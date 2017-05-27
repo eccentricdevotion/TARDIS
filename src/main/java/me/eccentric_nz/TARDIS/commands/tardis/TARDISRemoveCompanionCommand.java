@@ -41,7 +41,7 @@ public class TARDISRemoveCompanionCommand {
 
     public boolean doRemoveCompanion(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
@@ -74,10 +74,6 @@ public class TARDISRemoveCompanionCommand {
                 String message = "COMPANIONS_REMOVE_ALL";
                 if (!args[1].equals("all")) {
                     UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-//                    if (oluuid == null) {
-//                        oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
-//                        plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
-//                    }
                     if (oluuid != null) {
                         String[] split = comps.split(":");
                         StringBuilder buf = new StringBuilder();
@@ -100,8 +96,8 @@ public class TARDISRemoveCompanionCommand {
                         return true;
                     }
                 }
-                HashMap<String, Object> tid = new HashMap<String, Object>();
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> tid = new HashMap<>();
+                HashMap<String, Object> set = new HashMap<>();
                 tid.put("tardis_id", id);
                 set.put("companions", newList);
                 QueryFactory qf = new QueryFactory(plugin);

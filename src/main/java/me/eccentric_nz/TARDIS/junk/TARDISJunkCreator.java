@@ -55,7 +55,7 @@ public class TARDISJunkCreator {
             return true;
         }
         // check if there is a junk TARDIS already
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
@@ -67,7 +67,7 @@ public class TARDISJunkCreator {
         // save a tardis record
         String cw = plugin.getConfig().getString("creation.default_world_name");
         final QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");
         set.put("size", "JUNK");
@@ -84,7 +84,7 @@ public class TARDISJunkCreator {
         Material floor_type = Material.WOOL;
         byte floor_data = 7;
         // check if player_prefs record
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
         if (rsp.resultSet()) {
@@ -96,7 +96,7 @@ public class TARDISJunkCreator {
             wall_data = wid_data.getData();
         } else {
             // create a player_prefs record
-            HashMap<String, Object> setpp = new HashMap<String, Object>();
+            HashMap<String, Object> setpp = new HashMap<>();
             setpp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             setpp.put("player", "junk");
             setpp.put("wall", "ORANGE_WOOL");
@@ -106,7 +106,7 @@ public class TARDISJunkCreator {
         }
         World chunkworld = plugin.getServer().getWorld(cw);
         // populate home, current, next and back tables
-        HashMap<String, Object> setlocs = new HashMap<String, Object>();
+        HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
         setlocs.put("world", l.getWorld().getName());
         setlocs.put("x", l.getBlockX());
@@ -128,11 +128,8 @@ public class TARDISJunkCreator {
         // build the TARDIS in the Vortex
         plugin.getInteriorBuilder().buildInner(CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, wall_data, floor_type, floor_data, true);
         // build the TARDIS in the world
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getPresetBuilder().buildPreset(bd);
         }, 5L);
         return true;
     }

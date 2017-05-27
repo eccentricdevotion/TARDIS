@@ -49,7 +49,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISBlockBreakListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> sign_lookup = new HashMap<String, String>();
+    private final HashMap<String, String> sign_lookup = new HashMap<>();
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -79,12 +79,12 @@ public class TARDISBlockBreakListener implements Listener {
         Block block = event.getBlock();
         Material blockType = block.getType();
         if (player.getGameMode().equals(GameMode.CREATIVE) && TARDISBuilderInstanceKeeper.getPrecious().contains(blockType)) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
                 // remove protection
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 String loc = block.getLocation().toString();
                 wherep.put("location", loc);
                 wherep.put("police_box", 0);
@@ -108,11 +108,8 @@ public class TARDISBlockBreakListener implements Listener {
                     plugin.getTrackerKeeper().getExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
                     TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            plugin.getTrackerKeeper().getExterminate().remove(uuid);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        plugin.getTrackerKeeper().getExterminate().remove(uuid);
                     }, timeout * 20);
                 } else {
                     TARDISMessage.send(player, "NO_PERM_DELETE");

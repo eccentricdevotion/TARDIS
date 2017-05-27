@@ -53,7 +53,7 @@ public class TARDISHotbarListener implements Listener {
                 // get TARDIS location
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(player.getUniqueId().toString())) {
-                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", rs.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {

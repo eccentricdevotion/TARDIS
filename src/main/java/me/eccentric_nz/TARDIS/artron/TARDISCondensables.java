@@ -37,7 +37,7 @@ public class TARDISCondensables {
     }
 
     public void makeCondensables() {
-        condensables = new HashMap<String, Integer>();
+        condensables = new HashMap<>();
         if (plugin.getConfig().getBoolean("preferences.use_default_condensables")) {
             condensables.put("ACACIA_DOOR_ITEM", 3);
             condensables.put("ACACIA_FENCE", 1);

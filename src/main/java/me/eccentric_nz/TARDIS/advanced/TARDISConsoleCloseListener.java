@@ -58,7 +58,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISConsoleCloseListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> onlythese = new ArrayList<Material>();
+    private final List<Material> onlythese = new ArrayList<>();
 
     public TARDISConsoleCloseListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -76,7 +76,7 @@ public class TARDISConsoleCloseListener implements Listener {
         if (inv_name.equals("§4TARDIS Console")) {
             Player p = ((Player) event.getPlayer());
             // get the TARDIS the player is in
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
@@ -105,7 +105,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     }
                 }
                 // get TARDIS's current location
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
@@ -120,10 +120,10 @@ public class TARDISConsoleCloseListener implements Listener {
                         Material mat = is.getType();
                         if (!mat.equals(Material.MAP) && is.hasItemMeta()) {
                             boolean ignore = false;
-                            HashMap<String, Object> set_next = new HashMap<String, Object>();
-                            HashMap<String, Object> set_tardis = new HashMap<String, Object>();
-                            HashMap<String, Object> where_next = new HashMap<String, Object>();
-                            HashMap<String, Object> where_tardis = new HashMap<String, Object>();
+                            HashMap<String, Object> set_next = new HashMap<>();
+                            HashMap<String, Object> set_tardis = new HashMap<>();
+                            HashMap<String, Object> where_next = new HashMap<>();
+                            HashMap<String, Object> where_tardis = new HashMap<>();
                             // process any disks
                             List<String> lore = is.getItemMeta().getLore();
                             if (lore != null) {
@@ -136,7 +136,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 continue;
                                             }
                                             // get a parking spot in this area
-                                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                                            HashMap<String, Object> wherea = new HashMap<>();
                                             wherea.put("area_name", first);
                                             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                             if (!rsa.resultSet()) {
@@ -228,7 +228,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 }
                                                 UUID toUUID = to.getUniqueId();
                                                 // check the to player's DND status
-                                                HashMap<String, Object> wherednd = new HashMap<String, Object>();
+                                                HashMap<String, Object> wherednd = new HashMap<>();
                                                 wherednd.put("uuid", toUUID.toString());
                                                 ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                                                 if (rspp.resultSet() && rspp.isDND()) {
@@ -309,8 +309,8 @@ public class TARDISConsoleCloseListener implements Listener {
                             // Randomiser Circuit
                             Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
                             if (l != null) {
-                                HashMap<String, Object> set_next = new HashMap<String, Object>();
-                                HashMap<String, Object> where_next = new HashMap<String, Object>();
+                                HashMap<String, Object> set_next = new HashMap<>();
+                                HashMap<String, Object> where_next = new HashMap<>();
                                 set_next.put("world", l.getWorld().getName());
                                 set_next.put("x", l.getBlockX());
                                 set_next.put("y", l.getBlockY());
@@ -350,9 +350,9 @@ public class TARDISConsoleCloseListener implements Listener {
 
     private void saveCurrentConsole(Inventory inv, String uuid) {
         String serialized = TARDISSerializeInventory.itemStacksToString(inv.getContents());
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("console", serialized);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         new QueryFactory(plugin).doSyncUpdate("storage", set, where);
     }

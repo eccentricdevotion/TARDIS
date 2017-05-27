@@ -52,9 +52,9 @@ public class TARDISSetDifficultyCommand {
             return true;
         }
         int diff = (args[1].equalsIgnoreCase("easy")) ? 1 : 0;
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("difficulty", diff);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", set, where);
         TARDISMessage.send(player, "DIFF_SAVED");

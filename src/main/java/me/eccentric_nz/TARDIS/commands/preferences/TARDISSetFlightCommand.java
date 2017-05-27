@@ -51,9 +51,9 @@ public class TARDISSetFlightCommand {
             default:
                 break;
         }
-        HashMap<String, Object> setf = new HashMap<String, Object>();
+        HashMap<String, Object> setf = new HashMap<>();
         setf.put("flying_mode", mode);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setf, where);
         TARDISMessage.send(player, "FLIGHT_SAVED");

@@ -64,11 +64,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISTerminalListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, ResultSetCurrentLocation> terminalUsers = new HashMap<UUID, ResultSetCurrentLocation>();
-    private final HashMap<UUID, String> terminalDestination = new HashMap<UUID, String>();
-    private final HashMap<UUID, Integer> terminalStep = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> terminalIDs = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Boolean> terminalSub = new HashMap<UUID, Boolean>();
+    private final HashMap<UUID, ResultSetCurrentLocation> terminalUsers = new HashMap<>();
+    private final HashMap<UUID, String> terminalDestination = new HashMap<>();
+    private final HashMap<UUID, Integer> terminalStep = new HashMap<>();
+    private final HashMap<UUID, Integer> terminalIDs = new HashMap<>();
+    private final HashMap<UUID, Boolean> terminalSub = new HashMap<>();
 
     public TARDISTerminalListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -91,7 +91,7 @@ public class TARDISTerminalListener implements Listener {
                 final Player player = (Player) event.getWhoClicked();
                 UUID uuid = player.getUniqueId();
                 // get the TARDIS the player is in
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                 if (rst.resultSet()) {
@@ -148,7 +148,7 @@ public class TARDISTerminalListener implements Listener {
                         case 49:
                             // set destination
                             if (terminalDestination.containsKey(uuid)) {
-                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                HashMap<String, Object> set = new HashMap<>();
                                 String[] data = terminalDestination.get(uuid).split(":");
                                 String ww = (plugin.isMVOnServer()) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
                                 set.put("world", ww);
@@ -157,7 +157,7 @@ public class TARDISTerminalListener implements Listener {
                                 set.put("z", data[3]);
                                 set.put("direction", terminalUsers.get(uuid).getDirection().toString());
                                 set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
-                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
                                 new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
                                 plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
@@ -203,12 +203,12 @@ public class TARDISTerminalListener implements Listener {
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof Player && inv.getName().equals("§4Destination Terminal")) {
             UUID uuid = ((Player) holder).getUniqueId();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
                 if (rsc.resultSet()) {
@@ -222,7 +222,7 @@ public class TARDISTerminalListener implements Listener {
                     return;
                 }
             }
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            HashMap<String, Object> wherepp = new HashMap<>();
             wherepp.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
@@ -365,7 +365,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void toggleSubmarine(Inventory inv, Player p) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
@@ -375,19 +375,19 @@ public class TARDISTerminalListener implements Listener {
             im.setLore(Arrays.asList(bool));
             is.setItemMeta(im);
             int tf = (rsp.isSubmarineOn()) ? 0 : 1;
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("submarine_on", tf);
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("pp_id", rsp.getPp_id());
             new QueryFactory(plugin).doUpdate("player_prefs", set, wheret);
         }
     }
 
     private String getWorld(String e, String this_world, Player p) {
-        List<String> allowedWorlds = new ArrayList<String>();
+        List<String> allowedWorlds = new ArrayList<>();
         String world = "";
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
-        for (String o : worldlist) {
+        worldlist.forEach((o) -> {
             World ww = plugin.getServer().getWorld(o);
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
@@ -411,7 +411,7 @@ public class TARDISTerminalListener implements Listener {
                     allowedWorlds.remove(this_world);
                 }
             }
-        }
+        });
         // random world
         if (allowedWorlds.size() > 0) {
             Random rand = new Random();
@@ -436,7 +436,7 @@ public class TARDISTerminalListener implements Listener {
         int slotm = getValue(34, getSlot(inv, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
         int slotx = getValue(16, getSlot(inv, 10, 16), true, uuid) * slotm;
         int slotz = getValue(25, getSlot(inv, 19, 25), true, uuid) * slotm;
-        List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<>();
         COMPASS d = terminalUsers.get(uuid).getDirection();
         // what kind of world is it?
         Environment e;

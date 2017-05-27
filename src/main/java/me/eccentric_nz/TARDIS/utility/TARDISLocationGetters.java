@@ -48,7 +48,7 @@ public class TARDISLocationGetters {
      * @return the TARDIS interior chunk
      */
     public Chunk getTARDISChunk(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
         if (rs.fromID(id)) {
@@ -161,7 +161,7 @@ public class TARDISLocationGetters {
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("world", w);
                 where.put("x", (x + cx));
                 where.put("z", (z + cl));

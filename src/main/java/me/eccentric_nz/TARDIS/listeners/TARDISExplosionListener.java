@@ -82,7 +82,7 @@ public class TARDISExplosionListener implements Listener {
             }
             int idchk = 0;
             // get list of police box blocks from DB
-            HashMap<String, Object> whereb = new HashMap<String, Object>();
+            HashMap<String, Object> whereb = new HashMap<>();
             whereb.put("police_box", 1);
             ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, true);
             if (rs.resultSet()) {
@@ -96,7 +96,7 @@ public class TARDISExplosionListener implements Listener {
                             e.blockList().remove(block);
                         }
                         if (id != idchk) {
-                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            HashMap<String, Object> where = new HashMap<>();
                             where.put("tardis_id", id);
                             ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
                             if (rsd.resultSet()) {

@@ -71,12 +71,9 @@ public class TARDISAreaListener implements Listener {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
                     TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            plugin.getTrackerKeeper().getArea().remove(uuid);
-                            plugin.getTrackerKeeper().getBlock().remove(uuid);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        plugin.getTrackerKeeper().getArea().remove(uuid);
+                        plugin.getTrackerKeeper().getBlock().remove(uuid);
                     }, 1200L);
                 } else {
                     TARDISMessage.send(player, "AREA_INSIDE");
@@ -112,7 +109,7 @@ public class TARDISAreaListener implements Listener {
                     }
                     String n = plugin.getTrackerKeeper().getArea().get(uuid);
                     QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("area_name", n);
                     set.put("world", firstblock[0]);
                     set.put("minx", minx);

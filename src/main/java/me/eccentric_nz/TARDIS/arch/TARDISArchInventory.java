@@ -15,7 +15,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISAttribute;
@@ -31,7 +30,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class TARDISArchInventory {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final String prefix = TARDIS.plugin.getPrefix();
 
     @SuppressWarnings("deprecation")
@@ -115,15 +114,12 @@ public class TARDISArchInventory {
                 p.getInventory().setHelmet(null);
                 // give a fob watch if it is the Chameleon Arch inventory
                 if (arch == 0) {
-                    TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
-                            ItemStack result = recipe.getResult();
-                            result.setAmount(1);
-                            p.getInventory().addItem(result);
-                            p.updateInventory();
-                        }
+                    TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                        ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+                        ItemStack result = recipe.getResult();
+                        result.setAmount(1);
+                        p.getInventory().addItem(result);
+                        p.updateInventory();
                     }, 5L);
                 }
             }
@@ -175,14 +171,14 @@ public class TARDISArchInventory {
     }
 
     private HashMap<Integer, List<TARDISAttributeData>> getAttributeMap(ItemStack[] stacks) {
-        HashMap<Integer, List<TARDISAttributeData>> map = new HashMap<Integer, List<TARDISAttributeData>>();
+        HashMap<Integer, List<TARDISAttributeData>> map = new HashMap<>();
         int add = (stacks.length == 4) ? 36 : 0;
         for (int s = 0; s < stacks.length; s++) {
             ItemStack i = stacks[s];
             if (i != null && !i.getType().equals(Material.AIR)) {
                 TARDISAttributes attributes = new TARDISAttributes(i);
                 if (attributes.size() > 0) {
-                    List<TARDISAttributeData> ist = new ArrayList<TARDISAttributeData>();
+                    List<TARDISAttributeData> ist = new ArrayList<>();
                     for (TARDISAttribute a : attributes.values()) {
                         TARDISAttributeData data = new TARDISAttributeData(a.getName(), a.getAttributeType().getMinecraftId(), a.getAmount(), a.getOperation());
                         ist.add(data);
@@ -197,17 +193,17 @@ public class TARDISArchInventory {
     private void reapplyCustomAttributes(Player p, String data) {
         try {
             HashMap<Integer, List<TARDISAttributeData>> cus = TARDISAttributeSerialization.fromDatabase(data);
-            for (Map.Entry<Integer, List<TARDISAttributeData>> m : cus.entrySet()) {
+            cus.entrySet().forEach((m) -> {
                 int slot = m.getKey();
                 if (slot != -1) {
                     ItemStack is = p.getInventory().getItem(slot);
                     TARDISAttributes attributes = new TARDISAttributes(is);
-                    for (TARDISAttributeData ad : m.getValue()) {
+                    m.getValue().forEach((ad) -> {
                         attributes.add(TARDISAttribute.newBuilder().name(ad.getAttribute()).type(TARDISAttributeType.fromId(ad.getAttributeID())).operation(ad.getOperation()).amount(ad.getValue()).build());
                         p.getInventory().setItem(m.getKey(), attributes.getStack());
-                    }
+                    });
                 }
-            }
+            });
         } catch (IOException e) {
             System.err.println("Could not reapply custom attributes, " + e);
         }

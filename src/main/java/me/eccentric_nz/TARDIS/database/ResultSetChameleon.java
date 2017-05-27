@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class ResultSetChameleon {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -46,7 +46,7 @@ public class ResultSetChameleon {
 //    private String stainData;
 //    private String glassID;
 //    private String glassData;
-    private final HashMap<String, String> data = new HashMap<String, String>();
+    private final HashMap<String, String> data = new HashMap<>();
     private final String prefix;
 
     /**
@@ -76,9 +76,9 @@ public class ResultSetChameleon {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
+            where.entrySet().forEach((entry) -> {
                 sbw.append(entry.getKey()).append(" = ? AND ");
-            }
+            });
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "chameleon" + wheres;

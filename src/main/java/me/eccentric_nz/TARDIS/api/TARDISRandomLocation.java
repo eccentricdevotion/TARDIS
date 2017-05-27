@@ -47,7 +47,7 @@ public class TARDISRandomLocation {
     }
 
     public final List<World> getWorlds(List<String> list) {
-        List<World> worlds = new ArrayList<World>();
+        List<World> worlds = new ArrayList<>();
         for (String s : list) {
             World o = Bukkit.getServer().getWorld(s);
             if (o != null) {

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 
@@ -27,7 +26,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
  */
 public class TARDISWallsLookup {
 
-    public HashMap<String, String> wall_lookup = new HashMap<String, String>();
+    public HashMap<String, String> wall_lookup = new HashMap<>();
     private final TARDIS plugin;
 
     public TARDISWallsLookup(TARDIS plugin) {
@@ -36,11 +35,11 @@ public class TARDISWallsLookup {
     }
 
     private HashMap<String, String> getLookup() {
-        HashMap<String, String> hmap = new HashMap<String, String>();
-        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
+        HashMap<String, String> hmap = new HashMap<>();
+        plugin.getTardisWalls().blocks.entrySet().forEach((entry) -> {
             Pair value = entry.getValue();
             hmap.put(value.getType().toString() + ":" + value.getData(), entry.getKey());
-        }
+        });
         return hmap;
     }
 }

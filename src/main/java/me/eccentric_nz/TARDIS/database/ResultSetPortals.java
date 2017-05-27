@@ -34,11 +34,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetPortals {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
 
     /**
@@ -71,7 +71,7 @@ public class ResultSetPortals {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    HashMap<String, String> row = new HashMap<String, String>();
+                    HashMap<String, String> row = new HashMap<>();
                     ResultSetMetaData rsmd = rs.getMetaData();
                     int columns = rsmd.getColumnCount();
                     for (int i = 1; i < columns + 1; i++) {

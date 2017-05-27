@@ -27,9 +27,9 @@ public class TARDISFurnaceRecipe {
 
     public void addFurnaceRecipes() {
         Set<String> furnace = plugin.getRecipesConfig().getConfigurationSection("furnace").getKeys(false);
-        for (String s : furnace) {
+        furnace.forEach((s) -> {
             plugin.getServer().addRecipe(makeRecipe(s));
-        }
+        });
     }
 
     private FurnaceRecipe makeRecipe(String s) {

@@ -40,7 +40,7 @@ public class TARDISLand {
 
     public void exitVortex() {
         // get handbrake location
-        HashMap<String, Object> whereh = new HashMap<String, Object>();
+        HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         whereh.put("type", 0);
         ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);

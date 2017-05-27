@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.sonic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
@@ -63,7 +62,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
 
     private HashMap<String, Integer> getCosts() {
         double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
         map.put("Standard Sonic", (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full));
         map.put("Bio-scanner Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full));
         map.put("Redstone Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.redstone") * full));
@@ -75,7 +74,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
     }
 
     private HashMap<String, String> getFields() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("Bio-scanner Upgrade", "bio");
         map.put("Redstone Upgrade", "redstone");
         map.put("Diamond Upgrade", "diamond");
@@ -173,7 +172,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                             lore = sonic_im.getLore();
                         } else {
                             // otherwise this is the first upgrade
-                            lore = new ArrayList<String>();
+                            lore = new ArrayList<>();
                             lore.add("Upgrades:");
                         }
                         // if they don't already have the upgrade
@@ -220,8 +219,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
 
     private void save(Player p, ItemStack is, boolean close) {
         // process the sonic
-        HashMap<String, Object> set = new HashMap<String, Object>();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ItemMeta im = is.getItemMeta();
         String dn = im.getDisplayName();
@@ -233,9 +232,9 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         set.put("sonic_type", colour);
         if (im.hasLore()) {
             List<String> lore = im.getLore();
-            for (Map.Entry<String, String> map : fields.entrySet()) {
+            fields.entrySet().forEach((map) -> {
                 set.put(map.getValue(), (lore.contains(map.getKey())) ? 1 : 0);
-            }
+            });
         }
         new QueryFactory(plugin).doUpdate("sonic", set, where);
         plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
@@ -256,7 +255,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                 drop.setVelocity(new Vector(0, 0, 0));
                 plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
                 // remove the Artron energy
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).alterEnergyLevel("tardis", -cost, where, p);
             } else {

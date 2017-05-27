@@ -93,7 +93,7 @@ public class TARDISTimeTravel {
         int wherex = 0, highest = 252, wherez = 0;
         // get worlds
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
-        List<World> allowedWorlds = new ArrayList<World>();
+        List<World> allowedWorlds = new ArrayList<>();
 
         if (e.equals("THIS")) {
             allowedWorlds.add(this_world);
@@ -207,7 +207,7 @@ public class TARDISTimeTravel {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
-                            HashMap<String, Object> wheres = new HashMap<String, Object>();
+                            HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("uuid", p.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
@@ -217,7 +217,7 @@ public class TARDISTimeTravel {
                                     Location underwater = submarine(currentBlock, d);
                                     if (underwater != null) {
                                         // get TARDIS id
-                                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                        HashMap<String, Object> wherep = new HashMap<>();
                                         wherep.put("uuid", p.getUniqueId().toString());
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                                         if (rst.resultSet()) {
@@ -374,18 +374,15 @@ public class TARDISTimeTravel {
         TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
         TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
         TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISBlockSetters.setBlock(w, startx, starty, startz, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx + c, starty, startz, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
-                TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            TARDISBlockSetters.setBlock(w, startx, starty, startz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx + c, starty, startz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
         }, 300L);
     }
 

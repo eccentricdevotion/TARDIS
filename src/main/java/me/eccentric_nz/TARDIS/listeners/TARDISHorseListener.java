@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Entity;
@@ -52,7 +54,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISHorseListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> barding = new ArrayList<Material>();
+    private final List<Material> barding = new ArrayList<>();
 
     public TARDISHorseListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -67,17 +69,17 @@ public class TARDISHorseListener implements Listener {
         if (e instanceof AbstractHorse && !(e instanceof Llama)) {
             AbstractHorse h = (AbstractHorse) e;
             Material m = event.getBlock().getType();
-            Entity passenger = h.getPassenger();
+            Entity passenger = h.getPassengers().get(0);
             if (passenger != null && m.equals(Material.WOOD_PLATE)) {
                 if (passenger instanceof Player) {
                     final Player p = (Player) passenger;
                     String pworld = p.getLocation().getWorld().getName();
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                     if (rst.resultSet() && pworld.contains("TARDIS")) {
                         int id = rst.getTardis_id();
-                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", id);
                         whered.put("door_type", 1);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
@@ -128,7 +130,8 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseInventory(h.getInventory().getContents());
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
-                        tmhor.setHorseHealth(h.getMaxHealth());
+                        double mh = h.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                        tmhor.setHorseHealth(mh);
                         tmhor.setHealth(h.getHealth());
                         if (plugin.isHelperOnServer()) {
                             tmhor.setSpeed(plugin.getTardisHelper().getHorseSpeed(h));
@@ -156,7 +159,8 @@ public class TARDISHorseListener implements Listener {
                                 ChestedHorse chested = (ChestedHorse) equine;
                                 chested.setCarryingChest(true);
                             }
-                            equine.setMaxHealth(tmhor.getHorseHealth());
+                            AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                            attribute.setBaseValue(tmhor.getHorseHealth());
                             equine.setHealth(tmhor.getHealth());
                             Inventory inv = equine.getInventory();
                             inv.setContents(tmhor.getHorseinventory());
@@ -169,13 +173,13 @@ public class TARDISHorseListener implements Listener {
                                     ItemStack saddle = inv.getItem(saddle_slot);
                                     ee.getInventory().setSaddle(saddle);
                                 }
-                                for (Material mat : barding) {
+                                barding.forEach((mat) -> {
                                     if (inv.contains(mat)) {
                                         int armour_slot = inv.first(mat);
                                         ItemStack bard = inv.getItem(armour_slot);
                                         ee.getInventory().setArmor(bard);
                                     }
-                                }
+                                });
                             }
                             if (plugin.isHelperOnServer()) {
                                 plugin.getTardisHelper().setHorseSpeed(equine, tmhor.getSpeed());
@@ -186,19 +190,12 @@ public class TARDISHorseListener implements Listener {
 
                             // teleport player and remove from travellers table
                             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
-                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
                             new QueryFactory(plugin).doDelete("travellers", where);
                             // set player as passenger
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        equine.addPassenger(p);
-                                    } catch (Exception e) {
-                                        equine.setPassenger(p);
-                                    }
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                equine.addPassenger(p);
                             }, 10L);
                         }
                     }

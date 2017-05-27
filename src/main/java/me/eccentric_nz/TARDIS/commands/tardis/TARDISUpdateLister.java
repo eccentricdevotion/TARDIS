@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -41,17 +40,17 @@ public class TARDISUpdateLister {
     public void list() {
         TARDISMessage.send(player, "UPDATE_INFO");
         player.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
-        for (Map.Entry<String, List<String>> map : options.entrySet()) {
+        options.entrySet().forEach((map) -> {
             player.sendMessage(map.getKey());
-            for (String s : map.getValue()) {
+            map.getValue().forEach((s) -> {
                 player.sendMessage("    " + s);
-            }
-        }
+            });
+        });
     }
 
     private LinkedHashMap<String, List<String>> createUpdateOptions() {
-        LinkedHashMap<String, List<String>> update_options = new LinkedHashMap<String, List<String>>();
-        List<String> controls = new ArrayList<String>();
+        LinkedHashMap<String, List<String>> update_options = new LinkedHashMap<>();
+        List<String> controls = new ArrayList<>();
         controls.add(ChatColor.GREEN + "artron" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Artron Energy Capacitor button");
         controls.add(ChatColor.GREEN + "back" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Previous Location button");
         controls.add(ChatColor.GREEN + "button" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random Location button");
@@ -62,7 +61,7 @@ public class TARDISUpdateLister {
         controls.add(ChatColor.GREEN + "z-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random z coordinate setter");
         controls.add(ChatColor.GREEN + "control" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Control Menu");
         update_options.put("TARDIS Controls", controls);
-        List<String> guis = new ArrayList<String>();
+        List<String> guis = new ArrayList<>();
         guis.add(ChatColor.RED + "advanced" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Advanced Console");
         guis.add(ChatColor.RED + "ars" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Architectural Reconfiguration System");
         guis.add(ChatColor.RED + "chameleon" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Chameleon Circuit");
@@ -75,7 +74,7 @@ public class TARDISUpdateLister {
         guis.add(ChatColor.RED + "storage" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Disk Storage Container");
         guis.add(ChatColor.RED + "generator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Generator");
         update_options.put("TARDIS User Interfaces", guis);
-        List<String> spawns = new ArrayList<String>();
+        List<String> spawns = new ArrayList<>();
         spawns.add(ChatColor.BLUE + "creeper" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Artron Charged Creeper");
         spawns.add(ChatColor.BLUE + "eps" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Emergency Programme One");
         spawns.add(ChatColor.BLUE + "farm" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Farm room");
@@ -84,7 +83,7 @@ public class TARDISUpdateLister {
         spawns.add(ChatColor.BLUE + "stall" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Llama stall room");
         spawns.add(ChatColor.BLUE + "village" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Village room");
         update_options.put("TARDIS Internal Spawn Locations", spawns);
-        List<String> misc = new ArrayList<String>();
+        List<String> misc = new ArrayList<>();
         misc.add(ChatColor.LIGHT_PURPLE + "condenser" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Artron Energy Condenser");
         misc.add(ChatColor.LIGHT_PURPLE + "door" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS Interior Door");
         misc.add(ChatColor.LIGHT_PURPLE + "backdoor" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS back doors");

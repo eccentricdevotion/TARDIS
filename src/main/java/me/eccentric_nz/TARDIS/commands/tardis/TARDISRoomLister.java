@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -43,24 +42,24 @@ public class TARDISRoomLister {
 
     public void list() {
         TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
-        for (Map.Entry<String, List<String>> map : options.entrySet()) {
+        options.entrySet().forEach((map) -> {
             player.sendMessage(map.getKey());
             if (map.getValue().size() > 0) {
-                for (String s : map.getValue()) {
+                map.getValue().forEach((s) -> {
                     player.sendMessage("    " + s);
-                }
+                });
             } else {
                 TARDISMessage.send(player, true, "ROOM_NONE");
             }
-        }
+        });
         TARDISMessage.send(player, "ROOM_GALLERY");
     }
 
     private LinkedHashMap<String, List<String>> createRoomOptions(Player player) {
-        LinkedHashMap<String, List<String>> room_options = new LinkedHashMap<String, List<String>>();
-        List<String> default_rooms = new ArrayList<String>();
-        List<String> custom_rooms = new ArrayList<String>();
-        for (String room : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+        LinkedHashMap<String, List<String>> room_options = new LinkedHashMap<>();
+        List<String> default_rooms = new ArrayList<>();
+        List<String> custom_rooms = new ArrayList<>();
+        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((room) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".enabled")) {
                 ChatColor colour = (player.hasPermission("tardis.room." + room)) ? ChatColor.GREEN : ChatColor.RED;
                 if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".user")) {
@@ -69,7 +68,7 @@ public class TARDISRoomLister {
                     default_rooms.add(colour + room);
                 }
             }
-        }
+        });
         room_options.put("Default Rooms", default_rooms);
         room_options.put("Custom Rooms", custom_rooms);
         return room_options;

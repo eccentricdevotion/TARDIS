@@ -56,7 +56,7 @@ public class TARDISLazarusListener implements Listener {
                 Block b = event.getClickedBlock();
                 String l = b.getLocation().toString();
                 // is it a lazarus plate?
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("location", l);
                 where.put("type", 19);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);

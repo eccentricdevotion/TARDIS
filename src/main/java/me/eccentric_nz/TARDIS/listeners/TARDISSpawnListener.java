@@ -40,8 +40,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 public class TARDISSpawnListener implements Listener {
 
     private final TARDIS plugin;
-    List<SpawnReason> good_spawns = new ArrayList<SpawnReason>();
-    List<Biome> biomes = new ArrayList<Biome>();
+    List<SpawnReason> good_spawns = new ArrayList<>();
+    List<Biome> biomes = new ArrayList<>();
     private final Random rand;
 
     public TARDISSpawnListener(TARDIS plugin) {
@@ -98,11 +98,8 @@ public class TARDISSpawnListener implements Listener {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
                     TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            event.getEntity().remove();
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        event.getEntity().remove();
                     }, 2L);
                 }
             }

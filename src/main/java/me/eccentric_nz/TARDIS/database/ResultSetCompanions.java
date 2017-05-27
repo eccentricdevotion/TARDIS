@@ -33,11 +33,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetCompanions {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
-    private final List<UUID> companions = new ArrayList<UUID>();
+    private final List<UUID> companions = new ArrayList<>();
     private final String prefix;
 
     /**

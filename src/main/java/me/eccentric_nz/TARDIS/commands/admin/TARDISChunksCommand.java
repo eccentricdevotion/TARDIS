@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -35,9 +34,9 @@ public class TARDISChunksCommand {
 
     public boolean listChunks(CommandSender sender) {
         if (plugin.getGeneralKeeper().getTardisChunkList().size() > 0) {
-            for (Chunk c : plugin.getGeneralKeeper().getTardisChunkList()) {
+            plugin.getGeneralKeeper().getTardisChunkList().forEach((c) -> {
                 sender.sendMessage(plugin.getPluginName() + c.getWorld().getName() + ": " + c);
-            }
+            });
         } else {
             TARDISMessage.send(sender, "NO_CHUNKS");
         }

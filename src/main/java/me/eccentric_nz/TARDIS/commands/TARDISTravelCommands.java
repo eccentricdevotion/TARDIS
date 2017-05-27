@@ -75,7 +75,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISTravelCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> BIOME_SUBS = new ArrayList<String>();
+    private final List<String> BIOME_SUBS = new ArrayList<>();
     private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
     private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
 
@@ -110,7 +110,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 QueryFactory qf = new QueryFactory(plugin);
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 // get tardis data
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (!rs.resultSet()) {
@@ -129,7 +129,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                     return true;
                 }
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
@@ -150,8 +150,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
-                HashMap<String, Object> tid = new HashMap<String, Object>();
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> tid = new HashMap<>();
+                HashMap<String, Object> set = new HashMap<>();
                 tid.put("tardis_id", id);
                 if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
@@ -201,7 +201,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             String which;
                             if (args[0].equalsIgnoreCase("home")) {
                                 // get home location
-                                HashMap<String, Object> wherehl = new HashMap<String, Object>();
+                                HashMap<String, Object> wherehl = new HashMap<>();
                                 wherehl.put("tardis_id", id);
                                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
                                 if (!rsh.resultSet()) {
@@ -217,7 +217,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 which = "Home";
                             } else if (args[0].equalsIgnoreCase("back")) {
                                 // get fast return location
-                                HashMap<String, Object> wherebl = new HashMap<String, Object>();
+                                HashMap<String, Object> wherebl = new HashMap<>();
                                 wherebl.put("tardis_id", id);
                                 ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
                                 if (!rsb.resultSet()) {
@@ -305,7 +305,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "TRAVEL_NO_SELF");
                                 return true;
                             }
-                            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                            HashMap<String, Object> wherecl = new HashMap<>();
                             wherecl.put("tardis_id", id);
                             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                             if (!rsc.resultSet()) {
@@ -319,7 +319,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 return true;
                             }
                             // check the to player's DND status
-                            HashMap<String, Object> wherednd = new HashMap<String, Object>();
+                            HashMap<String, Object> wherednd = new HashMap<>();
                             wherednd.put("uuid", saved.getUniqueId().toString());
                             ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                             if (rspp.resultSet() && rspp.isDND()) {
@@ -344,7 +344,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         // check the to player's DND status
-                        HashMap<String, Object> wherednd = new HashMap<String, Object>();
+                        HashMap<String, Object> wherednd = new HashMap<>();
                         wherednd.put("uuid", requested.getUniqueId().toString());
                         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                         if (rspp.resultSet() && rspp.isDND()) {
@@ -362,13 +362,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         plugin.getTrackerKeeper().getChat().put(requestedUUID, player.getUniqueId());
                         final Player p = player;
                         final String to = args[0];
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                if (plugin.getTrackerKeeper().getChat().containsKey(requestedUUID)) {
-                                    plugin.getTrackerKeeper().getChat().remove(requestedUUID);
-                                    TARDISMessage.send(p, "REQUEST_NO_RESPONSE", to);
-                                }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            if (plugin.getTrackerKeeper().getChat().containsKey(requestedUUID)) {
+                                plugin.getTrackerKeeper().getChat().remove(requestedUUID);
+                                TARDISMessage.send(p, "REQUEST_NO_RESPONSE", to);
                             }
                         }, 1200L);
                         return true;
@@ -385,7 +382,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 // check they have a biome disk in storage
                                 boolean hasBiomeDisk = false;
                                 UUID uuid = player.getUniqueId();
-                                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                HashMap<String, Object> whereb = new HashMap<>();
                                 whereb.put("uuid", uuid.toString());
                                 ResultSetDiskStorage rsb = new ResultSetDiskStorage(plugin, whereb);
                                 if (rsb.resultSet()) {
@@ -413,9 +410,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         if (upper.equals("LIST")) {
                             StringBuilder buf = new StringBuilder();
-                            for (String bi : BIOME_SUBS) {
+                            BIOME_SUBS.forEach((bi) -> {
                                 buf.append(bi).append(", ");
-                            }
+                            });
                             String b = buf.toString().substring(0, buf.length() - 2);
                             TARDISMessage.send(player, "BIOMES", b);
                             return true;
@@ -424,7 +421,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 Biome biome = Biome.valueOf(upper);
                                 TARDISMessage.send(player, "BIOME_SEARCH");
 
-                                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                HashMap<String, Object> wherecl = new HashMap<>();
                                 wherecl.put("tardis_id", tardis.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
@@ -487,7 +484,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                         // we're thinking this is a saved destination name
                         if (player.hasPermission("tardis.save")) {
-                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                            HashMap<String, Object> whered = new HashMap<>();
                             whered.put("dest_name", args[1]);
                             whered.put("tardis_id", id);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
@@ -511,7 +508,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
-                                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                    HashMap<String, Object> wheres = new HashMap<>();
                                     wheres.put("world", rsd.getWorld());
                                     wheres.put("x", rsd.getX());
                                     wheres.put("y", rsd.getY());
@@ -530,7 +527,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("direction", rsd.getDirection());
                                 } else {
                                     // get current direction
-                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", tardis.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
@@ -561,7 +558,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
-                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        HashMap<String, Object> wherea = new HashMap<>();
                         wherea.put("area_name", args[1]);
                         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                         if (!rsa.resultSet()) {
@@ -606,7 +603,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 return false;
                             case 3:
                                 if (args[0].startsWith("~")) {
-                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
@@ -780,7 +777,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         int x, y, z;
         World w;
         if (args[0].equals("~")) {
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
@@ -836,7 +833,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(p, "BIOME_NOT_VALID");
             return null;
         }
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -924,7 +921,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, FLAG.getDefaultFlags()))) {
             return 1;
         }
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {

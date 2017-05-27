@@ -117,13 +117,13 @@ public class TARDISUtils {
      * @param qf an instance of the database QueyFactory
      */
     public void updateStorageId(String uuid, int id, QueryFactory qf) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         ResultSetDiskStorage rss = new ResultSetDiskStorage(plugin, where);
         if (rss.resultSet()) {
-            HashMap<String, Object> wherej = new HashMap<String, Object>();
+            HashMap<String, Object> wherej = new HashMap<>();
             wherej.put("uuid", uuid);
-            HashMap<String, Object> setj = new HashMap<String, Object>();
+            HashMap<String, Object> setj = new HashMap<>();
             setj.put("tardis_id", id);
             qf.doUpdate("storage", setj, wherej);
         }
@@ -177,15 +177,15 @@ public class TARDISUtils {
                     if (update) {
                         TARDISMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
                         // update the grace count if the TARDIS has travelled
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("grace", (grace_count + 1));
                         new QueryFactory(plugin).doUpdate("t_count", set, where);
                     }
                 } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
                     // check player difficulty preference
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {
@@ -195,7 +195,7 @@ public class TARDISUtils {
             }
         } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
             // check player difficulty preference
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {

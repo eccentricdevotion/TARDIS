@@ -60,7 +60,7 @@ public class TARDISMakeHerBlueCommand {
             }
         }
         plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
@@ -100,7 +100,7 @@ public class TARDISMakeHerBlueCommand {
             TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
             return true;
         }
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", tardis.getTardis_id());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -117,9 +117,9 @@ public class TARDISMakeHerBlueCommand {
             return false;
         }
         // set the preset to NEW
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("tardis_id", id);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", "NEW");
         qf.doUpdate("tardis", set, wherep);
         final BuildData bd = new BuildData(plugin, uuid.toString());
@@ -132,15 +132,12 @@ public class TARDISMakeHerBlueCommand {
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisID(id);
         bd.setBiome(rsc.getBiome());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getPresetBuilder().buildPreset(bd);
         }, 20L);
         String message = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";
         TARDISMessage.send(player.getPlayer(), message);
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         qf.alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
         return true;

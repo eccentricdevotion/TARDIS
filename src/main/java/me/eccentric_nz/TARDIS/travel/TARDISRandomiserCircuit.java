@@ -46,8 +46,8 @@ public class TARDISRandomiserCircuit {
     public Location getRandomlocation(Player p, COMPASS d) {
         // get a random world
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
-        List<String> allowedWorlds = new ArrayList<String>();
-        for (String o : worldlist) {
+        List<String> allowedWorlds = new ArrayList<>();
+        worldlist.forEach((o) -> {
             World ww = plugin.getServer().getWorld(o);
             if (ww != null) {
                 if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
@@ -66,7 +66,7 @@ public class TARDISRandomiserCircuit {
                     allowedWorlds.remove(o);
                 }
             }
-        }
+        });
         Parameters params = new Parameters(p, FLAG.getDefaultFlags());
         params.setCompass(d);
         return plugin.getTardisAPI().getRandomLocation(allowedWorlds, null, params);

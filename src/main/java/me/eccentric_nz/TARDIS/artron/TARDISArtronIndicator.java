@@ -73,7 +73,7 @@ public class TARDISArtronIndicator {
                     Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
                     max.setScore(fc);
                     Score timelord = objective.getScore(ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {

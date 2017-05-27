@@ -49,9 +49,9 @@ public class TARDISSiegeRunnable implements Runnable {
 
     @Override
     public void run() {
-        for (int id : plugin.getTrackerKeeper().getInSiegeMode()) {
+        plugin.getTrackerKeeper().getInSiegeMode().forEach((id) -> {
             // get current Artron level
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
@@ -59,7 +59,7 @@ public class TARDISSiegeRunnable implements Runnable {
                 int level = tardis.getArtron_level();
                 if (level > deplete) {
                     // remove some energy
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
                     qf.alterEnergyLevel("tardis", deplete, whered, null);
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
@@ -77,7 +77,7 @@ public class TARDISSiegeRunnable implements Runnable {
                     }
                     if (boost) {
                         // give some energy
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                        HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
                     }
@@ -85,7 +85,7 @@ public class TARDISSiegeRunnable implements Runnable {
             }
             // give players inside TARDIS a health boost
             if (plugin.getConfig().getBoolean("siege.healing")) {
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
                 if (rst.resultSet()) {
@@ -97,6 +97,6 @@ public class TARDISSiegeRunnable implements Runnable {
                     }
                 }
             }
-        }
+        });
     }
 }

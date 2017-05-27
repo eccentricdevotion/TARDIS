@@ -47,9 +47,9 @@ import org.bukkit.util.Vector;
 public class TARDISAntiBuildListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> no_place = new ArrayList<Material>();
-    private final List<Material> allow_interact = new ArrayList<Material>();
-    private final List<Material> no_flower_pot = new ArrayList<Material>();
+    private final List<Material> no_place = new ArrayList<>();
+    private final List<Material> allow_interact = new ArrayList<>();
+    private final List<Material> no_flower_pot = new ArrayList<>();
 
     public TARDISAntiBuildListener(TARDIS plugin) {
         this.plugin = plugin;

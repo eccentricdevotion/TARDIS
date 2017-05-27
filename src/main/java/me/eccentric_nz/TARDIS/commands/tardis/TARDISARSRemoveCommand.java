@@ -49,7 +49,7 @@ public class TARDISARSRemoveCommand {
         }
         int id = rs.getTardis_id();
         // get the sign location so we can reset the sign text
-        HashMap<String, Object> wheres = new HashMap<String, Object>();
+        HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
         wheres.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
@@ -64,7 +64,7 @@ public class TARDISARSRemoveCommand {
                     }
                     sign.update();
                 }
-                HashMap<String, Object> del = new HashMap<String, Object>();
+                HashMap<String, Object> del = new HashMap<>();
                 del.put("tardis_id", id);
                 del.put("type", 10);
                 new QueryFactory(plugin).doDelete("controls", del);

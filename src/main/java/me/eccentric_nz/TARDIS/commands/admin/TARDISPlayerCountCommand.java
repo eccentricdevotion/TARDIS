@@ -50,9 +50,9 @@ public class TARDISPlayerCountCommand {
             if (args.length == 3) {
                 // set count
                 int count = TARDISNumberParsers.parseInt(args[2]);
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("count", count);
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("uuid", uuid);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("t_count", setc, wherec);

@@ -52,7 +52,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISPrefsMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> lookup = new HashMap<String, String>();
+    private final HashMap<String, String> lookup = new HashMap<>();
 
     public TARDISPrefsMenuListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -94,16 +94,13 @@ public class TARDISPrefsMenuListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     if (slot == 23 && im.getDisplayName().equals("Interior hum sound")) {
                         // close this gui and load the sounds GUI
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                Inventory hum_inv = plugin.getServer().createInventory(p, 18, "§4TARDIS Interior Sounds");
-                                // close inventory
-                                p.closeInventory();
-                                // open new inventory
-                                hum_inv.setContents(new TARDISHumInventory().getSounds());
-                                p.openInventory(hum_inv);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory hum_inv = plugin.getServer().createInventory(p, 18, "§4TARDIS Interior Sounds");
+                            // close inventory
+                            p.closeInventory();
+                            // open new inventory
+                            hum_inv.setContents(new TARDISHumInventory().getSounds());
+                            p.openInventory(hum_inv);
                         }, 1L);
                         return;
                     }
@@ -118,9 +115,9 @@ public class TARDISPrefsMenuListener implements Listener {
                                 // must not be in the vortex or materialising
                                 if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                     // set the handbrake to ON
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                    HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("handbrake_on", 1);
                                     QueryFactory qf = new QueryFactory(plugin);
                                     qf.doUpdate("tardis", set, wheret);
@@ -129,7 +126,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                     TARDISMessage.send(p, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-                                        HashMap<String, Object> wheref = new HashMap<String, Object>();
+                                        HashMap<String, Object> wheref = new HashMap<>();
                                         wheref.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", amount, wheref, p);
                                     }
@@ -161,21 +158,18 @@ public class TARDISPrefsMenuListener implements Listener {
                     }
                     if (slot == 25 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", uuid.toString());
                         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
                         if (rs.resultSet()) {
                             // close this gui and load the TARDIS map
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    Inventory new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS Map");
-                                    // close inventory
-                                    p.closeInventory();
-                                    // open new inventory
-                                    new_inv.setContents(new TARDISARSMap(plugin).getMap());
-                                    p.openInventory(new_inv);
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                Inventory new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS Map");
+                                // close inventory
+                                p.closeInventory();
+                                // open new inventory
+                                new_inv.setContents(new TARDISARSMap(plugin).getMap());
+                                p.openInventory(new_inv);
                             }, 1L);
                         } else {
                             TARDISMessage.send(p, "NOT_IN_TARDIS");
@@ -184,13 +178,10 @@ public class TARDISPrefsMenuListener implements Listener {
                     }
                     if (slot == 26 && im.getDisplayName().equals("Admin Menu")) {
                         // close this gui and load the Admin Menu
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                Inventory menu = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
-                                menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
-                                p.openInventory(menu);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory menu = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                            menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+                            p.openInventory(menu);
                         }, 1L);
                         return;
                     }
@@ -198,102 +189,108 @@ public class TARDISPrefsMenuListener implements Listener {
                     boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
                     String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
                     int b = (bool) ? 0 : 1;
-                    if (im.getDisplayName().equals("Junk TARDIS")) {
-                        // must be outside of the TARDIS
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("uuid", uuid);
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (rst.resultSet()) {
-                            TARDISMessage.send(p, "JUNK_PRESET_OUTSIDE");
-                            return;
+                    switch (im.getDisplayName()) {
+                        case "Junk TARDIS": {
+                            // must be outside of the TARDIS
+                            HashMap<String, Object> wheret = new HashMap<>();
+                            wheret.put("uuid", uuid);
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                            if (rst.resultSet()) {
+                                TARDISMessage.send(p, "JUNK_PRESET_OUTSIDE");
+                                return;
+                            }
+                            if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
+                                long now = System.currentTimeMillis();
+                                long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                                long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
+                                if (now < then) {
+                                    TARDISMessage.send(p, "COOLDOWN", String.format("%d", cooldown / 1000));
+                                    return;
+                                }
+                            }
+                            HashMap<String, Object> where = new HashMap<>();
+                            where.put("uuid", uuid.toString());
+                            ResultSetJunk rsj = new ResultSetJunk(plugin, where);
+                            boolean has = rsj.resultSet();
+                            // get preset
+                            HashMap<String, Object> wherep = new HashMap<>();
+                            wherep.put("uuid", uuid.toString());
+                            ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
+                            if (rsp.resultSet()) {
+                                QueryFactory qf = new QueryFactory(plugin);
+                                Tardis tardis = rsp.getTardis();
+                                String current = tardis.getPreset().toString();
+                                // make sure is opposite
+                                if (current.equals("JUNK_MODE") && !bool) {
+                                    TARDISMessage.send(p, "JUNK_ALREADY_ON");
+                                    return;
+                                }
+                                if (!current.equals("JUNK_MODE") && bool) {
+                                    TARDISMessage.send(p, "JUNK_ALREADY_OFF");
+                                    return;
+                                }
+                                int id = tardis.getTardis_id();
+                                String chameleon = tardis.getChameleon();
+                                String cham_set;
+                                HashMap<String, Object> setj = new HashMap<>();
+                                if (has) {
+                                    // update rcord with current preset
+                                    HashMap<String, Object> wherej = new HashMap<>();
+                                    wherej.put("uuid", uuid.toString());
+                                    setj.put("preset", current);
+                                    qf.doSyncUpdate("junk", setj, wherej);
+                                } else {
+                                    // create a junk record
+                                    setj.put("uuid", uuid.toString());
+                                    setj.put("tardis_id", id);
+                                    setj.put("preset", current);
+                                    qf.doSyncInsert("junk", setj);
+                                }
+                                HashMap<String, Object> whereu = new HashMap<>();
+                                whereu.put("uuid", uuid.toString());
+                                HashMap<String, Object> sett = new HashMap<>();
+                                String message = "JUNK_PRESET_ON";
+                                if (bool) {
+                                    // restore saved preset
+                                    String preset = (has) ? rsj.getPreset().toString() : current;
+                                    sett.put("chameleon_preset", preset);
+                                    sett.put("chameleon_demat", "JUNK_MODE");
+                                    message = "JUNK_PRESET_OFF";
+                                    cham_set = preset;
+                                } else {
+                                    // save JUNK_MODE preset
+                                    sett.put("chameleon_preset", "JUNK_MODE");
+                                    sett.put("chameleon_demat", current);
+                                    cham_set = "JUNK_MODE";
+                                }
+                                qf.doSyncUpdate("tardis", sett, whereu);
+                                // set the Chameleon Circuit sign
+                                TARDISStaticUtils.setSign(chameleon, 3, cham_set, p);
+                                // rebuild
+                                TARDISMessage.send(p, message);
+                                p.performCommand("tardis rebuild");
+                            }
+                            break;
                         }
-                        if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
-                            long now = System.currentTimeMillis();
-                            long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
-                            long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
-                            if (now < then) {
-                                TARDISMessage.send(p, "COOLDOWN", String.format("%d", cooldown / 1000));
-                                return;
-                            }
-                        }
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", uuid.toString());
-                        ResultSetJunk rsj = new ResultSetJunk(plugin, where);
-                        boolean has = rsj.resultSet();
-                        // get preset
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
-                        wherep.put("uuid", uuid.toString());
-                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
-                        if (rsp.resultSet()) {
-                            QueryFactory qf = new QueryFactory(plugin);
-                            Tardis tardis = rsp.getTardis();
-                            String current = tardis.getPreset().toString();
-                            // make sure is opposite
-                            if (current.equals("JUNK_MODE") && !bool) {
-                                TARDISMessage.send(p, "JUNK_ALREADY_ON");
-                                return;
-                            }
-                            if (!current.equals("JUNK_MODE") && bool) {
-                                TARDISMessage.send(p, "JUNK_ALREADY_OFF");
-                                return;
-                            }
-                            int id = tardis.getTardis_id();
-                            String chameleon = tardis.getChameleon();
-                            String cham_set;
-                            HashMap<String, Object> setj = new HashMap<String, Object>();
-                            if (has) {
-                                // update rcord with current preset
-                                HashMap<String, Object> wherej = new HashMap<String, Object>();
-                                wherej.put("uuid", uuid.toString());
-                                setj.put("preset", current);
-                                qf.doSyncUpdate("junk", setj, wherej);
+                        case "Companion Build":
+                            String[] args = new String[2];
+                            args[0] = "";
+                            args[1] = value;
+                            new TARDISBuildCommand(plugin).toggleCompanionBuilding(((Player) event.getWhoClicked()), args);
+                            break;
+                        default: {
+                            HashMap<String, Object> set = new HashMap<>();
+                            HashMap<String, Object> where = new HashMap<>();
+                            where.put("uuid", uuid.toString());
+                            if (im.getDisplayName().equals("HADS Type")) {
+                                value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
+                                set.put("hads_type", value);
                             } else {
-                                // create a junk record
-                                setj.put("uuid", uuid.toString());
-                                setj.put("tardis_id", id);
-                                setj.put("preset", current);
-                                qf.doSyncInsert("junk", setj);
+                                set.put(lookup.get(im.getDisplayName()), b);
                             }
-                            HashMap<String, Object> whereu = new HashMap<String, Object>();
-                            whereu.put("uuid", uuid.toString());
-                            HashMap<String, Object> sett = new HashMap<String, Object>();
-                            String message = "JUNK_PRESET_ON";
-                            if (bool) {
-                                // restore saved preset
-                                String preset = (has) ? rsj.getPreset().toString() : current;
-                                sett.put("chameleon_preset", preset);
-                                sett.put("chameleon_demat", "JUNK_MODE");
-                                message = "JUNK_PRESET_OFF";
-                                cham_set = preset;
-                            } else {
-                                // save JUNK_MODE preset
-                                sett.put("chameleon_preset", "JUNK_MODE");
-                                sett.put("chameleon_demat", current);
-                                cham_set = "JUNK_MODE";
-                            }
-                            qf.doSyncUpdate("tardis", sett, whereu);
-                            // set the Chameleon Circuit sign
-                            TARDISStaticUtils.setSign(chameleon, 3, cham_set, p);
-                            // rebuild
-                            TARDISMessage.send(p, message);
-                            p.performCommand("tardis rebuild");
+                            new QueryFactory(plugin).doUpdate("player_prefs", set, where);
+                            break;
                         }
-                    } else if (im.getDisplayName().equals("Companion Build")) {
-                        String[] args = new String[2];
-                        args[0] = "";
-                        args[1] = value;
-                        new TARDISBuildCommand(plugin).toggleCompanionBuilding(((Player) event.getWhoClicked()), args);
-                    } else {
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", uuid.toString());
-                        if (im.getDisplayName().equals("HADS Type")) {
-                            value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
-                            set.put("hads_type", value);
-                        } else {
-                            set.put(lookup.get(im.getDisplayName()), b);
-                        }
-                        new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                     }
                     lore.set(0, value);
                     im.setLore(lore);

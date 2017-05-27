@@ -124,7 +124,7 @@ public class MaterialisationData {
     }
 
     public void setPlayerDefaults(String uuid) {
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid);
         final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
         if (rsp.resultSet()) {

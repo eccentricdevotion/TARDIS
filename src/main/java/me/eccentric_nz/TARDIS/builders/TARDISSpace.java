@@ -144,17 +144,14 @@ public class TARDISSpace {
     }
 
     public void keepNight() {
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                timechk();
-            }
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            timechk();
         }, 60L, 1200L);
     }
 
     private void timechk() {
         List<World> serverWorlds = plugin.getServer().getWorlds();
-        for (World w : serverWorlds) {
+        serverWorlds.forEach((w) -> {
             if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
                 Long now = w.getTime();
                 Long dawn = 14000L;
@@ -164,7 +161,7 @@ public class TARDISSpace {
                     w.setTime(dawn);
                 }
             }
-        }
+        });
     }
 
     public void createDefaultWorld(String name) {

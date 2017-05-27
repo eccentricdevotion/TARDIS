@@ -52,8 +52,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISStorageListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    List<String> inv_titles = new ArrayList<String>();
-    private final List<Material> onlythese = new ArrayList<Material>();
+    List<String> inv_titles = new ArrayList<>();
+    private final List<Material> onlythese = new ArrayList<>();
 
     public TARDISStorageListener(TARDIS plugin) {
         super(plugin);
@@ -118,7 +118,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         }
         final Player player = (Player) event.getWhoClicked();
         // get the storage record
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
@@ -264,41 +264,38 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             }
         }
         String serialized = TARDISSerializeInventory.itemStacksToString(inv.getContents());
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put(column, serialized);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         new QueryFactory(plugin).doUpdate("storage", set, where);
     }
 
     private void loadInventory(final String serialized, final Player p, final STORAGE s) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                ItemStack[] stack = null;
-                try {
-                    if (!serialized.isEmpty()) {
-                        if (s.equals(STORAGE.AREA)) {
-                            stack = TARDISSerializeInventory.itemStacksFromString(new TARDISAreaDisks(plugin).checkDisksForNewAreas(p));
-                        } else {
-                            stack = TARDISSerializeInventory.itemStacksFromString(serialized);
-                        }
-                    } else if (s.equals(STORAGE.AREA)) {
-                        stack = new TARDISAreaDisks(plugin).makeDisks(p);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            ItemStack[] stack = null;
+            try {
+                if (!serialized.isEmpty()) {
+                    if (s.equals(STORAGE.AREA)) {
+                        stack = TARDISSerializeInventory.itemStacksFromString(new TARDISAreaDisks(plugin).checkDisksForNewAreas(p));
                     } else {
-                        stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
+                        stack = TARDISSerializeInventory.itemStacksFromString(serialized);
                     }
-                } catch (IOException ex) {
-                    plugin.debug("Could not get inventory from database! " + ex);
+                } else if (s.equals(STORAGE.AREA)) {
+                    stack = new TARDISAreaDisks(plugin).makeDisks(p);
+                } else {
+                    stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
                 }
-                // close inventory
-                p.closeInventory();
-                if (stack != null) {
-                    // open new inventory
-                    Inventory inv = plugin.getServer().createInventory(p, 54, s.getTitle());
-                    inv.setContents(stack);
-                    p.openInventory(inv);
-                }
+            } catch (IOException ex) {
+                plugin.debug("Could not get inventory from database! " + ex);
+            }
+            // close inventory
+            p.closeInventory();
+            if (stack != null) {
+                // open new inventory
+                Inventory inv = plugin.getServer().createInventory(p, 54, s.getTitle());
+                inv.setContents(stack);
+                p.openInventory(inv);
             }
         }, 1L);
     }

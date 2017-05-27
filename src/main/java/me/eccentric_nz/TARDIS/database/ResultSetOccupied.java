@@ -37,10 +37,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetOccupied {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final List<Integer> data = new ArrayList<Integer>();
+    private final List<Integer> data = new ArrayList<>();
     private final String prefix;
 
     /**

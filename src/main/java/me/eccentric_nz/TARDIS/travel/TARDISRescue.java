@@ -87,14 +87,14 @@ public class TARDISRescue {
             TARDISMessage.send(player, "RESCUE_NOT_SAFE");
             return false;
         }
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("world", player_loc.getWorld().getName());
         set.put("x", (player_loc.getBlockX() - move));
         set.put("y", player_loc.getBlockY());
         set.put("z", player_loc.getBlockZ());
         set.put("direction", d.toString());
         set.put("submarine", 0);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         QueryFactory qf = new QueryFactory(plugin);
         qf.doSyncUpdate("next", set, where);
@@ -122,7 +122,7 @@ public class TARDISRescue {
     public RescueData tryRescue(Player player, UUID saved, boolean request) {
         if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {
             // get tardis data
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -135,7 +135,7 @@ public class TARDISRescue {
                 TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                 return new RescueData(false, 0);
             }
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet() && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
@@ -154,7 +154,7 @@ public class TARDISRescue {
                 return new RescueData(false, 0);
             }
             // get direction
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {

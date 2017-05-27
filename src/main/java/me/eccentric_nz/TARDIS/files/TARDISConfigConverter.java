@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.files;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,9 +33,9 @@ public class TARDISConfigConverter {
 
     private final TARDIS plugin;
     private FileConfiguration config = null;
-    HashMap<String, String> sectionsBool = new HashMap<String, String>();
-    HashMap<String, String> sectionsInt = new HashMap<String, String>();
-    HashMap<String, String> sectionsString = new HashMap<String, String>();
+    HashMap<String, String> sectionsBool = new HashMap<>();
+    HashMap<String, String> sectionsInt = new HashMap<>();
+    HashMap<String, String> sectionsString = new HashMap<>();
 
     public TARDISConfigConverter(TARDIS plugin) {
         plugin.debug("Starting config conversion...");
@@ -125,32 +124,32 @@ public class TARDISConfigConverter {
         // update the new file with the old settings
         File newConfigFile = new File(plugin.getDataFolder() + File.separator + "config.yml");
         FileConfiguration newConfig = YamlConfiguration.loadConfiguration(newConfigFile);
-        for (Map.Entry<String, String> map : sectionsBool.entrySet()) {
+        sectionsBool.entrySet().forEach((map) -> {
             newConfig.set(map.getValue(), config.getBoolean(map.getKey()));
-        }
-        for (Map.Entry<String, String> map : sectionsInt.entrySet()) {
+        });
+        sectionsInt.entrySet().forEach((map) -> {
             newConfig.set(map.getValue(), config.getInt(map.getKey()));
-        }
-        for (Map.Entry<String, String> map : sectionsString.entrySet()) {
+        });
+        sectionsString.entrySet().forEach((map) -> {
             if (map.getKey().equals("inventory_group") && config.getString(map.getKey()).equals("0")) {
                 newConfig.set(map.getValue(), config.getInt(map.getKey()));
             } else {
                 newConfig.set(map.getValue(), config.getString(map.getKey()));
             }
-        }
+        });
         // get worlds
         Set<String> worldNames = config.getConfigurationSection("worlds").getKeys(false);
-        for (String wname : worldNames) {
+        worldNames.forEach((wname) -> {
             newConfig.set("worlds." + wname, config.getBoolean("worlds." + wname));
-        }
+        });
         // get rechargers
         Set<String> chargerNames = config.getConfigurationSection("rechargers").getKeys(false);
-        for (String charname : chargerNames) {
+        chargerNames.forEach((charname) -> {
             newConfig.set("rechargers." + charname + ".world", config.getString("rechargers." + charname + ".world"));
             newConfig.set("rechargers." + charname + ".x", config.getInt("rechargers." + charname + ".x"));
             newConfig.set("rechargers." + charname + ".y", config.getInt("rechargers." + charname + ".y"));
             newConfig.set("rechargers." + charname + ".z", config.getInt("rechargers." + charname + ".z"));
-        }
+        });
         try {
             newConfig.save(new File(plugin.getDataFolder(), "config.yml"));
         } catch (IOException io) {

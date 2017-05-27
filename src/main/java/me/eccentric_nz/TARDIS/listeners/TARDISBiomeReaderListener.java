@@ -56,7 +56,7 @@ public class TARDISBiomeReaderListener implements Listener {
                 }
                 UUID uuid = player.getUniqueId();
                 // check if they have this biome disk yet
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
                 if (rs.resultSet()) {
@@ -68,7 +68,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                 ItemStack bd = new ItemStack(Material.GREEN_RECORD, 1);
                                 ItemMeta dim = bd.getItemMeta();
                                 dim.setDisplayName("Biome Storage Disk");
-                                List<String> disk_lore = new ArrayList<String>();
+                                List<String> disk_lore = new ArrayList<>();
                                 disk_lore.add(biome.toString());
                                 dim.setLore(disk_lore);
                                 bd.setItemMeta(dim);
@@ -76,9 +76,9 @@ public class TARDISBiomeReaderListener implements Listener {
                                 if (slot != -1) {
                                     disks1[slot] = bd;
                                     String serialized = TARDISSerializeInventory.itemStacksToString(disks1);
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("biomes_one", serialized);
-                                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                                    HashMap<String, Object> whereu = new HashMap<>();
                                     whereu.put("uuid", uuid.toString());
                                     new QueryFactory(plugin).doUpdate("storage", set, whereu);
                                     TARDISMessage.send(player, "BIOME_READER_ADDED", biome.toString(), "1");
@@ -87,9 +87,9 @@ public class TARDISBiomeReaderListener implements Listener {
                                     if (slot != -1) {
                                         disks2[slot] = bd;
                                         String serialized = TARDISSerializeInventory.itemStacksToString(disks2);
-                                        HashMap<String, Object> set = new HashMap<String, Object>();
+                                        HashMap<String, Object> set = new HashMap<>();
                                         set.put("biomes_two", serialized);
-                                        HashMap<String, Object> whereu = new HashMap<String, Object>();
+                                        HashMap<String, Object> whereu = new HashMap<>();
                                         whereu.put("uuid", uuid.toString());
                                         new QueryFactory(plugin).doUpdate("storage", set, whereu);
                                         TARDISMessage.send(player, "BIOME_READER_ADDED", biome.toString(), "2");

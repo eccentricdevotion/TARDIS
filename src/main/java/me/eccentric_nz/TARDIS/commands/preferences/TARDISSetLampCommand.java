@@ -54,9 +54,9 @@ public class TARDISSetLampCommand {
             TARDISMessage.send(player, "LAMP_NO_SET");
             return true;
         }
-        HashMap<String, Object> setl = new HashMap<String, Object>();
+        HashMap<String, Object> setl = new HashMap<>();
         setl.put("lamp", lamp.toString());
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
         TARDISMessage.send(player, "LAMP_SAVED");

@@ -32,10 +32,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetSiege {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<UUID, Integer> data = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> data = new HashMap<>();
     private final String prefix;
 
     /**

@@ -145,7 +145,7 @@ public class TARDISDestroyerInner {
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         qf.doDelete("blocks", where);
         // remove from protectBlockMap - remove(id) would only remove the first one

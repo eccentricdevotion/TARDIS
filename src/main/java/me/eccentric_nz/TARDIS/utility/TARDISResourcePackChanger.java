@@ -41,15 +41,15 @@ public class TARDISResourcePackChanger {
      * Sets a player's texture pack.
      *
      * @param p The player
-     * @param url The URL of the texture pack file
+     * @param str The URL of the texture pack file
      */
-    public void changeRP(Player p, String url) {
+    public void changeRP(Player p, String str) {
         // check the URL
         try {
-            new URL(url);
+            URL url = new URL(str);
             if (p.isOnline()) {
                 UUID uuid = p.getUniqueId();
-                plugin.getServer().getPlayer(uuid).setResourcePack(url);
+                plugin.getServer().getPlayer(uuid).setResourcePack(str);
             }
         } catch (MalformedURLException e) {
             TARDISMessage.send(p, "URL", e.getMessage());

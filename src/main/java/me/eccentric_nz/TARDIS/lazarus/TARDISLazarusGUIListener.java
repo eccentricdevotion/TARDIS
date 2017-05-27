@@ -76,15 +76,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISLazarusGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, String> disguises = new HashMap<UUID, String>();
-    private final HashMap<UUID, Integer> horses = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> llamas = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> sheep = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> cats = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> rabbits = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Boolean> snowmen = new HashMap<UUID, Boolean>();
+    private final HashMap<UUID, String> disguises = new HashMap<>();
+    private final HashMap<UUID, Integer> horses = new HashMap<>();
+    private final HashMap<UUID, Integer> llamas = new HashMap<>();
+    private final HashMap<UUID, Integer> sheep = new HashMap<>();
+    private final HashMap<UUID, Integer> cats = new HashMap<>();
+    private final HashMap<UUID, Integer> rabbits = new HashMap<>();
+    private final HashMap<UUID, Integer> professions = new HashMap<>();
+    private final HashMap<UUID, Integer> slimes = new HashMap<>();
+    private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
@@ -179,26 +179,20 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // undisguise the player
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (DisguiseAPI.isDisguised(player)) {
-                            DisguiseAPI.undisguiseToAll(player);
-                        } else {
-                            twaOff(player);
-                        }
-                        TARDISMessage.send(player, "GENETICS_RESTORED");
-                        plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (DisguiseAPI.isDisguised(player)) {
+                        DisguiseAPI.undisguiseToAll(player);
+                    } else {
+                        twaOff(player);
                     }
+                    TARDISMessage.send(player, "GENETICS_RESTORED");
+                    plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                 }, 80L);
                 // open the door
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        openDoor(b);
-                        untrack(uuid);
-                        plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    openDoor(b);
+                    untrack(uuid);
+                    plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
                 }, 100L);
             }
             if (slot == 52) { // add disguise
@@ -208,194 +202,185 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // disguise the player
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (DisguiseAPI.isDisguised(player)) {
-                            DisguiseAPI.undisguiseToAll(player);
-                        }
-                        if (isReversedPolarity(inv)) {
-                            plugin.getTrackerKeeper().setImmortalityGate(player.getName());
-                            PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
-                            for (Player p : plugin.getServer().getOnlinePlayers()) {
-                                if (!p.getUniqueId().equals(uuid)) {
-                                    DisguiseAPI.disguiseToAll(p, playerDisguise);
-                                }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (DisguiseAPI.isDisguised(player)) {
+                        DisguiseAPI.undisguiseToAll(player);
+                    }
+                    if (isReversedPolarity(inv)) {
+                        plugin.getTrackerKeeper().setImmortalityGate(player.getName());
+                        PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
+                        plugin.getServer().getOnlinePlayers().forEach((p) -> {
+                            if (!p.getUniqueId().equals(uuid)) {
+                                DisguiseAPI.disguiseToAll(p, playerDisguise);
                             }
-                            plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master has cloned his genetic template to all players. Behold the Master Race!");
-                            plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
-                            // schedule a delayed task to remove the disguise
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    for (Player p : plugin.getServer().getOnlinePlayers()) {
-                                        if (DisguiseAPI.isDisguised(p)) {
-                                            DisguiseAPI.undisguiseToAll(p);
-                                        }
-                                    }
-                                    plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
-                                    plugin.getTrackerKeeper().setImmortalityGate("");
-                                    plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
+                        });
+                        plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master has cloned his genetic template to all players. Behold the Master Race!");
+                        plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
+                        // schedule a delayed task to remove the disguise
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            plugin.getServer().getOnlinePlayers().forEach((p) -> {
+                                if (DisguiseAPI.isDisguised(p)) {
+                                    DisguiseAPI.undisguiseToAll(p);
                                 }
-                            }, 3600L);
-                        } else if (disguises.containsKey(uuid)) {
-                            String disguise = disguises.get(uuid);
-                            // undisguise first
-                            twaOff(player);
-                            if (twaMonsters.contains(disguise)) {
-                                if (disguise.equals("WEEPING ANGEL")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("CYBERMAN")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad CYBERMAN on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("ICE WARRIOR")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ICE on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("EMPTY CHILD")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad EMPTY on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("SILURIAN")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SILURIAN on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("SONTARAN")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SONTARAN on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("STRAX")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad STRAX on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("VASHTA NERADA")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad VASHTA on " + player.getUniqueId());
-                                }
-                                if (disguise.equals("ZYGON")) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ZYGON on " + player.getUniqueId());
-                                }
+                            });
+                            plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
+                            plugin.getTrackerKeeper().setImmortalityGate("");
+                            plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
+                        }, 3600L);
+                    } else if (disguises.containsKey(uuid)) {
+                        String disguise = disguises.get(uuid);
+                        // undisguise first
+                        twaOff(player);
+                        if (twaMonsters.contains(disguise)) {
+                            if (disguise.equals("WEEPING ANGEL")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("CYBERMAN")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad CYBERMAN on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("ICE WARRIOR")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ICE on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("EMPTY CHILD")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad EMPTY on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("SILURIAN")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SILURIAN on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("SONTARAN")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SONTARAN on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("STRAX")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad STRAX on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("VASHTA NERADA")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad VASHTA on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("ZYGON")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ZYGON on " + player.getUniqueId());
+                            }
+                        } else {
+                            DisguiseType dt = DisguiseType.valueOf(disguise);
+                            if (dt.equals(DisguiseType.PLAYER)) {
+                                PlayerDisguise playerDisguise = new PlayerDisguise("Herobrine");
+                                DisguiseAPI.disguiseToAll(player, playerDisguise);
                             } else {
-                                DisguiseType dt = DisguiseType.valueOf(disguise);
-                                if (dt.equals(DisguiseType.PLAYER)) {
-                                    PlayerDisguise playerDisguise = new PlayerDisguise("Herobrine");
-                                    DisguiseAPI.disguiseToAll(player, playerDisguise);
-                                } else {
-                                    MobDisguise mobDisguise = new MobDisguise(dt);
-                                    LivingWatcher livingWatcher;
-                                    try {
-                                        livingWatcher = mobDisguise.getWatcher();
-                                    } catch (NoSuchMethodError e) {
-                                        TARDISMessage.message(player, "LIBS");
-                                        return;
-                                    }
-                                    switch (dt) {
-                                        case DONKEY:
-                                        case MULE:
-                                            ChestedHorseWatcher hcw = (ChestedHorseWatcher) livingWatcher;
-                                            hcw.setCarryingChest(getBoolean(inv));
-                                            break;
-                                        case SHEEP:
-                                            SheepWatcher sw = (SheepWatcher) livingWatcher;
-                                            sw.setColor(getColor(inv));
-                                            sw.setBaby(getBaby(inv));
-                                            if (getBoolean(inv)) {
-                                                sw.setCustomName("jeb_");
-                                                sw.setCustomNameVisible(true);
-                                            }
-                                            break;
-                                        case HORSE:
-                                            HorseWatcher hw = (HorseWatcher) livingWatcher;
-                                            hw.setColor(getHorseColor(inv));
-                                            hw.setBaby(getBaby(inv));
-                                            break;
-                                        case LLAMA:
-                                            LlamaWatcher llw = (LlamaWatcher) livingWatcher;
-                                            llw.setColor(getLlamaColor(inv));
-                                            if (getBoolean(inv)) {
-                                                Random rand = new Random();
-                                                llw.setCarpet(AnimalColor.values()[rand.nextInt(16)]);
-                                            }
-                                            break;
-                                        case OCELOT:
-                                            OcelotWatcher ow = (OcelotWatcher) livingWatcher;
-                                            ow.setType(getCatType(inv));
-                                            ow.setBaby(getBaby(inv));
-                                            break;
-                                        case PIG:
-                                            PigWatcher pw = (PigWatcher) livingWatcher;
-                                            pw.setSaddled(getBoolean(inv));
-                                            pw.setBaby(getBaby(inv));
-                                            break;
-                                        case RABBIT:
-                                            RabbitWatcher rw = (RabbitWatcher) livingWatcher;
-                                            rw.setType(getRabbitType(inv));
-                                            rw.setBaby(getBaby(inv));
-                                            break;
-                                        case VILLAGER:
-                                            VillagerWatcher vw = (VillagerWatcher) livingWatcher;
-                                            vw.setProfession(getProfession(inv));
-                                            vw.setBaby(getBaby(inv));
-                                            break;
-                                        case WOLF:
-                                            WolfWatcher ww = (WolfWatcher) livingWatcher;
-                                            if (getBoolean(inv)) {
-                                                ww.setTamed(true);
-                                                ww.setCollarColor(getColor(inv));
-                                            }
-                                            ww.setBaby(getBaby(inv));
-                                            break;
-                                        case SLIME:
-                                        case MAGMA_CUBE:
-                                            SlimeWatcher slw = (SlimeWatcher) livingWatcher;
-                                            slw.setSize(getSlimeSize(inv));
-                                            break;
-                                        case BAT:
-                                            BatWatcher bw = (BatWatcher) livingWatcher;
-                                            bw.setHanging(!getBoolean(inv));
-                                            break;
-                                        case BLAZE:
-                                            BlazeWatcher bbw = (BlazeWatcher) livingWatcher;
-                                            bbw.setBlazing(getBoolean(inv));
-                                            break;
-                                        case CREEPER:
-                                            CreeperWatcher cw = (CreeperWatcher) livingWatcher;
-                                            cw.setPowered(getBoolean(inv));
-                                            break;
-                                        case ENDERMAN:
-                                            EndermanWatcher ew = (EndermanWatcher) livingWatcher;
-                                            ew.setAggressive(getBoolean(inv));
-                                            break;
-                                        case COW:
-                                        case SKELETON_HORSE:
-                                        case ZOMBIE_HORSE:
-                                        case ZOMBIE:
-                                            AgeableWatcher aw = (AgeableWatcher) livingWatcher;
-                                            aw.setBaby(getBaby(inv));
-                                            break;
-                                        case ZOMBIE_VILLAGER:
-                                            ZombieVillagerWatcher zvw = (ZombieVillagerWatcher) livingWatcher;
-                                            zvw.setBaby(getBaby(inv));
-                                            zvw.setProfession(getZombieProfession(inv));
-                                            break;
-                                        case SNOWMAN:
-                                            SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
-                                            snw.setDerp(!snowmen.get(uuid));
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    DisguiseAPI.disguiseToAll(player, mobDisguise);
+                                MobDisguise mobDisguise = new MobDisguise(dt);
+                                LivingWatcher livingWatcher;
+                                try {
+                                    livingWatcher = mobDisguise.getWatcher();
+                                } catch (NoSuchMethodError e) {
+                                    TARDISMessage.message(player, "LIBS");
+                                    return;
                                 }
+                                switch (dt) {
+                                    case DONKEY:
+                                    case MULE:
+                                        ChestedHorseWatcher hcw = (ChestedHorseWatcher) livingWatcher;
+                                        hcw.setCarryingChest(getBoolean(inv));
+                                        break;
+                                    case SHEEP:
+                                        SheepWatcher sw = (SheepWatcher) livingWatcher;
+                                        sw.setColor(getColor(inv));
+                                        sw.setBaby(getBaby(inv));
+                                        if (getBoolean(inv)) {
+                                            sw.setCustomName("jeb_");
+                                            sw.setCustomNameVisible(true);
+                                        }
+                                        break;
+                                    case HORSE:
+                                        HorseWatcher hw = (HorseWatcher) livingWatcher;
+                                        hw.setColor(getHorseColor(inv));
+                                        hw.setBaby(getBaby(inv));
+                                        break;
+                                    case LLAMA:
+                                        LlamaWatcher llw = (LlamaWatcher) livingWatcher;
+                                        llw.setColor(getLlamaColor(inv));
+                                        if (getBoolean(inv)) {
+                                            Random rand = new Random();
+                                            llw.setCarpet(AnimalColor.values()[rand.nextInt(16)]);
+                                        }
+                                        break;
+                                    case OCELOT:
+                                        OcelotWatcher ow = (OcelotWatcher) livingWatcher;
+                                        ow.setType(getCatType(inv));
+                                        ow.setBaby(getBaby(inv));
+                                        break;
+                                    case PIG:
+                                        PigWatcher pw = (PigWatcher) livingWatcher;
+                                        pw.setSaddled(getBoolean(inv));
+                                        pw.setBaby(getBaby(inv));
+                                        break;
+                                    case RABBIT:
+                                        RabbitWatcher rw = (RabbitWatcher) livingWatcher;
+                                        rw.setType(getRabbitType(inv));
+                                        rw.setBaby(getBaby(inv));
+                                        break;
+                                    case VILLAGER:
+                                        VillagerWatcher vw = (VillagerWatcher) livingWatcher;
+                                        vw.setProfession(getProfession(inv));
+                                        vw.setBaby(getBaby(inv));
+                                        break;
+                                    case WOLF:
+                                        WolfWatcher ww = (WolfWatcher) livingWatcher;
+                                        if (getBoolean(inv)) {
+                                            ww.setTamed(true);
+                                            ww.setCollarColor(getColor(inv));
+                                        }
+                                        ww.setBaby(getBaby(inv));
+                                        break;
+                                    case SLIME:
+                                    case MAGMA_CUBE:
+                                        SlimeWatcher slw = (SlimeWatcher) livingWatcher;
+                                        slw.setSize(getSlimeSize(inv));
+                                        break;
+                                    case BAT:
+                                        BatWatcher bw = (BatWatcher) livingWatcher;
+                                        bw.setHanging(!getBoolean(inv));
+                                        break;
+                                    case BLAZE:
+                                        BlazeWatcher bbw = (BlazeWatcher) livingWatcher;
+                                        bbw.setBlazing(getBoolean(inv));
+                                        break;
+                                    case CREEPER:
+                                        CreeperWatcher cw = (CreeperWatcher) livingWatcher;
+                                        cw.setPowered(getBoolean(inv));
+                                        break;
+                                    case ENDERMAN:
+                                        EndermanWatcher ew = (EndermanWatcher) livingWatcher;
+                                        ew.setAggressive(getBoolean(inv));
+                                        break;
+                                    case COW:
+                                    case SKELETON_HORSE:
+                                    case ZOMBIE_HORSE:
+                                    case ZOMBIE:
+                                        AgeableWatcher aw = (AgeableWatcher) livingWatcher;
+                                        aw.setBaby(getBaby(inv));
+                                        break;
+                                    case ZOMBIE_VILLAGER:
+                                        ZombieVillagerWatcher zvw = (ZombieVillagerWatcher) livingWatcher;
+                                        zvw.setBaby(getBaby(inv));
+                                        zvw.setProfession(getZombieProfession(inv));
+                                        break;
+                                    case SNOWMAN:
+                                        SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
+                                        snw.setDerp(!snowmen.get(uuid));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                DisguiseAPI.disguiseToAll(player, mobDisguise);
                             }
-                            TARDISMessage.send(player, "GENETICS_MODIFIED", disguise);
-                            plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, disguise));
                         }
+                        TARDISMessage.send(player, "GENETICS_MODIFIED", disguise);
+                        plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, disguise));
                     }
                 }, 80L);
                 // open the door
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        openDoor(b);
-                        untrack(uuid);
-                        plugin.getTrackerKeeper().getGeneticallyModified().add(uuid);
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    openDoor(b);
+                    untrack(uuid);
+                    plugin.getTrackerKeeper().getGeneticallyModified().add(uuid);
                 }, 100L);
             }
             if (slot == 53) {
@@ -612,15 +597,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-//    private SkeletonType getSkeletonType(Inventory i) {
-//        ItemStack is = i.getItem(48);
-//        ItemMeta im = is.getItemMeta();
-//        try {
-//            return SkeletonType.valueOf(im.getLore().get(0));
-//        } catch (IllegalArgumentException e) {
-//            return SkeletonType.NORMAL;
-//        }
-//    }
     private int getSlimeSize(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();

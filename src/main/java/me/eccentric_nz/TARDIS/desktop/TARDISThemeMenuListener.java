@@ -119,11 +119,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     @Override
     public void close(final Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 
@@ -133,15 +130,12 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      * @param p the player using the GUI
      */
     private void wall(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-                ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
-                Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall Menu");
-                wall.setContents(wall_blocks);
-                p.openInventory(wall);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
+            ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
+            Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall Menu");
+            wall.setContents(wall_blocks);
+            p.openInventory(wall);
         }, 1L);
     }
 
@@ -151,15 +145,12 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      * @param p the player using the GUI
      */
     private void archive(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-                ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
-                Inventory menu = plugin.getServer().createInventory(p, 27, "§4TARDIS Archive");
-                menu.setContents(archive);
-                p.openInventory(menu);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
+            ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
+            Inventory menu = plugin.getServer().createInventory(p, 27, "§4TARDIS Archive");
+            menu.setContents(archive);
+            p.openInventory(menu);
         }, 1L);
     }
 
@@ -170,30 +161,27 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      * player a 'free' repair(s).
      */
     private void repair(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-                String uuid = p.getUniqueId().toString();
-                boolean repair;
-                TARDISRepair tr = new TARDISRepair(plugin, p);
-                // is it a free repair?
-                ResultSetCount rsc = new ResultSetCount(plugin, uuid);
-                if (rsc.resultSet() && rsc.getRepair() > 0) {
-                    // decrement repair
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("uuid", uuid);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("repair", rsc.getRepair() - 1);
-                    new QueryFactory(plugin).doUpdate("t_count", set, where);
-                    repair = true;
-                } else {
-                    // scan console and check condensed blocks
-                    repair = tr.hasCondensedMissingBlocks();
-                }
-                if (repair) {
-                    tr.restore(false);
-                }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
+            String uuid = p.getUniqueId().toString();
+            boolean repair;
+            TARDISRepair tr = new TARDISRepair(plugin, p);
+            // is it a free repair?
+            ResultSetCount rsc = new ResultSetCount(plugin, uuid);
+            if (rsc.resultSet() && rsc.getRepair() > 0) {
+                // decrement repair
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", uuid);
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("repair", rsc.getRepair() - 1);
+                new QueryFactory(plugin).doUpdate("t_count", set, where);
+                repair = true;
+            } else {
+                // scan console and check condensed blocks
+                repair = tr.hasCondensedMissingBlocks();
+            }
+            if (repair) {
+                tr.restore(false);
             }
         }, 1L);
     }
@@ -203,12 +191,9 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      * original console schematic (missing blocks will not be restored).
      */
     private void clean(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-                new TARDISRepair(plugin, p).restore(true);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
+            new TARDISRepair(plugin, p).restore(true);
         }, 1L);
     }
 }

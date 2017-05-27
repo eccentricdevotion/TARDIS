@@ -44,7 +44,7 @@ public class TARDISRemoteBackCommand {
     public boolean sendBack(CommandSender sender, int id, OfflinePlayer player) {
 
         // get fast return location
-        HashMap<String, Object> wherebl = new HashMap<String, Object>();
+        HashMap<String, Object> wherebl = new HashMap<>();
         wherebl.put("tardis_id", id);
         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
         if (!rsb.resultSet()) {
@@ -53,7 +53,7 @@ public class TARDISRemoteBackCommand {
             }
             return true;
         }
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("world", rsb.getWorld().getName());
         set.put("x", rsb.getX());
         set.put("y", rsb.getY());
@@ -61,7 +61,7 @@ public class TARDISRemoteBackCommand {
         set.put("direction", rsb.getDirection().toString());
         set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
         // get current police box location
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -72,12 +72,12 @@ public class TARDISRemoteBackCommand {
         }
         // set hidden false
         final QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> sett = new HashMap<String, Object>();
+        HashMap<String, Object> sett = new HashMap<>();
         sett.put("hidden", 0);
-        HashMap<String, Object> ttid = new HashMap<String, Object>();
+        HashMap<String, Object> ttid = new HashMap<>();
         ttid.put("tardis_id", id);
         qf.doUpdate("tardis", sett, ttid);
-        HashMap<String, Object> tid = new HashMap<String, Object>();
+        HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         qf.doUpdate("current", set, tid);
         plugin.getTrackerKeeper().getInVortex().add(id);
@@ -105,11 +105,8 @@ public class TARDISRemoteBackCommand {
         bd.setRebuild(false);
         bd.setSubmarine(rsb.isSubmarine());
         bd.setTardisID(id);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getPresetBuilder().buildPreset(bd);
         }, 20L);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {

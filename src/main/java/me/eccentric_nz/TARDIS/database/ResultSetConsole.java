@@ -31,7 +31,7 @@ import org.bukkit.block.Block;
  */
 public class ResultSetConsole {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int tardis_id;

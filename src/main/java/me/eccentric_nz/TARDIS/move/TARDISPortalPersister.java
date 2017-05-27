@@ -34,7 +34,7 @@ import org.bukkit.Location;
 public class TARDISPortalPersister {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private PreparedStatement ps = null;
     private ResultSet rs = null;

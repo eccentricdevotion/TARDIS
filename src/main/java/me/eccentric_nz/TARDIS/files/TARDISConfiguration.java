@@ -519,9 +519,9 @@ public class TARDISConfiguration {
             if (!config.isConfigurationSection("rechargers")) {
                 plugin.getConfig().createSection("rechargers");
             }
-            for (String remove : removeOptions) {
+            removeOptions.forEach((remove) -> {
                 plugin.getConfig().set(remove, null);
-            }
+            });
             if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
                 plugin.getConfig().set("difficulty", "hard");
             }
@@ -553,17 +553,17 @@ public class TARDISConfiguration {
 
     public void doWorlds() {
         List<World> worlds = plugin.getServer().getWorlds();
-        for (World w : worlds) {
+        worlds.forEach((w) -> {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 plugin.getConfig().set(worldname, true);
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
             }
-        }
+        });
         plugin.saveConfig();
         // now remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(true);
-        for (String cw : cWorlds) {
+        cWorlds.forEach((cw) -> {
             if (plugin.getServer().getWorld(cw) == null) {
                 plugin.getConfig().set("worlds." + cw, null);
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
@@ -571,7 +571,7 @@ public class TARDISConfiguration {
                 // the removed world
                 plugin.getCleanUpWorlds().add(cw);
             }
-        }
+        });
     }
 
     private void checkRoomsConfig() {
@@ -599,7 +599,7 @@ public class TARDISConfiguration {
         }
         // copy old settings and add any custom rooms
         if (config.contains("rooms")) {
-            for (String r : config.getConfigurationSection("rooms").getKeys(false)) {
+            config.getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
                 rooms_config.set("rooms." + r + ".enabled", config.getBoolean("rooms." + r + ".enabled"));
                 rooms_config.set("rooms." + r + ".cost", config.getInt("rooms." + r + ".cost"));
                 if (!r.equalsIgnoreCase("ANTIGRAVITY")) {
@@ -607,7 +607,7 @@ public class TARDISConfiguration {
                 }
                 rooms_config.set("rooms." + r + ".seed", config.getString("rooms." + r + ".seed"));
                 rooms_config.set("rooms." + r + ".user", config.getBoolean("rooms." + r + ".user"));
-            }
+            });
             // remove old rooms section
             plugin.getConfig().set("rooms", null);
         }
@@ -725,14 +725,14 @@ public class TARDISConfiguration {
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
         } else if (blocks_config.getStringList("lamp_blocks").get(0).equals("50")) {
-            List<String> lstrs = new ArrayList<String>();
-            for (int l : blocks_config.getIntegerList("lamp_blocks")) {
+            List<String> lstrs = new ArrayList<>();
+            blocks_config.getIntegerList("lamp_blocks").forEach((l) -> {
                 try {
                     lstrs.add(Material.getMaterial(l).toString());
                 } catch (Exception e) {
                     plugin.debug("Invalid Material ID in lamp_blocks section.");
                 }
-            }
+            });
             blocks_config.set("lamp_blocks", lstrs);
             i++;
         }
@@ -766,7 +766,7 @@ public class TARDISConfiguration {
             }
         }
         if (!blocks_config.contains("no_artron_value")) {
-            blocks_config.set("no_artron_value", new ArrayList<String>());
+            blocks_config.set("no_artron_value", new ArrayList<>());
             i++;
         }
         try {

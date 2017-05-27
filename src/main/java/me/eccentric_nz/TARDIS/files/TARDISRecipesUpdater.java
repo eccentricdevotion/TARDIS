@@ -32,9 +32,9 @@ public class TARDISRecipesUpdater {
 
     private final TARDIS plugin;
     private FileConfiguration recipes_config = null;
-    private final HashMap<String, Integer> flavours = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> colours = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> damage = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> flavours = new HashMap<>();
+    private final HashMap<String, Integer> colours = new HashMap<>();
+    private final HashMap<String, Integer> damage = new HashMap<>();
 
     public TARDISRecipesUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -391,11 +391,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
             i++;
         }
-        for (Map.Entry<String, Integer> uses : damage.entrySet()) {
+        damage.entrySet().forEach((uses) -> {
             if (recipes_config.getString(uses.getKey()).isEmpty()) {
                 recipes_config.set(uses.getKey(), "Uses left~" + uses.getValue());
             }
-        }
+        });
         try {
             recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
             if (i > 0) {

@@ -42,8 +42,8 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISChameleonWallMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, Integer> scroll = new HashMap<UUID, Integer>();
-    private final List<UUID> scrolling = new ArrayList<UUID>();
+    private final HashMap<UUID, Integer> scroll = new HashMap<>();
+    private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
 
@@ -117,11 +117,8 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
         if (remove) {
             plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         }
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 
@@ -132,14 +129,11 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
      */
     public void back(final Player p) {
         close(p);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-                Inventory gui = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
-                gui.setContents(seeds);
-                p.openInventory(gui);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
+            Inventory gui = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
+            gui.setContents(seeds);
+            p.openInventory(gui);
         }, 2L);
     }
 

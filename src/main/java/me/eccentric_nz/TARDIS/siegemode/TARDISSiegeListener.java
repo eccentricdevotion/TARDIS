@@ -81,7 +81,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         // check location
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("world", b.getWorld().getName());
         where.put("x", b.getX());
         where.put("y", b.getY());
@@ -92,7 +92,7 @@ public class TARDISSiegeListener implements Listener {
         }
         event.setCancelled(true);
         int id = rsc.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (!rs.resultSet()) {
@@ -122,21 +122,21 @@ public class TARDISSiegeListener implements Listener {
         ItemStack is = new ItemStack(Material.HUGE_MUSHROOM_1, 1, (byte) 14);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
-        List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
         lore.add("ID: " + id);
         // get occupants
-        HashMap<String, Object> wherec = new HashMap<String, Object>();
+        HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherec, true);
         if (rst.resultSet()) {
-            for (UUID tuuid : rst.getData()) {
+            rst.getData().forEach((tuuid) -> {
                 Player p = plugin.getServer().getPlayer(tuuid);
                 if (p != null && tuuid != tluuid) {
                     String c = p.getName();
                     lore.add("Companion: " + c);
                 }
-            }
+            });
         }
         im.setLore(lore);
         is.setItemMeta(im);
@@ -206,9 +206,9 @@ public class TARDISSiegeListener implements Listener {
                 plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
                 plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
                 // update the current location
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("world", loc.getWorld().getName());
                 set.put("x", loc.getBlockX());
                 set.put("y", loc.getBlockY());
@@ -254,9 +254,9 @@ public class TARDISSiegeListener implements Listener {
         }
         // update the current location
         int id = plugin.getTrackerKeeper().getSiegeCarrying().get(uuid);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("world", loc.getWorld().getName());
         set.put("x", loc.getBlockX());
         set.put("y", loc.getBlockY());
@@ -288,7 +288,7 @@ public class TARDISSiegeListener implements Listener {
         }
         UUID uuid = p.getUniqueId();
         // check location
-        HashMap<String, Object> wherec = new HashMap<String, Object>();
+        HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("world", b.getWorld().getName());
         wherec.put("x", b.getX());
         wherec.put("y", b.getY());
@@ -298,7 +298,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         // must be the Time Lord or companion of this TARDIS
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", rsc.getTardis_id());
         ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (!rst.resultSet()) {
@@ -326,7 +326,7 @@ public class TARDISSiegeListener implements Listener {
         if (!p.isSneaking()) {
             // attempt to transfer Time Lord energy to the TARDIS
             // check player has a prefs record
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            HashMap<String, Object> wherepp = new HashMap<>();
             wherepp.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (!rsp.resultSet()) {
@@ -339,9 +339,9 @@ public class TARDISSiegeListener implements Listener {
                 return;
             }
             // transfer min
-            HashMap<String, Object> wheretl = new HashMap<String, Object>();
+            HashMap<String, Object> wheretl = new HashMap<>();
             wheretl.put("uuid", uuid.toString());
-            HashMap<String, Object> wherea = new HashMap<String, Object>();
+            HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("player_prefs", -min, wheretl, p);
             qf.alterEnergyLevel("tardis", min, wherea, p);
@@ -365,15 +365,12 @@ public class TARDISSiegeListener implements Listener {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getPresetBuilder().buildPreset(bd);
             }, 10L);
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("siege_on", 0);
-            HashMap<String, Object> wheres = new HashMap<String, Object>();
+            HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("tardis_id", id);
             // update the database
             qf.doUpdate("tardis", set, wheres);

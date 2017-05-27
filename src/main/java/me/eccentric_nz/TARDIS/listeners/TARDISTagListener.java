@@ -127,7 +127,7 @@ public class TARDISTagListener implements Listener {
      * @return a random player
      */
     private Player getRandomPlayer() {
-        List<Player> players = new ArrayList<Player>(plugin.getServer().getOnlinePlayers());
+        List<Player> players = new ArrayList<>(plugin.getServer().getOnlinePlayers());
         int num = players.size();
         return players.get(rand.nextInt(num));
     }
@@ -194,7 +194,7 @@ public class TARDISTagListener implements Listener {
      * @param t the player's score
      */
     private void updateTagStats(String p, long t) {
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("player", p);
         set.put("time", t);
         new QueryFactory(plugin).doSyncInsert("tag", set);

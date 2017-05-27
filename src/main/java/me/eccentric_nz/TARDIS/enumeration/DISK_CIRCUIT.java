@@ -46,7 +46,7 @@ public enum DISK_CIRCUIT {
 
     String name;
     Material material;
-    static final List<String> circuitNames = new ArrayList<String>();
+    static final List<String> circuitNames = new ArrayList<>();
 
     private DISK_CIRCUIT(String name, Material material) {
         this.name = name;

@@ -68,11 +68,8 @@ public class TARDISGrowthListener implements Listener {
                     case AIR:
                         plugin.debug("setting another block on top");
                         // with cactus and sugar cane the block returned is AIR
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType());
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType());
                         }, 3L);
                         break;
                     case CARROT:
@@ -82,33 +79,24 @@ public class TARDISGrowthListener implements Listener {
                     case PUMPKIN_STEM:
                         // fully grown is 7
                         if (data < 6) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    plant.setData((byte) (data + 2));
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                plant.setData((byte) (data + 2));
                             }, 3L);
                         }
                         break;
                     case COCOA:
                         // fully grown is 3
                         if (data < 4 && random.nextInt(100) < 25) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    plant.setData((byte) (data + 8));
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                plant.setData((byte) (data + 8));
                             }, 3L);
                         }
                         break;
                     default: // NETHER_WARTS
                         // fully grown is 3
                         if (data < 2 && random.nextInt(100) < 33) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    plant.setData((byte) (data + 2));
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                plant.setData((byte) (data + 2));
                             }, 3L);
                         }
                         break;

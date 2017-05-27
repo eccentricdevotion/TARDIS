@@ -63,7 +63,7 @@ public class TARDISHostileDispersal {
 
     @SuppressWarnings("deprecation")
     public void disperseTARDIS(final int id, UUID uuid, Player hostile, PRESET preset) {
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -155,7 +155,7 @@ public class TARDISHostileDispersal {
             plugin.getPresetDestroyer().destroyHandbrake(l, d);
         }
         // remove blue wool
-        final List<FallingBlock> falls = new ArrayList<FallingBlock>();
+        final List<FallingBlock> falls = new ArrayList<>();
         byte tmp = 0;
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
@@ -184,25 +184,19 @@ public class TARDISHostileDispersal {
         }
         final byte data = tmp;
         // schedule task to remove fallen blocks
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                for (FallingBlock f : falls) {
-                    f.getLocation().getBlock().setType(Material.AIR);
-                    f.remove();
-                }
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            falls.forEach((f) -> {
+                f.getLocation().getBlock().setType(Material.AIR);
+                f.remove();
+            });
         }, 10L);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                // set carpet base at location
-                for (int xx = 0; xx < 3; xx++) {
-                    for (int zz = 0; zz < 3; zz++) {
-                        Block block = w.getBlockAt((sbx + xx), (sby), (sbz + zz));
-                        block.setType(Material.CARPET);
-                        block.setData(data);
-                    }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            // set carpet base at location
+            for (int xx = 0; xx < 3; xx++) {
+                for (int zz = 0; zz < 3; zz++) {
+                    Block block = w.getBlockAt((sbx + xx), (sby), (sbz + zz));
+                    block.setType(Material.CARPET);
+                    block.setData(data);
                 }
             }
         }, 15L);
@@ -212,10 +206,10 @@ public class TARDISHostileDispersal {
     }
 
     private List<Material> buildList() {
-        List<Material> list = new ArrayList<Material>();
-        for (Integer i : plugin.getBlocksConfig().getIntegerList("under_door_blocks")) {
+        List<Material> list = new ArrayList<>();
+        plugin.getBlocksConfig().getIntegerList("under_door_blocks").forEach((i) -> {
             list.add(Material.getMaterial(i));
-        }
+        });
         return list;
     }
 }

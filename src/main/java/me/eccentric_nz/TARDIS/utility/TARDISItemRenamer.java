@@ -50,7 +50,7 @@ public class TARDISItemRenamer {
         } else {
             im.setDisplayName(name);
             if (setlore) {
-                ArrayList<String> lore = new ArrayList<String>();
+                ArrayList<String> lore = new ArrayList<>();
                 lore.add("Enter and exit your TARDIS");
                 im.setLore(lore);
             }

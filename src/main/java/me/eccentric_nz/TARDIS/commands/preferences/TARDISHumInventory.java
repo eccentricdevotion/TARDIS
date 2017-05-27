@@ -45,7 +45,7 @@ public class TARDISHumInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
-        List<ItemStack> options = new ArrayList<ItemStack>();
+        List<ItemStack> options = new ArrayList<>();
         // get HUM sounds
         for (HUM hum : HUM.values()) {
             ItemStack is = new ItemStack(Material.BOWL, 1);

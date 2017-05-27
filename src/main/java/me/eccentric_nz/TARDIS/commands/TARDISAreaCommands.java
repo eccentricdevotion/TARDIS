@@ -115,9 +115,9 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_PARK");
                     return false;
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("area_name", args[1]);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("parking_distance", park);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("areas", set, where);
@@ -129,7 +129,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_NEED");
                     return false;
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("area_name", args[1]);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doDelete("areas", where);
@@ -141,7 +141,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_NEED");
                     return false;
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("area_name", args[1]);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
                 if (!rsa.resultSet()) {
@@ -188,7 +188,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         return true;
                     }
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("area_name", args[1]);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
                 if (!rsa.resultSet()) {

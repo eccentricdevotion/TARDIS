@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -133,7 +132,7 @@ public class TARDISWorldGuardUtils {
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p.getName());
         region.setOwners(dd);
-        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        HashMap<Flag<?>, Object> flags = new HashMap<>();
         //flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.ENDER_BUILD, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
@@ -167,7 +166,7 @@ public class TARDISWorldGuardUtils {
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p);
         region.setOwners(dd);
-        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        HashMap<Flag<?>, Object> flags = new HashMap<>();
         if (!p.equals("junk")) {
             flags.put(DefaultFlag.ENTRY, State.DENY);
         } else {
@@ -212,7 +211,7 @@ public class TARDISWorldGuardUtils {
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p.getName());
         region.setOwners(dd);
-        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        HashMap<Flag<?>, Object> flags = new HashMap<>();
         flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
@@ -242,7 +241,7 @@ public class TARDISWorldGuardUtils {
         b1 = makeBlockVector(one);
         b2 = makeBlockVector(two);
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("renderer_" + name, b1, b2);
-        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        HashMap<Flag<?>, Object> flags = new HashMap<>();
         flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
@@ -284,8 +283,8 @@ public class TARDISWorldGuardUtils {
         RegionManager rm = wg.getRegionManager(l.getWorld());
         ApplicableRegionSet ars = rm.getApplicableRegions(l);
         if (ars.size() > 0) {
-            LinkedList< String> parentNames = new LinkedList< String>();
-            LinkedList< String> regions = new LinkedList< String>();
+            LinkedList<String> parentNames = new LinkedList<>();
+            LinkedList<String> regions = new LinkedList<>();
             for (ProtectedRegion pr : ars) {
                 String id = pr.getId();
                 regions.add(id);
@@ -295,9 +294,9 @@ public class TARDISWorldGuardUtils {
                     parent = parent.getParent();
                 }
             }
-            for (String name : parentNames) {
+            parentNames.forEach((name) -> {
                 regions.remove(name);
-            }
+            });
             rm.removeRegion(regions.getFirst());
             try {
                 rm.save();
@@ -408,8 +407,8 @@ public class TARDISWorldGuardUtils {
         RegionManager rm = wg.getRegionManager(location.getWorld());
         ApplicableRegionSet ars = rm.getApplicableRegions(location);
         if (ars.size() > 0) {
-            LinkedList< String> parentNames = new LinkedList< String>();
-            LinkedList< String> regions = new LinkedList< String>();
+            LinkedList<String> parentNames = new LinkedList<>();
+            LinkedList<String> regions = new LinkedList<>();
             for (ProtectedRegion pr : ars) {
                 String id = pr.getId();
                 regions.add(id);
@@ -419,9 +418,9 @@ public class TARDISWorldGuardUtils {
                     parent = parent.getParent();
                 }
             }
-            for (String name : parentNames) {
+            parentNames.forEach((name) -> {
                 regions.remove(name);
-            }
+            });
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
             DefaultDomain dd = pr.getOwners();
@@ -495,13 +494,13 @@ public class TARDISWorldGuardUtils {
      * @return a list of TARDIS region names for this world
      */
     public List<String> getRegions(World w) {
-        List<String> regions = new ArrayList<String>();
+        List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionManager(w);
-        for (Map.Entry<String, ProtectedRegion> pr : rm.getRegions().entrySet()) {
+        rm.getRegions().entrySet().forEach((pr) -> {
             if (pr.getKey().contains("tardis") && pr.getValue().getFlags().containsKey(DefaultFlag.BUILD)) {
                 regions.add(pr.getKey());
             }
-        }
+        });
         return regions;
     }
 
@@ -512,13 +511,13 @@ public class TARDISWorldGuardUtils {
      * @return a list of TARDIS region names for this world
      */
     public List<String> getTARDISRegions(World w) {
-        List<String> regions = new ArrayList<String>();
+        List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionManager(w);
-        for (Map.Entry<String, ProtectedRegion> pr : rm.getRegions().entrySet()) {
+        rm.getRegions().entrySet().forEach((pr) -> {
             if (pr.getKey().contains("tardis")) {
                 regions.add(pr.getKey());
             }
-        }
+        });
         return regions;
     }
 

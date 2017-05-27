@@ -52,7 +52,7 @@ public class TARDISAbandoned {
         final String biome = l.getBlock().getBiome().toString();
         String chun = cw + ":" + cx + ":" + cz;
         final QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("owner", "");
         set.put("chunk", chun);
         set.put("size", s.getPermission().toUpperCase(Locale.ENGLISH));
@@ -62,7 +62,7 @@ public class TARDISAbandoned {
         set.put("chameleon_demat", p.toString());
         final int lastInsertId = qf.doSyncInsert("tardis", set);
         // populate home, current, next and back tables
-        HashMap<String, Object> setlocs = new HashMap<String, Object>();
+        HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
         setlocs.put("world", l.getWorld().getName());
         setlocs.put("x", l.getBlockX());

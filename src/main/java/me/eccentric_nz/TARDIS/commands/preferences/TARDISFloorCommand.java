@@ -60,16 +60,16 @@ public class TARDISFloorCommand {
         if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             TARDISMessage.send(player, message, pref);
-            List<String> sortedKeys = new ArrayList<String>(plugin.getTardisWalls().blocks.keySet());
+            List<String> sortedKeys = new ArrayList<>(plugin.getTardisWalls().blocks.keySet());
             Collections.sort(sortedKeys);
-            for (String w : sortedKeys) {
+            sortedKeys.forEach((w) -> {
                 player.sendMessage(w);
-            }
+            });
             return true;
         }
-        HashMap<String, Object> setw = new HashMap<String, Object>();
+        HashMap<String, Object> setw = new HashMap<>();
         setw.put(pref, wall_mat);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setw, where);
         TARDISMessage.send(player, "PREF_MAT_SET", TARDISPrefsCommands.ucfirst(pref));

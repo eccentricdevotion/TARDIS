@@ -73,7 +73,7 @@ public class TARDISSetDestinationCommand {
                     return true;
                 }
                 // check they are not in the tardis
-                HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+                HashMap<String, Object> wherettrav = new HashMap<>();
                 wherettrav.put("uuid", player.getUniqueId().toString());
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
@@ -113,7 +113,7 @@ public class TARDISSetDestinationCommand {
                 int dy = l.getBlockY() + 1;
                 int dz = l.getBlockZ();
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("dest_name", args[1]);
                 set.put("world", dw);

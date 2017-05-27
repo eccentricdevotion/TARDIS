@@ -57,7 +57,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISSignListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validSigns = new ArrayList<Material>();
+    List<Material> validSigns = new ArrayList<>();
 
     public TARDISSignListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -88,7 +88,7 @@ public class TARDISSignListener implements Listener {
             if (action == Action.RIGHT_CLICK_BLOCK && validSigns.contains(blockType)) {
                 UUID uuid = player.getUniqueId();
                 // check they are in the TARDIS
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", uuid.toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 boolean inside = rst.resultSet();
@@ -112,7 +112,7 @@ public class TARDISSignListener implements Listener {
                         which = rsts.getWhich();
                     }
                 } else {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", uuid.toString());
                     where.put("save_sign", signloc);
                     ResultSetJunk rsj = new ResultSetJunk(plugin, where);
@@ -125,7 +125,7 @@ public class TARDISSignListener implements Listener {
                 }
                 if (found) {
                     event.setCancelled(true);
-                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                     rs.resultSet();
@@ -188,7 +188,7 @@ public class TARDISSignListener implements Listener {
                                     int x = TARDISNumberParsers.parseInt(lore.get(2));
                                     int y = TARDISNumberParsers.parseInt(lore.get(3));
                                     int z = TARDISNumberParsers.parseInt(lore.get(4));
-                                    HashMap<String, Object> set_next = new HashMap<String, Object>();
+                                    HashMap<String, Object> set_next = new HashMap<>();
                                     set_next.put("world", world);
                                     set_next.put("x", x);
                                     set_next.put("y", y);
@@ -198,7 +198,7 @@ public class TARDISSignListener implements Listener {
                                     set_next.put("submarine", (sub) ? 1 : 0);
                                     TARDISMessage.send(player, "LOC_SET", true);
                                     // update next
-                                    HashMap<String, Object> where_next = new HashMap<String, Object>();
+                                    HashMap<String, Object> where_next = new HashMap<>();
                                     where_next.put("tardis_id", id);
                                     new QueryFactory(plugin).doSyncUpdate("next", set_next, where_next);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));

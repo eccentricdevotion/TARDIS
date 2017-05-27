@@ -42,9 +42,9 @@ import org.bukkit.util.FileUtil;
 public class TARDISUUIDConverter {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final List<String> timelords = new ArrayList<String>();
+    private final List<String> timelords = new ArrayList<>();
     private final String prefix;
 
     public TARDISUUIDConverter(TARDIS plugin) {
@@ -161,7 +161,7 @@ public class TARDISUUIDConverter {
             if (timelords.size() > 0) {
                 TARDISUUIDFetcher fetcher = new TARDISUUIDFetcher(timelords);
                 // get UUIDs
-                Map<String, UUID> response = null;
+                Map<String, UUID> response;
                 try {
                     response = fetcher.call();
                 } catch (Exception e) {

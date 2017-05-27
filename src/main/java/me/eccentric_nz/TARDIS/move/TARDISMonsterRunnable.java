@@ -65,8 +65,8 @@ import org.bukkit.inventory.EntityEquipment;
 public class TARDISMonsterRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final List<EntityType> monsters = new ArrayList<EntityType>();
-    private final List<EntityType> random_monsters = new ArrayList<EntityType>();
+    private final List<EntityType> monsters = new ArrayList<>();
+    private final List<EntityType> random_monsters = new ArrayList<>();
 
     public TARDISMonsterRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -135,14 +135,8 @@ public class TARDISMonsterRunnable implements Runnable {
                                         case ENDERMAN:
                                             Enderman enderman = (Enderman) e;
                                             tm.setCarried(enderman.getCarriedMaterial());
-                                            try {
-                                                if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
-                                                    dn = "Silent";
-                                                }
-                                            } catch (Exception ex) {
-                                                if (twa && e.getPassenger() != null && e.getPassenger().getType().equals(EntityType.GUARDIAN)) {
-                                                    dn = "Silent";
-                                                }
+                                            if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                                                dn = "Silent";
                                             }
                                             break;
                                         case PIG_ZOMBIE:
@@ -209,14 +203,8 @@ public class TARDISMonsterRunnable implements Runnable {
                                     tm.setAge(e.getTicksLived());
                                     tm.setHealth(((LivingEntity) e).getHealth());
                                     tm.setName(((LivingEntity) e).getCustomName());
-                                    try {
-                                        if (e.getPassengers().size() > 0) {
-                                            tm.setPassenger(e.getPassengers().get(0).getType());
-                                        }
-                                    } catch (NoSuchMethodError ex) {
-                                        if (e.getPassenger() != null) {
-                                            tm.setPassenger(e.getPassenger().getType());
-                                        }
+                                    if (e.getPassengers().size() > 0) {
+                                        tm.setPassenger(e.getPassengers().get(0).getType());
                                     }
                                     moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
                                 }
@@ -228,7 +216,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         Random r = new Random();
                         // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
                         if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", map.getValue().getTardisId());
                             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                             if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
@@ -270,7 +258,7 @@ public class TARDISMonsterRunnable implements Runnable {
         Location loc = null;
         if (guardian) {
             // check for pool
-            HashMap<String, Object> wherea = new HashMap<String, Object>();
+            HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", tpl.getTardisId());
             ResultSetARS rsa = new ResultSetARS(plugin, wherea);
             if (rsa.resultSet()) {
@@ -282,7 +270,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         for (int col : row) {
                             if (col == 80) {
                                 // need to get the console location - will be different for non-TIPS TARDISes
-                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", tpl.getTardisId());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                                 if (rs.resultSet()) {
@@ -320,14 +308,14 @@ public class TARDISMonsterRunnable implements Runnable {
                 e.remove();
             }
             // if there are players in the TARDIS sound the cloister bell
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", tpl.getTardisId());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
                 TARDISSounds.playTARDISSound(loc, "tardis_cloister_bell");
             } else {
                 // else message the Time Lord
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", tpl.getTardisId());
                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 2);
                 if (rst.resultSet()) {
@@ -336,7 +324,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         TARDISMessage.send(p, "MONSTER", m.getDisplayName());
                     }
                 }
-                HashMap<String, Object> wherer = new HashMap<String, Object>();
+                HashMap<String, Object> wherer = new HashMap<>();
                 wherer.put("tardis_id", rst.getTardis().getTardis_id());
                 wherer.put("type", 5);
                 wherer.put("secondary", 0);
@@ -441,11 +429,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
-                    try {
-                        ent.addPassenger(passenger);
-                    } catch (Exception ex) {
-                        ent.setPassenger(passenger);
-                    }
+                    ent.addPassenger(passenger);
                 }
             }
         }

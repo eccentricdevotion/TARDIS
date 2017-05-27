@@ -95,7 +95,7 @@ public class TARDISLister {
                 n++;
             }
         } else {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
             if (rst.resultSet()) {
@@ -104,14 +104,14 @@ public class TARDISLister {
                 // list TARDIS saves
                 if (l.equalsIgnoreCase("saves")) {
                     // get home
-                    HashMap<String, Object> wherehl = new HashMap<String, Object>();
+                    HashMap<String, Object> wherehl = new HashMap<>();
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
                     p.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("SAVES"));
                     p.sendMessage(ChatColor.GREEN + plugin.getLanguage().getString("HOME") + ": " + rsh.getWorld().getName() + " at x:" + rsh.getX() + " y:" + rsh.getY() + " z:" + rsh.getZ());
                     // list other saved destinations
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
                     ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, whered, true);
                     int i = 1;

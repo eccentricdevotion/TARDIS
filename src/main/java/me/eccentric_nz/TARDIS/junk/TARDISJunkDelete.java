@@ -53,7 +53,7 @@ public class TARDISJunkDelete {
             // get the current location
             Location bb_loc = null;
             Biome biome = null;
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
@@ -78,13 +78,10 @@ public class TARDISJunkDelete {
             final World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
             // give the TARDIS time to remove itself as it's not hidden
             if (cw != null) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.getInteriorDestroyer().destroyInner(CONSOLES.SCHEMATICFor("junk"), id, cw, 0, "junk", -999);
-                        TARDISDeleteCommand.cleanDatabase(id);
-                        TARDISMessage.send(sender, "JUNK_DELETED");
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getInteriorDestroyer().destroyInner(CONSOLES.SCHEMATICFor("junk"), id, cw, 0, "junk", -999);
+                    TARDISDeleteCommand.cleanDatabase(id);
+                    TARDISMessage.send(sender, "JUNK_DELETED");
                 }, 20L);
             }
         }

@@ -66,11 +66,8 @@ public class TARDISEPSRunnable implements Runnable {
         if (l != null) {
             try {
                 TARDISSounds.playTARDISSound(l, "tardis_takeoff");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        TARDISSounds.playTARDISSound(l, "tardis_land");
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    TARDISSounds.playTARDISSound(l, "tardis_land");
                 }, 490L);
                 plugin.setTardisSpawn(true);
                 l.setX(l.getX() + 0.5F);
@@ -124,7 +121,7 @@ public class TARDISEPSRunnable implements Runnable {
             // get world spawn location
             return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
         } else {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             where.put("door_type", 1);
             ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);

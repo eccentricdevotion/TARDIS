@@ -36,7 +36,7 @@ import org.bukkit.Material;
 public class TARDISVaultChecker implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
     private final String prefix;
@@ -62,7 +62,7 @@ public class TARDISVaultChecker implements Runnable {
                     Location l = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location"));
                     if (l != null && !chests.contains(l.getBlock().getType())) {
                         int id = rs.getInt("v_id");
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("v_id", id);
                         qf.doDelete("vaults", where);
                         i++;

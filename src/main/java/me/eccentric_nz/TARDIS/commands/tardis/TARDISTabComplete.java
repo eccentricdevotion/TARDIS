@@ -44,7 +44,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
-        List<String> tcs = new ArrayList<String>();
+        List<String> tcs = new ArrayList<>();
         for (TARDIS_COMMAND tc : TARDIS_COMMAND.values()) {
             tcs.add(tc.toString());
         }
@@ -61,24 +61,30 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
-            if (sub.equals("add") || sub.equals("remove")) {
-                return null;
-            } else if (sub.equals("archive")) {
-                return partial(lastArg, ARCHIVE_SUBS);
-            } else if (sub.equals("chameleon")) {
-                return partial(lastArg, CHAM_SUBS);
-            } else if (sub.equals("direction")) {
-                return partial(lastArg, DIR_SUBS);
-            } else if (sub.equals("list")) {
-                return partial(lastArg, LIST_SUBS);
-            } else if (sub.equals("rescue") || sub.equals("save_player")) {
-                return null;
-            } else if (sub.equals("room") || sub.equals("jettison")) {
-                return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
-            } else if (sub.equals("secondary")) {
-                return partial(lastArg, SEC_SUBS);
-            } else if (sub.equals("update")) {
-                return partial(lastArg, UPD_SUBS);
+            switch (sub) {
+                case "add":
+                case "remove":
+                    return null;
+                case "archive":
+                    return partial(lastArg, ARCHIVE_SUBS);
+                case "chameleon":
+                    return partial(lastArg, CHAM_SUBS);
+                case "direction":
+                    return partial(lastArg, DIR_SUBS);
+                case "list":
+                    return partial(lastArg, LIST_SUBS);
+                case "rescue":
+                case "save_player":
+                    return null;
+                case "room":
+                case "jettison":
+                    return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
+                case "secondary":
+                    return partial(lastArg, SEC_SUBS);
+                case "update":
+                    return partial(lastArg, UPD_SUBS);
+                default:
+                    break;
             }
         } else if (args.length == 3) {
             String sub = args[1];
@@ -98,12 +104,12 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     }
 
     private List<String> getPublicRechargers() {
-        List<String> ret = new ArrayList<String>();
-        for (String r : plugin.getConfig().getConfigurationSection("rechargers").getKeys(false)) {
+        List<String> ret = new ArrayList<>();
+        plugin.getConfig().getConfigurationSection("rechargers").getKeys(false).forEach((r) -> {
             if (!r.startsWith("rift")) {
                 ret.add(r);
             }
-        }
+        });
         return ret;
     }
 }

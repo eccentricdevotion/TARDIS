@@ -39,9 +39,9 @@ public class TARDISEPSMessageCommand {
             BookMeta bm = (BookMeta) bq.getItemMeta();
             List<String> pages = bm.getPages();
             StringBuilder sb = new StringBuilder();
-            for (String s : pages) {
+            pages.forEach((s) -> {
                 sb.append(s).append(" ");
-            }
+            });
             message = sb.toString();
         } else {
             if (count < 2) {
@@ -55,9 +55,9 @@ public class TARDISEPSMessageCommand {
             String tmp = buf.toString();
             message = tmp.substring(0, tmp.length() - 1);
         }
-        HashMap<String, Object> sete = new HashMap<String, Object>();
+        HashMap<String, Object> sete = new HashMap<>();
         sete.put("eps_message", message);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", sete, where);
         TARDISMessage.send(player, "EP1_SET");

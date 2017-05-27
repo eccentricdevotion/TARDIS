@@ -17,14 +17,11 @@
 package me.eccentric_nz.TARDIS.move;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -35,7 +32,7 @@ import org.bukkit.entity.Player;
 public class TARDISSpectaclesRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final HashMap<COMPASS, Byte> bottom = new HashMap<COMPASS, Byte>();
+    private final HashMap<COMPASS, Byte> bottom = new HashMap<>();
 
     public TARDISSpectaclesRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -48,14 +45,14 @@ public class TARDISSpectaclesRunnable implements Runnable {
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
-        for (Map.Entry<UUID, Block> map : plugin.getTrackerKeeper().getInvisibleDoors().entrySet()) {
+        plugin.getTrackerKeeper().getInvisibleDoors().entrySet().forEach((map) -> {
             Player p = plugin.getServer().getPlayer(map.getKey());
             if (p != null && p.isOnline() && plugin.getTrackerKeeper().getSpectacleWearers().contains(map.getKey())) {
                 String b = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getRelative(BlockFace.UP).toString();
                 if (b.equals(map.getValue().toString())) {
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(map.getKey().toString())) {
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                        HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                         if (rsc.resultSet()) {
@@ -65,6 +62,6 @@ public class TARDISSpectaclesRunnable implements Runnable {
                     }
                 }
             }
-        }
+        });
     }
 }

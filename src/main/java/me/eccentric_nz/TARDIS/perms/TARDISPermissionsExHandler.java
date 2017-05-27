@@ -39,7 +39,7 @@ public class TARDISPermissionsExHandler {
 
     private final TARDIS plugin;
     private File permissionsFile = null;
-    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<String, List<String>>();
+    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
     String group;
 
     public TARDISPermissionsExHandler(TARDIS plugin) {
@@ -56,7 +56,7 @@ public class TARDISPermissionsExHandler {
             while ((line = bufRdr.readLine()) != null) {
                 if (line.charAt(0) == '#') {
                     group = line.substring(1).trim();
-                    permgroups.put(group, new ArrayList<String>());
+                    permgroups.put(group, new ArrayList<>());
                 } else {
                     List<String> perms = permgroups.get(group);
                     perms.add(line.trim());

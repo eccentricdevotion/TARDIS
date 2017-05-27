@@ -57,7 +57,7 @@ public class TARDISUpgradeBlockScanner {
         int l = dimensions.getInt("length");
         float v = h * w * l;
         // calculate startx, starty, startz
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
@@ -79,7 +79,7 @@ public class TARDISUpgradeBlockScanner {
             Material wall_type;
             Material floor_type;
             // get wall/floor block prefs from database...
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {

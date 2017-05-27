@@ -53,7 +53,7 @@ public class TARDISCheckLocCommand {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", rs.getTardis_id());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {

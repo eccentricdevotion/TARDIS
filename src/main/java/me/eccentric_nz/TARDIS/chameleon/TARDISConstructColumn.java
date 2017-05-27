@@ -41,7 +41,7 @@ public class TARDISConstructColumn {
 
     public TARDISChameleonColumn getColumn() {
         // get the json data
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetChameleon rs = new ResultSetChameleon(plugin, where);
         if (rs.resultSet()) {

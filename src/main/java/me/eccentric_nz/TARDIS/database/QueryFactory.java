@@ -37,7 +37,7 @@ import org.bukkit.entity.Player;
 public class QueryFactory {
 
     private final TARDIS plugin;
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     Connection connection = service.getConnection();
     private final String prefix;
 
@@ -75,10 +75,10 @@ public class QueryFactory {
         String questions;
         StringBuilder sbf = new StringBuilder();
         StringBuilder sbq = new StringBuilder();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
+        data.entrySet().forEach((entry) -> {
             sbf.append(entry.getKey()).append(",");
             sbq.append("?,");
-        }
+        });
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
@@ -176,14 +176,14 @@ public class QueryFactory {
         Statement statement = null;
         String values;
         StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
+        where.entrySet().forEach((entry) -> {
             sbw.append(entry.getKey()).append(" = ");
             if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");
             }
-        }
+        });
         where.clear();
         values = sbw.toString().substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + prefix + table + " WHERE " + values;
@@ -393,7 +393,7 @@ public class QueryFactory {
     public boolean claimTARDIS(Player player, int id) {
         PreparedStatement ps = null;
         // check if they have a non-abandoned TARDIS
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         String uuid = player.getUniqueId().toString();
         where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

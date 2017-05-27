@@ -85,13 +85,13 @@ public class TARDISHandbrakeListener implements Listener {
             Material blockType = block.getType();
             if (blockType == Material.LEVER) {
                 final UUID uuid = player.getUniqueId();
-                HashMap<String, Object> whereu = new HashMap<String, Object>();
+                HashMap<String, Object> whereu = new HashMap<>();
                 whereu.put("uuid", uuid.toString());
                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, whereu, false);
                 boolean inside = rsv.resultSet();
                 // check handbrake location against the database.
                 final Location handbrake_loc = block.getLocation();
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 boolean found = false;
                 int tmp_id = -1;
                 if (inside) {
@@ -131,7 +131,7 @@ public class TARDISHandbrakeListener implements Listener {
                         TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
                         return;
                     }
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
+                    HashMap<String, Object> wherei = new HashMap<>();
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
                     if (rs.resultSet()) {
@@ -158,7 +158,7 @@ public class TARDISHandbrakeListener implements Listener {
                             BlockState state = block.getState();
                             Lever lever = (Lever) state.getData();
                             // should the beacon turn on
-                            HashMap<String, Object> wherek = new HashMap<String, Object>();
+                            HashMap<String, Object> wherek = new HashMap<>();
                             wherek.put("uuid", uuid.toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             boolean beac_on = true;
@@ -187,11 +187,8 @@ public class TARDISHandbrakeListener implements Listener {
                                         // track handbrake clicked for takeoff when door closed
                                         plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                                         // give them 30 seconds to close the door
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
-                                            }
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
                                         }, 600L);
                                         return;
                                     }
@@ -217,7 +214,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     TARDISMessage.send(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-                                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                        HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", amount, wheret, player);
                                         if (!uuid.equals(ownerUUID)) {
@@ -237,9 +234,9 @@ public class TARDISHandbrakeListener implements Listener {
                                         int uses_left = tcc.getMaterialisationUses();
                                         new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MATERIALISATION, uses_left, id, player).damage();
                                     }
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("handbrake_on", 1);
-                                    HashMap<String, Object> whereh = new HashMap<String, Object>();
+                                    HashMap<String, Object> whereh = new HashMap<>();
                                     whereh.put("tardis_id", id);
                                     qf.doUpdate("tardis", set, whereh);
                                 } else {
@@ -266,7 +263,7 @@ public class TARDISHandbrakeListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private boolean isDoorOpen(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);

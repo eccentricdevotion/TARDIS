@@ -139,7 +139,7 @@ public class TARDISBlockSetters {
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         int bid = b.getTypeId();
@@ -172,7 +172,7 @@ public class TARDISBlockSetters {
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         int bid = b.getTypeId();
@@ -202,7 +202,7 @@ public class TARDISBlockSetters {
     public static void setBlockAndRemember(Block b, Material m, byte d, int id, int type) {
         // save the block location so that we can restore it (if it wasn't air)!
         String l = b.getLocation().toString();
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         int bid = b.getTypeId();
@@ -240,7 +240,7 @@ public class TARDISBlockSetters {
             // remember replaced block location, TypeId and Data so we can restore it later
             String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             set.put("location", l);
             set.put("block", bid);

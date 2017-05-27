@@ -46,7 +46,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISPrefsCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<>();
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -126,11 +126,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return true;
                     }
                     // get the players preferences
-                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                    HashMap<String, Object> wherepp = new HashMap<>();
                     wherepp.put("uuid", player.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                     QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
                         set.put("uuid", player.getUniqueId().toString());

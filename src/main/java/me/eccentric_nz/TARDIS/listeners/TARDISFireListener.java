@@ -37,7 +37,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 public class TARDISFireListener implements Listener {
 
     private final TARDIS plugin;
-    List<BlockFace> faces = new ArrayList<BlockFace>();
+    List<BlockFace> faces = new ArrayList<>();
 
     public TARDISFireListener(TARDIS plugin) {
         this.plugin = plugin;

@@ -51,7 +51,7 @@ public class TARDISCompanionInventory {
                 SkullMeta skull = (SkullMeta) head.getItemMeta();
                 skull.setOwner(op.getName());
                 skull.setDisplayName(op.getName());
-                ArrayList<String> lore = new ArrayList<String>();
+                ArrayList<String> lore = new ArrayList<>();
                 lore.add(c);
                 skull.setLore(lore);
                 head.setItemMeta(skull);
@@ -63,7 +63,7 @@ public class TARDISCompanionInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta ii = info.getItemMeta();
         ii.setDisplayName("Info");
-        ArrayList<String> info_lore = new ArrayList<String>();
+        ArrayList<String> info_lore = new ArrayList<>();
         info_lore.add("To REMOVE a companion");
         info_lore.add("select a player head");
         info_lore.add("then click the Remove");

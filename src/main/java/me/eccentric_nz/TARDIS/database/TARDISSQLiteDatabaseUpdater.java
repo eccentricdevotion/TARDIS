@@ -34,17 +34,17 @@ import org.bukkit.ChatColor;
  */
 public class TARDISSQLiteDatabaseUpdater {
 
-    private final List<String> areaupdates = new ArrayList<String>();
-    private final List<String> blockupdates = new ArrayList<String>();
-    private final List<String> countupdates = new ArrayList<String>();
-    private final List<String> destupdates = new ArrayList<String>();
-    private final List<String> doorupdates = new ArrayList<String>();
-    private final List<String> gravityupdates = new ArrayList<String>();
-    private final List<String> portalsupdates = new ArrayList<String>();
-    private final List<String> prefsupdates = new ArrayList<String>();
-    private final List<String> tardisupdates = new ArrayList<String>();
-    private final List<String> inventoryupdates = new ArrayList<String>();
-    private final List<String> chameleonupdates = new ArrayList<String>();
+    private final List<String> areaupdates = new ArrayList<>();
+    private final List<String> blockupdates = new ArrayList<>();
+    private final List<String> countupdates = new ArrayList<>();
+    private final List<String> destupdates = new ArrayList<>();
+    private final List<String> doorupdates = new ArrayList<>();
+    private final List<String> gravityupdates = new ArrayList<>();
+    private final List<String> portalsupdates = new ArrayList<>();
+    private final List<String> prefsupdates = new ArrayList<>();
+    private final List<String> tardisupdates = new ArrayList<>();
+    private final List<String> inventoryupdates = new ArrayList<>();
+    private final List<String> chameleonupdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final long now = System.currentTimeMillis();
     private final Statement statement;

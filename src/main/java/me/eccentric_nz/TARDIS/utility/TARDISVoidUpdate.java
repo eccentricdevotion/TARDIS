@@ -42,7 +42,7 @@ public class TARDISVoidUpdate {
 
     public void updateBiome() {
         // get TIPS slot
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {

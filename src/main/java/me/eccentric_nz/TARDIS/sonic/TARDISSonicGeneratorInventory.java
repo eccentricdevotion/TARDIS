@@ -246,7 +246,7 @@ public class TARDISSonicGeneratorInventory {
         ItemMeta screw = sonic.getItemMeta();
         String dn = (data.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : data.getSonicType() + "Sonic Screwdriver";
         screw.setDisplayName(dn);
-        List<String> upgrades = new ArrayList<String>();
+        List<String> upgrades = new ArrayList<>();
         double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
         int artron = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
         if (data.hasBio()) {
@@ -281,7 +281,7 @@ public class TARDISSonicGeneratorInventory {
         cost.setItemMeta(cost_im);
 
         if (upgrades.size() > 0) {
-            List<String> finalUps = new ArrayList<String>();
+            List<String> finalUps = new ArrayList<>();
             finalUps.add("Upgrades:");
             finalUps.addAll(upgrades);
             screw.setLore(finalUps);

@@ -34,7 +34,7 @@ public class TARDISWalls {
     public HashMap<String, Pair> blocks;
 
     public TARDISWalls() {
-        blocks = new LinkedHashMap<String, Pair>();
+        blocks = new LinkedHashMap<>();
         blocks.put("STONE", new Pair(Material.STONE, (byte) 0));
         blocks.put("COBBLESTONE", new Pair(Material.COBBLESTONE, (byte) 0));
         blocks.put("MOSSY_COBBLESTONE", new Pair(Material.MOSSY_COBBLESTONE, (byte) 0));
@@ -64,6 +64,7 @@ public class TARDISWalls {
         blocks.put("MAGENTA_WOOL", new Pair(Material.WOOL, (byte) 2));
         blocks.put("LIGHT_BLUE_WOOL", new Pair(Material.WOOL, (byte) 3));
         blocks.put("YELLOW_WOOL", new Pair(Material.WOOL, (byte) 4));
+        blocks.put("LIME_WOOL", new Pair(Material.WOOL, (byte) 5));
         blocks.put("LIGHT_GREEN_WOOL", new Pair(Material.WOOL, (byte) 5));
         blocks.put("PINK_WOOL", new Pair(Material.WOOL, (byte) 6));
         blocks.put("GREY_WOOL", new Pair(Material.WOOL, (byte) 7));
@@ -85,6 +86,7 @@ public class TARDISWalls {
         blocks.put("MAGENTA_CLAY", new Pair(Material.STAINED_CLAY, (byte) 2));
         blocks.put("LIGHT_BLUE_CLAY", new Pair(Material.STAINED_CLAY, (byte) 3));
         blocks.put("YELLOW_CLAY", new Pair(Material.STAINED_CLAY, (byte) 4));
+        blocks.put("LIME_CLAY", new Pair(Material.STAINED_CLAY, (byte) 5));
         blocks.put("LIGHT_GREEN_CLAY", new Pair(Material.STAINED_CLAY, (byte) 5));
         blocks.put("PINK_CLAY", new Pair(Material.STAINED_CLAY, (byte) 6));
         blocks.put("GREY_CLAY", new Pair(Material.STAINED_CLAY, (byte) 7));
@@ -133,6 +135,44 @@ public class TARDISWalls {
         blocks.put("PURPUR_PILLAR", new Pair(Material.PURPUR_PILLAR, (byte) 10));
         blocks.put("BONE_BLOCK", new Pair(Material.BONE_BLOCK, (byte) 0));
         blocks.put("NETHER_WART_BLOCK", new Pair(Material.NETHER_WART_BLOCK, (byte) 0));
+        blocks.put("WHITE_CONCRETE", new Pair(Material.CONCRETE, (byte) 0));
+        blocks.put("ORANGE_CONCRETE", new Pair(Material.CONCRETE, (byte) 1));
+        blocks.put("MAGENTA_CONCRETE", new Pair(Material.CONCRETE, (byte) 2));
+        blocks.put("LIGHT_BLUE_CONCRETE", new Pair(Material.CONCRETE, (byte) 3));
+        blocks.put("YELLOW_CONCRETE", new Pair(Material.CONCRETE, (byte) 4));
+        blocks.put("LIME_CONCRETE", new Pair(Material.CONCRETE, (byte) 5));
+        blocks.put("LIGHT_GREEN_CONCRETE", new Pair(Material.CONCRETE, (byte) 5));
+        blocks.put("PINK_CONCRETE", new Pair(Material.CONCRETE, (byte) 6));
+        blocks.put("GRAY_CONCRETE", new Pair(Material.CONCRETE, (byte) 7));
+        blocks.put("LIGHT_GRAY_CONCRETE", new Pair(Material.CONCRETE, (byte) 8));
+        blocks.put("GREY_CONCRETE", new Pair(Material.CONCRETE, (byte) 7));
+        blocks.put("LIGHT_GREY_CONCRETE", new Pair(Material.CONCRETE, (byte) 8));
+        blocks.put("CYAN_CONCRETE", new Pair(Material.CONCRETE, (byte) 9));
+        blocks.put("PURPLE_CONCRETE", new Pair(Material.CONCRETE, (byte) 10));
+        blocks.put("BLUE_CONCRETE", new Pair(Material.CONCRETE, (byte) 11));
+        blocks.put("BROWN_CONCRETE", new Pair(Material.CONCRETE, (byte) 12));
+        blocks.put("GREEN_CONCRETE", new Pair(Material.CONCRETE, (byte) 13));
+        blocks.put("RED_CONCRETE", new Pair(Material.CONCRETE, (byte) 14));
+        blocks.put("BLACK_CONCRETE", new Pair(Material.CONCRETE, (byte) 15));
+        blocks.put("WHITE_GLAZED_TERRACOTTA", new Pair(Material.WHITE_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("ORANGE_GLAZED_TERRACOTTA", new Pair(Material.ORANGE_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("MAGENTA_GLAZED_TERRACOTTA", new Pair(Material.MAGENTA_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("LIGHT_BLUE_GLAZED_TERRACOTTA", new Pair(Material.LIGHT_BLUE_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("YELLOW_GLAZED_TERRACOTTA", new Pair(Material.YELLOW_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("LIME_GLAZED_TERRACOTTA", new Pair(Material.LIME_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("LIGHT_GREEN_GLAZED_TERRACOTTA", new Pair(Material.LIME_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("PINK_GLAZED_TERRACOTTA", new Pair(Material.PINK_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("GRAY_GLAZED_TERRACOTTA", new Pair(Material.GRAY_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("LIGHT_GRAY_GLAZED_TERRACOTTA", new Pair(Material.SILVER_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("GREY_GLAZED_TERRACOTTA", new Pair(Material.GRAY_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("LIGHT_GREY_GLAZED_TERRACOTTA", new Pair(Material.SILVER_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("CYAN_GLAZED_TERRACOTTA", new Pair(Material.CYAN_GLAZED_TERRACOTTA, (byte) 90));
+        blocks.put("PURPLE_GLAZED_TERRACOTTA", new Pair(Material.PURPLE_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("BLUE_GLAZED_TERRACOTTA", new Pair(Material.BLUE_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("BROWN_GLAZED_TERRACOTTA", new Pair(Material.BROWN_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("GREEN_GLAZED_TERRACOTTA", new Pair(Material.GREEN_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("RED_GLAZED_TERRACOTTA", new Pair(Material.RED_GLAZED_TERRACOTTA, (byte) 0));
+        blocks.put("BLACK_GLAZED_TERRACOTTA", new Pair(Material.BLACK_GLAZED_TERRACOTTA, (byte) 0));
         if (TARDIS.plugin.getConfig().getBoolean("allow.all_blocks")) {
             blocks.put("BEDROCK", new Pair(Material.BEDROCK, (byte) 0));
             blocks.put("COAL_ORE", new Pair(Material.COAL_ORE, (byte) 0));

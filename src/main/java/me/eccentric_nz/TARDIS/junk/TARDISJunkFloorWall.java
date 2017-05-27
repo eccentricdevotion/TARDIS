@@ -50,19 +50,19 @@ public class TARDISJunkFloorWall {
         if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             TARDISMessage.send(sender, message, pref);
-            List<String> sortedKeys = new ArrayList<String>(plugin.getTardisWalls().blocks.keySet());
+            List<String> sortedKeys = new ArrayList<>(plugin.getTardisWalls().blocks.keySet());
             Collections.sort(sortedKeys);
-            for (String w : sortedKeys) {
+            sortedKeys.forEach((w) -> {
                 sender.sendMessage(w);
-            }
+            });
             return true;
         }
         final QueryFactory qf = new QueryFactory(plugin);
         // check if player_prefs record
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-        HashMap<String, Object> setpp = new HashMap<String, Object>();
+        HashMap<String, Object> setpp = new HashMap<>();
         if (!rsp.resultSet()) {
             String otherpref = (pref.equals("floor")) ? "wall" : "floor";
             String otherset = (pref.equals("floor")) ? "ORANGE_WOOL" : "GREY_WOOL";
@@ -74,7 +74,7 @@ public class TARDISJunkFloorWall {
             qf.doInsert("player_prefs", setpp);
         } else {
             setpp.put(pref, wall_mat);
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             qf.doUpdate("player_prefs", setpp, where);
         }

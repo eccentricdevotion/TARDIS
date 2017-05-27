@@ -45,18 +45,18 @@ public class TARDISInsideCommand {
             return true;
         }
         int id = rs.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
         if (rst.resultSet()) {
             List<UUID> data = rst.getData();
             TARDISMessage.send(player, "INSIDE_PLAYERS");
-            for (UUID s : data) {
+            data.forEach((s) -> {
                 Player p = plugin.getServer().getPlayer(s);
                 if (p != null) {
                     player.sendMessage(p.getDisplayName());
                 }
-            }
+            });
         } else {
             TARDISMessage.send(player, "INSIDE");
         }

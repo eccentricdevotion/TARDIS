@@ -64,7 +64,7 @@ public class TARDISHostileDisplacement {
 
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -109,9 +109,9 @@ public class TARDISHostileDisplacement {
                     if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, FLAG.getNoMessageFlags()))) {
                         // set current
                         QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> tid = new HashMap<String, Object>();
+                        HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("world", fl.getWorld().getName());
                         set.put("x", fl.getBlockX());
                         set.put("y", fl.getBlockY());
@@ -131,12 +131,9 @@ public class TARDISHostileDisplacement {
                         dd.setSubmarine(rsc.isSubmarine());
                         dd.setTardisID(id);
                         dd.setBiome(rsc.getBiome());
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plugin.getTrackerKeeper().getDematerialising().add(id);
-                                plugin.getPresetDestroyer().destroyPreset(dd);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            plugin.getTrackerKeeper().getDematerialising().add(id);
+                            plugin.getPresetDestroyer().destroyPreset(dd);
                         }, delay);
                         final BuildData bd = new BuildData(plugin, uuid.toString());
                         bd.setDirection(d);
@@ -147,11 +144,8 @@ public class TARDISHostileDisplacement {
                         bd.setRebuild(false);
                         bd.setSubmarine(rsc.isSubmarine());
                         bd.setTardisID(id);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plugin.getPresetBuilder().buildPreset(bd);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            plugin.getPresetBuilder().buildPreset(bd);
                         }, delay * 2);
                         // message time lord
                         String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");

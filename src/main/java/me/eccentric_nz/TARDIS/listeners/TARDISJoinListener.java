@@ -70,13 +70,13 @@ public class TARDISJoinListener implements Listener {
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
             if (player.hasPermission("tardis.kit.join")) {
                 // check if they have the tardis kit
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 where.put("name", "joinkit");
                 ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                 if (!rsa.resultSet()) {
                     //add a record
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", uuid);
                     set.put("name", "joinkit");
                     qf.doInsert("achievements", set);
@@ -89,13 +89,13 @@ public class TARDISJoinListener implements Listener {
         if (plugin.getConfig().getBoolean("allow.achievements")) {
             if (player.hasPermission("tardis.book")) {
                 // check if they have started building a TARDIS yet
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 where.put("name", "tardis");
                 ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                 if (!rsa.resultSet()) {
                     //add a record
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", uuid);
                     set.put("name", "tardis");
                     qf.doInsert("achievements", set);
@@ -109,7 +109,7 @@ public class TARDISJoinListener implements Listener {
             // check if they have t_count record - create one if not
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (!rsc.resultSet()) {
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("uuid", uuid);
                 setc.put("player", player.getName());
                 qf.doInsert("t_count", setc);
@@ -117,28 +117,25 @@ public class TARDISJoinListener implements Listener {
         }
         if (plugin.getConfig().getBoolean("allow.tp_switch") && player.hasPermission("tardis.texture")) {
             // are they in the TARDIS?
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 // is texture switching on?
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", player.getUniqueId().toString());
                 final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
                     if (rsp.isTextureOn()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                         }, 50L);
                     }
                 }
             }
         }
         // load and remember the players Police Box chunk
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
@@ -146,7 +143,7 @@ public class TARDISJoinListener implements Listener {
             int id = tardis.getTardis_id();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
@@ -165,7 +162,7 @@ public class TARDISJoinListener implements Listener {
             } else {
                 now = System.currentTimeMillis();
             }
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("lastuse", now);
             set.put("monsters", 0);
             if (!last_known_name.equals(player.getName())) {
@@ -178,7 +175,7 @@ public class TARDISJoinListener implements Listener {
                 }
                 set.put("last_known_name", player.getName());
             }
-            HashMap<String, Object> wherel = new HashMap<String, Object>();
+            HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);
             // add TARDIS player to UUID cache

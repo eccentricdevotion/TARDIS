@@ -54,25 +54,25 @@ public class TARDISAreaDisks {
      */
     public ItemStack[] makeDisks(Player p) {
 
-        List<ItemStack> areas = new ArrayList<ItemStack>();
+        List<ItemStack> areas = new ArrayList<>();
         // get the areas this player has access to
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
             // cycle through areas
-            for (Area a : rsa.getData()) {
+            rsa.getData().forEach((a) -> {
                 String name = a.getAreaName();
                 if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
                     ItemStack is = new ItemStack(Material.RECORD_3, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Area Storage Disk");
-                    List<String> lore = new ArrayList<String>();
+                    List<String> lore = new ArrayList<>();
                     lore.add(name);
                     lore.add(a.getWorld());
                     im.setLore(lore);
                     is.setItemMeta(im);
                     areas.add(is);
                 }
-            }
+            });
         }
         ItemStack[] stack = new ItemStack[54];
         // set default top slots
@@ -100,11 +100,11 @@ public class TARDISAreaDisks {
     public String checkDisksForNewAreas(Player p) {
         String serialized = "";
         // get the player's storage record
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
-            List<String> player_has = new ArrayList<String>();
+            List<String> player_has = new ArrayList<>();
             String serilized_areas = rs.getAreas();
             try {
                 // check storage inventory
@@ -152,7 +152,7 @@ public class TARDISAreaDisks {
                                 ItemStack is = new ItemStack(Material.RECORD_3, 1);
                                 ItemMeta im = is.getItemMeta();
                                 im.setDisplayName("Area Storage Disk");
-                                List<String> lore = new ArrayList<String>();
+                                List<String> lore = new ArrayList<>();
                                 lore.add(name);
                                 lore.add(map.getWorld());
                                 im.setLore(lore);

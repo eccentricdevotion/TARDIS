@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -48,20 +47,20 @@ public class TARDISStandbyMode implements Runnable {
         // get TARDISes that are powered on
         HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
         QueryFactory qf = new QueryFactory(plugin);
-        for (final Map.Entry<Integer, StandbyData> map : ids.entrySet()) {
+        ids.entrySet().forEach((map) -> {
             final int id = map.getKey();
             int level = map.getValue().getLevel();
             // not while travelling or recharging and only until they hit zero
             if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
                 // remove some energy
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -amount, where, null);
             } else if (level <= amount) {
                 // power down!
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("tardis_id", id);
-                HashMap<String, Object> setp = new HashMap<String, Object>();
+                HashMap<String, Object> setp = new HashMap<>();
                 setp.put("powered_on", 0);
                 OfflinePlayer player = plugin.getServer().getOfflinePlayer(map.getValue().getUuid());
                 if (player.isOnline()) {
@@ -79,11 +78,8 @@ public class TARDISStandbyMode implements Runnable {
                 }
                 // police box lamp, delay it incase the TARDIS needs rebuilding
                 if (map.getValue().getPreset().equals(PRESET.NEW) || map.getValue().getPreset().equals(PRESET.OLD)) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
                     }, delay);
                 }
                 // if lights are on, turn them off
@@ -95,7 +91,7 @@ public class TARDISStandbyMode implements Runnable {
                 // update database
                 qf.doUpdate("tardis", setp, wherep);
             }
-        }
+        });
     }
 
     private boolean isTravelling(int id) {
@@ -106,7 +102,7 @@ public class TARDISStandbyMode implements Runnable {
      * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {

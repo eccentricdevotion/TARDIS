@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 public class TARDISArchPersister {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -178,46 +178,42 @@ public class TARDISArchPersister {
     }
 
     public void checkAll() {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ps = connection.prepareStatement("SELECT * FROM " + prefix + "arched");
-                    rs = ps.executeQuery();
-                    if (rs.isBeforeFirst()) {
-                        while (rs.next()) {
-                            Player player = plugin.getServer().getPlayer(UUID.fromString(rs.getString("uuid")));
-                            if (player != null && player.isOnline() && !DisguiseAPI.isDisguised(player)) {
-                                // disguise the player
-                                final String name = rs.getString("arch_name");
-                                long time = System.currentTimeMillis() + rs.getLong("arch_time");
-                                TARDISWatchData twd = new TARDISWatchData(name, time);
-                                plugin.getTrackerKeeper().getJohnSmith().put(player.getUniqueId(), twd);
-                                DisguiseAPI.undisguiseToAll(player);
-                                PlayerDisguise playerDisguise = new PlayerDisguise(name);
-                                playerDisguise.setHideHeldItemFromSelf(false);
-                                playerDisguise.setViewSelfDisguise(false);
-                                DisguiseAPI.disguiseToAll(player, playerDisguise);
-                                player.setDisplayName(name);
-                                player.setPlayerListName(name);
-                            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            try {
+                ps = connection.prepareStatement("SELECT * FROM " + prefix + "arched");
+                rs = ps.executeQuery();
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        Player player = plugin.getServer().getPlayer(UUID.fromString(rs.getString("uuid")));
+                        if (player != null && player.isOnline() && !DisguiseAPI.isDisguised(player)) {
+                            // disguise the player
+                            final String name = rs.getString("arch_name");
+                            long time = System.currentTimeMillis() + rs.getLong("arch_time");
+                            TARDISWatchData twd = new TARDISWatchData(name, time);
+                            plugin.getTrackerKeeper().getJohnSmith().put(player.getUniqueId(), twd);
+                            DisguiseAPI.undisguiseToAll(player);
+                            PlayerDisguise playerDisguise = new PlayerDisguise(name);
+                            playerDisguise.setHideHeldItemFromSelf(false);
+                            playerDisguise.setViewSelfDisguise(false);
+                            DisguiseAPI.disguiseToAll(player, playerDisguise);
+                            player.setDisplayName(name);
+                            player.setPlayerListName(name);
                         }
-                    }
-                } catch (SQLException ex) {
-                    plugin.debug("ResultSet error for arched table: " + ex.getMessage());
-                } finally {
-                    try {
-                        if (ps != null) {
-                            ps.close();
-                        }
-                        if (rs != null) {
-                            rs.close();
-                        }
-                    } catch (SQLException ex) {
-                        plugin.debug("Error closing arched statement or resultset: " + ex.getMessage());
                     }
                 }
-
+            } catch (SQLException ex) {
+                plugin.debug("ResultSet error for arched table: " + ex.getMessage());
+            } finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                    if (rs != null) {
+                        rs.close();
+                    }
+                } catch (SQLException ex) {
+                    plugin.debug("Error closing arched statement or resultset: " + ex.getMessage());
+                }
             }
         }, 30L);
     }

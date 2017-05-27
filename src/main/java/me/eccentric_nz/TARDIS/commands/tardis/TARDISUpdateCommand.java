@@ -53,7 +53,7 @@ public class TARDISUpdateCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -153,7 +153,7 @@ public class TARDISUpdateCommand {
                 }
             }
             if (!tardis_block.equals("backdoor")) {
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {

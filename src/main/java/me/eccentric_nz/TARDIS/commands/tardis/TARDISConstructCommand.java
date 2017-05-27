@@ -80,9 +80,9 @@ public class TARDISConstructCommand {
             return true;
         }
         // save it
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("line" + l, raw);
         new QueryFactory(plugin).doUpdate("chameleon", set, where);
         TARDISMessage.send(player, "CONSTRUCT_LINE_SAVED");

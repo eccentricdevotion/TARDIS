@@ -72,7 +72,7 @@ public class TARDISThemeInventory {
                 if (current_console.equals(a.getPermission())) {
                     cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
                 }
-                List<String> lore = new ArrayList<String>();
+                List<String> lore = new ArrayList<>();
                 lore.add("Cost: " + cost);
                 if (!player.hasPermission("tardis." + a.getPermission())) {
                     lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));

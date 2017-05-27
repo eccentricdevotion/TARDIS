@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.command.CommandException;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -104,7 +105,7 @@ public class TARDISSkaro {
                 twa.getConfig().set("daleks.worlds.Skaro", 500);
                 twa.saveConfig();
             }
-        } catch (Exception e) {
+        } catch (CommandException e) {
             plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy files to TerrainControl plugin data folder: {0}", e.getMessage());
         }
     }

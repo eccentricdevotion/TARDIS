@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONException;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -40,7 +39,7 @@ public class TARDISInventorySerialization {
 
     @SuppressWarnings("unchecked")
     public static Map<String, Object> toMap(JSONObject object) throws JSONException {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         Iterator<String> keys = object.keys();
         while (keys.hasNext()) {
             String key = keys.next();
@@ -62,7 +61,7 @@ public class TARDISInventorySerialization {
     }
 
     public static List<Object> toList(JSONArray array) throws JSONException {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             list.add(fromJson(array.get(i)));
         }
@@ -70,23 +69,23 @@ public class TARDISInventorySerialization {
     }
 
     public static String toString(ItemStack[] inv) {
-        List<String> result = new ArrayList<String>();
-        List<ConfigurationSerializable> items = new ArrayList<ConfigurationSerializable>();
+        List<String> result = new ArrayList<>();
+        List<ConfigurationSerializable> items = new ArrayList<>();
         items.addAll(Arrays.asList(inv));
-        for (ConfigurationSerializable cs : items) {
+        items.forEach((cs) -> {
             if (cs == null) {
                 result.add("null");
             } else {
                 result.add(new JSONObject(serialize(cs)).toString());
             }
-        }
+        });
         JSONArray json_array = new JSONArray(result);
         return json_array.toString();
     }
 
     public static ItemStack[] toItemStacks(String s) {
         JSONArray json = new JSONArray(s);
-        List<ItemStack> contents = new ArrayList<ItemStack>();
+        List<ItemStack> contents = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             String piece = json.getString(i);
             if (piece.equalsIgnoreCase("null")) {
@@ -109,30 +108,30 @@ public class TARDISInventorySerialization {
 
     public static Map<String, Object> serialize(ConfigurationSerializable cs) {
         Map<String, Object> serialized = recreateMap(cs.serialize());
-        for (Entry<String, Object> entry : serialized.entrySet()) {
+        serialized.entrySet().forEach((entry) -> {
             if (entry.getValue() instanceof ConfigurationSerializable) {
                 entry.setValue(serialize((ConfigurationSerializable) entry.getValue()));
             }
-        }
+        });
         serialized.put(ConfigurationSerialization.SERIALIZED_TYPE_KEY, ConfigurationSerialization.getAlias(cs.getClass()));
         return serialized;
     }
 
     public static Map<String, Object> recreateMap(Map<String, Object> original) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        for (Entry<String, Object> entry : original.entrySet()) {
+        Map<String, Object> map = new HashMap<>();
+        original.entrySet().forEach((entry) -> {
             map.put(entry.getKey(), entry.getValue());
-        }
+        });
         return map;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static ConfigurationSerializable deserialize(Map<String, Object> map) {
-        for (Entry<String, Object> entry : map.entrySet()) {
+        map.entrySet().forEach((entry) -> {
             if (entry.getValue() instanceof Map && ((Map) entry.getValue()).containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
                 entry.setValue(deserialize((Map) entry.getValue()));
             }
-        }
+        });
         return ConfigurationSerialization.deserializeObject(map);
     }
 }

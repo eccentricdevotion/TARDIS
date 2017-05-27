@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 public class TARDISJunkCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<>();
 
     public TARDISJunkCommands(TARDIS plugin) {
         this.plugin = plugin;

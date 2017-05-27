@@ -38,7 +38,7 @@ public class TARDISPoliceBoxLampToggler {
     }
 
     public void toggleLamp(int id, boolean on) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (rs.resultSet()) {

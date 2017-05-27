@@ -395,7 +395,7 @@ public enum TARDISInfoMenu {
      * @return a HashMap<String, String> of child menu items, and their (ALT)key
      */
     public static TreeMap<String, String> getChildren(String parent) {
-        TreeMap<String, String> children = new TreeMap<String, String>();
+        TreeMap<String, String> children = new TreeMap<>();
         for (TARDISInfoMenu tim : values()) {
             if (tim.getParent().equals(parent)) {
                 String[] crumbs = tim.getName().split("[|]");

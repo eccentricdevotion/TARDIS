@@ -271,10 +271,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         int xx = coords[0];
         int zz = coords[1];
         int prior = grid[yy][xx][zz];
-        for (int i : room_ids) {
-            if (prior == i) {
-                return true;
-            }
+        if (room_ids.stream().anyMatch((i) -> (prior == i))) {
+            return true;
         }
         String console = Material.getMaterial(prior).toString();
         return consoleBlocks.contains(console);
@@ -289,8 +287,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();
         // less non-room types
-        this.room_ids = new ArrayList<Integer>();
-        this.room_names = new ArrayList<String>();
+        this.room_ids = new ArrayList<>();
+        this.room_names = new ArrayList<>();
         for (TARDISARS a : ars) {
             if (a.getOffset() != 0) {
                 this.room_ids.add(a.getId());
@@ -331,13 +329,13 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      * @return a list of enabled custom room names
      */
     public List<String> getCustomRoomNames() {
-        List<String> crooms = new ArrayList<String>();
+        List<String> crooms = new ArrayList<>();
         Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
-        for (String cr : names) {
+        names.forEach((cr) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
                 crooms.add(cr);
             }
-        }
+        });
         return crooms;
     }
 }

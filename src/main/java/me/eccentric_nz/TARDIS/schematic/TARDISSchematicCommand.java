@@ -14,7 +14,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
-import org.bukkit.block.banner.Pattern;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -131,12 +130,12 @@ public class TARDISSchematicCommand implements CommandExecutor {
                                 state.put("colour", banner.getBaseColor().toString());
                                 JSONArray patterns = new JSONArray();
                                 if (banner.numberOfPatterns() > 0) {
-                                    for (Pattern p : banner.getPatterns()) {
+                                    banner.getPatterns().forEach((p) -> {
                                         JSONObject pattern = new JSONObject();
                                         pattern.put("pattern", p.getPattern().toString());
                                         pattern.put("pattern_colour", p.getColor().toString());
                                         patterns.put(pattern);
-                                    }
+                                    });
                                 }
                                 state.put("patterns", patterns);
                                 state.put("bdata", d);
@@ -155,9 +154,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
                 File file = new File(output);
                 try {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024);
-                    bw.write(schematic.toString());
-                    bw.close();
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024)) {
+                        bw.write(schematic.toString());
+                    }
                     TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm");
                     file.delete();
                     TARDISMessage.send(player, "SCHM_SAVED", args[1]);

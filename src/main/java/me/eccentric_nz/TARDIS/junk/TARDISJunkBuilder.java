@@ -89,7 +89,7 @@ public class TARDISJunkBuilder implements Runnable {
                     byte floor_data;
                     Material wall_type;
                     byte wall_data;
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
                     if (rsp.resultSet()) {
@@ -175,24 +175,30 @@ public class TARDISJunkBuilder implements Runnable {
                                     String trip = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 4, trip, 0);
                                 }
-                                if (type.equals(Material.SPONGE) || type.equals(Material.AIR)) {
-                                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
-                                } else if (type.equals(Material.CAKE_BLOCK)) {
-                                    plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.LEVER, (byte) 5, bd.getTardisID());
-                                } else if (type.equals(Material.WOOL)) {
-                                    switch (data) {
-                                        case 1:
-                                            plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, wall_data, bd.getTardisID());
-                                            break;
-                                        case 8:
-                                            plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, floor_data, bd.getTardisID());
-                                            break;
-                                        default:
-                                            plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, bd.getTardisID());
-                                            break;
-                                    }
-                                } else {
-                                    plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, bd.getTardisID());
+                                switch (type) {
+                                    case SPONGE:
+                                    case AIR:
+                                        TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
+                                        break;
+                                    case CAKE_BLOCK:
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.LEVER, (byte) 5, bd.getTardisID());
+                                        break;
+                                    case WOOL:
+                                        switch (data) {
+                                            case 1:
+                                                plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, wall_data, bd.getTardisID());
+                                                break;
+                                            case 8:
+                                                plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, floor_data, bd.getTardisID());
+                                                break;
+                                            default:
+                                                plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, bd.getTardisID());
+                                                break;
+                                        }
+                                        break;
+                                    default:
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, bd.getTardisID());
+                                        break;
                                 }
                             }
                         }
@@ -208,12 +214,12 @@ public class TARDISJunkBuilder implements Runnable {
                     }
                 } else if (plugin.getConfig().getBoolean("junk.particles")) {
                     // just animate particles
-                    for (Entity e : plugin.getUtils().getJunkTravellers(loc)) {
+                    plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
                         if (e instanceof Player) {
                             Player p = (Player) e;
                             TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
                         }
-                    }
+                    });
                 }
             } else {
                 plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(bd.getTardisID()));
@@ -227,9 +233,9 @@ public class TARDISJunkBuilder implements Runnable {
                 plugin.getGeneralKeeper().setJunkTravelling(false);
                 plugin.getGeneralKeeper().getJunkTravellers().clear();
                 // update current location
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", bd.getTardisID());
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("world", loc.getWorld().getName());
                 set.put("x", loc.getBlockX());
                 set.put("y", sy);

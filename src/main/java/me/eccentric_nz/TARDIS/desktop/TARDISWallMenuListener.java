@@ -44,8 +44,8 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISWallMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, Integer> scroll = new HashMap<UUID, Integer>();
-    private final List<UUID> scrolling = new ArrayList<UUID>();
+    private final HashMap<UUID, Integer> scroll = new HashMap<>();
+    private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
     private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
@@ -142,11 +142,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
         if (remove) {
             plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         }
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 
@@ -156,15 +153,12 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
      * @param p the player using the GUI
      */
     private void floor(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-                ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
-                Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Floor Menu");
-                wall.setContents(wall_blocks);
-                p.openInventory(wall);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
+            ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
+            Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Floor Menu");
+            wall.setContents(wall_blocks);
+            p.openInventory(wall);
         }, 1L);
     }
 

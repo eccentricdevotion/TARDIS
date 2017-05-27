@@ -41,7 +41,7 @@ public class TARDISRemoteRebuildCommand {
     }
 
     public boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean cham, boolean hidden) {
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -64,18 +64,15 @@ public class TARDISRemoteRebuildCommand {
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisID(id);
         bd.setBiome(rsc.getBiome());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getPresetBuilder().buildPreset(bd);
         }, 10L);
         TARDISMessage.send(sender, "TARDIS_REBUILT");
         // set hidden to false
         if (hidden) {
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
-            HashMap<String, Object> seth = new HashMap<String, Object>();
+            HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
             new QueryFactory(plugin).doUpdate("tardis", seth, whereh);
         }

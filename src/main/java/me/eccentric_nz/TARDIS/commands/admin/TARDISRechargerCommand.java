@@ -53,7 +53,7 @@ public class TARDISRechargerCommand {
             return true;
         }
         // make sure they're not targeting their inner TARDIS beacon
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {

@@ -63,15 +63,15 @@ public class TARDISCreeperDeathListener implements Listener {
                 if (p != null) {
                     String killerUUID = p.getUniqueId().toString();
                     // is the killer a Time Lord?
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", killerUUID);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                     if (rs.resultSet()) {
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("uuid", killerUUID);
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         int amount = plugin.getArtronConfig().getInt("creeper_recharge");
                         if (!rsp.resultSet()) {
                             set.put("uuid", killerUUID);
@@ -79,7 +79,7 @@ public class TARDISCreeperDeathListener implements Listener {
                             qf.doInsert("player_prefs", set);
                         } else {
                             int level = rsp.getArtronLevel() + amount;
-                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", killerUUID);
                             set.put("artron_level", level);
                             qf.doUpdate("player_prefs", set, wherea);

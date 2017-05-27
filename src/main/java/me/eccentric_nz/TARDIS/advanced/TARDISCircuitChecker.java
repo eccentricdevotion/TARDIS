@@ -83,7 +83,7 @@ public class TARDISCircuitChecker {
      * installed.
      */
     public void getCircuits() {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {

@@ -57,7 +57,7 @@ public class TARDISDirectionCommand {
                 return false;
             }
             UUID uuid = player.getUniqueId();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -100,7 +100,7 @@ public class TARDISDirectionCommand {
             boolean hid = tardis.isHidden();
             PRESET demat = tardis.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
@@ -109,13 +109,13 @@ public class TARDISDirectionCommand {
             }
             COMPASS old_d = rsc.getDirection();
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> tid = new HashMap<String, Object>();
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> tid = new HashMap<>();
+            HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             set.put("direction", dir);
             qf.doUpdate("current", set, tid);
-            HashMap<String, Object> did = new HashMap<String, Object>();
-            HashMap<String, Object> setd = new HashMap<String, Object>();
+            HashMap<String, Object> did = new HashMap<>();
+            HashMap<String, Object> setd = new HashMap<>();
             did.put("door_type", 0);
             did.put("tardis_id", id);
             setd.put("door_direction", dir);
@@ -148,21 +148,18 @@ public class TARDISDirectionCommand {
                 bd.setSubmarine(rsc.isSubmarine());
                 bd.setTardisID(id);
                 bd.setBiome(rsc.getBiome());
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.getPresetBuilder().buildPreset(bd);
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getPresetBuilder().buildPreset(bd);
                 }, 10L);
             }
-            HashMap<String, Object> wherea = new HashMap<String, Object>();
+            HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
             if (hid) {
                 TARDISMessage.send(player, "DIRECTION_CHANGED");
             }
             // if they have a Direction Frame, update the rotation
-            HashMap<String, Object> wheredf = new HashMap<String, Object>();
+            HashMap<String, Object> wheredf = new HashMap<>();
             wheredf.put("tardis_id", id);
             wheredf.put("type", 18);
             ResultSetControls rsdf = new ResultSetControls(plugin, wheredf, false);

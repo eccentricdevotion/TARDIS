@@ -27,7 +27,7 @@ public class TARDISRecordingTask implements Runnable {
             int perBatch = 100;
             if (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
                 //plugin.debug("Beginning batch insert from queue. " + System.currentTimeMillis());
-                TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+                TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
                 connection = service.getConnection();
                 // Handle dead connections
                 if (connection == null || connection.isClosed()) {
@@ -58,7 +58,7 @@ public class TARDISRecordingTask implements Runnable {
                     if (a == null) {
                         break;
                     }
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("location", a);
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
                     if (rs.resultSet()) {

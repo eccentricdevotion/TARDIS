@@ -45,11 +45,8 @@ public class TARDISMenuListener {
      * @param p the player using the GUI
      */
     public void close(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 
@@ -61,15 +58,15 @@ public class TARDISMenuListener {
             return;
         }
         Set<Integer> slots = event.getRawSlots();
-        for (Integer slot : slots) {
+        slots.forEach((slot) -> {
             if ((slot >= 0 && slot < titles.get(title))) {
                 event.setCancelled(true);
             }
-        }
+        });
     }
 
     public final HashMap<String, Integer> getTitleMap() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
         map.put("§4Add Companion", 54);
         map.put("§4Admin Menu", 54);
         map.put("§4Architectural Reconfiguration", 54);

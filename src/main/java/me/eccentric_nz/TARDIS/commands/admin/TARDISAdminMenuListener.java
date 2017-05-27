@@ -59,22 +59,16 @@ public class TARDISAdminMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     // close this gui and load the previous / next page
                     if (option.equals("Previous page")) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                Inventory ppm = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
-                                ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
-                                p.openInventory(ppm);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory ppm = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                            ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+                            p.openInventory(ppm);
                         }, 1L);
                     } else {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                Inventory ppm = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
-                                ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
-                                p.openInventory(ppm);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory ppm = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                            ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
+                            p.openInventory(ppm);
                         }, 1L);
                     }
                     return;
@@ -82,13 +76,10 @@ public class TARDISAdminMenuListener implements Listener {
                 if (slot == 53 && option.equals("Player Preferences")) {
                     final Player p = (Player) event.getWhoClicked();
                     // close this gui and load the Player Prefs Menu
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            Inventory ppm = plugin.getServer().createInventory(p, 27, "§4Player Prefs Menu");
-                            ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
-                            p.openInventory(ppm);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        Inventory ppm = plugin.getServer().createInventory(p, 27, "§4Player Prefs Menu");
+                        ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
+                        p.openInventory(ppm);
                     }, 1L);
                     return;
                 }

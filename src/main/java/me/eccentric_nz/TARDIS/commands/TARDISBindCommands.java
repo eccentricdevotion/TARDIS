@@ -47,7 +47,7 @@ import org.bukkit.entity.Player;
 public class TARDISBindCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<>();
     private final List<String> type_1;
 
     public TARDISBindCommands(TARDIS plugin) {
@@ -92,7 +92,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 return false;
             }
             int id = rs.getTardis_id();
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
@@ -100,15 +100,15 @@ public class TARDISBindCommands implements CommandExecutor {
                 return false;
             }
             if (args[0].equalsIgnoreCase("update")) {
-                for (String s : type_1) {
+                type_1.forEach((s) -> {
                     QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                    HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("tardis_id", id);
                     whereu.put("dest_name", s);
-                    HashMap<String, Object> setu = new HashMap<String, Object>();
+                    HashMap<String, Object> setu = new HashMap<>();
                     setu.put("type", 1);
                     qf.doUpdate("destinations", setu, whereu);
-                }
+                });
                 TARDISMessage.send(player, "BIND_SET");
                 return true;
             }
@@ -117,7 +117,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 return false;
             }
             if (args[0].equalsIgnoreCase("remove")) {
-                HashMap<String, Object> whered = new HashMap<String, Object>();
+                HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
@@ -132,14 +132,14 @@ public class TARDISBindCommands implements CommandExecutor {
                 int did = rsd.getDest_id();
                 int dtype = rsd.getType();
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("dest_id", did);
                 if (dtype > 0) {
                     // delete the record
                     qf.doDelete("destinations", whereb);
                 } else {
                     // just remove the bind location
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("bind", "");
                     qf.doUpdate("destinations", set, whereb);
                 }
@@ -148,7 +148,7 @@ public class TARDISBindCommands implements CommandExecutor {
             } else {
                 int did = 0;
                 if (args[0].equalsIgnoreCase("save")) { // type 0
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
                     whered.put("dest_name", args[1]);
                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
@@ -160,7 +160,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                 }
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 if (args[0].equalsIgnoreCase("cmd")) { // type 1
                     if (!type_1.contains(args[1])) {
@@ -186,7 +186,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     did = qf.doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("area")) { // type 3
-                    HashMap<String, Object> wherea = new HashMap<String, Object>();
+                    HashMap<String, Object> wherea = new HashMap<>();
                     wherea.put("area_name", args[1]);
                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                     if (!rsa.resultSet()) {
@@ -205,7 +205,6 @@ public class TARDISBindCommands implements CommandExecutor {
                     // check valid biome
                     try {
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
-//                        Biome biome = Biome.valueOf(upper);
                         if (!upper.equals("HELL") && !upper.equals("SKY")) {
                             set.put("dest_name", upper);
                             set.put("type", 4);

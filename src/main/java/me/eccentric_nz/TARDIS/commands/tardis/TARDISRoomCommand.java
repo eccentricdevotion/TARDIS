@@ -64,7 +64,7 @@ public class TARDISRoomCommand {
             TARDISMessage.send(player, "NO_PERM_ROOM_TYPE");
             return true;
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
@@ -99,7 +99,7 @@ public class TARDISRoomCommand {
         SCHEMATIC schm = tardis.getSchematic();
         int tips = tardis.getTIPS();
         // check they are in the tardis
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -117,7 +117,7 @@ public class TARDISRoomCommand {
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
             String floor = "LIGHT_GREY_WOOL";
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            HashMap<String, Object> wherepp = new HashMap<>();
             boolean hasPrefs = false;
             wherepp.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
@@ -126,7 +126,7 @@ public class TARDISRoomCommand {
                 wall = rsp.getWall();
                 floor = rsp.getFloor();
             }
-            HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
+            HashMap<String, Integer> item_counts = new HashMap<>();
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
                 String bid = block_data[0];
@@ -151,7 +151,7 @@ public class TARDISRoomCommand {
                 }
             }
             for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("block_data", map.getKey());
                 ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
@@ -184,7 +184,7 @@ public class TARDISRoomCommand {
         sd.setSchematic(schm);
         sd.setChunkMinMax(chunk);
         // check whether they have an ARS sign
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("tardis_id", id);
         wherea.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);

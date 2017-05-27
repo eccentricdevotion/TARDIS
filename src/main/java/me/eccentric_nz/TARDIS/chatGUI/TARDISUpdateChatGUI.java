@@ -21,45 +21,45 @@ public class TARDISUpdateChatGUI {
         if (args.length == 1) {
             TARDISMessage.send(player, "UPDATE_SECTION");
             player.sendMessage("------");
-            for (String s : plugin.getJsonKeeper().getSections()) {
+            plugin.getJsonKeeper().getSections().forEach((s) -> {
                 sendJSON(s, player);
-            }
+            });
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("controls")) {
             TARDISMessage.send(player, "UPDATE_SECTION");
             player.sendMessage("------");
-            for (String c : plugin.getJsonKeeper().getControls()) {
+            plugin.getJsonKeeper().getControls().forEach((c) -> {
                 sendJSON(c, player);
-            }
+            });
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("interfaces")) {
             TARDISMessage.send(player, "UPDATE_INTERFACE");
             player.sendMessage("------");
-            for (String i : plugin.getJsonKeeper().getInterfaces()) {
+            plugin.getJsonKeeper().getInterfaces().forEach((i) -> {
                 sendJSON(i, player);
-            }
+            });
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("locations")) {
             TARDISMessage.send(player, "UPDATE_LOCATION");
             player.sendMessage("------");
-            for (String l : plugin.getJsonKeeper().getLocations()) {
+            plugin.getJsonKeeper().getLocations().forEach((l) -> {
                 sendJSON(l, player);
-            }
+            });
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("others")) {
             TARDISMessage.send(player, "UPDATE_OTHER");
             player.sendMessage("------");
-            for (String o : plugin.getJsonKeeper().getOthers()) {
+            plugin.getJsonKeeper().getOthers().forEach((o) -> {
                 sendJSON(o, player);
-            }
+            });
             player.sendMessage("------");
             return true;
         }

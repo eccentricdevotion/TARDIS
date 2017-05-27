@@ -40,7 +40,7 @@ public class TARDISNameKeyCommand {
     public boolean nameKey(Player player, String[] args) {
         // determine key item
         String key;
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {

@@ -50,7 +50,7 @@ public class TARDISRoomMap {
     public void load() {
         String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
                 boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
                 String basepath = (user) ? userbasepath : defaultbasepath;
@@ -63,7 +63,7 @@ public class TARDISRoomMap {
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                 }
             }
-        }
+        });
     }
 
     /**
@@ -74,7 +74,7 @@ public class TARDISRoomMap {
      * @return true if the schematic was loaded successfully
      */
     public boolean makeRoomMap(String fileStr, String s) {
-        HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();
+        HashMap<String, Integer> blockIDs = new HashMap<>();
         File f = new File(fileStr + ".tschm");
         if (!f.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");

@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
  */
 public class ResultSetStandby {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
@@ -45,7 +45,7 @@ public class ResultSetStandby {
     }
 
     public HashMap<Integer, StandbyData> onStandby() {
-        HashMap<Integer, StandbyData> ids = new HashMap<Integer, StandbyData>();
+        HashMap<Integer, StandbyData> ids = new HashMap<>();
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix + "tardis WHERE powered_on = 1 AND abandoned = 0";
@@ -56,20 +56,24 @@ public class ResultSetStandby {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     StandbyData sd;
-                    if (rs.getString("size").equals("JUNK")) {
-                        sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
-                    } else if (rs.getString("size").equals("ARCHIVE")) {
-                        HashMap<String, Object> wherea = new HashMap<String, Object>();
-                        wherea.put("uuid", rs.getString("uuid"));
-                        wherea.put("use", 1);
-                        ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
-                        boolean lanterns = false;
-                        if (rsa.resultSet()) {
-                            lanterns = rsa.getArchive().isLanterns();
-                        }
-                        sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), lanterns);
-                    } else {
-                        sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getBY_NAMES().get(rs.getString("size")).hasLanterns());
+                    switch (rs.getString("size")) {
+                        case "JUNK":
+                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                            break;
+                        case "ARCHIVE":
+                            HashMap<String, Object> wherea = new HashMap<>();
+                            wherea.put("uuid", rs.getString("uuid"));
+                            wherea.put("use", 1);
+                            ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
+                            boolean lanterns = false;
+                            if (rsa.resultSet()) {
+                                lanterns = rsa.getArchive().isLanterns();
+                            }
+                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), lanterns);
+                            break;
+                        default:
+                            sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getBY_NAMES().get(rs.getString("size")).hasLanterns());
+                            break;
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
                 }

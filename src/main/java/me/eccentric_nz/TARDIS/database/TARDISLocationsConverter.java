@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class TARDISLocationsConverter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final List<String> directions = Arrays.asList("NORTH", "SOUTH", "EAST", "WEST");
@@ -107,7 +107,7 @@ public class TARDISLocationsConverter {
     }
 
     private HashMap<String, Object> buildMap(int id, String[] data, String d) {
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("world", data[0]);
         set.put("x", TARDISNumberParsers.parseInt(data[1]));

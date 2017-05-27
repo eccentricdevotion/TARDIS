@@ -115,7 +115,7 @@ public class TARDISRoomRemover {
                         byte data = block.getData();
                         if ((data == (byte) 5 || data == (byte) 6) && block.getType().equals(Material.WOOL)) {
                             String loc = new Location(w, x, y, z).toString();
-                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            HashMap<String, Object> where = new HashMap<>();
                             where.put("location", loc);
                             where.put("tardis_id", id);
                             qf.doDelete("gravity_well", where);
@@ -126,9 +126,9 @@ public class TARDISRoomRemover {
         }
         if (r.equals("FARM") || r.equals("STABLE") || r.equals("STALL") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO")) {
             // remove stored location from the database
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put(r.toLowerCase(Locale.ENGLISH), "");
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             qf.doUpdate("tardis", set, where);
         }

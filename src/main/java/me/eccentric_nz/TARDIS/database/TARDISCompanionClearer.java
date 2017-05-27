@@ -32,7 +32,7 @@ import org.bukkit.util.FileUtil;
 public class TARDISCompanionClearer {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
 

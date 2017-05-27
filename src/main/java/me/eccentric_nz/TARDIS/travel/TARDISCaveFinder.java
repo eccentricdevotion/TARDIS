@@ -45,7 +45,7 @@ public class TARDISCaveFinder {
     public Location searchCave(Player p, int id) {
         Location l = null;
         // get the current TARDIS location
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
         if (rsc.resultSet()) {

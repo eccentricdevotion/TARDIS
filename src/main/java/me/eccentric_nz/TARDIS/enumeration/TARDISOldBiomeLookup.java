@@ -25,7 +25,7 @@ import org.bukkit.block.Biome;
  */
 public class TARDISOldBiomeLookup {
 
-    public final static HashMap<String, Biome> OLD_BIOME_LOOKUP = new HashMap<String, Biome>();
+    public final static HashMap<String, Biome> OLD_BIOME_LOOKUP = new HashMap<>();
 
     static {
         OLD_BIOME_LOOKUP.put("BEACH", Biome.BEACHES);

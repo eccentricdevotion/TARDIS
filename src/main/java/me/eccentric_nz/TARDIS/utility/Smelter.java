@@ -27,8 +27,8 @@ import org.bukkit.util.Vector;
  */
 public class Smelter {
 
-    private static final List<Vector> FUEL_VECTORS = new ArrayList<Vector>();
-    private static final List<Vector> ORE_VECTORS = new ArrayList<Vector>();
+    private static final List<Vector> FUEL_VECTORS = new ArrayList<>();
+    private static final List<Vector> ORE_VECTORS = new ArrayList<>();
 
     static {
         FUEL_VECTORS.add(new Vector(-6.0, 3.0, 4.0));

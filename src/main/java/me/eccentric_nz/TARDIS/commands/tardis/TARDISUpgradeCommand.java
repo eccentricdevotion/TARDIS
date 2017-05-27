@@ -49,7 +49,7 @@ public class TARDISUpgradeCommand {
             return true;
         }
         // they must have an existing TARDIS
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {

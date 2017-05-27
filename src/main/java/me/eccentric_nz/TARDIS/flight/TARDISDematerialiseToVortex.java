@@ -59,13 +59,13 @@ public class TARDISDematerialiseToVortex implements Runnable {
         final UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getInVortex().add(id);
         plugin.getTrackerKeeper().getDidDematToVortex().add(id);
-        HashMap<String, Object> wherei = new HashMap<String, Object>();
+        HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             boolean hidden = tardis.isHidden();
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
             String resetw = "";
@@ -90,7 +90,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setBiome(biome);
             final PRESET preset = tardis.getPreset();
             if (preset.equals(PRESET.JUNK_MODE)) {
-                HashMap<String, Object> wherenl = new HashMap<String, Object>();
+                HashMap<String, Object> wherenl = new HashMap<>();
                 wherenl.put("tardis_id", id);
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
                 if (!rsn.resultSet()) {
@@ -102,7 +102,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             }
             plugin.getPM().callEvent(new TARDISDematerialisationEvent(player, tardis, l));
             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
-                HashMap<String, Object> wherek = new HashMap<String, Object>();
+                HashMap<String, Object> wherek = new HashMap<>();
                 wherek.put("uuid", uuid.toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                 boolean minecart = (rsp.resultSet()) ? rsp.isMinecartOn() : false;
@@ -123,9 +123,9 @@ public class TARDISDematerialiseToVortex implements Runnable {
             } else {
                 // set hidden false!
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("hidden", 0);
-                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 qf.doUpdate("tardis", set, whereh);
                 plugin.getPresetDestroyer().removeBlockProtection(id, qf);

@@ -137,12 +137,12 @@ public class TARDISSeedBlockProcessor {
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
                 final QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
                 set.put("chunk", chun);
                 set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
-                HashMap<String, Object> setpp = new HashMap<String, Object>();
+                HashMap<String, Object> setpp = new HashMap<>();
                 Material wall_type = seed.getWallType();
                 byte wall_data = seed.getWallData();
                 Material floor_type = seed.getFloorType();
@@ -171,7 +171,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", player.getUniqueId().toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (!rsp.resultSet()) {
@@ -181,12 +181,12 @@ public class TARDISSeedBlockProcessor {
                     setpp.put(key, default_key);
                     qf.doSyncInsert("player_prefs", setpp);
                 } else {
-                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                    HashMap<String, Object> wherepp = new HashMap<>();
                     wherepp.put("uuid", player.getUniqueId().toString());
                     qf.doUpdate("player_prefs", setpp, wherepp);
                 }
                 // populate home, current, next and back tables
-                HashMap<String, Object> setlocs = new HashMap<String, Object>();
+                HashMap<String, Object> setlocs = new HashMap<>();
                 setlocs.put("tardis_id", lastInsertId);
                 setlocs.put("world", l.getWorld().getName());
                 setlocs.put("x", l.getBlockX());
@@ -211,9 +211,9 @@ public class TARDISSeedBlockProcessor {
                 plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, floor_type, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
-                    HashMap<String, Object> seta = new HashMap<String, Object>();
+                    HashMap<String, Object> seta = new HashMap<>();
                     seta.put("completed", 1);
-                    HashMap<String, Object> wherea = new HashMap<String, Object>();
+                    HashMap<String, Object> wherea = new HashMap<>();
                     wherea.put("uuid", player.getUniqueId().toString());
                     wherea.put("name", "tardis");
                     qf.doUpdate("achievements", seta, wherea);
@@ -223,12 +223,12 @@ public class TARDISSeedBlockProcessor {
                 if (max_count > 0) {
                     TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
                 }
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("count", player_count + 1);
                 setc.put("grace", grace_count);
                 if (has_count) {
                     // update the player's TARDIS count
-                    HashMap<String, Object> wheretc = new HashMap<String, Object>();
+                    HashMap<String, Object> wheretc = new HashMap<>();
                     wheretc.put("uuid", player.getUniqueId().toString());
                     qf.doUpdate("t_count", setc, wheretc);
                 } else {
@@ -238,7 +238,7 @@ public class TARDISSeedBlockProcessor {
                 }
                 return true;
             } else {
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rscl.resultSet()) {

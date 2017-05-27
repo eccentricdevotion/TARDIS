@@ -41,7 +41,7 @@ public class NBSDecoder {
     }
 
     private static Song parse(InputStream inputStream, File decodeFile) {
-        HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
+        HashMap<Integer, Layer> layerHashMap = new HashMap<>();
         try {
             DataInputStream dis = new DataInputStream(inputStream);
             short length = readShort(dis);

@@ -33,7 +33,7 @@ import org.bukkit.Location;
 public class TARDISVortexPersister {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -78,7 +78,7 @@ public class TARDISVortexPersister {
             while (rs.next()) {
                 int id = rs.getInt("tardis_id");
                 // get handbrake location
-                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 whereh.put("type", 0);
                 ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);

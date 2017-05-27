@@ -80,7 +80,7 @@ public class TARDISRemoteKeyListener implements Listener {
         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
             String uuid = player.getUniqueId().toString();
             // has TARDIS?
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -102,7 +102,7 @@ public class TARDISRemoteKeyListener implements Listener {
             if (action.equals(Action.LEFT_CLICK_AIR)) {
 
                 // get the TARDIS current location
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                 if (!rsc.resultSet()) {
@@ -110,15 +110,15 @@ public class TARDISRemoteKeyListener implements Listener {
                 }
                 Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> whered = new HashMap<String, Object>();
+                HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                 if (rsd.resultSet()) {
                     // toggle door lock
                     int locked = (rsd.isLocked()) ? 0 : 1;
-                    HashMap<String, Object> setl = new HashMap<String, Object>();
+                    HashMap<String, Object> setl = new HashMap<>();
                     setl.put("locked", locked);
-                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                    HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     // always lock / unlock both doors
                     qf.doUpdate("doors", setl, wherel);
@@ -127,15 +127,12 @@ public class TARDISRemoteKeyListener implements Listener {
                     final TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
                     TARDISSounds.playTARDISSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            tpblt.toggleLamp(id, powered);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        tpblt.toggleLamp(id, powered);
                     }, 6L);
                 }
             } else if (preset.equals(PRESET.INVISIBLE)) {
-                HashMap<String, Object> whered = new HashMap<String, Object>();
+                HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 whered.put("door_type", 1);
                 ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);

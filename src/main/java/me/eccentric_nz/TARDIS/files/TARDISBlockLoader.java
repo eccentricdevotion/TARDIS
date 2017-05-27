@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
@@ -57,11 +56,11 @@ public class TARDISBlockLoader {
     public void loadProtectBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
         if (rsb.resultSet()) {
-            for (ReplacedBlock rp : rsb.getData()) {
+            rsb.getData().forEach((rp) -> {
                 plugin.getGeneralKeeper().getProtectBlockMap().put(rp.getStrLocation(), rp.getTardis_id());
-            }
+            });
             // fix AIR in block field
-            TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+            TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
             Connection connection = service.getConnection();
             PreparedStatement ps = null;
             try {
@@ -130,7 +129,7 @@ public class TARDISBlockLoader {
      * persisted between restarts.
      */
     public void loadAntiBuild() {
-        TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+        TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
         Connection connection = service.getConnection();
         Statement statement = null;
         ResultSet rs = null;

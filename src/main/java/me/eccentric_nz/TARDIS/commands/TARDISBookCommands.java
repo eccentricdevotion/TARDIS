@@ -107,7 +107,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                         return true;
                     }
                     // check they have not already started the achievement
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
                     where.put("name", first);
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
@@ -122,7 +122,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                             return true;
                         }
                     }
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", player.getUniqueId().toString());
                     set.put("name", first);
                     QueryFactory qf = new QueryFactory(plugin);
@@ -136,7 +136,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
     }
 
     private LinkedHashMap<String, String> getAchievements() {
-        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
         Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
         for (String a : aset) {
             if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {

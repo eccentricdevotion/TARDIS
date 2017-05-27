@@ -60,10 +60,10 @@ import org.bukkit.inventory.EquipmentSlot;
 public class TARDISUpdateListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<Material>();
-    List<Material> validSigns = new ArrayList<Material>();
-    List<Material> plates = new ArrayList<Material>();
-    HashMap<String, Integer> controls = new HashMap<String, Integer>();
+    List<Material> validBlocks = new ArrayList<>();
+    List<Material> validSigns = new ArrayList<>();
+    List<Material> plates = new ArrayList<>();
+    HashMap<String, Integer> controls = new HashMap<>();
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -145,7 +145,7 @@ public class TARDISUpdateListener implements Listener {
                 by = (by - 1);
                 blockData = block.getRelative(BlockFace.DOWN).getData();
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", playerUUID);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -158,8 +158,8 @@ public class TARDISUpdateListener implements Listener {
             SCHEMATIC schm = tardis.getSchematic();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
-            HashMap<String, Object> tid = new HashMap<String, Object>();
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> tid = new HashMap<>();
+            HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
             if (controls.containsKey(blockName)) {
@@ -196,7 +196,7 @@ public class TARDISUpdateListener implements Listener {
                 table = "doors";
                 set.put("door_location", blockLocStr);
                 set.put("door_direction", d);
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 wheret.put("uuid", playerUUID);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -217,13 +217,13 @@ public class TARDISUpdateListener implements Listener {
                 }
                 tid.put("door_type", type);
                 // check if we have a backdoor yet
-                HashMap<String, Object> whered = new HashMap<String, Object>();
+                HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 whered.put("door_type", type);
                 ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                 if (!rsd.resultSet()) {
                     // insert record
-                    HashMap<String, Object> setd = new HashMap<String, Object>();
+                    HashMap<String, Object> setd = new HashMap<>();
                     setd.put("tardis_id", id);
                     setd.put("door_type", type);
                     setd.put("door_location", blockLocStr);
@@ -247,7 +247,7 @@ public class TARDISUpdateListener implements Listener {
                 set.put("scanner", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("generator") && blockType.equals(Material.FLOWER_POT)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 24);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -264,7 +264,7 @@ public class TARDISUpdateListener implements Listener {
                     return;
                 }
                 plugin.getTrackerKeeper().getTelepathicPlacements().remove(uuid);
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 wheret.put("type", 23);
                 ResultSetControls rsc = new ResultSetControls(plugin, wheret, false);
@@ -276,16 +276,13 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        block.setType(Material.DAYLIGHT_DETECTOR);
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    block.setType(Material.DAYLIGHT_DETECTOR);
                 }, 3L);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
                 // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block
-                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 whereh.put("type", 0);
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
@@ -321,7 +318,7 @@ public class TARDISUpdateListener implements Listener {
                 set.put("rail", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 2);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -332,7 +329,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 3);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -343,7 +340,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 4);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -354,7 +351,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 5);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -389,7 +386,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("keyboard") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 7);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -408,24 +405,24 @@ public class TARDISUpdateListener implements Listener {
                 s.update();
             }
             if (blockName.equalsIgnoreCase("back") && validBlocks.contains(blockType)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 8);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
                     // insert current into back
-                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                     if (rscl.resultSet()) {
-                        HashMap<String, Object> setb = new HashMap<String, Object>();
+                        HashMap<String, Object> setb = new HashMap<>();
                         setb.put("world", rscl.getWorld().getName());
                         setb.put("x", rscl.getX());
                         setb.put("y", rscl.getY());
                         setb.put("z", rscl.getZ());
                         setb.put("direction", rscl.getDirection().toString());
                         setb.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
-                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                        HashMap<String, Object> whereb = new HashMap<>();
                         whereb.put("tardis_id", id);
                         qf.doUpdate("back", setb, whereb);
                     }
@@ -437,7 +434,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("terminal") && validSigns.contains(blockType)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 9);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -459,7 +456,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("control") && validSigns.contains(blockType)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 22);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -481,7 +478,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("ars") && validSigns.contains(blockType)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 10);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -489,7 +486,7 @@ public class TARDISUpdateListener implements Listener {
                     // insert control
                     qf.insertControl(id, 10, blockLocStr, 0);
                     // check if they already have an ARS record (they may have used `/tardis arsremove`)
-                    HashMap<String, Object> wherer = new HashMap<String, Object>();
+                    HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("tardis_id", id);
                     ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                     if (!rsa.resultSet()) {
@@ -518,7 +515,7 @@ public class TARDISUpdateListener implements Listener {
                         }
                         empty[1][4][4] = control;
                         JSONArray json = new JSONArray(empty);
-                        HashMap<String, Object> seta = new HashMap<String, Object>();
+                        HashMap<String, Object> seta = new HashMap<>();
                         seta.put("tardis_id", id);
                         seta.put("uuid", playerUUID);
                         seta.put("json", json.toString());
@@ -539,7 +536,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("temporal") && validSigns.contains(blockType)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 11);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -561,7 +558,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("info") && validSigns.contains(blockType)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 13);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -582,7 +579,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             if (blockName.equalsIgnoreCase("storage") && blockType.equals(Material.NOTE_BLOCK)) {
-                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                HashMap<String, Object> wherel = new HashMap<>();
                 wherel.put("tardis_id", id);
                 wherel.put("type", 14);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
@@ -597,7 +594,7 @@ public class TARDISUpdateListener implements Listener {
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
-                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                HashMap<String, Object> wherel = new HashMap<>();
                 wherel.put("tardis_id", id);
                 wherel.put("type", 15);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
@@ -612,7 +609,7 @@ public class TARDISUpdateListener implements Listener {
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType) || plates.contains(blockType))) {
-                HashMap<String, Object> wherez = new HashMap<String, Object>();
+                HashMap<String, Object> wherez = new HashMap<>();
                 wherez.put("tardis_id", id);
                 wherez.put("type", 16);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherez, false);
@@ -627,7 +624,7 @@ public class TARDISUpdateListener implements Listener {
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("siege") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
-                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                HashMap<String, Object> wherel = new HashMap<>();
                 wherel.put("tardis_id", id);
                 wherel.put("type", controls.get(blockName));
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);

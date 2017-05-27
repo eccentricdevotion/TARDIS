@@ -33,16 +33,16 @@ import org.bukkit.entity.Player;
 public class TARDISSetKeyCommand {
 
     private final TARDIS plugin;
-    private final List<Material> keys = new ArrayList<Material>();
+    private final List<Material> keys = new ArrayList<>();
 
     public TARDISSetKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
-        for (String m : plugin.getBlocksConfig().getStringList("keys")) {
+        plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
             try {
                 keys.add(Material.valueOf(m));
             } catch (IllegalArgumentException e) {
             }
-        }
+        });
     }
 
     public boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
@@ -67,9 +67,9 @@ public class TARDISSetKeyCommand {
             return true;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
-        HashMap<String, Object> setk = new HashMap<String, Object>();
+        HashMap<String, Object> setk = new HashMap<>();
         setk.put(field, setMaterial);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setk, where);
         TARDISMessage.send(player, "KEY_SAVED");

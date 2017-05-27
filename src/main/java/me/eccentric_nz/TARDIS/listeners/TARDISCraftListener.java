@@ -34,7 +34,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,9 +58,9 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Material, String> t = new HashMap<Material, String>();
+    private final HashMap<Material, String> t = new HashMap<>();
     private final TARDISWallsLookup twl;
-    private final List<UUID> crafters = new ArrayList<UUID>();
+    private final List<UUID> crafters = new ArrayList<>();
     private final List<Integer> spaces = Arrays.asList(1, 4, 7, 6, 9);
 
     public TARDISCraftListener(TARDIS plugin) {
@@ -83,7 +82,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
         // custom seeds
-        for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+        plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase(Locale.ENGLISH))) {
                     Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
@@ -92,7 +91,7 @@ public class TARDISCraftListener implements Listener {
                     plugin.getLogger().log(Level.WARNING, "The custom console {0} does not have a corresponding upgrade value in artron.", console);
                 }
             }
-        }
+        });
         twl = new TARDISWallsLookup(plugin);
     }
 
@@ -103,15 +102,12 @@ public class TARDISCraftListener implements Listener {
         Inventory inv = event.getInventory();
         if (crafters.contains(uuid) && inv.getType().equals(InventoryType.WORKBENCH)) {
             // remove dropped items around workbench
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    for (Entity e : p.getNearbyEntities(6, 6, 6)) {
-                        if (e instanceof Item) {
-                            e.remove();
-                        }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                p.getNearbyEntities(6, 6, 6).forEach((e) -> {
+                    if (e instanceof Item) {
+                        e.remove();
                     }
-                }
+                });
             }, 1L);
             crafters.remove(uuid);
         }
@@ -130,50 +126,44 @@ public class TARDISCraftListener implements Listener {
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
             final Player player = (Player) event.getWhoClicked();
             final UUID uuid = player.getUniqueId();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    if (checkSlots(inv)) {
-                        if (!crafters.contains(uuid)) {
-                            crafters.add(uuid);
-                        }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                if (checkSlots(inv)) {
+                    if (!crafters.contains(uuid)) {
+                        crafters.add(uuid);
+                    }
+                    if (slot == 0) {
+                        event.setCancelled(true);
+                    }
+                    // get the materials in crafting slots
+                    Material m7 = inv.getItem(7).getType(); // tardis type
+                    final ItemStack is = new ItemStack(m7, 1);
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName("§6TARDIS Seed Block");
+                    List<String> lore = new ArrayList<>();
+                    lore.add(t.get(m7));
+                    lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
+                    lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    if (checkPerms(player, m7)) {
+                        TARDISMessage.send(player, "SEED_VALID");
+                        inv.setItem(0, is);
+                        player.updateInventory();
                         if (slot == 0) {
                             event.setCancelled(true);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                // clear the other slots
+                                for (int i = 1; i < 10; i++) {
+                                    inv.setItem(i, null);
+                                }
+                                if (!event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                    player.setItemOnCursor(is);
+                                    crafters.remove(uuid);
+                                }
+                            }, 2L);
                         }
-                        // get the materials in crafting slots
-                        Material m7 = inv.getItem(7).getType(); // tardis type
-                        final ItemStack is = new ItemStack(m7, 1);
-                        ItemMeta im = is.getItemMeta();
-                        im.setDisplayName("§6TARDIS Seed Block");
-                        List<String> lore = new ArrayList<String>();
-                        lore.add(t.get(m7));
-                        lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
-                        lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
-                        im.setLore(lore);
-                        is.setItemMeta(im);
-                        if (checkPerms(player, m7)) {
-                            TARDISMessage.send(player, "SEED_VALID");
-                            inv.setItem(0, is);
-                            player.updateInventory();
-                            if (slot == 0) {
-                                event.setCancelled(true);
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // clear the other slots
-                                        for (int i = 1; i < 10; i++) {
-                                            inv.setItem(i, null);
-                                        }
-                                        if (!event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-                                            player.setItemOnCursor(is);
-                                            crafters.remove(uuid);
-                                        }
-                                    }
-                                }, 2L);
-                            }
-                        } else {
-                            TARDISMessage.send(player, "NO_PERMS");
-                        }
+                    } else {
+                        TARDISMessage.send(player, "NO_PERMS");
                     }
                 }
             }, 2L);

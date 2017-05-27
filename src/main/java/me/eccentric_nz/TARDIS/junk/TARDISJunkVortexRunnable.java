@@ -62,12 +62,12 @@ public class TARDISJunkVortexRunnable implements Runnable {
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
             }
             if (plugin.getConfig().getBoolean("junk.particles")) {
-                for (Entity e : plugin.getUtils().getJunkTravellers(vortexJunkLoc)) {
+                plugin.getUtils().getJunkTravellers(vortexJunkLoc).forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
                     }
-                }
+                });
             }
             if (i == 2) {
                 // play sound
@@ -88,19 +88,16 @@ public class TARDISJunkVortexRunnable implements Runnable {
             }
             if (i == LOOPS) {
                 // teleport players
-                for (Entity e : getJunkTravellers()) {
+                getJunkTravellers().forEach((e) -> {
                     if (e instanceof Player) {
                         final Player p = (Player) e;
                         final Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                p.teleport(relativeLoc);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            p.teleport(relativeLoc);
                         }, 2L);
                     }
-                }
+                });
                 plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;

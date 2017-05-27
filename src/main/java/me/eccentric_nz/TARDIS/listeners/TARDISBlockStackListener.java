@@ -61,7 +61,7 @@ public class TARDISBlockStackListener implements Listener {
 
     private final TARDIS plugin;
 
-    private final List<Material> blocks = new ArrayList<Material>();
+    private final List<Material> blocks = new ArrayList<>();
     private Material custom;
 
     public TARDISBlockStackListener(TARDIS plugin) {
@@ -75,7 +75,7 @@ public class TARDISBlockStackListener implements Listener {
         blocks.add(Material.REDSTONE_BLOCK); // redstone
         blocks.add(Material.QUARTZ_BLOCK); // ARS
         blocks.add(Material.COAL_BLOCK); // steampunk
-        for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+        plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 try {
                     custom = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
@@ -84,7 +84,7 @@ public class TARDISBlockStackListener implements Listener {
                     plugin.debug(plugin.getPluginName() + "Invalid custom seed block material for " + console + "!");
                 }
             }
-        }
+        });
     }
 
     /**
@@ -193,7 +193,7 @@ public class TARDISBlockStackListener implements Listener {
                         final String biome = block_loc.getBlock().getBiome().toString();
                         String chun = cw + ":" + cx + ":" + cz;
                         final QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
@@ -211,7 +211,7 @@ public class TARDISBlockStackListener implements Listener {
                         set.put("chameleon_preset", preset);
                         set.put("chameleon_demat", preset);
 //                        }
-                        HashMap<String, Object> setpp = new HashMap<String, Object>();
+                        HashMap<String, Object> setpp = new HashMap<>();
                         if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
@@ -225,19 +225,19 @@ public class TARDISBlockStackListener implements Listener {
                         setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                         final int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("uuid", player.getUniqueId().toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         if (!rsp.resultSet()) {
                             setpp.put("uuid", player.getUniqueId().toString());
                             qf.doInsert("player_prefs", setpp);
                         } else {
-                            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                            HashMap<String, Object> wherepp = new HashMap<>();
                             wherepp.put("uuid", player.getUniqueId().toString());
                             qf.doUpdate("player_prefs", setpp, wherepp);
                         }
                         // populate home, current, next and back tables
-                        HashMap<String, Object> setlocs = new HashMap<String, Object>();
+                        HashMap<String, Object> setlocs = new HashMap<>();
                         setlocs.put("tardis_id", lastInsertId);
                         setlocs.put("world", block_loc.getWorld().getName());
                         setlocs.put("x", block_loc.getBlockX());
@@ -264,9 +264,9 @@ public class TARDISBlockStackListener implements Listener {
                         plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, Material.WOOL, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
-                            HashMap<String, Object> seta = new HashMap<String, Object>();
+                            HashMap<String, Object> seta = new HashMap<>();
                             seta.put("completed", 1);
-                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", player.getUniqueId().toString());
                             wherea.put("name", "tardis");
                             qf.doUpdate("achievements", seta, wherea);
@@ -276,12 +276,12 @@ public class TARDISBlockStackListener implements Listener {
                         if (max_count > 0) {
                             TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
                         }
-                        HashMap<String, Object> setc = new HashMap<String, Object>();
+                        HashMap<String, Object> setc = new HashMap<>();
                         setc.put("count", player_count + 1);
                         setc.put("grace", grace_count);
                         if (has_count) {
                             // update the player's TARDIS count
-                            HashMap<String, Object> wheretc = new HashMap<String, Object>();
+                            HashMap<String, Object> wheretc = new HashMap<>();
                             wheretc.put("uuid", player.getUniqueId().toString());
                             qf.doUpdate("t_count", setc, wheretc);
                         } else {
@@ -290,7 +290,7 @@ public class TARDISBlockStackListener implements Listener {
                             qf.doInsert("t_count", setc);
                         }
                     } else {
-                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                        HashMap<String, Object> wherecl = new HashMap<>();
                         wherecl.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                         if (rscl.resultSet()) {

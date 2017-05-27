@@ -37,7 +37,7 @@ public class TARDISLazarusTWAInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<String, EntityType>();
+    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<>();
 
     public TARDISLazarusTWAInventory(TARDIS plugin) {
         this.plugin = plugin;

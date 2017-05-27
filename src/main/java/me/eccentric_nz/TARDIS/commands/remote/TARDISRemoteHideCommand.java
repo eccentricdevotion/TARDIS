@@ -47,7 +47,7 @@ public class TARDISRemoteHideCommand {
             TARDISMessage.send(sender, "NOT_IN_VORTEX");
             return true;
         }
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -59,7 +59,7 @@ public class TARDISRemoteHideCommand {
             olp = (OfflinePlayer) sender;
         } else {
             // get tardis owner
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
@@ -84,9 +84,9 @@ public class TARDISRemoteHideCommand {
         plugin.getPresetDestroyer().destroyPreset(dd);
         TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
         // set hidden to true
-        HashMap<String, Object> whereh = new HashMap<String, Object>();
+        HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
-        HashMap<String, Object> seth = new HashMap<String, Object>();
+        HashMap<String, Object> seth = new HashMap<>();
         seth.put("hidden", 1);
         new QueryFactory(plugin).doUpdate("tardis", seth, whereh);
         return true;

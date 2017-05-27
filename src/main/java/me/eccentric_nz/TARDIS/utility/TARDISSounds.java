@@ -48,8 +48,8 @@ public class TARDISSounds {
             ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
             if (rs.resultSet()) {
                 List<UUID> data = rs.getData();
-                for (UUID u : data) {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                data.forEach((u) -> {
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", u.toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
                     boolean userSFX;
@@ -67,7 +67,7 @@ public class TARDISSounds {
                             playTARDISSound(player.getLocation(), hum);
                         }
                     }
-                }
+                });
             }
         }
     }
@@ -78,7 +78,7 @@ public class TARDISSounds {
      * @param p the player to play the sound to
      */
     public static void playTARDISHum(Player p) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
         boolean userSFX;
@@ -125,11 +125,8 @@ public class TARDISSounds {
      * @param s The sound to play
      */
     public static void playTARDISSound(final Player p, final String s) {
-        TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.playSound(p.getLocation(), s, VOLUME, 1.0f);
-            }
+        TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+            p.playSound(p.getLocation(), s, VOLUME, 1.0f);
         }, 5L);
     }
 }

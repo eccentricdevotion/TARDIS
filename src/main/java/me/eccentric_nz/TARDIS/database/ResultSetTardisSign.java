@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
  */
 public class ResultSetTardisSign {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;

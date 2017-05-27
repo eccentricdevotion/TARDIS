@@ -40,14 +40,14 @@ public enum FLAG {
     LIMIT;
 
     public static List<FLAG> getNoMessageFlags() {
-        List<FLAG> flags = new ArrayList<FLAG>();
+        List<FLAG> flags = new ArrayList<>();
         flags.addAll(Arrays.asList(FLAG.values()));
         flags.remove(FLAG.MESSAGE_PLAYER);
         return flags;
     }
 
     public static List<FLAG> getAPIFlags() {
-        List<FLAG> flags = new ArrayList<FLAG>();
+        List<FLAG> flags = new ArrayList<>();
         flags.addAll(Arrays.asList(FLAG.values()));
         flags.remove(FLAG.MESSAGE_PLAYER);
         flags.remove(FLAG.SPACE_TARDIS);

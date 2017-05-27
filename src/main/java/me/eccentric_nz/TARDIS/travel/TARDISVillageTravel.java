@@ -54,7 +54,7 @@ public class TARDISVillageTravel {
 
     public Location getRandomVillage(Player p, int id) {
         // get world the Police Box is in
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (rs.resultSet()) {
@@ -91,7 +91,7 @@ public class TARDISVillageTravel {
                 NbtCompound nbtc = TARDISNbtFactory.fromCompressedStream(is);
                 NbtCompound nbtdata = nbtc.getPath("data");
                 NbtCompound nbtf = nbtdata.getPath("Features");
-                List<String> nbtl = new ArrayList<String>(nbtf.keySet());
+                List<String> nbtl = new ArrayList<>(nbtf.keySet());
                 int size = nbtl.size();
                 String r = nbtl.get(rand.nextInt(size));
                 String[] split = r.substring(1, r.length() - 1).split(",");

@@ -48,7 +48,7 @@ public class TARDISRemoveSavedLocationCommand {
                 return false;
             }
             int id = rs.getTardis_id();
-            HashMap<String, Object> whered = new HashMap<String, Object>();
+            HashMap<String, Object> whered = new HashMap<>();
             whered.put("dest_name", args[1]);
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
@@ -58,7 +58,7 @@ public class TARDISRemoveSavedLocationCommand {
             }
             int destID = rsd.getDest_id();
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> did = new HashMap<String, Object>();
+            HashMap<String, Object> did = new HashMap<>();
             did.put("dest_id", destID);
             qf.doDelete("destinations", did);
             TARDISMessage.send(player, "DEST_DELETED", args[1]);

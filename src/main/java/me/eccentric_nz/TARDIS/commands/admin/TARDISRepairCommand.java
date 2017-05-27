@@ -55,9 +55,9 @@ public class TARDISRepairCommand {
         if (args.length == 3) {
             r = TARDISNumberParsers.parseInt(args[2]);
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("repair", r);
         new QueryFactory(plugin).doUpdate("t_count", set, where);
         TARDISMessage.send(sender, "REPAIR_SET", args[1], args[2]);

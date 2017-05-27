@@ -44,7 +44,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 
     private final TARDIS plugin;
     private final Material sonicMaterial;
-    private final HashMap<String, String> upgrades = new HashMap<String, String>();
+    private final HashMap<String, String> upgrades = new HashMap<>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -115,7 +115,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                         lore = sim.getLore();
                     } else {
                         // otherwise this is the first upgrade
-                        lore = new ArrayList<String>();
+                        lore = new ArrayList<>();
                         lore.add("Upgrades:");
                     }
                     // if they don't already have the upgrade

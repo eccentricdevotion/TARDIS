@@ -53,12 +53,12 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISChameleonConstructorListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Material, Integer> doors = new HashMap<Material, Integer>();
+    private final HashMap<Material, Integer> doors = new HashMap<>();
     private final List<Material> doormats;
-    private final List<Material> precious = new ArrayList<Material>();
-    private final List<Material> lamps = new ArrayList<Material>();
-    private final HashMap<UUID, Integer> currentDoor = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> currentLamp = new HashMap<UUID, Integer>();
+    private final List<Material> precious = new ArrayList<>();
+    private final List<Material> lamps = new ArrayList<>();
+    private final HashMap<UUID, Integer> currentDoor = new HashMap<>();
+    private final HashMap<UUID, Integer> currentLamp = new HashMap<>();
     private final int dn;
     private final int ln;
 
@@ -93,14 +93,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         this.precious.add(Material.REDSTONE_BLOCK);
         this.precious.add(Material.REDSTONE_ORE);
         this.precious.add(Material.SEA_LANTERN);
-        this.doormats = new ArrayList<Material>(this.doors.keySet());
-        for (String s : plugin.getBlocksConfig().getStringList("lamp_blocks")) {
+        this.doormats = new ArrayList<>(this.doors.keySet());
+        plugin.getBlocksConfig().getStringList("lamp_blocks").forEach((s) -> {
             try {
                 this.lamps.add(Material.valueOf(s));
             } catch (IllegalArgumentException e) {
                 plugin.debug("Invalid Material in lamp_blocks section.");
             }
-        }
+        });
         this.ln = this.lamps.size();
     }
 
@@ -123,12 +123,12 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                    HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
@@ -140,29 +140,23 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                 case 0:
                                     // back
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
-                                            ItemStack[] items = tci.getMenu();
-                                            Inventory chaminv = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
-                                            chaminv.setContents(items);
-                                            player.openInventory(chaminv);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
+                                        ItemStack[] items = tci.getMenu();
+                                        Inventory chaminv = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                                        chaminv.setContents(items);
+                                        player.openInventory(chaminv);
                                     }, 2L);
                                     break;
                                 case 2:
                                     // help
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
-                                            ItemStack[] items = tci.getHelp();
-                                            Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Chameleon Help");
-                                            chaminv.setContents(items);
-                                            player.openInventory(chaminv);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
+                                        ItemStack[] items = tci.getHelp();
+                                        Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Chameleon Help");
+                                        chaminv.setContents(items);
+                                        player.openInventory(chaminv);
                                     }, 2L);
                                     break;
                                 case 5:
@@ -179,7 +173,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     close(player);
                                     break;
                                 case 7:
-                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", id);
                                     ResultSetChameleon rscl = new ResultSetChameleon(plugin, wherecl);
                                     if (!rscl.resultSet()) {
@@ -281,11 +275,11 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     String jsonGlassID = new JSONArray(glassID).toString();
                                     String jsonGlassData = new JSONArray(glassData).toString();
                                     // save chameleon construct
-                                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherec = new HashMap<>();
                                     wherec.put("tardis_id", id);
                                     ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
                                     QueryFactory qf = new QueryFactory(plugin);
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("blueprintID", jsonBlueID);
                                     set.put("blueprintData", jsonBlueData);
                                     set.put("stainID", jsonStainID);
@@ -294,7 +288,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     set.put("glassData", jsonGlassData);
                                     if (rsc.resultSet()) {
                                         // update
-                                        HashMap<String, Object> whereu = new HashMap<String, Object>();
+                                        HashMap<String, Object> whereu = new HashMap<>();
                                         whereu.put("tardis_id", id);
                                         qf.doUpdate("chameleon", set, whereu);
                                     } else {
@@ -359,10 +353,10 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 
     private void buildConstruct(String preset, int id, QueryFactory qf, String location, Player player) {
         // update tardis table
-        HashMap<String, Object> sett = new HashMap<String, Object>();
+        HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
         sett.put("chameleon_demat", preset);
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         qf.doUpdate("tardis", sett, wheret);
         // update chameleon sign

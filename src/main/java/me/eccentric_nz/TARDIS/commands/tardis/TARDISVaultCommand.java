@@ -60,7 +60,7 @@ public class TARDISVaultCommand {
             return true;
         }
         // player is in TARDIS
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
@@ -90,7 +90,7 @@ public class TARDISVaultCommand {
         int y = l.getBlockY() - (l.getBlockY() % 16);
         int z = l.getBlockZ() - mz;
         String pos = l.toString();
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", pos);
         set.put("x", x);

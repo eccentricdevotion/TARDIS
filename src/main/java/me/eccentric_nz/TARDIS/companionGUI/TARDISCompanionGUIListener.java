@@ -41,7 +41,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISCompanionGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, Integer> selected_head = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> selected_head = new HashMap<>();
 
     public TARDISCompanionGUIListener(TARDIS plugin) {
         super(plugin);
@@ -65,19 +65,16 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                             break;
                         case 48: // add
                             close(player);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    ItemStack[] items = new TARDISCompanionAddInventory(plugin, uuid).getPlayers();
-                                    Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Add Companion");
-                                    presetinv.setContents(items);
-                                    player.openInventory(presetinv);
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                ItemStack[] items = new TARDISCompanionAddInventory(plugin, uuid).getPlayers();
+                                Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Add Companion");
+                                presetinv.setContents(items);
+                                player.openInventory(presetinv);
                             }, 2L);
                             break;
                         case 51: // delete
                             if (selected_head.containsKey(uuid)) {
-                                HashMap<String, Object> where = new HashMap<String, Object>();
+                                HashMap<String, Object> where = new HashMap<>();
                                 where.put("uuid", uuid.toString());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                                 if (rs.resultSet()) {
@@ -110,8 +107,8 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
     }
 
     private void removeCompanion(int id, String comps, String uuid) {
-        HashMap<String, Object> tid = new HashMap<String, Object>();
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> tid = new HashMap<>();
+        HashMap<String, Object> set = new HashMap<>();
         QueryFactory qf = new QueryFactory(plugin);
         String newList = "";
         String[] split = comps.split(":");

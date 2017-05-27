@@ -49,9 +49,9 @@ public class TARDISAdminMenuInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
-        List<ItemStack> options = new ArrayList<ItemStack>();
-        Set<String> config = new TreeSet<String>(plugin.getConfig().getKeys(true));
-        for (String c : config) {
+        List<ItemStack> options = new ArrayList<>();
+        Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
+        config.forEach((c) -> {
             String value = plugin.getConfig().getString(c);
             if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("abandon") && !c.startsWith("circuits") && !c.startsWith("conversions") && !c.startsWith("debug") && !c.startsWith("desktop") && !c.startsWith("junk") && !c.startsWith("siege") && !c.startsWith("travel") && !c.startsWith("worlds")) {
                 ItemStack is = new ItemStack(Material.DIODE, 1);
@@ -61,7 +61,7 @@ public class TARDISAdminMenuInventory {
                 is.setItemMeta(im);
                 options.add(is);
             }
-        }
+        });
         ItemStack[] stack = new ItemStack[54];
         for (int s = 0; s < 52; s++) {
             if (s < options.size()) {

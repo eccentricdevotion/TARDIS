@@ -47,13 +47,13 @@ public class TARDISRemoteTravelCommand {
     }
 
     public boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
-        HashMap<String, Object> wherei = new HashMap<String, Object>();
+        HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             boolean hidden = tardis.isHidden();
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
             String resetw = "";
@@ -67,7 +67,7 @@ public class TARDISRemoteTravelCommand {
             COMPASS cd = rscl.getDirection();
             Biome biome = rscl.getBiome();
             boolean sub = rscl.isSubmarine();
-            HashMap<String, Object> wherenl = new HashMap<String, Object>();
+            HashMap<String, Object> wherenl = new HashMap<>();
             wherenl.put("tardis_id", id);
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
@@ -81,7 +81,7 @@ public class TARDISRemoteTravelCommand {
             if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                 exit.getWorld().loadChunk(exit.getChunk());
             }
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
@@ -114,31 +114,28 @@ public class TARDISRemoteTravelCommand {
             bd.setRebuild(false);
             bd.setSubmarine(is_next_sub);
             bd.setTardisID(id);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                    TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getPresetBuilder().buildPreset(bd);
+                TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
             }, delay);
             if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
                 plugin.getTrackerKeeper().getDamage().remove(id);
             }
             // current
-            HashMap<String, Object> setcurrent = new HashMap<String, Object>();
+            HashMap<String, Object> setcurrent = new HashMap<>();
             setcurrent.put("world", exit.getWorld().getName());
             setcurrent.put("x", exit.getBlockX());
             setcurrent.put("y", exit.getBlockY());
             setcurrent.put("z", exit.getBlockZ());
             setcurrent.put("direction", sd.toString());
             setcurrent.put("submarine", (is_next_sub) ? 1 : 0);
-            HashMap<String, Object> wherecurrent = new HashMap<String, Object>();
+            HashMap<String, Object> wherecurrent = new HashMap<>();
             wherecurrent.put("tardis_id", id);
             // get current location for back
-            HashMap<String, Object> wherecu = new HashMap<String, Object>();
+            HashMap<String, Object> wherecu = new HashMap<>();
             wherecu.put("tardis_id", id);
             ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
-            HashMap<String, Object> setback = new HashMap<String, Object>();
+            HashMap<String, Object> setback = new HashMap<>();
             if (!rscu.resultSet()) {
                 // back
                 setback.put("world", exit.getWorld().getName());
@@ -156,16 +153,16 @@ public class TARDISRemoteTravelCommand {
                 setback.put("direction", rscu.getDirection().toString());
                 setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
             }
-            HashMap<String, Object> whereback = new HashMap<String, Object>();
+            HashMap<String, Object> whereback = new HashMap<>();
             whereback.put("tardis_id", id);
             // update Police Box door direction
-            HashMap<String, Object> setdoor = new HashMap<String, Object>();
+            HashMap<String, Object> setdoor = new HashMap<>();
             setdoor.put("door_direction", sd.toString());
-            HashMap<String, Object> wheredoor = new HashMap<String, Object>();
+            HashMap<String, Object> wheredoor = new HashMap<>();
             wheredoor.put("tardis_id", id);
             wheredoor.put("door_type", 0);
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             if (set.size() > 0) {
                 qf.doUpdate("tardis", set, whereh);

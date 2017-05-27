@@ -46,7 +46,7 @@ public class TARDISBuildCommand {
         }
         String playerNameStr = player.getName();
         // get the player's TARDIS world
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
@@ -55,8 +55,8 @@ public class TARDISBuildCommand {
         }
         Tardis tardis = rs.getTardis();
         Integer id = tardis.getTardis_id();
-        HashMap<String, Object> setp = new HashMap<String, Object>();
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> setp = new HashMap<>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", player.getUniqueId().toString());
         if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_ON")) || args[1].equalsIgnoreCase("on")) {
             setp.put("build_on", 1);

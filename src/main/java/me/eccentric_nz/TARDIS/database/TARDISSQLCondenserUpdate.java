@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -30,7 +29,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLCondenserUpdate implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final int amount;
     private final HashMap<String, Object> where;
@@ -58,14 +57,14 @@ public class TARDISSQLCondenserUpdate implements Runnable {
         Statement statement = null;
         String wheres;
         StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
+        where.entrySet().forEach((entry) -> {
             sbw.append(entry.getKey()).append(" = ");
             if (entry.getValue().getClass().equals(String.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");
             }
-        }
+        });
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + prefix + "condenser SET block_count = block_count - " + amount + " WHERE " + wheres;

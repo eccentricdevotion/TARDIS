@@ -32,12 +32,12 @@ import org.bukkit.Material;
  */
 public class TARDISBuilderInstanceKeeper {
 
-    private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
+    private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
     private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private HashMap<Material, String> seeds;
-    private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<String, String>();
+    private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
     private static final List<String> IGNORE_BLOCKS = Arrays.asList(new String[]{"AIR", "BEDROCK", "CAKE_BLOCK", "COMMAND", "GOLD_ORE", "HUGE_MUSHROOM_2", "ICE", "LAVA", "MOB_SPAWNER", "MONSTER_EGGS", "PISTON_EXTENSION", "SPONGE", "STATIONARY_LAVA", "STATIONARY_WATER", "WATER"});
-    private static final List<Material> PRECIOUS = new ArrayList<Material>();
+    private static final List<Material> PRECIOUS = new ArrayList<>();
 
     static {
         BLOCK_CONVERSION.put("BED_BLOCK", "BED");

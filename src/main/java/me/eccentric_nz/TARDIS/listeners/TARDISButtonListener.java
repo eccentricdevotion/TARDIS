@@ -75,7 +75,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> validBlocks = new ArrayList<Material>();
+    private final List<Material> validBlocks = new ArrayList<>();
     private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22);
     private final List<Integer> allow_unpowered = Arrays.asList(13, 17, 22);
     private final List<Integer> no_siege = Arrays.asList(0, 10, 12, 16, 19, 20);
@@ -117,7 +117,7 @@ public class TARDISButtonListener implements Listener {
                 // get clicked block location
                 String buttonloc = block.getLocation().toString();
                 // get tardis from saved button location
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("location", buttonloc);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
@@ -130,7 +130,7 @@ public class TARDISButtonListener implements Listener {
                     if (!onlythese.contains(type)) {
                         return;
                     }
-                    HashMap<String, Object> whereid = new HashMap<String, Object>();
+                    HashMap<String, Object> whereid = new HashMap<>();
                     whereid.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                     if (rs.resultSet()) {
@@ -274,7 +274,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     // do they have a storage record?
-                                    HashMap<String, Object> wherestore = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherestore = new HashMap<>();
                                     wherestore.put("uuid", playerUUID);
                                     ResultSetDiskStorage rsstore = new ResultSetDiskStorage(plugin, wherestore);
                                     ItemStack[] stack = new ItemStack[54];
@@ -295,7 +295,7 @@ public class TARDISButtonListener implements Listener {
                                             plugin.debug("Could not get default Storage Inventory: " + ex.getMessage());
                                         }
                                         // make a record
-                                        HashMap<String, Object> setstore = new HashMap<String, Object>();
+                                        HashMap<String, Object> setstore = new HashMap<>();
                                         setstore.put("uuid", player.getUniqueId().toString());
                                         setstore.put("tardis_id", id);
                                         qf.doInsert("storage", setstore);
@@ -376,15 +376,12 @@ public class TARDISButtonListener implements Listener {
         final Location zero = TARDISLocationGetters.getLocationFromDB(z, 0.0F, 0.0F);
         if (zero != null) {
             TARDISMessage.send(player, "ZERO_READY");
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
-                    plugin.getPM().callEvent(new TARDISZeroRoomEnterEvent(player, id));
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
+                plugin.getPM().callEvent(new TARDISZeroRoomEnterEvent(player, id));
             }, 20L);
             plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
-            HashMap<String, Object> wherez = new HashMap<String, Object>();
+            HashMap<String, Object> wherez = new HashMap<>();
             wherez.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
         } else {

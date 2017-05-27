@@ -43,7 +43,7 @@ public class TARDISBannerSetter {
             Banner banner = (Banner) pbb.getState();
             DyeColor dye = DyeColor.valueOf(state.getString("colour"));
             banner.setBaseColor(dye);
-            List<Pattern> plist = new ArrayList<Pattern>();
+            List<Pattern> plist = new ArrayList<>();
             JSONArray patterns = state.getJSONArray("patterns");
             for (int j = 0; j < patterns.length(); j++) {
                 JSONObject jo = patterns.getJSONObject(j);

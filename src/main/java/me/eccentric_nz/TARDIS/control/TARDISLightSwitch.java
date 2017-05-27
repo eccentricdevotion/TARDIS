@@ -43,9 +43,9 @@ public class TARDISLightSwitch {
     }
 
     public void flickSwitch() {
-        HashMap<String, Object> wherel = new HashMap<String, Object>();
+        HashMap<String, Object> wherel = new HashMap<>();
         wherel.put("tardis_id", id);
-        HashMap<String, Object> setl = new HashMap<String, Object>();
+        HashMap<String, Object> setl = new HashMap<>();
         if (lights) {
             new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
             setl.put("lights_on", 0);

@@ -76,56 +76,53 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
             wr.setTaskId(id);
             plugin.getTrackerKeeper().getRegulating().put(uuid, wr);
             // schedule a delayed task to close the inventory
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getServer().getScheduler().cancelTask(id);
-                    int final_slot = plugin.getTrackerKeeper().getRegulating().get(uuid).getSlot();
-                    plugin.getTrackerKeeper().getRegulating().remove(uuid);
-                    player.closeInventory();
-                    // adjust the landing location based on the final slot
-                    int blocks = 0;
-                    switch (final_slot) {
-                        case 0:
-                        case 4:
-                        case 36:
-                        case 40:
-                            blocks = 8;
-                            break;
-                        case 1:
-                        case 3:
-                        case 9:
-                        case 13:
-                        case 27:
-                        case 31:
-                        case 37:
-                        case 39:
-                            blocks = 6;
-                            break;
-                        case 2:
-                        case 10:
-                        case 12:
-                        case 18:
-                        case 22:
-                        case 28:
-                        case 30:
-                        case 38:
-                            blocks = 4;
-                            break;
-                        case 11:
-                        case 19:
-                        case 21:
-                        case 29:
-                            blocks = 2;
-                            break;
-                        default:
-                            break;
-                    }
-                    // adjust location
-                    if (blocks != 0) {
-                        Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
-                        plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
-                    }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getServer().getScheduler().cancelTask(id);
+                int final_slot = plugin.getTrackerKeeper().getRegulating().get(uuid).getSlot();
+                plugin.getTrackerKeeper().getRegulating().remove(uuid);
+                player.closeInventory();
+                // adjust the landing location based on the final slot
+                int blocks = 0;
+                switch (final_slot) {
+                    case 0:
+                    case 4:
+                    case 36:
+                    case 40:
+                        blocks = 8;
+                        break;
+                    case 1:
+                    case 3:
+                    case 9:
+                    case 13:
+                    case 27:
+                    case 31:
+                    case 37:
+                    case 39:
+                        blocks = 6;
+                        break;
+                    case 2:
+                    case 10:
+                    case 12:
+                    case 18:
+                    case 22:
+                    case 28:
+                    case 30:
+                    case 38:
+                        blocks = 4;
+                        break;
+                    case 11:
+                    case 19:
+                    case 21:
+                    case 29:
+                        blocks = 2;
+                        break;
+                    default:
+                        break;
+                }
+                // adjust location
+                if (blocks != 0) {
+                    Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
+                    plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
                 }
             }, 600L);
         }

@@ -78,7 +78,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 allow = true;
                 id = plugin.getTrackerKeeper().getJunkPlayers().get(uuid);
             } else {
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
@@ -103,7 +103,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                             } else {
                                 ItemMeta cim = cursor.getItemMeta();
                                 String save = cim.getDisplayName();
-                                HashMap<String, Object> where = new HashMap<String, Object>();
+                                HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
                                 where.put("dest_name", save);
                                 new QueryFactory(plugin).doDelete("destinations", where);
@@ -117,7 +117,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 } else {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
                         Location current = null;
@@ -155,7 +155,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 }
                                 if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
-                                    HashMap<String, Object> wheresave = new HashMap<String, Object>();
+                                    HashMap<String, Object> wheresave = new HashMap<>();
                                     wheresave.put("world", lore.get(0));
                                     wheresave.put("x", lore.get(1));
                                     wheresave.put("y", lore.get(2));
@@ -168,7 +168,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     }
                                 }
                                 if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("world", lore.get(0));
                                     set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
                                     set.put("y", TARDISNumberParsers.parseInt(lore.get(2)));
@@ -184,7 +184,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                             set.put("submarine", 0);
                                         }
                                     }
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                    HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
                                     new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
@@ -210,7 +210,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 }
                 if (slot == 45) {
                     // check it is this player's TARDIS
-                    HashMap<String, Object> wherez = new HashMap<String, Object>();
+                    HashMap<String, Object> wherez = new HashMap<>();
                     wherez.put("tardis_id", id);
                     wherez.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
@@ -227,15 +227,12 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 if (slot == 49) {
                     // load TARDIS areas
                     close(player);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
-                            ItemStack[] items = sst.getTerminal();
-                            Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
-                            areainv.setContents(items);
-                            player.openInventory(areainv);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
+                        ItemStack[] items = sst.getTerminal();
+                        Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
+                        areainv.setContents(items);
+                        player.openInventory(areainv);
                     }, 2L);
                 }
             }
@@ -249,7 +246,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
         if (inv_name.equals("§4TARDIS saves")) {
             UUID uuid = ((Player) event.getPlayer()).getUniqueId();
             // get the TARDIS the player is in
-            HashMap<String, Object> wheres = new HashMap<String, Object>();
+            HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
             if (rst.resultSet()) {
@@ -260,9 +257,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     if (stack[i] != null) {
                         ItemMeta im = stack[i].getItemMeta();
                         String save = im.getDisplayName();
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("slot", i);
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         where.put("dest_name", save);
                         qf.doUpdate("destinations", set, where);

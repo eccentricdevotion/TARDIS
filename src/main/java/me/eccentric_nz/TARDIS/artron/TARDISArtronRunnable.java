@@ -48,13 +48,13 @@ public class TARDISArtronRunnable implements Runnable {
     @Override
     public void run() {
         int level = isFull(id);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         boolean near = isNearCharger(id);
         if (!near || level > (plugin.getArtronConfig().getInt("full_charge") - 1)) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("recharging", 0);
             qf.doUpdate("tardis", set, where);
         } else if (near) {
@@ -69,7 +69,7 @@ public class TARDISArtronRunnable implements Runnable {
      * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {

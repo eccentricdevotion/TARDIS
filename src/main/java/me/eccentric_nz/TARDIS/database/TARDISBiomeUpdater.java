@@ -32,7 +32,7 @@ import org.bukkit.block.BlockFace;
  */
 public class TARDISBiomeUpdater implements Runnable {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
@@ -57,9 +57,9 @@ public class TARDISBiomeUpdater implements Runnable {
                 while (rs.next()) {
                     if (rs.getString("biome").isEmpty()) {
                         String b = getBiome(rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("biome", b);
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("current_id", rs.getInt("current_id"));
                         qf.doUpdate("current", set, where);
                     }

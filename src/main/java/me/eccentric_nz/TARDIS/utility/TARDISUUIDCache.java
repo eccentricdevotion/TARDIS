@@ -104,11 +104,8 @@ public class TARDISUUIDCache {
     }
 
     private void asyncFetch(final ArrayList<String> names) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                syncFetch(names);
-            }
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+            syncFetch(names);
         });
     }
 
@@ -122,7 +119,7 @@ public class TARDISUUIDCache {
     }
 
     private ArrayList<String> nameList(String name) {
-        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<>();
         names.add(name);
         return names;
     }

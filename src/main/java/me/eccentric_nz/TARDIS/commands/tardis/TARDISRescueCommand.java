@@ -61,13 +61,10 @@ public class TARDISRescueCommand {
                 String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
                 TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
                 plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
-                            plugin.getTrackerKeeper().getChat().remove(savedUUID);
-                            TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
-                        }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
+                        plugin.getTrackerKeeper().getChat().remove(savedUUID);
+                        TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
                     }
                 }, 1200L);
             }

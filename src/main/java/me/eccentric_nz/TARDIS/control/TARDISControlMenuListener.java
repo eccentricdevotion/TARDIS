@@ -79,12 +79,12 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                    HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
                         final int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
@@ -140,11 +140,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     }
                                     close(player);
                                     // give the GUI time to close first
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
                                     }, 2L);
                                     break;
                                 case 2:
@@ -208,14 +205,11 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     if (zero != null) {
                                         close(player);
                                         TARDISMessage.send(player, "ZERO_READY");
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
-                                            }
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
                                         }, 20L);
                                         plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
-                                        HashMap<String, Object> wherez = new HashMap<String, Object>();
+                                        HashMap<String, Object> wherez = new HashMap<>();
                                         wherez.put("tardis_id", id);
                                         new QueryFactory(plugin).alterEnergyLevel("tardis", -zero_amount, wherez, player);
                                     } else {
@@ -384,7 +378,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                                    HashMap<String, Object> whered = new HashMap<>();
                                     whered.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
                                     String direction = "EAST";

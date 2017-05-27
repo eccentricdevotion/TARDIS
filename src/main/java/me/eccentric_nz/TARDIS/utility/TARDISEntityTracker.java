@@ -45,7 +45,7 @@ public class TARDISEntityTracker {
 
     public void addNPCs(Location exterior, Location interior, UUID uuid) {
         List<Entity> ents = TARDISScannerListener.getNearbyEntities(exterior, 6);
-        List<Integer> npcids = new ArrayList<Integer>();
+        List<Integer> npcids = new ArrayList<>();
         for (Entity e : ents) {
             if (e instanceof LivingEntity) {
                 // create NPC
@@ -62,29 +62,35 @@ public class TARDISEntityTracker {
                 Location l = new Location(interior.getWorld(), adjx, adjy, adjz);
                 plugin.setTardisSpawn(true);
                 npc.spawn(l);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "npc select " + npc.getId());
                 npcids.add(npc.getId());
                 if (npc.isSpawned()) {
                     switch (e.getType()) {
                         case ZOMBIE:
                             Zombie z = (Zombie) e;
-                            plugin.getServer().dispatchCommand(plugin.getConsole(), "npc select " + npc.getId());
                             if (z.isBaby()) {
                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "npc zombiemod -b");
                             }
-                            if (z.isVillager()) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "npc zombiemod -v");
-                            }
+                            break;
+                        case ZOMBIE_VILLAGER:
+                            plugin.getServer().dispatchCommand(plugin.getConsole(), "npc zombiemod -v");
                             break;
                         case CHICKEN:
                         case COW:
+                        case DONKEY:
+                        case HORSE:
+                        case LLAMA:
+                        case MULE:
                         case OCELOT:
+                        case PARROT:
                         case PIG:
+                        case POLAR_BEAR:
+                        case RABBIT:
                         case SHEEP:
                         case VILLAGER:
                         case WOLF:
                             Ageable a = (Ageable) e;
                             if (!a.isAdult()) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "npc select " + npc.getId());
                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "npc age baby");
                             }
                             break;
@@ -103,13 +109,13 @@ public class TARDISEntityTracker {
     }
 
     public void removeNPCs(UUID uuid) {
-        for (Integer i : plugin.getTrackerKeeper().getRenderedNPCs().get(uuid)) {
+        plugin.getTrackerKeeper().getRenderedNPCs().get(uuid).forEach((i) -> {
             NPCRegistry registry = CitizensAPI.getNPCRegistry();
             NPC npc = registry.getById(i);
             if (npc != null) {
                 npc.destroy();
             }
-        }
+        });
         plugin.getTrackerKeeper().getRenderedNPCs().remove(uuid);
     }
 }

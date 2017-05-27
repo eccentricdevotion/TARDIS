@@ -70,7 +70,7 @@ public class TARDISSonicGeneratorListener implements Listener {
         }
         String location = block.getLocation().toString();
         // get tardis from saved location
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("type", 24);
         where.put("location", location);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
@@ -79,7 +79,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 final Player player = event.getPlayer();
                 UUID uuid = player.getUniqueId();
                 // check if the generator is activated
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", uuid.toString());
                 ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
                 if (rss.resultSet()) {
@@ -117,7 +117,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             ItemMeta screw = sonic.getItemMeta();
             String dn = (s.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : s.getSonicType() + "Sonic Screwdriver";
             screw.setDisplayName(dn);
-            List<String> upgrades = new ArrayList<String>();
+            List<String> upgrades = new ArrayList<>();
             if (s.hasBio()) {
                 upgrades.add("Bio-scanner Upgrade");
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
@@ -143,7 +143,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignit") * full);
             }
             if (upgrades.size() > 0) {
-                List<String> finalUps = new ArrayList<String>();
+                List<String> finalUps = new ArrayList<>();
                 finalUps.add("Upgrades:");
                 finalUps.addAll(upgrades);
                 screw.setLore(finalUps);
@@ -155,7 +155,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 drop.setVelocity(new Vector(0, 0, 0));
                 plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
                 // remove the Artron energy
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).alterEnergyLevel("tardis", -cost, where, p);
             } else {
@@ -178,7 +178,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             return;
         }
         // check location
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("type", 24);
         where.put("location", b.getLocation().toString());
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
@@ -186,7 +186,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             return;
         }
         // check if activated
-        HashMap<String, Object> wheres = new HashMap<String, Object>();
+        HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("uuid", event.getPlayer().getUniqueId().toString());
         ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
         if (rss.resultSet()) {
@@ -217,7 +217,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             String l = event.getBlock().getLocation().toString();
             // generator was crafted
             // get tardis player is in
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
@@ -225,15 +225,15 @@ public class TARDISSonicGeneratorListener implements Listener {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.insertSyncControl(rs.getTardis_id(), 24, l, 0);
                 // do they have a sonic record?
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", event.getPlayer().getUniqueId().toString());
                 ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("activated", 1);
                 if (rss.resultSet()) {
                     if (!rss.getSonic().isActivated()) {
                         // update it to activated
-                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        HashMap<String, Object> wherea = new HashMap<>();
                         wherea.put("uuid", uuid);
                         qf.doUpdate("sonic", set, wherea);
                     }

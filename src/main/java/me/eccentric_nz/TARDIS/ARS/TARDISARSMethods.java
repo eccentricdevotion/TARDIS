@@ -57,15 +57,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISARSMethods {
 
     public final TARDIS plugin;
-    public final HashMap<UUID, Integer> scroll_start = new HashMap<UUID, Integer>();
-    public final HashMap<UUID, Integer> selected_slot = new HashMap<UUID, Integer>();
-    public final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<UUID, TARDISARSSaveData>();
-    public final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<UUID, TARDISARSMapData>();
+    public final HashMap<UUID, Integer> scroll_start = new HashMap<>();
+    public final HashMap<UUID, Integer> selected_slot = new HashMap<>();
+    public final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
+    public final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
     public final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    //public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF, Material.STAINED_CLAY, Material.DRAGON_EGG, Material.PRISMARINE);
     public final Set<String> consoleBlocks = CONSOLES.getBY_MATERIALS().keySet();
-    public final HashMap<UUID, Integer> ids = new HashMap<UUID, Integer>();
-    public final List<UUID> hasLoadedMap = new ArrayList<UUID>();
+    public final HashMap<UUID, Integer> ids = new HashMap<>();
+    public final List<UUID> hasLoadedMap = new ArrayList<>();
 
     public TARDISARSMethods(TARDIS plugin) {
         this.plugin = plugin;
@@ -79,12 +78,12 @@ public class TARDISARSMethods {
     public void saveAll(UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
         JSONArray json = new JSONArray(md.getData());
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("ars_x_east", md.getE());
         set.put("ars_z_south", md.getS());
         set.put("ars_y_layer", md.getY());
         set.put("json", json.toString());
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("ars_id", md.getId());
         new QueryFactory(plugin).doUpdate("ars", set, wherea);
     }
@@ -97,15 +96,12 @@ public class TARDISARSMethods {
     public void revert(UUID uuid) {
         TARDISARSSaveData sd = save_map_data.get(uuid);
         JSONArray json = new JSONArray(sd.getData());
-        final HashMap<String, Object> set = new HashMap<String, Object>();
+        final HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
-        final HashMap<String, Object> wherea = new HashMap<String, Object>();
+        final HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("ars_id", sd.getId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                new QueryFactory(plugin).doUpdate("ars", set, wherea);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            new QueryFactory(plugin).doUpdate("ars", set, wherea);
         }, 6L);
     }
 
@@ -312,81 +308,78 @@ public class TARDISARSMethods {
      */
     public void close(final Player p) {
         final UUID uuid = p.getUniqueId();
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                if (scroll_start.containsKey(uuid)) {
-                    scroll_start.remove(uuid);
-                }
-                if (selected_slot.containsKey(uuid)) {
-                    selected_slot.remove(uuid);
-                }
-                if (hasLoadedMap.contains(uuid)) {
-                    hasLoadedMap.remove(uuid);
-                }
-                if (map_data.containsKey(uuid)) {
-                    if (playerIsOwner(p.getUniqueId().toString(), ids.get(uuid))) {
-                        saveAll(uuid);
-                        TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(uuid));
-                        boolean changed = tap.compare3DArray(save_map_data.get(uuid).getData(), map_data.get(uuid).getData());
-                        if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
-                            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
-                                    String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
-                                    TARDISMessage.send(p, message);
-                                    revert(uuid);
-                                    p.closeInventory();
-                                    return;
-                                }
-                            }
-                            TARDISMessage.send(p, "ARS_START");
-                            // do all jettisons first
-                            if (tap.getJettison().size() > 0) {
-                                TARDISMessage.send(p, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
-                                long del = 5L;
-                                for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
-                                    TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(uuid), p);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
-                                    del += 5L;
-                                }
-                            }
-                            // one every 40 seconds at default room_speed
-                            long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
-                            long delay = 20L;
-                            for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
-                                TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(uuid));
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
-                                delay += period;
-                            }
-                            // damage the circuit if configured
-                            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
-                                // get the id of the TARDIS this player is in
-                                int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
-                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                                tcc.getCircuits();
-                                // decrement uses
-                                int uses_left = tcc.getArsUses();
-                                new TARDISCircuitDamager(plugin, DISK_CIRCUIT.ARS, uses_left, id, p).damage();
-                            }
-                        } else {
-                            // reset map to the previous version
-                            revert(uuid);
-                            if (tap.getError().equals("ARS_LIMIT")) {
-                                TARDISMessage.send(p, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
-                            } else {
-                                TARDISMessage.send(p, tap.getError());
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (scroll_start.containsKey(uuid)) {
+                scroll_start.remove(uuid);
+            }
+            if (selected_slot.containsKey(uuid)) {
+                selected_slot.remove(uuid);
+            }
+            if (hasLoadedMap.contains(uuid)) {
+                hasLoadedMap.remove(uuid);
+            }
+            if (map_data.containsKey(uuid)) {
+                if (playerIsOwner(p.getUniqueId().toString(), ids.get(uuid))) {
+                    saveAll(uuid);
+                    TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(uuid));
+                    boolean changed = tap.compare3DArray(save_map_data.get(uuid).getData(), map_data.get(uuid).getData());
+                    if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
+                        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                            if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
+                                String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
+                                TARDISMessage.send(p, message);
+                                revert(uuid);
+                                p.closeInventory();
+                                return;
                             }
                         }
+                        TARDISMessage.send(p, "ARS_START");
+                        // do all jettisons first
+                        if (tap.getJettison().size() > 0) {
+                            TARDISMessage.send(p, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
+                            long del = 5L;
+                            for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
+                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(uuid), p);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
+                                del += 5L;
+                            }
+                        }
+                        // one every 40 seconds at default room_speed
+                        long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
+                        long delay = 20L;
+                        for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
+                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(uuid));
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
+                            delay += period;
+                        }
+                        // damage the circuit if configured
+                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
+                            // get the id of the TARDIS this player is in
+                            int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
+                            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                            tcc.getCircuits();
+                            // decrement uses
+                            int uses_left = tcc.getArsUses();
+                            new TARDISCircuitDamager(plugin, DISK_CIRCUIT.ARS, uses_left, id, p).damage();
+                        }
                     } else {
-                        TARDISMessage.send(p, "ROOM_ONLY_TL");
+                        // reset map to the previous version
                         revert(uuid);
+                        if (tap.getError().equals("ARS_LIMIT")) {
+                            TARDISMessage.send(p, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
+                        } else {
+                            TARDISMessage.send(p, tap.getError());
+                        }
                     }
-                    map_data.remove(uuid);
-                    save_map_data.remove(uuid);
-                    ids.remove(uuid);
+                } else {
+                    TARDISMessage.send(p, "ROOM_ONLY_TL");
+                    revert(uuid);
                 }
-                p.closeInventory();
+                map_data.remove(uuid);
+                save_map_data.remove(uuid);
+                ids.remove(uuid);
             }
+            p.closeInventory();
         }, 1L);
     }
 
@@ -402,7 +395,7 @@ public class TARDISARSMethods {
             return;
         }
         setLore(inv, 10, "Loading...");
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", ids.get(uuid));
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
@@ -499,7 +492,7 @@ public class TARDISARSMethods {
         boolean hasRequired = true;
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        HashMap<String, Object> wherepp = new HashMap<>();
         boolean hasPrefs = false;
         wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
@@ -508,7 +501,7 @@ public class TARDISARSMethods {
             wall = rsp.getWall();
             floor = rsp.getFloor();
         }
-        HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
+        HashMap<String, Integer> item_counts = new HashMap<>();
         for (Map.Entry<TARDISARSSlot, ARS> rooms : map.entrySet()) {
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().getActualName());
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
@@ -533,7 +526,7 @@ public class TARDISARSMethods {
             }
         }
         for (Map.Entry<String, Integer> blocks : item_counts.entrySet()) {
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             wherec.put("block_data", blocks.getKey());
             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
@@ -550,7 +543,7 @@ public class TARDISARSMethods {
 
     public int getTardisId(String uuid) {
         int id = 0;
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
@@ -560,7 +553,7 @@ public class TARDISARSMethods {
     }
 
     public boolean hasRenderer(UUID uuid) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", ids.get(uuid));
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
@@ -573,7 +566,7 @@ public class TARDISARSMethods {
         Material m = inv.getItem(slot).getType();
         if (m.equals(Material.NETHER_BRICK)) {
             // allow only if console is not MASTER
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_BRICK")) {
@@ -584,7 +577,7 @@ public class TARDISARSMethods {
     }
 
     public boolean playerIsOwner(String uuid, int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

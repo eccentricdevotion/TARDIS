@@ -90,13 +90,13 @@ public class TARDISManualFlightRunnable implements Runnable {
     }
 
     private List<Location> getRepeaterList(int id) {
-        List<Location> repeaters = new ArrayList<Location>();
+        List<Location> repeaters = new ArrayList<>();
         ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
         if (rsr.resultSet()) {
             List<String> locs = rsr.getLocations();
-            for (String l : locs) {
+            locs.forEach((l) -> {
                 repeaters.add(TARDISLocationGetters.getLocationFromDB(l, 0.0f, 0.0f));
-            }
+            });
         }
         return repeaters;
     }

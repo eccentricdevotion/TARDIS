@@ -60,7 +60,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
             final Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 45) {
                 // get the TARDIS the player is in
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
@@ -89,17 +89,14 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
             if (slot == 49) {
                 // load TARDIS saves
                 close(player);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                        if (rs.fromUUID(player.getUniqueId().toString())) {
-                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
-                            ItemStack[] items = sst.getTerminal();
-                            Inventory saveinv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
-                            saveinv.setContents(items);
-                            player.openInventory(saveinv);
-                        }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                    if (rs.fromUUID(player.getUniqueId().toString())) {
+                        TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
+                        ItemStack[] items = sst.getTerminal();
+                        Inventory saveinv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                        saveinv.setContents(items);
+                        player.openInventory(saveinv);
                     }
                 }, 2L);
             }

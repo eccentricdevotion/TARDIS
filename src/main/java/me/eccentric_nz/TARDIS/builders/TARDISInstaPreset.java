@@ -73,7 +73,7 @@ public class TARDISInstaPreset {
     private final Random rand;
     private final byte random_colour;
     private final ChatColor sign_colour;
-    private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
+    private final List<ProblemBlock> do_at_end = new ArrayList<>();
     private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
 
     public TARDISInstaPreset(TARDIS plugin, BuildData bd, PRESET preset, int cham_id, byte cham_data, boolean rebuild) {
@@ -119,7 +119,7 @@ public class TARDISInstaPreset {
         QueryFactory qf = new QueryFactory(plugin);
         // if configured and it's a Whovian preset set biome
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && bd.useTexture()) {
-            List<Chunk> chunks = new ArrayList<Chunk>();
+            List<Chunk> chunks = new ArrayList<>();
             Chunk chunk = bd.getLocation().getChunk();
             chunks.add(chunk);
             // load the chunk
@@ -147,10 +147,10 @@ public class TARDISInstaPreset {
                 }
             }
             // refresh the chunks
-            for (Chunk c : chunks) {
+            chunks.forEach((c) -> {
                 //world.refreshChunk(c.getX(), c.getZ());
                 plugin.getTardisHelper().refreshChunk(c);
-            }
+            });
         }
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
@@ -161,7 +161,7 @@ public class TARDISInstaPreset {
                 Location l = idl.getL();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
                 // put player into travellers table
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", bd.getTardisID());
                 set.put("uuid", playerUUID.toString());
                 qf.doInsert("travellers", set);
@@ -350,7 +350,7 @@ public class TARDISInstaPreset {
                             if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                                 Sign s = (Sign) sign.getState();
                                 if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                    HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", bd.getTardisID());
                                     ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                                     if (rst.resultSet()) {
@@ -478,31 +478,28 @@ public class TARDISInstaPreset {
                 }
             }
         }
-        for (ProblemBlock pb : do_at_end) {
+        do_at_end.forEach((pb) -> {
             plugin.getBlockUtils().setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getId(), pb.getData(), bd.getTardisID());
-        }
+        });
         if (!rebuild) {
             // message travellers in tardis
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", bd.getTardisID());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
             if (rst.resultSet()) {
                 final List<UUID> travellers = rst.getData();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        for (UUID s : travellers) {
-                            Player trav = plugin.getServer().getPlayer(s);
-                            if (trav != null) {
-                                String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                                TARDISMessage.send(trav, message);
-                                // TARDIS has travelled so add players to list so they can receive Artron on exit
-                                if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-                                    plugin.getTrackerKeeper().getHasTravelled().add(s);
-                                }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    travellers.forEach((s) -> {
+                        Player trav = plugin.getServer().getPlayer(s);
+                        if (trav != null) {
+                            String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
+                            TARDISMessage.send(trav, message);
+                            // TARDIS has travelled so add players to list so they can receive Artron on exit
+                            if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
+                                plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         }
-                    }
+                    });
                 }, 30L);
             }
         }
@@ -519,15 +516,15 @@ public class TARDISInstaPreset {
 
     private void processDoor(String doorloc, QueryFactory qf) {
         // should insert the door when tardis is first made, and then update the location there after!
-        HashMap<String, Object> whered = new HashMap<String, Object>();
+        HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisID());
         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-        HashMap<String, Object> setd = new HashMap<String, Object>();
+        HashMap<String, Object> setd = new HashMap<>();
         setd.put("door_location", doorloc);
         setd.put("door_direction", bd.getDirection().toString());
         if (rsd.resultSet()) {
-            HashMap<String, Object> whereid = new HashMap<String, Object>();
+            HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoor_id());
             qf.doUpdate("doors", setd, whereid);
         } else {

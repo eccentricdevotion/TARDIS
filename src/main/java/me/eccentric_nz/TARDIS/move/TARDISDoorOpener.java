@@ -60,11 +60,8 @@ public class TARDISDoorOpener {
             if (!rs.getOuterBlock().getChunk().isLoaded()) {
                 rs.getOuterBlock().getChunk().load();
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    open(rs.getOuterBlock(), rs.getInnerBlock(), false, rs.getOuterDirection());
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                open(rs.getOuterBlock(), rs.getInnerBlock(), false, rs.getOuterDirection());
             }, 5L);
         }
     }
@@ -101,9 +98,9 @@ public class TARDISDoorOpener {
             }
             if (add && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                 // get all companion UUIDs
-                List<UUID> uuids = new ArrayList<UUID>();
+                List<UUID> uuids = new ArrayList<>();
                 uuids.add(uuid);
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 Tardis tardis = null;
@@ -124,7 +121,7 @@ public class TARDISDoorOpener {
                 }
                 // get locations
                 // exterior portal (from current location)
-                HashMap<String, Object> where_exportal = new HashMap<String, Object>();
+                HashMap<String, Object> where_exportal = new HashMap<>();
                 where_exportal.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
                 rsc.resultSet();
@@ -197,12 +194,12 @@ public class TARDISDoorOpener {
                     tp_out.setAbandoned(abandoned);
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         // players
-                        for (UUID u : uuids) {
+                        uuids.forEach((u) -> {
                             // only add them if they're not there already!
                             if (!plugin.getTrackerKeeper().getMover().contains(u)) {
                                 plugin.getTrackerKeeper().getMover().add(u);
                             }
-                        }
+                        });
                     }
                     // locations
                     if (tardis != null && preset != null && preset.hasPortal()) {

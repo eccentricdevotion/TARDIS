@@ -35,14 +35,14 @@ import org.bukkit.ChatColor;
  */
 public class TARDISMySQLDatabaseUpdater {
 
-    private final List<String> tardisupdates = new ArrayList<String>();
-    private final List<String> prefsupdates = new ArrayList<String>();
-    private final List<String> destsupdates = new ArrayList<String>();
-    private final List<String> countupdates = new ArrayList<String>();
-    private final List<String> portalsupdates = new ArrayList<String>();
-    private final List<String> inventoryupdates = new ArrayList<String>();
-    private final List<String> chameleonupdates = new ArrayList<String>();
-    private final HashMap<String, String> uuidUpdates = new HashMap<String, String>();
+    private final List<String> tardisupdates = new ArrayList<>();
+    private final List<String> prefsupdates = new ArrayList<>();
+    private final List<String> destsupdates = new ArrayList<>();
+    private final List<String> countupdates = new ArrayList<>();
+    private final List<String> portalsupdates = new ArrayList<>();
+    private final List<String> inventoryupdates = new ArrayList<>();
+    private final List<String> chameleonupdates = new ArrayList<>();
+    private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
     private final TARDIS plugin;
     private final String prefix;

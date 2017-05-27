@@ -46,15 +46,15 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
 
     public TARDISPrefsTabComplete(TARDIS plugin) {
         HashMap<String, Pair> map = new TARDISWalls().blocks;
-        List<String> mats = new ArrayList<String>();
-        for (String key : map.keySet()) {
+        List<String> mats = new ArrayList<>();
+        map.keySet().forEach((key) -> {
             mats.add(key);
-        }
+        });
         this.MAT_SUBS = ImmutableList.copyOf(mats);
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             this.KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));
         } else {
-            List<String> keys = new ArrayList<String>();
+            List<String> keys = new ArrayList<>();
             Material[] materialValues = Material.values();
             for (Material key : materialValues) {
                 if (!key.isBlock()) {
@@ -72,25 +72,30 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
-            if (sub.equals("add") || sub.equals("remove")) {
-                // return null to default to online player name matching
-                return null;
-            } else if (sub.equals("floor") || sub.equals("wall") || sub.equals("siege_floor") || sub.equals("siege_wall")) {
-                return partial(lastArg, MAT_SUBS);
-            } else if (sub.equals("key")) {
-                return partial(lastArg, KEY_SUBS);
-            } else if (sub.equals("language")) {
-                return partial(lastArg, LANGUAGE_SUBS);
-            } else if (sub.equals("flight")) {
-                return partial(lastArg, FLIGHT_SUBS);
-            } else if (sub.equals("difficulty")) {
-                return partial(lastArg, DIFF_SUBS);
-            } else if (sub.equals("hads_type")) {
-                return partial(lastArg, HADS_SUBS);
-            } else if (sub.equals("hum")) {
-                return partial(lastArg, HUM_SUBS);
-            } else {
-                return partial(lastArg, ONOFF_SUBS);
+            switch (sub) {
+                case "add":
+                case "remove":
+                    // return null to default to online player name matching
+                    return null;
+                case "floor":
+                case "wall":
+                case "siege_floor":
+                case "siege_wall":
+                    return partial(lastArg, MAT_SUBS);
+                case "key":
+                    return partial(lastArg, KEY_SUBS);
+                case "language":
+                    return partial(lastArg, LANGUAGE_SUBS);
+                case "flight":
+                    return partial(lastArg, FLIGHT_SUBS);
+                case "difficulty":
+                    return partial(lastArg, DIFF_SUBS);
+                case "hads_type":
+                    return partial(lastArg, HADS_SUBS);
+                case "hum":
+                    return partial(lastArg, HUM_SUBS);
+                default:
+                    return partial(lastArg, ONOFF_SUBS);
             }
         }
         return ImmutableList.of();

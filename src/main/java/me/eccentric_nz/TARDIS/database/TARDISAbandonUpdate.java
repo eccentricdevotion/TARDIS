@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISAbandonUpdate {
 
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
@@ -53,7 +53,7 @@ public class TARDISAbandonUpdate {
             ps.setInt(1, id);
             ps.executeUpdate();
             // get current location
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
             if (rs.resultSet()) {

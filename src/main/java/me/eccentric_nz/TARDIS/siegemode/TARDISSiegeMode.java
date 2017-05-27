@@ -62,7 +62,7 @@ public class TARDISSiegeMode {
     @SuppressWarnings("deprecation")
     public void toggleViaSwitch(int id, Player p) {
         // get the current siege status
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (!rs.resultSet()) {
@@ -70,7 +70,7 @@ public class TARDISSiegeMode {
         }
         Tardis tardis = rs.getTardis();
         // get current location
-        HashMap<String, Object> wherec = new HashMap<String, Object>();
+        HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
         if (!rsc.resultSet()) {
@@ -78,9 +78,9 @@ public class TARDISSiegeMode {
         }
         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         final Block siege = current.getBlock();
-        HashMap<String, Object> wheres = new HashMap<String, Object>();
+        HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         if (tardis.isSiege_on()) {
             // must have at least 10% power
             int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
@@ -102,11 +102,8 @@ public class TARDISSiegeMode {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getPresetBuilder().buildPreset(bd);
             }, 10L);
             set.put("siege_on", 0);
             // remove trackers
@@ -117,12 +114,12 @@ public class TARDISSiegeMode {
                 String[] chu = tardis.getChunk().split(":");
                 String w = chu[0];
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                    List<TARDISSiegeArea> breeding = new ArrayList<TARDISSiegeArea>();
-                    for (TARDISSiegeArea breeding_area : plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w)) {
+                    List<TARDISSiegeArea> breeding = new ArrayList<>();
+                    plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((breeding_area) -> {
                         if (breeding_area.getId() != id) {
                             breeding.add(breeding_area);
                         }
-                    }
+                    });
                     if (breeding.size() > 0) {
                         plugin.getTrackerKeeper().getSiegeBreedingAreas().put(w, breeding);
                     } else {
@@ -130,12 +127,12 @@ public class TARDISSiegeMode {
                     }
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
-                    List<TARDISSiegeArea> growth = new ArrayList<TARDISSiegeArea>();
-                    for (TARDISSiegeArea growth_area : plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w)) {
+                    List<TARDISSiegeArea> growth = new ArrayList<>();
+                    plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w).forEach((growth_area) -> {
                         if (growth_area.getId() != id) {
                             growth.add(growth_area);
                         }
-                    }
+                    });
                     if (growth.size() > 0) {
                         plugin.getTrackerKeeper().getSiegeGrowthAreas().put(w, growth);
                     } else {
@@ -193,7 +190,7 @@ public class TARDISSiegeMode {
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
                     List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
                     if (breeding_areas == null) {
-                        breeding_areas = new ArrayList<TARDISSiegeArea>();
+                        breeding_areas = new ArrayList<>();
                     }
                     breeding_areas.add(tsa);
                     plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
@@ -201,7 +198,7 @@ public class TARDISSiegeMode {
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
                     List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                     if (growth_areas == null) {
-                        growth_areas = new ArrayList<TARDISSiegeArea>();
+                        growth_areas = new ArrayList<>();
                     }
                     growth_areas.add(tsa);
                     plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
@@ -216,7 +213,7 @@ public class TARDISSiegeMode {
     }
 
     public void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);
         if (rspp.resultSet()) {

@@ -39,7 +39,7 @@ public class TARDISBlackWoolToggler {
 
     @SuppressWarnings("deprecation")
     public void toggleBlocks(final int id, final Player player) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 1);
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
@@ -70,7 +70,7 @@ public class TARDISBlackWoolToggler {
     }
 
     public boolean isOpen(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 1);
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);

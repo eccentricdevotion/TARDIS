@@ -64,12 +64,12 @@ public class TARDISConstants {
         int keysSize = (keys != null) ? keys.length : 0;
         int valuesSize = (values != null) ? values.length : 0;
         if (keysSize == 0 && valuesSize == 0) {
-            return new HashMap<Integer, Integer>();
+            return new HashMap<>();
         }
         if (keysSize != valuesSize) {
             throw new IllegalArgumentException("The number of keys doesn't match the number of values.");
         }
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < keysSize; i++) {
             map.put(keys[i], values[i]);
         }

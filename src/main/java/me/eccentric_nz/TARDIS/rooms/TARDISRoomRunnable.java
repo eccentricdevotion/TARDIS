@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -165,10 +164,10 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
                 // set the repeaters
-                for (Map.Entry<Block, Byte> entry : mushroomblocks.entrySet()) {
+                mushroomblocks.entrySet().forEach((entry) -> {
                     entry.getKey().setType(Material.DIODE_BLOCK_OFF);
                     entry.getKey().setData(entry.getValue(), true);
-                }
+                });
                 mushroomblocks.clear();
             }
             if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
@@ -178,10 +177,10 @@ public class TARDISRoomRunnable implements Runnable {
                 });
                 caneblocks.clear();
                 // attach the cocoa
-                for (Map.Entry<Block, Byte> entry : cocoablocks.entrySet()) {
+                cocoablocks.entrySet().forEach((entry) -> {
                     entry.getKey().setType(Material.COCOA);
                     entry.getKey().setData(entry.getValue(), true);
-                }
+                });
                 cocoablocks.clear();
                 // plant the melon
                 melonblocks.forEach((melon) -> {
@@ -213,16 +212,16 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (room.equals("VILLAGE")) {
                 // put doors on
-                for (Map.Entry<Block, Byte> entry : doorblocks.entrySet()) {
+                doorblocks.entrySet().forEach((entry) -> {
                     entry.getKey().setType(Material.WOODEN_DOOR);
                     entry.getKey().setData(entry.getValue(), true);
-                }
+                });
                 doorblocks.clear();
             }
             // put levers on
-            for (Map.Entry<Block, Byte> entry : leverblocks.entrySet()) {
+            leverblocks.entrySet().forEach((entry) -> {
                 entry.getKey().setTypeIdAndData(69, entry.getValue(), true);
-            }
+            });
             leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
@@ -245,14 +244,14 @@ public class TARDISRoomRunnable implements Runnable {
             setBanners(177, wallBanners);
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
-                for (Chunk ch : chunkList) {
+                chunkList.forEach((ch) -> {
                     if (plugin.getConfig().getBoolean("creation.sky_biome")) {
                         // refesh the cunk so ctm textures show
                         //world.refreshChunk(ch.getX(), ch.getZ());
                         plugin.getTardisHelper().refreshChunk(ch);
                     }
                     plugin.getGeneralKeeper().getRoomChunkList().remove(ch);
-                }
+                });
             }
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
@@ -492,9 +491,9 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (level == 4 && room.equals("GREENHOUSE")) {
                     // set all the ice to water
-                    for (Block ice : iceblocks) {
+                    iceblocks.forEach((ice) -> {
                         ice.setType(Material.STATIONARY_WATER);
-                    }
+                    });
                     iceblocks.clear();
                 }
             }

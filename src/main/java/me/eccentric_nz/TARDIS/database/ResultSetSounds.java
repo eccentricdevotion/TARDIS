@@ -39,10 +39,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetSounds {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final List<UUID> data = new ArrayList<UUID>();
+    private final List<UUID> data = new ArrayList<>();
     private final String prefix;
 
     /**

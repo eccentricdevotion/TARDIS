@@ -38,7 +38,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class TARDISTeleportListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<TeleportCause> causes = new ArrayList<TeleportCause>();
+    private final List<TeleportCause> causes = new ArrayList<>();
 
     public TARDISTeleportListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -55,7 +55,7 @@ public class TARDISTeleportListener implements Listener {
             String world_to = event.getTo().getWorld().getName();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 Player p = event.getPlayer();
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {

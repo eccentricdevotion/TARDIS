@@ -59,7 +59,7 @@ public class TARDISHideCommand {
             }
             plugin.getTrackerKeeper().getHideCooldown().put(uuid, System.currentTimeMillis());
             int id;
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -85,7 +85,7 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "NO_MAT_CIRCUIT");
                 return true;
             }
-            HashMap<String, Object> wherein = new HashMap<String, Object>();
+            HashMap<String, Object> wherein = new HashMap<>();
             wherein.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
             if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
@@ -100,7 +100,7 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
             }
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", tardis.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
@@ -127,13 +127,13 @@ public class TARDISHideCommand {
             plugin.getTrackerKeeper().getInVortex().add(id);
             TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET);
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
             // set hidden to true
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
-            HashMap<String, Object> seth = new HashMap<String, Object>();
+            HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 1);
             qf.doUpdate("tardis", seth, whereh);
             return true;

@@ -44,7 +44,7 @@ public class TARDISJunkPreference {
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
         // get TARDIS
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", ustr);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
@@ -54,7 +54,7 @@ public class TARDISJunkPreference {
             String current = tardis.getPreset().toString();
             String chameleon = tardis.getChameleon();
             // must be outside of the TARDIS
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", ustr);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
@@ -80,17 +80,17 @@ public class TARDISJunkPreference {
                 return true;
             }
             // check if they have a junk record
-            HashMap<String, Object> wherej = new HashMap<String, Object>();
+            HashMap<String, Object> wherej = new HashMap<>();
             wherej.put("uuid", ustr);
             ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
             boolean has = rsj.resultSet();
-            HashMap<String, Object> sett = new HashMap<String, Object>();
+            HashMap<String, Object> sett = new HashMap<>();
             String cham_set = "";
             if (arg.equalsIgnoreCase("on")) {
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 if (has) {
                     // update record
-                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                    HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("uuid", ustr);
                     set.put("preset", current);
                     qf.doSyncUpdate("junk", set, whereu);
@@ -116,7 +116,7 @@ public class TARDISJunkPreference {
                 cham_set = preset;
             }
             // update tardis table
-            HashMap<String, Object> whereu = new HashMap<String, Object>();
+            HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", ustr);
             qf.doSyncUpdate("tardis", sett, whereu);
             // set the Chameleon Circuit sign

@@ -43,7 +43,7 @@ public class TARDISEmergencyRelocation {
     public void relocate(int id, Player p) {
         TARDISMessage.send(p, "EMERGENCY");
         // get the TARDIS
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
@@ -61,9 +61,9 @@ public class TARDISEmergencyRelocation {
                 Tardis tardis = rs.getTardis();
                 new TARDISInstaPreset(plugin, bd, tardis.getPreset(), 159, (byte) 8, false).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("world", emergency.getWorld().getName());
                 setc.put("x", emergency.getBlockX());
                 setc.put("y", emergency.getBlockY());
@@ -71,9 +71,9 @@ public class TARDISEmergencyRelocation {
                 setc.put("direction", "EAST");
                 setc.put("submarine", 0);
                 qf.doUpdate("current", setc, wherec);
-                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("tardis_id", id);
-                HashMap<String, Object> setb = new HashMap<String, Object>();
+                HashMap<String, Object> setb = new HashMap<>();
                 setb.put("world", emergency.getWorld().getName());
                 setb.put("x", emergency.getBlockX());
                 setb.put("y", emergency.getBlockY());
@@ -82,7 +82,7 @@ public class TARDISEmergencyRelocation {
                 setb.put("submarine", 0);
                 qf.doUpdate("current", setb, whereb);
                 TARDISMessage.send(p, "EMERGENCY_DONE");
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
             }

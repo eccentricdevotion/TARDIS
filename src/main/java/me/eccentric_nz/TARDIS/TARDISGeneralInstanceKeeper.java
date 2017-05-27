@@ -56,10 +56,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class TARDISGeneralInstanceKeeper {
 
-    private HashSet<Material> transparent = new HashSet<Material>();
-    private List<Block> doorPistons = new ArrayList<Block>();
-    private List<Integer> npcIDs = new ArrayList<Integer>();
-    private List<String> quotes = new ArrayList<String>();
+    private HashSet<Material> transparent = new HashSet<>();
+    private List<Block> doorPistons = new ArrayList<>();
+    private List<Integer> npcIDs = new ArrayList<>();
+    private List<String> quotes = new ArrayList<>();
     private TARDISAdminCommands tardisAdminCommand;
     private TARDISButtonListener buttonListener;
     private TARDISDoorListener doorListener;
@@ -67,37 +67,37 @@ public class TARDISGeneralInstanceKeeper {
     private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
     private TARDISTravelCommands tardisTravelCommand;
-    private final HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
-    private final HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
-    private final HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
-    private final HashMap<String, Double[]> gravityUpList = new HashMap<String, Double[]>();
-    private final HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
-    private final HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
-    private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<UUID, TARDISCondenserData>();
-    private final List<Block> artronFurnaces = new ArrayList<Block>();
+    private final HashMap<String, Double[]> gravityEastList = new HashMap<>();
+    private final HashMap<String, Double[]> gravityNorthList = new HashMap<>();
+    private final HashMap<String, Double[]> gravitySouthList = new HashMap<>();
+    private final HashMap<String, Double[]> gravityUpList = new HashMap<>();
+    private final HashMap<String, Double[]> gravityWestList = new HashMap<>();
+    private final HashMap<String, Integer> protectBlockMap = new HashMap<>();
+    private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
+    private final List<Block> artronFurnaces = new ArrayList<>();
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
-    private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
-    private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
-    private final List<Chunk> railChunkList = new ArrayList<Chunk>();
-    private final List<Location> rechargers = new ArrayList<Location>();
+    private final List<Chunk> roomChunkList = new ArrayList<>();
+    private final List<Chunk> tardisChunkList = new ArrayList<>();
+    private final List<Chunk> railChunkList = new ArrayList<>();
+    private final List<Location> rechargers = new ArrayList<>();
     private final List<Material> doors = Arrays.asList(Material.IRON_DOOR_BLOCK, Material.WOODEN_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAILS, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_FENCE, Material.NETHER_BRICK_STAIRS);
     private final List<Material> interactables;
-    private final List<String> gravityDownList = new ArrayList<String>();
+    private final List<String> gravityDownList = new ArrayList<>();
     private final List<String> roomArgs;
-    private final List<String> sonicLamps = new ArrayList<String>();
-    private final List<String> sonicPistons = new ArrayList<String>();
-    private final List<String> sonicRails = new ArrayList<String>();
-    private final List<String> sonicWires = new ArrayList<String>();
+    private final List<String> sonicLamps = new ArrayList<>();
+    private final List<String> sonicPistons = new ArrayList<>();
+    private final List<String> sonicRails = new ArrayList<>();
+    private final List<String> sonicWires = new ArrayList<>();
     private final TARDIS plugin;
     private final TARDISUUIDCache UUIDCache;
     private final YamlConfiguration pluginYAML;
     private long junkTime;
     private boolean junkTravelling = false;
     private Location junkDestination = null;
-    private final List<UUID> junkTravellers = new ArrayList<UUID>();
+    private final List<UUID> junkTravellers = new ArrayList<>();
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -112,9 +112,7 @@ public class TARDISGeneralInstanceKeeper {
         this.pluginYAML = new YamlConfiguration();
         try {
             this.pluginYAML.load(reader);
-        } catch (IOException ex) {
-            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidConfigurationException ex) {
+        } catch (IOException | InvalidConfigurationException ex) {
             Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -338,19 +336,19 @@ public class TARDISGeneralInstanceKeeper {
     private void setRechargers() {
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
             Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
-            for (String s : therechargers) {
+            therechargers.forEach((s) -> {
                 World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + s + ".world"));
                 int x = plugin.getConfig().getInt("rechargers." + s + ".x");
                 int y = plugin.getConfig().getInt("rechargers." + s + ".y");
                 int z = plugin.getConfig().getInt("rechargers." + s + ".z");
                 Location rc_loc = new Location(w, x, y, z);
                 this.rechargers.add(rc_loc);
-            }
+            });
         }
     }
 
     private HashSet<Material> buildTransparent() {
-        HashSet<Material> trans = new HashSet<Material>();
+        HashSet<Material> trans = new HashSet<>();
         // add transparent blocks
         trans.add(Material.AIR);
         trans.add(Material.DEAD_BUSH);
@@ -367,60 +365,60 @@ public class TARDISGeneralInstanceKeeper {
     }
 
     private List<String> buildRoomArgs() {
-        List<String> rooms = new ArrayList<String>();
+        List<String> rooms = new ArrayList<>();
         // rooms - only add if enabled in the config
-        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
                 rooms.add(r);
             }
-        }
+        });
         return rooms;
     }
 
     private List<Material> buildInteractables() {
-        List<Material> interactables = new ArrayList<Material>();
-        interactables.add(Material.ACACIA_DOOR);
-        interactables.add(Material.ACACIA_FENCE_GATE);
-        interactables.add(Material.ANVIL);
-        interactables.add(Material.BEACON);
-        interactables.add(Material.BED_BLOCK);
-        interactables.add(Material.BIRCH_DOOR);
-        interactables.add(Material.BIRCH_FENCE_GATE);
-        interactables.add(Material.BURNING_FURNACE);
-        interactables.add(Material.CHEST);
-        interactables.add(Material.DARK_OAK_DOOR);
-        interactables.add(Material.DARK_OAK_FENCE_GATE);
-        interactables.add(Material.DIODE_BLOCK_OFF);
-        interactables.add(Material.DIODE_BLOCK_ON);
-        interactables.add(Material.DISPENSER);
-        interactables.add(Material.DROPPER);
-        interactables.add(Material.ENDER_CHEST);
-        interactables.add(Material.FENCE_GATE);
-        interactables.add(Material.FURNACE);
-        interactables.add(Material.GOLD_PLATE);
-        interactables.add(Material.HOPPER);
-        interactables.add(Material.IRON_DOOR_BLOCK);
-        interactables.add(Material.IRON_PLATE);
-        interactables.add(Material.IRON_TRAPDOOR);
-        interactables.add(Material.JUKEBOX);
-        interactables.add(Material.JUNGLE_DOOR);
-        interactables.add(Material.JUNGLE_FENCE_GATE);
-        interactables.add(Material.LEVER);
-        interactables.add(Material.NOTE_BLOCK);
-        interactables.add(Material.REDSTONE_COMPARATOR_OFF);
-        interactables.add(Material.REDSTONE_COMPARATOR_ON);
-        interactables.add(Material.SIGN);
-        interactables.add(Material.SPRUCE_DOOR);
-        interactables.add(Material.SPRUCE_FENCE_GATE);
-        interactables.add(Material.STONE_BUTTON);
-        interactables.add(Material.STONE_PLATE);
-        interactables.add(Material.TRAPPED_CHEST);
-        interactables.add(Material.TRAP_DOOR);
-        interactables.add(Material.WALL_SIGN);
-        interactables.add(Material.WOODEN_DOOR);
-        interactables.add(Material.WOOD_BUTTON);
-        interactables.add(Material.WOOD_PLATE);
-        interactables.add(Material.WORKBENCH);
-        return interactables;
+        List<Material> list = new ArrayList<>();
+        list.add(Material.ACACIA_DOOR);
+        list.add(Material.ACACIA_FENCE_GATE);
+        list.add(Material.ANVIL);
+        list.add(Material.BEACON);
+        list.add(Material.BED_BLOCK);
+        list.add(Material.BIRCH_DOOR);
+        list.add(Material.BIRCH_FENCE_GATE);
+        list.add(Material.BURNING_FURNACE);
+        list.add(Material.CHEST);
+        list.add(Material.DARK_OAK_DOOR);
+        list.add(Material.DARK_OAK_FENCE_GATE);
+        list.add(Material.DIODE_BLOCK_OFF);
+        list.add(Material.DIODE_BLOCK_ON);
+        list.add(Material.DISPENSER);
+        list.add(Material.DROPPER);
+        list.add(Material.ENDER_CHEST);
+        list.add(Material.FENCE_GATE);
+        list.add(Material.FURNACE);
+        list.add(Material.GOLD_PLATE);
+        list.add(Material.HOPPER);
+        list.add(Material.IRON_DOOR_BLOCK);
+        list.add(Material.IRON_PLATE);
+        list.add(Material.IRON_TRAPDOOR);
+        list.add(Material.JUKEBOX);
+        list.add(Material.JUNGLE_DOOR);
+        list.add(Material.JUNGLE_FENCE_GATE);
+        list.add(Material.LEVER);
+        list.add(Material.NOTE_BLOCK);
+        list.add(Material.REDSTONE_COMPARATOR_OFF);
+        list.add(Material.REDSTONE_COMPARATOR_ON);
+        list.add(Material.SIGN);
+        list.add(Material.SPRUCE_DOOR);
+        list.add(Material.SPRUCE_FENCE_GATE);
+        list.add(Material.STONE_BUTTON);
+        list.add(Material.STONE_PLATE);
+        list.add(Material.TRAPPED_CHEST);
+        list.add(Material.TRAP_DOOR);
+        list.add(Material.WALL_SIGN);
+        list.add(Material.WOODEN_DOOR);
+        list.add(Material.WOOD_BUTTON);
+        list.add(Material.WOOD_PLATE);
+        list.add(Material.WORKBENCH);
+        return list;
     }
 }

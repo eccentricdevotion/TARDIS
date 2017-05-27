@@ -38,7 +38,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class ResultSetArchiveButtons {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
@@ -67,7 +67,7 @@ public class ResultSetArchiveButtons {
                     ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (byte) i);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(rs.getString("name"));
-                    List<String> lore = new ArrayList<String>();
+                    List<String> lore = new ArrayList<>();
                     if (!rs.getString("description").isEmpty()) {
                         Pattern p = Pattern.compile("\\G\\s*(.{1,25})(?=\\s|$)", Pattern.DOTALL);
                         Matcher m = p.matcher(rs.getString("description"));

@@ -38,7 +38,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
 
     public TARDISQuestionTabComplete(TARDIS plugin) {
         this.plugin = plugin;
-        List<String> roots = new ArrayList<String>();
+        List<String> roots = new ArrayList<>();
         for (ROOT_COMMAND rc : TARDISCommandHelper.ROOT_COMMAND.values()) {
             roots.add(rc.toString());
         }

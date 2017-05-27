@@ -42,11 +42,11 @@ public class TARDISCommandHelper {
             sender.sendMessage("------");
             sender.sendMessage(ChatColor.GOLD + "TARDIS commands - use " + ChatColor.AQUA + "/tardis? <command> " + ChatColor.RESET + "for more info");
             sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + "http://goo.gl/f8lWbP");
-            for (String o : plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false)) {
+            plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false).forEach((o) -> {
                 if (!o.equals("tardis?")) {
                     sender.sendMessage("/" + o);
                 }
-            }
+            });
             sender.sendMessage("------");
         } else {
             String[] split = c.split(" ");

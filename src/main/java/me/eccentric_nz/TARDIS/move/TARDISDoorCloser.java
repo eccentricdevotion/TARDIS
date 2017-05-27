@@ -54,11 +54,8 @@ public class TARDISDoorCloser {
             if (!rs.getInnerBlock().getChunk().isLoaded()) {
                 rs.getInnerBlock().getChunk().load();
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    close(rs.getInnerBlock(), null, rs.getInnerDirection());
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                close(rs.getInnerBlock(), null, rs.getInnerDirection());
             }, 5L);
         }
     }
@@ -99,8 +96,8 @@ public class TARDISDoorCloser {
         }
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // get all companion UUIDs
-            List<UUID> uuids = new ArrayList<UUID>();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            List<UUID> uuids = new ArrayList<>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
@@ -116,7 +113,7 @@ public class TARDISDoorCloser {
             }
             // get locations
             // exterior portal (from current location)
-            HashMap<String, Object> where_exportal = new HashMap<String, Object>();
+            HashMap<String, Object> where_exportal = new HashMap<>();
             where_exportal.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
             rsc.resultSet();
@@ -127,11 +124,11 @@ public class TARDISDoorCloser {
             // unset trackers
             if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 // players
-                for (UUID u : uuids) {
+                uuids.forEach((u) -> {
                     if (plugin.getTrackerKeeper().getMover().contains(u)) {
                         plugin.getTrackerKeeper().getMover().remove(u);
                     }
-                }
+                });
             }
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);

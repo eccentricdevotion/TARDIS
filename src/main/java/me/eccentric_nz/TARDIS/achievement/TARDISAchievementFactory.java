@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.achievement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
@@ -55,14 +54,14 @@ public class TARDISAchievementFactory {
     public void doAchievement(Object obj) {
         QueryFactory qf = new QueryFactory(plugin);
         // have they started the achievement?
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", player.getUniqueId().toString());
         wherea.put("name", name);
         wherea.put("completed", 0);
         ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
-        HashMap<String, Object> seta = new HashMap<String, Object>();
+        HashMap<String, Object> seta = new HashMap<>();
         if (rsa.resultSet()) {
-            HashMap<String, Object> wherem = new HashMap<String, Object>();
+            HashMap<String, Object> wherem = new HashMap<>();
             wherem.put("a_id", rsa.getA_id());
             boolean achieved = false;
             // check if the achievement has been reached
@@ -95,9 +94,9 @@ public class TARDISAchievementFactory {
                     ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
                     Inventory inv = player.getInventory();
                     HashMap<Integer, ItemStack> excess = inv.addItem(is);
-                    for (Map.Entry<Integer, ItemStack> me : excess.entrySet()) {
+                    excess.entrySet().forEach((me) -> {
                         player.getWorld().dropItem(player.getLocation(), me.getValue());
-                    }
+                    });
                 }
                 // set achievement as done
                 seta.put("completed", 1);

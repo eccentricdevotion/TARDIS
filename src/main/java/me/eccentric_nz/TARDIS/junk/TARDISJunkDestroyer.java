@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
@@ -78,41 +77,38 @@ public class TARDISJunkDestroyer implements Runnable {
         if (i < 25) {
             i++;
             if (i == 1) {
-                for (Entity e : getJunkTravellers(4.0d)) {
+                getJunkTravellers(4.0d).forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
-                }
+                });
                 TARDISSounds.playTARDISSound(junkLoc, "junk_takeoff");
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, junkLoc), 0, 1L);
             }
             if (i == 25) {
                 // get junk vortex location
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 if (rs.resultSet()) {
                     // teleport players to vortex
                     vortexJunkLoc = plugin.getLocationUtils().getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
-                    for (Entity e : getJunkTravellers(4.0d)) {
+                    getJunkTravellers(4.0d).forEach((e) -> {
                         if (e instanceof Player) {
                             final Player p = (Player) e;
                             final Location relativeLoc = getRelativeLocation(p);
                             p.teleport(relativeLoc);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    p.teleport(relativeLoc);
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                p.teleport(relativeLoc);
                             }, 2L);
                         }
-                    }
+                    });
                     TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisID());
                     int jvrtask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 20L);
                     runnable.setTask(jvrtask);
                 }
-                List<Chunk> chunks = new ArrayList<Chunk>();
+                List<Chunk> chunks = new ArrayList<>();
                 // remove blocks
                 for (int level = ey; level >= sy; level--) {
                     for (int row = ex; row >= sx; row--) {
@@ -133,26 +129,25 @@ public class TARDISJunkDestroyer implements Runnable {
                             }
                         }
                         // refresh the chunks
-                        for (Chunk chink : chunks) {
-                            //world.refreshChunk(chink.getX(), chink.getZ());
+                        chunks.forEach((chink) -> {
                             plugin.getTardisHelper().refreshChunk(chink);
-                        }
+                        });
                         chunks.clear();
                     }
                 }
                 plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(pdd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(pdd.getTardisID()));
                 // check protected blocks if has block id and data stored then put the block back!
-                HashMap<String, Object> tid = new HashMap<String, Object>();
+                HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", pdd.getTardisID());
                 ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
                 if (rsb.resultSet()) {
-                    for (ReplacedBlock rp : rsb.getData()) {
+                    rsb.getData().forEach((rp) -> {
                         int rx = rp.getLocation().getBlockX();
                         int ry = rp.getLocation().getBlockY();
                         int rz = rp.getLocation().getBlockZ();
                         TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlock(), rp.getData());
-                    }
+                    });
                 }
                 // remove block protection
                 plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID(), new QueryFactory(plugin));
@@ -161,12 +156,12 @@ public class TARDISJunkDestroyer implements Runnable {
                 task = 0;
             } else if (plugin.getConfig().getBoolean("junk.particles")) {
                 // just animate particles
-                for (Entity e : plugin.getUtils().getJunkTravellers(junkLoc)) {
+                plugin.getUtils().getJunkTravellers(junkLoc).forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
                     }
-                }
+                });
             }
         }
     }

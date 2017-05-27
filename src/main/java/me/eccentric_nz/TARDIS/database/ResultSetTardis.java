@@ -40,14 +40,14 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class ResultSetTardis {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final String limit;
     private final boolean multiple;
     private Tardis tardis;
-    private final List<Tardis> data = new ArrayList<Tardis>();
+    private final List<Tardis> data = new ArrayList<>();
     private final String prefix;
     private final int abandoned;
 
@@ -86,9 +86,9 @@ public class ResultSetTardis {
         String thelimit = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
+            where.entrySet().forEach((entry) -> {
                 sbw.append(entry.getKey()).append(" = ? AND ");
-            }
+            });
             if (abandoned < 2) {
                 wheres = " WHERE " + sbw.toString() + "abandoned = " + abandoned;
             } else {

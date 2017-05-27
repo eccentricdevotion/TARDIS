@@ -63,14 +63,14 @@ public class TARDISARSRunnable implements Runnable {
     @Override
     public void run() {
         String whichroom = room.getActualName();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             String[] chunk_data = tardis.getChunk().split(":");
             World w = plugin.getServer().getWorld(chunk_data[0]);
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            HashMap<String, Object> wherepp = new HashMap<>();
             wherepp.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             TARDISRoomData roomData = new TARDISRoomData();
@@ -116,16 +116,16 @@ public class TARDISARSRunnable implements Runnable {
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
-                for (Map.Entry<String, Integer> entry : roomBlockCounts.entrySet()) {
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                roomBlockCounts.entrySet().forEach((entry) -> {
+                    HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", tardis_id);
                     wherec.put("block_data", entry.getKey());
                     qf.alterCondenserBlockCount(entry.getValue(), wherec);
-                }
+                });
             }
             // take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", p.getUniqueId().toString());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
@@ -139,11 +139,11 @@ public class TARDISARSRunnable implements Runnable {
     }
 
     private HashMap<String, Integer> getRoomBlockCounts(String room, String uuid) {
-        HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
+        HashMap<String, Integer> blockIDCount = new HashMap<>();
         HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        HashMap<String, Object> wherepp = new HashMap<>();
         boolean hasPrefs = false;
         wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);

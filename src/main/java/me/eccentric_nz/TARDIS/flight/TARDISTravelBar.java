@@ -48,20 +48,17 @@ public class TARDISTravelBar {
         final double millis = duration * 50.0d;
         final long start = System.currentTimeMillis();
         final double end = start + millis;
-        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                long now = System.currentTimeMillis();
-                if (now < end) {
-                    double progress = 1 - (end - now) / millis;
-                    bb.setProgress(progress);
-                } else {
-                    bb.setProgress(1);
-                    bb.setVisible(false);
-                    bb.removeAll();
-                    Bukkit.getScheduler().cancelTask(taskID);
-                    taskID = 0;
-                }
+        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            long now = System.currentTimeMillis();
+            if (now < end) {
+                double progress = 1 - (end - now) / millis;
+                bb.setProgress(progress);
+            } else {
+                bb.setProgress(1);
+                bb.setVisible(false);
+                bb.removeAll();
+                Bukkit.getScheduler().cancelTask(taskID);
+                taskID = 0;
             }
         }, 1L, 1L);
     }

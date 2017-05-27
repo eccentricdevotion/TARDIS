@@ -65,17 +65,14 @@ public class TARDISMapChecker {
             }
         }
         if (opwarn) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    Set<OfflinePlayer> ops = plugin.getServer().getOperators();
-                    for (OfflinePlayer olp : ops) {
-                        if (olp.isOnline()) {
-                            Player p = olp.getPlayer();
-                            TARDISMessage.send(p, "MAPS_NOT_FOUND");
-                        }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Set<OfflinePlayer> ops = plugin.getServer().getOperators();
+                ops.forEach((olp) -> {
+                    if (olp.isOnline()) {
+                        Player p = olp.getPlayer();
+                        TARDISMessage.send(p, "MAPS_NOT_FOUND");
                     }
-                }
+                });
             }, 200L);
         }
     }

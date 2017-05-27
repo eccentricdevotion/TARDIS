@@ -59,12 +59,12 @@ public class TARDISChameleonTemplateListener extends TARDISMenuListener implemen
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                    HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
@@ -72,29 +72,23 @@ public class TARDISChameleonTemplateListener extends TARDISMenuListener implemen
                                 case 0:
                                     // back
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
-                                            ItemStack[] items = tci.getHelp();
-                                            Inventory chamhelp = plugin.getServer().createInventory(player, 54, "§4Chameleon Help");
-                                            chamhelp.setContents(items);
-                                            player.openInventory(chamhelp);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
+                                        ItemStack[] items = tci.getHelp();
+                                        Inventory chamhelp = plugin.getServer().createInventory(player, 54, "§4Chameleon Help");
+                                        chamhelp.setContents(items);
+                                        player.openInventory(chamhelp);
                                     }, 2L);
                                     break;
                                 case 8:
                                     // construct
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
-                                            ItemStack[] items = tci.getConstruct();
-                                            Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
-                                            chamcon.setContents(items);
-                                            player.openInventory(chamcon);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                                        ItemStack[] items = tci.getConstruct();
+                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
+                                        chamcon.setContents(items);
+                                        player.openInventory(chamcon);
                                     }, 2L);
                                     break;
                                 default:

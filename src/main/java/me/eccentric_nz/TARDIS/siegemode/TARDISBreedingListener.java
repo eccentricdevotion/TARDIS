@@ -56,13 +56,13 @@ public class TARDISBreedingListener implements Listener {
         if (!plugin.getTrackerKeeper().getSiegeBreedingAreas().containsKey(w)) {
             return;
         }
-        for (TARDISSiegeArea area : plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w)) {
+        plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((area) -> {
             if (area.isInSiegeArea(l) && random.nextInt(100) < chance) {
                 // make them twins
                 plugin.setTardisSpawn(true);
                 Ageable twin = (Ageable) l.getWorld().spawnEntity(l, ent.getType());
                 twin.setBaby();
             }
-        }
+        });
     }
 }

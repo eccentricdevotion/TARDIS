@@ -29,7 +29,7 @@ import org.bukkit.Material;
  */
 public class TARDISMaterialIDConverter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;

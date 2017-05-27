@@ -74,7 +74,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
             if (oluuid != null) {
                 final UUID uuid = oluuid;
                 // check the player has a TARDIS
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
@@ -91,7 +91,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                     boolean handbrake = tardis.isHandbrake_on();
                     int level = tardis.getArtron_level();
                     if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("uuid", ((Player) sender).getUniqueId().toString());
                         ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                         if (!rst.resultSet()) {
@@ -183,132 +183,135 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     }
                                 }
                                 // home, area or coords?
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                if (args[2].toLowerCase(Locale.ENGLISH).equals("home")) {
-                                    // get home location
-                                    HashMap<String, Object> wherehl = new HashMap<String, Object>();
-                                    wherehl.put("tardis_id", id);
-                                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
-                                    if (!rsh.resultSet()) {
-                                        TARDISMessage.send(sender, "HOME_NOT_FOUND");
-                                        return true;
-                                    }
-                                    set.put("world", rsh.getWorld().getName());
-                                    set.put("x", rsh.getX());
-                                    set.put("y", rsh.getY());
-                                    set.put("z", rsh.getZ());
-                                    set.put("direction", rsh.getDirection().toString());
-                                    set.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
-                                } else if (args[2].toLowerCase(Locale.ENGLISH).equals("area")) {
-                                    // check area name
-                                    HashMap<String, Object> wherea = new HashMap<String, Object>();
-                                    wherea.put("area_name", args[3]);
-                                    ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
-                                    if (!rsa.resultSet()) {
-                                        TARDISMessage.send(sender, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
-                                        return true;
-                                    }
-                                    if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                        // must use advanced console if difficulty hard
-                                        if (plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
-                                            TARDISMessage.send(sender, "ADV_AREA");
+                                HashMap<String, Object> set = new HashMap<>();
+                                switch (args[2].toLowerCase(Locale.ENGLISH)) {
+                                    case "home":
+                                        // get home location
+                                        HashMap<String, Object> wherehl = new HashMap<>();
+                                        wherehl.put("tardis_id", id);
+                                        ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
+                                        if (!rsh.resultSet()) {
+                                            TARDISMessage.send(sender, "HOME_NOT_FOUND");
                                             return true;
                                         }
-                                        // check permission
-                                        String perm = "tardis.area." + args[3];
-                                        if ((!p.getPlayer().hasPermission(perm) && !p.getPlayer().hasPermission("tardis.area.*"))) {
-                                            TARDISMessage.send(sender, "TRAVEL_NO_AREA_PERM", args[3]);
+                                        set.put("world", rsh.getWorld().getName());
+                                        set.put("x", rsh.getX());
+                                        set.put("y", rsh.getY());
+                                        set.put("z", rsh.getZ());
+                                        set.put("direction", rsh.getDirection().toString());
+                                        set.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
+                                        break;
+                                    case "area":
+                                        // check area name
+                                        HashMap<String, Object> wherea = new HashMap<>();
+                                        wherea.put("area_name", args[3]);
+                                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+                                        if (!rsa.resultSet()) {
+                                            TARDISMessage.send(sender, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                                             return true;
                                         }
-                                    }
-                                    // get a landing spot
-                                    Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
-                                    // returns null if full!
-                                    if (l == null) {
-                                        TARDISMessage.send(sender, "NO_MORE_SPOTS");
-                                        return true;
-                                    }
-                                    set.put("world", l.getWorld().getName());
-                                    set.put("x", l.getBlockX());
-                                    set.put("y", l.getBlockY());
-                                    set.put("z", l.getBlockZ());
-                                    set.put("submarine", 0);
-                                } else {
-                                    // coords
-                                    if (args.length < 6) {
-                                        TARDISMessage.send(sender, "ARG_COORDS");
-                                        return true;
-                                    }
-                                    if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                        if (!p.getPlayer().hasPermission("tardis.timetravel.location")) {
-                                            TARDISMessage.send(sender, "NO_PERMS");
+                                        if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+                                            // must use advanced console if difficulty hard
+                                            if (plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
+                                                TARDISMessage.send(sender, "ADV_AREA");
+                                                return true;
+                                            }
+                                            // check permission
+                                            String perm = "tardis.area." + args[3];
+                                            if ((!p.getPlayer().hasPermission(perm) && !p.getPlayer().hasPermission("tardis.area.*"))) {
+                                                TARDISMessage.send(sender, "TRAVEL_NO_AREA_PERM", args[3]);
+                                                return true;
+                                            }
+                                        }
+                                        // get a landing spot
+                                        Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                        // returns null if full!
+                                        if (l == null) {
+                                            TARDISMessage.send(sender, "NO_MORE_SPOTS");
                                             return true;
                                         }
-                                    }
-                                    int x, y, z;
-                                    World w = plugin.getServer().getWorld(args[2]);
-                                    if (w == null) {
-                                        TARDISMessage.send(sender, "WORLD_NOT_FOUND");
-                                        return true;
-                                    }
-                                    if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
-                                        TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
-                                        return true;
-                                    }
-                                    if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[2].equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                                        TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
-                                        return true;
-                                    }
-                                    x = TARDISNumberParsers.parseInt(args[args.length - 3]);
-                                    y = TARDISNumberParsers.parseInt(args[args.length - 2]);
-                                    if (y == 0) {
-                                        TARDISMessage.send(sender, "Y_NOT_VALID");
-                                        return true;
-                                    }
-                                    z = TARDISNumberParsers.parseInt(args[args.length - 1]);
-                                    Location location = new Location(w, x, y, z);
-                                    // check location
-                                    if (!plugin.getTardisArea().areaCheckInExisting(location)) {
-                                        TARDISMessage.send(sender, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
-                                        return true;
-                                    }
-                                    // check respect if not admin
-                                    if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                        if (!plugin.getPluginRespect().getRespect(location, new Parameters(p.getPlayer(), FLAG.getDefaultFlags()))) {
-                                            return true;
-                                        }
-                                    }
-                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                    wherecl.put("tardis_id", id);
-                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                                    if (!rsc.resultSet()) {
-                                        TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-                                        return true;
-                                    }
-                                    // check location
-                                    int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
-                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
-                                    if (count > 0) {
-                                        TARDISMessage.send(sender, "NOT_SAFE");
-                                        return true;
-                                    } else {
-                                        set.put("world", location.getWorld().getName());
-                                        set.put("x", location.getBlockX());
-                                        set.put("y", location.getBlockY());
-                                        set.put("z", location.getBlockZ());
+                                        set.put("world", l.getWorld().getName());
+                                        set.put("x", l.getBlockX());
+                                        set.put("y", l.getBlockY());
+                                        set.put("z", l.getBlockZ());
                                         set.put("submarine", 0);
-                                    }
+                                        break;
+                                    default:
+                                        // coords
+                                        if (args.length < 6) {
+                                            TARDISMessage.send(sender, "ARG_COORDS");
+                                            return true;
+                                        }
+                                        if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+                                            if (!p.getPlayer().hasPermission("tardis.timetravel.location")) {
+                                                TARDISMessage.send(sender, "NO_PERMS");
+                                                return true;
+                                            }
+                                        }
+                                        int x,
+                                         y,
+                                         z;
+                                        World w = plugin.getServer().getWorld(args[2]);
+                                        if (w == null) {
+                                            TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                                            return true;
+                                        }
+                                        if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
+                                            TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
+                                            return true;
+                                        }
+                                        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[2].equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                                            TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
+                                            return true;
+                                        }
+                                        x = TARDISNumberParsers.parseInt(args[args.length - 3]);
+                                        y = TARDISNumberParsers.parseInt(args[args.length - 2]);
+                                        if (y == 0) {
+                                            TARDISMessage.send(sender, "Y_NOT_VALID");
+                                            return true;
+                                        }
+                                        z = TARDISNumberParsers.parseInt(args[args.length - 1]);
+                                        Location location = new Location(w, x, y, z);
+                                        // check location
+                                        if (!plugin.getTardisArea().areaCheckInExisting(location)) {
+                                            TARDISMessage.send(sender, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
+                                            return true;
+                                        }
+                                        // check respect if not admin
+                                        if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+                                            if (!plugin.getPluginRespect().getRespect(location, new Parameters(p.getPlayer(), FLAG.getDefaultFlags()))) {
+                                                return true;
+                                            }
+                                        }
+                                        HashMap<String, Object> wherecl = new HashMap<>();
+                                        wherecl.put("tardis_id", id);
+                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                        if (!rsc.resultSet()) {
+                                            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                                            return true;
+                                        }
+                                        // check location
+                                        int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
+                                        int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+                                        if (count > 0) {
+                                            TARDISMessage.send(sender, "NOT_SAFE");
+                                            return true;
+                                        } else {
+                                            set.put("world", location.getWorld().getName());
+                                            set.put("x", location.getBlockX());
+                                            set.put("y", location.getBlockY());
+                                            set.put("z", location.getBlockZ());
+                                            set.put("submarine", 0);
+                                        }
+                                        break;
                                 }
-                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", id);
                                 new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        OfflinePlayer player = plugin.getServer().getOfflinePlayer(uuid);
-                                        String success = (new TARDISRemoteTravelCommand(plugin).doTravel(id, player, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");
-                                        TARDISMessage.send(sender, "REMOTE_SUCCESS", success);
-                                    }
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    OfflinePlayer player = plugin.getServer().getOfflinePlayer(uuid);
+                                    String success = (new TARDISRemoteTravelCommand(plugin).doTravel(id, player, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");
+                                    TARDISMessage.send(sender, "REMOTE_SUCCESS", success);
                                 }, 5L);
                                 return true;
                         }

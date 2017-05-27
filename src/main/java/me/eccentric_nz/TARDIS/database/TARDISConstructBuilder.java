@@ -66,11 +66,11 @@ public class TARDISConstructBuilder {
             jsonGlassData = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,9,0,0],[0,0,0,0],[0,0,4,0]]";
         }
         // save chameleon construct
-        HashMap<String, Object> wherec = new HashMap<String, Object>();
+        HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
         ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("blueprintID", jsonBlueID);
         set.put("blueprintData", jsonBlueData);
         set.put("stainID", jsonStainID);
@@ -79,7 +79,7 @@ public class TARDISConstructBuilder {
         set.put("glassData", jsonGlassData);
         if (rsc.resultSet()) {
             // update
-            HashMap<String, Object> whereu = new HashMap<String, Object>();
+            HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("tardis_id", id);
             qf.doUpdate("chameleon", set, whereu);
         } else {
@@ -88,9 +88,9 @@ public class TARDISConstructBuilder {
             qf.doInsert("chameleon", set);
         }
         // set preset to CONSTRUCT
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        HashMap<String, Object> sett = new HashMap<String, Object>();
+        HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
         qf.doUpdate("tardis", sett, where);
     }

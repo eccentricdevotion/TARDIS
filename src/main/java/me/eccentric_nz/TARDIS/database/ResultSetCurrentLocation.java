@@ -37,7 +37,7 @@ import org.bukkit.block.Biome;
  */
 public class ResultSetCurrentLocation {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -79,9 +79,9 @@ public class ResultSetCurrentLocation {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
+            where.entrySet().forEach((entry) -> {
                 sbw.append(entry.getKey()).append(" = ? AND ");
-            }
+            });
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "current" + wheres;

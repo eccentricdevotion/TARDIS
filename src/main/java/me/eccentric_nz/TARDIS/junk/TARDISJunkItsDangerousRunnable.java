@@ -43,14 +43,14 @@ public class TARDISJunkItsDangerousRunnable implements Runnable {
             t.setType(Material.REDSTONE_TORCH_OFF);
         }
         // check if player is in Junk TARDIS effects zone
-        List<UUID> remove = new ArrayList<UUID>();
-        for (UUID uuid : plugin.getGeneralKeeper().getJunkTravellers()) {
+        List<UUID> remove = new ArrayList<>();
+        plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
             Player p = plugin.getServer().getPlayer(uuid);
             if (p.isOnline() && !isInside(p.getLocation())) {
                 p.setHealth(0);
                 remove.add(uuid);
             }
-        }
+        });
         if (remove.size() > 0) {
             plugin.getGeneralKeeper().getJunkTravellers().removeAll(remove);
         }

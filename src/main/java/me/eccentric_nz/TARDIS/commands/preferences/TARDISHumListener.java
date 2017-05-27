@@ -40,9 +40,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISHumListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Integer, Long> sounds = new HashMap<Integer, Long>();
-    private final HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-    private final HashMap<UUID, Integer> last = new HashMap<UUID, Integer>();
+    private final HashMap<Integer, Long> sounds = new HashMap<>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
+    private final HashMap<UUID, Integer> last = new HashMap<>();
 
     public TARDISHumListener(TARDIS plugin) {
         super(plugin);
@@ -75,8 +75,8 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     switch (slot) {
                         case 11:
-                            HashMap<String, Object> setr = new HashMap<String, Object>();
-                            HashMap<String, Object> wherer = new HashMap<String, Object>();
+                            HashMap<String, Object> setr = new HashMap<>();
+                            HashMap<String, Object> wherer = new HashMap<>();
                             wherer.put("uuid", uuid.toString());
                             setr.put("hum", "");
                             new QueryFactory(plugin).doUpdate("player_prefs", setr, wherer);
@@ -107,8 +107,8 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                     cooldown.put(uuid, System.currentTimeMillis());
                                 }
                             } else {
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                HashMap<String, Object> where = new HashMap<String, Object>();
+                                HashMap<String, Object> set = new HashMap<>();
+                                HashMap<String, Object> where = new HashMap<>();
                                 where.put("uuid", uuid.toString());
                                 set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
                                 new QueryFactory(plugin).doUpdate("player_prefs", set, where);

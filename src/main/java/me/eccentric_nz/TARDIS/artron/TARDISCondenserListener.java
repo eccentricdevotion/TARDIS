@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.artron;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -56,7 +55,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISCondenserListener implements Listener {
 
     private final TARDIS plugin;
-    private List<String> zero = new ArrayList<String>();
+    private List<String> zero = new ArrayList<>();
 
     public TARDISCondenserListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -84,7 +83,7 @@ public class TARDISCondenserListener implements Listener {
                 String chest_loc;
                 ResultSetTardis rs;
                 boolean isCondenser;
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 if (title.equals("§4Artron Condenser")) {
                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                         if (plugin.isMVOnServer() && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
@@ -119,7 +118,7 @@ public class TARDISCondenserListener implements Listener {
                     QueryFactory qf = new QueryFactory(plugin);
                     int amount = 0;
                     // get the stacks in the inventory
-                    HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
+                    HashMap<String, Integer> item_counts = new HashMap<>();
                     for (ItemStack is : inv.getContents()) {
                         if (is != null) {
                             String item = is.getType().toString();
@@ -146,13 +145,13 @@ public class TARDISCondenserListener implements Listener {
                     Tardis tardis = rs.getTardis();
                     // process item_counts
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
-                        for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
+                        item_counts.entrySet().forEach((map) -> {
                             // check if the tardis has condensed this material before
-                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", tardis.getTardis_id());
                             wherec.put("block_data", map.getKey());
                             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
-                            HashMap<String, Object> setc = new HashMap<String, Object>();
+                            HashMap<String, Object> setc = new HashMap<>();
                             if (rsc.resultSet()) {
                                 int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
                                 qf.updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), map.getKey());
@@ -162,11 +161,11 @@ public class TARDISCondenserListener implements Listener {
                                 setc.put("block_count", map.getValue());
                                 qf.doInsert("condenser", setc);
                             }
-                        }
+                        });
                     }
                     // halve it cause 1:1 is too much...
                     amount = Math.round(amount / 2.0F);
-                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", tardis.getTardis_id());
                     qf.alterEnergyLevel("tardis", amount, wheret, player);
                     if (amount > 0) {
@@ -201,7 +200,7 @@ public class TARDISCondenserListener implements Listener {
         if (b != null && b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Location loc = b.getLocation();
             String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("condenser", chest_loc);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {

@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
@@ -117,7 +119,7 @@ public class TARDISEjectListener implements Listener {
                 // teleport player and remove from travellers table
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
                 TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).doDelete("travellers", where);
                 break;
@@ -160,7 +162,8 @@ public class TARDISEjectListener implements Listener {
                 TARDISLlama tmlla = new TARDISLlama();
                 tmlla.setAge(ll.getAge());
                 tmlla.setBaby(!ll.isAdult());
-                tmlla.setHorseHealth(ll.getMaxHealth());
+                double mh = ll.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                tmlla.setHorseHealth(mh);
                 tmlla.setHealth(ll.getHealth());
                 // get horse colour, style and variant
                 tmlla.setLlamacolor(ll.getColor());
@@ -197,8 +200,8 @@ public class TARDISEjectListener implements Listener {
                 if (tmlla.isBaby()) {
                     llama.setBaby();
                 }
-                llama.setMaxHealth(tmlla.getHorseHealth());
-                llama.setHealth(tmlla.getHealth());
+                AttributeInstance attribute = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                attribute.setBaseValue(tmlla.getHorseHealth());
                 String name = tmlla.getName();
                 if (name != null && !name.isEmpty()) {
                     llama.setCustomName(name);

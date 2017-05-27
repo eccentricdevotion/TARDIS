@@ -101,25 +101,24 @@ public class TARDISLanguageUpdater {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
             // sort language file alphabetically if additions were made
             try {
-                FileReader fileReader = new FileReader(lang_path);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                String inputLine;
-                List<String> lineList = new ArrayList<String>();
-                while ((inputLine = bufferedReader.readLine()) != null) {
-                    lineList.add(inputLine);
+                List<String> lineList;
+                try (FileReader fileReader = new FileReader(lang_path)) {
+                    BufferedReader bufferedReader = new BufferedReader(fileReader);
+                    String inputLine;
+                    lineList = new ArrayList<>();
+                    while ((inputLine = bufferedReader.readLine()) != null) {
+                        lineList.add(inputLine);
+                    }
                 }
-                fileReader.close();
 
                 Collections.sort(lineList);
 
-                FileWriter fileWriter = new FileWriter(lang_path);
-                PrintWriter out = new PrintWriter(fileWriter, false);
-                for (String outputLine : lineList) {
-                    out.println(outputLine);
+                try (FileWriter fileWriter = new FileWriter(lang_path); PrintWriter out = new PrintWriter(fileWriter, false)) {
+                    lineList.forEach((outputLine) -> {
+                        out.println(outputLine);
+                    });
+                    out.flush();
                 }
-                out.flush();
-                out.close();
-                fileWriter.close();
             } catch (IOException ex) {
                 plugin.debug("Could not alphabetize language config file! " + ex.getMessage());
             }

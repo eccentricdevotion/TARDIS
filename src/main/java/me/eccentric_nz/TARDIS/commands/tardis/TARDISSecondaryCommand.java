@@ -49,14 +49,14 @@ public class TARDISSecondaryCommand {
                 TARDISMessage.send(player, "UPDATE_NOT_VALID");
                 return false;
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {

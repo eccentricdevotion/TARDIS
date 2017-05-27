@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 public class TARDISTextureCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<>();
 
     public TARDISTextureCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -72,17 +72,17 @@ public class TARDISTextureCommands implements CommandExecutor {
             if (player.hasPermission("tardis.texture")) {
                 // get the players preferences
                 String playerUUID = player.getUniqueId().toString();
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                HashMap<String, Object> wherepp = new HashMap<>();
                 wherepp.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 // if no prefs record found, make one
                 if (!rsp.resultSet()) {
                     set.put("uuid", playerUUID);
                     qf.doInsert("player_prefs", set);
                 }
-                HashMap<String, Object> upd = new HashMap<String, Object>();
+                HashMap<String, Object> upd = new HashMap<>();
                 if (pref.equals("on")) {
                     upd.put("texture_on", 1);
                 }
@@ -111,7 +111,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                     }
                 }
                 if (upd.size() > 0) {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", playerUUID);
                     qf.doUpdate("player_prefs", upd, where);
                     TARDISMessage.send(player, "PREF_TEXTURE");

@@ -84,7 +84,7 @@ public class TARDISKeyboardPacketListener implements Listener {
         if (b != null && (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))) {
             Player player = event.getPlayer();
             String loc = event.getClickedBlock().getLocation().toString();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("type", 7);
             where.put("location", loc);
             ResultSetControls rs = new ResultSetControls(plugin, where, false);

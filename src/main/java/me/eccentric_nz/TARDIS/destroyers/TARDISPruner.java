@@ -41,7 +41,7 @@ import org.bukkit.command.CommandSender;
  */
 public class TARDISPruner {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
@@ -62,32 +62,32 @@ public class TARDISPruner {
             rs = statement.executeQuery(query);
             String file = plugin.getDataFolder() + File.separator + "TARDIS_Prune_List.txt";
             try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-                if (rs.isBeforeFirst()) {
-                    sender.sendMessage(plugin.getPluginName() + "Prune List:");
-                } else {
-                    TARDISMessage.send(sender, "PRUNE_NONE");
-                }
-                while (rs.next()) {
-                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                    wherecl.put("tardis_id", rs.getInt("tardis_id"));
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                    if (rsc.resultSet()) {
-                        // double check that this is an unused TARDIS
-                        Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
-                        if (lastuse.before(prune)) {
-                            String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
-                            // write line to file
-                            bw.write(line);
-                            bw.newLine();
-                            // display the TARDIS prune list
-                            sender.sendMessage(line);
-                        }
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
+                    if (rs.isBeforeFirst()) {
+                        sender.sendMessage(plugin.getPluginName() + "Prune List:");
                     } else {
-                        plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+                        TARDISMessage.send(sender, "PRUNE_NONE");
+                    }
+                    while (rs.next()) {
+                        HashMap<String, Object> wherecl = new HashMap<>();
+                        wherecl.put("tardis_id", rs.getInt("tardis_id"));
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                        if (rsc.resultSet()) {
+                            // double check that this is an unused TARDIS
+                            Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
+                            if (lastuse.before(prune)) {
+                                String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                                // write line to file
+                                bw.write(line);
+                                bw.newLine();
+                                // display the TARDIS prune list
+                                sender.sendMessage(line);
+                            }
+                        } else {
+                            plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+                        }
                     }
                 }
-                bw.close();
             } catch (IOException e) {
                 plugin.debug("Could not create and write to TARDIS_Prune_List.txt! " + e.getMessage());
             }

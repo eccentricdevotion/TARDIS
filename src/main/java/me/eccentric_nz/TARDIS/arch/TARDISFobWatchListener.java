@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -77,7 +78,8 @@ public class TARDISFobWatchListener implements Listener {
                     DisguiseAPI.undisguiseToAll(player);
                 }
                 player.getWorld().strikeLightningEffect(player.getLocation());
-                player.setHealth(player.getMaxHealth() / 10.0d);
+                double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                player.setHealth(mh / 10.0d);
                 if (inv) {
                     new TARDISArchInventory().switchInventories(player, 0);
                 }

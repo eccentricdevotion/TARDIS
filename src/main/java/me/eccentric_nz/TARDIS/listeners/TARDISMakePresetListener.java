@@ -48,7 +48,7 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final List<Integer> not_glass = new ArrayList<Integer>();
+    private final List<Integer> not_glass = new ArrayList<>();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;

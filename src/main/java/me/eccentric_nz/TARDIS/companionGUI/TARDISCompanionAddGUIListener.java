@@ -68,7 +68,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                             close(player);
                             break;
                         default:
-                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", player.getUniqueId().toString());
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                             if (rs.resultSet()) {
@@ -98,22 +98,19 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
         if (rs.fromUUID(player.getUniqueId().toString())) {
             final String comps = rs.getCompanions();
             close(player);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    ItemStack[] items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
-                    Inventory cominv = plugin.getServer().createInventory(player, 54, "§4Companions");
-                    cominv.setContents(items);
-                    player.openInventory(cominv);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                ItemStack[] items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
+                Inventory cominv = plugin.getServer().createInventory(player, 54, "§4Companions");
+                cominv.setContents(items);
+                player.openInventory(cominv);
             }, 2L);
         }
     }
 
     private void addCompanion(int id, String comps, String puid) {
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> tid = new HashMap<String, Object>();
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> tid = new HashMap<>();
+        HashMap<String, Object> set = new HashMap<>();
         tid.put("tardis_id", id);
         if (comps != null && !comps.isEmpty()) {
             // add to the list

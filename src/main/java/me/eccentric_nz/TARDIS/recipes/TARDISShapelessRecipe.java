@@ -9,6 +9,7 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,17 +22,19 @@ public class TARDISShapelessRecipe {
 
     private final TARDIS plugin;
     private final HashMap<String, ShapelessRecipe> shapelessRecipes;
+    private final NamespacedKey key;
 
     public TARDISShapelessRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        this.shapelessRecipes = new HashMap<String, ShapelessRecipe>();
+        this.shapelessRecipes = new HashMap<>();
+        this.key = new NamespacedKey(this.plugin, "TARDIS");
     }
 
     public void addShapelessRecipes() {
         Set<String> shapeless = plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false);
-        for (String s : shapeless) {
+        shapeless.forEach((s) -> {
             plugin.getServer().addRecipe(makeRecipe(s));
-        }
+        });
     }
 
     private ShapelessRecipe makeRecipe(String s) {
@@ -59,7 +62,7 @@ public class TARDISShapelessRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
         }
         is.setItemMeta(im);
-        ShapelessRecipe r = new ShapelessRecipe(is);
+        ShapelessRecipe r = new ShapelessRecipe(key, is);
         for (String i : ingredients) {
             String[] recipe_idata = i.split(":");
             Material m = Material.valueOf(recipe_idata[0]);

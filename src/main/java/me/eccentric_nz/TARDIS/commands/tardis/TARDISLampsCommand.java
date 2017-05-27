@@ -65,25 +65,25 @@ public class TARDISLampsCommand {
             TARDISMessage.send(owner, "NO_PERMS");
             return false;
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();
             // check if they have already got lamp records
-            HashMap<String, Object> wherel = new HashMap<String, Object>();
+            HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
             QueryFactory qf = new QueryFactory(plugin);
             if (rsl.resultSet()) {
                 TARDISMessage.send(owner, "LAMP_DELETE");
-                HashMap<String, Object> wheredel = new HashMap<String, Object>();
+                HashMap<String, Object> wheredel = new HashMap<>();
                 wheredel.put("tardis_id", id);
                 qf.doDelete("lamps", wheredel);
             }
             // get the TARDIS console chunks
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);
             if (rsc.resultSet()) {
@@ -91,7 +91,7 @@ public class TARDISLampsCommand {
                 SCHEMATIC schm = tardis.getSchematic();
                 Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 // player preference
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                HashMap<String, Object> wherepp = new HashMap<>();
                 wherepp.put("uuid", owner.getUniqueId().toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet() && rsp.isLanternsOn()) {
@@ -123,7 +123,7 @@ public class TARDISLampsCommand {
                                 Material mat = world.getBlockAt(xx, yy, zz).getType();
                                 if (mat.equals(lampon)) {
                                     String lamp = w + ":" + xx + ":" + yy + ":" + zz;
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("tardis_id", id);
                                     set.put("location", lamp);
                                     qf.doInsert("lamps", set);

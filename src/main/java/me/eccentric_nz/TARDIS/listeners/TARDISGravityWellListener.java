@@ -49,8 +49,8 @@ import org.bukkit.inventory.EquipmentSlot;
 public class TARDISGravityWellListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Double, Byte> woolData = new HashMap<Double, Byte>();
-    private final HashMap<Double, String> woolColour = new HashMap<Double, String>();
+    private final HashMap<Double, Byte> woolData = new HashMap<>();
+    private final HashMap<Double, String> woolColour = new HashMap<>();
 
     public TARDISGravityWellListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -217,12 +217,12 @@ public class TARDISGravityWellListener implements Listener {
                 String loc = b.getLocation().toString();
                 if (values[0] == 6) {
                     // find record and delete it
-                    HashMap<String, Object> whereg = new HashMap<String, Object>();
+                    HashMap<String, Object> whereg = new HashMap<>();
                     whereg.put("tardis_id", id);
                     whereg.put("location", loc);
                     ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, false);
                     if (rsg.resultSet()) {
-                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        HashMap<String, Object> whered = new HashMap<>();
                         whered.put("g_id", rsg.getGravity_id());
                         if (qf.doSyncDelete("gravity_well", whered)) {
                             switch (rsg.getDirection()) {
@@ -261,7 +261,7 @@ public class TARDISGravityWellListener implements Listener {
                         return;
                     }
                     // add a record
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", id);
                     set.put("location", loc);
                     set.put("direction", values[0].intValue());

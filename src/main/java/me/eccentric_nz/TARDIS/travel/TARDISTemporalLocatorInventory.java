@@ -36,7 +36,7 @@ public class TARDISTemporalLocatorInventory {
 
     private final ItemStack[] temporal;
     private final TARDIS plugin;
-    List<String> time = new ArrayList<String>();
+    List<String> time = new ArrayList<>();
 
     public TARDISTemporalLocatorInventory(TARDIS plugin) {
         this.plugin = plugin;
@@ -112,7 +112,7 @@ public class TARDISTemporalLocatorInventory {
             ItemStack is = new ItemStack(Material.WATCH, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(time.get(c));
-            List<String> lore = new ArrayList<String>();
+            List<String> lore = new ArrayList<>();
             lore.add(i + " ticks");
             im.setLore(lore);
             is.setItemMeta(im);

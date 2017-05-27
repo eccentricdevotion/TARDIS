@@ -61,12 +61,12 @@ public class TARDISRenderRoomListener implements Listener {
     public void transmat(final Player p) {
         TARDISMessage.send(p, "TRANSMAT");
         // get the TARDIS the player is in
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
-            HashMap<String, Object> whered = new HashMap<String, Object>();
+            HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", id);
             whered.put("door_type", 1);
             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
@@ -106,15 +106,12 @@ public class TARDISRenderRoomListener implements Listener {
                 tmp_loc.setPitch(p.getLocation().getPitch());
                 tmp_loc.setYaw(p.getLocation().getYaw());
                 final Location tp_loc = tmp_loc;
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        p.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
-                        p.teleport(tp_loc);
-                        plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
-                        if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId()) && plugin.getPM().isPluginEnabled("Citizens")) {
-                            new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
-                        }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    p.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+                    p.teleport(tp_loc);
+                    plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
+                    if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId()) && plugin.getPM().isPluginEnabled("Citizens")) {
+                        new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
                     }
                 }, 10L);
             } else {

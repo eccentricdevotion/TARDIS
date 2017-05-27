@@ -52,12 +52,12 @@ public class TARDISQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         UUID uuid = event.getPlayer().getUniqueId();
         // forget the players Police Box chunk
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", tardis.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
@@ -93,11 +93,8 @@ public class TARDISQuitListener implements Listener {
                         delay = 20L;
                     }
                     if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
                         }, delay);
                     }
                     // if lights are on, turn them off
@@ -107,9 +104,9 @@ public class TARDISQuitListener implements Listener {
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
                     // update database
-                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
-                    HashMap<String, Object> sett = new HashMap<String, Object>();
+                    HashMap<String, Object> sett = new HashMap<>();
                     sett.put("powered_on", 0);
                     new QueryFactory(plugin).doUpdate("tardis", sett, wheret);
                 }

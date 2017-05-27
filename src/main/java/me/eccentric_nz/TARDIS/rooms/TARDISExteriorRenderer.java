@@ -279,18 +279,15 @@ public class TARDISExteriorRenderer {
             new TARDISEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
         }
         // charge artron energy for the render
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
         plugin.getTrackerKeeper().getRenderRoomOccupants().add(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                transmat(p, d, location);
-                p.playSound(location, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
-                TARDISMessage.send(p, "RENDER_EXIT");
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            transmat(p, d, location);
+            p.playSound(location, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+            TARDISMessage.send(p, "RENDER_EXIT");
         }, 10L);
     }
 

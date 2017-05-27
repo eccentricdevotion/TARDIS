@@ -22,9 +22,9 @@ import java.util.List;
 import org.bukkit.ChatColor;
 
 /**
- * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down
- into an array of strings appropriate for displaying on the Minecraft player
- console.
+ * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it
+ * down into an array of strings appropriate for displaying on the Minecraft
+ * player console.
  */
 public class TARDISChatPaginator {
 
@@ -85,7 +85,7 @@ public class TARDISChatPaginator {
         char[] rawChars = (rawString + ' ').toCharArray(); // add a trailing space to trigger pagination
         StringBuilder word = new StringBuilder();
         StringBuilder line = new StringBuilder();
-        List<String> lines = new LinkedList<String>();
+        List<String> lines = new LinkedList<>();
         int lineColorChars = 0;
         for (int i = 0; i < rawChars.length; i++) {
             char c = rawChars[i];
@@ -98,9 +98,7 @@ public class TARDISChatPaginator {
             }
             if (c == ' ' || c == '\n') {
                 if (line.length() == 0 && word.length() - lineColorChars > lineLength) { // special case: extremely long word begins a line
-                    for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
-                        lines.add(partialWord);
-                    }
+                    lines.addAll(Arrays.asList(word.toString().split("(?<=\\G.{" + lineLength + "})")));
                 } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > lineLength) { // Line too long...break the line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
                         lines.add(line.toString());

@@ -38,7 +38,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISCircuitRepairListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Byte, String> circuits = new HashMap<Byte, String>();
+    private final HashMap<Byte, String> circuits = new HashMap<>();
 
     public TARDISCircuitRepairListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -95,7 +95,7 @@ public class TARDISCircuitRepairListener implements Listener {
                                         // clone the map
                                         ItemStack clone = first.clone();
                                         ItemMeta cim = clone.getItemMeta();
-                                        List<String> clore = new ArrayList<String>();
+                                        List<String> clore = new ArrayList<>();
                                         clore.add("Uses left");
                                         clore.add(ChatColor.YELLOW + "" + repair_to);
                                         cim.setLore(clore);

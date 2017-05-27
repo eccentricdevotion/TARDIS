@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class Song {
 
-    private HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
+    private HashMap<Integer, Layer> layerHashMap = new HashMap<>();
     private final short songHeight;
     private final short length;
     private final String title;

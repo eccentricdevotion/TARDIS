@@ -65,8 +65,8 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class TARDISScannerListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<Material>();
-    HashMap<String, EntityType> twa = new HashMap<String, EntityType>();
+    List<Material> validBlocks = new ArrayList<>();
+    HashMap<String, EntityType> twa = new HashMap<>();
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -110,7 +110,7 @@ public class TARDISScannerListener implements Listener {
                 int bz = b.getBlockZ();
                 String scanner_loc = bw + ":" + bx + ":" + by + ":" + bz;
                 // get tardis from saved scanner location
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("scanner", scanner_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
@@ -139,7 +139,7 @@ public class TARDISScannerListener implements Listener {
                     final TARDISScannerData data = scan(player, id, bsched);
                     if (data != null) {
                         boolean extrend = true;
-                        HashMap<String, Object> wherer = new HashMap<String, Object>();
+                        HashMap<String, Object> wherer = new HashMap<>();
                         wherer.put("uuid", player.getUniqueId().toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
                         if (rsp.resultSet()) {
@@ -148,13 +148,10 @@ public class TARDISScannerListener implements Listener {
                         if (!renderer.isEmpty() && extrend) {
                             int required = plugin.getArtronConfig().getInt("render");
                             if (level > required) {
-                                bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
-                                            TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                            ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
-                                        }
+                                bsched.scheduleSyncDelayedTask(plugin, () -> {
+                                    if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
+                                        TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                        ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
                                     }
                                 }, 160L);
                             } else {
@@ -169,7 +166,7 @@ public class TARDISScannerListener implements Listener {
 
     public static List<Entity> getNearbyEntities(Location l, int radius) {
         int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
-        List<Entity> radiusEntities = new ArrayList<Entity>();
+        List<Entity> radiusEntities = new ArrayList<>();
         for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
             for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
                 int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
@@ -189,7 +186,7 @@ public class TARDISScannerListener implements Listener {
         final Location scan_loc;
         String whereisit;
         final COMPASS tardisDirection;
-        HashMap<String, Object> wherenl = new HashMap<String, Object>();
+        HashMap<String, Object> wherenl = new HashMap<>();
         wherenl.put("tardis_id", id);
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
@@ -213,8 +210,8 @@ public class TARDISScannerListener implements Listener {
         data.setScanLocation(scan_loc);
         data.setTardisDirection(tardisDirection);
         // record nearby entities
-        final HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
-        final List<String> playernames = new ArrayList<String>();
+        final HashMap<EntityType, Integer> scannedentities = new HashMap<>();
+        final List<String> playernames = new ArrayList<>();
         for (Entity k : getNearbyEntities(scan_loc, 16)) {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
@@ -254,7 +251,7 @@ public class TARDISScannerListener implements Listener {
                         }
                     }
                 }
-                if (et.equals(EntityType.ENDERMAN) && k.getPassenger() != null && k.getPassenger().getType().equals(EntityType.GUARDIAN)) {
+                if (et.equals(EntityType.ENDERMAN) && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                     // silent
                     et = EntityType.SPLASH_POTION;
                 }
@@ -277,11 +274,8 @@ public class TARDISScannerListener implements Listener {
         }
         TARDISMessage.send(player, true, "SCAN_WORLD", worldname);
         TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_DIRECTION", tardisDirection.toString());
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_DIRECTION", tardisDirection.toString());
         }, 20L);
         // get biome
         Biome tmb;
@@ -306,110 +300,115 @@ public class TARDISScannerListener implements Listener {
         }
         final Biome biome = tmb;
         data.setBiome(biome);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
         }, 40L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
         }, 60L);
         // get weather
         final String weather;
-        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.MUTATED_DESERT) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_ROCK) || biome.equals(Biome.MUTATED_SAVANNA) || biome.equals(Biome.MUTATED_SAVANNA_ROCK) || biome.equals(Biome.MESA) || biome.equals(Biome.MUTATED_MESA) || biome.equals(Biome.MUTATED_MESA_CLEAR_ROCK) || biome.equals(Biome.MUTATED_MESA_ROCK) || biome.equals(Biome.MESA_ROCK) || biome.equals(Biome.MESA_CLEAR_ROCK)) {
-            weather = plugin.getLanguage().getString("WEATHER_DRY");
-        } else if (biome.equals(Biome.ICE_FLATS) || biome.equals(Biome.MUTATED_ICE_FLATS) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.TAIGA_COLD) || biome.equals(Biome.TAIGA_COLD_HILLS) || biome.equals(Biome.MUTATED_TAIGA_COLD)) {
-            weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
-        } else {
-            weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
+        switch (biome) {
+            case DESERT:
+            case DESERT_HILLS:
+            case MUTATED_DESERT:
+            case SAVANNA:
+            case SAVANNA_ROCK:
+            case MUTATED_SAVANNA:
+            case MUTATED_SAVANNA_ROCK:
+            case MESA:
+            case MUTATED_MESA:
+            case MUTATED_MESA_CLEAR_ROCK:
+            case MUTATED_MESA_ROCK:
+            case MESA_ROCK:
+            case MESA_CLEAR_ROCK:
+                weather = plugin.getLanguage().getString("WEATHER_DRY");
+                break;
+            case ICE_FLATS:
+            case MUTATED_ICE_FLATS:
+            case FROZEN_OCEAN:
+            case FROZEN_RIVER:
+            case COLD_BEACH:
+            case TAIGA_COLD:
+            case TAIGA_COLD_HILLS:
+            case MUTATED_TAIGA_COLD:
+                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
+                break;
+            default:
+                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
+                break;
         }
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_WEATHER", weather);
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_WEATHER", weather);
         }, 80L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
         }, 100L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
         }, 120L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                if (scannedentities.size() > 0) {
-                    TARDISMessage.send(player, true, "SCAN_ENTS");
-                    for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                        String message = "";
-                        StringBuilder buf = new StringBuilder();
-                        if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
-                            for (String p : playernames) {
-                                buf.append(", ").append(p);
-                            }
-                            message = " (" + buf.toString().substring(2) + ")";
-                        }
-                        switch (entry.getKey()) {
-                            case AREA_EFFECT_CLOUD:
-                                player.sendMessage("    Cyberman: " + entry.getValue());
-                                break;
-                            case COMPLEX_PART:
-                                player.sendMessage("    Dalek: " + entry.getValue());
-                                break;
-                            case ARMOR_STAND:
-                                player.sendMessage("    Empty Child: " + entry.getValue());
-                                break;
-                            case ARROW:
-                                player.sendMessage("    Ice Warrior: " + entry.getValue());
-                                break;
-                            case SPLASH_POTION:
-                                player.sendMessage("    Silent: " + entry.getValue());
-                                break;
-                            case BOAT:
-                                player.sendMessage("    Silurian: " + entry.getValue());
-                                break;
-                            case FIREWORK:
-                                player.sendMessage("    Sontaran: " + entry.getValue());
-                                break;
-                            case EGG:
-                                player.sendMessage("    Strax: " + entry.getValue());
-                                break;
-                            case ENDER_CRYSTAL:
-                                player.sendMessage("    Vashta Nerada: " + entry.getValue());
-                                break;
-                            case DRAGON_FIREBALL:
-                                player.sendMessage("    Weeping Angel: " + entry.getValue());
-                                break;
-                            case FISHING_HOOK:
-                                player.sendMessage("    Zygon: " + entry.getValue());
-                                break;
-                            default:
-                                player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
-                                break;
-                        }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            if (scannedentities.size() > 0) {
+                TARDISMessage.send(player, true, "SCAN_ENTS");
+                for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
+                    String message = "";
+                    StringBuilder buf = new StringBuilder();
+                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                        playernames.forEach((p) -> {
+                            buf.append(", ").append(p);
+                        });
+                        message = " (" + buf.toString().substring(2) + ")";
                     }
-                    scannedentities.clear();
-                } else {
-                    TARDISMessage.send(player, true, "SCAN_NONE");
+                    switch (entry.getKey()) {
+                        case AREA_EFFECT_CLOUD:
+                            player.sendMessage("    Cyberman: " + entry.getValue());
+                            break;
+                        case COMPLEX_PART:
+                            player.sendMessage("    Dalek: " + entry.getValue());
+                            break;
+                        case ARMOR_STAND:
+                            player.sendMessage("    Empty Child: " + entry.getValue());
+                            break;
+                        case ARROW:
+                            player.sendMessage("    Ice Warrior: " + entry.getValue());
+                            break;
+                        case SPLASH_POTION:
+                            player.sendMessage("    Silent: " + entry.getValue());
+                            break;
+                        case BOAT:
+                            player.sendMessage("    Silurian: " + entry.getValue());
+                            break;
+                        case FIREWORK:
+                            player.sendMessage("    Sontaran: " + entry.getValue());
+                            break;
+                        case EGG:
+                            player.sendMessage("    Strax: " + entry.getValue());
+                            break;
+                        case ENDER_CRYSTAL:
+                            player.sendMessage("    Vashta Nerada: " + entry.getValue());
+                            break;
+                        case DRAGON_FIREBALL:
+                            player.sendMessage("    Weeping Angel: " + entry.getValue());
+                            break;
+                        case FISHING_HOOK:
+                            player.sendMessage("    Zygon: " + entry.getValue());
+                            break;
+                        default:
+                            player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                            break;
+                    }
                 }
-                // damage the circuit if configured
-                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
-                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                    tcc.getCircuits();
-                    // decrement uses
-                    int uses_left = tcc.getScannerUses();
-                    new TARDISCircuitDamager(plugin, DISK_CIRCUIT.SCANNER, uses_left, id, player).damage();
-                }
+                scannedentities.clear();
+            } else {
+                TARDISMessage.send(player, true, "SCAN_NONE");
+            }
+            // damage the circuit if configured
+            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+                // decrement uses
+                int uses_left = tcc.getScannerUses();
+                new TARDISCircuitDamager(plugin, DISK_CIRCUIT.SCANNER, uses_left, id, player).damage();
             }
         }, 140L);
         return data;

@@ -2,7 +2,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetSmelter;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
@@ -43,13 +42,12 @@ public class TARDISSmelterListener implements Listener {
             List<Chest> fuelChests = rs.getFuelChests();
             List<Chest> oreChests = rs.getOreChests();
             // process drop chest contents
-            HashMap<Material, Integer> fuels = new HashMap<Material, Integer>();
-            HashMap<Material, Integer> ores = new HashMap<Material, Integer>();
-            HashMap<Material, Integer> remainders = new HashMap<Material, Integer>();
+            HashMap<Material, Integer> fuels = new HashMap<>();
+            HashMap<Material, Integer> ores = new HashMap<>();
+            HashMap<Material, Integer> remainders = new HashMap<>();
             for (ItemStack is : inv.getContents()) {
                 if (is != null) {
                     Material m = is.getType();
-//                    if (Smelter.isFuel(m)) {
                     if (m.isFuel()) {
                         int amount = (fuels.containsKey(m)) ? fuels.get(m) + is.getAmount() : is.getAmount();
                         fuels.put(m, amount);
@@ -64,32 +62,32 @@ public class TARDISSmelterListener implements Listener {
             }
             // process fuels
             int fsize = fuelChests.size();
-            for (Map.Entry<Material, Integer> fmap : fuels.entrySet()) {
+            fuels.entrySet().forEach((fmap) -> {
                 int remainder = fmap.getValue() % fsize;
                 if (remainder > 0) {
                     remainders.put(fmap.getKey(), remainder);
                 }
                 int distrib = fmap.getValue() / fsize;
-                for (Chest fc : fuelChests) {
+                fuelChests.forEach((fc) -> {
                     fc.getInventory().addItem(new ItemStack(fmap.getKey(), distrib));
-                }
-            }
+                });
+            });
             // process ores
             int osize = oreChests.size();
-            for (Map.Entry<Material, Integer> omap : ores.entrySet()) {
+            ores.entrySet().forEach((omap) -> {
                 int remainder = omap.getValue() % osize;
                 if (remainder > 0) {
                     remainders.put(omap.getKey(), remainder);
                 }
                 int distrib = omap.getValue() / osize;
-                for (Chest fc : oreChests) {
+                oreChests.forEach((fc) -> {
                     fc.getInventory().addItem(new ItemStack(omap.getKey(), distrib));
-                }
-            }
+                });
+            });
             // return remainder to drop chest
-            for (Map.Entry<Material, Integer> rmap : remainders.entrySet()) {
+            remainders.entrySet().forEach((rmap) -> {
                 inv.addItem(new ItemStack(rmap.getKey(), rmap.getValue()));
-            }
+            });
         }
     }
 }

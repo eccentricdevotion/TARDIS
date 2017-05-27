@@ -20,7 +20,7 @@ public class TARDISSonicReplant implements Runnable {
     private final Material sand = Material.SAND;
     private final Material soil = Material.SOIL;
     private final Material soul = Material.SOUL_SAND;
-    private final HashMap<BlockFace, Byte> c_data = new HashMap<BlockFace, Byte>();
+    private final HashMap<BlockFace, Byte> c_data = new HashMap<>();
 
     public TARDISSonicReplant(TARDIS plugin, Block block, Material type) {
         this.plugin = plugin;
@@ -52,13 +52,13 @@ public class TARDISSonicReplant implements Runnable {
                 break;
             case INK_SACK:
                 if (block.getType().equals(air)) {
-                    for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
+                    plugin.getGeneralKeeper().getFaces().forEach((f) -> {
                         // only jungle logs
                         if (block.getRelative(f).getType().equals(log) && (block.getRelative(f).getData() == 3)) {
                             block.setType(Material.COCOA);
                             block.setData(c_data.get(f));
                         }
-                    }
+                    });
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.INK_SACK, 1, (short) 3));
                 }

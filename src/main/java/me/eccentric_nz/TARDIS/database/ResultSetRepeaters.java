@@ -37,13 +37,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
  */
 public class ResultSetRepeaters {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
     private final int secondary;
     private final byte[] diodes = new byte[4];
-    List<String> locations = new ArrayList<String>();
+    List<String> locations = new ArrayList<>();
     private final String prefix;
 
     /**

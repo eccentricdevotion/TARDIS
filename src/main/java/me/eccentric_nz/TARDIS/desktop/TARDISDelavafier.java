@@ -31,7 +31,7 @@ public class TARDISDelavafier {
 
     public void swap() {
         // calculate startx, starty, startz
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {

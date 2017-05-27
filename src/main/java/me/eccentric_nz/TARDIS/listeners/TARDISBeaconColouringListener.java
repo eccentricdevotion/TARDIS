@@ -45,7 +45,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISBeaconColouringListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> glass = new ArrayList<Material>();
+    private final List<Material> glass = new ArrayList<>();
 
     public TARDISBeaconColouringListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -113,7 +113,7 @@ public class TARDISBeaconColouringListener implements Listener {
                 change = original;
                 break;
         }
-        List<Block> candidates = new ArrayList<Block>();
+        List<Block> candidates = new ArrayList<>();
         candidates.add(b);
         while (b.getRelative(BlockFace.UP, u).getType().equals(original)) {
             candidates.add(b.getRelative(BlockFace.UP, u));
@@ -131,12 +131,12 @@ public class TARDISBeaconColouringListener implements Listener {
             player.getInventory().removeItem(new ItemStack(dye.getType(), needed, dye.getDurability()));
         }
         player.updateInventory();
-        for (Block bb : candidates) {
+        candidates.forEach((bb) -> {
             bb.setType(change);
             bb.setData(new_data, true);
-        }
+        });
         // take the Artron Energy
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());
         int energy = plugin.getCondensables().get("GLASS") * needed;
         new QueryFactory(plugin).alterEnergyLevel("tardis", -energy, wherea, player);

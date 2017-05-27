@@ -49,9 +49,9 @@ public class TARDISJettisonCommand {
             }
             if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
                 StringBuilder buf = new StringBuilder(args[1]);
-                for (String rl : plugin.getGeneralKeeper().getRoomArgs()) {
+                plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> {
                     buf.append(rl).append(", ");
-                }
+                });
                 String roomlist = buf.toString().substring(0, buf.length() - 2);
                 TARDISMessage.send(player, "ROOM_NOT_VALID", roomlist);
                 return true;
@@ -63,7 +63,7 @@ public class TARDISJettisonCommand {
             }
             int id = rs.getTardis_id();
             // check they are in the tardis
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             wheret.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);

@@ -77,7 +77,7 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
         if (!running) {
             // get Archive if nescessary
             if (tud.getSchematic().getPermission().equals("archive")) {
-                HashMap<String, Object> wherean = new HashMap<String, Object>();
+                HashMap<String, Object> wherean = new HashMap<>();
                 wherean.put("uuid", uuid.toString());
                 wherean.put("use", 1);
                 ResultSetArchive rs = new ResultSetArchive(plugin, wherean);
@@ -114,12 +114,12 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
             w = dimensions.getInt("width");
             c = dimensions.getInt("length");
             // calculate startx, starty, startz
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (!rs.resultSet()) {
                 // abort and return energy
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);

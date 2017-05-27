@@ -39,7 +39,7 @@ public class TARDISHostileAction {
     }
 
     public void processAction(final int id, Player hostile) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
@@ -47,7 +47,7 @@ public class TARDISHostileAction {
             UUID uuid = tardis.getUuid();
             boolean poweredOn = tardis.isPowered_on();
             PRESET preset = tardis.getPreset();
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {

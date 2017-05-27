@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISWorldRemover {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private Statement statement;
     private final TARDIS plugin;

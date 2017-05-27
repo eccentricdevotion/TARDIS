@@ -4,7 +4,6 @@
 package me.eccentric_nz.TARDIS.schematic;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -24,9 +23,9 @@ public class TARDISSchematicPaster {
 
     private final TARDIS plugin;
     private final Player player;
-    HashMap<Block, Byte> postRedstoneTorches = new HashMap<Block, Byte>();
-    HashMap<Block, JSONObject> postStandingBanners = new HashMap<Block, JSONObject>();
-    HashMap<Block, JSONObject> postWallBanners = new HashMap<Block, JSONObject>();
+    HashMap<Block, Byte> postRedstoneTorches = new HashMap<>();
+    HashMap<Block, JSONObject> postStandingBanners = new HashMap<>();
+    HashMap<Block, JSONObject> postWallBanners = new HashMap<>();
 
     public TARDISSchematicPaster(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -67,29 +66,34 @@ public class TARDISSchematicPaster {
                     Material m = Material.valueOf((String) col.get("type"));
                     byte b = col.getByte("data");
                     Block block = world.getBlockAt(x + w, y + h, z + l);
-                    if (m.equals(Material.REDSTONE_TORCH_ON)) {
-                        postRedstoneTorches.put(block, b);
-                    } else if (m.equals(Material.STANDING_BANNER) || m.equals(Material.WALL_BANNER)) {
-                        JSONObject state = col.optJSONObject("banner");
-                        if (state != null) {
-                            if (m.equals(Material.STANDING_BANNER)) {
-                                postStandingBanners.put(block, state);
-                            } else {
-                                postWallBanners.put(block, state);
+                    switch (m) {
+                        case REDSTONE_TORCH_ON:
+                            postRedstoneTorches.put(block, b);
+                            break;
+                        case STANDING_BANNER:
+                        case WALL_BANNER:
+                            JSONObject state = col.optJSONObject("banner");
+                            if (state != null) {
+                                if (m.equals(Material.STANDING_BANNER)) {
+                                    postStandingBanners.put(block, state);
+                                } else {
+                                    postWallBanners.put(block, state);
+                                }
                             }
-                        }
-                    } else {
-                        block.setType(m);
-                        block.setData(b, true);
+                            break;
+                        default:
+                            block.setType(m);
+                            block.setData(b, true);
+                            break;
                     }
                 }
             }
         }
-        for (Map.Entry<Block, Byte> entry : postRedstoneTorches.entrySet()) {
+        postRedstoneTorches.entrySet().forEach((entry) -> {
             Block prtb = entry.getKey();
             byte ptdata = entry.getValue();
             prtb.setTypeIdAndData(76, ptdata, true);
-        }
+        });
         setBanners(176, postStandingBanners);
         setBanners(177, postWallBanners);
         return true;

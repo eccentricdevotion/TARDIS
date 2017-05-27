@@ -36,15 +36,15 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class ResultSetAreas {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final boolean onlynames;
     private Area area;
-    private final List<Area> data = new ArrayList<Area>();
-    private final List<String> names = new ArrayList<String>();
+    private final List<Area> data = new ArrayList<>();
+    private final List<String> names = new ArrayList<>();
     private final String prefix;
 
     /**
@@ -80,9 +80,9 @@ public class ResultSetAreas {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
+            where.entrySet().forEach((entry) -> {
                 sbw.append(entry.getKey()).append(" = ? AND ");
-            }
+            });
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "areas" + wheres;

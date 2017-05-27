@@ -27,10 +27,10 @@ import org.bukkit.Material;
  */
 public class CONSOLES {
 
-    private final static HashMap<String, SCHEMATIC> BY_NAMES = new HashMap<String, SCHEMATIC>();
-    private final static HashMap<String, SCHEMATIC> BY_PERMS = new HashMap<String, SCHEMATIC>();
-    private final static HashMap<String, SCHEMATIC> BY_MATERIALS = new HashMap<String, SCHEMATIC>();
-    private final static List<SCHEMATIC> NO_BEACON = new ArrayList<SCHEMATIC>();
+    private final static HashMap<String, SCHEMATIC> BY_NAMES = new HashMap<>();
+    private final static HashMap<String, SCHEMATIC> BY_PERMS = new HashMap<>();
+    private final static HashMap<String, SCHEMATIC> BY_MATERIALS = new HashMap<>();
+    private final static List<SCHEMATIC> NO_BEACON = new ArrayList<>();
 
     /**
      * Attempts to get the SCHEMATIC with the given name.

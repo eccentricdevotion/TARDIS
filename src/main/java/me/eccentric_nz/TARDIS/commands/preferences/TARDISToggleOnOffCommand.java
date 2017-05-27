@@ -59,8 +59,8 @@ public class TARDISToggleOnOffCommand {
             TARDISMessage.send(player, "HADS_DISBALED");
             return true;
         }
-        HashMap<String, Object> setp = new HashMap<String, Object>();
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> setp = new HashMap<>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", player.getUniqueId().toString());
         if (args[1].equalsIgnoreCase("on")) {
             setp.put(pref + "_on", 1);

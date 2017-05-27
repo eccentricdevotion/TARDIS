@@ -39,7 +39,7 @@ public class TARDISOccupyCommand {
 
     public boolean toggleOccupancy(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             String occupied;
@@ -47,7 +47,7 @@ public class TARDISOccupyCommand {
             if (rst.resultSet()) {
                 // only if they're not in the TARDIS world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    HashMap<String, Object> whered = new HashMap<>();
                     whered.put("uuid", player.getUniqueId().toString());
                     qf.doDelete("travellers", whered);
                     occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
@@ -62,7 +62,7 @@ public class TARDISOccupyCommand {
                     return false;
                 }
                 int id = rs.getTardis_id();
-                HashMap<String, Object> wherei = new HashMap<String, Object>();
+                HashMap<String, Object> wherei = new HashMap<>();
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());
                 qf.doInsert("travellers", wherei);

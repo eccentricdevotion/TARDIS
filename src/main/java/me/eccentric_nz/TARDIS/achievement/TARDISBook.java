@@ -61,14 +61,11 @@ public class TARDISBook {
         String book_str = "";
         String ls = System.getProperty("line.separator");
         try {
-            Scanner scanner = new Scanner(file);
-            try {
+            try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {
                     fileContents.append(scanner.nextLine()).append(ls);
                 }
                 book_str = fileContents.toString();
-            } finally {
-                scanner.close();
             }
         } catch (FileNotFoundException f) {
             plugin.debug("Could not find file");

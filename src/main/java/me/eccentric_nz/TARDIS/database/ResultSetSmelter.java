@@ -41,7 +41,7 @@ import org.bukkit.util.Vector;
  */
 public class ResultSetSmelter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
@@ -132,15 +132,15 @@ public class ResultSetSmelter {
 
     private List<Chest> getChests(String location, boolean fuel) {
         Location l = plugin.getLocationUtils().getLocationFromBukkitString(location);
-        List<Chest> chests = new ArrayList<Chest>();
+        List<Chest> chests = new ArrayList<>();
         List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();
-        for (Vector v : vectors) {
+        vectors.forEach((v) -> {
             Block b = l.clone().add(v).getBlock();
             if (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) {
                 Chest chest = (Chest) b.getState();
                 chests.add(chest);
             }
-        }
+        });
         return chests;
     }
 }

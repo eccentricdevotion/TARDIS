@@ -37,7 +37,7 @@ import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
  */
 public class ResultSetTardisSize {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
@@ -76,7 +76,7 @@ public class ResultSetTardisSize {
                 rs.next();
                 if (rs.getString("size").equals("ARCHIVE")) {
                     // get archive
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", uuid);
                     where.put("use", 1);
                     ResultSetArchive rsa = new ResultSetArchive(plugin, where);

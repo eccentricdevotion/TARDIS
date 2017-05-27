@@ -32,7 +32,7 @@ public class TARDISJunkFind {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", rs.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {

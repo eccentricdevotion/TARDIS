@@ -60,8 +60,8 @@ public enum TARDISARS implements ARS {
     private final String name;
     private final String descriptiveName;
     private final int offset;
-    private final static HashMap<Integer, ARS> EXTENDED_ID = new HashMap<Integer, ARS>();
-    private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<String, ARS>();
+    private final static HashMap<Integer, ARS> EXTENDED_ID = new HashMap<>();
+    private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<>();
 
     private TARDISARS(int id, String name, String descriptiveName, int offset) {
         this.id = id;

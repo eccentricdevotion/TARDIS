@@ -49,23 +49,23 @@ public class TARDISFastReturnButton {
             TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
             return;
         }
-        HashMap<String, Object> wherebl = new HashMap<String, Object>();
+        HashMap<String, Object> wherebl = new HashMap<>();
         wherebl.put("tardis_id", id);
         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
         if (rsb.resultSet()) {
-            HashMap<String, Object> wherecu = new HashMap<String, Object>();
+            HashMap<String, Object> wherecu = new HashMap<>();
             wherecu.put("tardis_id", id);
             ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
             if (rscu.resultSet()) {
                 if (!compareCurrentToBack(rscu, rsb)) {
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("world", rsb.getWorld().getName());
                     set.put("x", rsb.getX());
                     set.put("y", rsb.getY());
                     set.put("z", rsb.getZ());
                     set.put("direction", rsb.getDirection().toString());
                     set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
-                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                    HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);

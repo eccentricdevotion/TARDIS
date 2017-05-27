@@ -56,9 +56,9 @@ public class TARDISDesiegeCommand {
             int id = rs.getTardis_id();
             QueryFactory qf = new QueryFactory(plugin);
             // turn off siege mode
-            HashMap<String, Object> wheres = new HashMap<String, Object>();
+            HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("tardis_id", id);
-            HashMap<String, Object> sets = new HashMap<String, Object>();
+            HashMap<String, Object> sets = new HashMap<>();
             sets.put("siege_on", 0);
             qf.doUpdate("tardis", sets, wheres);
             // clear trackers
@@ -66,14 +66,14 @@ public class TARDISDesiegeCommand {
             plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
             // get home location
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
             if (rsh.resultSet()) {
                 // set current location
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("world", rsh.getWorld().getName());
                 setc.put("x", rsh.getX());
                 setc.put("y", rsh.getY());

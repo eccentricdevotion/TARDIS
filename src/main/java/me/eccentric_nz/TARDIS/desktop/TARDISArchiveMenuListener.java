@@ -70,18 +70,15 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                 switch (slot) {
                     case 17:
                         // back
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                         rs.resultSet();
                         final Tardis tardis = rs.getTardis();
                         // return to Desktop Theme GUI
                         close(p);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton();
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton();
                         }, 2L);
                         break;
                     case 18:
@@ -124,13 +121,10 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 tud.setSchematic(CONSOLES.SCHEMATICFor(size));
                                 tud.setWall("WOOL:1");
                                 tud.setFloor("WOOL:8");
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
-                                        // process upgrade
-                                        new TARDISThemeProcessor(plugin, uuid).changeDesktop();
-                                    }
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                                    // process upgrade
+                                    new TARDISThemeProcessor(plugin, uuid).changeDesktop();
                                 }, 10L);
                                 close(p);
                             }
@@ -165,13 +159,10 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 tud.setSchematic(schm);
                                 tud.setWall("WOOL:1");
                                 tud.setFloor("WOOL:8");
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
-                                        // process upgrade
-                                        new TARDISThemeProcessor(plugin, uuid).changeDesktop();
-                                    }
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                                    // process upgrade
+                                    new TARDISThemeProcessor(plugin, uuid).changeDesktop();
                                 }, 10L);
                                 close(p);
                             }
@@ -195,11 +186,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
     @Override
     public void close(final Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 
@@ -209,14 +197,11 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      * @param p the player using the GUI
      */
     private void scan(final Player p, final Inventory inv) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                List<String> lore = getSizeLore(inv);
-                String size = lore.get(0);
-                p.closeInventory();
-                p.performCommand("tardis archive scan " + size);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            List<String> lore = getSizeLore(inv);
+            String size = lore.get(0);
+            p.closeInventory();
+            p.performCommand("tardis archive scan " + size);
         }, 1L);
     }
 
@@ -227,16 +212,13 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      * @param p the player using the GUI
      */
     private void archive(final Player p, final Inventory inv) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                List<String> lore = getSizeLore(inv);
-                String size = lore.get(0);
-                p.closeInventory();
-                // generate random name
-                String name = TARDISRandomArchiveName.getRandomName();
-                p.performCommand("tardis archive add " + name + " " + size);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            List<String> lore = getSizeLore(inv);
+            String size = lore.get(0);
+            p.closeInventory();
+            // generate random name
+            String name = TARDISRandomArchiveName.getRandomName();
+            p.performCommand("tardis archive add " + name + " " + size);
         }, 1L);
     }
 

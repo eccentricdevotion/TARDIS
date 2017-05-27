@@ -37,7 +37,7 @@ public class TARDISGroupManagerHandler {
 
     private final TARDIS plugin;
     private File permissionsFile = null;
-    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<String, List<String>>();
+    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
     String group;
 
     public TARDISGroupManagerHandler(TARDIS plugin) {
@@ -54,7 +54,7 @@ public class TARDISGroupManagerHandler {
             while ((line = bufRdr.readLine()) != null) {
                 if (line.charAt(0) == '#') {
                     group = line.substring(1).trim();
-                    permgroups.put(group, new ArrayList<String>());
+                    permgroups.put(group, new ArrayList<>());
                 } else {
                     List<String> perms = permgroups.get(group);
                     perms.add(line.trim());
@@ -77,9 +77,9 @@ public class TARDISGroupManagerHandler {
             String grpstr = entry.getKey();
             List<String> perms = entry.getValue();
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mangadd " + grpstr);
-            for (String p : perms) {
+            perms.forEach((p) -> {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mangaddp " + grpstr + " " + p);
-            }
+            });
             if (i == 0) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "manuadd " + player + " " + grpstr);
             }

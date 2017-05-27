@@ -66,7 +66,7 @@ public class TARDISBlockDamageListener implements Listener {
         Player p = event.getPlayer();
         Block b = event.getBlock();
         String l = b.getLocation().toString();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("location", l);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
         if (rsb.resultSet()) {
@@ -108,7 +108,7 @@ public class TARDISBlockDamageListener implements Listener {
     }
 
     private boolean isOwner(int id, String uuid) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
@@ -116,7 +116,7 @@ public class TARDISBlockDamageListener implements Listener {
     }
 
     private boolean isOwnerOnline(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
         if (rst.resultSet()) {
@@ -125,7 +125,7 @@ public class TARDISBlockDamageListener implements Listener {
                 return false;
             }
             UUID ownerUUID = tardis.getUuid();
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("uuid", ownerUUID.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean hads_on = true;
@@ -139,19 +139,19 @@ public class TARDISBlockDamageListener implements Listener {
     }
 
     private void unhide(final int id, Player player) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
         if (rst.resultSet() && rst.getTardis().isHidden()) {
             // unhide this tardis
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
             final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
@@ -163,16 +163,13 @@ public class TARDISBlockDamageListener implements Listener {
             bd.setRebuild(true);
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getPresetBuilder().buildPreset(bd);
             }, 5L);
             // set hidden to false
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
-            HashMap<String, Object> seth = new HashMap<String, Object>();
+            HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
             qf.doUpdate("tardis", seth, whereh);
         }

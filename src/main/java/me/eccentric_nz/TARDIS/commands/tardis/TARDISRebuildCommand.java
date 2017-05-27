@@ -57,7 +57,7 @@ public class TARDISRebuildCommand {
                 }
             }
             plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -83,7 +83,7 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "NO_MAT_CIRCUIT");
                 return true;
             }
-            HashMap<String, Object> wherein = new HashMap<String, Object>();
+            HashMap<String, Object> wherein = new HashMap<>();
             wherein.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
             if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
@@ -102,7 +102,7 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                 return true;
             }
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", tardis.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
@@ -127,23 +127,20 @@ public class TARDISRebuildCommand {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                    plugin.getTrackerKeeper().getInVortex().add(id);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getPresetBuilder().buildPreset(bd);
+                plugin.getTrackerKeeper().getInVortex().add(id);
             }, 10L);
             TARDISMessage.send(player.getPlayer(), "TARDIS_REBUILT");
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
             qf.alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
             // set hidden to false
             if (tardis.isHidden()) {
-                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
-                HashMap<String, Object> seth = new HashMap<String, Object>();
+                HashMap<String, Object> seth = new HashMap<>();
                 seth.put("hidden", 0);
                 qf.doUpdate("tardis", seth, whereh);
             }

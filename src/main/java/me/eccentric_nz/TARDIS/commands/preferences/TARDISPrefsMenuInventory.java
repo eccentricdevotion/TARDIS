@@ -58,18 +58,18 @@ public class TARDISPrefsMenuInventory {
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         // get player prefs
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
-        List<ItemStack> options = new ArrayList<ItemStack>();
+        List<ItemStack> options = new ArrayList<>();
         if (!rsp.resultSet()) {
             // make a new record
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid.toString());
             set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
             new QueryFactory(plugin).doInsert("player_prefs", set);
             // get the new record
-            HashMap<String, Object> whereu = new HashMap<String, Object>();
+            HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", uuid.toString());
             rsp = new ResultSetPlayerPrefs(plugin, whereu);
             rsp.resultSet();
@@ -249,7 +249,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta nk = ju.getItemMeta();
         nk.setDisplayName("Junk TARDIS");
         // get TARDIS preset
-        HashMap<String, Object> wherej = new HashMap<String, Object>();
+        HashMap<String, Object> wherej = new HashMap<>();
         wherej.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false, 0);
         String junk_value = plugin.getLanguage().getString("SET_OFF");

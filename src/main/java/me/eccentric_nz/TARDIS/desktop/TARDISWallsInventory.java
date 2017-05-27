@@ -38,7 +38,7 @@ public class TARDISWallsInventory {
 
     private final ItemStack[] menu;
     private final TARDIS plugin;
-    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
+    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREEN_WOOL", "LIGHT_GREEN_CLAY", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "GREY_CONCRETE", "LIGHT_GREY_CONCRETE", "GREY_GLAZED_TERRACOTTA", "LIGHT_GREY_GLAZED_TERRACOTTA", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallsInventory(TARDIS plugin) {
         this.plugin = plugin;

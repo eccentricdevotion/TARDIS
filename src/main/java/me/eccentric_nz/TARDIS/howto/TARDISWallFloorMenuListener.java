@@ -44,8 +44,8 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISWallFloorMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, Integer> scroll = new HashMap<UUID, Integer>();
-    private final List<UUID> scrolling = new ArrayList<UUID>();
+    private final HashMap<UUID, Integer> scroll = new HashMap<>();
+    private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
     private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
@@ -118,11 +118,8 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
     @Override
     public void close(final Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 
@@ -133,14 +130,11 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
      */
     public void back(final Player p) {
         close(p);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-                Inventory gui = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
-                gui.setContents(seeds);
-                p.openInventory(gui);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
+            Inventory gui = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
+            gui.setContents(seeds);
+            p.openInventory(gui);
         }, 2L);
     }
 

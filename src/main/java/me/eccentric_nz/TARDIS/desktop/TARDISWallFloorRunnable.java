@@ -85,12 +85,12 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             w = dimensions.getInt("width");
             c = dimensions.getInt("length");
             // calculate startx, starty, startz
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (!rs.resultSet()) {
                 // abort and return energy
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);

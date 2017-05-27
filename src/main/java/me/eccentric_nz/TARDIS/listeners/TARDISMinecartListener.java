@@ -79,7 +79,7 @@ public class TARDISMinecartListener implements Listener {
                 String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
                 switch (mat) {
                     case IRON_DOOR_BLOCK: // is it a TARDIS door?
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", db_loc);
                         where.put("door_type", 0);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
@@ -89,7 +89,7 @@ public class TARDISMinecartListener implements Listener {
                             }
                             // get RAIL room location
                             id = rsd.getTardis_id();
-                            HashMap<String, Object> whereid = new HashMap<String, Object>();
+                            HashMap<String, Object> whereid = new HashMap<>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                             if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
@@ -102,21 +102,21 @@ public class TARDISMinecartListener implements Listener {
                         break;
                     case FENCE: // is it a RAIL room fence?
                         // get police box location
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("rail", db_loc);
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
                         if (rsp.resultSet()) {
                             Tardis tardis = rsp.getTardis();
                             playerUUID = tardis.getUuid();
                             id = tardis.getTardis_id();
-                            HashMap<String, Object> whereinner = new HashMap<String, Object>();
+                            HashMap<String, Object> whereinner = new HashMap<>();
                             whereinner.put("tardis_id", id);
                             whereinner.put("door_type", 1);
                             ResultSetDoors rsdinner = new ResultSetDoors(plugin, whereinner, false);
                             if (rsdinner.resultSet() && rsdinner.isLocked()) {
                                 return;
                             }
-                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                            HashMap<String, Object> whered = new HashMap<>();
                             whered.put("tardis_id", id);
                             whered.put("door_type", 0);
                             ResultSetDoors rspb = new ResultSetDoors(plugin, whered, false);
@@ -194,11 +194,8 @@ public class TARDISMinecartListener implements Listener {
             }
         }
         // start a delayed task to remove the chunk
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk);
         }, delay);
         minecart.remove();
         Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);

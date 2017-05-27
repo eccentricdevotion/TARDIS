@@ -163,7 +163,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             if (count == 0) {
                 safe = true;
                 // get TARDIS id
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", p.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                 if (rst.resultSet()) {

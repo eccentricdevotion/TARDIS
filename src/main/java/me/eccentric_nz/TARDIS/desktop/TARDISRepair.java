@@ -57,7 +57,7 @@ public class TARDISRepair {
     public void restore(boolean clean) {
         UUID uuid = player.getUniqueId();
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
@@ -75,7 +75,7 @@ public class TARDISRepair {
             } else {
                 tud.setSchematic(tud.getPrevious());
                 // get player prefs
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", uuid.toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
@@ -99,7 +99,7 @@ public class TARDISRepair {
 
     public boolean hasCondensedMissingBlocks() {
         String uuid = player.getUniqueId().toString();
-        HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();
+        HashMap<String, Integer> blockIDs = new HashMap<>();
         JSONObject obj = getConsole();
         if (obj.has("dimensions")) {
             // get dimensions
@@ -109,7 +109,7 @@ public class TARDISRepair {
             int l = dimensions.getInt("length");
             // get input array
             JSONArray arr = (JSONArray) obj.get("input");
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
@@ -134,7 +134,7 @@ public class TARDISRepair {
                 String floor = "LIGHT_GREY_WOOL";
                 Material wall_type = Material.WOOL;
                 Material floor_type = Material.WOOL;
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                HashMap<String, Object> wherepp = new HashMap<>();
                 boolean hasPrefs = false;
                 wherepp.put("uuid", uuid);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
@@ -214,9 +214,9 @@ public class TARDISRepair {
                         }
                     }
                 }
-                HashMap<String, Integer> blockTypeCount = new HashMap<String, Integer>();
+                HashMap<String, Integer> blockTypeCount = new HashMap<>();
                 boolean hasRequired = true;
-                HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
+                HashMap<String, Integer> item_counts = new HashMap<>();
                 for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                     String[] block_data = entry.getKey().split(":");
                     String bid = block_data[0];
@@ -244,7 +244,7 @@ public class TARDISRepair {
                     }
                 }
                 for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);
                     wherec.put("block_data", map.getKey());
                     ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
@@ -278,7 +278,7 @@ public class TARDISRepair {
     private JSONObject getConsole() {
         JSONObject obj = new JSONObject();
         String uuid = player.getUniqueId().toString();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
@@ -286,7 +286,7 @@ public class TARDISRepair {
             String perm = tardis.getSchematic().getPermission();
             if (perm.equals("archive")) {
                 // try 1
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid);
                 wherea.put("use", 1);
                 ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
@@ -294,7 +294,7 @@ public class TARDISRepair {
                     obj = rsa.getArchive().getJSON();
                 } else {
                     // try 2
-                    HashMap<String, Object> wherea2 = new HashMap<String, Object>();
+                    HashMap<String, Object> wherea2 = new HashMap<>();
                     wherea2.put("uuid", uuid);
                     wherea2.put("use", 2);
                     ResultSetArchive rsa2 = new ResultSetArchive(plugin, wherea2);
@@ -304,7 +304,7 @@ public class TARDISRepair {
                         new ArchiveUpdate(plugin, uuid, rsa2.getArchive().getName()).setInUse();
                     } else {
                         // try 3
-                        HashMap<String, Object> wherea3 = new HashMap<String, Object>();
+                        HashMap<String, Object> wherea3 = new HashMap<>();
                         wherea3.put("uuid", uuid);
                         wherea3.put("use", 0);
                         ResultSetArchive rsa3 = new ResultSetArchive(plugin, wherea3);
@@ -328,7 +328,7 @@ public class TARDISRepair {
     private String getArchiveName() {
         String uuid = player.getUniqueId().toString();
         // try 1
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid);
         wherea.put("use", 1);
         ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
@@ -336,7 +336,7 @@ public class TARDISRepair {
             return rsa.getArchive().getName();
         } else {
             // try 2
-            HashMap<String, Object> wherea2 = new HashMap<String, Object>();
+            HashMap<String, Object> wherea2 = new HashMap<>();
             wherea2.put("uuid", uuid);
             wherea2.put("use", 2);
             ResultSetArchive rsa2 = new ResultSetArchive(plugin, wherea2);
@@ -344,7 +344,7 @@ public class TARDISRepair {
                 return rsa2.getArchive().getName();
             } else {
                 // try 3
-                HashMap<String, Object> wherea3 = new HashMap<String, Object>();
+                HashMap<String, Object> wherea3 = new HashMap<>();
                 wherea3.put("uuid", uuid);
                 wherea3.put("use", 0);
                 ResultSetArchive rsa3 = new ResultSetArchive(plugin, wherea3);

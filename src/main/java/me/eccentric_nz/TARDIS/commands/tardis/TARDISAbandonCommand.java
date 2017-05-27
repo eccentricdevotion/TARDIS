@@ -81,7 +81,7 @@ public class TARDISAbandonCommand {
                 } else {
                     PRESET preset = rs.getPreset();
                     // need to be in tardis
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (!rst.resultSet()) {
@@ -117,7 +117,7 @@ public class TARDISAbandonCommand {
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                     TARDISMessage.send(player, "ABANDONED_SUCCESS");
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                     if (rsc.resultSet()) {

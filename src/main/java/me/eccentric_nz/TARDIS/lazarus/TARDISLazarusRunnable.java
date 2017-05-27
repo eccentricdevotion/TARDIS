@@ -44,7 +44,7 @@ public class TARDISLazarusRunnable implements Runnable {
     @SuppressWarnings("deprecation")
     public void run() {
         if (i < LOOPS) {
-            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
+            plugin.getGeneralKeeper().getFaces().forEach((face) -> {
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
                     b.getRelative(face).setData((byte) 1);
@@ -54,13 +54,13 @@ public class TARDISLazarusRunnable implements Runnable {
                     b.getRelative(face).setData((byte) 0);
                     b.getRelative(face).getRelative(BlockFace.UP).setData((byte) 0);
                 }
-            }
+            });
             i++;
         } else {
-            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
+            plugin.getGeneralKeeper().getFaces().forEach((face) -> {
                 b.getRelative(face).setData((byte) 0);
                 b.getRelative(face).getRelative(BlockFace.UP).setData((byte) 0);
-            }
+            });
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
         }

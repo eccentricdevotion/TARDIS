@@ -74,17 +74,17 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private boolean running;
     int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, j = 2;
     World world;
-    private final List<Block> lampblocks = new ArrayList<Block>();
+    private final List<Block> lampblocks = new ArrayList<>();
     private List<Chunk> chunks;
-    private final HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postLeverBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
-    private final HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
+    private final HashMap<Block, Byte> postDoorBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<>();
     private Block postBedrock;
     JSONArray arr;
     Material wall_type, floor_type;
@@ -116,7 +116,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         if (!running) {
             // get Archive if nescessary
             if (tud.getSchematic().getPermission().equals("archive")) {
-                HashMap<String, Object> wherean = new HashMap<String, Object>();
+                HashMap<String, Object> wherean = new HashMap<>();
                 wherean.put("uuid", uuid.toString());
                 wherean.put("use", 1);
                 ResultSetArchive rs = new ResultSetArchive(plugin, wherean);
@@ -132,7 +132,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             if (tud.getPrevious().getPermission().equals("archive")) {
-                HashMap<String, Object> whereap = new HashMap<String, Object>();
+                HashMap<String, Object> whereap = new HashMap<>();
                 whereap.put("uuid", uuid.toString());
                 whereap.put("use", 2);
                 ResultSetArchive rs = new ResultSetArchive(plugin, whereap);
@@ -147,8 +147,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     return;
                 }
             }
-            set = new HashMap<String, Object>();
-            where = new HashMap<String, Object>();
+            set = new HashMap<>();
+            where = new HashMap<>();
             JSONObject obj;
             if (archive_next == null) {
                 String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
@@ -171,12 +171,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             w = dimensions.getInt("width");
             c = dimensions.getInt("length");
             // calculate startx, starty, startz
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (!rs.resultSet()) {
                 // abort and return energy
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
@@ -197,11 +197,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // remove the charged creeper
             Location creeper = getCreeperLocation(tardis.getCreeper());
             Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
-            for (Entity e : ent.getNearbyEntities(1.5d, 1.5d, 1.5d)) {
+            ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
                 if (e instanceof Creeper) {
                     e.remove();
                 }
-            }
+            });
             ent.remove();
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -230,11 +230,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // get input array
             arr = (JSONArray) obj.get("input");
             // clear existing lamp blocks
-            HashMap<String, Object> whered = new HashMap<String, Object>();
+            HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", id);
             qf.doDelete("lamps", whered);
             // clear existing precious blocks
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("tardis_id", id);
             wherep.put("police_box", 0);
             qf.doDelete("blocks", wherep);
@@ -253,7 +253,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             player.teleport(loc);
             // clear lamps table as we'll be adding the new lamp positions later
-            HashMap<String, Object> wherel = new HashMap<String, Object>();
+            HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             qf.doDelete("lamps", wherel);
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
@@ -261,64 +261,64 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
             // remove items
-            for (Chunk chink : chunks) {
+            chunks.forEach((chink) -> {
                 // remove dropped items
                 for (Entity e : chink.getEntities()) {
                     if (e instanceof Item) {
                         e.remove();
                     }
                 }
-            }
+            });
             // put on the door, redstone torches, signs, and the repeaters
-            for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
+            postDoorBlocks.entrySet().forEach((entry) -> {
                 Block pdb = entry.getKey();
                 byte pddata = entry.getValue();
                 pdb.setType(Material.IRON_DOOR_BLOCK);
                 pdb.setData(pddata, true);
-            }
+            });
             // TODO fix redstone blocks falling off
-            for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
+            postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
                 Block prtb = entry.getKey();
                 byte ptdata = entry.getValue();
                 prtb.setTypeIdAndData(76, ptdata, true);
-            }
-            for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
+            });
+            postLeverBlocks.entrySet().forEach((entry) -> {
                 Block plb = entry.getKey();
                 byte pldata = entry.getValue();
                 plb.setType(Material.LEVER);
                 plb.setData(pldata, true);
-            }
-            for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
+            });
+            postTorchBlocks.entrySet().forEach((entry) -> {
                 Block ptb = entry.getKey();
                 byte ptdata = entry.getValue();
                 ptb.setTypeIdAndData(50, ptdata, true);
-            }
-            for (Map.Entry<Block, Byte> entry : postRepeaterBlocks.entrySet()) {
+            });
+            postRepeaterBlocks.entrySet().forEach((entry) -> {
                 Block prb = entry.getKey();
                 byte ptdata = entry.getValue();
                 prb.setType(Material.DIODE_BLOCK_OFF);
                 prb.setData(ptdata, true);
-            }
-            for (Map.Entry<Block, Byte> entry : postStickyPistonBaseBlocks.entrySet()) {
+            });
+            postStickyPistonBaseBlocks.entrySet().forEach((entry) -> {
                 Block pspb = entry.getKey();
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 byte pspdata = entry.getValue();
                 pspb.setType(Material.PISTON_STICKY_BASE);
                 pspb.setData(pspdata, true);
-            }
-            for (Map.Entry<Block, Byte> entry : postPistonBaseBlocks.entrySet()) {
+            });
+            postPistonBaseBlocks.entrySet().forEach((entry) -> {
                 Block ppb = entry.getKey();
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
                 byte ppbdata = entry.getValue();
                 ppb.setType(Material.PISTON_BASE);
                 ppb.setData(ppbdata, true);
-            }
-            for (Map.Entry<Block, Byte> entry : postPistonExtensionBlocks.entrySet()) {
+            });
+            postPistonExtensionBlocks.entrySet().forEach((entry) -> {
                 Block ppeb = entry.getKey();
                 byte ppedata = entry.getValue();
                 ppeb.setType(Material.PISTON_EXTENSION);
                 ppeb.setData(ppedata, true);
-            }
+            });
             int s = 0;
             for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
@@ -339,10 +339,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 s++;
             }
-            for (Block lamp : lampblocks) {
+            lampblocks.forEach((lamp) -> {
                 Material l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 lamp.setType(l);
-            }
+            });
             lampblocks.clear();
             if (postBedrock != null) {
                 postBedrock.setType(Material.GLASS);
@@ -368,10 +368,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
                 List<TARDISARSJettison> jettisons = getJettisons(tud.getPrevious(), tud.getSchematic(), chunk);
-                for (TARDISARSJettison jet : jettisons) {
+                jettisons.forEach((jet) -> {
                     // remove the room
                     setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
-                }
+                });
                 // also tidy up the space directly above the ARS centre slot
                 int tidy = starty + h;
                 int plus = 16 - h;
@@ -386,7 +386,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 int big = plugin.getArtronConfig().getInt("upgrades." + tud.getPrevious().getPermission());
                 int small = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 int refund = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * (big - small));
-                HashMap<String, Object> setr = new HashMap<String, Object>();
+                HashMap<String, Object> setr = new HashMap<>();
                 setr.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", refund, setr, null);
                 if (player.isOnline()) {
@@ -396,24 +396,26 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 // clean up space above coral console
                 int tidy = starty + h;
                 int plus = 32 - h;
-                for (Chunk chk : chunks) {
+                chunks.forEach((chk) -> {
                     setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), plus);
-                }
+                });
             }
             // add / remove chunks from the chunks table
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             qf.doDelete("chunks", wherec);
             List<Chunk> chunkList = plugin.getInteriorBuilder().getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
             // update chunks list in DB
-            for (Chunk hunk : chunkList) {
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+            chunkList.stream().map((hunk) -> {
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("tardis_id", id);
                 setc.put("world", world.getName());
                 setc.put("x", hunk.getX());
                 setc.put("z", hunk.getZ());
+                return setc;
+            }).forEachOrdered((setc) -> {
                 qf.doInsert("chunks", setc);
-            }
+            });
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
@@ -473,10 +475,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.IRON_DOOR_BLOCK)) {
                     if (data < (byte) 8) { // iron door bottom
-                        HashMap<String, Object> setd = new HashMap<String, Object>();
+                        HashMap<String, Object> setd = new HashMap<>();
                         String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         setd.put("door_location", doorloc);
-                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", id);
                         whered.put("door_type", 1);
                         qf.doUpdate("doors", setd, whered);
@@ -515,7 +517,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // silverfish stone
                     if (data == 2) {
                         // get current ARS json
-                        HashMap<String, Object> wherer = new HashMap<String, Object>();
+                        HashMap<String, Object> wherer = new HashMap<>();
                         wherer.put("tardis_id", id);
                         ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                         if (rsa.resultSet()) {
@@ -548,9 +550,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 existing[2][4][4] = control;
                             }
                             JSONArray json = new JSONArray(existing);
-                            HashMap<String, Object> seta = new HashMap<String, Object>();
+                            HashMap<String, Object> seta = new HashMap<>();
                             seta.put("json", json.toString());
-                            HashMap<String, Object> wheres = new HashMap<String, Object>();
+                            HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("tardis_id", id);
                             qf.doUpdate("ars", seta, wheres);
                         }
@@ -561,7 +563,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     Block lamp = world.getBlockAt(x, y, z);
                     lampblocks.add(lamp);
                     // remember lamp block locations for malfunction and light switch
-                    HashMap<String, Object> setlb = new HashMap<String, Object>();
+                    HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     setlb.put("tardis_id", id);
                     setlb.put("location", lloc);
@@ -608,7 +610,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                 if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) || type.equals(Material.BEDROCK)) {
-                    HashMap<String, Object> setpb = new HashMap<String, Object>();
+                    HashMap<String, Object> setpb = new HashMap<>();
                     String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
@@ -667,14 +669,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             // remove items
-            for (Chunk chink : chunks) {
+            chunks.forEach((chink) -> {
                 // remove dropped items
                 for (Entity e : chink.getEntities()) {
                     if (e instanceof Item) {
                         e.remove();
                     }
                 }
-            }
+            });
             if (row < w) {
                 row++;
             }
@@ -707,7 +709,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     }
 
     private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
-        List<TARDISARSJettison> list = new ArrayList<TARDISARSJettison>();
+        List<TARDISARSJettison> list = new ArrayList<>();
         if (prev.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
             // the 3 chunks on the same level
             list.add(new TARDISARSJettison(chunk, 1, 4, 5));
@@ -756,7 +758,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     }
 
     private List<Chunk> getChunks(Chunk c, SCHEMATIC s) {
-        List<Chunk> chinks = new ArrayList<Chunk>();
+        List<Chunk> chinks = new ArrayList<>();
         chinks.add(c);
         if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {
             chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));

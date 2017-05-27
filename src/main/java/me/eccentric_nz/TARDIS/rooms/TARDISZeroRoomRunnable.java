@@ -42,11 +42,11 @@ public class TARDISZeroRoomRunnable implements Runnable {
         if (inZeroRoom.size() < 1) {
             return;
         }
-        for (Player p : inZeroRoom) {
+        inZeroRoom.forEach((p) -> {
             // setHealth() method max is 20.0
             if (p.isOnline() && p.getHealth() < 19.5) {
                 p.setHealth(p.getHealth() + 0.5);
             }
-        }
+        });
     }
 }

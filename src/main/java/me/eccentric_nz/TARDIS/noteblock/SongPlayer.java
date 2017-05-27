@@ -29,7 +29,7 @@ public class SongPlayer {
     protected Song song;
     protected boolean playing = false;
     protected short tick = -1;
-    protected ArrayList<UUID> playerList = new ArrayList<UUID>();
+    protected ArrayList<UUID> playerList = new ArrayList<>();
     protected boolean destroyed = false;
     protected Thread playerThread;
 
@@ -39,38 +39,35 @@ public class SongPlayer {
     }
 
     private void createThread() {
-        playerThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!destroyed) {
-                    long startTime = System.currentTimeMillis();
-                    synchronized (SongPlayer.this) {
-                        if (playing) {
-                            SongPlayer sp = SongPlayer.this;
-                            sp.tick = ((short) (sp.tick + 1));
-                            if (tick > song.getLength()) {
-                                playing = false;
-                                tick = -1;
-                                SongEndEvent event = new SongEndEvent(SongPlayer.this);
-                                Bukkit.getPluginManager().callEvent(event);
-                                destroy();
-                                return;
-                            }
-                            for (UUID uuid : playerList) {
-                                Player p = Bukkit.getPlayer(uuid);
-                                if (p != null) {
-                                    playTick(p, tick);
-                                }
-                            }
+        playerThread = new Thread(() -> {
+            while (!destroyed) {
+                long startTime = System.currentTimeMillis();
+                synchronized (SongPlayer.this) {
+                    if (playing) {
+                        SongPlayer sp = SongPlayer.this;
+                        sp.tick = ((short) (sp.tick + 1));
+                        if (tick > song.getLength()) {
+                            playing = false;
+                            tick = -1;
+                            SongEndEvent event = new SongEndEvent(SongPlayer.this);
+                            Bukkit.getPluginManager().callEvent(event);
+                            destroy();
+                            return;
                         }
+                        playerList.forEach((uuid) -> {
+                            Player p = Bukkit.getPlayer(uuid);
+                            if (p != null) {
+                                playTick(p, tick);
+                            }
+                        });
                     }
-                    long duration = System.currentTimeMillis() - startTime;
-                    float delayMillis = song.getDelay() * 50;
-                    if (duration < delayMillis) {
-                        try {
-                            Thread.sleep((long) delayMillis - duration);
-                        } catch (InterruptedException e) {
-                        }
+                }
+                long duration = System.currentTimeMillis() - startTime;
+                float delayMillis = song.getDelay() * 50;
+                if (duration < delayMillis) {
+                    try {
+                        Thread.sleep((long) delayMillis - duration);
+                    } catch (InterruptedException e) {
                     }
                 }
             }
@@ -89,7 +86,7 @@ public class SongPlayer {
                 playerList.add(p.getUniqueId());
                 List<SongPlayer> songs = NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId());
                 if (songs == null) {
-                    songs = new ArrayList<SongPlayer>();
+                    songs = new ArrayList<>();
                 }
                 songs.add(this);
                 NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
@@ -98,12 +95,12 @@ public class SongPlayer {
     }
 
     public void playTick(Player p, int tick) {
-        for (Layer l : song.getLayerHashMap().values()) {
+        song.getLayerHashMap().values().forEach((l) -> {
             Note note = l.getNote(tick);
             if (note != null) {
                 p.playSound(p.getEyeLocation(), NoteBlockInstrument.getInstrument(note.getInstrument()), l.getVolume() * 100, NotePitch.getPitch(note.getKey() - 33));
             }
-        }
+        });
     }
 
     public void destroy() {
@@ -145,7 +142,7 @@ public class SongPlayer {
             if (NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()) == null) {
                 return;
             }
-            List<SongPlayer> songs = new ArrayList<SongPlayer>(NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()));
+            List<SongPlayer> songs = new ArrayList<>(NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()));
             songs.remove(this);
             NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
             if ((playerList.isEmpty())) {

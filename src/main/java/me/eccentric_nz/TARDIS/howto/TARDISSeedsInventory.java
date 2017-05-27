@@ -59,7 +59,7 @@ public class TARDISSeedsInventory {
                 ItemStack is = new ItemStack(m, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(a.getDescription());
-                List<String> lore = new ArrayList<String>();
+                List<String> lore = new ArrayList<>();
                 lore.add("Click to see recipe...");
                 im.setLore(lore);
                 is.setItemMeta(im);

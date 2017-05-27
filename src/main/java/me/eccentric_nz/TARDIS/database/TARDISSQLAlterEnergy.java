@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
@@ -35,7 +34,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TARDISSQLAlterEnergy implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String table;
     private final int amount;
@@ -70,14 +69,14 @@ public class TARDISSQLAlterEnergy implements Runnable {
         Statement statement = null;
         String wheres;
         StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
+        where.entrySet().forEach((entry) -> {
             sbw.append(entry.getKey()).append(" = ");
             if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");
             }
-        }
+        });
         int tmp = 0;
         if (where.containsKey("tardis_id")) {
             tmp = (Integer) where.get("tardis_id");

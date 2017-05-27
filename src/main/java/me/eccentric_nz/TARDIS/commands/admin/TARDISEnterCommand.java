@@ -63,7 +63,7 @@ public class TARDISEnterCommand {
         } catch (NumberFormatException nfe) {
             // do nothing
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         if (tmp == -1) {
             // Look up this player's UUID
             UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
@@ -77,7 +77,7 @@ public class TARDISEnterCommand {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();
             String owner = tardis.getOwner();
-            HashMap<String, Object> wherei = new HashMap<String, Object>();
+            HashMap<String, Object> wherei = new HashMap<>();
             wherei.put("door_type", 1);
             wherei.put("tardis_id", id);
             ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
@@ -147,7 +147,7 @@ public class TARDISEnterCommand {
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("uuid", player.getUniqueId().toString());
                 qf.doInsert("travellers", set);

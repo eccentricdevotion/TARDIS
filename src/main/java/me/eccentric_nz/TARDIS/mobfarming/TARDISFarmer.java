@@ -33,6 +33,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Chicken;
@@ -71,7 +73,7 @@ import org.bukkit.inventory.meta.SpawnEggMeta;
 public class TARDISFarmer {
 
     private final TARDIS plugin;
-    private final List<Material> barding = new ArrayList<Material>();
+    private final List<Material> barding = new ArrayList<>();
 
     public TARDISFarmer(TARDIS plugin) {
         this.plugin = plugin;
@@ -218,7 +220,8 @@ public class TARDISFarmer {
                             TARDISHorse tmpackhor = new TARDISHorse();
                             tmpackhor.setAge(packhorse.getAge());
                             tmpackhor.setBaby(!packhorse.isAdult());
-                            tmpackhor.setHorseHealth(packhorse.getMaxHealth());
+                            double phmh = packhorse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                            tmpackhor.setHorseHealth(phmh);
                             tmpackhor.setHealth(packhorse.getHealth());
                             tmpackhor.setHorseVariant(e.getType());
                             if (ph_brokenin.isTamed()) {
@@ -269,7 +272,8 @@ public class TARDISFarmer {
                             TARDISHorse tmhor = new TARDISHorse();
                             tmhor.setAge(horse.getAge());
                             tmhor.setBaby(!horse.isAdult());
-                            tmhor.setHorseHealth(horse.getMaxHealth());
+                            double mh = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                            tmhor.setHorseHealth(mh);
                             tmhor.setHealth(horse.getHealth());
                             // get horse colour, style and variant
                             tmhor.setHorseColour(horse.getColor());
@@ -324,7 +328,8 @@ public class TARDISFarmer {
                             TARDISLlama tmlla = new TARDISLlama();
                             tmlla.setAge(llama.getAge());
                             tmlla.setBaby(!llama.isAdult());
-                            tmlla.setHorseHealth(llama.getMaxHealth());
+                            double llmh = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                            tmlla.setHorseHealth(llmh);
                             tmlla.setHealth(llama.getHealth());
                             // get horse colour, style and variant
                             tmlla.setLlamacolor(llama.getColor());
@@ -561,7 +566,7 @@ public class TARDISFarmer {
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
                             world.getChunkAt(chicken_pen).load();
                         }
-                        for (TARDISMob e : old_macd_had_a_chicken) {
+                        old_macd_had_a_chicken.forEach((e) -> {
                             plugin.setTardisSpawn(true);
                             Entity chicken = world.spawnEntity(chicken_pen, EntityType.CHICKEN);
                             Chicken pecker = (Chicken) chicken;
@@ -574,14 +579,14 @@ public class TARDISFarmer {
                                 pecker.setCustomName(name);
                             }
                             pecker.setRemoveWhenFarAway(false);
-                        }
+                        });
                     }
                     if (old_macd_had_a_cow.size() > 0) {
                         Location cow_pen = new Location(world, x + 3, y, z + 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
                         }
-                        for (TARDISMob e : old_macd_had_a_cow) {
+                        old_macd_had_a_cow.forEach((e) -> {
                             plugin.setTardisSpawn(true);
                             Entity cow = world.spawnEntity(cow_pen, EntityType.COW);
                             Cow moo = (Cow) cow;
@@ -594,14 +599,14 @@ public class TARDISFarmer {
                                 moo.setCustomName(name);
                             }
                             moo.setRemoveWhenFarAway(false);
-                        }
+                        });
                     }
                     if (old_macd_had_a_pig.size() > 0) {
                         Location pig_pen = new Location(world, x - 3, y, z - 3);
                         while (!world.getChunkAt(pig_pen).isLoaded()) {
                             world.getChunkAt(pig_pen).load();
                         }
-                        for (TARDISPig e : old_macd_had_a_pig) {
+                        old_macd_had_a_pig.forEach((e) -> {
                             plugin.setTardisSpawn(true);
                             Entity pig = world.spawnEntity(pig_pen, EntityType.PIG);
                             Pig oinker = (Pig) pig;
@@ -615,14 +620,14 @@ public class TARDISFarmer {
                             }
                             oinker.setSaddle(e.isSaddled());
                             oinker.setRemoveWhenFarAway(false);
-                        }
+                        });
                     }
                     if (old_macd_had_a_sheep.size() > 0) {
                         Location sheep_pen = new Location(world, x - 3, y, z + 3);
                         while (!world.getChunkAt(sheep_pen).isLoaded()) {
                             world.getChunkAt(sheep_pen).load();
                         }
-                        for (TARDISMob e : old_macd_had_a_sheep) {
+                        old_macd_had_a_sheep.forEach((e) -> {
                             plugin.setTardisSpawn(true);
                             Entity sheep = world.spawnEntity(sheep_pen, EntityType.SHEEP);
                             Sheep baa = (Sheep) sheep;
@@ -636,14 +641,14 @@ public class TARDISFarmer {
                                 baa.setCustomName(name);
                             }
                             baa.setRemoveWhenFarAway(false);
-                        }
+                        });
                     }
                     if (old_macd_had_a_mooshroom.size() > 0) {
                         Location cow_pen = new Location(world, x + 3, y, z + 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
                         }
-                        for (TARDISMob e : old_macd_had_a_mooshroom) {
+                        old_macd_had_a_mooshroom.forEach((e) -> {
                             plugin.setTardisSpawn(true);
                             Entity mooshroom = world.spawnEntity(cow_pen, EntityType.MUSHROOM_COW);
                             MushroomCow fungi = (MushroomCow) mooshroom;
@@ -656,7 +661,7 @@ public class TARDISFarmer {
                                 fungi.setCustomName(name);
                             }
                             fungi.setRemoveWhenFarAway(false);
-                        }
+                        });
                     }
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
                     // no farm, give the player spawn eggs
@@ -711,7 +716,7 @@ public class TARDISFarmer {
                     while (!world.getChunkAt(horse_pen).isLoaded()) {
                         world.getChunkAt(horse_pen).load();
                     }
-                    for (TARDISHorse e : old_macd_had_a_horse) {
+                    old_macd_had_a_horse.forEach((e) -> {
                         plugin.setTardisSpawn(true);
                         Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
                         Horse equine = (Horse) horse;
@@ -719,7 +724,8 @@ public class TARDISFarmer {
                         if (e.isBaby()) {
                             equine.setBaby();
                         }
-                        equine.setMaxHealth(e.getHorseHealth());
+                        AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                        attribute.setBaseValue(e.getHorseHealth());
                         equine.setHealth(e.getHealth());
                         equine.setColor(e.getHorseColour());
                         equine.setStyle(e.getHorseStyle());
@@ -741,13 +747,13 @@ public class TARDISFarmer {
                             ItemStack saddle = inv.getItem(saddle_slot);
                             equine.getInventory().setSaddle(saddle);
                         }
-                        for (Material m : barding) {
+                        barding.forEach((m) -> {
                             if (inv.contains(m)) {
                                 int armour_slot = inv.first(m);
                                 ItemStack bard = inv.getItem(armour_slot);
                                 equine.getInventory().setArmor(bard);
                             }
-                        }
+                        });
                         if (e.isLeashed()) {
                             Inventory pinv = p.getInventory();
                             ItemStack leash = new ItemStack(Material.LEASH, 1);
@@ -758,8 +764,8 @@ public class TARDISFarmer {
                             plugin.getTardisHelper().setHorseSpeed(equine, e.getSpeed());
                         }
                         equine.setRemoveWhenFarAway(false);
-                    }
-                    for (TARDISHorse ph : old_macd_had_a_packhorse) {
+                    });
+                    old_macd_had_a_packhorse.forEach((ph) -> {
                         plugin.setTardisSpawn(true);
                         Entity pack_horse = world.spawnEntity(horse_pen, ph.getHorseVariant());
                         Horse equine = (Horse) pack_horse;
@@ -767,7 +773,8 @@ public class TARDISFarmer {
                         if (ph.isBaby()) {
                             equine.setBaby();
                         }
-                        equine.setMaxHealth(ph.getHorseHealth());
+                        AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                        attribute.setBaseValue(ph.getHorseHealth());
                         equine.setHealth(ph.getHealth());
                         String name = ph.getName();
                         if (name != null && !name.isEmpty()) {
@@ -801,7 +808,7 @@ public class TARDISFarmer {
                             plugin.getTardisHelper().setHorseSpeed(equine, ph.getSpeed());
                         }
                         equine.setRemoveWhenFarAway(false);
-                    }
+                    });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_horse.size() > 0) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size());
@@ -824,7 +831,7 @@ public class TARDISFarmer {
                     while (!world.getChunkAt(llama_pen).isLoaded()) {
                         world.getChunkAt(llama_pen).load();
                     }
-                    for (TARDISLlama ll : old_macd_had_a_llama) {
+                    old_macd_had_a_llama.forEach((ll) -> {
                         plugin.setTardisSpawn(true);
                         Entity llama = world.spawnEntity(llama_pen, EntityType.LLAMA);
                         Llama cria = (Llama) llama;
@@ -834,7 +841,8 @@ public class TARDISFarmer {
                         if (ll.isBaby()) {
                             cria.setBaby();
                         }
-                        cria.setMaxHealth(ll.getHorseHealth());
+                        AttributeInstance attribute = cria.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                        attribute.setBaseValue(ll.getHorseHealth());
                         cria.setHealth(ll.getHealth());
                         String name = ll.getName();
                         if (name != null && !name.isEmpty()) {
@@ -868,7 +876,7 @@ public class TARDISFarmer {
                             plugin.getTardisHelper().setHorseSpeed(cria, ll.getSpeed());
                         }
                         cria.setRemoveWhenFarAway(false);
-                    }
+                    });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_llama.size() > 0) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_llama.size());
@@ -891,7 +899,7 @@ public class TARDISFarmer {
                     while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
                         world.getChunkAt(rabbit_hutch).load();
                     }
-                    for (TARDISRabbit e : old_macd_had_a_rabbit) {
+                    old_macd_had_a_rabbit.forEach((e) -> {
                         plugin.setTardisSpawn(true);
                         Entity rabbit = world.spawnEntity(rabbit_hutch, EntityType.RABBIT);
                         Rabbit bunny = (Rabbit) rabbit;
@@ -905,7 +913,7 @@ public class TARDISFarmer {
                         }
                         bunny.setRabbitType(e.getBunnyType());
                         bunny.setRemoveWhenFarAway(false);
-                    }
+                    });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_rabbit.size() > 0) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size());
@@ -928,7 +936,7 @@ public class TARDISFarmer {
                     while (!world.getChunkAt(v_room).isLoaded()) {
                         world.getChunkAt(v_room).load();
                     }
-                    for (TARDISVillager e : old_macd_had_a_villager) {
+                    old_macd_had_a_villager.forEach((e) -> {
                         plugin.setTardisSpawn(true);
                         Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                         Villager npc = (Villager) vill;
@@ -950,7 +958,7 @@ public class TARDISFarmer {
                             plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         }
                         npc.setRemoveWhenFarAway(false);
-                    }
+                    });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_villager.size() > 0) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size());
@@ -973,7 +981,7 @@ public class TARDISFarmer {
                     while (!world.getChunkAt(i_room).isLoaded()) {
                         world.getChunkAt(i_room).load();
                     }
-                    for (TARDISMob e : old_macd_had_a_polarbear) {
+                    old_macd_had_a_polarbear.forEach((e) -> {
                         plugin.setTardisSpawn(true);
                         Entity bear = world.spawnEntity(i_room, EntityType.POLAR_BEAR);
                         PolarBear polar = (PolarBear) bear;
@@ -986,7 +994,7 @@ public class TARDISFarmer {
                             polar.setCustomName(name);
                         }
                         polar.setRemoveWhenFarAway(false);
-                    }
+                    });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_polarbear.size() > 0) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_polarbear.size());
@@ -1009,7 +1017,7 @@ public class TARDISFarmer {
                     while (!world.getChunkAt(b_room).isLoaded()) {
                         world.getChunkAt(b_room).load();
                     }
-                    for (TARDISParrot e : old_macd_had_a_parrot) {
+                    old_macd_had_a_parrot.forEach((e) -> {
                         plugin.setTardisSpawn(true);
                         Entity polly = world.spawnEntity(b_room, EntityType.PARROT);
                         Parrot parrot = (Parrot) polly;
@@ -1024,7 +1032,7 @@ public class TARDISFarmer {
                         }
                         ((Sittable) parrot).setSitting(false); // let them fly in the cage
                         parrot.setRemoveWhenFarAway(false);
-                    }
+                    });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_parrot.size() > 0) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();

@@ -48,7 +48,7 @@ import org.bukkit.block.BlockFace;
 public class TARDISPresetBuilderFactory {
 
     private final TARDIS plugin;
-    HashMap<COMPASS, BlockFace[]> face_map = new HashMap<COMPASS, BlockFace[]>();
+    HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
     public final List<PRESET> no_block_under_door;
     public final List<PRESET> notSubmarinePresets;
     Random rand;
@@ -60,7 +60,7 @@ public class TARDISPresetBuilderFactory {
         face_map.put(COMPASS.WEST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
         face_map.put(COMPASS.SOUTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
         face_map.put(COMPASS.EAST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
-        no_block_under_door = new ArrayList<PRESET>();
+        no_block_under_door = new ArrayList<>();
         no_block_under_door.add(PRESET.ANGEL);
         no_block_under_door.add(PRESET.DUCK);
         no_block_under_door.add(PRESET.GAZEBO);
@@ -70,7 +70,7 @@ public class TARDISPresetBuilderFactory {
         no_block_under_door.add(PRESET.ROBOT);
         no_block_under_door.add(PRESET.TORCH);
         no_block_under_door.add(PRESET.WELL);
-        notSubmarinePresets = new ArrayList<PRESET>();
+        notSubmarinePresets = new ArrayList<>();
         notSubmarinePresets.add(PRESET.LAMP);
         notSubmarinePresets.add(PRESET.MINESHAFT);
     }
@@ -81,7 +81,7 @@ public class TARDISPresetBuilderFactory {
      * @param bd the TARDIS build data
      */
     public void buildPreset(final BuildData bd) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", bd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
@@ -167,19 +167,16 @@ public class TARDISPresetBuilderFactory {
                 final int id = cham_id;
                 final byte data = cham_data;
                 // delay by the usual time so handbrake message shows after materialisation sound
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                        TARDISInstaPreset insta = new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id, data, false);
-                        insta.buildPreset();
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id, data, false);
+                    insta.buildPreset();
                 }, 375L);
             }
             // update demat so it knows about the current preset after it has changed
-            HashMap<String, Object> whered = new HashMap<String, Object>();
+            HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", bd.getTardisID());
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("chameleon_demat", preset.toString());
             new QueryFactory(plugin).doUpdate("tardis", set, whered);
         }

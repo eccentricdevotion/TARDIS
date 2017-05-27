@@ -33,15 +33,16 @@ public class TARDISArchSerialization {
     public static String toDatabase(ItemStack[] inventory) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
             // Write the size of the inventory
-            dataOutput.writeInt(inventory.length);
-            // Save every element in the list
-            for (ItemStack is : inventory) {
-                dataOutput.writeObject(is);
+            try (BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)) {
+                // Write the size of the inventory
+                dataOutput.writeInt(inventory.length);
+                // Save every element in the list
+                for (ItemStack is : inventory) {
+                    dataOutput.writeObject(is);
+                }
+                // Serialize that array
             }
-            // Serialize that array
-            dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
         } catch (IOException e) {
             throw new IllegalStateException("Unable to save item stacks.", e);
@@ -51,15 +52,15 @@ public class TARDISArchSerialization {
     public static ItemStack[] fromDatabase(String data) throws IOException {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
-            int size = dataInput.readInt();
-            ItemStack[] inventory = new ItemStack[size];
-
-            // Read the serialized inventory
-            for (int i = 0; i < size; i++) {
-                inventory[i] = (ItemStack) dataInput.readObject();
+            ItemStack[] inventory;
+            try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
+                int size = dataInput.readInt();
+                inventory = new ItemStack[size];
+                // Read the serialized inventory
+                for (int i = 0; i < size; i++) {
+                    inventory[i] = (ItemStack) dataInput.readObject();
+                }
             }
-            dataInput.close();
             return inventory;
         } catch (ClassNotFoundException e) {
             throw new IOException("Unable to decode class type.", e);

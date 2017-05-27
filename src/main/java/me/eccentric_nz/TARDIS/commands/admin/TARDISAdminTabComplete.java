@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -63,16 +62,16 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         } else {
             this.FLAG_SUBS = ImmutableList.of("none", "build", "entry");
         }
-        List<String> tmpPresets = new ArrayList<String>();
+        List<String> tmpPresets = new ArrayList<>();
         for (PRESET p : PRESET.values()) {
             tmpPresets.add(p.toString());
         }
         this.PRESETS = ImmutableList.copyOf(tmpPresets);
         this.ROOT_SUBS = ImmutableList.copyOf(combineLists());
-        List<String> worlds = new ArrayList<String>();
-        for (World w : plugin.getServer().getWorlds()) {
+        List<String> worlds = new ArrayList<>();
+        plugin.getServer().getWorlds().forEach((w) -> {
             worlds.add(w.getName());
-        }
+        });
         this.WORLD_SUBS = ImmutableList.copyOf(worlds);
         this.SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
     }
@@ -158,7 +157,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     }
 
     private List<String> combineLists() {
-        List<String> newList = new ArrayList<String>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
+        List<String> newList = new ArrayList<>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());

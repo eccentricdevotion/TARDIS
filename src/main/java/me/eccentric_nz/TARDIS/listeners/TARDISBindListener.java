@@ -47,7 +47,7 @@ import org.bukkit.inventory.EquipmentSlot;
 public class TARDISBindListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<Material>();
+    List<Material> validBlocks = new ArrayList<>();
 
     public TARDISBindListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -82,11 +82,11 @@ public class TARDISBindListener implements Listener {
                 final Player player = event.getPlayer();
                 UUID uuid = player.getUniqueId();
                 String l = b.getLocation().toString();
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 if (plugin.getTrackerKeeper().getBinder().containsKey(uuid)) {
                     where.put("dest_id", plugin.getTrackerKeeper().getBinder().get(uuid));
                     plugin.getTrackerKeeper().getBinder().remove(uuid);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("bind", l);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doUpdate("destinations", set, where);
@@ -97,13 +97,13 @@ public class TARDISBindListener implements Listener {
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             UUID ownerUUID = tardis.getUuid();
-                            HashMap<String, Object> whereb = new HashMap<String, Object>();
+                            HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);

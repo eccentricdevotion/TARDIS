@@ -31,7 +31,7 @@ public class TARDISWorldGuardFlag {
     private static final Map<String, StateFlag> FLAG_LOOKUP;
 
     static {
-        Map<String, StateFlag> flag_lookup = new HashMap<String, StateFlag>();
+        Map<String, StateFlag> flag_lookup = new HashMap<>();
         flag_lookup.put("build", DefaultFlag.BUILD);
         flag_lookup.put("chest-access", DefaultFlag.CHEST_ACCESS);
         flag_lookup.put("creeper-explosion", DefaultFlag.CREEPER_EXPLOSION);

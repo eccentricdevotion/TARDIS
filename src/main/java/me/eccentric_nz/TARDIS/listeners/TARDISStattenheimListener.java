@@ -68,7 +68,7 @@ import org.yi.acru.bukkit.Lockette.Lockette;
 public class TARDISStattenheimListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> useless = new ArrayList<Material>();
+    List<Material> useless = new ArrayList<>();
     Material remote;
 
     public TARDISStattenheimListener(TARDIS plugin) {
@@ -100,7 +100,7 @@ public class TARDISStattenheimListener implements Listener {
                 Action action = event.getAction();
                 // check they are a Time Lord
                 UUID uuid = player.getUniqueId();
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (!rs.resultSet()) {
@@ -171,7 +171,7 @@ public class TARDISStattenheimListener implements Listener {
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtron_level();
                         // check they are not in the tardis
-                        HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+                        HashMap<String, Object> wherettrav = new HashMap<>();
                         wherettrav.put("uuid", uuid.toString());
                         wherettrav.put("tardis_id", id);
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
@@ -184,7 +184,7 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         // get TARDIS's current location
-                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                        HashMap<String, Object> wherecl = new HashMap<>();
                         wherecl.put("tardis_id", tardis.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
@@ -221,9 +221,9 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         Location oldSave = null;
-                        HashMap<String, Object> bid = new HashMap<String, Object>();
+                        HashMap<String, Object> bid = new HashMap<>();
                         bid.put("tardis_id", id);
-                        HashMap<String, Object> bset = new HashMap<String, Object>();
+                        HashMap<String, Object> bset = new HashMap<>();
                         if (rsc.getWorld() != null) {
                             oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             // set fast return location
@@ -243,9 +243,9 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         qf.doUpdate("back", bset, bid);
                         // set current location
-                        HashMap<String, Object> cid = new HashMap<String, Object>();
+                        HashMap<String, Object> cid = new HashMap<>();
                         cid.put("tardis_id", id);
-                        HashMap<String, Object> cset = new HashMap<String, Object>();
+                        HashMap<String, Object> cset = new HashMap<>();
                         cset.put("world", remoteLocation.getWorld().getName());
                         cset.put("x", remoteLocation.getBlockX());
                         cset.put("y", remoteLocation.getBlockY());
@@ -255,8 +255,8 @@ public class TARDISStattenheimListener implements Listener {
                         qf.doUpdate("current", cset, cid);
                         // update tardis
                         if (hidden) {
-                            HashMap<String, Object> tid = new HashMap<String, Object>();
-                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            HashMap<String, Object> tid = new HashMap<>();
+                            HashMap<String, Object> set = new HashMap<>();
                             set.put("hidden", 0);
                             tid.put("tardis_id", id);
                             qf.doUpdate("tardis", set, tid);
@@ -277,15 +277,12 @@ public class TARDISStattenheimListener implements Listener {
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
                             dd.setBiome(rsc.getBiome());
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!hid) {
-                                        plugin.getTrackerKeeper().getDematerialising().add(id);
-                                        plugin.getPresetDestroyer().destroyPreset(dd);
-                                    } else {
-                                        plugin.getPresetDestroyer().removeBlockProtection(id, qf);
-                                    }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                if (!hid) {
+                                    plugin.getTrackerKeeper().getDematerialising().add(id);
+                                    plugin.getPresetDestroyer().destroyPreset(dd);
+                                } else {
+                                    plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                                 }
                             }, delay);
                         }
@@ -298,14 +295,11 @@ public class TARDISStattenheimListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(sub);
                         bd.setTardisID(id);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plugin.getPresetBuilder().buildPreset(bd);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            plugin.getPresetBuilder().buildPreset(bd);
                         }, delay * 2);
                         // remove energy from TARDIS
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", -ch, wheret, player);
                         plugin.getTrackerKeeper().getHasDestination().remove(id);
@@ -318,7 +312,7 @@ public class TARDISStattenheimListener implements Listener {
                 } else if (action.equals(Action.RIGHT_CLICK_AIR) && plugin.getConfig().getBoolean("allow.power_down")) {
                     // is the power off?
                     if (!power) {
-                        HashMap<String, Object> wherek = new HashMap<String, Object>();
+                        HashMap<String, Object> wherek = new HashMap<>();
                         wherek.put("uuid", uuid.toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                         boolean beacon_on = true;
@@ -327,9 +321,9 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         // power up
                         PRESET preset = tardis.getPreset();
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("tardis_id", id);
-                        HashMap<String, Object> setp = new HashMap<String, Object>();
+                        HashMap<String, Object> setp = new HashMap<>();
                         setp.put("powered_on", 1);
                         TARDISMessage.send(player, "POWER_ON");
                         // if lights are off, turn them on

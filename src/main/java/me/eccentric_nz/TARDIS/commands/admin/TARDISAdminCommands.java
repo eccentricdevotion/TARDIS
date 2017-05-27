@@ -46,11 +46,11 @@ import org.bukkit.command.ConsoleCommandSender;
 public class TARDISAdminCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    public HashMap<String, String> firstsStr = new HashMap<String, String>();
-    public List<String> firstsStrArtron = new ArrayList<String>();
-    public HashMap<String, String> firstsBool = new HashMap<String, String>();
-    public HashMap<String, String> firstsInt = new HashMap<String, String>();
-    public List<String> firstsIntArtron = new ArrayList<String>();
+    public HashMap<String, String> firstsStr = new HashMap<>();
+    public List<String> firstsStrArtron = new ArrayList<>();
+    public HashMap<String, String> firstsBool = new HashMap<>();
+    public HashMap<String, String> firstsInt = new HashMap<>();
+    public List<String> firstsIntArtron = new ArrayList<>();
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;

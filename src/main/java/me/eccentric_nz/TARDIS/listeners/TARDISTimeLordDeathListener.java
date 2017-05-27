@@ -85,7 +85,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             if (player.hasPermission("tardis.autonomous")) {
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 // are they a time lord?
@@ -95,7 +95,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                         final int id = tardis.getTardis_id();
                         String eps = tardis.getEps();
                         String creeper = tardis.getCreeper();
-                        HashMap<String, Object> whereu = new HashMap<String, Object>();
+                        HashMap<String, Object> whereu = new HashMap<>();
                         whereu.put("uuid", uuid.toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, whereu);
                         if (rsp.resultSet()) {
@@ -108,7 +108,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 if (tardis.getArtron_level() > amount) {
                                     if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                         // check if there are players in the TARDIS
-                                        HashMap<String, Object> wherev = new HashMap<String, Object>();
+                                        HashMap<String, Object> wherev = new HashMap<>();
                                         wherev.put("tardis_id", id);
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                         if (rst.resultSet()) {
@@ -122,7 +122,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     String death_world = death_loc.getWorld().getName();
                                     // where is the TARDIS Police Box?
-                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
@@ -132,7 +132,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     COMPASS cd = rsc.getDirection();
                                     Location sl = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                                     // where is home?
-                                    HashMap<String, Object> wherehl = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherehl = new HashMap<>();
                                     wherehl.put("tardis_id", id);
                                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
                                     if (!rsh.resultSet()) {
@@ -191,9 +191,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             dd.setTardisID(id);
                                             dd.setBiome(rsc.getBiome());
                                             // set handbrake off
-                                            HashMap<String, Object> set = new HashMap<String, Object>();
+                                            HashMap<String, Object> set = new HashMap<>();
                                             set.put("handbrake_on", 0);
-                                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                                            HashMap<String, Object> tid = new HashMap<>();
                                             tid.put("tardis_id", id);
                                             if (!tardis.isHidden()) {
                                                 plugin.getPresetDestroyer().destroyPreset(dd);
@@ -218,62 +218,56 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         bd.setOutside(false);
                                         bd.setSubmarine(sub);
                                         bd.setTardisID(id);
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                // rebuild police box - needs to be a delay
-                                                plugin.getPresetBuilder().buildPreset(bd);
-                                                plugin.getTrackerKeeper().getInVortex().add(id);
-                                                // play tardis_land sfx
-                                                TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
-                                                // set handbrake on
-                                                HashMap<String, Object> seth = new HashMap<String, Object>();
-                                                seth.put("handbrake_on", 1);
-                                                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                                wheret.put("tardis_id", id);
-                                                qf.doUpdate("tardis", seth, wheret);
-                                            }
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            // rebuild police box - needs to be a delay
+                                            plugin.getPresetBuilder().buildPreset(bd);
+                                            plugin.getTrackerKeeper().getInVortex().add(id);
+                                            // play tardis_land sfx
+                                            TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                                            // set handbrake on
+                                            HashMap<String, Object> seth = new HashMap<>();
+                                            seth.put("handbrake_on", 1);
+                                            HashMap<String, Object> wheret = new HashMap<>();
+                                            wheret.put("tardis_id", id);
+                                            qf.doUpdate("tardis", seth, wheret);
                                         }, 500L);
                                         // set current
-                                        HashMap<String, Object> setc = new HashMap<String, Object>();
+                                        HashMap<String, Object> setc = new HashMap<>();
                                         setc.put("world", goto_loc.getWorld().getName());
                                         setc.put("x", goto_loc.getBlockX());
                                         setc.put("y", goto_loc.getBlockY());
                                         setc.put("z", goto_loc.getBlockZ());
                                         setc.put("direction", fd.toString());
                                         setc.put("submarine", (sub) ? 1 : 0);
-                                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                        HashMap<String, Object> wherec = new HashMap<>();
                                         wherec.put("tardis_id", id);
                                         qf.doUpdate("current", setc, wherec);
                                         // set back
-                                        HashMap<String, Object> setb = new HashMap<String, Object>();
+                                        HashMap<String, Object> setb = new HashMap<>();
                                         setb.put("world", rsc.getWorld().getName());
                                         setb.put("x", rsc.getX());
                                         setb.put("y", rsc.getY());
                                         setb.put("z", rsc.getZ());
                                         setb.put("direction", rsc.getDirection().toString());
                                         setb.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
-                                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                        HashMap<String, Object> whereb = new HashMap<>();
                                         whereb.put("tardis_id", id);
                                         qf.doUpdate("back", setb, whereb);
                                         // take energy
-                                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                                        HashMap<String, Object> wherea = new HashMap<>();
                                         wherea.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", -amount, wherea, player);
                                         // power down?
                                         if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                            HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                            HashMap<String, Object> wherep = new HashMap<>();
                                             wherep.put("tardis_id", id);
-                                            HashMap<String, Object> setp = new HashMap<String, Object>();
+                                            HashMap<String, Object> setp = new HashMap<>();
                                             // power down
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
                                             if (tardis.getPreset().equals(PRESET.NEW) || tardis.getPreset().equals(PRESET.OLD)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                                                    }
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                                    new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
                                                 }, 1L);
                                             }
                                             // if lights are on, turn them off
@@ -286,7 +280,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
                                     // enter siege mode
                                     // where is the TARDIS Police Box?
-                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
@@ -295,9 +289,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     Location sl = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                                     Block siege = sl.getBlock();
-                                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                    HashMap<String, Object> wheres = new HashMap<>();
                                     wheres.put("tardis_id", id);
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     // destroy tardis
                                     final DestroyData dd = new DestroyData(plugin, uuid.toString());
                                     dd.setDirection(rsc.getDirection());
@@ -321,7 +315,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         if (plugin.getConfig().getInt("siege.breeding") > 0) {
                                             List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
                                             if (breeding_areas == null) {
-                                                breeding_areas = new ArrayList<TARDISSiegeArea>();
+                                                breeding_areas = new ArrayList<>();
                                             }
                                             breeding_areas.add(tsa);
                                             plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
@@ -329,7 +323,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         if (plugin.getConfig().getInt("siege.growth") > 0) {
                                             List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                                             if (growth_areas == null) {
-                                                growth_areas = new ArrayList<TARDISSiegeArea>();
+                                                growth_areas = new ArrayList<>();
                                             }
                                             growth_areas.add(tsa);
                                             plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
@@ -374,7 +368,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 
     private Location getRecharger(String world, Player player) {
         Location l = null;
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("world", world);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {

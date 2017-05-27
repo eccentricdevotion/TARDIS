@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -62,7 +61,7 @@ public class TARDISExterminator {
     }
 
     public boolean exterminate(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         try {
@@ -75,7 +74,7 @@ public class TARDISExterminator {
                 int tips = tardis.getTIPS();
                 boolean hasZero = (!tardis.getZero().isEmpty());
                 SCHEMATIC schm = tardis.getSchematic();
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
@@ -128,7 +127,7 @@ public class TARDISExterminator {
     public boolean exterminate(final Player player, Block block) {
         int signx = 0, signz = 0;
         Location sign_loc = block.getLocation();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         ResultSetTardis rs;
         if (player.hasPermission("tardis.delete")) {
             Block blockbehind = null;
@@ -148,7 +147,7 @@ public class TARDISExterminator {
             if (blockbehind != null) {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("world", bd_loc.getWorld().getName());
                 wherecl.put("x", bd_loc.getBlockX());
                 wherecl.put("y", bd_loc.getBlockY());
@@ -178,7 +177,7 @@ public class TARDISExterminator {
             SCHEMATIC schm = tardis.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
-                HashMap<String, Object> travid = new HashMap<String, Object>();
+                HashMap<String, Object> travid = new HashMap<>();
                 travid.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
                 if (rst.resultSet()) {
@@ -187,7 +186,7 @@ public class TARDISExterminator {
                 }
             }
             // check the sign location
-            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
@@ -247,12 +246,9 @@ public class TARDISExterminator {
                 }
                 cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        cleanDatabase(id);
-                        TARDISMessage.send(player, "TARDIS_EXTERMINATED");
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    cleanDatabase(id);
+                    TARDISMessage.send(player, "TARDIS_EXTERMINATED");
                 }, 40L);
                 return false;
             } else {
@@ -283,16 +279,16 @@ public class TARDISExterminator {
 
     public void cleanHashMaps(int id) {
         // remove protected blocks from the HashMap
-        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        HashMap<String, Object> whereb = new HashMap<>();
         whereb.put("tardis_id", id);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, whereb, true);
         if (rsb.resultSet()) {
-            for (ReplacedBlock rp : rsb.getData()) {
+            rsb.getData().forEach((rp) -> {
                 plugin.getGeneralKeeper().getProtectBlockMap().remove(rp.getStrLocation());
-            }
+            });
         }
         // remove gravity well blocks from the HashMap
-        HashMap<String, Object> whereg = new HashMap<String, Object>();
+        HashMap<String, Object> whereg = new HashMap<>();
         whereg.put("tardis_id", id);
         ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, true);
         if (rsg.resultSet()) {
@@ -327,11 +323,11 @@ public class TARDISExterminator {
         QueryFactory qf = new QueryFactory(plugin);
         List<String> tables = Arrays.asList("ars", "back", "blocks", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
-        for (String table : tables) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+        tables.forEach((table) -> {
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             qf.doDelete(table, where);
-        }
+        });
     }
 
     private void cleanWorlds(World w, String owner) {
@@ -345,10 +341,10 @@ public class TARDISExterminator {
             String name = w.getName();
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
-            for (Player p : players) {
+            players.forEach((p) -> {
                 TARDISMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
-            }
+            });
             if (plugin.isMVOnServer()) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }

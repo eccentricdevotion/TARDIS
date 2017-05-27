@@ -40,8 +40,8 @@ import org.bukkit.entity.Player;
 public class TARDISGravityCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> directions = new ArrayList<String>();
-    private final HashMap<String, Double> gravityDirection = new HashMap<String, Double>();
+    private final List<String> directions = new ArrayList<>();
+    private final HashMap<String, Double> gravityDirection = new HashMap<>();
 
     public TARDISGravityCommands(TARDIS plugin) {
         this.plugin = plugin;

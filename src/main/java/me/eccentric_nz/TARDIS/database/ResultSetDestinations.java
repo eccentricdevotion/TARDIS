@@ -36,7 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class ResultSetDestinations {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -53,7 +53,7 @@ public class ResultSetDestinations {
     private int type;
     private boolean submarine;
     private int slot;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
 
     /**
@@ -86,9 +86,9 @@ public class ResultSetDestinations {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
+            where.entrySet().forEach((entry) -> {
                 sbw.append(entry.getKey()).append(" = ? AND ");
-            }
+            });
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "destinations" + wheres;
@@ -111,7 +111,7 @@ public class ResultSetDestinations {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
+                        HashMap<String, String> row = new HashMap<>();
                         ResultSetMetaData rsmd = rs.getMetaData();
                         int columns = rsmd.getColumnCount();
                         for (int i = 1; i < columns + 1; i++) {

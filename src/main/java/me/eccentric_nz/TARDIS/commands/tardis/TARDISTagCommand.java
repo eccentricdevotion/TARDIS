@@ -47,11 +47,11 @@ public class TARDISTagCommand {
         player.sendMessage("-----------");
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
-            for (HashMap<String, String> map : data) {
+            data.forEach((map) -> {
                 String p = map.get("player");
                 long t = TARDISNumberParsers.parseLong(map.get("time"));
                 player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
-            }
+            });
         } else {
             player.sendMessage("The are no stats yet :(");
         }

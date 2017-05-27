@@ -72,20 +72,20 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                    HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             final ADAPTION adapt = tardis.getAdaption();
 //                            String preset = tardis.getPreset().toString();
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            HashMap<String, Object> set = new HashMap<>();
+                            HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
                             switch (slot) {
                                 case 0:
@@ -175,29 +175,23 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                 case 14:
                                     // presets
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin);
-                                            ItemStack[] items = tpi.getPresets();
-                                            Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Chameleon Presets");
-                                            presetinv.setContents(items);
-                                            player.openInventory(presetinv);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        TARDISPresetInventory tpi = new TARDISPresetInventory(plugin);
+                                        ItemStack[] items = tpi.getPresets();
+                                        Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Chameleon Presets");
+                                        presetinv.setContents(items);
+                                        player.openInventory(presetinv);
                                     }, 2L);
                                     break;
                                 case 15:
                                     // constructor GUI
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
-                                            ItemStack[] items = tci.getConstruct();
-                                            Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
-                                            chamcon.setContents(items);
-                                            player.openInventory(chamcon);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                                        ItemStack[] items = tci.getConstruct();
+                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
+                                        chamcon.setContents(items);
+                                        player.openInventory(chamcon);
                                     }, 2L);
                                     break;
                                 case 20:

@@ -64,7 +64,7 @@ public class TARDISMalfunction {
     public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
         // get cuurent TARDIS preset location
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
         if (rscl.resultSet()) {
@@ -96,26 +96,26 @@ public class TARDISMalfunction {
     }
 
     public void doMalfunction(Location l, int id, Player p, String eps, String creeper, Location handbrake) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
         if (rsl.resultSet()) {
             // get player prefs
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
-                    HashMap<String, Object> wherev = new HashMap<String, Object>();
+                    HashMap<String, Object> wherev = new HashMap<>();
                     wherev.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                     List<UUID> playerUUIDs;
                     if (rst.resultSet()) {
                         playerUUIDs = rst.getData();
                     } else {
-                        playerUUIDs = new ArrayList<UUID>();
+                        playerUUIDs = new ArrayList<>();
                         playerUUIDs.add(p.getUniqueId());
                     }
                     TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);

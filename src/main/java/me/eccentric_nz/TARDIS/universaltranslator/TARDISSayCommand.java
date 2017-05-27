@@ -59,7 +59,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 return false;
             }
             String preferedLang = "ENGLISH";
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             if (sender instanceof Player) {
                 where.put("uuid", ((Player) sender).getUniqueId().toString());
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);

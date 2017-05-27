@@ -54,7 +54,7 @@ public class TARDISPresetDestroyerFactory {
     }
 
     public void destroyPreset(DestroyData dd) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", dd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
@@ -109,7 +109,7 @@ public class TARDISPresetDestroyerFactory {
     }
 
     public void destroyDoor(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
         ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
@@ -357,9 +357,9 @@ public class TARDISPresetDestroyerFactory {
 
     public void destroyLampTrapdoors(Location l, COMPASS d) {
         Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
-        for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> {
             lamp.getRelative(f).setType(Material.AIR);
-        }
+        });
     }
 
     private BlockFace getOppositeFace(COMPASS c) {
@@ -377,7 +377,7 @@ public class TARDISPresetDestroyerFactory {
     }
 
     public void removeBlockProtection(int id, QueryFactory qf) {
-        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        HashMap<String, Object> whereb = new HashMap<>();
         whereb.put("tardis_id", id);
         whereb.put("police_box", 1);
         qf.doDelete("blocks", whereb);

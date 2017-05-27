@@ -36,17 +36,17 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISAnvilListener implements Listener {
 
-    HashMap<String, Material> disallow = new HashMap<String, Material>();
+    HashMap<String, Material> disallow = new HashMap<>();
 
     public TARDISAnvilListener(TARDIS plugin) {
-        for (String r : plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false)) {
+        plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
             String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
             disallow.put(r, Material.valueOf(result[0]));
-        }
-        for (String q : plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false)) {
+        });
+        plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false).forEach((q) -> {
             String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
             disallow.put(q, Material.valueOf(result[0]));
-        }
+        });
     }
 
     @SuppressWarnings("deprecation")

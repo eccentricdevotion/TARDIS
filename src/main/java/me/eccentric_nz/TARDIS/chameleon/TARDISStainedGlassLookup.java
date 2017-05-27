@@ -26,7 +26,7 @@ import java.util.HashMap;
  */
 public class TARDISStainedGlassLookup {
 
-    private final HashMap<Integer, Byte> stain = new HashMap<Integer, Byte>();
+    private final HashMap<Integer, Byte> stain = new HashMap<>();
 
     public TARDISStainedGlassLookup() {
         stain.put(1, (byte) 8);

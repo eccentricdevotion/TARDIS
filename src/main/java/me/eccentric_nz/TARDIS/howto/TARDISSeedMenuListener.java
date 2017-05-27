@@ -56,14 +56,11 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
                     event.setCancelled(true);
                     close(p);
                     if (slot != 17) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                ItemStack[] recipe = new TARDISSeedRecipeInventory(is.getType()).getMenu();
-                                Inventory gui = plugin.getServer().createInventory(p, 27, "§4TARDIS Seed Recipe");
-                                gui.setContents(recipe);
-                                p.openInventory(gui);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] recipe = new TARDISSeedRecipeInventory(is.getType()).getMenu();
+                            Inventory gui = plugin.getServer().createInventory(p, 27, "§4TARDIS Seed Recipe");
+                            gui.setContents(recipe);
+                            p.openInventory(gui);
                         }, 2L);
                     }
                 }
@@ -84,11 +81,8 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
     @Override
     public void close(final Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 }

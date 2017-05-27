@@ -58,7 +58,7 @@ import org.bukkit.entity.Player;
 public class TARDISBuilderInner {
 
     private final TARDIS plugin;
-    List<Block> lampblocks = new ArrayList<Block>();
+    List<Block> lampblocks = new ArrayList<>();
     private Block postBedrock = null;
 
     public TARDISBuilderInner(TARDIS plugin) {
@@ -114,20 +114,20 @@ public class TARDISBuilderInner {
         int l = dimensions.getInt("length");
         byte data;
         String playerUUID = p.getUniqueId().toString();
-        HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postLeverBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, JSONObject> postStandingBanners = new HashMap<Block, JSONObject>();
-        HashMap<Block, JSONObject> postWallBanners = new HashMap<Block, JSONObject>();
+        HashMap<Block, Byte> postDoorBlocks = new HashMap<>();
+        HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<>();
+        HashMap<Block, Byte> postTorchBlocks = new HashMap<>();
+        HashMap<Block, Byte> postSignBlocks = new HashMap<>();
+        HashMap<Block, Byte> postRepeaterBlocks = new HashMap<>();
+        HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<>();
+        HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<>();
+        HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<>();
+        HashMap<Block, Byte> postLeverBlocks = new HashMap<>();
+        HashMap<Block, JSONObject> postStandingBanners = new HashMap<>();
+        HashMap<Block, JSONObject> postWallBanners = new HashMap<>();
         Location ender = null;
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         // calculate startx, starty, startz
         TARDISTIPSData pos = null;
         if (tips) { // default world - use TIPS
@@ -167,14 +167,14 @@ public class TARDISBuilderInner {
         // get list of used chunks
         List<Chunk> chunkList = getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, l);
         // update chunks list in DB
-        for (Chunk c : chunkList) {
-            HashMap<String, Object> setc = new HashMap<String, Object>();
+        chunkList.forEach((c) -> {
+            HashMap<String, Object> setc = new HashMap<>();
             setc.put("tardis_id", dbID);
             setc.put("world", world.getName());
             setc.put("x", c.getX());
             setc.put("z", c.getZ());
             qf.doInsert("chunks", setc);
-        }
+        });
         // if for some reason this is not a TARDIS world, set the blocks to air first
         if (below) {
             for (level = 0; level < h; level++) {
@@ -194,7 +194,7 @@ public class TARDISBuilderInner {
             starty = 15;
             startz = resetz;
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", dbID);
         // get input array
         JSONArray arr = (JSONArray) obj.get("input");
@@ -271,7 +271,7 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.IRON_DOOR_BLOCK)) {
                         if (data < (byte) 8) { // iron door bottom
-                            HashMap<String, Object> setd = new HashMap<String, Object>();
+                            HashMap<String, Object> setd = new HashMap<>();
                             String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
                             setd.put("tardis_id", dbID);
                             setd.put("door_type", 1);
@@ -340,7 +340,7 @@ public class TARDISBuilderInner {
                                 empty[2][4][4] = control;
                             }
                             JSONArray json = new JSONArray(empty);
-                            HashMap<String, Object> seta = new HashMap<String, Object>();
+                            HashMap<String, Object> seta = new HashMap<>();
                             seta.put("tardis_id", dbID);
                             seta.put("uuid", playerUUID);
                             seta.put("json", json.toString());
@@ -352,7 +352,7 @@ public class TARDISBuilderInner {
                         Block lamp = world.getBlockAt(x, y, z);
                         lampblocks.add(lamp);
                         // remember lamp block locations for malfunction and light switch
-                        HashMap<String, Object> setlb = new HashMap<String, Object>();
+                        HashMap<String, Object> setlb = new HashMap<>();
                         String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         setlb.put("tardis_id", dbID);
                         setlb.put("location", lloc);
@@ -398,7 +398,7 @@ public class TARDISBuilderInner {
                     }
                     // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                     if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
-                        HashMap<String, Object> setpb = new HashMap<String, Object>();
+                        HashMap<String, Object> setpb = new HashMap<>();
                         String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         setpb.put("tardis_id", dbID);
                         setpb.put("location", loc);
@@ -479,54 +479,54 @@ public class TARDISBuilderInner {
             }
         }
         // put on the door, redstone torches, signs, and the repeaters
-        for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
+        postDoorBlocks.entrySet().forEach((entry) -> {
             Block pdb = entry.getKey();
             byte pddata = entry.getValue();
             pdb.setType(Material.IRON_DOOR_BLOCK);
             pdb.setData(pddata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
+        });
+        postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
             Block prtb = entry.getKey();
             byte ptdata = entry.getValue();
             prtb.setTypeIdAndData(76, ptdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
+        });
+        postTorchBlocks.entrySet().forEach((entry) -> {
             Block ptb = entry.getKey();
             byte ptdata = entry.getValue();
             ptb.setTypeIdAndData(50, ptdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postRepeaterBlocks.entrySet()) {
+        });
+        postRepeaterBlocks.entrySet().forEach((entry) -> {
             Block prb = entry.getKey();
             byte ptdata = entry.getValue();
             prb.setType(Material.DIODE_BLOCK_OFF);
             prb.setData(ptdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postStickyPistonBaseBlocks.entrySet()) {
+        });
+        postStickyPistonBaseBlocks.entrySet().forEach((entry) -> {
             Block pspb = entry.getKey();
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
             byte pspdata = entry.getValue();
             pspb.setType(Material.PISTON_STICKY_BASE);
             pspb.setData(pspdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postPistonBaseBlocks.entrySet()) {
+        });
+        postPistonBaseBlocks.entrySet().forEach((entry) -> {
             Block ppb = entry.getKey();
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
             byte ppbdata = entry.getValue();
             ppb.setType(Material.PISTON_BASE);
             ppb.setData(ppbdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postPistonExtensionBlocks.entrySet()) {
+        });
+        postPistonExtensionBlocks.entrySet().forEach((entry) -> {
             Block ppeb = entry.getKey();
             byte ppedata = entry.getValue();
             ppeb.setType(Material.PISTON_EXTENSION);
             ppeb.setData(ppedata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
+        });
+        postLeverBlocks.entrySet().forEach((entry) -> {
             Block plb = entry.getKey();
             byte pldata = entry.getValue();
             plb.setType(Material.LEVER);
             plb.setData(pldata, true);
-        }
+        });
         int s = 0;
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             if (s == 0) {
@@ -537,7 +537,6 @@ public class TARDISBuilderInner {
                 psb.setData(psdata, true);
                 if (psb.getType().equals(Material.WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
-//                if (s > 0) {
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
                     cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
@@ -552,10 +551,10 @@ public class TARDISBuilderInner {
         if (postBedrock != null) {
             postBedrock.setType(Material.REDSTONE_BLOCK);
         }
-        for (Block lamp : lampblocks) {
+        lampblocks.forEach((lamp) -> {
             Material lantern = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
             lamp.setType(lantern);
-        }
+        });
         lampblocks.clear();
         setBanners(176, postStandingBanners);
         setBanners(177, postWallBanners);
@@ -579,13 +578,13 @@ public class TARDISBuilderInner {
         if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
             if (p.hasPermission("tardis.kit.create")) {
                 // check if they have the tardis kit
-                HashMap<String, Object> wherek = new HashMap<String, Object>();
+                HashMap<String, Object> wherek = new HashMap<>();
                 wherek.put("uuid", playerUUID);
                 wherek.put("name", "createkit");
                 ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek, false);
                 if (!rsa.resultSet()) {
                     //add a record
-                    HashMap<String, Object> setk = new HashMap<String, Object>();
+                    HashMap<String, Object> setk = new HashMap<>();
                     setk.put("uuid", playerUUID);
                     setk.put("name", "createkit");
                     qf.doInsert("achievements", setk);
@@ -608,7 +607,7 @@ public class TARDISBuilderInner {
      * @return a list of Chunks.
      */
     public List<Chunk> getChunks(World w, int x, int z, int wid, int len) {
-        List<Chunk> chunks = new ArrayList<Chunk>();
+        List<Chunk> chunks = new ArrayList<>();
         int cw = TARDISNumberParsers.roundUp(wid, 16);
         int cl = TARDISNumberParsers.roundUp(len, 16);
         // check all the chunks that will be used by the schematic

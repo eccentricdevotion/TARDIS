@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISSQLiteDatabase {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private Statement statement = null;
     private final TARDIS plugin;

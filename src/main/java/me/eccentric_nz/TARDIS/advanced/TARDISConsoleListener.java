@@ -46,7 +46,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISConsoleListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> onlythese = new ArrayList<Material>();
+    private final List<Material> onlythese = new ArrayList<>();
 
     public TARDISConsoleListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,7 +70,7 @@ public class TARDISConsoleListener implements Listener {
             Block b = event.getClickedBlock();
             if (b != null && b.getType().equals(Material.JUKEBOX)) {
                 // is it a TARDIS console?
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("location", b.getLocation().toString());
                 wherec.put("type", 15);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -78,7 +78,7 @@ public class TARDISConsoleListener implements Listener {
                     event.setCancelled(true);
                     int id = rsc.getTardis_id();
                     // determine key item
-                    HashMap<String, Object> wherek = new HashMap<String, Object>();
+                    HashMap<String, Object> wherek = new HashMap<>();
                     wherek.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                     String key;
@@ -91,7 +91,7 @@ public class TARDISConsoleListener implements Listener {
                     ItemStack disk = event.getPlayer().getInventory().getItemInMainHand();
                     if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
                         // only the time lord of this tardis
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         wheret.put("uuid", p.getUniqueId().toString());
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
@@ -104,7 +104,7 @@ public class TARDISConsoleListener implements Listener {
                             return;
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
-                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
                         ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
                         if (rsds.resultSet()) {
@@ -119,7 +119,7 @@ public class TARDISConsoleListener implements Listener {
                             }
                         } else {
                             // create new storage record
-                            HashMap<String, Object> setstore = new HashMap<String, Object>();
+                            HashMap<String, Object> setstore = new HashMap<>();
                             setstore.put("uuid", p.getUniqueId().toString());
                             setstore.put("tardis_id", id);
                             new QueryFactory(plugin).doInsert("storage", setstore);

@@ -82,15 +82,12 @@ public class TARDISArtronFurnaceListener implements Listener {
                             furnace.setCookTime(cookTime);
                         }
                         // return an empty cell
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                lore.set(1, "0");
-                                im.setLore(lore);
-                                is.setItemMeta(im);
-                                is.removeEnchantment(Enchantment.DURABILITY);
-                                furnace.getInventory().setItem(1, is);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            lore.set(1, "0");
+                            im.setLore(lore);
+                            is.setItemMeta(im);
+                            is.removeEnchantment(Enchantment.DURABILITY);
+                            furnace.getInventory().setItem(1, is);
                         }, 2L);
                     }
                 }

@@ -59,7 +59,7 @@ public class TARDISCompanionAddInventory {
                         SkullMeta skull = (SkullMeta) head.getItemMeta();
                         skull.setOwner(p.getName());
                         skull.setDisplayName(p.getName());
-                        ArrayList<String> lore = new ArrayList<String>();
+                        ArrayList<String> lore = new ArrayList<>();
                         lore.add(p.getUniqueId().toString());
                         skull.setLore(lore);
                         head.setItemMeta(skull);
@@ -73,7 +73,7 @@ public class TARDISCompanionAddInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta ii = info.getItemMeta();
         ii.setDisplayName("Info");
-        ArrayList<String> info_lore = new ArrayList<String>();
+        ArrayList<String> info_lore = new ArrayList<>();
         info_lore.add("Click a player head to");
         info_lore.add("add them as a companion.");
         ii.setLore(info_lore);

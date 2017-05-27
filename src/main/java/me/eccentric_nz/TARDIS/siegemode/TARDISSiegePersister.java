@@ -37,7 +37,7 @@ import org.bukkit.Chunk;
 public class TARDISSiegePersister {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -64,7 +64,7 @@ public class TARDISSiegePersister {
                             if (plugin.getConfig().getInt("siege.breeding") > 0) {
                                 List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
                                 if (breeding_areas == null) {
-                                    breeding_areas = new ArrayList<TARDISSiegeArea>();
+                                    breeding_areas = new ArrayList<>();
                                 }
                                 breeding_areas.add(tsa);
                                 plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
@@ -74,7 +74,7 @@ public class TARDISSiegePersister {
                                 List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                                 if (growth_areas == null) {
                                     plugin.debug("the list was null");
-                                    growth_areas = new ArrayList<TARDISSiegeArea>();
+                                    growth_areas = new ArrayList<>();
                                 }
                                 growth_areas.add(tsa);
                                 plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);

@@ -38,7 +38,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 public class TARDISEntityGriefListener implements Listener {
 
     private final TARDIS plugin;
-    List<EntityType> ents = new ArrayList<EntityType>();
+    List<EntityType> ents = new ArrayList<>();
 
     public TARDISEntityGriefListener(TARDIS plugin) {
         this.plugin = plugin;

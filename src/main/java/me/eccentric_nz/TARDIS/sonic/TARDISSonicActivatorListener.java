@@ -58,7 +58,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
     private List<ItemStack> getStacks() {
         // get the Sonic Generator recipe
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Sonic Generator");
-        List<ItemStack> mats = new ArrayList<ItemStack>(recipe.getIngredientMap().values());
+        List<ItemStack> mats = new ArrayList<>(recipe.getIngredientMap().values());
         mats.removeAll(Collections.singleton(null));
         return mats;
     }
@@ -109,14 +109,14 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
             // actvate Sonic Generator
             String uuid = p.getUniqueId().toString();
             // do they have a sonic record?
-            HashMap<String, Object> wheres = new HashMap<String, Object>();
+            HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("uuid", uuid);
             ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("activated", 1);
             QueryFactory qf = new QueryFactory(plugin);
             if (rss.resultSet() && !rss.getSonic().isActivated()) {
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid);
                 qf.doUpdate("sonic", set, wherea);
             } else {

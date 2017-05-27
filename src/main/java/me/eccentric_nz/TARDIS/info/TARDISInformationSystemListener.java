@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.info;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -1222,10 +1221,10 @@ public class TARDISInformationSystemListener implements Listener {
         plugin.getTrackerKeeper().getInfoMenu().put(p.getUniqueId(), item);
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        for (Map.Entry<String, String> m : TARDISInfoMenu.getChildren(item.toString()).entrySet()) {
+        TARDISInfoMenu.getChildren(item.toString()).entrySet().forEach((m) -> {
             String menu = m.getKey().replaceFirst(m.getValue(), "§f" + m.getValue() + "§6");
             p.sendMessage("§6> " + menu);
-        }
+        });
         p.sendMessage("§6> §fE§6xit");
     }
 

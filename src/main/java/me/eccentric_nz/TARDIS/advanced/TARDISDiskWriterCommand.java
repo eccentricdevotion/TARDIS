@@ -44,7 +44,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISDiskWriterCommand {
 
     private final TARDIS plugin;
-    private final List<String> disks = new ArrayList<String>();
+    private final List<String> disks = new ArrayList<>();
 
     public TARDISDiskWriterCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -81,7 +81,7 @@ public class TARDISDiskWriterCommand {
                     TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return false;
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (!rs.resultSet()) {
@@ -93,7 +93,7 @@ public class TARDISDiskWriterCommand {
                     PRESET preset = tardis.getPreset();
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
                     // TODO check for disk lore if MEDIUM difficulty
-                    HashMap<String, Object> wherename = new HashMap<String, Object>();
+                    HashMap<String, Object> wherename = new HashMap<>();
                     wherename.put("tardis_id", id);
                     wherename.put("dest_name", args[1]);
                     wherename.put("type", 0);
@@ -103,7 +103,7 @@ public class TARDISDiskWriterCommand {
                         return true;
                     }
                     // get current destination
-                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
@@ -139,7 +139,7 @@ public class TARDISDiskWriterCommand {
     private boolean saveDiskToStorage(Player player, ItemStack is) {
         UUID uuid = player.getUniqueId();
         // check if they have room for this save disk
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
@@ -149,9 +149,9 @@ public class TARDISDiskWriterCommand {
                 if (slot != -1) {
                     saves1[slot] = is;
                     String serialized = TARDISSerializeInventory.itemStacksToString(saves1);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("saves_one", serialized);
-                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                    HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("uuid", uuid.toString());
                     new QueryFactory(plugin).doUpdate("storage", set, whereu);
                     return true;
@@ -161,9 +161,9 @@ public class TARDISDiskWriterCommand {
                     if (slot != -1) {
                         saves2[slot] = is;
                         String serialized = TARDISSerializeInventory.itemStacksToString(saves2);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("saves_two", serialized);
-                        HashMap<String, Object> whereu = new HashMap<String, Object>();
+                        HashMap<String, Object> whereu = new HashMap<>();
                         whereu.put("uuid", uuid.toString());
                         new QueryFactory(plugin).doUpdate("storage", set, whereu);
                         return true;
@@ -212,7 +212,7 @@ public class TARDISDiskWriterCommand {
                     TARDISMessage.send(player, "DISK_NO_SAVE");
                     return true;
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (!rs.resultSet()) {

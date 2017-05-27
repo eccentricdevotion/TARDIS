@@ -162,7 +162,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", dd.getPlayer().getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     boolean minecart = false;
@@ -179,13 +179,13 @@ public class TARDISDematerialisationPreset implements Runnable {
                 the_colour = getWoolColour(dd.getTardisID(), preset);
             } else if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
                 // animate particles
-                for (Entity e : plugin.getUtils().getJunkTravellers(dd.getLocation())) {
+                plugin.getUtils().getJunkTravellers(dd.getLocation()).forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         Location effectsLoc = dd.getLocation().clone().add(0.5d, 0, 0.5d);
                         TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
                     }
-                }
+                });
             } else {
                 // just change the walls
                 int xx, zz;
@@ -321,11 +321,8 @@ public class TARDISDematerialisationPreset implements Runnable {
                         final Player p = (Player) e;
                         final Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                p.teleport(relativeLoc);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            p.teleport(relativeLoc);
                         }, 2L);
                     }
                 }
@@ -355,7 +352,7 @@ public class TARDISDematerialisationPreset implements Runnable {
 
     @SuppressWarnings("deprecation")
     private byte getWoolColour(int id, PRESET p) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);

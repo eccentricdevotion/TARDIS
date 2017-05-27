@@ -43,7 +43,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISChatListener implements Listener {
 
     private final TARDIS plugin;
-    private static final String HOW_TO_REG_EX = "(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)";
+    private final String HOW_TO_REG_EX = "(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)";
     private Pattern howToPattern = null;
 
     public TARDISChatListener(TARDIS plugin) {
@@ -74,23 +74,20 @@ public class TARDISChatListener implements Listener {
                     // delay it so the chat appears before the message
                     final String player = event.getPlayer().getName();
                     final String message = (request) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            RescueData rd = res.tryRescue(rescuer, saved, request);
-                            if (rd.success()) {
-                                if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
-                                    Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
-                                    if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                                        TARDISMessage.send(who, message, player);
-                                    }
-                                    plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
-                                } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                                    TARDISMessage.send(rescuer, message, player);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        RescueData rd = res.tryRescue(rescuer, saved, request);
+                        if (rd.success()) {
+                            if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
+                                Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
+                                if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                                    TARDISMessage.send(who, message, player);
                                 }
-                                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                                    new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();
-                                }
+                                plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
+                            } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                                TARDISMessage.send(rescuer, message, player);
+                            }
+                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                                new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();
                             }
                         }
                     }, 2L);
@@ -109,7 +106,7 @@ public class TARDISChatListener implements Listener {
             return;
         }
         if (this.howToPattern == null) {
-            this.howToPattern = Pattern.compile(this.HOW_TO_REG_EX, Pattern.CASE_INSENSITIVE);
+            this.howToPattern = Pattern.compile(HOW_TO_REG_EX, Pattern.CASE_INSENSITIVE);
         }
         if (this.howToPattern.matcher(message).matches()) {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());

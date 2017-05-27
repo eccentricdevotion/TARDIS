@@ -50,7 +50,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 
     private final TARDIS plugin;
     private final int full;
-    private final HashMap<String, String> items = new HashMap<String, String>();
+    private final HashMap<String, String> items = new HashMap<>();
 
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -141,9 +141,9 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "ARG_KIT");
                         return true;
                     }
-                    for (String k : plugin.getKitsConfig().getStringList("kits." + args[2])) {
+                    plugin.getKitsConfig().getStringList("kits." + args[2]).forEach((k) -> {
                         this.giveItem(k, p);
-                    }
+                    });
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
                 }
@@ -154,17 +154,21 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return this.giveTachyon(sender, args[0], args[2]);
                 }
                 int amount;
-                if (args[2].equals("full")) {
-                    amount = full;
-                } else if (args[2].equals("empty")) {
-                    amount = 0;
-                } else {
-                    try {
-                        amount = Integer.parseInt(args[2]);
-                    } catch (NumberFormatException nfe) {
-                        TARDISMessage.send(sender, "ARG_GIVE");
-                        return true;
-                    }
+                switch (args[2]) {
+                    case "full":
+                        amount = full;
+                        break;
+                    case "empty":
+                        amount = 0;
+                        break;
+                    default:
+                        try {
+                            amount = Integer.parseInt(args[2]);
+                        } catch (NumberFormatException nfe) {
+                            TARDISMessage.send(sender, "ARG_GIVE");
+                            return true;
+                        }
+                        break;
                 }
                 if (item.equals("artron")) {
                     if (plugin.getServer().getOfflinePlayer(args[0]) == null) {
@@ -263,7 +267,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 //            plugin.getGeneralKeeper().getUUIDCache().getId(player);
 //        }
         if (uuid != null) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
@@ -286,9 +290,9 @@ public class TARDISGiveCommand implements CommandExecutor {
                     }
                 }
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("artron_level", set_level);
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 qf.doUpdate("tardis", set, wheret);
                 sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
@@ -314,7 +318,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             // set display name
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("§6TARDIS Seed Block");
-            List<String> lore = new ArrayList<String>();
+            List<String> lore = new ArrayList<>();
             lore.add(type);
             lore.add("Walls: ORANGE_WOOL");
             lore.add("Floors: LIGHT_GRAY_WOOL");

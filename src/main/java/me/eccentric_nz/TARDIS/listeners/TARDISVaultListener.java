@@ -26,6 +26,7 @@ public class TARDISVaultListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
+    @SuppressWarnings("deprecation")
     public void onVaultDropChestClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
@@ -58,8 +59,8 @@ public class TARDISVaultListener implements Listener {
                             // make sure there is a free slot
                             if (cinv.firstEmpty() != -1) {
                                 ItemStack[] cc = cinv.getContents();
-                                List<Material> mats = new ArrayList<Material>();
-                                List<MatData> mds = new ArrayList<MatData>();
+                                List<Material> mats = new ArrayList<>();
+                                List<MatData> mds = new ArrayList<>();
                                 // find unique item stack materials
                                 for (ItemStack is : cc) {
                                     if (is != null) {
@@ -86,7 +87,7 @@ public class TARDISVaultListener implements Listener {
                                     }
                                 }
                                 // for each material found, see if there are any stacks of it in the drop chest
-                                for (MatData m : mds) {
+                                mds.forEach((m) -> {
                                     int slot = inv.first(m.getMaterial());
                                     while (slot != -1 && cinv.firstEmpty() != -1) {
                                         // get the item stack
@@ -104,7 +105,7 @@ public class TARDISVaultListener implements Listener {
                                             slot = -1;
                                         }
                                     }
-                                }
+                                });
                             }
                         }
                     }

@@ -51,7 +51,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TARDISAcidWater implements Listener {
 
     private final TARDIS plugin;
-    private final List<Player> burningPlayers = new ArrayList<Player>();
+    private final List<Player> burningPlayers = new ArrayList<>();
 
     public TARDISAcidWater(TARDIS plugin) {
         this.plugin = plugin;

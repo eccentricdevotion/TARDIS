@@ -57,43 +57,24 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                         case 8:
                             // back to seeds
                             close(p);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-                                    Inventory gui = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
-                                    gui.setContents(seeds);
-                                    p.openInventory(gui);
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
+                                Inventory gui = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
+                                gui.setContents(seeds);
+                                p.openInventory(gui);
                             }, 2L);
                             break;
                         case 11:
                         case 20:
                             // wall & floor
                             close(p);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
-                                    Inventory gui = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall & Floor Menu");
-                                    gui.setContents(recipe);
-                                    p.openInventory(gui);
-                                }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
+                                Inventory gui = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall & Floor Menu");
+                                gui.setContents(recipe);
+                                p.openInventory(gui);
                             }, 2L);
                             break;
-//                        case 19:
-//                            // chameleon
-//                            close(p);
-//                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    ItemStack[] chameleon = new TARDISChameleonInventory(plugin).getMenu();
-//                                    Inventory gui = plugin.getServer().createInventory(p, 54, "§4Police Box Wall Menu");
-//                                    gui.setContents(chameleon);
-//                                    p.openInventory(gui);
-//                                }
-//                            }, 2L);
-//                            break;
                         case 26:
                             // close
                             close(p);
@@ -119,11 +100,8 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
     @Override
     public void close(final Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.closeInventory();
         }, 1L);
     }
 }

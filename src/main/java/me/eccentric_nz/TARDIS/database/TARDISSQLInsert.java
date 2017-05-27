@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 public class TARDISSQLInsert implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> data;
@@ -61,10 +61,10 @@ public class TARDISSQLInsert implements Runnable {
         String questions;
         StringBuilder sbf = new StringBuilder();
         StringBuilder sbq = new StringBuilder();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
+        data.entrySet().forEach((entry) -> {
             sbf.append(entry.getKey()).append(",");
             sbq.append("?,");
-        }
+        });
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {

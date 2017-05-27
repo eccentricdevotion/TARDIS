@@ -46,11 +46,8 @@ public class TARDISCreeperChecker {
      * Energy Capacitor is still there.
      */
     public void startCreeperCheck() {
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                checkCreepers();
-            }
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            checkCreepers();
         }, 600L, 12000L);
     }
 

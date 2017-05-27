@@ -66,7 +66,7 @@ public class TARDISKeyboardListener implements Listener {
         Block against = event.getBlockAgainst();
         // is it a TARDIS keyboard sign
         String loc_str = against.getLocation().toString();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("type", 7);
         where.put("location", loc_str);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
@@ -118,7 +118,7 @@ public class TARDISKeyboardListener implements Listener {
             }
         }
         // process the lines...
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
@@ -143,11 +143,11 @@ public class TARDISKeyboardListener implements Listener {
             // home?
             if (event.getLine(0).equalsIgnoreCase("home")) {
                 // check not already at home location
-                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
                 if (rsh.resultSet()) {
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                     if (rsc.resultSet()) {
@@ -192,7 +192,7 @@ public class TARDISKeyboardListener implements Listener {
                 plugin.debug(plugin.getLanguage().getString("BIOME_NOT_VALID"));
             }
             // dest?
-            HashMap<String, Object> whered = new HashMap<String, Object>();
+            HashMap<String, Object> whered = new HashMap<>();
             whered.put("dest_name", event.getLine(0));
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (rsd.resultSet()) {
@@ -202,7 +202,7 @@ public class TARDISKeyboardListener implements Listener {
                 return;
             }
             // area?
-            HashMap<String, Object> wherea = new HashMap<String, Object>();
+            HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("area_name", event.getLine(0));
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
             if (rsa.resultSet()) {

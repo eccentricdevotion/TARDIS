@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -157,7 +156,7 @@ public class TARDISDeinstaPreset {
 
         if (sub && plugin.isWorldGuardOnServer()) {
             // replace the block under the door if there is one
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             where.put("block", 19);
             ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
@@ -170,14 +169,14 @@ public class TARDISDeinstaPreset {
             }
         }
         // check protected blocks if has block id and data stored then put the block back!
-        HashMap<String, Object> tid = new HashMap<String, Object>();
+        HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         tid.put("police_box", 1);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
         if (rsb.resultSet()) {
-            for (ReplacedBlock rb : rsb.getData()) {
+            rsb.getData().forEach((rb) -> {
                 TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlock(), rb.getData());
-            }
+            });
         }
         // if just hiding don't remove block protection
         if (!hide) {

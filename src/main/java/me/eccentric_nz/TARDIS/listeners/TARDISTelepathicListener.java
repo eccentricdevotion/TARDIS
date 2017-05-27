@@ -60,21 +60,21 @@ public class TARDISTelepathicListener implements Listener {
         }
         String location = block.getLocation().toString();
         // get tardis from saved location
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("type", 23);
         where.put("location", location);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
             int id = rsc.getTardis_id();
             // get the Time Lord of this TARDIS
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (rs.resultSet()) {
                 UUID o_uuid = rs.getTardis().getUuid();
                 String owner = o_uuid.toString();
                 // get Time Lord player prefs
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", owner);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
@@ -89,11 +89,8 @@ public class TARDISTelepathicListener implements Listener {
                     }
                 }
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    block.setType(Material.DAYLIGHT_DETECTOR);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                block.setType(Material.DAYLIGHT_DETECTOR);
             }, 3L);
         }
     }
@@ -105,7 +102,7 @@ public class TARDISTelepathicListener implements Listener {
             return;
         }
         // check location
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("type", 23);
         where.put("location", b.getLocation().toString());
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);

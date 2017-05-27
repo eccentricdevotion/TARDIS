@@ -43,7 +43,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISArtronStorageCommand implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<>();
 
     public TARDISArtronStorageCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -102,7 +102,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 }
                 current_level = rs.getArtron_level();
             } else {
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, wheret);
                 if (!rs.resultSet()) {
@@ -148,7 +148,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             is.setItemMeta(im);
             // remove the energy from the tardis/timelord
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             String table;
             if (which.equals("tardis")) {
                 where.put("uuid", playerUUID);

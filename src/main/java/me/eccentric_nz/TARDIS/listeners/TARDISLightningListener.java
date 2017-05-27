@@ -60,7 +60,7 @@ public class TARDISLightningListener implements Listener {
         if (!strike.isEffect()) {
             Location l = strike.getLocation();
             World strikeworld = l.getWorld();
-            ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<String, Object>(), "", true, 0);
+            ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
             if (rs.resultSet()) {
                 for (Tardis t : rs.getData()) {
                     boolean charging = true;
@@ -71,7 +71,7 @@ public class TARDISLightningListener implements Listener {
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         return;
                     }
-                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (rsc.resultSet()) {
@@ -83,9 +83,9 @@ public class TARDISLightningListener implements Listener {
                             if (plugin.getUtils().compareLocations(loc, loc)) {
                                 QueryFactory qf = new QueryFactory(plugin);
                                 int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtron_level();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
-                                HashMap<String, Object> where = new HashMap<String, Object>();
+                                HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, where);
                             }

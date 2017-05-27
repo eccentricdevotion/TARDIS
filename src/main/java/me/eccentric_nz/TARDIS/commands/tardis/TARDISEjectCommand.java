@@ -52,7 +52,7 @@ public class TARDISEjectCommand {
             return false;
         }
         int ownerid = rs.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {

@@ -41,7 +41,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -64,7 +63,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<Material>();
+    List<Material> validBlocks = new ArrayList<>();
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -103,14 +102,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                 if (validBlocks.contains(blockType)) {
                     // we need to get this block's location and then get the tardis_id from it
                     String buttonloc = block.getLocation().toString();
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("type", 6);
                     where.put("location", buttonloc);
                     ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                     if (rsc.resultSet()) {
                         // get tardis data
                         final int id = rsc.getTardis_id();
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                         if (rs.resultSet()) {
@@ -119,7 +118,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 return;
                             }
                             final boolean abandoned = tardis.isAbandoned();
-                            HashMap<String, Object> whereid = new HashMap<String, Object>();
+                            HashMap<String, Object> whereid = new HashMap<>();
                             whereid.put("tardis_id", id);
                             int current_level = tardis.getArtron_level();
                             boolean init = tardis.isTardis_init();
@@ -130,7 +129,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             Material cell = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Artron Storage Cell.result"));
                             QueryFactory qf = new QueryFactory(plugin);
                             // determine key item
-                            HashMap<String, Object> wherek = new HashMap<String, Object>();
+                            HashMap<String, Object> wherek = new HashMap<>();
                             wherek.put("uuid", player.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             String key;
@@ -197,14 +196,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         lore.set(1, "0");
                                         im.setLore(lore);
                                         is.setItemMeta(im);
-                                        for (Enchantment e : is.getEnchantments().keySet()) {
+                                        is.getEnchantments().keySet().forEach((e) -> {
                                             is.removeEnchantment(e);
-                                        }
+                                        });
                                         TARDISMessage.send(player, "CELL_TRANSFER");
                                     }
                                 }
                                 // update charge
-                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
                                 qf.doUpdate("tardis", set, whereid);
                             } else if (item.equals(Material.getMaterial(key))) {
@@ -239,7 +238,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         }
                                     }
                                     // set the capacitor to 50% charge
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     int half = Math.round(fc / 2.0F);
                                     set.put("artron_level", half);
                                     set.put("tardis_init", 1);
@@ -257,7 +256,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                                 plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());
                                             }
-                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                            HashMap<String, Object> wherec = new HashMap<>();
                                             wherec.put("tardis_id", id);
                                             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
                                             if (rsc.resultSet()) {
@@ -311,7 +310,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISMessage.send(player, "ENERGY_UNDER_10");
                                     return;
                                 }
-                                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                HashMap<String, Object> wherep = new HashMap<>();
                                 wherep.put("uuid", player.getUniqueId().toString());
                                 if (hasPrefs) {
                                     int level = rsp.getArtronLevel();
@@ -321,13 +320,13 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     }
                                     int new_level = current_level + level;
                                     // set player level to 0
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<>();
                                     set.put("artron_level", 0);
-                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherel = new HashMap<>();
                                     wherel.put("uuid", player.getUniqueId().toString());
                                     qf.doUpdate("player_prefs", set, wherel);
                                     // add player level to TARDIS level
-                                    HashMap<String, Object> sett = new HashMap<String, Object>();
+                                    HashMap<String, Object> sett = new HashMap<>();
                                     sett.put("artron_level", new_level);
                                     qf.doUpdate("tardis", sett, whereid);
                                     int percent = Math.round((new_level * 100F) / fc);

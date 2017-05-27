@@ -52,7 +52,7 @@ public class TARDISSeedBlockListener implements Listener {
 
     private final TARDIS plugin;
     private final TARDISWallsLookup twl;
-    private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
+    private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -116,7 +116,7 @@ public class TARDISSeedBlockListener implements Listener {
                     return;
                 }
                 im.setDisplayName("§6TARDIS Seed Block");
-                List<String> lore = new ArrayList<String>();
+                List<String> lore = new ArrayList<>();
                 lore.add(data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
@@ -145,7 +145,7 @@ public class TARDISSeedBlockListener implements Listener {
             if (trackTARDISSeed.containsKey(l)) {
                 Player player = event.getPlayer();
                 String key;
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
                 if (rsp.resultSet()) {

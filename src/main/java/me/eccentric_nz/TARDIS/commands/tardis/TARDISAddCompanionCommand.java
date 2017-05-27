@@ -58,7 +58,7 @@ public class TARDISAddCompanionCommand {
 
     public boolean doAdd(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
@@ -84,14 +84,10 @@ public class TARDISAddCompanionCommand {
                 return true;
             } else {
                 UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-//                if (oluuid == null) {
-//                    oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
-//                    plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
-//                }
                 if (oluuid != null) {
                     QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> tid = new HashMap<String, Object>();
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> tid = new HashMap<>();
+                    HashMap<String, Object> set = new HashMap<>();
                     tid.put("tardis_id", id);
                     if (comps != null && !comps.isEmpty()) {
                         // add to the list

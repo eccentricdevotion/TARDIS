@@ -37,7 +37,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class TARDISAddRegionsCommand {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private WorldGuardPlugin wg;
     private final String prefix;

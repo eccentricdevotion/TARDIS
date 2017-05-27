@@ -257,11 +257,8 @@ public class UserInterface extends javax.swing.JFrame {
         /*
          * Create and display the form
          */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new UserInterface().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new UserInterface().setVisible(true);
         });
     }
 

@@ -52,7 +52,7 @@ public class TARDISArea {
     public boolean areaCheckInExisting(Location l) {
         boolean chk = true;
         String w = l.getWorld().getName();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
@@ -77,7 +77,7 @@ public class TARDISArea {
      */
     public boolean areaCheckInExile(String area, Location l) {
         boolean chk = true;
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("area_name", area);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
@@ -101,7 +101,7 @@ public class TARDISArea {
     public boolean areaCheckLocPlayer(Player p, Location l) {
         boolean chk = false;
         String w = l.getWorld().getName();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
@@ -130,7 +130,7 @@ public class TARDISArea {
     public Location getNextSpot(String area) {
         Location location = null;
         // find the next available slot in this area
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("area_name", area);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
@@ -149,7 +149,7 @@ public class TARDISArea {
             outerloop:
             for (xx = x; xx <= maxx; xx += park) {
                 for (zz = z; zz <= maxz; zz += park) {
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("world", wStr);
                     wherec.put("x", xx);
                     wherec.put("z", zz);

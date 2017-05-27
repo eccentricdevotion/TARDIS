@@ -33,13 +33,13 @@ public class TARDISJunkLocation {
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             id = rs.getTardis_id();
             // get current location
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
                 biome = rsc.getBiome();
                 // get home location
-                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
                 if (rsh.resultSet()) {

@@ -171,7 +171,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                         plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
                         TARDISSounds.playTARDISSound(saved, "tardis_land_fast");
                         // put player into travellers table
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", bd.getTardisID());
                         set.put("uuid", playerUUID.toString());
                         qf.doInsert("travellers", set);
@@ -182,7 +182,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
                     setBiome(world, x, z, bd.useTexture(), true);
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", bd.getTardisID());
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
@@ -319,15 +319,15 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             // remember the door location
                                             String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
                                             // should insert the door when tardis is first made, and then update location there after!
-                                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                                            HashMap<String, Object> whered = new HashMap<>();
                                             whered.put("door_type", 0);
                                             whered.put("tardis_id", bd.getTardisID());
                                             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                                            HashMap<String, Object> setd = new HashMap<String, Object>();
+                                            HashMap<String, Object> setd = new HashMap<>();
                                             setd.put("door_location", doorloc);
                                             setd.put("door_direction", bd.getDirection().toString());
                                             if (rsd.resultSet()) {
-                                                HashMap<String, Object> whereid = new HashMap<String, Object>();
+                                                HashMap<String, Object> whereid = new HashMap<>();
                                                 whereid.put("door_id", rsd.getDoor_id());
                                                 qf.doUpdate("doors", setd, whereid);
                                             } else {
@@ -381,7 +381,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                                             Sign s = (Sign) sign.getState();
                                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                                HashMap<String, Object> wheret = new HashMap<>();
                                                 wheret.put("tardis_id", bd.getTardisID());
                                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                                                 if (rst.resultSet()) {
@@ -731,12 +731,12 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 // message travellers in tardis
                 if (loops > 3) {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", bd.getTardisID());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
                     if (rst.resultSet()) {
                         List<UUID> travellers = rst.getData();
-                        for (UUID s : travellers) {
+                        travellers.forEach((s) -> {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
@@ -746,19 +746,19 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     plugin.getTrackerKeeper().getHasTravelled().add(s);
                                 }
                             }
-                        }
+                        });
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
                         TARDISMessage.send(bd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
                     }
                     // restore beacon up block if present
-                    HashMap<String, Object> whereb = new HashMap<String, Object>();
+                    HashMap<String, Object> whereb = new HashMap<>();
                     whereb.put("tardis_id", bd.getTardisID());
                     whereb.put("police_box", 2);
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
                     if (rs.resultSet()) {
                         ReplacedBlock rb = rs.getReplacedBlock();
                         TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlock(), rb.getData());
-                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", bd.getTardisID());
                         whered.put("police_box", 2);
                         new QueryFactory(plugin).doDelete("blocks", whered);
@@ -770,7 +770,7 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     public void setBiome(World world, int x, int z, boolean pp, boolean umbrella) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && pp) {
-            List<Chunk> chunks = new ArrayList<Chunk>();
+            List<Chunk> chunks = new ArrayList<>();
             Chunk chunk = bd.getLocation().getChunk();
             chunks.add(chunk);
             // load the chunk
@@ -801,18 +801,18 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
             }
             // refresh the chunks
-            for (Chunk c : chunks) {
+            chunks.forEach((c) -> {
                 //world.refreshChunk(c.getX(), c.getZ());
                 plugin.getTardisHelper().refreshChunk(c);
-            }
+            });
         }
     }
 
     private void saveJunkControl(String location, String field) {
         // remember control location
-        HashMap<String, Object> wherej = new HashMap<String, Object>();
+        HashMap<String, Object> wherej = new HashMap<>();
         wherej.put("tardis_id", bd.getTardisID());
-        HashMap<String, Object> setj = new HashMap<String, Object>();
+        HashMap<String, Object> setj = new HashMap<>();
         setj.put(field, location);
         new QueryFactory(plugin).doUpdate("junk", setj, wherej);
     }

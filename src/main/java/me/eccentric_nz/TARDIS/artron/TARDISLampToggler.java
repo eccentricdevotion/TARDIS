@@ -39,11 +39,11 @@ public class TARDISLampToggler {
     @SuppressWarnings("deprecation")
     public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
         // get lamp locations
-        HashMap<String, Object> wherel = new HashMap<String, Object>();
+        HashMap<String, Object> wherel = new HashMap<>();
         wherel.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
         if (rsl.resultSet()) {
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            HashMap<String, Object> wherepp = new HashMap<>();
             wherepp.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             boolean use_wool = false;

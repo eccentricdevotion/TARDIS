@@ -41,7 +41,7 @@ public class TARDISRandomButton {
     private final Player player;
     private final int id;
     private final int level;
-    private final HashMap<String, Object> set = new HashMap<String, Object>();
+    private final HashMap<String, Object> set = new HashMap<>();
     private final int secondary;
     private final String comps;
     private final UUID ownerUUID;
@@ -62,7 +62,7 @@ public class TARDISRandomButton {
             TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
             return;
         }
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rscl.resultSet()) {
@@ -159,7 +159,7 @@ public class TARDISRandomButton {
                             UUID cuuid = UUID.fromString(c);
                             if (plugin.getServer().getPlayer(cuuid) != null && !cuuid.equals(ownerUUID)) {
                                 // are they travelling
-                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                HashMap<String, Object> wherec = new HashMap<>();
                                 wherec.put("tardis_id", id);
                                 wherec.put("uuid", c);
                                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
@@ -177,7 +177,7 @@ public class TARDISRandomButton {
                     } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
                         TARDISMessage.send(plugin.getServer().getPlayer(ownerUUID), "DEST", dchat);
                     }
-                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                    HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);

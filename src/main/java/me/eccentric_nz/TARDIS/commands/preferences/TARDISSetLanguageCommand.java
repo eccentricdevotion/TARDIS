@@ -44,9 +44,9 @@ public class TARDISSetLanguageCommand {
             TARDISMessage.send(player, "LANG_NOT_VALID");
             return true;
         }
-        HashMap<String, Object> setl = new HashMap<String, Object>();
+        HashMap<String, Object> setl = new HashMap<>();
         setl.put(pref, l);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
         TARDISMessage.send(player, "PREF_SET", ucfirst(pref));

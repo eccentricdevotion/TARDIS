@@ -55,7 +55,7 @@ public class TARDISThemeProcessor {
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         // get Archive if nescessary
         if (tud.getSchematic().getPermission().equals("archive")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             where.put("use", 1);
             ResultSetArchive rs = new ResultSetArchive(plugin, where);
@@ -69,7 +69,7 @@ public class TARDISThemeProcessor {
             }
         }
         if (tud.getPrevious().getPermission().equals("archive")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             where.put("use", 2);
             ResultSetArchive rs = new ResultSetArchive(plugin, where);
@@ -116,21 +116,21 @@ public class TARDISThemeProcessor {
         // update player prefs
         String wall_pref = new TARDISWallsLookup(plugin).wall_lookup.get(tud.getWall());
         String floor_pref = new TARDISWallsLookup(plugin).wall_lookup.get(tud.getFloor());
-        HashMap<String, Object> setp = new HashMap<String, Object>();
+        HashMap<String, Object> setp = new HashMap<>();
         setp.put("wall", wall_pref);
         setp.put("floor", floor_pref);
         setp.put("lanterns_on", (tud.getSchematic().hasLanterns()) ? 1 : 0);
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
         qf.doUpdate("player_prefs", setp, wherep);
         // update TARDIS
-        HashMap<String, Object> sett = new HashMap<String, Object>();
+        HashMap<String, Object> sett = new HashMap<>();
         sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         qf.doUpdate("tardis", sett, wheret);
         // take the Artron Energy
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());
         String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
         int amount = plugin.getArtronConfig().getInt(config_path);
@@ -171,7 +171,7 @@ public class TARDISThemeProcessor {
 
     private boolean checkARSGrid(SCHEMATIC prev, SCHEMATIC next, UUID uuid) {
         // get ARS
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {

@@ -34,7 +34,7 @@ import org.bukkit.World;
  */
 public class TARDISInteriorPostioning {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
@@ -124,7 +124,7 @@ public class TARDISInteriorPostioning {
      * @return a list of slot numbers
      */
     private List<Integer> makeUsedSlotList() {
-        List<Integer> usedSlots = new ArrayList<Integer>();
+        List<Integer> usedSlots = new ArrayList<>();
         Statement statement = null;
         ResultSet rs = null;
         String query = "SELECT tips FROM " + prefix + "tardis";

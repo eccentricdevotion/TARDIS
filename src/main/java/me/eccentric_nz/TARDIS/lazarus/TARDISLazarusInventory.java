@@ -42,7 +42,7 @@ public class TARDISLazarusInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<String, EntityType>();
+    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<>();
 
     public TARDISLazarusInventory(TARDIS plugin) {
         this.plugin = plugin;
@@ -148,7 +148,7 @@ public class TARDISLazarusInventory {
         ItemStack tamed = new ItemStack(Material.LEASH, 1);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
-        List<String> opts = new ArrayList<String>();
+        List<String> opts = new ArrayList<>();
         for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST").split("/")) {
             opts.add(ChatColor.ITALIC + o + ChatColor.RESET);
         }

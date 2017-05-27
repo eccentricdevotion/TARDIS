@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
@@ -53,9 +52,9 @@ public class TARDISZeroRoomBuilder {
             slot = tintpos.getFreeSlot();
             // uodate TARDIS table with new slot number
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("tips", slot);
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             qf.doUpdate("tardis", set, where);
         }
@@ -75,18 +74,18 @@ public class TARDISZeroRoomBuilder {
             // ok, room growing was successful, so take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms.ZERO.cost");
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", p.getUniqueId().toString());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
-                for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                c_data.getBlockIDCount().entrySet().forEach((entry) -> {
+                    HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", c_data.getTardis_id());
                     wherec.put("block_data", entry.getKey());
                     qf.alterCondenserBlockCount(entry.getValue(), wherec);
-                }
+                });
                 plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
             }
             // are we doing an achievement?

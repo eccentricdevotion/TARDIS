@@ -45,7 +45,7 @@ public class TARDISFindCommand {
                 return true;
             }
             if (plugin.getDifficulty().equals(DIFFICULTY.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {

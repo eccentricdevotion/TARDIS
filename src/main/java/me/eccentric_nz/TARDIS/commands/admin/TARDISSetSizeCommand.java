@@ -52,9 +52,9 @@ public class TARDISSetSizeCommand {
             return true;
         }
         String uuid = p.getUniqueId().toString();
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("size", type);
         new QueryFactory(plugin).doUpdate("tardis", set, where);
         TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);

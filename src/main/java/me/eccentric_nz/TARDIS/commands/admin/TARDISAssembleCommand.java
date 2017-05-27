@@ -55,7 +55,7 @@ public class TARDISAssembleCommand {
                 UUID uuid = p.getUniqueId();
                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
                 // get players TARDIS
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {

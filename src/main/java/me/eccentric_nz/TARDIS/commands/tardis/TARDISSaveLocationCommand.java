@@ -54,7 +54,7 @@ public class TARDISSaveLocationCommand {
             } else {
                 int id = rs.getTardis_id();
                 // check has unique name
-                HashMap<String, Object> wherename = new HashMap<String, Object>();
+                HashMap<String, Object> wherename = new HashMap<>();
                 wherename.put("tardis_id", id);
                 wherename.put("dest_name", args[1]);
                 wherename.put("type", 0);
@@ -64,7 +64,7 @@ public class TARDISSaveLocationCommand {
                     return true;
                 }
                 // get current destination
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
@@ -77,7 +77,7 @@ public class TARDISSaveLocationCommand {
                     return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("dest_name", args[1]);
                 set.put("world", w);

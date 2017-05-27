@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -67,29 +68,24 @@ public class TARDISSonicEntityListener implements Listener {
                     plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
                         TARDISMessage.send(player, "SONIC_INV");
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                PlayerInventory pinv = scanned.getInventory();
-                                ItemStack[] items = pinv.getStorageContents();
-                                Inventory menu = plugin.getServer().createInventory(player, items.length, "§4" + scanned.getName() + "'s Inventory");
-                                menu.setContents(items);
-                                player.openInventory(menu);
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            PlayerInventory pinv = scanned.getInventory();
+                            ItemStack[] items = pinv.getStorageContents();
+                            Inventory menu = plugin.getServer().createInventory(player, items.length, "§4" + scanned.getName() + "'s Inventory");
+                            menu.setContents(items);
+                            player.openInventory(menu);
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         TARDISMessage.send(player, "SONIC_PLAYER");
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                // getHealth() / getMaxHealth() * getHealthScale()
-                                double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
-                                float hunger = (scanned.getFoodLevel() / 20F) * 100;
-                                TARDISMessage.send(player, "SONIC_NAME", scanned.getName());
-                                TARDISMessage.send(player, true, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
-                                TARDISMessage.send(player, true, "SONIC_HEALTH", String.format("%f", health));
-                                TARDISMessage.send(player, true, "SONIC_HUNGER", String.format("%.2f", hunger));
-                            }
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            // getHealth() / getMaxHealth() * getHealthScale()
+                            double mh = scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                            double health = scanned.getHealth() / mh * scanned.getHealthScale();
+                            float hunger = (scanned.getFoodLevel() / 20F) * 100;
+                            TARDISMessage.send(player, "SONIC_NAME", scanned.getName());
+                            TARDISMessage.send(player, true, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
+                            TARDISMessage.send(player, true, "SONIC_HEALTH", String.format("%f", health));
+                            TARDISMessage.send(player, true, "SONIC_HUNGER", String.format("%.2f", hunger));
                         }, 40L);
                     }
                 }

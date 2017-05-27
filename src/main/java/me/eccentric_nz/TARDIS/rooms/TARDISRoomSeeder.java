@@ -74,7 +74,7 @@ public class TARDISRoomSeeder implements Listener {
             Material blockType = block.getType();
             Material inhand = player.getInventory().getItemInMainHand().getType();
             String key;
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
@@ -145,14 +145,14 @@ public class TARDISRoomSeeder implements Listener {
                     // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", player.getUniqueId().toString());
                     qf.alterEnergyLevel("tardis", -amount, set, player);
                     // remove blocks from condenser table if rooms_require_blocks is true
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
                         for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
-                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", c_data.getTardis_id());
                             wherec.put("block_data", entry.getKey());
                             qf.alterCondenserBlockCount(entry.getValue(), wherec);

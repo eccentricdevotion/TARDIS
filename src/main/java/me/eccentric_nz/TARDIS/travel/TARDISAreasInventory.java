@@ -52,7 +52,7 @@ public class TARDISAreasInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
-        List<ItemStack> areas = new ArrayList<ItemStack>();
+        List<ItemStack> areas = new ArrayList<>();
         // saved destinations
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
         int i = 0;
@@ -64,7 +64,7 @@ public class TARDISAreasInventory {
                     ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(name);
-                    List<String> lore = new ArrayList<String>();
+                    List<String> lore = new ArrayList<>();
                     lore.add(a.getWorld());
                     im.setLore(lore);
                     is.setItemMeta(im);

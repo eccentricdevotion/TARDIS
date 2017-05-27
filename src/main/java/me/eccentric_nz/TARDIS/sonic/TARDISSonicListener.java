@@ -21,7 +21,6 @@ import com.griefcraft.lwc.LWCPlugin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -84,15 +83,15 @@ public class TARDISSonicListener implements Listener {
 
     private final TARDIS plugin;
     private final Material sonic;
-    private final HashMap<UUID, Long> timeout = new HashMap<UUID, Long>();
-    private final HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-    private final List<Material> diamond = new ArrayList<Material>();
-    private final List<Material> distance = new ArrayList<Material>();
-    private final List<Material> doors = new ArrayList<Material>();
-    private final List<Material> redstone = new ArrayList<Material>();
-    private final List<UUID> frozenPlayers = new ArrayList<UUID>();
-    private final List<BlockFace> faces = new ArrayList<BlockFace>();
-    private final List<Material> paintable = new ArrayList<Material>();
+    private final HashMap<UUID, Long> timeout = new HashMap<>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
+    private final List<Material> diamond = new ArrayList<>();
+    private final List<Material> distance = new ArrayList<>();
+    private final List<Material> doors = new ArrayList<>();
+    private final List<Material> redstone = new ArrayList<>();
+    private final List<UUID> frozenPlayers = new ArrayList<>();
+    private final List<BlockFace> faces = new ArrayList<>();
+    private final List<Material> paintable = new ArrayList<>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -183,41 +182,35 @@ public class TARDISSonicListener implements Listener {
                         long cool = System.currentTimeMillis();
                         if ((!cooldown.containsKey(player.getUniqueId()) || cooldown.get(player.getUniqueId()) < cool)) {
                             cooldown.put(player.getUniqueId(), cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    Location observerPos = player.getEyeLocation();
-                                    TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
-                                    TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-                                    TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                Location observerPos = player.getEyeLocation();
+                                TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+                                TARDISVector3D observerStart = new TARDISVector3D(observerPos);
+                                TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
 
-                                    Player hit = null;
-                                    // Get nearby entities
-                                    for (Player target : player.getWorld().getPlayers()) {
-                                        // Bounding box of the given player
-                                        TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-                                        TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-                                        TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-                                        if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                                            if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                                                hit = target;
-                                            }
+                                Player hit = null;
+                                // Get nearby entities
+                                for (Player target : player.getWorld().getPlayers()) {
+                                    // Bounding box of the given player
+                                    TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
+                                    TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
+                                    TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
+                                    if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+                                        if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                                            hit = target;
                                         }
                                     }
-                                    // freeze the closest player
-                                    if (hit != null) {
-                                        TARDISMessage.send(hit, "FREEZE", player.getName());
-                                        final UUID uuid = hit.getUniqueId();
-                                        frozenPlayers.add(uuid);
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                frozenPlayers.remove(uuid);
-                                            }
-                                        }, 100L);
-                                    } else if (player.hasPermission("tardis.sonic.standard")) {
-                                        standardSonic(player);
-                                    }
+                                }
+                                // freeze the closest player
+                                if (hit != null) {
+                                    TARDISMessage.send(hit, "FREEZE", player.getName());
+                                    final UUID uuid = hit.getUniqueId();
+                                    frozenPlayers.add(uuid);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        frozenPlayers.remove(uuid);
+                                    }, 100L);
+                                } else if (player.hasPermission("tardis.sonic.standard")) {
+                                    standardSonic(player);
                                 }
                             }, 20L);
                         } else {
@@ -240,53 +233,50 @@ public class TARDISSonicListener implements Listener {
                     final Block b = event.getClickedBlock();
                     if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         playSonicSound(player, now, 600L, "sonic_short");
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                HashMap<String, Object> wheredoor = new HashMap<String, Object>();
-                                Location loc = b.getLocation();
-                                String bw = loc.getWorld().getName();
-                                int bx = loc.getBlockX();
-                                int by = loc.getBlockY();
-                                int bz = loc.getBlockZ();
-                                if (b.getData() >= 8 && !b.getType().equals(Material.TRAP_DOOR)) {
-                                    by = (by - 1);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            HashMap<String, Object> wheredoor = new HashMap<>();
+                            Location loc = b.getLocation();
+                            String bw = loc.getWorld().getName();
+                            int bx = loc.getBlockX();
+                            int by = loc.getBlockY();
+                            int bz = loc.getBlockZ();
+                            if (b.getData() >= 8 && !b.getType().equals(Material.TRAP_DOOR)) {
+                                by = (by - 1);
+                            }
+                            String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
+                            wheredoor.put("door_location", doorloc);
+                            wheredoor.put("door_type", 0);
+                            ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
+                            if (rsd.resultSet()) {
+                                int id = rsd.getTardis_id();
+                                // get the TARDIS owner's name
+                                HashMap<String, Object> wheren = new HashMap<>();
+                                wheren.put("tardis_id", id);
+                                ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);
+                                if (rsn.resultSet()) {
+                                    Tardis tardis = rsn.getTardis();
+                                    String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
+                                    TARDISMessage.send(player, "TARDIS_WHOSE", name);
+                                    int percent = Math.round((tardis.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
+                                    TARDISMessage.send(player, "ENERGY_LEVEL", String.format("%d", percent));
+                                    HashMap<String, Object> whereb = new HashMap<>();
+                                    whereb.put("tardis_id", id);
+                                    ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
+                                    if (rsb.resultSet()) {
+                                        TARDISMessage.send(player, "SCAN_LAST", rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
+                                    }
                                 }
-                                String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
-                                wheredoor.put("door_location", doorloc);
-                                wheredoor.put("door_type", 0);
-                                ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
-                                if (rsd.resultSet()) {
-                                    int id = rsd.getTardis_id();
-                                    // get the TARDIS owner's name
-                                    HashMap<String, Object> wheren = new HashMap<String, Object>();
-                                    wheren.put("tardis_id", id);
-                                    ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);
-                                    if (rsn.resultSet()) {
-                                        Tardis tardis = rsn.getTardis();
-                                        String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
-                                        TARDISMessage.send(player, "TARDIS_WHOSE", name);
-                                        int percent = Math.round((tardis.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
-                                        TARDISMessage.send(player, "ENERGY_LEVEL", String.format("%d", percent));
-                                        HashMap<String, Object> whereb = new HashMap<String, Object>();
-                                        whereb.put("tardis_id", id);
-                                        ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
-                                        if (rsb.resultSet()) {
-                                            TARDISMessage.send(player, "SCAN_LAST", rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
-                                        }
-                                    }
-                                    HashMap<String, Object> whereid = new HashMap<String, Object>();
-                                    whereid.put("tardis_id", id);
-                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
-                                    if (rst.resultSet()) {
-                                        List<UUID> data = rst.getData();
-                                        TARDISMessage.send(player, "SONIC_INSIDE");
-                                        for (UUID s : data) {
-                                            player.sendMessage(plugin.getServer().getPlayer(s).getDisplayName());
-                                        }
-                                    } else {
-                                        TARDISMessage.send(player, "SONIC_OCCUPY");
-                                    }
+                                HashMap<String, Object> whereid = new HashMap<>();
+                                whereid.put("tardis_id", id);
+                                ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
+                                if (rst.resultSet()) {
+                                    List<UUID> data = rst.getData();
+                                    TARDISMessage.send(player, "SONIC_INSIDE");
+                                    data.forEach((s) -> {
+                                        player.sendMessage(plugin.getServer().getPlayer(s).getDisplayName());
+                                    });
+                                } else {
+                                    TARDISMessage.send(player, "SONIC_OCCUPY");
                                 }
                             }
                         }, 60L);
@@ -326,7 +316,7 @@ public class TARDISSonicListener implements Listener {
                                 }
                                 // not TARDIS doors!
                                 String doorloc = tmp.getLocation().getWorld().getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
-                                HashMap<String, Object> wheredoor = new HashMap<String, Object>();
+                                HashMap<String, Object> wheredoor = new HashMap<>();
                                 wheredoor.put("door_location", doorloc);
                                 ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
                                 if (rsd.resultSet()) {
@@ -363,14 +353,11 @@ public class TARDISSonicListener implements Listener {
                                             break;
                                     }
                                     // return the door to its previous state after 3 seconds
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (door_bottom.getData() != door_data) {
-                                                door_bottom.setData(door_data, false);
-                                            }
-                                            plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        if (door_bottom.getData() != door_data) {
+                                            door_bottom.setData(door_data, false);
                                         }
+                                        plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
                                     }, 60L);
                                 }
                                 break;
@@ -428,19 +415,19 @@ public class TARDISSonicListener implements Listener {
                                 if (plugin.getGeneralKeeper().getSonicWires().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicWires().remove(b.getLocation().toString());
                                     b.setData((byte) 0);
-                                    for (BlockFace f : faces) {
+                                    faces.forEach((f) -> {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
                                             b.setData((byte) 0);
                                         }
-                                    }
+                                    });
                                 } else {
                                     plugin.getGeneralKeeper().getSonicWires().add(b.getLocation().toString());
                                     b.setData((byte) 15);
-                                    for (BlockFace f : faces) {
+                                    faces.forEach((f) -> {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
                                             b.setData((byte) 13);
                                         }
-                                    }
+                                    });
                                 }
                                 break;
                             default:
@@ -457,13 +444,6 @@ public class TARDISSonicListener implements Listener {
                             this.ignite(b, player);
                         }
                         if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
-//                            // check the block is not protected by WorldGuard
-//                            if (plugin.isWorldGuardOnServer()) {
-//                                if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
-//                                    TARDISMessage.send(player, "SONIC_PROTECT");
-//                                    return;
-//                                }
-//                            }
                             // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
                             if (checkBlockRespect(player, b)) {
                                 TARDISMessage.send(player, "SONIC_PROTECT");
@@ -572,24 +552,21 @@ public class TARDISSonicListener implements Listener {
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
             TARDISSounds.playTARDISSound(player.getLocation(), sound);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    ItemStack is = player.getInventory().getItemInMainHand();
-                    if (is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
-                            for (Enchantment e : player.getInventory().getItemInMainHand().getEnchantments().keySet()) {
-                                player.getInventory().getItemInMainHand().removeEnchantment(e);
-                            }
-                        } else {
-                            // find the screwdriver in the player's inventory
-                            removeSonicEnchant(player.getInventory());
-                        }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                ItemStack is = player.getInventory().getItemInMainHand();
+                if (is.hasItemMeta()) {
+                    ItemMeta im1 = is.getItemMeta();
+                    if (im1.hasDisplayName() && ChatColor.stripColor(im1.getDisplayName()).equals("Sonic Screwdriver")) {
+                        player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> {
+                            player.getInventory().getItemInMainHand().removeEnchantment(e);
+                        });
                     } else {
                         // find the screwdriver in the player's inventory
                         removeSonicEnchant(player.getInventory());
                     }
+                } else {
+                    // find the screwdriver in the player's inventory
+                    removeSonicEnchant(player.getInventory());
                 }
             }, (cooldown / 50L));
         }
@@ -602,9 +579,9 @@ public class TARDISSonicListener implements Listener {
         }
         ItemStack stack = inv.getItem(first);
         if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-            for (Enchantment e : stack.getEnchantments().keySet()) {
+            stack.getEnchantments().keySet().forEach((e) -> {
                 stack.removeEnchantment(e);
-            }
+            });
         }
     }
 
@@ -641,9 +618,9 @@ public class TARDISSonicListener implements Listener {
 
     public void scan(final Location scan_loc, final Player player) {
         // record nearby entities
-        final HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
-        final List<String> playernames = new ArrayList<String>();
-        for (Entity k : getNearbyEntities(scan_loc, 16)) {
+        final HashMap<EntityType, Integer> scannedentities = new HashMap<>();
+        final List<String> playernames = new ArrayList<>();
+        getNearbyEntities(scan_loc, 16).forEach((k) -> {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
                 Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
@@ -660,7 +637,7 @@ public class TARDISSonicListener implements Listener {
                     scannedentities.put(et, entity_count + 1);
                 }
             }
-        }
+        });
         final long time = scan_loc.getWorld().getTime();
         final String daynight = TARDISStaticUtils.getTime(time);
         String worldname;
@@ -673,26 +650,17 @@ public class TARDISSonicListener implements Listener {
         // message the player
         TARDISMessage.send(player, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_WORLD", wn);
-                TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_WORLD", wn);
+            TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         }, 20L);
         // get biome
         final Biome biome = scan_loc.getBlock().getBiome();
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
         }, 40L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
         }, 60L);
         // get weather
         final String weather;
@@ -726,44 +694,32 @@ public class TARDISSonicListener implements Listener {
                 weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
                 break;
         }
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_WEATHER", weather);
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_WEATHER", weather);
         }, 80L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
         }, 100L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
-            }
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
         }, 120L);
-        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                TARDISMessage.send(player, true, "SCAN_ENTS");
-                if (scannedentities.size() > 0) {
-                    for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                        String message = "";
-                        StringBuilder buf = new StringBuilder();
-                        if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
-                            for (String p : playernames) {
-                                buf.append(", ").append(p);
-                            }
-                            message = " (" + buf.toString().substring(2) + ")";
-                        }
-                        player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.send(player, true, "SCAN_ENTS");
+            if (scannedentities.size() > 0) {
+                scannedentities.entrySet().forEach((entry) -> {
+                    String message = "";
+                    StringBuilder buf = new StringBuilder();
+                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                        playernames.forEach((p) -> {
+                            buf.append(", ").append(p);
+                        });
+                        message = " (" + buf.toString().substring(2) + ")";
                     }
-                    scannedentities.clear();
-                } else {
-                    TARDISMessage.send(player, true, "SCAN_NONE");
-                }
+                    player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                });
+                scannedentities.clear();
+            } else {
+                TARDISMessage.send(player, true, "SCAN_NONE");
             }
         }, 140L);
     }
@@ -791,7 +747,7 @@ public class TARDISSonicListener implements Listener {
                     // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
                     boolean allow = !checkBlockRespect(player, lowerdoor);
                     // is it a TARDIS door?
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
                     where.put("door_location", doorloc);
                     ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
@@ -809,14 +765,11 @@ public class TARDISSonicListener implements Listener {
                             if (blockType.equals(Material.IRON_DOOR_BLOCK)) {
                                 plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
                                 // return the door to its previous state after 3 seconds
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (lowerdoor.getData() != door_data) {
-                                            lowerdoor.setData(door_data, false);
-                                        }
-                                        plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    if (lowerdoor.getData() != door_data) {
+                                        lowerdoor.setData(door_data, false);
                                     }
+                                    plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
                                 }, 60L);
                             }
                         }
@@ -835,13 +788,10 @@ public class TARDISSonicListener implements Listener {
                     bs.setData(button);
                     bs.update(true);
                     long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            button.setPowered(false);
-                            bs.setData(button);
-                            bs.update(true);
-                        }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        button.setPowered(false);
+                        bs.setData(button);
+                        bs.update(true);
                     }, delay);
                     break;
                 default:

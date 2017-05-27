@@ -39,7 +39,7 @@ public class TARDISAbandonLister {
     }
 
     public void list(CommandSender sender) {
-        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<String, Object>(), "", true, 1);
+        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<>(), "", true, 1);
         sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
         if (rst.resultSet()) {
             boolean click = (plugin.getPM().isPluginEnabled("ProtocolLib") && sender instanceof Player);
@@ -49,7 +49,7 @@ public class TARDISAbandonLister {
             int i = 1;
             for (Tardis t : rst.getData()) {
                 // get current location
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", t.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                 if (rsc.resultSet()) {

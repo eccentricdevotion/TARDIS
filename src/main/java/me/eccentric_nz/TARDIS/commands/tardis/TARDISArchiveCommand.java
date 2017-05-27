@@ -108,13 +108,13 @@ public class TARDISArchiveCommand {
         QueryFactory qf = new QueryFactory(plugin);
         if (sub.equals("scan") || sub.equals("add") || sub.equals("update")) {
             // get TARDIS player is in
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
                 // must be the owner of the TARDIS
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 where.put("uuid", uuid);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -124,7 +124,7 @@ public class TARDISArchiveCommand {
                     // get the schematic start location, width, length and height
                     JSONObject obj = null;
                     if (current.getPermission().equals("archive")) {
-                        HashMap<String, Object> wherean = new HashMap<String, Object>();
+                        HashMap<String, Object> wherean = new HashMap<>();
                         wherean.put("uuid", uuid);
                         wherean.put("name", name);
                         ResultSetArchive rsa = new ResultSetArchive(plugin, wherean);
@@ -198,13 +198,13 @@ public class TARDISArchiveCommand {
                             TARDISMessage.send(player, "ARCHIVE_SCAN");
                             return true;
                         }
-                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        HashMap<String, Object> set = new HashMap<>();
                         set.put("data", ad.getJSON().toString());
                         set.put("console_size", console_size.toString());
                         set.put("beacon", ad.getBeacon());
                         // get lanterns preference
                         int lanterns = 0;
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("uuid", uuid);
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         if (rsp.resultSet() && rsp.isLanternsOn()) {
@@ -221,7 +221,7 @@ public class TARDISArchiveCommand {
                         }
                         if (sub.equals("update")) {
                             // update json in database
-                            HashMap<String, Object> whereu = new HashMap<String, Object>();
+                            HashMap<String, Object> whereu = new HashMap<>();
                             whereu.put("uuid", uuid);
                             whereu.put("name", name);
                             qf.doUpdate("archive", set, whereu);
@@ -252,9 +252,9 @@ public class TARDISArchiveCommand {
                 }
             }
             // update description
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("description", sb.toString());
-            HashMap<String, Object> whereu = new HashMap<String, Object>();
+            HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", uuid);
             whereu.put("name", name);
             qf.doUpdate("archive", set, whereu);
@@ -263,7 +263,7 @@ public class TARDISArchiveCommand {
         }
         if (sub.equals("remove")) {
             // delete the archive
-            HashMap<String, Object> whereu = new HashMap<String, Object>();
+            HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", uuid);
             whereu.put("name", name);
             qf.doDelete("archive", whereu);

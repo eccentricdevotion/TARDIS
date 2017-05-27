@@ -49,7 +49,7 @@ public class TARDISWorldBorderChecker {
     public boolean isInBorder(Location l) {
         boolean bool = true;
         if (border != null) {
-            BorderData bd = border.GetWorldBorder(l.getWorld().getName());
+            BorderData bd = border.getWorldBorder(l.getWorld().getName());
             if (bd != null && !bd.insideBorder(l)) {
                 bool = false;
             }

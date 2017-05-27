@@ -56,7 +56,7 @@ public class TARDISLampsRunnable implements Runnable {
         for (int j = 0; j < 9; j++) {
             handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
-        for (Block b : lamps) {
+        lamps.forEach((b) -> {
             if (b.getType().equals(light)) {
                 if (use_wool) {
                     b.setType(Material.WOOL);
@@ -67,17 +67,17 @@ public class TARDISLampsRunnable implements Runnable {
             } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
                 b.setType(light);
             }
-        }
+        });
         if (System.currentTimeMillis() > start) {
             // set all lamps back to whatever they were when the malfunction happened
             if (lights_on) {
-                for (Block b : lamps) {
+                lamps.forEach((b) -> {
                     if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
                         b.setType(light);
                     }
-                }
+                });
             } else {
-                for (Block b : lamps) {
+                lamps.forEach((b) -> {
                     if (b.getType().equals(light)) {
                         if (use_wool) {
                             b.setType(Material.WOOL);
@@ -86,7 +86,7 @@ public class TARDISLampsRunnable implements Runnable {
                             b.setType(Material.SPONGE);
                         }
                     }
-                }
+                });
             }
             plugin.getServer().getScheduler().cancelTask(task);
         }

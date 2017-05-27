@@ -61,15 +61,15 @@ public class TARDISItemFrameListener implements Listener {
                 int id = rst.getTardis_id();
                 String l = event.getRightClicked().getLocation().toString();
                 // check whether they have a direction item frame already
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("location", l);
                 where.put("type", 18);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 if (rsc.resultSet()) {
                     // update location
                     set.put("location", l);
-                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                    HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("tardis_id", id);
                     whereu.put("type", 18);
                     new QueryFactory(plugin).doUpdate("controls", set, whereu);
@@ -85,7 +85,7 @@ public class TARDISItemFrameListener implements Listener {
             // if the item frame has a tripwire hook in it
             // check if it is a TARDIS direction item frame
             String l = frame.getLocation().toString();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("location", l);
             where.put("type", 18);
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
@@ -93,7 +93,7 @@ public class TARDISItemFrameListener implements Listener {
                 // it's a TARDIS direction frame
                 int id = rs.getTardis_id();
                 // prevent other players from stealing the tripwire hook
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("tardis_id", id);
                 ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false, 2);
                 if (rso.resultSet() && !rso.getTardis().getUuid().equals(uuid)) {
@@ -151,37 +151,34 @@ public class TARDISItemFrameListener implements Listener {
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else // are they placing a tripwire hook?
-                 if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
-                        // get current tardis direction
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
-                        wherec.put("tardis_id", id);
-                        final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                        if (rscl.resultSet()) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    // update the TRIPWIRE_HOOK rotation
-                                    Rotation r;
-                                    switch (rscl.getDirection()) {
-                                        case EAST:
-                                            r = Rotation.COUNTER_CLOCKWISE;
-                                            break;
-                                        case SOUTH:
-                                            r = Rotation.NONE;
-                                            break;
-                                        case WEST:
-                                            r = Rotation.CLOCKWISE;
-                                            break;
-                                        default:
-                                            r = Rotation.FLIPPED;
-                                            break;
-                                    }
-                                    frame.setRotation(r);
-                                    TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
-                                }
-                            }, 4L);
-                        }
+                if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+                    // get current tardis direction
+                    HashMap<String, Object> wherec = new HashMap<>();
+                    wherec.put("tardis_id", id);
+                    final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                    if (rscl.resultSet()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            // update the TRIPWIRE_HOOK rotation
+                            Rotation r;
+                            switch (rscl.getDirection()) {
+                                case EAST:
+                                    r = Rotation.COUNTER_CLOCKWISE;
+                                    break;
+                                case SOUTH:
+                                    r = Rotation.NONE;
+                                    break;
+                                case WEST:
+                                    r = Rotation.CLOCKWISE;
+                                    break;
+                                default:
+                                    r = Rotation.FLIPPED;
+                                    break;
+                            }
+                            frame.setRotation(r);
+                            TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                        }, 4L);
                     }
+                }
             }
         }
     }

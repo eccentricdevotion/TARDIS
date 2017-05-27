@@ -114,7 +114,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         UUID uuid = p.getUniqueId();
         int id = ids.get(uuid);
         // need to get the console location - will be different for non-TIPS TARDISes
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
@@ -186,16 +186,13 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     @Override
     public void close(final Player p) {
         final UUID uuid = p.getUniqueId();
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                if (hasLoadedMap.contains(uuid)) {
-                    hasLoadedMap.remove(uuid);
-                }
-                map_data.remove(uuid);
-                ids.remove(uuid);
-                p.closeInventory();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (hasLoadedMap.contains(uuid)) {
+                hasLoadedMap.remove(uuid);
             }
+            map_data.remove(uuid);
+            ids.remove(uuid);
+            p.closeInventory();
         }, 1L);
     }
 }

@@ -29,7 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
-import org.bukkit.block.banner.Pattern;
 
 /**
  *
@@ -60,9 +59,9 @@ public class TARDISSchematicBuilder {
     public ArchiveData build() {
         boolean ars = true;
         // get locations of controls first and compare their coords...
-        map = new HashMap<Integer, Location>();
+        map = new HashMap<>();
         for (int c : controls) {
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             whereh.put("type", c);
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
@@ -96,7 +95,7 @@ public class TARDISSchematicBuilder {
             }
         }
         // also find the beacon location...
-        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        HashMap<String, Object> whereb = new HashMap<>();
         whereb.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
         int bx = 0, by = 0, bz = 0, cx = 0, cy = 0, cz = 0;
@@ -190,12 +189,12 @@ public class TARDISSchematicBuilder {
                         state.put("colour", banner.getBaseColor().toString());
                         JSONArray patterns = new JSONArray();
                         if (banner.numberOfPatterns() > 0) {
-                            for (Pattern p : banner.getPatterns()) {
+                            banner.getPatterns().forEach((p) -> {
                                 JSONObject pattern = new JSONObject();
                                 pattern.put("pattern", p.getPattern().toString());
                                 pattern.put("pattern_colour", p.getColor().toString());
                                 patterns.put(pattern);
-                            }
+                            });
                         }
                         state.put("patterns", patterns);
                         state.put("bdata", d);

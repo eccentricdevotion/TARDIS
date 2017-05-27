@@ -47,11 +47,8 @@ public class TARDISBlockPhysicsListener implements Listener {
         Block block = event.getBlock();
         if (block != null && block.getType().equals(Material.GRASS_PATH)) {
             final String loc = block.getRelative(BlockFace.UP).getLocation().toString();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    TARDISRecordingQueue.addToQueue(loc);
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                TARDISRecordingQueue.addToQueue(loc);
             }, 7L);
         }
         if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {

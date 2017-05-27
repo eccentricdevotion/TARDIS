@@ -62,7 +62,7 @@ public class TARDISSiegeButton {
             TARDISMessage.send(player, "POWER_DOWN");
             return;
         }
-        HashMap<String, Object> wherein = new HashMap<String, Object>();
+        HashMap<String, Object> wherein = new HashMap<>();
         wherein.put("uuid", uuid.toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
         if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {

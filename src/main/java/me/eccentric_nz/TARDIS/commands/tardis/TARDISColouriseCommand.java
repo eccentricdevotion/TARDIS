@@ -52,7 +52,7 @@ public class TARDISColouriseCommand {
             return true;
         }
         // must have a TARDIS
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
@@ -70,7 +70,7 @@ public class TARDISColouriseCommand {
             return true;
         }
         int ownerid = tardis.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {

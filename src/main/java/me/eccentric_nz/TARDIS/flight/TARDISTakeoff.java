@@ -58,9 +58,9 @@ public class TARDISTakeoff {
         if (!beac_on && !beacon.isEmpty()) {
             toggleBeacon(beacon, true);
         }
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("handbrake_on", 0);
-        HashMap<String, Object> whereh = new HashMap<String, Object>();
+        HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         new QueryFactory(plugin).doUpdate("tardis", set, whereh);
         TARDISMessage.send(player, "HANDBRAKE_OFF");
@@ -84,14 +84,14 @@ public class TARDISTakeoff {
     }
 
     public void run(int id, final Player player, String beacon) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("type", 0);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
             Location handbrake = plugin.getLocationUtils().getLocationFromBukkitString(rs.getLocation());
             // should the beacon turn on
-            HashMap<String, Object> wherek = new HashMap<String, Object>();
+            HashMap<String, Object> wherek = new HashMap<>();
             wherek.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
             boolean beac_on = true;
@@ -112,9 +112,9 @@ public class TARDISTakeoff {
             if (!beac_on && !beacon.isEmpty()) {
                 toggleBeacon(beacon, true);
             }
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("handbrake_on", 0);
-            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             new QueryFactory(plugin).doUpdate("tardis", set, whereh);
             TARDISMessage.send(player, "HANDBRAKE_OFF");

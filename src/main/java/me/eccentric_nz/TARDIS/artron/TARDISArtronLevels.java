@@ -48,9 +48,9 @@ public class TARDISArtronLevels {
      */
     public void recharge(int id) {
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("recharging", 1);
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         qf.doUpdate("tardis", set, where);
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);

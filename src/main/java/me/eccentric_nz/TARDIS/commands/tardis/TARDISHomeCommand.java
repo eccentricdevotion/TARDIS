@@ -88,7 +88,7 @@ public class TARDISHomeCommand {
                 return true;
             }
             // check they are not in the tardis
-            HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+            HashMap<String, Object> wherettrav = new HashMap<>();
             wherettrav.put("uuid", player.getUniqueId().toString());
             wherettrav.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
@@ -97,8 +97,8 @@ public class TARDISHomeCommand {
                 return true;
             }
             QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> tid = new HashMap<String, Object>();
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> tid = new HashMap<>();
+            HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             set.put("world", eyeLocation.getWorld().getName());
             set.put("x", eyeLocation.getBlockX());

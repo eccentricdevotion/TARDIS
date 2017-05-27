@@ -125,7 +125,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
@@ -651,9 +651,9 @@ public class TARDIS extends JavaPlugin {
             }
         }
         Set<String> booknames = achievementConfig.getKeys(false);
-        for (String b : booknames) {
+        booknames.forEach((b) -> {
             TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false, pluginName);
-        }
+        });
     }
 
     /**
@@ -661,11 +661,8 @@ public class TARDIS extends JavaPlugin {
      * they are inside the TARDIS.
      */
     private void startSound() {
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                TARDISSounds.playTARDISHum();
-            }
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            TARDISSounds.playTARDISHum();
         }, 60L, 1500L);
     }
 

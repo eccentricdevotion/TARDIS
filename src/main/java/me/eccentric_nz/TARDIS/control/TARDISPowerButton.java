@@ -60,9 +60,9 @@ public class TARDISPowerButton {
     }
 
     public void clickButton() {
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("tardis_id", id);
-        HashMap<String, Object> setp = new HashMap<String, Object>();
+        HashMap<String, Object> setp = new HashMap<>();
         if (powered) {
             if (isTravelling(id)) {
                 TARDISMessage.send(player, "POWER_NO");
@@ -81,11 +81,8 @@ public class TARDISPowerButton {
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
             if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
                 }, delay);
             }
             // if lights are on, turn them off
@@ -109,7 +106,7 @@ public class TARDISPowerButton {
                 new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
             }
             // determine beacon prefs
-            HashMap<String, Object> wherek = new HashMap<String, Object>();
+            HashMap<String, Object> wherek = new HashMap<>();
             wherek.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
             boolean beacon_on = true;

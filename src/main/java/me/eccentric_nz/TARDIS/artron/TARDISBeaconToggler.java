@@ -46,7 +46,7 @@ public class TARDISBeaconToggler {
     }
 
     public void flickSwitch(UUID uuid, int id, boolean on) {
-        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        HashMap<String, Object> whereb = new HashMap<>();
         whereb.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
         if (rs.resultSet()) {
@@ -93,9 +93,9 @@ public class TARDISBeaconToggler {
         TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
         TARDISBlockScannerData check = scanner.check();
         if (!check.getBeacon().isEmpty()) {
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("beacon", check.getBeacon());
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             new QueryFactory(plugin).doUpdate("tardis", set, where);
         }

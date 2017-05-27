@@ -33,11 +33,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISDatabaseConnection {
 
-    private static final TARDISDatabaseConnection instance = new TARDISDatabaseConnection();
+    private static final TARDISDatabaseConnection INSTANCE = new TARDISDatabaseConnection();
     private boolean isMySQL;
 
-    public static synchronized TARDISDatabaseConnection getInstance() {
-        return instance;
+    public static synchronized TARDISDatabaseConnection getINSTANCE() {
+        return INSTANCE;
     }
     public Connection connection = null;
     public Statement statement = null;

@@ -62,18 +62,15 @@ public class TARDISCircuitDamager {
         } else {
             // decrement
             final int decremented = uses_left - 1;
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    setCircuitDamage(circuit.getName(), decremented, false);
-                    TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
-                }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                setCircuitDamage(circuit.getName(), decremented, false);
+                TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
             }, 5L);
         }
     }
 
     public void setCircuitDamage(String c, int decremented, boolean destroy) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
@@ -110,9 +107,9 @@ public class TARDISCircuitDamager {
                     i++;
                 }
                 String serialized = TARDISSerializeInventory.itemStacksToString(clone);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("console", serialized);
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 new QueryFactory(plugin).doUpdate("storage", set, wheret);
             } catch (IOException ex) {

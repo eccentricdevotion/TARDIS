@@ -79,7 +79,7 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         // check the remote player is a Time Lord
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
@@ -89,7 +89,7 @@ public class TARDISRemoteComehereCommand {
         Tardis tardis = rs.getTardis();
         final int id = tardis.getTardis_id();
         // check they are not in the tardis
-        HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+        HashMap<String, Object> wherettrav = new HashMap<>();
         wherettrav.put("uuid", player.getUniqueId().toString());
         wherettrav.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
@@ -103,7 +103,7 @@ public class TARDISRemoteComehereCommand {
         }
         boolean hidden = tardis.isHidden();
         // get current police box location
-        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
@@ -138,9 +138,9 @@ public class TARDISRemoteComehereCommand {
         }
         final QueryFactory qf = new QueryFactory(plugin);
         Location oldSave = null;
-        HashMap<String, Object> bid = new HashMap<String, Object>();
+        HashMap<String, Object> bid = new HashMap<>();
         bid.put("tardis_id", id);
-        HashMap<String, Object> bset = new HashMap<String, Object>();
+        HashMap<String, Object> bset = new HashMap<>();
         if (rsc.getWorld() != null) {
             oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // set fast return location
@@ -159,9 +159,9 @@ public class TARDISRemoteComehereCommand {
             bset.put("submarine", (sub) ? 1 : 0);
         }
         qf.doUpdate("back", bset, bid);
-        HashMap<String, Object> tid = new HashMap<String, Object>();
+        HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> set = new HashMap<>();
         set.put("world", eyeLocation.getWorld().getName());
         set.put("x", eyeLocation.getBlockX());
         set.put("y", eyeLocation.getBlockY());
@@ -169,9 +169,9 @@ public class TARDISRemoteComehereCommand {
         set.put("direction", player_d.toString());
         set.put("submarine", (sub) ? 1 : 0);
         if (hidden) {
-            HashMap<String, Object> sett = new HashMap<String, Object>();
+            HashMap<String, Object> sett = new HashMap<>();
             sett.put("hidden", 0);
-            HashMap<String, Object> ttid = new HashMap<String, Object>();
+            HashMap<String, Object> ttid = new HashMap<>();
             ttid.put("tardis_id", id);
             qf.doUpdate("tardis", sett, ttid);
             // restore biome
@@ -192,15 +192,12 @@ public class TARDISRemoteComehereCommand {
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(biome);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    if (!hid) {
-                        plugin.getTrackerKeeper().getDematerialising().add(id);
-                        plugin.getPresetDestroyer().destroyPreset(dd);
-                    } else {
-                        plugin.getPresetDestroyer().removeBlockProtection(id, qf);
-                    }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                if (!hid) {
+                    plugin.getTrackerKeeper().getDematerialising().add(id);
+                    plugin.getPresetDestroyer().destroyPreset(dd);
+                } else {
+                    plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                 }
             }, delay);
         }
@@ -213,11 +210,8 @@ public class TARDISRemoteComehereCommand {
         bd.setRebuild(false);
         bd.setSubmarine(sub);
         bd.setTardisID(id);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getPresetBuilder().buildPreset(bd);
         }, delay * 2);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {

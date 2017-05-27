@@ -41,7 +41,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class ResultSetTravellers {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -49,7 +49,7 @@ public class ResultSetTravellers {
     private int traveller_id;
     private int tardis_id;
     private UUID uuid;
-    private final List<UUID> data = new ArrayList<UUID>();
+    private final List<UUID> data = new ArrayList<>();
     private final String prefix;
 
     /**
@@ -82,9 +82,9 @@ public class ResultSetTravellers {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
+            where.entrySet().forEach((entry) -> {
                 sbw.append(entry.getKey()).append(" = ? AND ");
-            }
+            });
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "travellers" + wheres;

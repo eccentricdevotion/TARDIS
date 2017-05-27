@@ -12,6 +12,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,12 +27,13 @@ public class TARDISShapedRecipe {
     private final HashMap<String, ShapedRecipe> shapedRecipes;
     private ChatColor keyDisplay;
     private ChatColor sonicDisplay;
-    private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<String, ChatColor>();
-    private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<String, ChatColor>();
+    private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<>();
+    private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<>();
+    private final NamespacedKey key;
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        this.shapedRecipes = new HashMap<String, ShapedRecipe>();
+        this.shapedRecipes = new HashMap<>();
         this.sonic_colour_lookup.put("mark_1", ChatColor.DARK_GRAY);
         this.sonic_colour_lookup.put("mark_2", ChatColor.YELLOW);
         this.sonic_colour_lookup.put("mark_3", ChatColor.DARK_PURPLE);
@@ -61,15 +63,16 @@ public class TARDISShapedRecipe {
         this.key_colour_lookup.put("sally", ChatColor.DARK_AQUA);
         this.key_colour_lookup.put("perception", ChatColor.BLUE);
         this.key_colour_lookup.put("gold", ChatColor.GOLD);
+        this.key = new NamespacedKey(this.plugin, "TARDIS");
     }
 
     public void addShapedRecipes() {
         keyDisplay = key_colour_lookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
         sonicDisplay = sonic_colour_lookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
         Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
-        for (String s : shaped) {
+        shaped.forEach((s) -> {
             plugin.getServer().addRecipe(makeRecipe(s));
-        }
+        });
     }
 
     @SuppressWarnings("deprecation")
@@ -107,7 +110,7 @@ public class TARDISShapedRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
         is.setItemMeta(im);
-        ShapedRecipe r = new ShapedRecipe(is);
+        ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape
         String difficulty = (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
         try {
@@ -118,7 +121,7 @@ public class TARDISShapedRecipe {
             }
             r.shape(shape[0], shape[1], shape[2]);
             Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
-            for (String g : ingredients) {
+            ingredients.forEach((g) -> {
                 char c = g.charAt(0);
                 String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
                 Material m = Material.valueOf(recipe_iddata[0]);
@@ -128,7 +131,7 @@ public class TARDISShapedRecipe {
                 } else {
                     r.setIngredient(c, m);
                 }
-            }
+            });
         } catch (IllegalArgumentException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
         }

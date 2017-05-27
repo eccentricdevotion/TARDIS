@@ -36,7 +36,7 @@ public class TARDISRegionFlagCommand {
         String world_name = plugin.getConfig().getString("creation.default_world_name");
         // get all regions for the default world
         List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(plugin.getServer().getWorld(world_name));
-        for (String region_id : world_regions) {
+        world_regions.forEach((region_id) -> {
             if (flag.endsWith("entry")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name + " -g nonmembers deny");
@@ -46,7 +46,7 @@ public class TARDISRegionFlagCommand {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " use -w " + world_name + " allow");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " chest-access -w " + world_name);
             }
-        }
+        });
         return true;
     }
 }

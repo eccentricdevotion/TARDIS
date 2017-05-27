@@ -54,9 +54,9 @@ import org.bukkit.material.Lever;
 public class TARDISJunkControlListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Byte, Integer> repeaterMap = new HashMap<Byte, Integer>();
+    private final HashMap<Byte, Integer> repeaterMap = new HashMap<>();
     private final List<String> worlds;
-    private final HashMap<UUID, Integer> worldMap = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> worldMap = new HashMap<>();
 
     public TARDISJunkControlListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -80,7 +80,7 @@ public class TARDISJunkControlListener implements Listener {
             Material blockType = block.getType();
             final Location controlLoc = block.getLocation();
             String c_loc = controlLoc.toString();
-            HashMap<String, Object> where = new HashMap<String, Object>();
+            HashMap<String, Object> where = new HashMap<>();
             where.put("location", c_loc);
             if (blockType == Material.LEVER) {
                 // Checks handbrake location against the database.
@@ -102,7 +102,7 @@ public class TARDISJunkControlListener implements Listener {
                             // get the current location
                             Location junkloc = null;
                             Biome biome = null;
-                            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                            HashMap<String, Object> wherecl = new HashMap<>();
                             wherecl.put("tardis_id", id);
                             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                             if (rsc.resultSet()) {
@@ -291,7 +291,7 @@ public class TARDISJunkControlListener implements Listener {
 
     private Block getControlBlock(int id, int type) {
         Block b = null;
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("type", type);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
