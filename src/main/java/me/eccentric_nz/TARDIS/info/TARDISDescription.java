@@ -106,6 +106,7 @@ public enum TARDISDescription {
     ARBORETUM("A room full of plants."),
     BAKER("A secondary console room based on the 4th Doctor's TARDIS."),
     BEDROOM("A king sized bed for two."),
+    BIRDCAGE("A room for birds. Polly wants a cracker!"),
     EMPTY("Not much in here."),
     FARM("You ned this room to bring farm animals into the TARDIS."),
     GRAVITY("Going down..."),
