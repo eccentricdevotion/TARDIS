@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -104,7 +104,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         block = block.getRelative(BlockFace.DOWN);
                     }
                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
-                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
@@ -141,7 +141,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         ItemStack stack = player.getInventory().getItemInMainHand();
                         Material material = stack.getType();
                         // get key material
-                        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                        HashMap<String, Object> wherepp = new HashMap<>();
                         wherepp.put("uuid", playerUUID.toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                         String key;
@@ -168,9 +168,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 if (material.equals(m)) {
                                     int locked = (rsd.isLocked()) ? 0 : 1;
                                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                                    HashMap<String, Object> setl = new HashMap<String, Object>();
+                                    HashMap<String, Object> setl = new HashMap<>();
                                     setl.put("locked", locked);
-                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    HashMap<String, Object> wherel = new HashMap<>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
                                     // always lock / unlock both doors
                                     qf.doUpdate("doors", setl, wherel);
@@ -188,7 +188,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 return;
                             }
                             // handbrake must be on
-                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            HashMap<String, Object> tid = new HashMap<>();
                             tid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
@@ -304,7 +304,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 TARDISMessage.send(player, "SIEGE_NO_EXIT");
                                 return;
                             }
-                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            HashMap<String, Object> tid = new HashMap<>();
                             tid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
@@ -317,7 +317,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 float pitch = player.getLocation().getPitch();
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrake_on();
-                                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                HashMap<String, Object> wherecl = new HashMap<>();
                                 wherecl.put("tardis_id", tardis.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
@@ -337,7 +337,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                 // get the other door direction
                                 final COMPASS d;
-                                HashMap<String, Object> other = new HashMap<String, Object>();
+                                HashMap<String, Object> other = new HashMap<>();
                                 other.put("tardis_id", id);
                                 other.put("door_type", end_doortype);
                                 ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
@@ -403,13 +403,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2, minecart);
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                final List<TARDISMob> pets = tf.exitPets(player);
+                                                final List<TARDISParrot> pets = tf.exitPets(player);
                                                 if (pets != null && pets.size() > 0) {
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            movePets(pets, exitTardis, player, d, false);
-                                                        }
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                                        movePets(pets, exitTardis, player, d, false);
                                                     }, 10L);
                                                 }
                                             }
@@ -448,7 +445,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             World cw = idl.getW();
                                             COMPASS innerD = idl.getD();
                                             // check for entities near the police box
-                                            List<TARDISMob> pets = null;
+                                            List<TARDISParrot> pets = null;
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
                                                 plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -479,7 +476,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             // put player into travellers table
                                             // remove them first as they may have exited incorrectly and we only want them listed once
                                             removeTraveller(playerUUID);
-                                            HashMap<String, Object> set = new HashMap<String, Object>();
+                                            HashMap<String, Object> set = new HashMap<>();
                                             set.put("tardis_id", id);
                                             set.put("uuid", playerUUID.toString());
                                             qf.doSyncInsert("travellers", set);
@@ -513,11 +510,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         }
                                         // put player into travellers table
                                         removeTraveller(playerUUID);
-                                        HashMap<String, Object> set = new HashMap<String, Object>();
+                                        HashMap<String, Object> set = new HashMap<>();
                                         set.put("tardis_id", id);
                                         set.put("uuid", playerUUID.toString());
                                         qf.doSyncInsert("travellers", set);
-                                        HashMap<String, Object> wheree = new HashMap<String, Object>();
+                                        HashMap<String, Object> wheree = new HashMap<>();
                                         wheree.put("tardis_id", id);
                                         int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
                                         qf.alterEnergyLevel("tardis", cost, wheree, player);
@@ -557,7 +554,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         // remove player from traveller table
                                         removeTraveller(playerUUID);
                                         // take energy
-                                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                                        HashMap<String, Object> wherea = new HashMap<>();
                                         wherea.put("tardis_id", id);
                                         int costa = (0 - plugin.getArtronConfig().getInt("backdoor"));
                                         qf.alterEnergyLevel("tardis", costa, wherea, player);

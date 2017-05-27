@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -43,9 +43,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Ocelot;
+import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
@@ -104,57 +105,51 @@ public class TARDISDoorListener {
         final boolean quotes = q;
         final boolean isSurvival = checkSurvival(to);
 
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.teleport(l);
-                playDoorSound(p, sound, l, m);
-            }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.teleport(l);
+            playDoorSound(p, sound, l, m);
         }, 5L);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.teleport(l);
-                if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
-                    p.setAllowFlight(true);
-                }
-                if (quotes) {
-                    if (r.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
-                        TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
-                    } else {
-                        p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
-                    }
-                }
-                if (exit) {
-                    plugin.getPM().callEvent(new TARDISExitEvent(p, to));
-                    // give some artron energy
-                    QueryFactory qf = new QueryFactory(plugin);
-                    // add energy to player
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    UUID uuid = p.getUniqueId();
-                    where.put("uuid", uuid.toString());
-                    if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
-                        int player_artron = plugin.getArtronConfig().getInt("player");
-                        qf.alterEnergyLevel("player_prefs", player_artron, where, p);
-                        plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
-                    }
-                    if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
-                        setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
-                        plugin.getTrackerKeeper().getSetTime().remove(uuid);
-                    }
-                    if (plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
-                        plugin.getTrackerKeeper().getEjecting().remove(uuid);
-                    }
-                } else {
-                    plugin.getPM().callEvent(new TARDISEnterEvent(p, from));
-                    if (p.isPlayerTimeRelative()) {
-                        setTemporalLocation(p, -1);
-                    }
-                    TARDISSounds.playTARDISHum(p);
-                }
-                // give a key
-                giveKey(p);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            p.teleport(l);
+            if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
+                p.setAllowFlight(true);
             }
+            if (quotes) {
+                if (r.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                    TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
+                } else {
+                    p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                }
+            }
+            if (exit) {
+                plugin.getPM().callEvent(new TARDISExitEvent(p, to));
+                // give some artron energy
+                QueryFactory qf = new QueryFactory(plugin);
+                // add energy to player
+                HashMap<String, Object> where = new HashMap<>();
+                UUID uuid = p.getUniqueId();
+                where.put("uuid", uuid.toString());
+                if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
+                    int player_artron = plugin.getArtronConfig().getInt("player");
+                    qf.alterEnergyLevel("player_prefs", player_artron, where, p);
+                    plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
+                }
+                if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
+                    setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
+                    plugin.getTrackerKeeper().getSetTime().remove(uuid);
+                }
+                if (plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
+                    plugin.getTrackerKeeper().getEjecting().remove(uuid);
+                }
+            } else {
+                plugin.getPM().callEvent(new TARDISEnterEvent(p, from));
+                if (p.isPlayerTimeRelative()) {
+                    setTemporalLocation(p, -1);
+                }
+                TARDISSounds.playTARDISHum(p);
+            }
+            // give a key
+            giveKey(p);
         }, 10L);
     }
 
@@ -189,7 +184,7 @@ public class TARDISDoorListener {
      * @param d the direction of the police box
      * @param enter whether the pets are entering (true) or exiting (false)
      */
-    public void movePets(List<TARDISMob> p, Location l, Player player, COMPASS d, boolean enter) {
+    public void movePets(List<TARDISParrot> p, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -215,7 +210,7 @@ public class TARDISDoorListener {
                     break;
             }
         }
-        for (TARDISMob pet : p) {
+        for (TARDISParrot pet : p) {
             plugin.setTardisSpawn(true);
             LivingEntity ent;
             ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
@@ -231,22 +226,45 @@ public class TARDISDoorListener {
             ent.setHealth(pet.getHealth());
             ((Tameable) ent).setTamed(true);
             ((Tameable) ent).setOwner(player);
-            if (pet.getType().equals(EntityType.WOLF)) {
-                Wolf wolf = (Wolf) ent;
-                wolf.setCollarColor(pet.getColour());
-                wolf.setSitting(pet.getSitting());
-                wolf.setAge(pet.getAge());
-                if (pet.isBaby()) {
-                    wolf.setBaby();
-                }
-            } else {
-                Ocelot cat = (Ocelot) ent;
-                cat.setCatType(pet.getCatType());
-                cat.setSitting(pet.getSitting());
-                cat.setAge(pet.getAge());
-                if (pet.isBaby()) {
-                    cat.setBaby();
-                }
+            switch (pet.getType()) {
+                case WOLF:
+                    Wolf wolf = (Wolf) ent;
+                    wolf.setCollarColor(pet.getColour());
+                    wolf.setSitting(pet.getSitting());
+                    wolf.setAge(pet.getAge());
+                    if (pet.isBaby()) {
+                        wolf.setBaby();
+                    }
+                    break;
+                case OCELOT:
+                    Ocelot cat = (Ocelot) ent;
+                    cat.setCatType(pet.getCatType());
+                    cat.setSitting(pet.getSitting());
+                    cat.setAge(pet.getAge());
+                    if (pet.isBaby()) {
+                        cat.setBaby();
+                    }
+                    break;
+                case PARROT:
+                    Parrot parrot = (Parrot) ent;
+                    parrot.setSitting(pet.getSitting());
+                    parrot.setAge(pet.getAge());
+                    if (pet.isBaby()) {
+                        parrot.setBaby();
+                    }
+                    parrot.setVariant(pet.getVariant());
+                    if (pet.isOnLeftShoulder() || pet.isOnRightShoulder()) {
+                        HumanEntity he = (HumanEntity) player;
+                        if (pet.isOnLeftShoulder()) {
+                            he.setShoulderEntityLeft(parrot);
+                        }
+                        if (pet.isOnRightShoulder()) {
+                            he.setShoulderEntityRight(parrot);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         p.clear();
@@ -261,7 +279,7 @@ public class TARDISDoorListener {
     @SuppressWarnings("deprecation")
     private void giveKey(Player p) {
         String key;
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
@@ -313,7 +331,7 @@ public class TARDISDoorListener {
     public TARDISDoorLocation getDoor(int doortype, int id) {
         TARDISDoorLocation tdl = new TARDISDoorLocation();
         // get door location
-        HashMap<String, Object> wherei = new HashMap<String, Object>();
+        HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("door_type", doortype);
         wherei.put("tardis_id", id);
         ResultSetDoors rsd = new ResultSetDoors(plugin, wherei, false);
@@ -433,15 +451,12 @@ public class TARDISDoorListener {
                 time -= time % 24000L;
                 time += 24000L + t;
                 final long calculatedtime = time - p.getWorld().getTime();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        p.setPlayerTime(calculatedtime, true);
-                        if (plugin.getConfig().getBoolean("allow.perception_filter")) {
-                            plugin.getFilter().addPerceptionFilter(p);
-                        }
-                        plugin.getTrackerKeeper().getTemporallyLocated().add(p.getUniqueId());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    p.setPlayerTime(calculatedtime, true);
+                    if (plugin.getConfig().getBoolean("allow.perception_filter")) {
+                        plugin.getFilter().addPerceptionFilter(p);
                     }
+                    plugin.getTrackerKeeper().getTemporallyLocated().add(p.getUniqueId());
                 }, 10L);
             } else {
                 p.resetPlayerTime();
@@ -468,7 +483,7 @@ public class TARDISDoorListener {
      * @param u the UUID of the player to remove
      */
     public void removeTraveller(UUID u) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", u.toString());
         new QueryFactory(plugin).doSyncDelete("travellers", where);
     }

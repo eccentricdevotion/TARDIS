@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -49,9 +49,6 @@ public class TARDISAnyoneMoveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
         Player p = event.getPlayer();
-//        if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
-//            return;
-//        }
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
         Location loc = p.getLocation(); // Grab Location
 
@@ -90,7 +87,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
             }
             to.setYaw(yaw);
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            HashMap<String, Object> wherepp = new HashMap<>();
             wherepp.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             boolean hasPrefs = rsp.resultSet();
@@ -98,7 +95,7 @@ public class TARDISAnyoneMoveListener implements Listener {
             boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
             boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
             // check for entities near the police box
-            List<TARDISMob> pets = null;
+            List<TARDISParrot> pets = null;
             if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
                 TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -112,7 +109,7 @@ public class TARDISAnyoneMoveListener implements Listener {
             } else {
                 // occupied
                 plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("uuid", uuid.toString());
                 qf.doSyncInsert("travellers", set);

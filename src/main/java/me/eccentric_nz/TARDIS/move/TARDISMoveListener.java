@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetVoid;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
@@ -99,7 +99,7 @@ public class TARDISMoveListener implements Listener {
                     yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
                 }
                 to.setYaw(yaw);
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                HashMap<String, Object> wherepp = new HashMap<>();
                 wherepp.put("uuid", uuid.toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 boolean hasPrefs = rsp.resultSet();
@@ -108,7 +108,7 @@ public class TARDISMoveListener implements Listener {
                 boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
                 boolean canPowerUp = (hasPrefs) ? rsp.isAutoPowerUp() && !tpl.isAbandoned() : false;
                 // check for entities near the police box
-                List<TARDISMob> pets = null;
+                List<TARDISParrot> pets = null;
                 if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -122,7 +122,7 @@ public class TARDISMoveListener implements Listener {
                 } else {
                     // occupied
                     plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", id);
                     set.put("uuid", uuid.toString());
                     qf.doSyncInsert("travellers", set);
@@ -140,17 +140,14 @@ public class TARDISMoveListener implements Listener {
                 }
                 if (canPowerUp && exit == false) {
                     // power up the TARDIS
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                            if (rs.resultSet()) {
-                                Tardis tardis = rs.getTardis();
-                                if (!tardis.isPowered_on()) {
-                                    new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
-                                }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("tardis_id", id);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+                        if (rs.resultSet()) {
+                            Tardis tardis = rs.getTardis();
+                            if (!tardis.isPowered_on()) {
+                                new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
                             }
                         }
                     }, 20L);
