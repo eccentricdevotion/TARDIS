@@ -227,77 +227,79 @@ public class TARDISCraftListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCraftTARDISItem(PrepareItemCraftEvent event) {
         Recipe recipe = event.getRecipe();
-        ItemStack is = recipe.getResult();
-        if (is.getType().equals(Material.AIR)) {
-            CraftingInventory ci = event.getInventory();
-            // get first map
-            int slot = ci.first(Material.MAP);
-            if (slot != -1) {
-                ItemStack map = ci.getItem(slot);
-                if (map.hasItemMeta() && map.getItemMeta().hasDisplayName() && TARDISConstants.CIRCUITS.contains(map.getItemMeta().getDisplayName())) {
-                    // disallow cloning
-                    if (ci.first(Material.EMPTY_MAP) != -1) {
-                        ci.setResult(null);
-                        return;
+        if (recipe != null) {
+            ItemStack is = recipe.getResult();
+            if (is.getType().equals(Material.AIR)) {
+                CraftingInventory ci = event.getInventory();
+                // get first map
+                int slot = ci.first(Material.MAP);
+                if (slot != -1) {
+                    ItemStack map = ci.getItem(slot);
+                    if (map.hasItemMeta() && map.getItemMeta().hasDisplayName() && TARDISConstants.CIRCUITS.contains(map.getItemMeta().getDisplayName())) {
+                        // disallow cloning
+                        if (ci.first(Material.EMPTY_MAP) != -1) {
+                            ci.setResult(null);
+                            return;
+                        }
                     }
                 }
             }
-        }
-        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
-            String dn = is.getItemMeta().getDisplayName();
-            CraftingInventory ci = event.getInventory();
-            if (is.getType().equals(Material.MAP)) {
-                if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
-                    // which circuit is it?
-                    String[] split = dn.split(" ");
-                    String which = split[1].toLowerCase(Locale.ENGLISH);
-                    // set the second line of lore
-                    ItemMeta im = is.getItemMeta();
-                    List<String> lore;
-                    String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
-                    if (im.hasLore()) {
-                        lore = im.getLore();
-                        lore.set(1, uses);
-                    } else {
-                        lore = Arrays.asList("Uses left", uses);
+            if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+                String dn = is.getItemMeta().getDisplayName();
+                CraftingInventory ci = event.getInventory();
+                if (is.getType().equals(Material.MAP)) {
+                    if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
+                        // which circuit is it?
+                        String[] split = dn.split(" ");
+                        String which = split[1].toLowerCase(Locale.ENGLISH);
+                        // set the second line of lore
+                        ItemMeta im = is.getItemMeta();
+                        List<String> lore;
+                        String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                        if (im.hasLore()) {
+                            lore = im.getLore();
+                            lore.set(1, uses);
+                        } else {
+                            lore = Arrays.asList("Uses left", uses);
+                        }
+                        im.setLore(lore);
+                        is.setItemMeta(im);
+                        ci.setResult(is);
                     }
-                    im.setLore(lore);
-                    is.setItemMeta(im);
+                } else if (is.getType().equals(Material.NETHER_BRICK_ITEM) && dn.equals("Acid Battery")) {
+                    for (int i = 2; i < 9; i += 2) {
+                        ItemStack water = ci.getItem(i);
+                        if (!water.hasItemMeta() || !water.getItemMeta().hasDisplayName() || !water.getItemMeta().getDisplayName().equals("Acid Bucket")) {
+                            ci.setResult(null);
+                            break;
+                        }
+                    }
+                } else if (is.getType().equals(Material.BEACON) && dn.equals("Rift Manipulator")) {
+                    for (int i = 2; i < 9; i += 2) {
+                        ItemStack acid = ci.getItem(i);
+                        if (!acid.hasItemMeta() || !acid.getItemMeta().hasDisplayName() || !acid.getItemMeta().getDisplayName().equals("Acid Battery")) {
+                            ci.setResult(null);
+                            break;
+                        }
+                    }
+                } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
+                    // enchant the result
+                    is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
+                    ci.setResult(is);
+                    List<Integer> slots = Arrays.asList(1, 3, 4, 6);
+                    for (int i : slots) {
+                        ItemStack rust = ci.getItem(i);
+                        if (!rust.hasItemMeta() || !rust.getItemMeta().hasDisplayName() || !rust.getItemMeta().getDisplayName().equals("Rust Bucket")) {
+                            ci.setResult(null);
+                            break;
+                        }
+                    }
+                } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses")) {
+                    LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
+                    lam.setColor(Color.WHITE);
+                    is.setItemMeta(lam);
                     ci.setResult(is);
                 }
-            } else if (is.getType().equals(Material.NETHER_BRICK_ITEM) && dn.equals("Acid Battery")) {
-                for (int i = 2; i < 9; i += 2) {
-                    ItemStack water = ci.getItem(i);
-                    if (!water.hasItemMeta() || !water.getItemMeta().hasDisplayName() || !water.getItemMeta().getDisplayName().equals("Acid Bucket")) {
-                        ci.setResult(null);
-                        break;
-                    }
-                }
-            } else if (is.getType().equals(Material.BEACON) && dn.equals("Rift Manipulator")) {
-                for (int i = 2; i < 9; i += 2) {
-                    ItemStack acid = ci.getItem(i);
-                    if (!acid.hasItemMeta() || !acid.getItemMeta().hasDisplayName() || !acid.getItemMeta().getDisplayName().equals("Acid Battery")) {
-                        ci.setResult(null);
-                        break;
-                    }
-                }
-            } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
-                // enchant the result
-                is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
-                ci.setResult(is);
-                List<Integer> slots = Arrays.asList(1, 3, 4, 6);
-                for (int i : slots) {
-                    ItemStack rust = ci.getItem(i);
-                    if (!rust.hasItemMeta() || !rust.getItemMeta().hasDisplayName() || !rust.getItemMeta().getDisplayName().equals("Rust Bucket")) {
-                        ci.setResult(null);
-                        break;
-                    }
-                }
-            } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses")) {
-                LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
-                lam.setColor(Color.WHITE);
-                is.setItemMeta(lam);
-                ci.setResult(is);
             }
         }
     }
