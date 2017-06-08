@@ -44,9 +44,9 @@ public class TARDISAssembleCommand {
             TARDISMessage.send(sender, "ASSEMBLE_ALL");
             return true;
         } else if (player.equalsIgnoreCase("list")) {
-            for (Integer d : plugin.getTrackerKeeper().getDispersedTARDII()) {
+            plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> {
                 plugin.debug("TARDIS id: " + d);
-            }
+            });
             return true;
         } else {
             // turn off dispersal for this player

@@ -48,12 +48,12 @@ public class TARDISRandomLocation {
 
     public final List<World> getWorlds(List<String> list) {
         List<World> worlds = new ArrayList<>();
-        for (String s : list) {
+        list.forEach((s) -> {
             World o = Bukkit.getServer().getWorld(s);
             if (o != null) {
                 worlds.add(o);
             }
-        }
+        });
         return worlds;
     }
 

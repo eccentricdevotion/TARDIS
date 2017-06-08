@@ -77,11 +77,11 @@ public class TARDISCommandHelper {
                         sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);
                         sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".description"));
                         sender.sendMessage(ChatColor.GRAY + "Aliases: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".aliases"));
-                        for (String m : args) {
+                        args.forEach((m) -> {
                             if (!notThese.contains(m)) {
                                 sender.sendMessage("/" + c + " " + m);
                             }
-                        }
+                        });
                     } else {
                         sender.sendMessage("Command: " + ChatColor.GOLD + "/" + root.toString());
                         sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);

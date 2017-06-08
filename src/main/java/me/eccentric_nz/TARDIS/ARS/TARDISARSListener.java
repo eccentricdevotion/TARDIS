@@ -295,7 +295,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 this.room_names.add(a.getDescriptiveName());
             }
         }
-        for (final String c : custom_names) {
+        custom_names.forEach((c) -> {
             this.room_ids.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId());
             final String uc = ucfirst(c);
             this.room_names.add(uc);
@@ -320,7 +320,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     return 1;
                 }
             });
-        }
+        });
     }
 
     /**

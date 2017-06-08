@@ -53,11 +53,11 @@ public class TARDISRemoveMobSpawnDeny {
         World vortex = plugin.getServer().getWorld(world);
         // get the regions for this world
         Map<String, ProtectedRegion> regions = wg.getRegionManager(vortex).getRegions();
-        for (Map.Entry<String, ProtectedRegion> map : regions.entrySet()) {
+        regions.entrySet().forEach((map) -> {
             if (map.getKey().startsWith("tardis_")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + map.getKey() + " mob-spawning -w " + world);
             }
-        }
+        });
         return true;
     }
 }

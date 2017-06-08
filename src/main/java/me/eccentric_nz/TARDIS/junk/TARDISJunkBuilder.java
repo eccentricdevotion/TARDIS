@@ -36,7 +36,6 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
@@ -75,12 +74,12 @@ public class TARDISJunkBuilder implements Runnable {
             if (i < 24) {
                 i++;
                 if (i == 2) {
-                    for (Entity e : plugin.getUtils().getJunkTravellers(loc)) {
+                    plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
                         if (e instanceof Player) {
                             Player p = (Player) e;
                             TARDISSounds.playTARDISSound(loc, "junk_land");
                         }
-                    }
+                    });
                     fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, loc), 0, 1L);
                 }
                 if (i == 1) {

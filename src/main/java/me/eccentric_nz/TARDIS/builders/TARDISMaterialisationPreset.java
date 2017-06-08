@@ -53,7 +53,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
@@ -508,13 +507,13 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
                     // animate particles
-                    for (Entity e : plugin.getUtils().getJunkTravellers(bd.getLocation())) {
+                    plugin.getUtils().getJunkTravellers(bd.getLocation()).forEach((e) -> {
                         if (e instanceof Player) {
                             Player p = (Player) e;
                             Location effectsLoc = bd.getLocation().clone().add(0.5d, 0, 0.5d);
                             TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
                         }
-                    }
+                    });
                 }
                 // just change the walls
                 int xx, zz;

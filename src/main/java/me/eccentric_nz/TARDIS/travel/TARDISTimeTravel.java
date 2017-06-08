@@ -98,7 +98,7 @@ public class TARDISTimeTravel {
         if (e.equals("THIS")) {
             allowedWorlds.add(this_world);
         } else {
-            for (String o : worldlist) {
+            worldlist.forEach((o) -> {
                 World ww = plugin.getServer().getWorld(o);
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
@@ -128,7 +128,7 @@ public class TARDISTimeTravel {
                         allowedWorlds.remove(ww);
                     }
                 }
-            }
+            });
         }
         listlen = allowedWorlds.size();
         // random world

@@ -31,7 +31,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -838,7 +837,7 @@ public class TARDIS extends JavaPlugin {
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<>();
         Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
-        for (String s : rooms) {
+        rooms.forEach((s) -> {
             if (!getRoomsConfig().contains("rooms." + s + ".user")) {
                 // set user supplied rooms as `user: true`
                 getRoomsConfig().set("rooms." + s + ".user", true);
@@ -847,7 +846,7 @@ public class TARDIS extends JavaPlugin {
                 Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
                 map.put(m, s);
             }
-        }
+        });
         saveConfig();
         return map;
     }
@@ -911,12 +910,12 @@ public class TARDIS extends JavaPlugin {
      * Resets any player who is 'Temporally Located' back to normal time.
      */
     private void resetTime() {
-        for (UUID key : trackerKeeper.getSetTime().keySet()) {
+        trackerKeeper.getSetTime().keySet().forEach((key) -> {
             Player p = this.getServer().getPlayer(key);
             if (p != null) {
                 p.resetPlayerTime();
             }
-        }
+        });
     }
 
     private void setDates() {

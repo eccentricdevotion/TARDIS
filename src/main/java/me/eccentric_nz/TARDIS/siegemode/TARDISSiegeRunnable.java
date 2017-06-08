@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.siegemode;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -89,12 +88,12 @@ public class TARDISSiegeRunnable implements Runnable {
                 wheret.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
                 if (rst.resultSet()) {
-                    for (UUID uuid : rst.getData()) {
+                    rst.getData().forEach((uuid) -> {
                         Player p = plugin.getServer().getPlayer(uuid);
                         if (p != null && p.isOnline() && p.getHealth() < 19.5) {
                             p.setHealth(p.getHealth() + 0.5);
                         }
-                    }
+                    });
                 }
             }
         });

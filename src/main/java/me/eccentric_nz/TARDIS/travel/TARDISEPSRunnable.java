@@ -91,13 +91,13 @@ public class TARDISEPSRunnable implements Runnable {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "npc lookclose");
                 }
                 plugin.getGeneralKeeper().getNpcIDs().add(npcid);
-                for (UUID p : players) {
+                players.forEach((p) -> {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
                         TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
                         TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_INFO"));
                     }
-                }
+                });
             } catch (CommandException e) {
                 plugin.debug(e.getMessage());
             }

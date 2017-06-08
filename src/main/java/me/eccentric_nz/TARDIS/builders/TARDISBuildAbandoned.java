@@ -144,14 +144,14 @@ public class TARDISBuildAbandoned {
         // get list of used chunks
         List<Chunk> chunkList = getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, l);
         // update chunks list in DB
-        for (Chunk ch : chunkList) {
+        chunkList.forEach((ch) -> {
             HashMap<String, Object> setc = new HashMap<>();
             setc.put("tardis_id", dbID);
             setc.put("world", world.getName());
             setc.put("x", ch.getX());
             setc.put("z", ch.getZ());
             qf.doInsert("chunks", setc);
-        }
+        });
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", dbID);
         // get input array

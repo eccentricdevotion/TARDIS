@@ -137,7 +137,7 @@ public class TARDISAcidWater implements Listener {
                     } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
                         // Apply additional potion effects
                         if (!plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions").isEmpty()) {
-                            for (String t : plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions")) {
+                            plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions").forEach((t) -> {
                                 PotionEffectType pet = PotionEffectType.getByName(t);
                                 if (pet != null && (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.CONFUSION) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOW) || pet.equals(PotionEffectType.SLOW_DIGGING) || pet.equals(PotionEffectType.WEAKNESS))) {
                                     player.addPotionEffect(new PotionEffect(pet, 200, 1));
@@ -145,7 +145,7 @@ public class TARDISAcidWater implements Listener {
                                     // Poison
                                     player.addPotionEffect(new PotionEffect(pet, 50, 1));
                                 }
-                            }
+                            });
                         }
                         // Apply damage if there is any
                         double ad = plugin.getPlanetsConfig().getDouble("planets.Skaro.acid_damage");

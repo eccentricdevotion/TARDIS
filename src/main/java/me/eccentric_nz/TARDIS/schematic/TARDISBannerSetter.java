@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.schematic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import org.bukkit.DyeColor;
@@ -36,7 +35,7 @@ public class TARDISBannerSetter {
 
     @SuppressWarnings("deprecation")
     public static void setBanners(int id, HashMap<Block, JSONObject> banners) {
-        for (Map.Entry<Block, JSONObject> entry : banners.entrySet()) {
+        banners.entrySet().forEach((entry) -> {
             JSONObject state = entry.getValue();
             Block pbb = entry.getKey().getLocation().getBlock();
             pbb.setTypeIdAndData(id, state.getByte("bdata"), true);
@@ -54,6 +53,6 @@ public class TARDISBannerSetter {
             }
             banner.setPatterns(plist);
             banner.update();
-        }
+        });
     }
 }

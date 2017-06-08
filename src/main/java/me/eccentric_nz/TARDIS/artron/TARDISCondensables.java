@@ -386,9 +386,9 @@ public class TARDISCondensables {
             condensables.put("YELLOW_GLAZED_TERRACOTTA", 20);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
-            for (String item : items) {
+            items.forEach((item) -> {
                 condensables.put(item, plugin.getCondensablesConfig().getInt(item));
-            }
+            });
         }
     }
 

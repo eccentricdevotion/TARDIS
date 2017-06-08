@@ -138,12 +138,12 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
     private LinkedHashMap<String, String> getAchievements() {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
-        for (String a : aset) {
+        aset.forEach((a) -> {
             if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
                 String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
                 map.put(a, title_reward);
             }
-        }
+        });
         return map;
     }
 

@@ -316,7 +316,7 @@ public class TARDISDematerialisationPreset implements Runnable {
             new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, false, preset);
             if (preset.equals(PRESET.JUNK_MODE)) {
                 // teleport player(s) to exit (tmd.getFromToLocation())
-                for (Entity e : getJunkTravellers(1.0d)) {
+                getJunkTravellers(1.0d).forEach((e) -> {
                     if (e instanceof Player) {
                         final Player p = (Player) e;
                         final Location relativeLoc = getRelativeLocation(p);
@@ -325,7 +325,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                             p.teleport(relativeLoc);
                         }, 2L);
                     }
-                }
+                });
             }
         }
     }

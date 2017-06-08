@@ -58,7 +58,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapedRecipe;
@@ -224,7 +223,7 @@ public class TARDII implements TardisAPI {
     @Override
     public List<String> getWorlds() {
         List<String> worlds = new ArrayList<>();
-        for (World w : Bukkit.getWorlds()) {
+        Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getConfig().getBoolean("worlds." + name)) {
                 if (TARDIS.plugin.isMVOnServer()) {
@@ -233,14 +232,14 @@ public class TARDII implements TardisAPI {
                     worlds.add(name);
                 }
             }
-        }
+        });
         return worlds;
     }
 
     @Override
     public List<String> getOverWorlds() {
         List<String> worlds = new ArrayList<>();
-        for (World w : Bukkit.getWorlds()) {
+        Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getConfig().getBoolean("worlds." + name) && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
                 if (TARDIS.plugin.isMVOnServer()) {
@@ -249,7 +248,7 @@ public class TARDII implements TardisAPI {
                     worlds.add(name);
                 }
             }
-        }
+        });
         return worlds;
     }
 
@@ -306,12 +305,12 @@ public class TARDII implements TardisAPI {
         where.put("tardis_id", id);
         ResultSetTravellers rs = new ResultSetTravellers(TARDIS.plugin, where, true);
         if (rs.resultSet()) {
-            for (UUID u : rs.getData()) {
+            rs.getData().forEach((u) -> {
                 Player p = Bukkit.getPlayer(u);
                 if (p != null && p.isOnline()) {
                     list.add(p.getName());
                 }
-            }
+            });
         }
         return list;
     }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
@@ -151,12 +150,12 @@ public class TARDISRoomSeeder implements Listener {
                     // remove blocks from condenser table if rooms_require_blocks is true
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
-                        for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
+                        c_data.getBlockIDCount().entrySet().forEach((entry) -> {
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", c_data.getTardis_id());
                             wherec.put("block_data", entry.getKey());
                             qf.alterCondenserBlockCount(entry.getValue(), wherec);
-                        }
+                        });
                         plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
                     }
                     // are we doing an achievement?
