@@ -193,7 +193,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("Citizens", "2.0.21");
         this.versions.put("Factions", "2.8.19");
         this.versions.put("GriefPrevention", "14.8");
-        this.versions.put("LibsDisguises", "9.2.4");
+        this.versions.put("LibsDisguises", "9.3.0");
         this.versions.put("MultiWorld", "5.2");
         this.versions.put("Multiverse-Adventure", "2.5");
         this.versions.put("Multiverse-Core", "2.5");
@@ -201,8 +201,8 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("MultiInv", "3.3.6");
         this.versions.put("My Worlds", "1.67");
         this.versions.put("PerWorldInventory", "1.9.0");
-        this.versions.put("ProtocolLib", "4.2.0");
-        this.versions.put("TARDISChunkGenerator", "2.5.2");
+        this.versions.put("ProtocolLib", "4.3.0");
+        this.versions.put("TARDISChunkGenerator", "2.5.3");
         this.versions.put("TerrainControl", "2.8.2");
         this.versions.put("Towny", "0.91");
         this.versions.put("WorldBorder", "1.8.1");
