@@ -40,8 +40,8 @@ public class TARDISUUIDCache {
 
     private final TARDIS plugin;
     private final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
-    private final Map<String, UUID> cache = new ConcurrentHashMap<String, UUID>();
-    private final Map<UUID, String> nameCache = new ConcurrentHashMap<UUID, String>();
+    private final Map<String, UUID> cache = new ConcurrentHashMap<>();
+    private final Map<UUID, String> nameCache = new ConcurrentHashMap<>();
 
     public TARDISUUIDCache(TARDIS plugin) {
         this.plugin = plugin;
