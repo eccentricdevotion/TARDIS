@@ -205,7 +205,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("TerrainControl", "2.8.2");
         this.versions.put("Towny", "0.91");
         this.versions.put("WorldBorder", "1.8.1");
-        this.versions.put("WorldGuard", "6.2.2");
+        this.versions.put("WorldGuard", "6.2.1");
     }
 
     @Override
