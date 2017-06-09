@@ -189,7 +189,7 @@ public class TARDIS extends JavaPlugin {
         this.helperOnServer = false;
         this.mvOnServer = false;
         this.invManager = INVENTORY_MANAGER.NONE;
-        this.versions.put("Citizens", "2.0.21");
+        this.versions.put("Citizens", "2.0.22");
         this.versions.put("Factions", "2.8.19");
         this.versions.put("GriefPrevention", "14.8");
         this.versions.put("LibsDisguises", "9.4.0");
