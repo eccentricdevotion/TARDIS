@@ -1,16 +1,15 @@
 #TODO
 
-##Current bugfix version `3.7.1`
+##Current bugfix version `3.8-beta-1`
 1. Fix bugs!
 
 ##Next minor version `3.8-beta-1`
-1. Update for Spigot 1.12 - _pretty much done_
-2. Add glazed terracotta chameleon presets
-3. Add new 1.12 blocks - _done_
-4. Add other worlds (Silurian cave world, Gallifrey)?
-5. Fix Biome adaptive presets dropping flowers & seeds (properly)
-6. Add original old consoles to desktop themes
-7. Add config option to use Concrete blocks for interior walls
+1. Add knowledge books with TARDIS recipes?
+2. Add glazed terracotta chameleon presets - use CTM to override textures similar to Pandorica preset (Bad Wolf, different blue TARDISes, door open [slimmer TARDIS texture])
+3. Add other worlds (Silurian cave world, Gallifrey)?
+4. Fix Biome adaptive presets dropping flowers & seeds (properly)
+5. Add original old consoles to desktop themes
+6. Add config option to use Concrete blocks for interior walls
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?

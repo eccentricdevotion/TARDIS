@@ -32,6 +32,7 @@ import org.bukkit.command.TabCompleter;
 public class TARDISGiveTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "acid-battery", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "generator", "glasses", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "reader", "remote", "rift-circuit", "rift-manipulator", "rust", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "telepathic", "tachyon", "vortex", "watch");
+    private final ImmutableList<String> GIVE_KNOWLEDGE = ImmutableList.of("knowledge", "1", "2", "64");
     private final Set<String> kits;
     private final ImmutableList<String> KIT_SUBS;
     private final ImmutableList<String> SEED_SUBS;
@@ -49,6 +50,8 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             return null;
         } else if (args.length == 2) {
             return partial(lastArg, GIVE_SUBS);
+        } else if (args.length == 3) {
+            return partial(lastArg, GIVE_KNOWLEDGE);
         } else {
             String sub = args[1];
             if (sub.equals("kit")) {

@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,6 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.KnowledgeBookMeta;
 
 /**
  *
@@ -161,6 +164,9 @@ public class TARDISGiveCommand implements CommandExecutor {
                     case "empty":
                         amount = 0;
                         break;
+                    case "knowledge":
+                        amount = 1;
+                        break;
                     default:
                         try {
                             amount = Integer.parseInt(args[2]);
@@ -183,9 +189,11 @@ public class TARDISGiveCommand implements CommandExecutor {
                         return true;
                     }
                     if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
-                        return this.giveFullCell(sender, amount, p);
+                        return giveFullCell(sender, amount, p);
+                    } else if (args[2].equals("knowledge")) {
+                        return giveKnowledgeBook(sender, item, p);
                     } else {
-                        return this.giveItem(sender, item, amount, p);
+                        return giveItem(sender, item, amount, p);
                     }
                 }
             } else {
@@ -262,10 +270,6 @@ public class TARDISGiveCommand implements CommandExecutor {
     private boolean giveArtron(CommandSender sender, String player, int amount) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-//        if (uuid == null) {
-//            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
-//            plugin.getGeneralKeeper().getUUIDCache().getId(player);
-//        }
         if (uuid != null) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -345,10 +349,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-//        if (uuid == null) {
-//            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
-//            plugin.getGeneralKeeper().getUUIDCache().getId(player);
-//        }
         if (uuid != null) {
             plugin.getServer().dispatchCommand(sender, "vmg " + uuid.toString() + " " + amount);
             return true;
@@ -381,6 +381,19 @@ public class TARDISGiveCommand implements CommandExecutor {
         player.getInventory().addItem(result);
         player.updateInventory();
         TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), amount + " Full Artron Storage Cell");
+        return true;
+    }
+
+    private boolean giveKnowledgeBook(CommandSender sender, String item, Player player) {
+        String item_to_give = items.get(item);
+        ItemStack book = new ItemStack(Material.KNOWLEDGE_BOOK, 1);
+        KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
+        NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_"));
+        kbm.addRecipe(nsk);
+        book.setItemMeta(kbm);
+        player.getInventory().addItem(book);
+        player.updateInventory();
+        TARDISMessage.send(player, "GIVE_KNOWLEDGE", sender.getName(), item_to_give);
         return true;
     }
 }
