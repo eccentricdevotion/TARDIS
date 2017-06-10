@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -388,8 +389,25 @@ public class TARDISGiveCommand implements CommandExecutor {
         String item_to_give = items.get(item);
         ItemStack book = new ItemStack(Material.KNOWLEDGE_BOOK, 1);
         KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
-        NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_"));
-        kbm.addRecipe(nsk);
+        switch (item) {
+            case "bow-tie":
+                List<String> colours = Arrays.asList("White", "Orange", "Magenta", "Light_Blue", "Yellow", "Lime", "Pink", "Grey", "Light_Grey", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black");
+                colours.forEach((bt) -> {
+                    NamespacedKey nsk = new NamespacedKey(plugin, bt + "_Bow_Tie");
+                    kbm.addRecipe(nsk);
+                });
+                break;
+            case "jelly-baby":
+                List<String> flavours = Arrays.asList("Vanilla", "Orange", "Watermelon", "Bubblegum", "Lemon", "Lime", "Strawberry", "Earl_Grey", "Vodka", "Island_Punch", "Grape", "Blueberry", "Cappuccino", "Apple", "Raspberry", "Licorice");
+                flavours.forEach((jelly) -> {
+                    NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_Jelly_Baby");
+                    kbm.addRecipe(nsk);
+                });
+                break;
+            default:
+                NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_"));
+                kbm.addRecipe(nsk);
+        }
         book.setItemMeta(kbm);
         player.getInventory().addItem(book);
         player.updateInventory();
