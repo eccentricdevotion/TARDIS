@@ -36,6 +36,7 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
@@ -370,7 +371,8 @@ public class TARDISFarmer {
                             break;
                         case PARROT:
                             Tameable polly = (Tameable) e;
-                            boolean timeLordIsOwner = ((OfflinePlayer) polly.getOwner()).getUniqueId().equals(p.getUniqueId());
+                            AnimalTamer tamer = polly.getOwner();
+                            boolean timeLordIsOwner = (tamer != null && ((OfflinePlayer) tamer).getUniqueId().equals(p.getUniqueId()));
                             TARDISParrot tmparrot = new TARDISParrot();
                             if (polly.isTamed()) {
                                 if (timeLordIsOwner) {
