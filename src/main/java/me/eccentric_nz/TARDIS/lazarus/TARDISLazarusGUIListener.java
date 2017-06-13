@@ -44,6 +44,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.HorseWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LlamaWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.OcelotWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.ParrotWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.PigWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.RabbitWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
@@ -59,6 +60,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Llama;
 import org.bukkit.entity.Ocelot.Type;
+import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
@@ -82,6 +84,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, Integer> sheep = new HashMap<>();
     private final HashMap<UUID, Integer> cats = new HashMap<>();
     private final HashMap<UUID, Integer> rabbits = new HashMap<>();
+    private final HashMap<UUID, Integer> parrots = new HashMap<>();
     private final HashMap<UUID, Integer> professions = new HashMap<>();
     private final HashMap<UUID, Integer> slimes = new HashMap<>();
     private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
@@ -306,6 +309,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         ow.setType(getCatType(inv));
                                         ow.setBaby(getBaby(inv));
                                         break;
+                                    case PARROT:
+                                        ParrotWatcher tw = (ParrotWatcher) livingWatcher;
+                                        tw.setVariant(getParrotVariant(inv));
+                                        tw.setBaby(getBaby(inv));
+                                        break;
                                     case PIG:
                                         PigWatcher pw = (PigWatcher) livingWatcher;
                                         pw.setSaddled(getBoolean(inv));
@@ -440,78 +448,95 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {
         String t = null;
         int o;
-        if (d.equals("SNOWMAN")) {
-            boolean derp;
-            if (snowmen.containsKey(uuid)) {
-                derp = !snowmen.get(uuid);
-            } else {
-                derp = true;
-            }
-            snowmen.put(uuid, derp);
-            t = (derp) ? "Pumpkin head" : "Derp face";
-        }
-        if (d.equals("SHEEP") || d.equals("WOLF") || d.equals("SHULKER")) {
-            if (sheep.containsKey(uuid)) {
-                o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = DyeColor.values()[o].toString();
-            sheep.put(uuid, o);
-        }
-        if (d.equals("HORSE")) {
-            if (horses.containsKey(uuid)) {
-                o = (horses.get(uuid) + 1 < 7) ? horses.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = org.bukkit.entity.Horse.Color.values()[o].toString();
-            horses.put(uuid, o);
-        }
-        if (d.equals("LLAMA")) {
-            if (llamas.containsKey(uuid)) {
-                o = (llamas.get(uuid) + 1 < 4) ? llamas.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = org.bukkit.entity.Llama.Color.values()[o].toString();
-            llamas.put(uuid, o);
-        }
-        if (d.equals("OCELOT")) {
-            if (cats.containsKey(uuid)) {
-                o = (cats.get(uuid) + 1 < 4) ? cats.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = Type.values()[o].toString();
-            cats.put(uuid, o);
-        }
-        if (d.equals("RABBIT")) {
-            if (rabbits.containsKey(uuid)) {
-                o = (rabbits.get(uuid) + 1 < 7) ? rabbits.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = RabbitType.values()[o].toString();
-            rabbits.put(uuid, o);
-        }
-        if (d.equals("VILLAGER") || d.equals("ZOMBIE_VILLAGER")) {
-            if (professions.containsKey(uuid)) {
-                o = (professions.get(uuid) + 1 < 6) ? professions.get(uuid) + 1 : 1;
-            } else {
-                o = 1;
-            }
-            t = Profession.values()[o].toString();
-            professions.put(uuid, o);
-        }
-        if (d.equals("SLIME") || d.equals("MAGMA_CUBE")) {
-            if (slimes.containsKey(uuid)) {
-                o = (slimes.get(uuid) + 1 < 3) ? slimes.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = slimeSizes.get(o).toString();
-            slimes.put(uuid, o);
+        switch (d) {
+            case "SNOWMAN":
+                boolean derp;
+                if (snowmen.containsKey(uuid)) {
+                    derp = !snowmen.get(uuid);
+                } else {
+                    derp = true;
+                }
+                snowmen.put(uuid, derp);
+                t = (derp) ? "Pumpkin head" : "Derp face";
+                break;
+            case "SHEEP":
+            case "WOLF":
+            case "SHULKER":
+                if (sheep.containsKey(uuid)) {
+                    o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = DyeColor.values()[o].toString();
+                sheep.put(uuid, o);
+                break;
+            case "HORSE":
+                if (horses.containsKey(uuid)) {
+                    o = (horses.get(uuid) + 1 < 7) ? horses.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = org.bukkit.entity.Horse.Color.values()[o].toString();
+                horses.put(uuid, o);
+                break;
+            case "LLAMA":
+                if (llamas.containsKey(uuid)) {
+                    o = (llamas.get(uuid) + 1 < 4) ? llamas.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = org.bukkit.entity.Llama.Color.values()[o].toString();
+                llamas.put(uuid, o);
+                break;
+            case "OCELOT":
+                if (cats.containsKey(uuid)) {
+                    o = (cats.get(uuid) + 1 < 4) ? cats.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = Type.values()[o].toString();
+                cats.put(uuid, o);
+                break;
+            case "RABBIT":
+                if (rabbits.containsKey(uuid)) {
+                    o = (rabbits.get(uuid) + 1 < 7) ? rabbits.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = RabbitType.values()[o].toString();
+                rabbits.put(uuid, o);
+                break;
+            case "PARROT":
+                if (parrots.containsKey(uuid)) {
+                    o = (parrots.get(uuid) + 1 < 5) ? parrots.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = Parrot.Variant.values()[o].toString();
+                parrots.put(uuid, o);
+                break;
+            case "VILLAGER":
+            case "ZOMBIE_VILLAGER":
+                if (professions.containsKey(uuid)) {
+                    o = (professions.get(uuid) + 1 < 6) ? professions.get(uuid) + 1 : 1;
+                } else {
+                    o = 1;
+                }
+                t = Profession.values()[o].toString();
+                professions.put(uuid, o);
+                break;
+            case "SLIME":
+            case "MAGMA_CUBE":
+                if (slimes.containsKey(uuid)) {
+                    o = (slimes.get(uuid) + 1 < 3) ? slimes.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = slimeSizes.get(o).toString();
+                slimes.put(uuid, o);
+                break;
+            default:
+                break;
         }
         if (t != null) {
             ItemStack is = i.getItem(48);
@@ -564,6 +589,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             return Type.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Type.WILD_OCELOT;
+        }
+    }
+
+    private Parrot.Variant getParrotVariant(Inventory i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return Parrot.Variant.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return Parrot.Variant.GRAY;
         }
     }
 

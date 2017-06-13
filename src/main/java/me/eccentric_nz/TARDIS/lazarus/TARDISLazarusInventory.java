@@ -65,6 +65,7 @@ public class TARDISLazarusInventory {
         disguises.put("MAGMA_CUBE", EntityType.MAGMA_CUBE);
         disguises.put("MUSHROOM_COW", EntityType.MUSHROOM_COW);
         disguises.put("OCELOT", EntityType.OCELOT);
+        disguises.put("PARROT", EntityType.PARROT);
         disguises.put("PIG", EntityType.PIG);
         disguises.put("PIG_ZOMBIE", EntityType.PIG_ZOMBIE);
         disguises.put("POLAR_BEAR", EntityType.POLAR_BEAR);
