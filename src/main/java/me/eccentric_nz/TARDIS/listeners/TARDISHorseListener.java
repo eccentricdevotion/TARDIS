@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -45,7 +43,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -54,13 +51,9 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISHorseListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> barding = new ArrayList<>();
 
     public TARDISHorseListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.barding.add(Material.IRON_BARDING);
-        this.barding.add(Material.GOLD_BARDING);
-        this.barding.add(Material.DIAMOND_BARDING);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -69,7 +62,7 @@ public class TARDISHorseListener implements Listener {
         if (e instanceof AbstractHorse && !(e instanceof Llama)) {
             AbstractHorse h = (AbstractHorse) e;
             Material m = event.getBlock().getType();
-            Entity passenger = h.getPassengers().get(0);
+            Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
             if (passenger != null && m.equals(Material.WOOD_PLATE)) {
                 if (passenger instanceof Player) {
                     final Player p = (Player) passenger;
@@ -164,22 +157,10 @@ public class TARDISHorseListener implements Listener {
                             equine.setHealth(tmhor.getHealth());
                             Inventory inv = equine.getInventory();
                             inv.setContents(tmhor.getHorseinventory());
-                            if (tmhor.getHorseVariant().equals(EntityType.HORSE) || tmhor.getHorseVariant().equals(EntityType.DONKEY) || tmhor.getHorseVariant().equals(EntityType.MULE)) {
+                            if (tmhor.getHorseVariant().equals(EntityType.HORSE)) {
                                 Horse ee = (Horse) equine;
                                 ee.setColor(tmhor.getHorseColour());
                                 ee.setStyle(tmhor.getHorseStyle());
-                                if (inv.contains(Material.SADDLE)) {
-                                    int saddle_slot = inv.first(Material.SADDLE);
-                                    ItemStack saddle = inv.getItem(saddle_slot);
-                                    ee.getInventory().setSaddle(saddle);
-                                }
-                                barding.forEach((mat) -> {
-                                    if (inv.contains(mat)) {
-                                        int armour_slot = inv.first(mat);
-                                        ItemStack bard = inv.getItem(armour_slot);
-                                        ee.getInventory().setArmor(bard);
-                                    }
-                                });
                             }
                             if (plugin.isHelperOnServer()) {
                                 plugin.getTardisHelper().setHorseSpeed(equine, tmhor.getSpeed());

@@ -251,7 +251,7 @@ public class TARDISScannerListener implements Listener {
                         }
                     }
                 }
-                if (et.equals(EntityType.ENDERMAN) && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                     // silent
                     et = EntityType.SPLASH_POTION;
                 }
