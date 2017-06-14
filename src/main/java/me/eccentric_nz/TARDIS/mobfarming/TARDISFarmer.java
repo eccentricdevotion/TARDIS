@@ -74,13 +74,9 @@ import org.bukkit.inventory.meta.SpawnEggMeta;
 public class TARDISFarmer {
 
     private final TARDIS plugin;
-    private final List<Material> barding = new ArrayList<>();
 
     public TARDISFarmer(TARDIS plugin) {
         this.plugin = plugin;
-        this.barding.add(Material.IRON_BARDING);
-        this.barding.add(Material.GOLD_BARDING);
-        this.barding.add(Material.DIAMOND_BARDING);
     }
 
     /**
@@ -126,7 +122,6 @@ public class TARDISFarmer {
         List<Entity> mobs = ent.getNearbyEntities(3.75D, 3.75D, 3.75D);
         if (mobs.size() > 0) {
             List<TARDISHorse> old_macd_had_a_horse = new ArrayList<>();
-            List<TARDISHorse> old_macd_had_a_packhorse = new ArrayList<>();
             List<TARDISLlama> old_macd_had_a_llama = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<>();
@@ -144,8 +139,6 @@ public class TARDISFarmer {
             }
             // count total farm mobs
             int farmtotal = 0;
-            // count total horses
-            int packhorsetotal = 0;
             // count total horses
             int horsetotal = 0;
             // count total rabbits
@@ -206,61 +199,9 @@ public class TARDISFarmer {
                             break;
                         case DONKEY:
                         case MULE:
-                            Tameable ph_brokenin = (Tameable) e;
-                            ChestedHorse packhorse = (ChestedHorse) e;
-                            AbstractHorse ah = (AbstractHorse) e;
-                            // if horse has a passenger, eject them!
-                            packhorse.eject();
-                            // don't farm other player's tamed horses
-                            if (ph_brokenin.isTamed()) {
-                                OfflinePlayer owner = (OfflinePlayer) ph_brokenin.getOwner();
-                                if (owner != null && !owner.getUniqueId().equals(p.getUniqueId())) {
-                                    break;
-                                }
-                            }
-                            TARDISHorse tmpackhor = new TARDISHorse();
-                            tmpackhor.setAge(packhorse.getAge());
-                            tmpackhor.setBaby(!packhorse.isAdult());
-                            double phmh = packhorse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-                            tmpackhor.setHorseHealth(phmh);
-                            tmpackhor.setHealth(packhorse.getHealth());
-                            tmpackhor.setHorseVariant(e.getType());
-                            if (ph_brokenin.isTamed()) {
-                                tmpackhor.setTamed(true);
-                            } else {
-                                tmpackhor.setTamed(false);
-                            }
-                            if (packhorse.isCarryingChest()) {
-                                tmpackhor.setHasChest(true);
-                            }
-                            tmpackhor.setName(((LivingEntity) packhorse).getCustomName());
-                            tmpackhor.setHorseInventory(packhorse.getInventory().getContents());
-                            tmpackhor.setDomesticity(packhorse.getDomestication());
-                            tmpackhor.setJumpStrength(packhorse.getJumpStrength());
-                            if (plugin.isHelperOnServer()) {
-                                double speed = plugin.getTardisHelper().getHorseSpeed(ah);
-                                tmpackhor.setSpeed(speed);
-                            }
-                            // check the leash
-                            if (packhorse.isLeashed()) {
-                                Entity leash = packhorse.getLeashHolder();
-                                tmpackhor.setLeashed(true);
-                                if (leash instanceof LeashHitch) {
-                                    leash.remove();
-                                }
-                            }
-                            old_macd_had_a_packhorse.add(tmpackhor);
-                            if (!stable.isEmpty() || (stable.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
-                                e.remove();
-                            }
-                            if (taf != null) {
-                                taf.doAchievement("HORSE");
-                            }
-                            packhorsetotal++;
-                            break;
                         case HORSE:
                             Tameable brokenin = (Tameable) e;
-                            Horse horse = (Horse) e;
+                            AbstractHorse horse = (AbstractHorse) e;
                             // if horse has a passenger, eject them!
                             horse.eject();
                             // don't farm other player's tamed horses
@@ -277,16 +218,22 @@ public class TARDISFarmer {
                             tmhor.setHorseHealth(mh);
                             tmhor.setHealth(horse.getHealth());
                             // get horse colour, style and variant
-                            tmhor.setHorseColour(horse.getColor());
-                            tmhor.setHorseStyle(horse.getStyle());
-                            tmhor.setHorseVariant(EntityType.HORSE);
+                            if (e.getType().equals(EntityType.HORSE)) {
+                                Horse pony = (Horse) horse;
+                                tmhor.setHorseColour(pony.getColor());
+                                tmhor.setHorseStyle(pony.getStyle());
+                            }
+                            tmhor.setHorseVariant(e.getType());
                             if (brokenin.isTamed()) {
                                 tmhor.setTamed(true);
                             } else {
                                 tmhor.setTamed(false);
                             }
-                            if (horse.isCarryingChest()) {
-                                tmhor.setHasChest(true);
+                            if (e.getType().equals(EntityType.DONKEY) || e.getType().equals(EntityType.MULE)) {
+                                ChestedHorse ch = (ChestedHorse) horse;
+                                if (ch.isCarryingChest()) {
+                                    tmhor.setHasChest(true);
+                                }
                             }
                             tmhor.setName(((LivingEntity) horse).getCustomName());
                             tmhor.setHorseInventory(horse.getInventory().getContents());
@@ -535,7 +482,7 @@ public class TARDISFarmer {
                             break;
                     }
                 }
-                if (farmtotal > 0 || packhorsetotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0) {
+                if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0) {
                     boolean canfarm;
                     switch (plugin.getInvManager()) {
                         case MULTIVERSE:
@@ -707,7 +654,7 @@ public class TARDISFarmer {
                 } else if (farmtotal > 0) {
                     TARDISMessage.send(p, "FARM");
                 }
-                if (!stable.isEmpty() && (old_macd_had_a_horse.size() > 0 || old_macd_had_a_packhorse.size() > 0)) {
+                if (!stable.isEmpty() && old_macd_had_a_horse.size() > 0) {
                     // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
@@ -720,8 +667,8 @@ public class TARDISFarmer {
                     }
                     old_macd_had_a_horse.forEach((e) -> {
                         plugin.setTardisSpawn(true);
-                        Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
-                        Horse equine = (Horse) horse;
+                        Entity horse = world.spawnEntity(horse_pen, e.getHorseVariant());
+                        AbstractHorse equine = (AbstractHorse) horse;
                         equine.setAge(e.getAge());
                         if (e.isBaby()) {
                             equine.setBaby();
@@ -729,8 +676,6 @@ public class TARDISFarmer {
                         AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                         attribute.setBaseValue(e.getHorseHealth());
                         equine.setHealth(e.getHealth());
-                        equine.setColor(e.getHorseColour());
-                        equine.setStyle(e.getHorseStyle());
                         String name = e.getName();
                         if (name != null && !name.isEmpty()) {
                             equine.setCustomName(name);
@@ -740,22 +685,19 @@ public class TARDISFarmer {
                             tamed.setTamed(true);
                             tamed.setOwner(p);
                         }
+                        if (e.getHorseVariant().equals(EntityType.HORSE)) {
+                            Horse pony = (Horse) equine;
+                            pony.setColor(e.getHorseColour());
+                            pony.setStyle(e.getHorseStyle());
+                        }
+                        if ((e.getHorseVariant().equals(EntityType.DONKEY) || e.getHorseVariant().equals(EntityType.MULE)) && e.hasChest()) {
+                            ChestedHorse ch = (ChestedHorse) equine;
+                            ch.setCarryingChest(true);
+                        }
                         equine.setDomestication(e.getDomesticity());
                         equine.setJumpStrength(e.getJumpStrength());
                         Inventory inv = equine.getInventory();
                         inv.setContents(e.getHorseinventory());
-                        if (inv.contains(Material.SADDLE)) {
-                            int saddle_slot = inv.first(Material.SADDLE);
-                            ItemStack saddle = inv.getItem(saddle_slot);
-                            equine.getInventory().setSaddle(saddle);
-                        }
-                        barding.forEach((m) -> {
-                            if (inv.contains(m)) {
-                                int armour_slot = inv.first(m);
-                                ItemStack bard = inv.getItem(armour_slot);
-                                equine.getInventory().setArmor(bard);
-                            }
-                        });
                         if (e.isLeashed()) {
                             Inventory pinv = p.getInventory();
                             ItemStack leash = new ItemStack(Material.LEASH, 1);
@@ -764,50 +706,6 @@ public class TARDISFarmer {
                         }
                         if (plugin.isHelperOnServer()) {
                             plugin.getTardisHelper().setHorseSpeed(equine, e.getSpeed());
-                        }
-                        equine.setRemoveWhenFarAway(false);
-                    });
-                    old_macd_had_a_packhorse.forEach((ph) -> {
-                        plugin.setTardisSpawn(true);
-                        Entity pack_horse = world.spawnEntity(horse_pen, ph.getHorseVariant());
-                        Horse equine = (Horse) pack_horse;
-                        equine.setAge(ph.getAge());
-                        if (ph.isBaby()) {
-                            equine.setBaby();
-                        }
-                        AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                        attribute.setBaseValue(ph.getHorseHealth());
-                        equine.setHealth(ph.getHealth());
-                        String name = ph.getName();
-                        if (name != null && !name.isEmpty()) {
-                            equine.setCustomName(name);
-                        }
-                        Tameable tamed = (Tameable) equine;
-                        if (ph.isTamed()) {
-                            tamed.setTamed(true);
-                            tamed.setOwner(p);
-                        }
-                        equine.setDomestication(ph.getDomesticity());
-                        equine.setJumpStrength(ph.getJumpStrength());
-                        if (ph.hasChest()) {
-                            ChestedHorse ch = (ChestedHorse) pack_horse;
-                            ch.setCarryingChest(true);
-                        }
-                        Inventory inv = equine.getInventory();
-                        inv.setContents(ph.getHorseinventory());
-                        if (inv.contains(Material.SADDLE)) {
-                            int saddle_slot = inv.first(Material.SADDLE);
-                            ItemStack saddle = inv.getItem(saddle_slot);
-                            equine.getInventory().setSaddle(saddle);
-                        }
-                        if (ph.isLeashed()) {
-                            Inventory pinv = p.getInventory();
-                            ItemStack leash = new ItemStack(Material.LEASH, 1);
-                            pinv.addItem(leash);
-                            p.updateInventory();
-                        }
-                        if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setHorseSpeed(equine, ph.getSpeed());
                         }
                         equine.setRemoveWhenFarAway(false);
                     });
