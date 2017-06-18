@@ -106,6 +106,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSeedBlockListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISSleepListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSmelterListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSpawnListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISStattenheimListener;
@@ -280,6 +281,7 @@ public class TARDISListenerRegisterer {
             }
         }
         plugin.getPM().registerEvents(new TARDISSignListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSleepListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSmelterListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicGeneratorMenuListener(plugin), plugin);
