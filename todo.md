@@ -8,8 +8,7 @@
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
 4. Add original old consoles to desktop themes
-5. Add config option to use Concrete blocks for interior walls
-6. Atmospheric Excitation?
+5. Atmospheric Excitation?
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
@@ -23,6 +22,7 @@
    * Mob farming / ejection events
 
 ##Resource Pack / TARDISWeepingAngels
+0. Custom Entity & Item models using Optifine
 1. Rare armour drops
 2. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
 3. Re-skin mobs for Resource pack, and add new mob sounds
