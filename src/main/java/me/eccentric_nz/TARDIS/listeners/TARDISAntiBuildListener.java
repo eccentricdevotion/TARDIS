@@ -30,6 +30,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -122,12 +123,19 @@ public class TARDISAntiBuildListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onCompanionPlace(PlayerInteractEvent event) {
+        // ignore non-hand click actions
+        if (event.getAction().equals(Action.PHYSICAL)) {
+            return;
+        }
         UUID uuid = event.getPlayer().getUniqueId();
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
             return;
         }
         EquipmentSlot hand = event.getHand();
+        if (hand == null) {
+            return;
+        }
         ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? event.getPlayer().getInventory().getItemInMainHand() : event.getPlayer().getInventory().getItemInOffHand();
         Material m;
         if (t != null) {
