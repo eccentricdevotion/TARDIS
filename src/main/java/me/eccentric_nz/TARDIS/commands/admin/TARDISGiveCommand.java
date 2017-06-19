@@ -327,8 +327,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             lore.add(type);
             lore.add("Walls: ORANGE_WOOL");
             lore.add("Floors: LIGHT_GRAY_WOOL");
-            lore.add("Chameleon block: BLUE WOOL");
-            lore.add("Lamp: REDSTONE_LAMP_OFF");
+            lore.add("Chameleon: FACTORY");
             im.setLore(lore);
             is.setItemMeta(im);
             player.getInventory().addItem(is);

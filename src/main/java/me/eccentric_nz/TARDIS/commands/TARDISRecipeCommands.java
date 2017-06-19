@@ -23,14 +23,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.MAP;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -389,7 +392,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         p.closeInventory();
         plugin.getTrackerKeeper().getRecipeView().add(p.getUniqueId());
-        final InventoryView view = p.openWorkbench(null, true);
+        Inventory inv = plugin.getServer().createInventory(p, 27, "§4" + str + " recipe");
         final String[] recipeShape = recipe.getShape();
         final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
         for (int j = 0; j < recipeShape.length; j++) {
@@ -428,16 +431,33 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setDisplayName("Rift Circuit");
                     item.setItemMeta(im);
                 }
-                view.getTopInventory().setItem(j * 3 + k + 1, item);
+                inv.setItem(j * 9 + k, item);
             }
         }
+        ItemStack result = recipe.getResult();
+        ItemMeta im = result.getItemMeta();
+        im.setDisplayName(str);
+        if (str.equals("TARDIS Invisibility Circuit")) {
+            // set the second line of lore
+            List<String> lore = im.getLore();
+            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            lore.set(1, uses);
+            im.setLore(lore);
+        }
+        if ((str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Sonic Blaster")) && !plugin.getInvManager().equals(INVENTORY_MANAGER.MULTIVERSE)) {
+            im.addItemFlags(ItemFlag.values());
+        }
+        result.setAmount(1);
+        result.setItemMeta(im);
+        inv.setItem(17, result);
+        p.openInventory(inv);
     }
 
     public void showShapelessRecipe(Player player, String str) {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         final List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
-        final InventoryView view = player.openWorkbench(null, true);
+        Inventory inv = plugin.getServer().createInventory(player, 27, "§4" + str + " recipe");
         for (int i = 0; i < ingredients.size(); i++) {
             if (ingredients.get(i).getType().equals(Material.MAP)) {
                 ItemMeta im = ingredients.get(i).getItemMeta();
@@ -449,13 +469,23 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 im.setDisplayName("Blank Storage Disk");
                 ingredients.get(i).setItemMeta(im);
             }
-            view.setItem(i + 1, ingredients.get(i));
+            inv.setItem(i * 9, ingredients.get(i));
         }
+        ItemStack result = recipe.getResult();
+        ItemMeta im = result.getItemMeta();
+        im.setDisplayName(str);
+        if ((str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Sonic Blaster")) && !plugin.getInvManager().equals(INVENTORY_MANAGER.MULTIVERSE)) {
+            im.addItemFlags(ItemFlag.values());
+        }
+        result.setAmount(1);
+        result.setItemMeta(im);
+        inv.setItem(17, result);
+        player.openInventory(inv);
     }
 
     public void showTARDISRecipe(Player player, String type) {
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
-        final InventoryView view = player.openWorkbench(null, true);
+        Inventory inv = plugin.getServer().createInventory(player, 27, "§4TARDIS " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
         // redstone torch
         ItemStack red = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
         // lapis block
@@ -472,16 +502,27 @@ public class TARDISRecipeCommands implements CommandExecutor {
         fl_meta.setDisplayName("Interior floors");
         fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
         in_floor.setItemMeta(fl_meta);
+        // seed block
+        ItemStack block = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
         // tardis type
         ItemStack tardis = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
         ItemMeta seed = tardis.getItemMeta();
-        seed.setLore(Arrays.asList(type.toUpperCase(Locale.ENGLISH)));
+        // set display name
+        seed.setDisplayName("§6TARDIS Seed Block");
+        List<String> lore = new ArrayList<>();
+        lore.add(type);
+        lore.add("Walls: ORANGE_WOOL");
+        lore.add("Floors: LIGHT_GRAY_WOOL");
+        lore.add("Chameleon: FACTORY");
+        seed.setLore(lore);
         tardis.setItemMeta(seed);
-        view.setItem(1, red);
-        view.setItem(4, lapis);
-        view.setItem(6, in_wall);
-        view.setItem(7, tardis);
-        view.setItem(9, in_floor);
+        inv.setItem(0, red);
+        inv.setItem(9, lapis);
+        inv.setItem(11, in_wall);
+        inv.setItem(17, tardis);
+        inv.setItem(18, block);
+        inv.setItem(20, in_floor);
+        player.openInventory(inv);
     }
 
     private String getDisplayName(byte data) {
