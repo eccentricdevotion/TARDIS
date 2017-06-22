@@ -353,12 +353,7 @@ public class TARDISRoomRunnable implements Runnable {
                 type = (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : floor_type;
                 data = floor_data;
                 // update player prefs - turn on mob farming
-                HashMap<String, Object> setpp = new HashMap<>();
-                setpp.put("farm_on", 1);
-                HashMap<String, Object> wherepp = new HashMap<>();
-                wherepp.put("uuid", p.getUniqueId().toString());
-                qf.doUpdate("player_prefs", setpp, wherepp);
-                TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
+                turnOnFarming(p, qf);
             }
             // set lazarus
             if (type.equals(Material.WOOD_PLATE) && room.equals("LAZARUS")) {
@@ -406,6 +401,10 @@ public class TARDISRoomRunnable implements Runnable {
                             plugin.getWorldGuardUtils().addRendererProtection(p.getName(), one, two);
                         }
                         break;
+                }
+                if (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE")) {
+                    // update player prefs - turn on mob farming
+                    turnOnFarming(p, qf);
                 }
             }
             if (type.equals(Material.SOUL_SAND) && room.equals("SMELTER")) {
@@ -675,6 +674,16 @@ public class TARDISRoomRunnable implements Runnable {
                 level++;
             }
         }
+    }
+
+    private void turnOnFarming(Player p, QueryFactory qf) {
+        // update player prefs - turn on mob farming
+        HashMap<String, Object> setpp = new HashMap<>();
+        setpp.put("farm_on", 1);
+        HashMap<String, Object> wherepp = new HashMap<>();
+        wherepp.put("uuid", p.getUniqueId().toString());
+        qf.doUpdate("player_prefs", setpp, wherepp);
+        TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
     }
 
     private boolean checkRoomNextDoor(Block b) {
