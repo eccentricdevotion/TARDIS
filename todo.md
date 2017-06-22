@@ -4,7 +4,7 @@
 1. Fix bugs!
 
 ##Next minor version `3.8-beta-1`
-1. Add glazed terracotta chameleon presets - use CTM to override textures similar to Pandorica preset (Bad Wolf, different blue TARDISes, door open [slimmer TARDIS texture])
+1. Add glazed terracotta chameleon presets
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
 4. Add original old consoles to desktop themes
