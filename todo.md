@@ -4,11 +4,10 @@
 1. Fix bugs!
 
 ##Next minor version `3.8-beta-1`
-1. Add glazed terracotta chameleon presets
+1. Add glazed terracotta chameleon presets?
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
-4. Add original old consoles to desktop themes
-5. Atmospheric Excitation?
+4. Atmospheric Excitation?
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?

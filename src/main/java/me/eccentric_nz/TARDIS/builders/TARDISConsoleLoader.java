@@ -71,6 +71,14 @@ public class TARDISConsoleLoader {
         CONSOLES.getBY_NAMES().put("SMALL", new SCHEMATIC("COBBLESTONE", "small", "16x16x16 cobblestone template", ConsoleSize.SMALL, false, true, false));
         CONSOLES.getBY_NAMES().put("MEDIUM", new SCHEMATIC("COBBLESTONE", "medium", "32x16x32 cobblestone template", ConsoleSize.MEDIUM, false, true, false));
         CONSOLES.getBY_NAMES().put("TALL", new SCHEMATIC("COBBLESTONE", "tall", "32x32x32 cobblestone template", ConsoleSize.TALL, false, true, false));
+        // legacy consoles
+        if (plugin.getConfig().getBoolean("creation.enable_legacy")) {
+            CONSOLES.getBY_NAMES().put("LEGACY_BIGGER", new SCHEMATIC("ORANGE_GLAZED_TERRACOTTA", "legacy_bigger", "The original Bigger Console", ConsoleSize.MEDIUM, true, false, false));
+            CONSOLES.getBY_NAMES().put("LEGACY_BUDGET", new SCHEMATIC("SILVER_GLAZED_TERRACOTTA", "legacy_budget", "The original Default Console", ConsoleSize.SMALL, true, false, false));
+            CONSOLES.getBY_NAMES().put("LEGACY_DELUXE", new SCHEMATIC("LIME_GLAZED_TERRACOTTA", "legacy_deluxe", "The original Deluxe Console", ConsoleSize.TALL, true, false, false));
+            CONSOLES.getBY_NAMES().put("LEGACY_ELEVENTH", new SCHEMATIC("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "The original 11th Doctor's Console", ConsoleSize.TALL, true, true, false));
+            CONSOLES.getBY_NAMES().put("LEGACY_REDSTONE", new SCHEMATIC("RED_GLAZED_TERRACOTTA", "legacy_redstone", "The original Redstone Console", ConsoleSize.TALL, true, false, false));
+        }
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists

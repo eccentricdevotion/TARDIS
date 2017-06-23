@@ -117,6 +117,7 @@ public class TARDISConfiguration {
         boolOptions.put("creation.create_worlds_with_perms", false);
         boolOptions.put("creation.custom_schematic", false);
         boolOptions.put("creation.default_world", false);
+        boolOptions.put("creation.enable_legacy", true);
         boolOptions.put("creation.keep_night", true);
         boolOptions.put("creation.sky_biome", true);
         boolOptions.put("creation.use_block_stack", false);
@@ -260,6 +261,11 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.deluxe", 10000);
         artronIntOptions.put("upgrades.eleventh", 10000);
         artronIntOptions.put("upgrades.ender", 5000);
+        artronIntOptions.put("upgrades.legacy_bigger", 7500);
+        artronIntOptions.put("upgrades.legacy_budget", 5000);
+        artronIntOptions.put("upgrades.legacy_deluxe", 10000);
+        artronIntOptions.put("upgrades.legacy_eleventh", 10000);
+        artronIntOptions.put("upgrades.legacy_redstone", 8000);
         artronIntOptions.put("upgrades.master", 10000);
         artronIntOptions.put("upgrades.plank", 5000);
         artronIntOptions.put("upgrades.pyramid", 5000);

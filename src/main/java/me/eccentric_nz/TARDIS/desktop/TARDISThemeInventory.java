@@ -88,6 +88,7 @@ public class TARDISThemeInventory {
                 im.setLore(lore);
                 is.setItemMeta(im);
                 stack[i] = is;
+                plugin.debug(i + ": " + a.getDescription());
                 i++;
             }
         }
@@ -97,7 +98,7 @@ public class TARDISThemeInventory {
             ItemMeta hive_im = arc.getItemMeta();
             hive_im.setDisplayName("Archive Consoles");
             arc.setItemMeta(hive_im);
-            stack[18] = arc;
+            stack[22] = arc;
         }
         if (plugin.getConfig().getBoolean("allow.repair")) {
             // repair
@@ -106,7 +107,7 @@ public class TARDISThemeInventory {
                 ItemMeta air_im = rep.getItemMeta();
                 air_im.setDisplayName("Repair Console");
                 rep.setItemMeta(air_im);
-                stack[19] = rep;
+                stack[23] = rep;
             }
             // clean
             if (player.hasPermission("tardis.repair")) {
@@ -114,7 +115,7 @@ public class TARDISThemeInventory {
                 ItemMeta an_im = cle.getItemMeta();
                 an_im.setDisplayName("Clean");
                 cle.setItemMeta(an_im);
-                stack[20] = cle;
+                stack[24] = cle;
             }
         }
         // close

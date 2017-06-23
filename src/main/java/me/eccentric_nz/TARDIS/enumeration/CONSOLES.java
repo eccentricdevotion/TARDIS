@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import org.bukkit.Material;
 
 /**
@@ -27,7 +28,7 @@ import org.bukkit.Material;
  */
 public class CONSOLES {
 
-    private final static HashMap<String, SCHEMATIC> BY_NAMES = new HashMap<>();
+    private final static TreeMap<String, SCHEMATIC> BY_NAMES = new TreeMap<>();
     private final static HashMap<String, SCHEMATIC> BY_PERMS = new HashMap<>();
     private final static HashMap<String, SCHEMATIC> BY_MATERIALS = new HashMap<>();
     private final static List<SCHEMATIC> NO_BEACON = new ArrayList<>();
@@ -70,7 +71,7 @@ public class CONSOLES {
         BY_MATERIALS.put("BONE_BLOCK", archive);
     }
 
-    public static HashMap<String, SCHEMATIC> getBY_NAMES() {
+    public static TreeMap<String, SCHEMATIC> getBY_NAMES() {
         return BY_NAMES;
     }
 

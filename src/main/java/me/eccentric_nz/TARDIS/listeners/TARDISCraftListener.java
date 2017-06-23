@@ -81,6 +81,11 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
+        t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
+        t.put(Material.LIME_GLAZED_TERRACOTTA, "LEGACY_DELUXE"); // legacy_deluxe
+        t.put(Material.ORANGE_GLAZED_TERRACOTTA, "LEGACY_BIGGER"); // legacy_bigger
+        t.put(Material.RED_GLAZED_TERRACOTTA, "LEGACY_REDSTONE"); // legacy_redstone
+        t.put(Material.SILVER_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
         // custom seeds
         plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

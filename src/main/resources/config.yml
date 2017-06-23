@@ -20,6 +20,7 @@ creation:
     keep_night: true
     inventory_group: 0
     add_perms: true
+    enable_legacy: true
     custom_schematic: false
     custom_schematic_seed: OBSIDIAN
     custom_creeper_id: 138
