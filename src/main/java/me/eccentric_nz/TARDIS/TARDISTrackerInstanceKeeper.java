@@ -115,6 +115,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> arrangers = new ArrayList<>();
     private final List<UUID> beaconColouring = new ArrayList<>();
     private final List<UUID> eggs = new ArrayList<>();
+    private final List<UUID> excitation = new ArrayList<>();
     private final List<UUID> farming = new ArrayList<>();
     private final List<UUID> geneticManipulation = new ArrayList<>();
     private final List<UUID> geneticallyModified = new ArrayList<>();
@@ -363,6 +364,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<UUID> getEggs() {
         return eggs;
+    }
+
+    public List<UUID> getExcitation() {
+        return excitation;
     }
 
     public HashMap<UUID, Integer> getEjecting() {

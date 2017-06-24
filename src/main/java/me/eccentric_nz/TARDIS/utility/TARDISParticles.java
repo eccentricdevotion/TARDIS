@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -25,7 +26,9 @@ import org.bukkit.util.Vector;
  *
  * @author eccentric_nz
  */
-public class TARDISJunkParticles {
+public class TARDISParticles {
+
+    private static final Random RAND = new Random();
 
     public static void sendVortexParticles(Location l, Player p) {
         double radials = 0.19634954084936207d;
@@ -44,6 +47,21 @@ public class TARDISJunkParticles {
         }
     }
 
+    public static void sendSnowParticles(Location l, Player p) {
+        for (int i = 0; i < 20; i++) {
+            double x = randomDouble();
+            double y = randomDouble();
+            double z = randomDouble();
+            l.add(x, y, z);
+            if (l.getBlock().isEmpty()) {
+                if (l.getWorld().getHighestBlockYAt(l) < l.getY()) {
+                    p.spawnParticle(Particle.CLOUD, l, 10);
+                }
+            }
+            l.subtract(x, y, z);
+        }
+    }
+
     private static Vector rotateAroundAxisX(Vector v, double angle) {
         double cos = Math.cos(angle);
         double sin = Math.sin(angle);
@@ -58,5 +76,9 @@ public class TARDISJunkParticles {
         double x = v.getX() * cos + v.getZ() * sin;
         double z = v.getX() * -sin + v.getZ() * cos;
         return v.setX(x).setZ(z);
+    }
+
+    private static Double randomDouble() {
+        return 10.0 * RAND.nextDouble();
     }
 }
