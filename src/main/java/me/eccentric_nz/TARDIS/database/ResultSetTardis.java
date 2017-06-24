@@ -61,7 +61,8 @@ public class ResultSetTardis {
      * @param limit
      * @param multiple a boolean indicating whether multiple rows should be
      * fetched
-     * @param abandoned whether to select TARDISes that abandoned (1) or not (0)
+     * @param abandoned whether to select TARDISes that are abandoned (1) or not
+     * (0)
      */
     public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
         this.plugin = plugin;

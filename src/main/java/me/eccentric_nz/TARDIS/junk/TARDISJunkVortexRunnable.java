@@ -20,7 +20,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -65,7 +65,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
                 plugin.getUtils().getJunkTravellers(vortexJunkLoc).forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
-                        TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                        TARDISParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });
             }

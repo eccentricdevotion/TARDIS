@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -183,7 +183,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         Location effectsLoc = dd.getLocation().clone().add(0.5d, 0, 0.5d);
-                        TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                        TARDISParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });
             } else {

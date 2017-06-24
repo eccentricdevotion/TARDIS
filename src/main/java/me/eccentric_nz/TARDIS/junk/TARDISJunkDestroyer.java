@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -159,7 +159,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 plugin.getUtils().getJunkTravellers(junkLoc).forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
-                        TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                        TARDISParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });
             }
