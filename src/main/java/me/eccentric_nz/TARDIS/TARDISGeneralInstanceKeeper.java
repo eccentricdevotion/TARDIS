@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
@@ -60,6 +61,7 @@ public class TARDISGeneralInstanceKeeper {
     private List<Block> doorPistons = new ArrayList<>();
     private List<Integer> npcIDs = new ArrayList<>();
     private List<String> quotes = new ArrayList<>();
+    private HashMap<String, String> sign_lookup = new HashMap<>();
     private TARDISAdminCommands tardisAdminCommand;
     private TARDISButtonListener buttonListener;
     private TARDISDoorListener doorListener;
@@ -106,6 +108,7 @@ public class TARDISGeneralInstanceKeeper {
         this.UUIDCache = new TARDISUUIDCache(plugin);
         this.doorListener = new TARDISDoorListener(plugin);
         this.interactables = buildInteractables();
+        this.sign_lookup = buildSignLookup();
         setRechargers();
         InputStream is = plugin.getResource("plugin.yml");
         InputStreamReader reader = new InputStreamReader(is);
@@ -187,6 +190,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public HashMap<String, Integer> getProtectBlockMap() {
         return protectBlockMap;
+    }
+
+    public HashMap<String, String> getSign_lookup() {
+        return sign_lookup;
     }
 
     public HashMap<UUID, TARDISCondenserData> getRoomCondenserData() {
@@ -420,5 +427,15 @@ public class TARDISGeneralInstanceKeeper {
         list.add(Material.WOOD_PLATE);
         list.add(Material.WORKBENCH);
         return list;
+    }
+
+    private HashMap<String, String> buildSignLookup() {
+        HashMap<String, String> lookup = new HashMap<>();
+        for (PRESET p : PRESET.values()) {
+            if (!p.getFirstLine().isEmpty() && !lookup.containsKey(p.getFirstLine())) {
+                lookup.put(p.getFirstLine(), p.getSecondLine());
+            }
+        }
+        return lookup;
     }
 }

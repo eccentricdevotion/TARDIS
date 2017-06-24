@@ -25,7 +25,9 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
@@ -47,6 +49,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -280,6 +283,50 @@ public class TARDISSonicListener implements Listener {
                                 }
                             }
                         }, 60L);
+                    }
+                    if (b.getType().equals(Material.WALL_SIGN) && player.hasPermission("tardis.atmospheric")) {
+                        // check the text on the sign
+                        Sign sign = (Sign) b.getState();
+                        String line0 = ChatColor.stripColor(sign.getLine(0));
+                        String line1 = ChatColor.stripColor(sign.getLine(1));
+                        String line2 = ChatColor.stripColor(sign.getLine(2));
+                        if (isPresetSign(line0, line1, line2)) {
+                            // get TARDIS id
+                            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                            if (rs.fromUUID(player.getUniqueId().toString())) {
+                                int tid = rs.getTardis_id();
+                                Block blockbehind = null;
+                                byte data = b.getData();
+                                if (data == 4) {
+                                    blockbehind = b.getRelative(BlockFace.EAST, 2);
+                                }
+                                if (data == 5) {
+                                    blockbehind = b.getRelative(BlockFace.WEST, 2);
+                                }
+                                if (data == 3) {
+                                    blockbehind = b.getRelative(BlockFace.NORTH, 2);
+                                }
+                                if (data == 2) {
+                                    blockbehind = b.getRelative(BlockFace.SOUTH, 2);
+                                }
+                                if (blockbehind != null) {
+                                    Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
+                                    Location bd_loc = blockDown.getLocation();
+                                    HashMap<String, Object> wherecl = new HashMap<>();
+                                    wherecl.put("tardis_id", tid);
+                                    wherecl.put("world", bd_loc.getWorld().getName());
+                                    wherecl.put("x", bd_loc.getBlockX());
+                                    wherecl.put("y", bd_loc.getBlockY());
+                                    wherecl.put("z", bd_loc.getBlockZ());
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (rsc.resultSet()) {
+                                        new TARDISAtmosphericExcitation(plugin).excite(tid, player);
+                                        plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
+                                        return;
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !plugin.getGeneralKeeper().getInteractables().contains(b.getType())) {
                         playSonicSound(player, now, 3050L, "sonic_screwdriver");
@@ -885,5 +932,13 @@ public class TARDISSonicListener implements Listener {
             tny = new TARDISTownyChecker(plugin, true).checkTowny(p, b.getLocation());
         }
         return (gpr || wgu || lke || lch || tny);
+    }
+
+    private boolean isPresetSign(String l0, String l1, String l2) {
+        if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
+            return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) && l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
+        } else {
+            return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l1) && l2.equals(plugin.getGeneralKeeper().getSign_lookup().get(l1)));
+        }
     }
 }

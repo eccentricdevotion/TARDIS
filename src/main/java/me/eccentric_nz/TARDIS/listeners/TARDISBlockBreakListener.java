@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -49,16 +48,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISBlockBreakListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> sign_lookup = new HashMap<>();
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;
-        int i = 0;
-        for (PRESET p : PRESET.values()) {
-            if (!p.getFirstLine().isEmpty() && !sign_lookup.containsKey(p.getFirstLine())) {
-                sign_lookup.put(p.getFirstLine(), p.getSecondLine());
-            }
-        }
     }
 
     /**
@@ -157,9 +149,9 @@ public class TARDISBlockBreakListener implements Listener {
 
     private boolean isPresetSign(String l0, String l1, String l2) {
         if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
-            return (sign_lookup.containsKey(l0) && l1.equals(sign_lookup.get(l0)));
+            return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) && l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
         } else {
-            return (sign_lookup.containsKey(l1) && l2.equals(sign_lookup.get(l1)));
+            return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l1) && l2.equals(plugin.getGeneralKeeper().getSign_lookup().get(l1)));
         }
     }
 }
