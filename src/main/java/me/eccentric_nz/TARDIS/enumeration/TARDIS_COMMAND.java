@@ -38,6 +38,7 @@ public enum TARDIS_COMMAND {
     eject,
     ep1,
     erase,
+    excite,
     exterminate,
     find,
     help,
@@ -68,6 +69,7 @@ public enum TARDIS_COMMAND {
 
     public boolean noSiege() {
         switch (this) {
+            case abandon:
             case archive:
             case colourise:
             case colorize:
@@ -75,6 +77,7 @@ public enum TARDIS_COMMAND {
             case desktop:
             case direction:
             case eject:
+            case excite:
             case exterminate:
             case hide:
             case home:

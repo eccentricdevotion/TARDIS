@@ -7,7 +7,7 @@
 1. Add glazed terracotta chameleon presets?
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
-4. Atmospheric Excitation?
+4. Atmospheric Excitation? Shoot firework from top of TARDIS, then use CLOUD particle effect to simulate snow, maybe add snow blocks around TARDIS
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?

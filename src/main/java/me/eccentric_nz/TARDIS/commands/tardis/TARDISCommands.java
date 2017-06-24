@@ -138,6 +138,9 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("eject")) {
                     return new TARDISEjectCommand(plugin).eject(player);
                 }
+                if (args[0].equalsIgnoreCase("excite")) {
+                    return new TARDISExciteCommand(plugin).excite(player);
+                }
                 if (args[0].equalsIgnoreCase("ep1")) {
                     return new TARDISEmergencyProgrammeCommand(plugin).showEP1(player);
                 }

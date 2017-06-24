@@ -309,6 +309,9 @@ permissions:
   tardis.rift:
     description: Allows a player to create personal time rift rechargers.
     default: op
+  tardis.atmospheric:
+    description: Allows a player to initiate atmospheric exitation around their TARDIS.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
@@ -470,6 +473,10 @@ commands:
       description: Allows a player to eject entities from their TARDIS.
       usage: /<command> eject
       permission: tardis.eject
+    excite:
+      description: Allows a player to initiate atmospheric exitation around their TARDIS.
+      usage: /<command> excite
+      permission: tardis.atmospheric
     ep1:
       description: Allows a player to make Emergency Program One appear.
       usage: /<command> abandon
