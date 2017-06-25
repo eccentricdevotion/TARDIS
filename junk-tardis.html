@@ -36,7 +36,6 @@
         <p><img src="images/docs/junk.jpg" alt="Junk TARDIS" /></p>
         <h3>Prequisites for enabling the Junk TARDIS</h3>
         <p>For the Junk TARDIS to be enabled on the server, the server must be set to use a default world for storing TARDISes (this is the default option with new installs). In the config, set <code>creation.default_world: true</code>. You will also need to enable the Junk TARDIS &mdash; <code>junk.enabled: true</code>.</p>
-        <p>To enable the Junk TARDIS effects, you need to install <a href="http://dev.bukkit.org/bukkit-plugins/effectlib/">EffectLib v3.4</a> or later on the server.</p>
         <h3>Creating the Junk TARDIS</h3>
         <p>Any player with the <code>tardis.admin</code> permission can create the Junk TARDIS, but only one Junk TARDIS can be active at a time. To create the Junk TARDIS:</p>
         <ol>
@@ -57,18 +56,18 @@
             <li><strong>repeater</strong> &mdash; determines the amount (1, 10, 100 or 1000) which is added or subtracted from the x and z coordinates when the buttons are clicked</li>
             <li><strong>comparator</strong> &mdash; sets whether the buttons add or subtract</li>
         </ul>
-        <p>When the Junk TARDIS is travelling, any player who steps off the Junk TARDIS platform will killed instantly. To visually show that the Junk TARDIS is travelling particle effects will show (if EffectLib is installed) and the redstone torch on the console will flash on and off.</p>
+        <p>When the Junk TARDIS is travelling, any player who steps off the Junk TARDIS platform will be killed instantly. To visually show that the Junk TARDIS is travelling particle effects and the redstone torch on the console will flash on and off.</p>
         <p>If no destination coordinates are entered onto the destination sign and the Junk TARDIS is not at its &lsquo;home&rsquo; location, then clicking the handbrake lever will make the Junk TARDIS travel home.</p>
         <h3>Other commands</h3>
         <p><code>/tardisjunk return</code> &mdash; returns the Junk TARDIS to its &lsquo;home&rsquo; location (bringing along any players who may be onboard)</p>
         <p><code>/tardisjunk time</code> &mdash; find out how much time remains before the Junk TARDIS automatically returns home.</p>
         <p><code>/tardisjunk find</code> &mdash; find the current location of the Junk TARDIS</p>
-        <p><code>/tardisjunk [wall|floor] [material]</code> &mdash; change the wall anf floor blocks of the Junk TARDIS. Use <strong>before</strong> creating the Junk TARDIS so that the Voretx TARDIS matches</p>
+        <p><code>/tardisjunk [wall|floor] [material]</code> &mdash; change the wall and floor blocks of the Junk TARDIS. Use <strong>before</strong> creating the Junk TARDIS so that the Voretx TARDIS matches</p>
         <h3 id="config">Config options</h3>
         <pre><code>junk.enabled: [true|false]</code></pre>
         <p>Whether the Junk TARDIS is available on the server &mdash; <strong>NOTE:</strong> The Junk TARDIS will be disabled if <code>creation.default_world</code> is <code>false</code></p>
         <pre><code>junk.particles: [true|false]</code></pre>
-        <p>Whether the Junk TARDIS displays a particle effect when travelling &mdash; requires <a href="http://dev.bukkit.org/bukkit-plugins/effectlib/">EffectLib 3.4</a> or higher</p>
+        <p>Whether the Junk TARDIS displays a particle effect when travelling</p>
         <pre><code>junk.return: [time in seconds]</code></pre>
         <p>If <code>[time in seconds]</code> is greater than <code>0</code> and the Junk TARDIS has not been used for longer than the specified period, it will automatically return to its &lsquo;home&rsquo; location</p>
         <h3>Permissions</h3>
