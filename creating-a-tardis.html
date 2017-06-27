@@ -32,17 +32,19 @@
 	<section>
 		<p><a href="#video">Jump to video</a></p>
 		<h1>Creating a TARDIS</h1>
-		<p>To create a TARDIS, you first need to craft a TARDIS seed block.</p>
+		<p>To create a TARDIS, you first need to craft a TARDIS seed block. The crafting recipe depends on which version of the plugin you have installed. Versions 2.6 &ndash; 3.6.x use <strong>7 items</strong>. Version 3.7 and higher use <strong>only 5 items</strong>.</p>
 		<h2>TARDIS Seed Blocks</h2>
-		<p>A seed block requires seven different components as explained below. You can mix and match your own combination of blocks (19,450,850 different combinations with the default plugin configuration) to customise the appearance of your TARDIS.</p>
+		<p>A seed block requires five or seven different components as explained below. You can mix and match your own combination of blocks (19,450,850 different combinations with the default plugin configuration) to customise the appearance of your TARDIS.</p>
+		<p><img src="images/docs/craftdefaultseed-v3.7.jpg" alt="Crafting a TARDIS seed block" /></p>
+		<p>The crafting grid above shows how to craft the default &lsquo;budget&rsquo; TARDIS that defaults to the FACTORY chameleon preset <strong>(TARDIS v3.7 and higher)</strong>:</p>
 		<p><img src="images/docs/craftdefaultseed.jpg" alt="Crafting a TARDIS seed block" /></p>
-		<p>The crafting grid above shows how to craft the default &lsquo;budget&rsquo; TARDIS with a blue Police Box:</p>
+		<p>The crafting grid above shows how to craft the default &lsquo;budget&rsquo; TARDIS with a blue Police Box <strong>(TARDIS v3.6.2 and lower)</strong>:</p>
 		<ul>
 			<li><strong>IRON block</strong> = TARDIS type, can be any of the current TARDIS &lsquo;type&rsquo; blocks e.g. IRON, GOLD, DIAMOND, EMERALD etc (<a href="#types">see list below</a>)</li>
 			<li><strong>LAPIS block</strong> = required block</li>
 			<li><strong>REDSTONE TORCH</strong> = required block</li>
-			<li><strong>BLUE WOOL</strong> = Police Box wall block, can be any block with an id from the <code>chameleon_blocks</code> configuration section in <em><a href="https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/resources/blocks.yml#L25">blocks.yml</a></em></li>
-			<li><strong>REDSTONE LAMP</strong> = Police Box lamp, can be any block with a material from the <code>lamp_blocks</code> configuration section in <em><a href="https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/resources/blocks.yml#L81">blocks.yml</a></em></li>
+			<li><strong>BLUE WOOL</strong> = Police Box wall block, can be any block with an id from the <code>chameleon_blocks</code> configuration section in <em><a href="https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/resources/blocks.yml#L25">blocks.yml</a></em> &mdash; <strong style="color:red">Leave empty for TARDIS v3.7 and above</strong></li>
+			<li><strong>REDSTONE LAMP</strong> = Police Box lamp, can be any block with a material from the <code>lamp_blocks</code> configuration section in <em><a href="https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/resources/blocks.yml#L81">blocks.yml</a></em> &mdash; <strong style="color:red">Leave empty for TARDIS v3.7 and above</strong></li>
 			<li><strong>LIGHT GREY WOOL</strong> = TARDIS interior floor block, can be any valid <a href="https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/java/me/eccentric_nz/TARDIS/rooms/TARDISWalls.java">TARDIS wall block</a></li>
 			<li><strong>ORANGE WOOL</strong> = TARDIS interior wall block, can be any valid <a href="https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/java/me/eccentric_nz/TARDIS/rooms/TARDISWalls.java">TARDIS wall block</a></li>
 		</ul>
@@ -72,6 +74,7 @@
 		<p>Your TARDIS requires a key, (default is a gold nugget, configurable in the config file).</p>
 		<p><strong>RIGHT</strong>-click the door with your &ldquo;key&rdquo; and it will transfer you into your new TARDIS interior!</p>
 		<h3 id="video">Video</h3>
+		<p>This video is now outdated, for TARDIS v3.7 and above do NOT include the exterior wall or lamp blocks!</p>
 		<iframe src="http://player.vimeo.com/video/80702478" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 		<p>&nbsp;</p>
 		<h2>Legacy TARDIS creation</h2>
