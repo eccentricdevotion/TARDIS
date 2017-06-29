@@ -146,6 +146,22 @@ permissions:
   tardis.coral:
     description: Allow players to build the Tenth Doctor's coral TARDIS.
     default: op
+  tardis.legacy_budget:
+    description: Allow players to build the legacy 'budget' TARDIS.
+    default: op
+  tardis.legacy_bigger:
+    description: Allow players to build the legacy 'bigger' TARDIS.
+    default: op
+  tardis.legacy_deluxe:
+    description: Allow players to build the legacy 'deluxe' TARDIS.
+    default: op
+  tardis.legacy_eleventh:
+    description: Allow players to build the legacy 'eleventh' TARDIS.
+    default: op
+  tardis.legacy_redstone:
+    description: Allow players to build the legacy 'redstone' TARDIS.
+    default: op
+
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
     default: op
@@ -183,6 +199,7 @@ permissions:
       tardis.room.arboretum: true
       tardis.room.baker: true
       tardis.room.bedroom: true
+      tardis.room.birdcage: true
       tardis.room.empty: true
       tardis.room.farm: true
       tardis.room.gravity: true
@@ -198,8 +215,9 @@ permissions:
       tardis.room.pool: true
       tardis.room.rail: true
       tardis.room.renderer: true
-      tardis.room.stable: true
       tardis.room.smelter: true
+      tardis.room.stable: true
+      tardis.room.stall: true
       tardis.room.trenzalore: true
       tardis.room.vault: true
       tardis.room.village: true
