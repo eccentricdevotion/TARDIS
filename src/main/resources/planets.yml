@@ -12,6 +12,9 @@ planets:
             - POISON
         rust: true
         flying_daleks: true
+    Siluria:
+        enabled: false
+        resource_pack: default
     TARDIS_TimeVortex:
         resource_pack: default
         void: true

@@ -901,13 +901,18 @@ public class TARDISConfiguration {
             planets_config.set("planets.Skaro.resource_pack", "https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1");
             save = true;
         }
+        if (!planets_config.contains("planets.Siluria.enabled")) {
+            planets_config.set("planets.Siluria.enabled", false);
+            planets_config.set("planets.Siluria.resource_pack", "default");
+            save = true;
+        }
         if (save) {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                 planets_config.save(new File(planetsPath));
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + "1" + ChatColor.RESET + " new item to planets.yml");
             } catch (IOException io) {
-                plugin.debug("Could not save chameleon_guis.yml, " + io.getMessage());
+                plugin.debug("Could not save planets.yml, " + io.getMessage());
             }
         }
     }
