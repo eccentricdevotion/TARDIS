@@ -30,13 +30,13 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
  *
  * @author eccentric_nz
  */
-public final class TARDISSiluriaSpawnEvent implements Listener {
+public final class TARDISSiluriaSpawnListener implements Listener {
 
     private final TARDIS plugin;
     private final TARDISWeepingAngelsAPI twaAPI;
     private final Random r = new Random();
 
-    public TARDISSiluriaSpawnEvent(TARDIS plugin, TARDISWeepingAngelsAPI twaAPI) {
+    public TARDISSiluriaSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
         this.twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
     }
