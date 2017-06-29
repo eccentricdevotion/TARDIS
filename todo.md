@@ -5,8 +5,7 @@
 
 ##Next minor version `3.8-beta-1`
 1. Add glazed terracotta chameleon presets?
-2. Add other worlds (Silurian cave world, Gallifrey)?
-3. Fix Biome adaptive presets dropping flowers & seeds (properly)
+2. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?

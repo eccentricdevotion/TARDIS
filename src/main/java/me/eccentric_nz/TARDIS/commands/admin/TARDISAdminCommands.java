@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -100,6 +101,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("skaro", "");
         firstsStr.put("spawn_abandoned", "");
         firstsStr.put("tardis_lamp", "police_box");
+        firstsStr.put("use_clay", "creation");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
@@ -156,7 +158,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("the_end", "travel");
         firstsBool.put("tp_switch", "allow");
         firstsBool.put("use_block_stack", "creation");
-        firstsBool.put("use_clay", "creation");
         firstsBool.put("use_worldguard", "preferences");
         firstsBool.put("village_travel", "allow");
         firstsBool.put("walk_in_tardis", "preferences");
@@ -372,6 +373,15 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
+                }
+                if (first.equals("use_clay")) {
+                    try {
+                        USE_CLAY use_clay = USE_CLAY.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                    } catch (IllegalArgumentException e) {
+                        TARDISMessage.send(sender, "ARG_USE_CLAY");
+                        return true;
+                    }
+                    plugin.getConfig().set("creation.use_clay", args[1].toUpperCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {

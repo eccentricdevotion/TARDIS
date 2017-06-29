@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -219,14 +220,20 @@ public class TARDISBuilderInner {
                         String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 14, storage, 0);
                     }
+                    // determine 'use_clay' material
+                    USE_CLAY use_clay;
+                    try {
+                        use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                    } catch (IllegalArgumentException e) {
+                        use_clay = USE_CLAY.WOOL;
+                    }
+                    Material use_mat = use_clay.getMaterial();
                     if (type.equals(Material.WOOL)) {
                         switch (data) {
                             case 1:
                                 switch (wall_type) {
                                     case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Stained Clay
-                                        if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                                            type = Material.STAINED_CLAY;
-                                        }
+                                        type = use_mat;
                                         break;
                                     default:
                                         type = wall_type;
@@ -237,22 +244,18 @@ public class TARDISBuilderInner {
                                 if (!schm.getPermission().equals("eleventh")) {
                                     switch (floor_type) {
                                         case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
-                                            if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                                                type = Material.STAINED_CLAY;
-                                            }
+                                            type = use_mat;
                                             break;
                                         default:
                                             type = floor_type;
                                             data = floor_data;
                                     }
-                                } else if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                                    type = Material.STAINED_CLAY;
+                                } else {
+                                    type = use_mat;
                                 }
                                 break;
                             default:
-                                if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                                    type = Material.STAINED_CLAY;
-                                }
+                                type = use_mat;
                                 break;
                         }
                     }

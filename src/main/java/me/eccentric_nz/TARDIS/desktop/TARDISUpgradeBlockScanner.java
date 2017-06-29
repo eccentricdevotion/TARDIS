@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
@@ -134,8 +135,15 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.COMMAND)) {
                             type = Material.SMOOTH_BRICK;
                         }
-                        if (type.equals(Material.WOOL) && plugin.getConfig().getBoolean("creation.use_clay")) {
-                            type = Material.STAINED_CLAY;
+                        if (type.equals(Material.WOOL)) {
+                            // determine 'use_clay' material
+                            USE_CLAY use_clay;
+                            try {
+                                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                            } catch (IllegalArgumentException e) {
+                                use_clay = USE_CLAY.WOOL;
+                            }
+                            type = use_clay.getMaterial();
                         }
                         if (type.equals(Material.AIR)) {
                             v--;

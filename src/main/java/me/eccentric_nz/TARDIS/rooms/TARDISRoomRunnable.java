@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
+import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -291,20 +292,28 @@ public class TARDISRoomRunnable implements Runnable {
             if (type.equals(Material.REDSTONE_WIRE)) {
                 data = 0;
             }
-            if (type.equals(Material.WOOL) && data == 7 && plugin.getConfig().getBoolean("creation.use_clay")) {
-                type = Material.STAINED_CLAY;
+            // determine 'use_clay' material
+            USE_CLAY use_clay;
+            try {
+                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+            } catch (IllegalArgumentException e) {
+                use_clay = USE_CLAY.WOOL;
+            }
+            Material use_mat = use_clay.getMaterial();
+            if (type.equals(Material.WOOL) && data == 7) {
+                type = use_mat;
             }
             if (type.equals(Material.WOOL) && data == 1) {
-                if (wall_type.equals(Material.WOOL) && wall_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) {
-                    type = Material.STAINED_CLAY;
+                if (wall_type.equals(Material.WOOL) && wall_data == 1) {
+                    type = use_mat;
                 } else {
                     type = wall_type;
                 }
                 data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && wall_type.equals(Material.WOOL) && (wall_data == 5 || wall_data == 6)) ? 1 : wall_data;
             }
             if (type.equals(Material.WOOL) && data == 8) {
-                if (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) {
-                    type = Material.STAINED_CLAY;
+                if (floor_type.equals(Material.WOOL) && floor_data == 8) {
+                    type = use_mat;
                 } else {
                     type = floor_type;
                 }
@@ -350,7 +359,7 @@ public class TARDISRoomRunnable implements Runnable {
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
-                type = (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : floor_type;
+                type = (floor_type.equals(Material.WOOL) && floor_data == 8) ? use_mat : floor_type;
                 data = floor_data;
                 // update player prefs - turn on mob farming
                 turnOnFarming(p, qf);
@@ -511,7 +520,7 @@ public class TARDISRoomRunnable implements Runnable {
                     type = Material.AIR;
                     data = (byte) 0;
                 } else {
-                    type = (wall_type.equals(Material.WOOL) && wall_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : wall_type;
+                    type = (wall_type.equals(Material.WOOL) && wall_data == 1) ? use_mat : wall_type;
                     data = wall_data;
                 }
             }

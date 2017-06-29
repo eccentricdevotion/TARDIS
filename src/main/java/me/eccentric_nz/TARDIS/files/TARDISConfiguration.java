@@ -121,7 +121,6 @@ public class TARDISConfiguration {
         boolOptions.put("creation.keep_night", true);
         boolOptions.put("creation.sky_biome", true);
         boolOptions.put("creation.use_block_stack", false);
-        boolOptions.put("creation.use_clay", false);
         boolOptions.put("debug", false);
         boolOptions.put("desktop.check_blocks_before_upgrade", false);
         boolOptions.put("growth.return_room_seed", true);
@@ -393,6 +392,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
+        strOptions.put("creation.use_clay", "WOOL");
         strOptions.put("police_box.default_preset", "FACTORY");
         strOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP_OFF");
         strOptions.put("police_box.sign_colour", "WHITE");
@@ -530,6 +530,13 @@ public class TARDISConfiguration {
             });
             if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
                 plugin.getConfig().set("difficulty", "hard");
+            }
+            if (config.contains("creation.use_clay") && (!config.getString("creation.use_clay").equals("WOOL") || !config.getString("creation.use_clay").equals("TERRACOTTA") || !config.getString("creation.use_clay").equals("CONCRETE"))) {
+                if (config.getBoolean("creation.use_clay")) {
+                    plugin.getConfig().set("creation.use_clay", "TERRACOTTA");
+                } else {
+                    plugin.getConfig().set("creation.use_clay", "WOOL");
+                }
             }
             if (config.contains("police_box.default_preset") && config.getString("police_box.default_preset").equals("NEW")) {
                 plugin.getConfig().set("police_box.default_preset", "FACTORY");

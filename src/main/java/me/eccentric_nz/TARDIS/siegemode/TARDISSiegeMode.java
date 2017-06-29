@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -221,13 +222,20 @@ public class TARDISSiegeMode {
             Pair floor = plugin.getTardisWalls().blocks.get(rspp.getFloor());
             String sw = rspp.getSiegeWall();
             String sf = rspp.getSiegeFloor();
-            if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                if (sw.equals("GRAY_CLAY") || sw.equals("GREY_CLAY")) {
+            // determine 'use_clay' material
+            USE_CLAY use_clay;
+            try {
+                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+            } catch (IllegalArgumentException e) {
+                use_clay = USE_CLAY.WOOL;
+            }
+            if (!use_clay.equals(USE_CLAY.WOOL)) {
+                if (sw.equals("GRAY_CLAY") || sw.equals("GREY_CLAY") || sw.equals("GREY_CONCRETE") || sw.equals("GREY_CONCRETE")) {
                     sw = "GRAY_WOOL";
                 }
             }
-            if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                if (sf.equals("BLACK_CLAY")) {
+            if (!use_clay.equals(USE_CLAY.WOOL)) {
+                if (sf.equals("BLACK_CLAY") || sw.equals("BLACK_CONCRETE")) {
                     sf = "BLACK_WOOL";
                 }
             }
