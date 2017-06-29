@@ -45,6 +45,8 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> PRESETS;
     private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
     private final ImmutableList<String> ROOT_SUBS;
+    private final ImmutableList<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
+    ;
     private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war", "twelfth");
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
@@ -133,6 +135,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             }
             if (sub.equals("spawn_abandoned")) {
                 return partial(lastArg, SEED_SUBS);
+            }
+            if (sub.equals("use_clay")) {
+                return partial(lastArg, USE_CLAY_SUBS);
             }
             if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("set_size")) {
                 // return null to default to online player name matching
