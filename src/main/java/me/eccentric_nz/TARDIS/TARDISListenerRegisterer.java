@@ -127,6 +127,7 @@ import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAcidWater;
+import me.eccentric_nz.TARDIS.planets.TARDISGallifreyChunkPopulateListener;
 import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
 import me.eccentric_nz.TARDIS.planets.TARDISSiluriaSpawnListener;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaroSpawnListener;
@@ -353,6 +354,9 @@ public class TARDISListenerRegisterer {
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled") && plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
             plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
+        }
+        if (plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.enabled")) {
+            plugin.getPM().registerEvents(new TARDISGallifreyChunkPopulateListener(plugin), plugin);
         }
         if (plugin.getPlanetsConfig().getBoolean("switch_resource_packs")) {
             plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);

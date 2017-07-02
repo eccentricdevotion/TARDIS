@@ -15,6 +15,9 @@ planets:
     Siluria:
         enabled: false
         resource_pack: default
+    Gallifrey:
+        enabled: false
+        resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
     TARDIS_TimeVortex:
         resource_pack: default
         void: true

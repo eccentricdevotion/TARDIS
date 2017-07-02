@@ -913,6 +913,11 @@ public class TARDISConfiguration {
             planets_config.set("planets.Siluria.resource_pack", "default");
             save = true;
         }
+        if (!planets_config.contains("planets.Gallifrey.enabled")) {
+            planets_config.set("planets.Gallifrey.enabled", false);
+            planets_config.set("planets.Gallifrey.resource_pack", "https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1");
+            save = true;
+        }
         if (save) {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";

@@ -77,6 +77,7 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
+import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
 import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
@@ -966,6 +967,9 @@ public class TARDIS extends JavaPlugin {
         }
         if (getPlanetsConfig().getBoolean("planets.Siluria.enabled") && getServer().getWorld("Siluria") == null) {
             new TARDISSiluria(this).createSilurianUnderworld();
+        }
+        if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") && getServer().getWorld("Gallifrey") == null) {
+            new TARDISGallifrey(this).createTimeLordWorld();
         }
     }
 
