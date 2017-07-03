@@ -48,7 +48,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
-    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
+    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREEN_WOOL", "LIGHT_GREEN_CONCRETE", "LIGHT_GREEN_GLAZED_TERRACOTTA", "LIGHT_GREEN_CLAY", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "GREY_CONCRETE", "LIGHT_GREY_CONCRETE", "GREY_GLAZED_TERRACOTTA", "LIGHT_GREY_GLAZED_TERRACOTTA", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallMenuListener(TARDIS plugin) {
         super(plugin);
