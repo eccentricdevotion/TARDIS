@@ -144,6 +144,7 @@ public class TARDISBuildGallifreyanStructure {
         HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<>();
         HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<>();
         HashMap<Block, Byte> postLeverBlocks = new HashMap<>();
+        HashMap<Block, Byte> postLadderBlocks = new HashMap<>();
         HashMap<Block, JSONObject> postStandingBanners = new HashMap<>();
         HashMap<Block, JSONObject> postWallBanners = new HashMap<>();
         Block chest = null;
@@ -193,6 +194,9 @@ public class TARDISBuildGallifreyanStructure {
                             break;
                         case LEVER:
                             postLeverBlocks.put(world.getBlockAt(x, y, z), data);
+                            break;
+                        case LADDER:
+                            postLadderBlocks.put(world.getBlockAt(x, y, z), data);
                             break;
                         case WALL_SIGN:
                             postSignBlocks.put(world.getBlockAt(x, y, z), data);
@@ -275,6 +279,12 @@ public class TARDISBuildGallifreyanStructure {
             byte pldata = entry.getValue();
             plb.setType(Material.LEVER);
             plb.setData(pldata, true);
+        });
+        postLadderBlocks.entrySet().forEach((entry) -> {
+            Block pldb = entry.getKey();
+            byte plddata = entry.getValue();
+            pldb.setType(Material.LADDER);
+            pldb.setData(plddata, true);
         });
         setBanners(176, postStandingBanners);
         setBanners(177, postWallBanners);
