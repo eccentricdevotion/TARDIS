@@ -573,6 +573,15 @@ public class TARDISARSMethods {
                 return false;
             }
         }
+        if (m.equals(Material.NETHER_WART_BLOCK)) {
+            // allow only if console is not CORAL
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_WART_BLOCK")) {
+                return false;
+            }
+        }
         return (consoleBlocks.contains(m.toString()));
     }
 

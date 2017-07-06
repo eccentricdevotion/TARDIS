@@ -58,7 +58,7 @@ rooms:
     enabled: true
     cost: 400
     offset: -4
-    seed: NETHER_BRICK
+    seed: WORKBENCH
     user: false
   EMPTY:
     enabled: true
@@ -142,7 +142,7 @@ rooms:
     enabled: true
     cost: 350
     offset: -4
-    seed: NETHER_WART_BLOCK
+    seed: BROWN_GLAZED_TERRACOTTA
     user: false
   RAIL:
     enabled: true

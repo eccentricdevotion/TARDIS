@@ -435,13 +435,13 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.RENDERER.seed", "HARD_CLAY");
         roomStrOptions.put("rooms.SMELTER.seed", "CHEST");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
-        roomStrOptions.put("rooms.STALL.seed", "NETHER_WART_BLOCK");
+        roomStrOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
         roomStrOptions.put("rooms.BIRDCAGE.seed", "YELLOW_GLAZED_TERRACOTTA");
         roomStrOptions.put("rooms.TRENZALORE.seed", "BRICK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");
         roomStrOptions.put("rooms.VILLAGE.seed", "LOG");
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
-        roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
+        roomStrOptions.put("rooms.WORKSHOP.seed", "WORKBENCH");
         roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
         signListOptions.put("junk", Arrays.asList("Destination"));
         chameleonListOptions.put("ADAPT_LORE", Arrays.asList("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));
@@ -609,6 +609,16 @@ public class TARDISConfiguration {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
+        }
+        // replace room seed block for Llama STALL
+        if (rooms_config.contains("rooms.WORKSHOP.seed") && rooms_config.get("rooms.WORKSHOP.seed").equals("NETHER_BRICK")) {
+            rooms_config.set("rooms.STALL.seed", "WORKBENCH");
+            i++;
+        }
+        // replace room seed block for Llama STALL
+        if (rooms_config.contains("rooms.STALL.seed") && rooms_config.get("rooms.STALL.seed").equals("NETHER_WART_BLOCK")) {
+            rooms_config.set("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
+            i++;
         }
         // copy old settings and add any custom rooms
         if (config.contains("rooms")) {
