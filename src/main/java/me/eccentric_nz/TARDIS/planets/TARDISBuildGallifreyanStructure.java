@@ -289,7 +289,7 @@ public class TARDISBuildGallifreyanStructure {
         setBanners(176, postStandingBanners);
         setBanners(177, postWallBanners);
         // finished processing - set chest contents
-        if (chest != null && plugin.isHelperOnServer()) {
+        if (chest != null) {
             // get nbt
             Plugin tc = plugin.getPM().getPlugin("TerrainControl");
             if (tc != null) {
