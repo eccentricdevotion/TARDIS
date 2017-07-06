@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import com.khorn.terraincontrol.bukkit.BukkitWorld;
+import com.khorn.terraincontrol.bukkit.TXPlugin;
+import com.khorn.terraincontrol.customobjects.bo3.BO3Loader;
+import com.khorn.terraincontrol.util.NamedBinaryTag;
 import java.io.File;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
@@ -29,6 +33,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.Plugin;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -41,9 +46,70 @@ import org.bukkit.entity.EntityType;
 public class TARDISBuildGallifreyanStructure {
 
     private final TARDIS plugin;
+    private final TARDISRandomCollection<String> nbtFiles = new TARDISRandomCollection<>();
 
     public TARDISBuildGallifreyanStructure(TARDIS plugin) {
         this.plugin = plugin;
+        this.nbtFiles.add(1, "RareE-1.nbt")
+                .add(1, "RareE-2.nbt")
+                .add(1, "RareE-3.nbt")
+                .add(2, "RareE-4.nbt")
+                .add(2, "RareE-5.nbt")
+                .add(2, "RareE-6.nbt")
+                .add(3, "RareE-7.nbt")
+                .add(3, "RareE-8.nbt")
+                .add(3, "RareE-9.nbt")
+                .add(4, "RareE-10.nbt")
+                .add(4, "RareE-11.nbt")
+                .add(4, "RareE-12.nbt")
+                .add(5, "RareE-13.nbt")
+                .add(5, "RareE-14.nbt")
+                .add(5, "RareE-15.nbt")
+                .add(6, "Rare-1.nbt")
+                .add(6, "Rare-2.nbt")
+                .add(6, "Rare-3.nbt")
+                .add(7, "Rare-4.nbt")
+                .add(7, "Rare-5.nbt")
+                .add(7, "Rare-6.nbt")
+                .add(8, "Rare-7.nbt")
+                .add(8, "Rare-8.nbt")
+                .add(8, "Rare-9.nbt")
+                .add(9, "Rare-10.nbt")
+                .add(9, "Rare-11.nbt")
+                .add(9, "Rare-12.nbt")
+                .add(10, "Rare-13.nbt")
+                .add(10, "Rare-14.nbt")
+                .add(10, "Rare-15.nbt")
+                .add(20, "BasicE-1.nbt")
+                .add(20, "BasicE-2.nbt")
+                .add(21, "BasicE-3.nbt")
+                .add(22, "BasicE-4.nbt")
+                .add(23, "BasicE-5.nbt")
+                .add(24, "BasicE-6.nbt")
+                .add(25, "BasicE-7.nbt")
+                .add(25, "BasicE-8.nbt")
+                .add(26, "BasicE-9.nbt")
+                .add(26, "BasicE-10.nbt")
+                .add(27, "BasicE-11.nbt")
+                .add(28, "BasicE-12.nbt")
+                .add(28, "BasicE-13.nbt")
+                .add(29, "BasicE-14.nbt")
+                .add(30, "BasicE-15.nbt")
+                .add(33, "Basic-1.nbt")
+                .add(38, "Basic-2.nbt")
+                .add(43, "Basic-3.nbt")
+                .add(48, "Basic-4.nbt")
+                .add(53, "Basic-5.nbt")
+                .add(58, "Basic-6.nbt")
+                .add(63, "Basic-7.nbt")
+                .add(68, "Basic-8.nbt")
+                .add(73, "Basic-9.nbt")
+                .add(78, "Basic-10.nbt")
+                .add(83, "Basic-11.nbt")
+                .add(88, "Basic-12.nbt")
+                .add(93, "Basic-13.nbt")
+                .add(98, "Basic-14.nbt")
+                .add(100, "Basic-15.nbt");
     }
 
     /**
@@ -80,6 +146,7 @@ public class TARDISBuildGallifreyanStructure {
         HashMap<Block, Byte> postLeverBlocks = new HashMap<>();
         HashMap<Block, JSONObject> postStandingBanners = new HashMap<>();
         HashMap<Block, JSONObject> postWallBanners = new HashMap<>();
+        Block chest = null;
         Material type;
         byte data;
 
@@ -101,6 +168,10 @@ public class TARDISBuildGallifreyanStructure {
 
                     // if it's the door, don't set it just remember its block then do it at the end
                     switch (type) {
+                        case CHEST:
+                            chest = world.getBlockAt(x, y, z);
+                            TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                            break;
                         case IRON_DOOR_BLOCK:
                             // doors
                             postDoorBlocks.put(world.getBlockAt(x, y, z), data);
@@ -207,6 +278,16 @@ public class TARDISBuildGallifreyanStructure {
         });
         setBanners(176, postStandingBanners);
         setBanners(177, postWallBanners);
-        // finished processing
+        // finished processing - set chest contents
+        if (chest != null && plugin.isHelperOnServer()) {
+            // get nbt
+            Plugin tc = plugin.getPM().getPlugin("TerrainControl");
+            if (tc != null) {
+                File f = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro" + File.separator + "WorldObjects" + File.separator + "NBT");
+                NamedBinaryTag tag = BO3Loader.loadMetadata(nbtFiles.next(), f);
+                BukkitWorld bw = ((TXPlugin) tc).worlds.get("Gallifrey");
+                bw.attachMetadata(chest.getX(), chest.getY(), chest.getZ(), tag);
+            }
+        }
     }
 }
