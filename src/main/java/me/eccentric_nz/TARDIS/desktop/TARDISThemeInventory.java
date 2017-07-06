@@ -88,7 +88,6 @@ public class TARDISThemeInventory {
                 im.setLore(lore);
                 is.setItemMeta(im);
                 stack[i] = is;
-                plugin.debug(i + ": " + a.getDescription());
                 i++;
             }
         }

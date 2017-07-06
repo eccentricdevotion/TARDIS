@@ -58,17 +58,17 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 18:
+                    case 22:
                         // archive
                         archive(p);
                         break;
-                    case 19:
+                    case 23:
                         // repair
                         if (plugin.getConfig().getBoolean("allow.repair")) {
                             repair(p);
                         }
                         break;
-                    case 20:
+                    case 24:
                         // clean
                         if (plugin.getConfig().getBoolean("allow.repair")) {
                             clean(p);
