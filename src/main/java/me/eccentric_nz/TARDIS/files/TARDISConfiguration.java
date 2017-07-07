@@ -612,11 +612,11 @@ public class TARDISConfiguration {
         }
         // replace room seed block for Llama STALL
         if (rooms_config.contains("rooms.WORKSHOP.seed") && rooms_config.get("rooms.WORKSHOP.seed").equals("NETHER_BRICK")) {
-            rooms_config.set("rooms.STALL.seed", "WORKBENCH");
+            rooms_config.set("rooms.WORKSHOP.seed", "WORKBENCH");
             i++;
         }
         // replace room seed block for Llama STALL
-        if (rooms_config.contains("rooms.STALL.seed") && rooms_config.get("rooms.STALL.seed").equals("NETHER_WART_BLOCK")) {
+        if (rooms_config.contains("rooms.STALL.seed") && (rooms_config.get("rooms.STALL.seed").equals("NETHER_WART_BLOCK") || rooms_config.get("rooms.STALL.seed").equals("WORKBENCH"))) {
             rooms_config.set("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
             i++;
         }
