@@ -73,7 +73,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.GOLD_BLOCK, "BIGGER"); // bigger
         t.put(Material.IRON_BLOCK, "BUDGET"); // budget
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
-        t.put(Material.NETHER_BRICK, "MASTER"); // master schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
+        t.put(Material.NETHER_BRICK, "MASTER"); // master schematic designed by ShadowAssociate
         t.put(Material.NETHER_WART_BLOCK, "CORAL"); // coral schematic designed by vistaero
         t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
         t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)

@@ -68,7 +68,7 @@ public class TARDISFileCopier {
         // The CORAL schematic designed by vistaero
         // The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         // The ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
-        // The MASTER's schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
+        // The MASTER's schematic designed by ShadowAssociate
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;

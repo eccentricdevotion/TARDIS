@@ -637,7 +637,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.MONSTER_EGGS)) {
                     // legacy monster egg stone for controls
-                    TARDISBlockSetters.setBlock(world, x, y, z, 0, (byte) 0);
+                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, (byte) 0);
                 } else if (type.equals(Material.HUGE_MUSHROOM_2) && data == 15) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {
@@ -662,6 +662,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         }
                         j++;
                     }
+                } else if (type.equals(Material.BROWN_MUSHROOM) && tud.getSchematic().getPermission().equals("master")) {
+                    // spawn locations for two villagers
+                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, (byte) 0);
+                    plugin.setTardisSpawn(true);
+                    world.spawnEntity(new Location(world, x + 0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
                 } else if (type.equals(Material.SPONGE)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, (byte) 0);
                 } else {

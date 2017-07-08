@@ -98,7 +98,7 @@ public enum TARDISDescription {
     ARS("The Architectural Reconfiguration System TARDIS - console design by killeratnight & L0rd Rahl."),
     WAR("The War Doctor's TARDIS."),
     PYRAMID("A sandstone pyramid TARDIS - console design by airomis."),
-    MASTER("The Master's TARDIS - console design by shadowhawk14269."),
+    MASTER("The Master's TARDIS - console design by ShadowAssociate."),
     ENDER("An End Stone and Purpur TARDIS - console design by ToppanaFIN."),
     CORAL("The 10th Doctor's TARDIS - console design by vistaero."),
     CUSTOM("A custom designed server TARDIS"),

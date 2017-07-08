@@ -415,6 +415,11 @@ public class TARDISBuildAbandoned {
                         String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         set.put("beacon", bedrocloc);
                         postBedrock = world.getBlockAt(x, y, z);
+                    } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {
+                        // spawn locations for two villagers
+                        TARDISBlockSetters.setBlock(world, x, y, z, 0, (byte) 0);
+                        plugin.setTardisSpawn(true);
+                        world.spawnEntity(new Location(world, +0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
                     } else {
                         TARDISBlockSetters.setBlock(world, x, y, z, type, data);
                     }
