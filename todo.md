@@ -1,9 +1,9 @@
 #TODO
 
-##Current bugfix version `3.8-beta-1`
+##Current bugfix version `3.8.1`
 1. Fix bugs!
 
-##Next minor version `3.8-beta-1`
+##Next minor version `3.9-beta-1`
 1. Add glazed terracotta chameleon presets?
 2. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
