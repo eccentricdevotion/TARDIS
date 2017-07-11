@@ -24,8 +24,8 @@ You need to place items in the grid in the following order:
 2: Lapis Block
 3: Redstone Torch
 
-4: A block to set the outside walls of the TARDIS exterior
-5: An item to set the TARDIS exterior lamp
+4: Empty
+5: Empty
 6: Empty
 
 7: A block to set the floors of the TARDIS interior
