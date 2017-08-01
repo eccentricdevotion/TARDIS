@@ -188,7 +188,7 @@ public class TARDISMySQLDatabaseUpdater {
                 }
             }
             // update data type for lamp in player_prefs
-            String lamp_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = " + prefix + "'player_prefs' AND COLUMN_NAME = 'lamp'";
+            String lamp_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "player_prefs' AND COLUMN_NAME = 'lamp'";
             ResultSet rslc = statement.executeQuery(lamp_check);
             if (rslc.next() && !rslc.getString("DATA_TYPE").equalsIgnoreCase("varchar")) {
                 String lamp_query = "ALTER TABLE " + prefix + "player_prefs CHANGE `lamp` `lamp` VARCHAR(64) NULL DEFAULT ''";
