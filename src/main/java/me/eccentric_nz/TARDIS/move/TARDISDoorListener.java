@@ -50,8 +50,8 @@ import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 /**
  *
@@ -288,9 +288,10 @@ public class TARDISDoorListener {
             key = plugin.getConfig().getString("preferences.key");
         }
         if (plugin.getConfig().getBoolean("travel.give_key") && !key.equals("AIR")) {
-            Inventory inv = p.getInventory();
+            PlayerInventory inv = p.getInventory();
             Material m = Material.valueOf(key);
-            if (!inv.contains(m)) {
+            ItemStack oh = inv.getItemInOffHand();
+            if (!inv.contains(m) && (oh != null && !oh.getType().equals(m))) {
                 ItemStack is = new ItemStack(m, 1);
                 TARDISItemRenamer ir = new TARDISItemRenamer(is);
                 ir.setName("TARDIS Key", true);
