@@ -28,7 +28,7 @@ import org.bukkit.command.TabCompleter;
 public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "acid-battery", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "generator", "glasses", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "reader", "remote", "rift-circuit", "rift-manipulator", "rust", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit", "tardis", "telepathic", "vortex", "watch");
-    private final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "eleventh", "ender", "master", "pyramid", "redstone", "steampunk", "tom", "twelfth", "war", "wood");
+    private final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "eleventh", "ender", "master", "pyramid", "redstone", "steampunk", "tom", "twelfth", "war", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
 
     public TARDISRecipeTabComplete() {
     }

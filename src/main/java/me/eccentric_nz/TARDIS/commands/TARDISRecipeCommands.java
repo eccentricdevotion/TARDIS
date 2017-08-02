@@ -124,6 +124,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("WAR", Material.STAINED_CLAY); // war doctor
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put("MASTER", Material.NETHER_BRICK); // master schematic designed by ShadowAssociate
+        t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
+        t.put("LEGACY_BUDGET", Material.SILVER_GLAZED_TERRACOTTA);
+        t.put("LEGACY_DELUXE", Material.LIME_GLAZED_TERRACOTTA);
+        t.put("LEGACY_ELEVENTH", Material.CYAN_GLAZED_TERRACOTTA);
+        t.put("LEGACY_REDSTONE", Material.RED_GLAZED_TERRACOTTA);
         // custom seeds
         plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
