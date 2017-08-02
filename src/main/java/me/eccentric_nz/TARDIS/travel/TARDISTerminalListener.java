@@ -327,6 +327,9 @@ public class TARDISTerminalListener implements Listener {
 
     private void setCurrent(Inventory inv, Player p, int slot) {
         String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
+        if (plugin.isMVOnServer()) {
+            current = plugin.getMVHelper().getAlias(current);
+        }
         int[] slots = new int[]{36, 38, 40, 42};
         for (int i : slots) {
             List<String> lore = null;
