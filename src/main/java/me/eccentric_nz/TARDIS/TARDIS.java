@@ -427,10 +427,14 @@ public class TARDIS extends JavaPlugin {
             String[] split = preSplit.split("-");
             try {
                 Version ver;
-                if (check.getName().equals("TARDISChunkGenerator") && check.getDescription().getVersion().startsWith("1")) {
+                if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
                     ver = new Version("1");
-                } else if (check.getName().equals("Factions") && check.getDescription().getVersion().endsWith("Beta")) {
+                } else if (plg.equals("Factions") && preSplit.endsWith("Beta")) {
                     ver = new Version(split[0].substring(0, split[0].length() - 4));
+                } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
+                    // eg 6.2.1;84bc322
+                    String[] semi = split[0].split(";");
+                    ver = new Version(semi[0]);
                 } else {
                     ver = new Version(split[0]);
                 }
