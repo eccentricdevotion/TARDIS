@@ -173,15 +173,17 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             }
             chunks = getChunks(chunk, tud.getSchematic());
-            // remove the charged creeper
-            Location creeper = getCreeperLocation(tardis.getCreeper());
-            Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
-            ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
-                if (e instanceof Creeper) {
-                    e.remove();
-                }
-            });
-            ent.remove();
+            if (!tardis.getCreeper().isEmpty()) {
+                // remove the charged creeper
+                Location creeper = getCreeperLocation(tardis.getCreeper());
+                Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
+                ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
+                    if (e instanceof Creeper) {
+                        e.remove();
+                    }
+                });
+                ent.remove();
+            }
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
