@@ -32,6 +32,41 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.8</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added new 1.12 blocks</li>
+            <li>Added BIRDCAGE room &mdash; permission: <code>tardis.room.birdcage</code></li>
+            <li>Added the ability to enter the TARDIS with a parrot on your shoulder(s)</li>
+            <li>Added Parrots to Genetic Manipulation (Lazarus) Device</li>
+            <li>Added Atmospheric Excitation &mdash; use the command /tardis excite or right-click the exterior TARDIS sign with your Sonic Screwdriver &mdash; permission: <code>tardis.atmospheric</code> &mdash; <a href="https://www.youtube.com/watch?v=vFGJkrnTTfI">https://www.youtube.com/watch?v=vFGJkrnTTfI</a></li>
+            <li>Added the ability to give Knowledge books with TARDIS recipes &mdash; doesn&rsquo;t do anything yet&hellip; you get a knowledge book, but the recipe doesn&rsquo;t display in the recipe book so pretty useless&hellip; waiting for Minecraft 1.13... &mdash; <code>/tardis give [tardis item] knowledge</code></li>
+            <li>(Re)added the original old consoles to desktop themes / seed blocks</li>
+            <li>Added a Silurian Underworld and Gallifrey &mdash; home world of the Time Lords
+                <ul>
+                    <li>as with the Skaro world it requires TerrainControl to be enabled on the server.</li>
+                    <li>enable it in planets.yml and restart the server (might need to run the plugin once to update the planets config file).</li>
+                    <li>Gallifrey has a world specific resource pack to change a few colours for a more Whovian look (according to the <a href="http://tardis.wikia.com/wiki/Gallifrey" rel="nofollow">TARDIS Wikia</a> <em>"From the planet&rsquo;s surface, it boasted an orange sky at night, snow-capped mountains, fields of red grass, and trees with bright silver leaves."</em>) &mdash; enable resource pack switching in planets.yml (or check it out here: <a href="https://github.com/eccentricdevotion/Gallifrey" target="_blank" rel="nofollow noopener noreferrer">https://github.com/eccentricdevotion/Gallifrey</a>)</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The TARDIS can now land a lot closer to the world border (used to be 16 blocks, now down to 1 block)</li>
+            <li>The plugin now prevents sleeping in TARDIS if the TARDIS world environment is The End</li>
+            <li>Mob farming is now turned on when growing a stable, village, hutch, stall, igloo or birdcage room</li>
+            <li>Changed the <code>creation.use_clay</code> config option to allow &lsquo;WOOL&rsquo;, &lsquo;TERRACOTTA&rsquo; or &lsquo;CONCRETE&rsquo;</li>
+            <li>Updated the Master&rsquo;s TARDIS schematic &mdash; thanks to&nbsp;ShadowAssociate</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed a crafting guide duplication bug when using the /tardisrecipe command</li>
+            <li>Fixed the version number display in the error message when the server is outdated</li>
+            <li>Fixed farming Mules &amp; Donkeys</li>
+            <li>Added missing room and legacy console perms to plugin.yml</li>
+            <li>Fixed duplicate lime blocks in desktop theme wall GUI</li>
+            <li>Fixed duplicate seed blocks for STALL room / CORAL console &amp; WORKSHOP / MASTER console</li>
+        </ul>
         <h3>TARDIS v3.7</h3>
         <h4>Additions</h4>
         <ul>
