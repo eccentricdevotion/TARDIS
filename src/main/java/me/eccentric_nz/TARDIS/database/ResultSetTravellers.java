@@ -59,7 +59,7 @@ public class ResultSetTravellers {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
-     * @param multiple a boolean setting whether to retrieve more than on
+     * @param multiple a boolean setting whether to retrieve more than one
      * record, it true returns an ArrayList that can be looped through later.
      */
     public ResultSetTravellers(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {

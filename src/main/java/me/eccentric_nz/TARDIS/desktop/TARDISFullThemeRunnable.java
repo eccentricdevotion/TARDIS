@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
@@ -245,15 +246,24 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             player = plugin.getServer().getPlayer(uuid);
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
-            // teleport player to safe location
-            TARDISMessage.send(player, "UPGRADE_TELEPORT");
+            // teleport all players to safe location
             Location loc;
             if (tud.getSchematic().getPermission().equals("twelfth") || tud.getPrevious().getPermission().equals("twelfth")) {
                 loc = chunk.getBlock(9, 69, 3).getLocation();
             } else {
                 loc = chunk.getBlock(8, 69, 4).getLocation();
             }
-            player.teleport(loc);
+            // get players in TARDIS
+            HashMap<String, Object> wherev = new HashMap<>();
+            wherev.put("tardis_id", id);
+            ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherev, true);
+            if (rsv.resultSet()) {
+                rsv.getData().forEach((u) -> {
+                    Player pv = plugin.getServer().getPlayer(u);
+                    pv.teleport(loc);
+                    TARDISMessage.send(pv, "UPGRADE_TELEPORT");
+                });
+            }
             // clear lamps table as we'll be adding the new lamp positions later
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
