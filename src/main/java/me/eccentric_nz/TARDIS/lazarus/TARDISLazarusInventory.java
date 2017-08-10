@@ -85,8 +85,9 @@ public class TARDISLazarusInventory {
         disguises.put("ZOMBIE_VILLAGER", EntityType.ZOMBIE_VILLAGER);
         disguises.put("HUSK", EntityType.HUSK);
         disguises.put("EVOKER", EntityType.EVOKER);
-        disguises.put("VEX", EntityType.VEX);
         disguises.put("VINDICATOR", EntityType.VINDICATOR);
+        disguises.put("ILLUSIONER", EntityType.ILLUSIONER);
+        disguises.put("VEX", EntityType.VEX);
         this.terminal = getItemStack();
     }
 
