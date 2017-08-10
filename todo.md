@@ -2,6 +2,9 @@
 
 ##Current bugfix version `3.8.1`
 1. Fix bugs!
+2. Convert TARDIS achievements to custom Advancements
+3. Add ARS methods messages to localisations (en.yml)
+4. Add Illusioner to Genetic Manipulator
 
 ##Next minor version `3.9-beta-1`
 1. Add glazed terracotta chameleon presets?
