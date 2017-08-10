@@ -100,7 +100,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                             setMap(md.getY(), md.getE(), md.getS(), uuid, inv);
                             setLore(inv, slot, null);
                         } else {
-                            setLore(inv, slot, "Load map data first!");
+                            setLore(inv, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
                         break;
                     default:
@@ -136,7 +136,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
             if (col < 0 || col > 8 || row < 0 || row > 8) {
                 // outside ARS grid
-                setLore(inv, 47, "You are outside of the ARS grid!");
+                setLore(inv, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
                 return;
             }
             int east = getOffset(col);
@@ -162,7 +162,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             int slot = ((row - south) * 9) + 4 + (col - east);
             ItemStack is = inv.getItem(slot);
             is.setType(Material.ARROW);
-            setLore(inv, slot, "You are here!");
+            setLore(inv, slot, plugin.getLanguage().getString("ARS_MAP_HERE"));
         }
     }
 

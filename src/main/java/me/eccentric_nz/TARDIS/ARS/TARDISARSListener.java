@@ -130,7 +130,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             setMap(md.getY(), md.getE(), md.getS(), uuid, inv);
                             setLore(inv, slot, null);
                         } else {
-                            setLore(inv, slot, "Load map data first!");
+                            setLore(inv, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
                         break;
                     case 30:
@@ -138,7 +138,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         if (selected_slot.containsKey(uuid)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
                             if (checkSavedGrid(uuid, selected_slot.get(uuid), 0)) {
-                                setLore(inv, slot, "You cannot reset the selected slot!");
+                                setLore(inv, slot, plugin.getLanguage().getString("ARS_RESET_SLOT"));
                                 break;
                             } else {
                                 ItemStack stone = new ItemStack(Material.STONE, 1);
@@ -149,7 +149,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 setLore(inv, slot, null);
                             }
                         } else {
-                            setLore(inv, slot, "No slot selected!");
+                            setLore(inv, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
                         }
                         break;
                     case 36:
@@ -198,7 +198,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             setSlot(inv, selected_slot.get(uuid), tnt, uuid, true);
                             setLore(inv, slot, null);
                         } else {
-                            setLore(inv, slot, "No slot selected!");
+                            setLore(inv, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
                         }
                         break;
                     case 45:
@@ -221,18 +221,18 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 String displayName = ris.getItemMeta().getDisplayName();
                                 String room = TARDISARS.ARSFor(displayName).getActualName();
                                 if (!player.hasPermission("tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
-                                    setLore(inv, slot, "You don't have permission for this room!");
+                                    setLore(inv, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
                                     break;
                                 }
                                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                                     int updown = (room.equals("GRAVITY")) ? -1 : 1;
                                     if (checkSavedGrid(uuid, selected_slot.get(uuid), updown)) {
-                                        setLore(inv, slot, "Using a gravity well here would overwrite an existing room!");
+                                        setLore(inv, slot, plugin.getLanguage().getString("ARS_GRAVITY"));
                                         break;
                                     }
                                 }
                                 if (room.equals("RENDERER") && hasRenderer(uuid)) {
-                                    setLore(inv, slot, "You already have one of these!");
+                                    setLore(inv, slot, plugin.getLanguage().getString("ARS_HAS_RENDERER"));
                                     break;
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
@@ -240,7 +240,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 setSlot(inv, slot, ris.getTypeId(), displayName, uuid, false);
                             }
                         } else {
-                            setLore(inv, slot, "No slot selected!");
+                            setLore(inv, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
                         }
                         break;
                     default:

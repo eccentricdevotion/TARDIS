@@ -391,7 +391,7 @@ public class TARDISARSMethods {
      */
     public void loadMap(Inventory inv, UUID uuid) {
         if (inv.getItem(10).getItemMeta().hasLore()) {
-            setLore(inv, 10, "Map already loaded!");
+            setLore(inv, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
             return;
         }
         setLore(inv, 10, "Loading...");
@@ -415,7 +415,7 @@ public class TARDISARSMethods {
             setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), uuid, inv);
             saveAll(uuid);
             hasLoadedMap.add(uuid);
-            setLore(inv, 10, "Map LOADED");
+            setLore(inv, 10, plugin.getLanguage().getString("ARS_MAP_LOADED"));
             switchLevel(inv, (27 + rs.getLayer()), uuid);
         }
     }
@@ -474,7 +474,7 @@ public class TARDISARSMethods {
             md.setS(us);
             map_data.put(uuid, md);
         } else {
-            setLore(inv, slot, "Load map data first!");
+            setLore(inv, slot, plugin.getLanguage().getString("ARS_LOAD"));
         }
     }
 
