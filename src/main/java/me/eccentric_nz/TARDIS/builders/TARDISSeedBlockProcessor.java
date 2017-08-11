@@ -148,10 +148,6 @@ public class TARDISSeedBlockProcessor {
                 byte wall_data = seed.getWallData();
                 Material floor_type = seed.getFloorType();
                 byte floor_data = seed.getFloorData();
-//                int c_id = seed.getBox_id();
-//                byte c_data = seed.getBox_data();
-//                set.put("chameleon_id", c_id);
-//                set.put("chameleon_data", c_data);
                 Long now;
                 if (player.hasPermission("tardis.prune.bypass")) {
                     now = Long.MAX_VALUE;
@@ -161,14 +157,11 @@ public class TARDISSeedBlockProcessor {
                 set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
                 String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase(Locale.ENGLISH);
-//                if (!preset.equals("NEW")) {
                 set.put("chameleon_preset", preset);
                 set.put("chameleon_demat", preset);
-//                }
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(wall_type, wall_data));
                 setpp.put("floor", getWallKey(floor_type, floor_data));
-//                setpp.put("lamp", seed.getLamp());
                 setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs

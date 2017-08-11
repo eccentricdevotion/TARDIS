@@ -314,41 +314,36 @@ public class TARDISBuilderInner {
                          */
                         String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
-                    }
-                    if (type.equals(Material.MONSTER_EGGS) && !schm.getPermission().equals("junk")) {
-                        // silverfish stone
-                        if (data == 2) {
-                            // create default json
-                            int[][][] empty = new int[3][9][9];
-                            for (int ars_y = 0; ars_y < 3; ars_y++) {
-                                for (int ars_x = 0; ars_x < 9; ars_x++) {
-                                    for (int ars_z = 0; ars_z < 9; ars_z++) {
-                                        empty[ars_y][ars_x][ars_z] = 1;
-                                    }
+                        // create default json for ARS
+                        int[][][] empty = new int[3][9][9];
+                        for (int ars_y = 0; ars_y < 3; ars_y++) {
+                            for (int ars_x = 0; ars_x < 9; ars_x++) {
+                                for (int ars_z = 0; ars_z < 9; ars_z++) {
+                                    empty[ars_y][ars_x][ars_z] = 1;
                                 }
                             }
-                            int control = schm.getSeedId();
-                            empty[1][4][4] = control;
-                            if (w > 16) {
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                if (h > 16) {
-                                    empty[2][4][4] = control;
-                                    empty[2][4][5] = control;
-                                    empty[2][5][4] = control;
-                                    empty[2][5][5] = control;
-                                }
-                            } else if (h > 16) {
-                                empty[2][4][4] = control;
-                            }
-                            JSONArray json = new JSONArray(empty);
-                            HashMap<String, Object> seta = new HashMap<>();
-                            seta.put("tardis_id", dbID);
-                            seta.put("uuid", playerUUID);
-                            seta.put("json", json.toString());
-                            qf.doInsert("ars", seta);
                         }
+                        int control = schm.getSeedId();
+                        empty[1][4][4] = control;
+                        if (w > 16) {
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                            if (h > 16) {
+                                empty[2][4][4] = control;
+                                empty[2][4][5] = control;
+                                empty[2][5][4] = control;
+                                empty[2][5][5] = control;
+                            }
+                        } else if (h > 16) {
+                            empty[2][4][4] = control;
+                        }
+                        JSONArray json = new JSONArray(empty);
+                        HashMap<String, Object> seta = new HashMap<>();
+                        seta.put("tardis_id", dbID);
+                        seta.put("uuid", playerUUID);
+                        seta.put("json", json.toString());
+                        qf.doInsert("ars", seta);
                     }
                     if (type.equals(Material.REDSTONE_LAMP_ON) || type.equals(Material.SEA_LANTERN)) {
                         // remember lamp blocks

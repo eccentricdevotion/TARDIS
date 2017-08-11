@@ -524,50 +524,45 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                      */
                     String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 0, handbrakeloc, 0);
-                }
-                if (type.equals(Material.MONSTER_EGGS)) {
-                    // silverfish stone
-                    if (data == 2) {
-                        // get current ARS json
-                        HashMap<String, Object> wherer = new HashMap<>();
-                        wherer.put("tardis_id", id);
-                        ResultSetARS rsa = new ResultSetARS(plugin, wherer);
-                        if (rsa.resultSet()) {
-                            int[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
-                            int control = tud.getSchematic().getSeedId();
-                            existing[1][4][4] = control;
-                            if (downgrade) {
-                                // reset slots to stone
-                                existing[2][4][4] = 1;
-                                existing[2][4][5] = 1;
-                                existing[2][5][4] = 1;
-                                existing[2][5][5] = 1;
-                                if (w <= 16) {
-                                    existing[1][4][5] = 1;
-                                    existing[1][5][4] = 1;
-                                    existing[1][5][5] = 1;
-                                }
+                    // get current ARS json
+                    HashMap<String, Object> wherer = new HashMap<>();
+                    wherer.put("tardis_id", id);
+                    ResultSetARS rsa = new ResultSetARS(plugin, wherer);
+                    if (rsa.resultSet()) {
+                        int[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                        int control = tud.getSchematic().getSeedId();
+                        existing[1][4][4] = control;
+                        if (downgrade) {
+                            // reset slots to stone
+                            existing[2][4][4] = 1;
+                            existing[2][4][5] = 1;
+                            existing[2][5][4] = 1;
+                            existing[2][5][5] = 1;
+                            if (w <= 16) {
+                                existing[1][4][5] = 1;
+                                existing[1][5][4] = 1;
+                                existing[1][5][5] = 1;
                             }
-                            if (w > 16) {
-                                existing[1][4][5] = control;
-                                existing[1][5][4] = control;
-                                existing[1][5][5] = control;
-                                if (h > 16) {
-                                    existing[2][4][4] = control;
-                                    existing[2][4][5] = control;
-                                    existing[2][5][4] = control;
-                                    existing[2][5][5] = control;
-                                }
-                            } else if (h > 16) {
-                                existing[2][4][4] = control;
-                            }
-                            JSONArray json = new JSONArray(existing);
-                            HashMap<String, Object> seta = new HashMap<>();
-                            seta.put("json", json.toString());
-                            HashMap<String, Object> wheres = new HashMap<>();
-                            wheres.put("tardis_id", id);
-                            qf.doUpdate("ars", seta, wheres);
                         }
+                        if (w > 16) {
+                            existing[1][4][5] = control;
+                            existing[1][5][4] = control;
+                            existing[1][5][5] = control;
+                            if (h > 16) {
+                                existing[2][4][4] = control;
+                                existing[2][4][5] = control;
+                                existing[2][5][4] = control;
+                                existing[2][5][5] = control;
+                            }
+                        } else if (h > 16) {
+                            existing[2][4][4] = control;
+                        }
+                        JSONArray json = new JSONArray(existing);
+                        HashMap<String, Object> seta = new HashMap<>();
+                        seta.put("json", json.toString());
+                        HashMap<String, Object> wheres = new HashMap<>();
+                        wheres.put("tardis_id", id);
+                        qf.doUpdate("ars", seta, wheres);
                     }
                 }
                 if (type.equals(Material.REDSTONE_LAMP_ON) || type.equals(Material.SEA_LANTERN)) {
