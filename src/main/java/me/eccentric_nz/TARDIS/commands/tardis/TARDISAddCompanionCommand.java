@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -101,7 +102,7 @@ public class TARDISAddCompanionCommand {
                     TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
+                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.FRIENDS, 1);
                         taf.doAchievement(1);
                     }
                     // if using WorldGuard, add them to the region membership

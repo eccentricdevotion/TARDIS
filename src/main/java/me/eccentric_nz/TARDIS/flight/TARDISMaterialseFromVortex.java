@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -255,7 +256,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             if (l.getWorld().equals(final_location.getWorld())) {
                                 int distance = (int) l.distance(final_location);
                                 if (distance > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
-                                    TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
+                                    TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.TRAVEL, 1);
                                     taf.doAchievement(distance);
                                 }
                             }

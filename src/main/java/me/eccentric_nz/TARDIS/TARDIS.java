@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
@@ -89,9 +90,9 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
 import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
@@ -349,7 +350,7 @@ public class TARDIS extends JavaPlugin {
             }
             resourcePack = getServerTP();
             // copy maps
-            new TARDISMapChecker(this).checkMaps();
+            new TARDISChecker(this).checkMapsAndAdvancements();
 
             presets = new TARDISChameleonPreset();
             presets.makePresets();
@@ -395,6 +396,12 @@ public class TARDIS extends JavaPlugin {
             }
             startRecorderTask();
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200L, 200L);
+            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_RELOAD"));
+                    getServer().dispatchCommand(TARDIS.plugin.getConsole(), "minecraft:reload");
+                }
+            }, 199L);
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);

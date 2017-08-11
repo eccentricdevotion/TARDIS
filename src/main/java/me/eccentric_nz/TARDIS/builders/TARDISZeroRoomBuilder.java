@@ -21,6 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
@@ -90,7 +91,7 @@ public class TARDISZeroRoomBuilder {
             }
             // are we doing an achievement?
             if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
-                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "rooms", plugin.getBuildKeeper().getSeeds().size());
+                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, ADVANCEMENT.ROOMS, plugin.getBuildKeeper().getSeeds().size());
                 taf.doAchievement("ZERO");
             }
         }

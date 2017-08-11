@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -57,6 +58,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         this.plugin = plugin;
         // add first arguments
         firstsStr.put("add_regions", "");
+        firstsStr.put("adv", "");
         firstsStr.put("arch", "");
         firstsStr.put("area", "creation");
         firstsStr.put("assemble", "");
@@ -256,6 +258,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (first.equals("remove_flag")) {
                         return new TARDISRemoveMobSpawnDeny(plugin).doAllowMobSpawning(sender);
                     }
+                }
+                if (first.equals("adv")) {
+                    TARDISAchievementFactory.checkAdvancement(args[1]);
+                    return true;
                 }
                 if (first.equals("list")) {
                     return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
