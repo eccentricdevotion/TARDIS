@@ -39,8 +39,8 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -727,6 +727,10 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
                     plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
+                }
+                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
+                    int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
+                    plugin.getServer().getScheduler().cancelTask(taskID);
                 }
                 // message travellers in tardis
                 if (loops > 3) {

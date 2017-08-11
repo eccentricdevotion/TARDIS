@@ -204,7 +204,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     lever.setPowered(true);
                                     state.setData(lever);
                                     state.update();
-                                    // Check if its at a recharge point
+                                    // Check if it's at a recharge point
                                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                     tal.recharge(id);
                                     if (!beac_on && !beacon.isEmpty()) {

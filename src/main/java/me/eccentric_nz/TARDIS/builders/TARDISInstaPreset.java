@@ -512,6 +512,10 @@ public class TARDISInstaPreset {
         if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
             plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
         }
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
+            int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
+            plugin.getServer().getScheduler().cancelTask(taskID);
+        }
     }
 
     private void processDoor(String doorloc, QueryFactory qf) {
