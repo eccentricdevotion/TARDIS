@@ -149,7 +149,7 @@ public class TARDISAchievementFactory {
                 TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:drwho/" + adv.getConfigName());
             }
         } else {
-            player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+            player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
             player.sendMessage(ChatColor.WHITE + TARDIS.plugin.getAchievementConfig().getString(adv.getConfigName() + ".message"));
         }
     }
