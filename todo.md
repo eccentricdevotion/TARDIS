@@ -1,6 +1,6 @@
 #TODO
 
-##Current bugfix version `3.8.1`
+##Current bugfix version `3.8.2`
 1. Fix bugs!
 
 ##Next minor version `3.9-beta-1`
@@ -11,7 +11,7 @@
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 * TARDISSonicBlaster addon? - _unlikely_
 * SpongeAPI - _unlikely_
-* Forge mod for custom items and blocks (to tie in with Sponge version) - _unlikely_
+* Forge mod for custom items and blocks (to tie in with Sponge version) - _maybe_
 * Slimmer TARDIS option? - _unlikely_
 * Add more API Events that other plugins can listen for?
    * Sonic Screwdriver events
@@ -40,14 +40,13 @@
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
-2. Achievements API is now available, but doesn't allow custom achievements :(
 
 ##Minecraft API if ever available
 1. Recreate everything with the new API :)
-2. Create custom blocks for the TARDIS and console.
-3. Custom TARDIS items and crafting recipes for the same.
-4. A Sonic Screwdriver and a crafting recipe for it.
-5. GUIs (if allowed)
-6. Make the TARDIS Police Box an entity (if allowed)
-7. Custom achievements
+2. Create custom blocks for the TARDIS and console
+3. Custom TARDIS items and crafting recipes for the same
+4. A Sonic Screwdriver and a crafting recipe for it
+5. GUIs
+6. Make the TARDIS Police Box an entity
+7. Custom advancements
 8. Custom monsters
