@@ -464,7 +464,7 @@ public class TARDIS extends JavaPlugin {
             Version minver = new Version("344");
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
-            String build = split[1].substring(1);
+            String build = (preSplit.contains("SNAPSHOT")) ? split[2].substring(1) : split[1].substring(1);
             try {
                 Version ver = new Version(build);
                 return (ver.compareTo(minver) >= 0);
