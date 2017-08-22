@@ -118,6 +118,10 @@ public class ResultSetTardis {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
+                    String uuid = rs.getString("uuid");
+                    if (rs.wasNull() || uuid.equals("")) {
+                        uuid = UUID.randomUUID().toString();
+                    }
                     String companions = rs.getString("companions");
                     if (rs.wasNull()) {
                         companions = "";
@@ -128,7 +132,7 @@ public class ResultSetTardis {
                     }
                     tardis = new Tardis(
                             rs.getInt("tardis_id"),
-                            UUID.fromString(rs.getString("uuid")),
+                            UUID.fromString(uuid),
                             rs.getString("owner"),
                             rs.getString("last_known_name"),
                             rs.getString("chunk"),
