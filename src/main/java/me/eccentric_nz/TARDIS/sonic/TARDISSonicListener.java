@@ -276,7 +276,12 @@ public class TARDISSonicListener implements Listener {
                                     List<UUID> data = rst.getData();
                                     TARDISMessage.send(player, "SONIC_INSIDE");
                                     data.forEach((s) -> {
-                                        player.sendMessage(plugin.getServer().getPlayer(s).getDisplayName());
+                                        Player p = plugin.getServer().getPlayer(s);
+                                        if (p != null) {
+                                            player.sendMessage(p.getDisplayName());
+                                        } else {
+                                            player.sendMessage(plugin.getServer().getOfflinePlayer(s).getName() + " (Offline)");
+                                        }
                                     });
                                 } else {
                                     TARDISMessage.send(player, "SONIC_OCCUPY");
