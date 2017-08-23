@@ -42,12 +42,13 @@ public class TARDISAbandonLister {
         ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<>(), "", true, 1);
         sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
         if (rst.resultSet()) {
-            boolean click = (plugin.getPM().isPluginEnabled("ProtocolLib") && sender instanceof Player);
+            boolean click = (sender instanceof Player);
             if (click) {
                 sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
             }
             int i = 1;
             for (Tardis t : rst.getData()) {
+                String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
                 // get current location
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", t.getTardis_id());
@@ -56,10 +57,10 @@ public class TARDISAbandonLister {
                     String w = (plugin.isMVOnServer()) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : rsc.getWorld().getName();
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
-                        String json = "[{\"text\":\"" + i + ". Abandoned by: " + t.getOwner() + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this TARDIS\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this TARDIS\"}]}}}]";
+                        String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this TARDIS\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this TARDIS\"}]}}}]";
                         TARDISUpdateChatGUI.sendJSON(json, (Player) sender);
                     } else {
-                        sender.sendMessage(i + ". Abandoned by: " + t.getOwner() + ", location: " + l);
+                        sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
                     }
                     i++;
                 }
