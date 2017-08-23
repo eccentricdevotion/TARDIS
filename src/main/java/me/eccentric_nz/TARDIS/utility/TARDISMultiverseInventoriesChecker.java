@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
-import com.onarandombox.multiverseinventories.api.GroupManager;
-import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
-import com.onarandombox.multiverseinventories.api.share.Sharables;
-import com.onarandombox.multiverseinventories.api.share.Shares;
+import com.onarandombox.multiverseinventories.WorldGroup;
+import com.onarandombox.multiverseinventories.profile.WorldGroupManager;
+import com.onarandombox.multiverseinventories.share.Sharables;
+import com.onarandombox.multiverseinventories.share.Shares;
 import java.util.List;
 import org.bukkit.Bukkit;
 
@@ -32,10 +32,10 @@ public class TARDISMultiverseInventoriesChecker {
 
     public static boolean checkWorldsCanShare(String from, String to) {
         MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");
-        GroupManager gm = mvi.getGroupManager();
+        WorldGroupManager gm = mvi.getGroupManager();
         if (gm.hasGroup(from)) {
-            List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);
-            for (WorldGroupProfile wgp : profiles) {
+            List<WorldGroup> profiles = gm.getGroupsForWorld(from);
+            for (WorldGroup wgp : profiles) {
                 if (wgp.containsWorld(to)) {
                     Shares shares = wgp.getShares();
                     if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) && !shares.isSharing(Sharables.ALL_DEFAULT)) {

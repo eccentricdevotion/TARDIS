@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
-import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
+import com.onarandombox.multiverseinventories.WorldGroup;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -104,7 +104,7 @@ public class TARDISSpace {
 //                        break;
                     case MULTIVERSE:
                         MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
-                        WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);
+                        WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
                         wgp.addWorld(name);
                         break;
 //                    case PER_WORLD:

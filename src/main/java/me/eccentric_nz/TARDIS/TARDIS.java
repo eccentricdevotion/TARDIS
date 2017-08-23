@@ -461,7 +461,7 @@ public class TARDIS extends JavaPlugin {
     private boolean checkMVI() {
         if (pm.isPluginEnabled("Multiverse-Inventories")) {
             Plugin check = pm.getPlugin("Multiverse-Inventories");
-            Version minver = new Version("344");
+            Version minver = new Version("431");
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             String build = (preSplit.contains("SNAPSHOT")) ? split[2].substring(1) : split[1].substring(1);
@@ -471,7 +471,7 @@ public class TARDIS extends JavaPlugin {
             } catch (IllegalArgumentException e) {
                 getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the build number for Multiverse-Inventories");
                 getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
-                getServer().getLogger().log(Level.WARNING, "Please check you have at least build 344");
+                getServer().getLogger().log(Level.WARNING, "Please check you have at least build 431");
                 getServer().getLogger().log(Level.WARNING, "The invalid build format was {0}", preSplit);
                 return true;
             }
