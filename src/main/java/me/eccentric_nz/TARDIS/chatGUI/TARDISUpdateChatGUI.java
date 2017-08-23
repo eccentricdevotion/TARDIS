@@ -1,10 +1,5 @@
 package me.eccentric_nz.TARDIS.chatGUI;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import java.lang.reflect.InvocationTargetException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -67,12 +62,6 @@ public class TARDISUpdateChatGUI {
     }
 
     public static void sendJSON(String json, Player p) {
-        PacketContainer chat = new PacketContainer(PacketType.Play.Server.CHAT);
-        chat.getChatComponents().write(0, WrappedChatComponent.fromJson(json));
-        try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(p, chat);
-        } catch (InvocationTargetException e) {
-            TARDIS.plugin.debug("Error sending JSON chat: " + e.getMessage());
-        }
+        TARDIS.plugin.getTardisHelper().sendJson(p, json);
     }
 }
