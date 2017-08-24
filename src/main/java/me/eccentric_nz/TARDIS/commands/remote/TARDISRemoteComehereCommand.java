@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import java.util.HashMap;
 import java.util.UUID;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -129,6 +130,11 @@ public class TARDISRemoteComehereCommand {
         if (plugin.getPM().isPluginEnabled("Lockette")) {
             Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
             if (Lockette.isProtected(eyeLocation.getBlock())) {
+                count = 1;
+            }
+        }
+        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+            if (LocketteProAPI.isProtected(eyeLocation.getBlock())) {
                 count = 1;
             }
         }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
@@ -911,6 +912,7 @@ public class TARDISSonicListener implements Listener {
         boolean gpr = false;
         boolean wgu = false;
         boolean lke = false;
+        boolean pro = false;
         boolean lch = false;
         boolean tny = false;
         // GriefPrevention
@@ -926,6 +928,9 @@ public class TARDISSonicListener implements Listener {
             Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
             lke = Lockette.isProtected(b);
         }
+        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+            pro = LocketteProAPI.isProtected(b);
+        }
         // LWC
         if (plugin.getPM().isPluginEnabled("LWC")) {
             LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
@@ -936,7 +941,7 @@ public class TARDISSonicListener implements Listener {
         if (plugin.getPM().isPluginEnabled("Towny")) {
             tny = new TARDISTownyChecker(plugin, true).checkTowny(p, b.getLocation());
         }
-        return (gpr || wgu || lke || lch || tny);
+        return (gpr || wgu || lke || pro || lch || tny);
     }
 
     private boolean isPresetSign(String l0, String l1, String l2) {

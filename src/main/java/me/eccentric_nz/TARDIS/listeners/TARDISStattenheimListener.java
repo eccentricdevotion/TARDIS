@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -208,6 +209,11 @@ public class TARDISStattenheimListener implements Listener {
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
                             Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                             if (Lockette.isProtected(remoteLocation.getBlock())) {
+                                count = 1;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                            if (LocketteProAPI.isProtected(remoteLocation.getBlock())) {
                                 count = 1;
                             }
                         }

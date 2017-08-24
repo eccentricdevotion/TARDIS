@@ -24,6 +24,7 @@ package me.eccentric_nz.TARDIS.sonic;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.lwc.LWCPlugin;
 import java.util.Arrays;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
@@ -77,6 +78,11 @@ public class TARDISSonicSorterListener implements Listener {
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
                             Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                             if (Lockette.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                            if (LocketteProAPI.isProtected(block)) {
                                 allow = false;
                             }
                         }
