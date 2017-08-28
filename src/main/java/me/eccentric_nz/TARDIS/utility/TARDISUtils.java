@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -236,5 +238,15 @@ public class TARDISUtils {
             plugin.getTardisHelper().refreshChunk(chunk);
         }
         return run;
+    }
+
+    public boolean checkSurrounding(Block under) {
+        List<BlockFace> faces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
+        for (BlockFace f : faces) {
+            if (LocketteProAPI.isProtected(under.getRelative(f))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

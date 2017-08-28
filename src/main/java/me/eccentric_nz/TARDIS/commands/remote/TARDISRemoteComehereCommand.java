@@ -134,7 +134,8 @@ public class TARDISRemoteComehereCommand {
             }
         }
         if (plugin.getPM().isPluginEnabled("LockettePro")) {
-            if (LocketteProAPI.isProtected(eyeLocation.getBlock())) {
+            Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
+            if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
                 count = 1;
             }
         }

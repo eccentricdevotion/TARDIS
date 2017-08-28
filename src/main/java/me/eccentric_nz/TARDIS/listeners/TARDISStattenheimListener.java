@@ -208,12 +208,13 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
                             Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
-                            if (Lockette.isProtected(remoteLocation.getBlock())) {
+                            if (Lockette.isProtected(remoteLocation.getBlock().getRelative(BlockFace.DOWN))) {
                                 count = 1;
                             }
                         }
                         if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                            if (LocketteProAPI.isProtected(remoteLocation.getBlock())) {
+                            Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
+                            if (LocketteProAPI.isProtected(remoteLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
                                 count = 1;
                             }
                         }

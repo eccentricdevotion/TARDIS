@@ -151,12 +151,13 @@ public class TARDISComehereCommand {
                 }
                 if (plugin.getPM().isPluginEnabled("Lockette")) {
                     Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
-                    if (Lockette.isProtected(eyeLocation.getBlock())) {
+                    if (Lockette.isProtected(eyeLocation.getBlock().getRelative(BlockFace.DOWN))) {
                         count = 1;
                     }
                 }
                 if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                    if (LocketteProAPI.isProtected(eyeLocation.getBlock())) {
+                    Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
+                    if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
                         count = 1;
                     }
                 }
