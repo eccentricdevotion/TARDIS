@@ -33,6 +33,8 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
+   * Judoon
+   * Clockwork Droid
  
 ##TIPS visulisation tool
 * Use WorldGuard region data

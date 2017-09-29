@@ -163,7 +163,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.1-R0.1-SNAPSHOT</version>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -196,7 +196,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>6.1.8-SNAPSHOT</version>
+            <version>6.1.9-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
@@ -252,7 +252,7 @@
         <dependency>
             <groupId>me.gnat008.perworldinventory</groupId>
             <artifactId>PerWorldInventory</artifactId>
-            <version>1.10.0</version>
+            <version>1.11.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/PerWorldInventory.jar</systemPath>
