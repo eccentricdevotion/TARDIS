@@ -29,7 +29,7 @@
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
-   * Wolves -> K-9? (Make new model using OptiFine Custom Entity Model mod)
+   * Wolves -> K-9? (Make new model using OptiFine Custom Entity Model mod) _done_
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows

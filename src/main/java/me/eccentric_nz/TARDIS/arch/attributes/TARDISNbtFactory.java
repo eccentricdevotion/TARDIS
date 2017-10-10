@@ -152,7 +152,11 @@ public class TARDISNbtFactory {
         }
 
         public Double getDouble(String key, Double defaultValue) {
-            return containsKey(key) ? (Double) get(key) : defaultValue;
+            try {
+                return containsKey(key) ? (Double) get(key) : defaultValue;
+            } catch (ClassCastException e) {
+                return containsKey(key) ? (Integer) get(key) * 1.0d : defaultValue;
+            }
         }
 
         public String getString(String key, String defaultValue) {
