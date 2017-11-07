@@ -115,10 +115,15 @@ public class TARDISPresetDestroyerFactory {
         ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
         if (rsd.resultSet()) {
             String dl = rsd.getDoor_location();
-            float f = 0.0F;
-            Block b = TARDISLocationGetters.getLocationFromDB(dl, f, f).getBlock();
-            b.setType(Material.AIR);
-            b.getRelative(BlockFace.UP).setType(Material.AIR);
+            if (dl != null) {
+                float f = 0.0F;
+                Location l = TARDISLocationGetters.getLocationFromDB(dl, f, f);
+                if (l != null) {
+                    Block b = l.getBlock();
+                    b.setType(Material.AIR);
+                    b.getRelative(BlockFace.UP).setType(Material.AIR);
+                }
+            }
         }
     }
 
