@@ -216,28 +216,31 @@ public class TARDISUtils {
     }
 
     public boolean restoreBiome(Location l, Biome biome) {
-        int sbx = l.getBlockX() - 1;
-        final int sbz = l.getBlockZ() - 1;
-        World w = l.getWorld();
-        boolean run = true;
-        // reset biome and it's not The End
-        if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.VOID) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
-            // reset the biome
-            for (int c = 0; c < 3 && run; c++) {
-                for (int r = 0; r < 3 && run; r++) {
-                    try {
-                        w.setBiome(sbx + c, sbz + r, biome);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                        return false;
+        if (l != null) {
+            int sbx = l.getBlockX() - 1;
+            final int sbz = l.getBlockZ() - 1;
+            World w = l.getWorld();
+            boolean run = true;
+            // reset biome and it's not The End
+            if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.VOID) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
+                // reset the biome
+                for (int c = 0; c < 3 && run; c++) {
+                    for (int r = 0; r < 3 && run; r++) {
+                        try {
+                            w.setBiome(sbx + c, sbz + r, biome);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                            return false;
+                        }
                     }
                 }
+                // refresh the chunk
+                Chunk chunk = w.getChunkAt(l);
+                plugin.getTardisHelper().refreshChunk(chunk);
             }
-            // refresh the chunk
-            Chunk chunk = w.getChunkAt(l);
-            plugin.getTardisHelper().refreshChunk(chunk);
+            return run;
         }
-        return run;
+        return true;
     }
 
     public boolean checkSurrounding(Block under) {
