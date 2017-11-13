@@ -87,8 +87,8 @@ public class Smelter {
             case SAND:
             case SMOOTH_BRICK:
             case SPONGE:
-                // available in minecraft 1.12
-//            case STAINED_CLAY:
+            // available in minecraft 1.12
+            case STAINED_CLAY:
                 return true;
             default:
                 return false;
