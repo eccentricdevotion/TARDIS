@@ -43,7 +43,7 @@ public class TARDISVaultCommand {
     public boolean addDropChest(Player player) {
         // check permission
         if (!player.hasPermission("tardis.vault")) {
-            TARDISMessage.send(player, "UPDATE_NO_PERM", "Drop Chest");
+            TARDISMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");
             return true;
         }
         // player is a Time Lord
