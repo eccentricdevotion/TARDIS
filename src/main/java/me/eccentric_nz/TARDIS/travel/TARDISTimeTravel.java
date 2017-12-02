@@ -50,7 +50,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTimeTravel {
 
-    private static final int[] startLoc = new int[6];
+    private static final int[] START_LOC = new int[6];
     private Location dest;
     private final TARDIS plugin;
     private final int attempts;
@@ -396,25 +396,25 @@ public class TARDISTimeTravel {
     public static int[] getStartLocation(Location loc, COMPASS d) {
         switch (d) {
             case EAST:
-                startLoc[0] = loc.getBlockX() - 2;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 1;
-                startLoc[3] = startLoc[2];
+                START_LOC[0] = loc.getBlockX() - 2;
+                START_LOC[1] = START_LOC[0];
+                START_LOC[2] = loc.getBlockZ() - 1;
+                START_LOC[3] = START_LOC[2];
                 break;
             case SOUTH:
-                startLoc[0] = loc.getBlockX() - 1;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 2;
-                startLoc[3] = startLoc[2];
+                START_LOC[0] = loc.getBlockX() - 1;
+                START_LOC[1] = START_LOC[0];
+                START_LOC[2] = loc.getBlockZ() - 2;
+                START_LOC[3] = START_LOC[2];
                 break;
             default:
-                startLoc[0] = loc.getBlockX() - 1;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 1;
-                startLoc[3] = startLoc[2];
+                START_LOC[0] = loc.getBlockX() - 1;
+                START_LOC[1] = START_LOC[0];
+                START_LOC[2] = loc.getBlockZ() - 1;
+                START_LOC[3] = START_LOC[2];
                 break;
         }
-        return startLoc;
+        return START_LOC;
     }
 
     /**
@@ -442,7 +442,7 @@ public class TARDISTimeTravel {
             air++;
         }
         Material mat = startBlock.getType();
-        if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4) {
+        if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4 || plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether")) {
             Location netherLocation = startBlock.getLocation();
             int netherLocY = netherLocation.getBlockY();
             netherLocation.setY(netherLocY + 1);

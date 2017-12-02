@@ -3,7 +3,8 @@
 ##Current bugfix version `3.8.2`
 1. Fix bugs!
 
-##Next minor version `3.9-beta-1`
+##Next version `4.0-beta-1`
+0. Update to Minecraft/Spigot 1.13
 1. Add glazed terracotta chameleon presets?
 2. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
