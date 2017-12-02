@@ -15,6 +15,7 @@ planets:
     Siluria:
         enabled: false
         resource_pack: default
+        false_nether: true
     Gallifrey:
         enabled: false
         resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
