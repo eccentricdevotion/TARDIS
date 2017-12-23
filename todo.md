@@ -36,6 +36,7 @@
    * Stray -> Scarecrows
    * Judoon
    * Clockwork Droid
+4. Custom GUI textures for TARDIS GUIs
  
 ##TIPS visulisation tool
 * Use WorldGuard region data
