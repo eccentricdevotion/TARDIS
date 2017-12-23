@@ -487,6 +487,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
                                             return;
                                         }
+                                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                            TARDISMessage.send(player, "SIEGE_NO_ENTER");
+                                            return;
+                                        }
                                         // always enter by the back door
                                         TARDISDoorLocation ibdl = getDoor(3, id);
                                         Location ibd_loc = ibdl.getL();
@@ -522,6 +526,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     case 3:
                                         if (artron < required) {
                                             TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
+                                            return;
+                                        }
+                                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                            TARDISMessage.send(player, "SIEGE_NO_EXIT");
                                             return;
                                         }
                                         // always exit to outer back door
