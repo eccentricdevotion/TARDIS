@@ -491,6 +491,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             TARDISMessage.send(player, "SIEGE_NO_ENTER");
                                             return;
                                         }
+                                        if (preset.equals(PRESET.JUNK_MODE)) {
+                                            TARDISMessage.send(player, "JUNK_NO_ENTRY");
+                                            return;
+                                        }
                                         // always enter by the back door
                                         TARDISDoorLocation ibdl = getDoor(3, id);
                                         Location ibd_loc = ibdl.getL();

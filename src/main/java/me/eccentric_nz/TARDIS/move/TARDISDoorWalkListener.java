@@ -497,11 +497,15 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
                                             return;
                                         }
-                                        // always enter by the back door
                                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                             TARDISMessage.send(player, "SIEGE_NO_ENTER");
                                             return;
                                         }
+                                        if (preset.equals(PRESET.JUNK_MODE)) {
+                                            TARDISMessage.send(player, "JUNK_NO_ENTRY");
+                                            return;
+                                        }
+                                        // always enter by the back door
                                         TARDISDoorLocation ibdl = getDoor(3, id);
                                         Location ibd_loc = ibdl.getL();
                                         if (ibd_loc == null) {
