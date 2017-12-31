@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import java.util.List;
+import org.bukkit.entity.Villager.Career;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.MerchantRecipe;
 
@@ -29,7 +30,7 @@ public class TARDISVillager extends TARDISMob {
 
     private Profession profession;
     private List<MerchantRecipe> trades;
-    private int career;
+    private Career career;
     private int careerLevel;
     private boolean willing;
     private int riches;
@@ -56,11 +57,11 @@ public class TARDISVillager extends TARDISMob {
         this.trades = trades;
     }
 
-    public int getCareer() {
+    public Career getCareer() {
         return career;
     }
 
-    public void setCareer(int career) {
+    public void setCareer(Career career) {
         this.career = career;
     }
 

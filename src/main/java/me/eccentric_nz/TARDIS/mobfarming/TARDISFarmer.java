@@ -441,7 +441,7 @@ public class TARDISFarmer {
                             tv.setTrades(v.getRecipes());
                             tv.setRiches(v.getRiches());
                             if (plugin.isHelperOnServer()) {
-                                tv.setCareer(plugin.getTardisHelper().getVillagerCareer(v));
+                                tv.setCareer(v.getCareer());
                                 tv.setCareerLevel(plugin.getTardisHelper().getVillagerCareerLevel(v));
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
@@ -849,12 +849,12 @@ public class TARDISFarmer {
                         npc.setHealth(e.getHealth());
                         npc.setRecipes(e.getTrades());
                         npc.setRiches(e.getRiches());
+                        npc.setCareer(e.getCareer());
                         String name = e.getName();
                         if (name != null && !name.isEmpty()) {
                             npc.setCustomName(name);
                         }
                         if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setVillagerCareer(npc, e.getCareer());
                             plugin.getTardisHelper().setVillagerCareerLevel(npc, e.getCareerLevel());
                             plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         }
