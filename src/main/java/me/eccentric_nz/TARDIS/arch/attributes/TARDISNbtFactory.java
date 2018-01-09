@@ -6,7 +6,6 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 import com.google.common.io.Closeables;
-import com.google.common.io.Files;
 import com.google.common.primitives.Primitives;
 import java.io.BufferedInputStream;
 import java.io.DataInput;
@@ -437,9 +436,6 @@ public class TARDISNbtFactory {
 
     /**
      * Load the content of a file from a stream.
-     * <p>
-     * Use {@link Files#newInputStreamSupplier(java.io.File)} to provide a
-     * stream from a file.
      *
      * @param stream - the input stream.
      * @return The decoded NBT compound.

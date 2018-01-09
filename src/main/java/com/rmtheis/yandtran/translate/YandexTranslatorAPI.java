@@ -96,7 +96,7 @@ public abstract class YandexTranslatorAPI {
      *
      * @param url
      * @param jsonValProperty
-     * @return
+     * @return a string
      * @throws java.lang.Exception
      */
     protected static String retrievePropString(final URL url, final String jsonValProperty) throws Exception {
@@ -112,7 +112,7 @@ public abstract class YandexTranslatorAPI {
      *
      * @param url
      * @param jsonValProperty
-     * @return
+     * @return a string of concatenated values
      * @throws java.lang.Exception
      */
     protected static String retrievePropArrString(final URL url, final String jsonValProperty) throws Exception {
