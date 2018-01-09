@@ -484,6 +484,7 @@ public class TARDIS extends JavaPlugin {
     public void onDisable() {
         if (hasVersion) {
             TARDISPerceptionFilter.removePerceptionFilter();
+            debug("Perception Filters removed");
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).save();
             }
@@ -498,9 +499,14 @@ public class TARDIS extends JavaPlugin {
             }
             new TARDISVortexPersister(this).save();
             updateTagStats();
+            debug("Updated Tag stats");
             closeDatabase();
+            debug("Closing database");
             resetTime();
+            debug("Reseting player time(s)");
             getServer().getScheduler().cancelTasks(this);
+            debug("Cancelling all scheduled tasks");
+            plugin.debug("TARDIS disabled successfully!");
         }
     }
 
