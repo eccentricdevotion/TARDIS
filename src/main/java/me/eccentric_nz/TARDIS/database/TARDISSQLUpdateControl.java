@@ -66,6 +66,7 @@ public class TARDISSQLUpdateControl implements Runnable {
             ResultSet rs = statement.executeQuery(select);
             if (rs.isBeforeFirst()) {
                 // update
+                rs.next();
                 String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
                 statement.executeUpdate(update);
             } else {

@@ -265,6 +265,7 @@ public class QueryFactory {
             String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
             ResultSet rs = statement.executeQuery(select);
             if (rs.isBeforeFirst()) {
+                rs.next();
                 // update
                 String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
                 statement.executeUpdate(update);

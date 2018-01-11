@@ -48,10 +48,8 @@ public class TARDISLazarusListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Action a = event.getAction();
         if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.WOOD_PLATE)) {
-            plugin.debug("Player walked onto a wood pressure plate...");
             final Player player = event.getPlayer();
             if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
-                plugin.debug("Player is already using the Lazarus device...");
                 return;
             }
             if (player.hasPermission("tardis.lazarus")) {
@@ -83,13 +81,8 @@ public class TARDISLazarusListener implements Listener {
                     } else {
                         inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
                     }
-                    plugin.debug("Opening Lazarus device inventory!");
                     player.openInventory(inv);
-                } else {
-                    plugin.debug("This is NOT a Lazarus device pressure plate...");
                 }
-            } else {
-                plugin.debug("Player doesn't have permission 'tardis.lazarus' to use the Lazarus Device / Genetic Manipulator!");
             }
         }
     }
