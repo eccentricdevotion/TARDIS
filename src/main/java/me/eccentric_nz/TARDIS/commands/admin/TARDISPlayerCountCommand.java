@@ -37,6 +37,7 @@ public class TARDISPlayerCountCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean countPlayers(CommandSender sender, String[] args) {
         int max_count = plugin.getConfig().getInt("creation.count");
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(args[1]);

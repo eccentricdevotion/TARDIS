@@ -89,6 +89,7 @@ public class TARDISKeyboardListener implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();

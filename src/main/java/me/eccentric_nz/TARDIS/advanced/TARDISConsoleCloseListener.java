@@ -69,6 +69,7 @@ public class TARDISConsoleCloseListener implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInventoryClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();

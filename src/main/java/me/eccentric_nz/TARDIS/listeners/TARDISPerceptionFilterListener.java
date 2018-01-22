@@ -49,6 +49,7 @@ public class TARDISPerceptionFilterListener implements Listener {
         this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPerceptionFilterClick(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {

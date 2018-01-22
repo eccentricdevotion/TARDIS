@@ -39,6 +39,7 @@ public class TARDISRemoveCompanionCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean doRemoveCompanion(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();

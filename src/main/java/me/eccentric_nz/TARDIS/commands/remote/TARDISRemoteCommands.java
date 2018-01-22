@@ -62,7 +62,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
     }
 
     @Override
-    
+    @SuppressWarnings("deprecation")
     public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
         // If the player/console typed /tardisremote then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisremote") && sender.hasPermission("tardis.remote")) {

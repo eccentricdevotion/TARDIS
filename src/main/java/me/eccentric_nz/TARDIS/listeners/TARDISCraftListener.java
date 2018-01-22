@@ -121,6 +121,7 @@ public class TARDISCraftListener implements Listener {
      *
      * @param event the player clicking the crafting result slot.
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockCraft(final InventoryClickEvent event) {
         final Inventory inv = event.getInventory();

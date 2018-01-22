@@ -269,6 +269,7 @@ public class TARDISAcidWater implements Listener {
         return red;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onFillAcidBucket(PlayerBucketFillEvent event) {
         Player p = event.getPlayer();

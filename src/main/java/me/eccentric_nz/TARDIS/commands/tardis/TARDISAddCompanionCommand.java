@@ -57,6 +57,7 @@ public class TARDISAddCompanionCommand {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean doAdd(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();

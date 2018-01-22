@@ -33,7 +33,7 @@ public class TARDISArchInventory {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final String prefix = TARDIS.plugin.getPrefix();
 
-    
+    @SuppressWarnings("deprecation")
     public void switchInventories(final Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();

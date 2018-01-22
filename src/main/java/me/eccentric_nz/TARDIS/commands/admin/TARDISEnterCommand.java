@@ -44,6 +44,7 @@ public class TARDISEnterCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean enterTARDIS(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {

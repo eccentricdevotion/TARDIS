@@ -38,8 +38,8 @@ public class TARDISSelectWatchListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
-    
     public void onTryToSelectWatch(PlayerItemHeldEvent event) {
         final Player player = event.getPlayer();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {

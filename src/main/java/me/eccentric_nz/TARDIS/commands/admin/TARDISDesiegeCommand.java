@@ -41,6 +41,7 @@ public class TARDISDesiegeCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean restore(CommandSender sender, String[] args) {
         // get the player
         Player p = plugin.getServer().getPlayer(args[1]);

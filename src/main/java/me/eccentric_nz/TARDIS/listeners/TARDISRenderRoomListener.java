@@ -45,6 +45,7 @@ public class TARDISRenderRoomListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();

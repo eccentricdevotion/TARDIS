@@ -68,6 +68,7 @@ public class TARDISArchCommand {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean force(CommandSender sender, String[] args) {
         if (args[2].length() < 2) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");

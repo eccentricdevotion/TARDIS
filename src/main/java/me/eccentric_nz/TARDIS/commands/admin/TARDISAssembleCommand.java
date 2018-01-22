@@ -37,6 +37,7 @@ public class TARDISAssembleCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean assemble(CommandSender sender, String player) {
         if (player.equalsIgnoreCase("all")) {
             plugin.getTrackerKeeper().getDispersed().clear();

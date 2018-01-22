@@ -70,6 +70,7 @@ public class TARDISGlassesListener implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void checkGlasses(final TARDIS plugin) {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             plugin.getTrackerKeeper().getSpectacleWearers().forEach((uuid) -> {

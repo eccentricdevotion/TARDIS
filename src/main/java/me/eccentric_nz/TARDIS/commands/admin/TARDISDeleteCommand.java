@@ -55,6 +55,7 @@ public class TARDISDeleteCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean deleteTARDIS(final CommandSender sender, final String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;

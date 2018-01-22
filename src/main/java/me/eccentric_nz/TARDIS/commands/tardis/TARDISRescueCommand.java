@@ -35,6 +35,7 @@ public class TARDISRescueCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean startRescue(final Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");

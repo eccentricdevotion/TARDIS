@@ -51,6 +51,7 @@ public class TARDISBeaconColouringListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {

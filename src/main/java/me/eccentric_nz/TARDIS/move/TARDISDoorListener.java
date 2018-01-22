@@ -183,6 +183,7 @@ public class TARDISDoorListener {
      * @param d the direction of the police box
      * @param enter whether the pets are entering (true) or exiting (false)
      */
+    @SuppressWarnings("deprecation")
     public void movePets(List<TARDISParrot> p, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
@@ -275,6 +276,7 @@ public class TARDISDoorListener {
      *
      * @param p the player to give the key to
      */
+    @SuppressWarnings("deprecation")
     private void giveKey(Player p) {
         String key;
         HashMap<String, Object> where = new HashMap<>();

@@ -331,6 +331,7 @@ public class TARDII implements TardisAPI {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public List<String> getTARDISCompanions(int id) {
         List<String> list = new ArrayList<>();
@@ -354,6 +355,7 @@ public class TARDII implements TardisAPI {
         return getTARDISCompanions(p.getUniqueId());
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public List<String> getTARDISCompanions(UUID uuid) {
         List<String> list = new ArrayList<>();

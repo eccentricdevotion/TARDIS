@@ -37,6 +37,7 @@ public class TARDISRepairCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean setFreeCount(CommandSender sender, String[] args) {
         // Look up this player's UUID
         OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);

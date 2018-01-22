@@ -62,6 +62,7 @@ public class TARDISBindCommands implements CommandExecutor {
         type_1 = Arrays.asList("hide", "rebuild", "home", "cave", "make_her_blue");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {

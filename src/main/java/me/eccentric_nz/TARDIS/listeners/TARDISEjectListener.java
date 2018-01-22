@@ -65,6 +65,7 @@ public class TARDISEjectListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEntityEvent event) {
         final Player player = event.getPlayer();

@@ -89,7 +89,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     }
 
     @Override
-    
+    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = null;
         if (sender instanceof Player) {

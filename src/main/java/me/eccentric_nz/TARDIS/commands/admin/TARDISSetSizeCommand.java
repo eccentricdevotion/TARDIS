@@ -37,6 +37,7 @@ public class TARDISSetSizeCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean overwrite(CommandSender sender, String[] args) {
         // /tadmin set_size [player] [size]
         // get the player

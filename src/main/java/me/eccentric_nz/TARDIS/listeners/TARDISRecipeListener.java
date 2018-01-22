@@ -54,6 +54,7 @@ public class TARDISRecipeListener implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onRecipeClose(InventoryCloseEvent event) {
         Inventory top = event.getView().getTopInventory();

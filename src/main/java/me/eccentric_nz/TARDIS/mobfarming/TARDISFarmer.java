@@ -917,6 +917,7 @@ public class TARDISFarmer {
         return old_macd_had_a_pet;
     }
 
+    @SuppressWarnings("deprecation")
     public List<TARDISParrot> exitPets(Player p) {
         List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
         Entity ent = (Entity) p;
