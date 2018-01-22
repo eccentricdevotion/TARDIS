@@ -415,7 +415,7 @@ public class TARDISRoomRunnable implements Runnable {
                     case HUTCH:
                     case STABLE:
                     case STALL:
-                        type = Material.GRASS;
+                        type = Material.GRASS_BLOCK;
                         break;
                     case BIRDCAGE:
                         type = Material.PODZOL;

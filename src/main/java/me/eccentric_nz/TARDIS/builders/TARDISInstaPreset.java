@@ -261,7 +261,7 @@ public class TARDISInstaPreset {
                     plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
                 switch (mat) {
-                    case GRASS:
+                    case GRASS_BLOCK:
                     case DIRT:
                         BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());

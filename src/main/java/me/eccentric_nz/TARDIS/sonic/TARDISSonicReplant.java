@@ -16,7 +16,7 @@ public class TARDISSonicReplant implements Runnable {
     private final Material type;
     private final Material air = Material.AIR;
     private final Material dirt = Material.DIRT;
-    private final Material grass = Material.GRASS;
+    private final Material grass = Material.GRASS_BLOCK;
     private final Material log = Material.JUNGLE_LOG;
     private final Material sand = Material.SAND;
     private final Material soil = Material.FARMLAND;

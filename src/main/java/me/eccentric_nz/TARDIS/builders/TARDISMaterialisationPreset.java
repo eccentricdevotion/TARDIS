@@ -275,7 +275,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                             }
                             Material mat = colData[yy].getMaterial();
                             switch (mat) {
-                                case GRASS:
+                                case GRASS_BLOCK:
                                 case DIRT:
                                     BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
@@ -594,7 +594,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                         }
                         Material mat = coldatas[yy].getMaterial();
                         switch (mat) {
-                            case GRASS:
+                            case GRASS_BLOCK:
                             case DIRT:
                                 BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);

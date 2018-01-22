@@ -210,6 +210,7 @@ public class TARDISCondensables {
             condensables.put("GOLD_INGOT", 105);
             condensables.put("GOLD_NUGGET", 12);
             condensables.put("GRASS", 1);
+            condensables.put("GRASS_BLOCK", 1);
             condensables.put("GRAVEL", 1);
             condensables.put("GRAY_GLAZED_TERRACOTTA", 20);
             condensables.put("GRAY_SHULKER_BOX", 120);

@@ -42,7 +42,7 @@ public class TARDISMaterialIDConverter {
         this.prefix = this.plugin.getPrefix();
         LEGACY_ID_LOOKUP.put(0, Material.AIR);
         LEGACY_ID_LOOKUP.put(1, Material.STONE);
-        LEGACY_ID_LOOKUP.put(2, Material.GRASS);
+        LEGACY_ID_LOOKUP.put(2, Material.GRASS_BLOCK);
         LEGACY_ID_LOOKUP.put(3, Material.DIRT);
         LEGACY_ID_LOOKUP.put(4, Material.COBBLESTONE);
         LEGACY_ID_LOOKUP.put(5, Material.OAK_PLANKS);
