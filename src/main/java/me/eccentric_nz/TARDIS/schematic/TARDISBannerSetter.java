@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
@@ -33,12 +34,13 @@ import org.bukkit.block.banner.PatternType;
  */
 public class TARDISBannerSetter {
 
-    @SuppressWarnings("deprecation")
-    public static void setBanners(int id, HashMap<Block, JSONObject> banners) {
+    public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
         banners.entrySet().forEach((entry) -> {
-            JSONObject state = entry.getValue();
+            TARDISBannerData tbd = entry.getValue();
+            JSONObject state = tbd.getState();
             Block pbb = entry.getKey().getLocation().getBlock();
-            pbb.setTypeIdAndData(id, state.getByte("bdata"), true);
+//            pbb.setTypeIdAndData(id, state.getByte("bdata"), true);
+            pbb.setType(tbd.getMaterial());
             Banner banner = (Banner) pbb.getState();
             DyeColor dye = DyeColor.valueOf(state.getString("colour"));
             banner.setBaseColor(dye);

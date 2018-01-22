@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.arch.attributes;
 
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
@@ -93,17 +92,6 @@ public class TARDISAttributes {
 
     // We can't make TARDISAttributes itself iterable without splitting it up into separate classes
     public Iterable<TARDISAttribute> values() {
-        return new Iterable<TARDISAttribute>() {
-            @Override
-            public Iterator<TARDISAttribute> iterator() {
-                return Iterators.transform(attributes.iterator(),
-                        new Function<Object, TARDISAttribute>() {
-                            @Override
-                            public TARDISAttribute apply(Object element) {
-                                return new TARDISAttribute((NbtCompound) element);
-                            }
-                        });
-            }
-        };
+        return () -> Iterators.transform(attributes.iterator(), (Object element) -> new TARDISAttribute((NbtCompound) element));
     }
 }

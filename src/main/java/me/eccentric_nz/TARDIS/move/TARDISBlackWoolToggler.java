@@ -37,7 +37,6 @@ public class TARDISBlackWoolToggler {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public void toggleBlocks(final int id, final Player player) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -48,16 +47,16 @@ public class TARDISBlackWoolToggler {
             Material mat;
             byte data;
             if (isAir(b)) {
-                mat = Material.WOOL;
-                data = (byte) 15;
+                mat = Material.BLACK_WOOL;
+//                data = (byte) 15;
             } else {
                 mat = Material.AIR;
                 data = (byte) 0;
             }
             b.setType(mat);
-            b.setData(data);
+//            b.setData(data);
             b.getRelative(BlockFace.UP).setType(mat);
-            b.getRelative(BlockFace.UP).setData(data);
+//            b.getRelative(BlockFace.UP).setData(data);
             if (TARDISStaticUtils.isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
                 // toggle doors shut
                 new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();

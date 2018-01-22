@@ -43,7 +43,7 @@ public class TARDISSetDestinationCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean doSetDestination(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);

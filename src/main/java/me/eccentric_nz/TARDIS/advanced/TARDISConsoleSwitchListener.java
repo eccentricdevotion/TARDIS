@@ -54,7 +54,7 @@ public class TARDISConsoleSwitchListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("Deprecation")
+    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onConsoleInventoryClick(final InventoryClickEvent event) {
         Inventory inv = event.getInventory();

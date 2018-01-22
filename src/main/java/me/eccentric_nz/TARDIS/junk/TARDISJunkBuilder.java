@@ -24,11 +24,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,6 +36,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 /**
@@ -91,22 +92,17 @@ public class TARDISJunkBuilder implements Runnable {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                    // TODO convert database entrys to remove data value
                     if (rsp.resultSet()) {
-                        TARDISWalls.Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                        floor_type = fid_data.getType();
-                        floor_data = fid_data.getData();
-                        TARDISWalls.Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                        wall_type = wid_data.getType();
-                        wall_data = wid_data.getData();
+                        floor_type = Material.valueOf(rsp.getFloor());
+                        wall_type = Material.valueOf(rsp.getWall());
                     } else {
-                        floor_type = Material.WOOL;
-                        floor_data = (byte) 8;
-                        wall_type = Material.WOOL;
-                        wall_data = (byte) 1;
+                        floor_type = Material.LIGHT_GRAY_WOOL;
+                        wall_type = Material.ORANGE_WOOL;
                     }
-                    // build TARDIS and remember blocks
+                    // build TARDIS and remember BLOCKS
                     Material type;
-                    byte data;
+                    BlockData data;
                     Block postTerminalBlock = null;
                     // get JSON
                     String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
@@ -132,9 +128,9 @@ public class TARDISJunkBuilder implements Runnable {
                                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                                     world.setBiome(x, z, Biome.VOID);
                                 }
-                                type = Material.valueOf((String) c.get("type"));
-                                data = c.getByte("data");
-                                if (type.equals(Material.CAKE_BLOCK)) {
+                                type = Material.getMaterial(c.getString("type"));
+                                data = plugin.getServer().createBlockData(c.getString("data"));
+                                if (type.equals(Material.CAKE)) {
                                     /*
                                      * This block will be converted to a lever
                                      * by setBlockAndRemember(), but remember it
@@ -148,22 +144,22 @@ public class TARDISJunkBuilder implements Runnable {
                                     String stone_button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
                                 }
-                                if (type.equals(Material.WOOD_BUTTON)) {
+                                if (type.equals(Material.OAK_BUTTON)) {
                                     // remember location 6
                                     String wood_button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
                                 }
-                                if (type.equals(Material.DIODE_BLOCK_OFF)) {
+                                if (type.equals(Material.REPEATER)) {
                                     // remember location 3
                                     String repeater = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 2, repeater, 0);
                                 }
-                                if (type.equals(Material.REDSTONE_COMPARATOR_OFF)) {
+                                if (type.equals(Material.COMPARATOR)) {
                                     // remember location 2
                                     String comparator = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 3, comparator, 0);
                                 }
-                                if (type.equals(Material.MONSTER_EGGS)) {
+                                if (TARDISMaterials.infested.contains(type)) {
                                     // insert / update control 9
                                     qf.insertSyncControl(bd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
                                     // remember block
@@ -177,26 +173,19 @@ public class TARDISJunkBuilder implements Runnable {
                                 switch (type) {
                                     case SPONGE:
                                     case AIR:
-                                        TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
+                                        TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                                         break;
-                                    case CAKE_BLOCK:
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.LEVER, (byte) 5, bd.getTardisID());
+                                    case CAKE:
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.CAKE, bd.getTardisID());
                                         break;
-                                    case WOOL:
-                                        switch (data) {
-                                            case 1:
-                                                plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, wall_data, bd.getTardisID());
-                                                break;
-                                            case 8:
-                                                plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, floor_data, bd.getTardisID());
-                                                break;
-                                            default:
-                                                plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, bd.getTardisID());
-                                                break;
-                                        }
+                                    case ORANGE_WOOL:
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, bd.getTardisID());
+                                        break;
+                                    case LIGHT_GRAY_WOOL:
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
                                         break;
                                     default:
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, bd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                         break;
                                 }
                             }

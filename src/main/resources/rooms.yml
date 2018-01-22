@@ -10,7 +10,7 @@ rooms:
     enabled: true
     cost: 325
     offset: -4
-    seed: LEAVES
+    seed: OAK_LEAVES
     user: false
   BEDROOM:
     enabled: true
@@ -40,7 +40,7 @@ rooms:
     enabled: true
     cost: 550
     offset: -4
-    seed: ENCHANTMENT_TABLE
+    seed: ENCHANTING_TABLE
     user: false
   POOL:
     enabled: true
@@ -58,7 +58,7 @@ rooms:
     enabled: true
     cost: 400
     offset: -4
-    seed: WORKBENCH
+    seed: CRAFTING_TABLE
     user: false
   EMPTY:
     enabled: true
@@ -82,19 +82,19 @@ rooms:
     enabled: true
     cost: 450
     offset: -4
-    seed: SMOOTH_STAIRS
+    seed: STONE_BRICK_STAIRS
     user: false
   BAKER:
     enabled: true
     cost: 350
     offset: -4
-    seed: ENDER_STONE
+    seed: END_STONE
     user: false
   WOOD:
     enabled: true
     cost: 350
     offset: -4
-    seed: WOOD
+    seed: OAK_PLANKS
     user: false
   FARM:
     enabled: true
@@ -112,7 +112,7 @@ rooms:
     enabled: true
     cost: 450
     offset: -4
-    seed: LOG_2
+    seed: ACACIA_LOG
     user: false
   IGLOO:
     enabled: true
@@ -154,23 +154,23 @@ rooms:
     enabled: true
     cost: 550
     offset: -4
-    seed: LOG
+    seed: OAK_LOG
     user: false
   TRENZALORE:
     enabled: true
     cost: 550
     offset: -4
-    seed: BRICK
+    seed: BRICKS
     user: false
   RENDERER:
     enabled: true
     cost: 550
     offset: -4
-    seed: HARD_CLAY
+    seed: TERRACOTTA
     user: false
   ZERO:
     enabled: true
     cost: 650
     offset: -4
-    seed: WOOD_BUTTON
+    seed: OAK_BUTTON
     user: false

@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -71,7 +70,7 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
+
     public void run() {
         // initialise
         if (!running) {
@@ -141,19 +140,11 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
             String[] split = tardis.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
             // wall/floor block prefs
-            String wall[] = tud.getWall().split(":");
-            String floor[] = tud.getFloor().split(":");
-            wall_type = Material.valueOf(wall[0]);
-            floor_type = Material.valueOf(floor[0]);
-            wall_data = TARDISNumberParsers.parseByte(wall[1]);
-            floor_data = TARDISNumberParsers.parseByte(floor[1]);
+            wall_type = Material.valueOf(tud.getWall());
+            floor_type = Material.valueOf(tud.getFloor());
             // siege wall/floor block prefs
-            String siege_wall[] = tud.getSiegeWall().split(":");
-            String siege_floor[] = tud.getSiegeFloor().split(":");
-            siege_wall_type = Material.valueOf(siege_wall[0]);
-            siege_floor_type = Material.valueOf(siege_floor[0]);
-            siege_wall_data = TARDISNumberParsers.parseByte(siege_wall[1]);
-            siege_floor_data = TARDISNumberParsers.parseByte(siege_floor[1]);
+            siege_wall_type = Material.valueOf(tud.getSiegeWall());
+            siege_floor_type = Material.valueOf(tud.getSiegeFloor());
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
@@ -176,22 +167,16 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
                 }
                 Block bb = world.getBlockAt(x, y, z);
                 Material compare_type = bb.getType();
-                byte compare_data = bb.getData();
                 Material to_wall_type = (toSiege) ? wall_type : siege_wall_type;
-                byte to_wall_data = (toSiege) ? wall_data : siege_wall_data;
                 Material to_floor_type = (toSiege) ? floor_type : siege_floor_type;
-                byte to_floor_data = (toSiege) ? floor_data : siege_floor_data;
                 Material type;
-                byte data;
-                if (compare_type.equals(to_wall_type) && compare_data == to_wall_data) {
+                if (compare_type.equals(to_wall_type)) {
                     type = (toSiege) ? siege_wall_type : wall_type;
-                    data = (toSiege) ? siege_wall_data : wall_data;
-                    TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                    TARDISBlockSetters.setBlock(world, x, y, z, type);
                 }
-                if (compare_type.equals(to_floor_type) && compare_data == to_floor_data) {
+                if (compare_type.equals(to_floor_type)) {
                     type = (toSiege) ? siege_floor_type : floor_type;
-                    data = (toSiege) ? siege_floor_data : floor_data;
-                    TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                    TARDISBlockSetters.setBlock(world, x, y, z, type);
                 }
             }
             if (row < w) {

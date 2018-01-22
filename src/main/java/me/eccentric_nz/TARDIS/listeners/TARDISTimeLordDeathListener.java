@@ -304,7 +304,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setBiome(rsc.getBiome());
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // place siege block
-                                    siege.setType(Material.HUGE_MUSHROOM_1);
+                                    siege.setType(Material.BROWN_MUSHROOM_BLOCK);
                                     siege.setData((byte) 14, true);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);

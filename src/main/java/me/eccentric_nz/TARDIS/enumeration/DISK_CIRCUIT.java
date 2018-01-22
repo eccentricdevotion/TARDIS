@@ -27,19 +27,19 @@ import org.bukkit.Material;
  */
 public enum DISK_CIRCUIT {
 
-    AREA("Area Storage Disk", Material.RECORD_3),
+    AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
     ARS("TARDIS ARS Circuit", Material.MAP),
-    BIOME("Biome Storage Disk", Material.GREEN_RECORD),
+    BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
     CHAMELEON("TARDIS Chameleon Circuit", Material.MAP),
     INPUT("TARDIS Input Circuit", Material.MAP),
     INVISIBILITY("TARDIS Invisibility Circuit", Material.MAP),
     KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
     MATERIALISATION("TARDIS Materialisation Circuit", Material.MAP),
     MEMORY("TARDIS Memory Circuit", Material.MAP),
-    PLAYER("Player Storage Disk", Material.RECORD_12),
-    PRESET("Preset Storage Disk", Material.RECORD_6),
+    PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT),
+    PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL),
     RANDOMISER("TARDIS Randomiser Circuit", Material.MAP),
-    SAVE("Save Storage Disk", Material.RECORD_4),
+    SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
     SCANNER("TARDIS Scanner Circuit", Material.MAP),
     SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
     TEMPORAL("TARDIS Temporal Circuit", Material.MAP);

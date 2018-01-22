@@ -56,7 +56,7 @@ public class TARDISComehereCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean doComeHere(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
             // check they are a timelord
@@ -139,7 +139,7 @@ public class TARDISComehereCommand {
                 int count;
                 boolean sub = false;
                 Block b = eyeLocation.getBlock();
-                if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.STATIONARY_WATER)) {
+                if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.FLOWING_WATER)) {
                     count = (tt.isSafeSubmarine(eyeLocation, player_d)) ? 0 : 1;
                     if (count == 0) {
                         sub = true;

@@ -43,7 +43,7 @@ public class TARDISSpectaclesRunnable implements Runnable {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
+    
     public void run() {
         plugin.getTrackerKeeper().getInvisibleDoors().entrySet().forEach((map) -> {
             Player p = plugin.getServer().getPlayer(map.getKey());
@@ -56,8 +56,8 @@ public class TARDISSpectaclesRunnable implements Runnable {
                         wherec.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                         if (rsc.resultSet()) {
-                            p.sendBlockChange(map.getValue().getLocation(), Material.IRON_DOOR_BLOCK, bottom.get(rsc.getDirection()));
-                            p.sendBlockChange(map.getValue().getRelative(BlockFace.UP).getLocation(), Material.IRON_DOOR_BLOCK, (byte) 9);
+                            p.sendBlockChange(map.getValue().getLocation(), Material.IRON_DOOR, bottom.get(rsc.getDirection()));
+                            p.sendBlockChange(map.getValue().getRelative(BlockFace.UP).getLocation(), Material.IRON_DOOR, (byte) 9);
                         }
                     }
                 }

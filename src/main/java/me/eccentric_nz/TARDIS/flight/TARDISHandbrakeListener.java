@@ -261,7 +261,7 @@ public class TARDISHandbrakeListener implements Listener {
         b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean isDoorOpen(int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);

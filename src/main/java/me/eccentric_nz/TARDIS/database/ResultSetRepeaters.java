@@ -104,7 +104,7 @@ public class ResultSetRepeaters {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public byte[] getRepeaters() {
         if (locations.size() == 4) {
             // get repeater settings

@@ -77,7 +77,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
      *
      * @param event a player clicking a block
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -87,7 +86,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking a door!
-            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.TRAP_DOOR)) {
+            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
                 final Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
                     Action action = event.getAction();
@@ -99,7 +98,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
-                    if (doorData >= 8 && !blockType.equals(Material.TRAP_DOOR)) {
+                    if (doorData >= 8 && !blockType.equals(Material.OAK_TRAPDOOR)) {
                         by = (by - 1);
                         block = block.getRelative(BlockFace.DOWN);
                     }
@@ -234,7 +233,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                             }
                                         }
-                                    } else if (blockType.equals(Material.TRAP_DOOR)) {
+                                    } else if (blockType.equals(Material.OAK_TRAPDOOR)) {
+                                        // TODO use block data
                                         byte door_data = block.getData();
                                         switch (door_data) {
                                             case 0:

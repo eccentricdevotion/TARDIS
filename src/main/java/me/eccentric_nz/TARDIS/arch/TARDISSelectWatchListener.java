@@ -39,7 +39,7 @@ public class TARDISSelectWatchListener implements Listener {
     }
 
     @EventHandler
-    @SuppressWarnings("deprecation")
+    
     public void onTryToSelectWatch(PlayerItemHeldEvent event) {
         final Player player = event.getPlayer();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
@@ -51,7 +51,7 @@ public class TARDISSelectWatchListener implements Listener {
         int slot = event.getNewSlot();
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(slot);
-        if (is == null || !is.getType().equals(Material.WATCH) || !is.hasItemMeta()) {
+        if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
             return;
         }
         ItemMeta im = is.getItemMeta();

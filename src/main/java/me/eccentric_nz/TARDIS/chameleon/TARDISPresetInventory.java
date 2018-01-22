@@ -51,12 +51,12 @@ public class TARDISPresetInventory {
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         page.setItemMeta(two);
         // New Police Box
-        ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
+        ItemStack box = new ItemStack(Material.BLUE_WOOL, 1);
         ItemMeta day = box.getItemMeta();
         day.setDisplayName("New Police Box");
         box.setItemMeta(day);
         // Stone Brick Column
-        ItemStack stone = new ItemStack(Material.SMOOTH_BRICK, 1);
+        ItemStack stone = new ItemStack(Material.STONE_BRICKS, 1);
         ItemMeta hrs = stone.getItemMeta();
         hrs.setDisplayName("Stone Brick Column");
         stone.setItemMeta(hrs);
@@ -71,22 +71,22 @@ public class TARDISPresetInventory {
         tpl.setDisplayName("Jungle Temple");
         jungle.setItemMeta(tpl);
         // Nether Fortress
-        ItemStack nether = new ItemStack(Material.NETHER_BRICK, 1);
+        ItemStack nether = new ItemStack(Material.NETHER_BRICKS, 1);
         ItemMeta frt = nether.getItemMeta();
         frt.setDisplayName("Nether Fortress");
         nether.setItemMeta(frt);
         // Old Police Box
-        ItemStack def = new ItemStack(Material.WOOL, 1, (short) 3);
+        ItemStack def = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
         ItemMeta dpb = def.getItemMeta();
         dpb.setDisplayName("Old Police Box");
         def.setItemMeta(dpb);
         // Swamp Hut
-        ItemStack swamp = new ItemStack(Material.LOG, 1);
+        ItemStack swamp = new ItemStack(Material.OAK_LOG, 1);
         ItemMeta hut = swamp.getItemMeta();
         hut.setDisplayName("Swamp Hut");
         swamp.setItemMeta(hut);
         // Party Tent
-        ItemStack tent = new ItemStack(Material.WOOL, 1, (short) 5);
+        ItemStack tent = new ItemStack(Material.LIME_WOOL, 1);
         ItemMeta pry = tent.getItemMeta();
         pry.setDisplayName("Party Tent");
         tent.setItemMeta(pry);
@@ -96,12 +96,12 @@ public class TARDISPresetInventory {
         hse.setDisplayName("Village House");
         village.setItemMeta(hse);
         // Yellow Submarine
-        ItemStack yellow = new ItemStack(Material.WOOL, 1, (short) 4);
+        ItemStack yellow = new ItemStack(Material.YELLOW_WOOL, 1);
         ItemMeta sme = yellow.getItemMeta();
         sme.setDisplayName("Yellow Submarine");
         yellow.setItemMeta(sme);
         // Telephone Box
-        ItemStack tel = new ItemStack(Material.WOOL, 1, (short) 14);
+        ItemStack tel = new ItemStack(Material.RED_WOOL, 1);
         ItemMeta pho = tel.getItemMeta();
         pho.setDisplayName("Red Telephone Box");
         tel.setItemMeta(pho);
@@ -111,7 +111,7 @@ public class TARDISPresetInventory {
         mer.setDisplayName("Submerged");
         sub.setItemMeta(mer);
         // Daisy Flower
-        ItemStack flo = new ItemStack(Material.WOOL, 1, (short) 0);
+        ItemStack flo = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta wer = flo.getItemMeta();
         wer.setDisplayName("Daisy Flower");
         flo.setItemMeta(wer);
@@ -126,7 +126,7 @@ public class TARDISPresetInventory {
         wee.setDisplayName("Weeping Angel");
         ang.setItemMeta(wee);
         // Windmill
-        ItemStack win = new ItemStack(Material.WOOL, 1, (short) 1);
+        ItemStack win = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta mill = win.getItemMeta();
         mill.setDisplayName("Windmill");
         win.setItemMeta(mill);
@@ -136,22 +136,22 @@ public class TARDISPresetInventory {
         ivy.setDisplayName("Mossy Well");
         well.setItemMeta(ivy);
         // Rubber duck
-        ItemStack rub = new ItemStack(Material.STAINED_CLAY, 1, (short) 4);
+        ItemStack rub = new ItemStack(Material.YELLOW_TERRACOTTA, 1);
         ItemMeta ber = rub.getItemMeta();
         ber.setDisplayName("Rubber Ducky");
         rub.setItemMeta(ber);
         // Mineshaft
-        ItemStack mine = new ItemStack(Material.RAILS, 1);
+        ItemStack mine = new ItemStack(Material.RAIL, 1);
         ItemMeta sht = mine.getItemMeta();
         sht.setDisplayName("Mineshaft");
         mine.setItemMeta(sht);
         // Creepy
-        ItemStack cre = new ItemStack(Material.WEB, 1);
+        ItemStack cre = new ItemStack(Material.COBWEB, 1);
         ItemMeta epy = cre.getItemMeta();
         epy.setDisplayName("Creepy");
         cre.setItemMeta(epy);
         // Peanut Butter
-        ItemStack pea = new ItemStack(Material.HARD_CLAY, 1);
+        ItemStack pea = new ItemStack(Material.TERRACOTTA, 1);
         ItemMeta nut = pea.getItemMeta();
         nut.setDisplayName("Peanut Butter Jar");
         pea.setItemMeta(nut);
@@ -161,7 +161,7 @@ public class TARDISPresetInventory {
         post.setDisplayName("Lamp Post");
         lamp.setItemMeta(post);
         // Candy Cane
-        ItemStack candy = new ItemStack(Material.STAINED_CLAY, 1, (short) 14);
+        ItemStack candy = new ItemStack(Material.RED_TERRACOTTA, 1);
         ItemMeta cane = candy.getItemMeta();
         cane.setDisplayName("Candy Cane");
         candy.setItemMeta(cane);
@@ -181,7 +181,7 @@ public class TARDISPresetInventory {
         ch.setDisplayName("Flaming Torch");
         tor.setItemMeta(ch);
         // Pine Tree
-        ItemStack pine = new ItemStack(Material.LEAVES, 1, (short) 1);
+        ItemStack pine = new ItemStack(Material.SPRUCE_LEAVES, 1);
         ItemMeta tree = pine.getItemMeta();
         tree.setDisplayName("Pine Tree");
         pine.setItemMeta(tree);
@@ -191,27 +191,27 @@ public class TARDISPresetInventory {
         ked.setDisplayName("Steam Punked");
         pun.setItemMeta(ked);
         // Nether Portal
-        ItemStack por = new ItemStack(Material.QUARTZ_ORE, 1);
+        ItemStack por = new ItemStack(Material.NETHER_QUARTZ_ORE, 1);
         ItemMeta tal = por.getItemMeta();
         tal.setDisplayName("Nether Portal");
         por.setItemMeta(tal);
         // cake
-        ItemStack cake = new ItemStack(Material.WOOL, 1, (short) 12);
+        ItemStack cake = new ItemStack(Material.BROWN_WOOL, 1);
         ItemMeta candle = cake.getItemMeta();
         candle.setDisplayName("Birthday Cake");
         cake.setItemMeta(candle);
         // grave
-        ItemStack grave = new ItemStack(Material.ENDER_STONE, 1);
+        ItemStack grave = new ItemStack(Material.END_STONE, 1);
         ItemMeta epitaph = grave.getItemMeta();
         epitaph.setDisplayName("Gravestone");
         grave.setItemMeta(epitaph);
         // topsy
-        ItemStack topsy = new ItemStack(Material.WOOL, 1, (short) 6);
+        ItemStack topsy = new ItemStack(Material.PINK_WOOL, 1);
         ItemMeta turvey = topsy.getItemMeta();
         turvey.setDisplayName("Topsy-turvey");
         topsy.setItemMeta(turvey);
         // mushroom
-        ItemStack mush = new ItemStack(Material.HUGE_MUSHROOM_1, 1);
+        ItemStack mush = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
         ItemMeta shroom = mush.getItemMeta();
         shroom.setDisplayName("Mushroom");
         mush.setItemMeta(shroom);
@@ -220,7 +220,7 @@ public class TARDISPresetInventory {
         ItemMeta cer = fen.getItemMeta();
         cer.setDisplayName("Random Fence");
         // Gazebo
-        ItemStack gaz = new ItemStack(Material.FENCE, 1);
+        ItemStack gaz = new ItemStack(Material.OAK_FENCE, 1);
         ItemMeta ebo = gaz.getItemMeta();
         ebo.setDisplayName("Gazebo");
         gaz.setItemMeta(ebo);
@@ -230,7 +230,7 @@ public class TARDISPresetInventory {
         sci.setDisplayName("Apperture Science");
         app.setItemMeta(sci);
         // Lighthouse
-        ItemStack lig = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
+        ItemStack lig = new ItemStack(Material.REDSTONE_LAMP, 1);
         ItemMeta hou = lig.getItemMeta();
         hou.setDisplayName("Tiny Lighthouse");
         lig.setItemMeta(hou);
@@ -245,7 +245,7 @@ public class TARDISPresetInventory {
         man.setDisplayName("Snowman");
         sno.setItemMeta(man);
         // Jail
-        ItemStack jail = new ItemStack(Material.IRON_FENCE, 1);
+        ItemStack jail = new ItemStack(Material.IRON_BARS, 1);
         ItemMeta gaol = jail.getItemMeta();
         gaol.setDisplayName("Jail Cell");
         jail.setItemMeta(gaol);
@@ -255,7 +255,7 @@ public class TARDISPresetInventory {
         dor.setDisplayName("Pandorica");
         pan.setItemMeta(dor);
         // Double Helix
-        ItemStack dou = new ItemStack(Material.SMOOTH_STAIRS, 1);
+        ItemStack dou = new ItemStack(Material.STONE_BRICK_STAIRS, 1);
         ItemMeta lix = dou.getItemMeta();
         lix.setDisplayName("Double Helix");
         dou.setItemMeta(lix);
@@ -299,7 +299,6 @@ public class TARDISPresetInventory {
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
-
 
         ItemStack[] is = {
             box, jungle, nether, def, swamp, tent, village, yellow, tel,

@@ -77,13 +77,13 @@ public class TARDISAbandoned {
         bd.setMalfunction(false);
         bd.setOutside(true);
         bd.setRebuild(false);
-        bd.setSubmarine(l.getBlock().getType().equals(Material.STATIONARY_WATER));
+        bd.setSubmarine(l.getBlock().getType().equals(Material.FLOWING_WATER));
         bd.setTardisID(lastInsertId);
         plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
         TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin);
         // build exterior
         builder.buildOuter(bd, p);
         // build interior
-        builder.buildInner(s, chunkworld, lastInsertId, Material.WOOL, (byte) 1, Material.WOOL, (byte) 8);
+        builder.buildInner(s, chunkworld, lastInsertId, Material.ORANGE_WOOL, Material.LIGHT_GRAY_WOOL);
     }
 }

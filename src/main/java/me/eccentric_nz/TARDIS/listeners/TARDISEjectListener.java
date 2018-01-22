@@ -51,6 +51,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.LlamaInventory;
 
 /**
  *
@@ -193,6 +194,8 @@ public class TARDISEjectListener implements Listener {
                         leash.remove();
                     }
                 }
+                LlamaInventory llinv = ll.getInventory();
+                tmlla.setDecor(llinv.getDecor());
                 Llama llama = (Llama) l.getWorld().spawnEntity(l, EntityType.LLAMA);
                 llama.setColor(tmlla.getLlamacolor());
                 llama.setStrength(tmlla.getStrength());
@@ -217,16 +220,12 @@ public class TARDISEjectListener implements Listener {
                     ChestedHorse ch = (ChestedHorse) llama;
                     ch.setCarryingChest(true);
                 }
-                Inventory inv = llama.getInventory();
+                LlamaInventory inv = llama.getInventory();
                 inv.setContents(tmlla.getHorseinventory());
-                if (inv.contains(Material.CARPET)) {
-                    int carpet_slot = inv.first(Material.CARPET);
-                    ItemStack carpet = inv.getItem(carpet_slot);
-                    llama.getInventory().setDecor(carpet);
-                }
+                inv.setDecor(tmlla.getDecor());
                 if (tmlla.isLeashed()) {
                     Inventory pinv = player.getInventory();
-                    ItemStack leash = new ItemStack(Material.LEASH, 1);
+                    ItemStack leash = new ItemStack(Material.LEAD, 1);
                     pinv.addItem(leash);
                     player.updateInventory();
                 }

@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 
 /**
  *
@@ -28,130 +31,88 @@ public class TARDISStairRecalculator {
      * Recalculate the data for directional block (TRAPDOOR) when the TARDIS
      * preset changes direction.
      *
-     * @param b the byte stored in the preset data
+     * @param b the block data stored in the preset data
      * @param d the new direction of the TARDIS
      * @param col the preset column that is being calculated
      * @param duck whether this is the Rubber Duck preset
-     * @return the recalculated byte
+     * @return the recalculated block data
      */
-    public byte recalculate(byte b, COMPASS d, int col, boolean duck) {
-        byte recalc;
+    public BlockData recalculate(BlockData b, COMPASS d, int col, boolean duck) {
+        Directional stair = (Directional) b;
         switch (d) {
             case SOUTH:
-                switch (b) {
-                    case 0:
-                        recalc = (byte) 2;
+                switch (stair.getFacing()) {
+                    case EAST: // 0
+                        stair.setFacing(BlockFace.SOUTH); // 2
                         break;
-                    case 1:
-                        recalc = (byte) 3;
+                    case WEST: // 1
+                        stair.setFacing(BlockFace.NORTH); // 3
                         break;
-                    case 2:
-                        recalc = (byte) 1;
+                    case SOUTH: // 2
+                        stair.setFacing(BlockFace.WEST); // 1
                         break;
-                    case 3:
-                        recalc = (byte) 0;
-                        break;
-                    case 4:
-                        recalc = (byte) 6;
-                        break;
-                    case 5:
-                        recalc = (byte) 7;
-                        break;
-                    case 6:
-                        recalc = (byte) 5;
-                        break;
-                    case 7:
-                        recalc = (byte) 4;
+                    case NORTH: // 3
+                        stair.setFacing(BlockFace.EAST); // 0
                         break;
                     default:
-                        recalc = b;
+                        break;
                 }
                 break;
             case WEST:
                 if (duck) {
-                    switch (b) {
-                        case 0:
-                            recalc = (byte) 1;
+                    switch (stair.getFacing()) {
+                        case EAST:
+                            stair.setFacing(BlockFace.WEST); // 1
                             break;
-                        case 1:
-                            recalc = (byte) 0;
+                        case WEST:
+                            stair.setFacing(BlockFace.EAST); // 0
                             break;
-                        case 2:
-                            recalc = (byte) 3;
+                        case SOUTH:
+                            stair.setFacing(BlockFace.NORTH); // 3
                             break;
-                        case 3:
-                            recalc = (byte) 2;
-                            break;
-                        case 4:
-                            recalc = (byte) 5;
-                            break;
-                        case 5:
-                            recalc = (byte) 4;
-                            break;
-                        case 6:
-                            recalc = (byte) 7;
-                            break;
-                        case 7:
-                            recalc = (byte) 6;
+                        case NORTH:
+                            stair.setFacing(BlockFace.SOUTH); // 2
                             break;
                         default:
-                            recalc = b;
+                            break;
                     }
                 } else {
                     if (col == 3 || col == 7) {
-                        switch (b) {
-                            case 0:
-                                recalc = (byte) 1;
+                        switch (stair.getFacing()) {
+                            case EAST:
+                                stair.setFacing(BlockFace.WEST); // 1
                                 break;
-                            case 1:
-                                recalc = (byte) 0;
-                                break;
-                            case 4:
-                                recalc = (byte) 5;
-                                break;
-                            case 5:
-                                recalc = (byte) 4;
+                            case WEST:
+                                stair.setFacing(BlockFace.EAST); // 0
                                 break;
                             default:
-                                recalc = b;
+                                break;
                         }
                     } else {
-                        recalc = b;
+                        break;
                     }
                 }
                 break;
             default:
-                switch (b) {
-                    case 0:
-                        recalc = (byte) 3;
+                switch (stair.getFacing()) {
+                    case EAST:
+                        stair.setFacing(BlockFace.NORTH); // 3
                         break;
-                    case 1:
-                        recalc = (byte) 2;
+                    case WEST:
+                        stair.setFacing(BlockFace.SOUTH); // 2
                         break;
-                    case 2:
-                        recalc = (byte) 0;
+                    case SOUTH:
+                        stair.setFacing(BlockFace.EAST); // 0
                         break;
-                    case 3:
-                        recalc = (byte) 1;
-                        break;
-                    case 4:
-                        recalc = (byte) 7;
-                        break;
-                    case 5:
-                        recalc = (byte) 6;
-                        break;
-                    case 6:
-                        recalc = (byte) 4;
-                        break;
-                    case 7:
-                        recalc = (byte) 5;
+                    case NORTH:
+                        stair.setFacing(BlockFace.WEST); // 1
                         break;
                     default:
-                        recalc = b;
+                        break;
                 }
                 break;
         }
-        return recalc;
+        return stair;
     }
 
 }

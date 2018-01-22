@@ -44,7 +44,7 @@ public class TARDISSonicActivatorInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
+    
     private ItemStack[] getItemStack() {
         List<String> lore = new ArrayList<>();
         lore.add("To activate the generator");

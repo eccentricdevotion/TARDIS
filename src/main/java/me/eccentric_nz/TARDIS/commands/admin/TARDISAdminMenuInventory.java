@@ -47,14 +47,14 @@ public class TARDISAdminMenuInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
+    
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<>();
         Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
         config.forEach((c) -> {
             String value = plugin.getConfig().getString(c);
             if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("abandon") && !c.startsWith("circuits") && !c.startsWith("conversions") && !c.startsWith("debug") && !c.startsWith("desktop") && !c.startsWith("junk") && !c.startsWith("siege") && !c.startsWith("travel") && !c.startsWith("worlds")) {
-                ItemStack is = new ItemStack(Material.DIODE, 1);
+                ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
                 im.setLore(Arrays.asList(value));

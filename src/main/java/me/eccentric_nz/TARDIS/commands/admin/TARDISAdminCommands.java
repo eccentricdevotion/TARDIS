@@ -136,6 +136,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
+        firstsBool.put("no_coords", "preferences");
         firstsBool.put("open_door_policy", "preferences");
         firstsBool.put("particles", "artron_furnace");
         firstsBool.put("per_world_perms", "travel");
@@ -171,7 +172,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("border_radius", "creation");
         firstsInt.put("confirm_timeout", "police_box");
         firstsInt.put("count", "creation");
-        firstsInt.put("custom_creeper_id", "creation");
         firstsInt.put("grace_period", "travel");
         firstsInt.put("gravity_max_distance", "growth");
         firstsInt.put("gravity_max_velocity", "growth");

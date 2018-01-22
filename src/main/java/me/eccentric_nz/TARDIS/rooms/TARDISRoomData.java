@@ -40,7 +40,6 @@ public class TARDISRoomData {
     JSONObject schematic;
     int tardis_id;
     Material middleType, floorType;
-    byte middleData, floorData;
 
     public TARDISRoomData() {
     }
@@ -93,28 +92,12 @@ public class TARDISRoomData {
         this.middleType = middleType;
     }
 
-    public byte getMiddleData() {
-        return middleData;
-    }
-
-    public void setMiddleData(byte middleData) {
-        this.middleData = middleData;
-    }
-
     public Material getFloorType() {
         return floorType;
     }
 
     public void setFloorType(Material floorType) {
         this.floorType = floorType;
-    }
-
-    public byte getFloorData() {
-        return floorData;
-    }
-
-    public void setFloorData(byte floorData) {
-        this.floorData = floorData;
     }
 
     public int getTardis_id() {

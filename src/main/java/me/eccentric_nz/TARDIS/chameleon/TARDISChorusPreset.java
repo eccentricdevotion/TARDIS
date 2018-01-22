@@ -35,10 +35,7 @@ public class TARDISChorusPreset extends TARDISPreset {
 
     public TARDISChorusPreset() {
         setBlueprint_id(blueprint_id);
-        setBlueprint_data(blueprint_data);
         setStained_id(stained_id);
-        setStained_data(stained_data);
         setGlass_id(glass_id);
-        setGlass_data(glass_data);
     }
 }

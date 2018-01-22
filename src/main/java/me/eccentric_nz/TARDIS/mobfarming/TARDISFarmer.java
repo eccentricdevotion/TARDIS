@@ -64,7 +64,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SpawnEggMeta;
+import org.bukkit.inventory.LlamaInventory;
 
 /**
  * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold
@@ -262,7 +262,6 @@ public class TARDISFarmer {
                             horsetotal++;
                             break;
                         case LLAMA:
-                            // TODO make a Llama room
                             Tameable ll_brokenin = (Tameable) e;
                             Llama llama = (Llama) e;
                             // if horse has a passenger, eject them!
@@ -308,6 +307,8 @@ public class TARDISFarmer {
                                     leash.remove();
                                 }
                             }
+                            LlamaInventory llinv = llama.getInventory();
+                            tmlla.setDecor(llinv.getDecor());
                             old_macd_had_a_llama.add(tmlla);
                             if (!stall.isEmpty() || (stall.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -617,38 +618,23 @@ public class TARDISFarmer {
                     // no farm, give the player spawn eggs
                     Inventory inv = p.getInventory();
                     if (old_macd_had_a_chicken.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size());
-                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                        im.setSpawnedType(EntityType.CHICKEN);
-                        is.setItemMeta(im);
+                        ItemStack is = new ItemStack(Material.CHICKEN_SPAWN_EGG, old_macd_had_a_chicken.size());
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_cow.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size());
-                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                        im.setSpawnedType(EntityType.COW);
-                        is.setItemMeta(im);
+                        ItemStack is = new ItemStack(Material.COW_SPAWN_EGG, old_macd_had_a_cow.size());
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_pig.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size());
-                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                        im.setSpawnedType(EntityType.PIG);
-                        is.setItemMeta(im);
+                        ItemStack is = new ItemStack(Material.PIG_SPAWN_EGG, old_macd_had_a_pig.size());
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_sheep.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size());
-                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                        im.setSpawnedType(EntityType.SHEEP);
-                        is.setItemMeta(im);
+                        ItemStack is = new ItemStack(Material.SHEEP_SPAWN_EGG, old_macd_had_a_sheep.size());
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_mooshroom.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size());
-                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                        im.setSpawnedType(EntityType.MUSHROOM_COW);
-                        is.setItemMeta(im);
+                        ItemStack is = new ItemStack(Material.MOOSHROOM_SPAWN_EGG, old_macd_had_a_mooshroom.size());
                         inv.addItem(is);
                     }
                     p.updateInventory();
@@ -701,7 +687,7 @@ public class TARDISFarmer {
                         inv.setContents(e.getHorseinventory());
                         if (e.isLeashed()) {
                             Inventory pinv = p.getInventory();
-                            ItemStack leash = new ItemStack(Material.LEASH, 1);
+                            ItemStack leash = new ItemStack(Material.LEAD, 1);
                             pinv.addItem(leash);
                             p.updateInventory();
                         }
@@ -712,10 +698,7 @@ public class TARDISFarmer {
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_horse.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size());
-                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                    im.setSpawnedType(EntityType.HORSE);
-                    is.setItemMeta(im);
+                    ItemStack is = new ItemStack(Material.HORSE_SPAWN_EGG, old_macd_had_a_horse.size());
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (horsetotal > 0) {
@@ -760,16 +743,12 @@ public class TARDISFarmer {
                             ChestedHorse ch = (ChestedHorse) llama;
                             ch.setCarryingChest(true);
                         }
-                        Inventory inv = cria.getInventory();
+                        LlamaInventory inv = cria.getInventory();
                         inv.setContents(ll.getHorseinventory());
-                        if (inv.contains(Material.CARPET)) {
-                            int carpet_slot = inv.first(Material.CARPET);
-                            ItemStack carpet = inv.getItem(carpet_slot);
-                            cria.getInventory().setDecor(carpet);
-                        }
+                        inv.setDecor(ll.getDecor());
                         if (ll.isLeashed()) {
                             Inventory pinv = p.getInventory();
-                            ItemStack leash = new ItemStack(Material.LEASH, 1);
+                            ItemStack leash = new ItemStack(Material.LEAD, 1);
                             pinv.addItem(leash);
                             p.updateInventory();
                         }
@@ -780,10 +759,7 @@ public class TARDISFarmer {
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_llama.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_llama.size());
-                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                    im.setSpawnedType(EntityType.LLAMA);
-                    is.setItemMeta(im);
+                    ItemStack is = new ItemStack(Material.LLAMA_SPAWN_EGG, old_macd_had_a_llama.size());
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (llamatotal > 0) {
@@ -817,10 +793,7 @@ public class TARDISFarmer {
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_rabbit.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size());
-                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                    im.setSpawnedType(EntityType.RABBIT);
-                    is.setItemMeta(im);
+                    ItemStack is = new ItemStack(Material.RABBIT_SPAWN_EGG, old_macd_had_a_rabbit.size());
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (rabbittotal > 0) {
@@ -862,10 +835,7 @@ public class TARDISFarmer {
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_villager.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size());
-                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                    im.setSpawnedType(EntityType.VILLAGER);
-                    is.setItemMeta(im);
+                    ItemStack is = new ItemStack(Material.VILLAGER_SPAWN_EGG, old_macd_had_a_villager.size());
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (villagertotal > 0) {
@@ -898,10 +868,7 @@ public class TARDISFarmer {
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_polarbear.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_polarbear.size());
-                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                    im.setSpawnedType(EntityType.POLAR_BEAR);
-                    is.setItemMeta(im);
+                    ItemStack is = new ItemStack(Material.POLAR_BEAR_SPAWN_EGG, old_macd_had_a_polarbear.size());
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (beartotal > 0) {
@@ -937,10 +904,7 @@ public class TARDISFarmer {
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_parrot.size() > 0) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();
-                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_parrot.size());
-                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
-                    im.setSpawnedType(EntityType.PARROT);
-                    is.setItemMeta(im);
+                    ItemStack is = new ItemStack(Material.PARROT_SPAWN_EGG, old_macd_had_a_parrot.size());
                     inv.addItem(is);
                     p.updateInventory();
                 }

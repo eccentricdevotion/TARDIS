@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.junk;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -35,10 +34,9 @@ public class TARDISJunkTabComplete extends TARDISCompleter implements TabComplet
     private final ImmutableList<String> MAT_SUBS;
 
     public TARDISJunkTabComplete() {
-        HashMap<String, TARDISWalls.Pair> map = new TARDISWalls().blocks;
         List<String> mats = new ArrayList<>();
-        map.keySet().forEach((key) -> {
-            mats.add(key);
+        TARDISWalls.BLOCKS.forEach((m) -> {
+            mats.add(m.toString());
         });
         this.MAT_SUBS = ImmutableList.copyOf(mats);
     }

@@ -44,7 +44,7 @@ public class TARDISRoomDirection {
     public void getDirection() {
         for (COMPASS c : COMPASS.values()) {
             BlockFace tmp = BlockFace.valueOf(c.toString());
-            if (b.getRelative(tmp).getType().equals(Material.STONE_PLATE)) {
+            if (b.getRelative(tmp).getType().equals(Material.STONE_PRESSURE_PLATE)) {
                 face = tmp;
                 found = true;
                 compass = c;

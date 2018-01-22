@@ -27,11 +27,8 @@ public class TARDISBuildData {
 
     private SCHEMATIC schematic;
     private Material wallType;
-    private byte wallData;
     private Material floorType;
-    private byte floorData;
     private int box_id;
-    private byte box_data;
     private int lamp;
 
     public TARDISBuildData() {
@@ -53,14 +50,6 @@ public class TARDISBuildData {
         this.wallType = wallType;
     }
 
-    public byte getWallData() {
-        return wallData;
-    }
-
-    public void setWallData(byte wallData) {
-        this.wallData = wallData;
-    }
-
     public Material getFloorType() {
         return floorType;
     }
@@ -69,28 +58,12 @@ public class TARDISBuildData {
         this.floorType = floorType;
     }
 
-    public byte getFloorData() {
-        return floorData;
-    }
-
-    public void setFloorData(byte floorData) {
-        this.floorData = floorData;
-    }
-
     public int getBox_id() {
         return box_id;
     }
 
     public void setBox_id(int box_id) {
         this.box_id = box_id;
-    }
-
-    public byte getBox_data() {
-        return box_data;
-    }
-
-    public void setBox_data(byte box_data) {
-        this.box_data = box_data;
     }
 
     public int getLamp() {

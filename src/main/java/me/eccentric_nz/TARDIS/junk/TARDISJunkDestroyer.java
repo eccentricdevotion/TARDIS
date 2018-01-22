@@ -146,7 +146,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         int rx = rp.getLocation().getBlockX();
                         int ry = rp.getLocation().getBlockY();
                         int rz = rp.getLocation().getBlockZ();
-                        TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlock(), rp.getData());
+                        TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlockData());
                     });
                 }
                 // remove block protection

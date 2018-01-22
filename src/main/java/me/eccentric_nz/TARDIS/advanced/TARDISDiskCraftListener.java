@@ -62,9 +62,9 @@ public class TARDISDiskCraftListener implements Listener {
                     // get the other ingredients
                     List<ItemStack> items = getOtherItems(inv);
                     ItemStack disk;
-                    if (inv.contains(Material.GREEN_RECORD)) {
+                    if (inv.contains(Material.MUSIC_DISC_CAT)) {
                         // check it is a Biome Storage Disk
-                        ItemStack is = inv.getItem(inv.first(Material.GREEN_RECORD));
+                        ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
                         if (is != null && is.hasItemMeta()) {
                             ItemMeta im = is.getItemMeta();
                             if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
@@ -76,7 +76,7 @@ public class TARDISDiskCraftListener implements Listener {
                                     if (items.size() > 1 && ladder > 0) {
                                         // mega biome
                                         items.remove(inv.getItem(ladder));
-                                        String lookup = items.get(0).getType().toString() + "_B" + items.get(0).getData().getData();
+                                        String lookup = items.get(0).getType().toString() + "_B";
                                         try {
                                             String biome = BIOME_LOOKUP.valueOf(lookup).getUpper();
                                             disk_lore.add(biome);
@@ -85,7 +85,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         }
                                     } else {
                                         // regular biome
-                                        String lookup = items.get(0).getType().toString() + "_B" + items.get(0).getData().getData();
+                                        String lookup = items.get(0).getType().toString() + "_B";
                                         try {
                                             String biome = BIOME_LOOKUP.valueOf(lookup).getRegular();
                                             disk_lore.add(biome);
@@ -94,7 +94,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         }
                                     }
                                     if (disk_lore.size() > 0) {
-                                        disk = new ItemStack(Material.GREEN_RECORD, 1);
+                                        disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                         ItemMeta dim = disk.getItemMeta();
                                         dim.setDisplayName("Biome Storage Disk");
                                         dim.setLore(disk_lore);
@@ -108,7 +108,7 @@ public class TARDISDiskCraftListener implements Listener {
                                     try {
                                         String biome = BIOME_LOOKUP.getBiome(lore.get(0)).getUpper();
                                         disk_lore.add(biome);
-                                        disk = new ItemStack(Material.GREEN_RECORD, 1);
+                                        disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                         ItemMeta dim = disk.getItemMeta();
                                         dim.setDisplayName("Biome Storage Disk");
                                         dim.setLore(disk_lore);
@@ -125,7 +125,7 @@ public class TARDISDiskCraftListener implements Listener {
                         }
                     } else {
                         // check it is a Preset Storage Disk
-                        ItemStack is = inv.getItem(inv.first(Material.RECORD_6));
+                        ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
                         if (is != null && is.hasItemMeta()) {
                             ItemMeta im = is.getItemMeta();
                             if (im.hasDisplayName() && im.getDisplayName().equals("Preset Storage Disk") && im.hasLore()) {
@@ -140,7 +140,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         }
                                         if (!preset.isEmpty()) {
                                             List<String> disk_lore = Arrays.asList(preset);
-                                            disk = new ItemStack(Material.RECORD_6, 1);
+                                            disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
                                             ItemMeta dim = disk.getItemMeta();
                                             dim.setDisplayName("Preset Storage Disk");
                                             dim.setLore(disk_lore);
@@ -168,7 +168,7 @@ public class TARDISDiskCraftListener implements Listener {
                 count++;
             }
         }
-        if ((inv.contains(Material.GREEN_RECORD) || inv.contains(Material.RECORD_6)) && count > 1) {
+        if ((inv.contains(Material.MUSIC_DISC_CAT) || inv.contains(Material.MUSIC_DISC_MALL)) && count > 1) {
             check = true;
         }
         return check;
@@ -179,7 +179,7 @@ public class TARDISDiskCraftListener implements Listener {
         for (ItemStack is : inv.getContents()) {
             if (is != null) {
                 Material m = is.getType();
-                if (!m.equals(Material.GREEN_RECORD) && !m.equals(Material.RECORD_6) && !m.equals(Material.AIR)) {
+                if (!m.equals(Material.MUSIC_DISC_CAT) && !m.equals(Material.MUSIC_DISC_MALL) && !m.equals(Material.AIR)) {
                     items.add(is);
                 }
             }

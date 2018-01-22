@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,12 +47,11 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
-    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallFloorMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.rows = this.plugin.getTardisWalls().blocks.size() / 8 + 1;
+        this.rows = TARDISWalls.BLOCKS.size() / 8 + 1;
         this.blocks = getWallBlocks();
     }
 
@@ -166,16 +164,13 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            if (!notthese.contains(entry.getKey())) {
-                Pair value = entry.getValue();
-                ItemStack is = new ItemStack(value.getType(), 1, value.getData());
-                stacks[r][c] = is;
-                c++;
-                if (c == 8) {
-                    r++;
-                    c = 0;
-                }
+        for (Material entry : TARDISWalls.BLOCKS) {
+            ItemStack is = new ItemStack(entry, 1);
+            stacks[r][c] = is;
+            c++;
+            if (c == 8) {
+                r++;
+                c = 0;
             }
         }
         return stacks;

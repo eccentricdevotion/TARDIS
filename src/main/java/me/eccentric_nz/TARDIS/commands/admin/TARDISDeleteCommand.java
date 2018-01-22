@@ -36,8 +36,8 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
@@ -55,7 +55,6 @@ public class TARDISDeleteCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean deleteTARDIS(final CommandSender sender, final String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
@@ -113,7 +112,7 @@ public class TARDISDeleteCommand {
                 TARDISMessage.send(sender, "WORLD_DELETED");
                 return true;
             }
-            final int restore = getRestore(cw);
+            final Material restore = getRestore(cw);
             // get the current location
             Location bb_loc = null;
             COMPASS d = COMPASS.EAST;
@@ -185,18 +184,17 @@ public class TARDISDeleteCommand {
         return true;
     }
 
-    private int getRestore(World w) {
-        if (w == null || w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
-            return 0;
+    private Material getRestore(World w) {
+        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
+            return Material.AIR;
         }
-        Environment env = w.getEnvironment();
-        switch (env) {
+        switch (w.getEnvironment()) {
             case NETHER:
-                return 87;
+                return Material.NETHERRACK;
             case THE_END:
-                return 121;
+                return Material.END_STONE;
             default:
-                return 1;
+                return Material.STONE;
         }
     }
 

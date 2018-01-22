@@ -9,8 +9,8 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
@@ -121,13 +121,15 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             JSONObject obj = new JSONObject();
                             Block b = w.getBlockAt(r, l, c);
                             obj.put("type", b.getType().toString());
-                            byte d = b.getData();
-                            obj.put("data", d);
+                            // does the block have blockdata
+                            String blockData = b.getBlockData().getDataString();
+                            plugin.debug("blockData: " + blockData);
+                            obj.put("data", blockData);
                             // banners
-                            if (b.getType().equals(Material.STANDING_BANNER) || b.getType().equals(Material.WALL_BANNER)) {
+                            if (TARDISStaticUtils.isBanner(b.getType())) {
                                 JSONObject state = new JSONObject();
                                 Banner banner = (Banner) b.getState();
-                                state.put("colour", banner.getBaseColor().toString());
+//                                state.put("colour", banner.getBaseColor().toString());
                                 JSONArray patterns = new JSONArray();
                                 if (banner.numberOfPatterns() > 0) {
                                     banner.getPatterns().forEach((p) -> {
@@ -138,7 +140,6 @@ public class TARDISSchematicCommand implements CommandExecutor {
                                     });
                                 }
                                 state.put("patterns", patterns);
-                                state.put("bdata", d);
                                 obj.put("banner", state);
                             }
                             columns.put(obj);

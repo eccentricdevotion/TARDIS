@@ -57,7 +57,7 @@ public class TARDISThemeInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
+    
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
         int i = 0;

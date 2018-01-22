@@ -96,7 +96,7 @@ public class TARDISDoorListener {
      * @param sound an integer representing the sound to play
      * @param m whether to play the resource pack sound
      */
-    @SuppressWarnings("deprecation")
+    
     public void movePlayer(final Player p, final Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
         final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         final World to = l.getWorld();
@@ -276,7 +276,7 @@ public class TARDISDoorListener {
      *
      * @param p the player to give the key to
      */
-    @SuppressWarnings("deprecation")
+    
     private void giveKey(Player p) {
         String key;
         HashMap<String, Object> where = new HashMap<>();

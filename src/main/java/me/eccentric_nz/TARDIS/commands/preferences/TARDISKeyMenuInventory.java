@@ -43,7 +43,7 @@ public class TARDISKeyMenuInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
+    
     private ItemStack[] getItemStack() {
         // \u00a7 = § (ChatColor code)
         // brass yale

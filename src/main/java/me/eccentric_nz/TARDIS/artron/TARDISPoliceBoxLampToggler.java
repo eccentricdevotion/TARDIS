@@ -47,17 +47,24 @@ public class TARDISPoliceBoxLampToggler {
             while (!lamp.getChunk().isLoaded()) {
                 lamp.getChunk().load();
             }
-            if (lamp.getType().equals(Material.REDSTONE_LAMP_ON) && !on) {
-                // turn off
-                redstone.setType(Material.WOOL);
-                redstone.setData((byte) 11);
-                return;
+            if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
+                if (on) {
+                    // turn on
+                    redstone.setType(Material.REDSTONE_BLOCK);
+                } else {
+                    // turn off
+                    redstone.setType(Material.BLUE_WOOL);
+                }
             }
-            if (lamp.getType().equals(Material.REDSTONE_LAMP_OFF) && on) {
-                // turn on
-                redstone.setType(Material.REDSTONE_BLOCK);
-            }
+//            if (lamp.getType().equals(Material.REDSTONE_LAMP) && !on) {
+//                // turn off
+//                redstone.setType(Material.BLUE_WOOL);
+//                return;
+//            }
+//            if (lamp.getType().equals(Material.REDSTONE_LAMP) && on) {
+//                // turn on
+//                redstone.setType(Material.REDSTONE_BLOCK);
+//            }
         }
     }
-
 }

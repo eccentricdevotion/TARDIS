@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 
 /**
  *
@@ -28,63 +31,63 @@ public class TARDISButtonRecalculator {
      * Recalculate the data for directional block (TRAPDOOR) when the TARDIS
      * preset changes direction.
      *
-     * @param b the byte stored in the preset data
+     * @param b the block data stored in the preset data
      * @param d the new direction of the TARDIS
-     * @return the recalculated byte
+     * @return the recalculated block data
      */
-    public byte recalculate(byte b, COMPASS d) {
-        byte recalc;
+    public BlockData recalculate(BlockData b, COMPASS d) {
+        Directional button = (Directional) b;
         switch (d) {
             case SOUTH:
-                switch (b) {
-                    case 1:
-                        recalc = 3;
+                switch (button.getFacing()) {
+                    case EAST:
+                        button.setFacing(BlockFace.SOUTH); // 3
                         break;
-                    case 2:
-                        recalc = 4;
+                    case WEST:
+                        button.setFacing(BlockFace.NORTH); // 4
                         break;
-                    case 3:
-                        recalc = 2;
+                    case SOUTH:
+                        button.setFacing(BlockFace.WEST); // 2
                         break;
-                    case 4:
-                        recalc = 1;
+                    case NORTH:
+                        button.setFacing(BlockFace.EAST); // 1
                         break;
                     default:
-                        recalc = b;
+                        break;
                 }
                 break;
             case WEST:
-                switch (b) {
-                    case 1:
-                        recalc = 2;
+                switch (button.getFacing()) {
+                    case EAST:
+                        button.setFacing(BlockFace.WEST); // 2
                         break;
-                    case 2:
-                        recalc = 1;
+                    case WEST:
+                        button.setFacing(BlockFace.EAST); // 1
                         break;
                     default:
-                        recalc = b;
+                        break;
                 }
                 break;
             default:
-                switch (b) {
-                    case 1:
-                        recalc = 4;
+                switch (button.getFacing()) {
+                    case EAST:
+                        button.setFacing(BlockFace.NORTH); // 4
                         break;
-                    case 2:
-                        recalc = 3;
+                    case WEST:
+                        button.setFacing(BlockFace.SOUTH); // 3
                         break;
-                    case 3:
-                        recalc = 1;
+                    case SOUTH:
+                        button.setFacing(BlockFace.EAST); // 1
                         break;
-                    case 4:
-                        recalc = 2;
+                    case NORTH:
+                        button.setFacing(BlockFace.WEST); // 2
                         break;
                     default:
-                        recalc = b;
+                        break;
                 }
                 break;
         }
-        return recalc;
+        return button;
     }
 
 }

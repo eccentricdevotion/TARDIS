@@ -70,7 +70,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             // get the y coord
             if (param.spaceTardis()) {
                 if (safeOverworld(war.getW(), x, z, param.getCompass(), param.getPlayer())) {
-                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && TARDISStaticUtils.isOceanBiome(dest.getBlock().getBiome())) {
+                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.FLOWING_WATER)) && TARDISStaticUtils.isOceanBiome(dest.getBlock().getBiome())) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
                         }
@@ -130,7 +130,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         Block block = l.getBlock();
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
+            if (!block.getType().equals(Material.FLOWING_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
                 break;
             }
         }

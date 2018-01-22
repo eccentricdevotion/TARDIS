@@ -46,42 +46,42 @@ public class TARDISARSMap {
     private ItemStack[] getItemStack() {
         // direction pad
         // up
-        ItemStack pad_up = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_up = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta up = pad_up.getItemMeta();
         up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
         pad_up.setItemMeta(up);
         // down
-        ItemStack pad_down = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_down = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta down = pad_down.getItemMeta();
         down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
         pad_down.setItemMeta(down);
         // left
-        ItemStack pad_left = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_left = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta left = pad_left.getItemMeta();
         left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
         pad_left.setItemMeta(left);
         // right
-        ItemStack pad_right = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_right = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta right = pad_right.getItemMeta();
         right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
         pad_right.setItemMeta(right);
         // level selected
-        ItemStack level_sel = new ItemStack(Material.WOOL, 1, (byte) 4);
+        ItemStack level_sel = new ItemStack(Material.YELLOW_WOOL, 1);
         ItemMeta main = level_sel.getItemMeta();
         main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
         level_sel.setItemMeta(main);
         // level top
-        ItemStack level_top = new ItemStack(Material.WOOL, 1, (byte) 0);
+        ItemStack level_top = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta top = level_top.getItemMeta();
         top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
         level_top.setItemMeta(top);
         // level top
-        ItemStack level_bot = new ItemStack(Material.WOOL, 1, (byte) 0);
+        ItemStack level_bot = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta bot = level_bot.getItemMeta();
         bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
         level_bot.setItemMeta(bot);
         // stone
-        ItemStack black = new ItemStack(Material.WOOL, 1, (byte) 15);
+        ItemStack black = new ItemStack(Material.BLACK_WOOL, 1);
         ItemMeta wool = black.getItemMeta();
         wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_ON"));
         black.setItemMeta(wool);

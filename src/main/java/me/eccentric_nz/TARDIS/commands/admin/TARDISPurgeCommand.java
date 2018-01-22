@@ -36,7 +36,7 @@ public class TARDISPurgeCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean clearAll(CommandSender sender, String[] args) {
         // Look up this player's UUID
         UUID uuid;

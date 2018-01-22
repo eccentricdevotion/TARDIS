@@ -107,7 +107,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Acid Battery.hard_shape", "-A-,ARA,-A-");
             recipes_config.set("shaped.Acid Battery.hard_ingredients.A", "WATER_BUCKET");
             recipes_config.set("shaped.Acid Battery.hard_ingredients.R", "REDSTONE_BLOCK");
-            recipes_config.set("shaped.Acid Battery.result", "NETHER_BRICK_ITEM");
+            recipes_config.set("shaped.Acid Battery.result", "NETHER_BRICK");
             recipes_config.set("shaped.Acid Battery.amount", 1);
             recipes_config.set("shaped.Acid Battery.lore", "");
             //
@@ -122,11 +122,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rift Circuit.lore", "");
             //
             recipes_config.set("shaped.Rift Manipulator.easy_shape", "-A-,ACA,RAR");
-            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK_ITEM");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "MAP:1983");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Rift Manipulator.hard_shape", "-A-,ACA,NAN");
-            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK_ITEM");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "MAP:1983");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.N", "NETHER_STAR");
             recipes_config.set("shaped.Rift Manipulator.result", "BEACON");
@@ -158,7 +158,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.C", "REDSTONE_COMPARATOR");
             recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.K", "GOLD_NUGGET");
-            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH_ON");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
             recipes_config.set("shaped.TARDIS Remote Key.hard_shape", "RCR,-K-,-T-");
             recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "REDSTONE_COMPARATOR");
@@ -169,7 +169,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Remote Key.lore", "Deadlock & unlock~Hide & rebuild");
             i++;
         } else if (recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.T").equals("REDSTONE_TORCH")) {
-            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH_ON");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
         }
         if (!recipes_config.contains("shaped.White Bow Tie")) {
             for (Map.Entry<String, Integer> map : colours.entrySet()) {
@@ -194,7 +194,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.3-D Glasses.easy_ingredients.M", "STAINED_GLASS_PANE:2");
             recipes_config.set("shaped.3-D Glasses.hard_shape", "R-T,P-P,CPM");
             recipes_config.set("shaped.3-D Glasses.hard_ingredients.R", "REDSTONE_COMPARATOR");
-            recipes_config.set("shaped.3-D Glasses.hard_ingredients.T", "REDSTONE_TORCH_ON");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.T", "REDSTONE_TORCH");
             recipes_config.set("shaped.3-D Glasses.hard_ingredients.P", "PAPER");
             recipes_config.set("shaped.3-D Glasses.hard_ingredients.C", "STAINED_GLASS_PANE:9");
             recipes_config.set("shaped.3-D Glasses.hard_ingredients.M", "STAINED_GLASS_PANE:2");
@@ -282,13 +282,13 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.D", "DIRT");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.N", "NETHERRACK");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.C", "COMPASS");
-            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "ENDER_STONE");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "END_STONE");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.W", "WATER_BUCKET");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_shape", "-D-,NCE,-W-");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.D", "DIRT");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.N", "NETHERRACK");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.C", "COMPASS");
-            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "ENDER_STONE");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "END_STONE");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "MAP:1980");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.amount", 1);

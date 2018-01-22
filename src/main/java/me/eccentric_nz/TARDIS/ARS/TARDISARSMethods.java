@@ -36,7 +36,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -109,20 +108,20 @@ public class TARDISARSMethods {
      * Converts the JSON data stored in the database to a 3D array.
      *
      * @param js the JSON from the database
-     * @return a 3D array of ints
+     * @return a 3D array of Strings
      */
-    public static int[][][] getGridFromJSON(String js) {
-        int[][][] grid = new int[3][9][9];
+    public static String[][][] getGridFromJSON(String js) {
+        String[][][] grid = new String[3][9][9];
         JSONArray json = new JSONArray(js);
         for (int y = 0; y < 3; y++) {
             JSONArray jsonx = json.getJSONArray(y);
             for (int x = 0; x < 9; x++) {
                 JSONArray jsonz = jsonx.getJSONArray(x);
                 for (int z = 0; z < 9; z++) {
-                    if (jsonz.getInt(z) == 46) {
-                        grid[y][x][z] = 1;
+                    if (jsonz.getString(z).equals("TNT")) {
+                        grid[y][x][z] = "STONE";
                     } else {
-                        grid[y][x][z] = jsonz.getInt(z);
+                        grid[y][x][z] = jsonz.getString(z);
                     }
                 }
             }
@@ -138,8 +137,8 @@ public class TARDISARSMethods {
      * @param z the z position of the slice
      * @return a slice of the larger array
      */
-    public int[][] sliceGrid(int[][] layer, int x, int z) {
-        int[][] slice = new int[5][5];
+    public String[][] sliceGrid(String[][] layer, int x, int z) {
+        String[][] slice = new String[5][5];
         int indexx = 0, indexz = 0;
         for (int xx = x; xx < (x + 5); xx++) {
             for (int zz = z; zz < (z + 5); zz++) {
@@ -158,14 +157,13 @@ public class TARDISARSMethods {
      *
      * @param inv the inventory to update
      * @param slot the slot number to update
-     * @param id the item id to set the item stack to
+     * @param material the item id to set the item stack to
      * @param room the room type associated with the id
      * @param uuid the player using the GUI
      * @param update whether to update the grid display
      */
-    @SuppressWarnings("deprecation")
-    public void setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update) {
-        ItemStack is = new ItemStack(id, 1);
+    public void setSlot(Inventory inv, int slot, Material material, String room, UUID uuid, boolean update) {
+        ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
@@ -178,7 +176,7 @@ public class TARDISARSMethods {
         is.setItemMeta(im);
         inv.setItem(slot, is);
         if (update) {
-            updateGrid(uuid, slot, id);
+            updateGrid(uuid, slot, material.toString());
         }
     }
 
@@ -191,12 +189,11 @@ public class TARDISARSMethods {
      * @param uuid the player using the GUI
      * @param update whether to update the grid display
      */
-    @SuppressWarnings("deprecation")
     public void setSlot(Inventory inv, int slot, ItemStack is, UUID uuid, boolean update) {
         inv.setItem(slot, is);
-        int id = is.getTypeId();
+        String material = is.getType().toString();
         if (update) {
-            updateGrid(uuid, slot, id);
+            updateGrid(uuid, slot, material);
         }
     }
 
@@ -239,25 +236,25 @@ public class TARDISARSMethods {
      *
      * @param uuid the UUID of the player using the GUI
      * @param slot the slot that was clicked
-     * @param id the type id of the block in the slot
+     * @param material the type id of the block in the slot
      */
-    public void updateGrid(UUID uuid, int slot, int id) {
+    public void updateGrid(UUID uuid, int slot, String material) {
         TARDISARSMapData md = map_data.get(uuid);
-        int[][][] grid = md.getData();
+        String[][][] grid = md.getData();
         int yy = md.getY();
         int[] coords = getCoords(slot, md);
         int newx = coords[0];
         int newz = coords[1];
-        if (id == 24) {
+        if (material.equals("SANDSTONE")) {
             if (yy < 2) {
-                grid[yy + 1][newx][newz] = id;
+                grid[yy + 1][newx][newz] = material;
             }
-        } else if (id == 48) {
+        } else if (material.equals("MOSSY_COBBLESTONE")) {
             if (yy > 0) {
-                grid[yy - 1][newx][newz] = id;
+                grid[yy - 1][newx][newz] = material;
             }
         }
-        grid[yy][newx][newz] = id;
+        grid[yy][newx][newz] = material;
         md.setData(grid);
         map_data.put(uuid, md);
     }
@@ -287,13 +284,13 @@ public class TARDISARSMethods {
     public void switchLevel(Inventory inv, int slot, UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
         for (int i = 27; i < 30; i++) {
-            byte data = 0;
+            Material material = Material.WHITE_WOOL;
             if (i == slot) {
-                data = 4;
+                material = Material.YELLOW_WOOL;
                 md.setY(i - 27);
                 map_data.put(uuid, md);
             }
-            ItemStack is = new ItemStack(Material.WOOL, 1, data);
+            ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
             is.setItemMeta(im);
@@ -401,8 +398,8 @@ public class TARDISARSMethods {
         if (rs.resultSet()) {
             TARDISARSSaveData sd = new TARDISARSSaveData();
             TARDISARSMapData md = new TARDISARSMapData();
-            int[][][] json = getGridFromJSON(rs.getJson());
-            int[][][] json2 = getGridFromJSON(rs.getJson());
+            String[][][] json = getGridFromJSON(rs.getJson());
+            String[][][] json2 = getGridFromJSON(rs.getJson());
             sd.setData(json);
             sd.setId(rs.getId());
             md.setData(json2);
@@ -422,16 +419,16 @@ public class TARDISARSMethods {
 
     public void setMap(int ul, int ue, int us, UUID uuid, Inventory inv) {
         TARDISARSMapData data = map_data.get(uuid);
-        int[][][] grid = data.getData();
-        int[][] layer = grid[ul];
-        int[][] map = sliceGrid(layer, ue, us);
+        String[][][] grid = data.getData();
+        String[][] layer = grid[ul];
+        String[][] map = sliceGrid(layer, ue, us);
         int indexx = 0, indexz = 0;
         for (int i = 4; i < 9; i++) {
             for (int j = 0; j < 5; j++) {
                 int slot = i + (j * 9);
-                int id = map[indexx][indexz];
-                String name = TARDISARS.ARSFor(id).getDescriptiveName();
-                setSlot(inv, slot, id, name, uuid, false);
+                Material material = Material.valueOf(map[indexx][indexz]);
+                String name = TARDISARS.ARSFor(material).getDescriptiveName();
+                setSlot(inv, slot, material, name, uuid, false);
                 indexz++;
             }
             indexz = 0;
@@ -479,7 +476,7 @@ public class TARDISARSMethods {
     }
 
     /**
-     * Checks whether a player has condensed the required blocks to grow the
+     * Checks whether a player has condensed the required BLOCKS to grow the
      * room (s).
      *
      * @param uuid the UUID of the player to check for
@@ -491,7 +488,7 @@ public class TARDISARSMethods {
     public boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
         boolean hasRequired = true;
         String wall = "ORANGE_WOOL";
-        String floor = "LIGHT_GREY_WOOL";
+        String floor = "LIGHT_GRAY_WOOL";
         HashMap<String, Object> wherepp = new HashMap<>();
         boolean hasPrefs = false;
         wherepp.put("uuid", uuid);
@@ -505,14 +502,10 @@ public class TARDISARSMethods {
         for (Map.Entry<TARDISARSSlot, ARS> rooms : map.entrySet()) {
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().getActualName());
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
-                String[] block_data = entry.getKey().split(":");
-                String bid = block_data[0];
-                String mat;
+                String bid = entry.getKey();
                 String bkey;
-                if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
-                    mat = (block_data[1].equals("1")) ? wall : floor;
-                    Pair iddata = plugin.getTardisWalls().blocks.get(mat);
-                    bkey = iddata.getType().toString();
+                if (hasPrefs && (bid.equals("ORANGE_WOOL") || bid.equals("LIGHT_GRAY_WOOL"))) {
+                    bkey = (bid.equals("ORANGE_WOOL")) ? wall : floor;
                 } else {
                     bkey = bid;
                 }
@@ -564,12 +557,12 @@ public class TARDISARSMethods {
 
     public boolean checkSlotForConsole(Inventory inv, int slot, String uuid) {
         Material m = inv.getItem(slot).getType();
-        if (m.equals(Material.NETHER_BRICK)) {
+        if (m.equals(Material.NETHER_BRICKS)) {
             // allow only if console is not MASTER
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_BRICK")) {
+            if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_BRICKS")) {
                 return false;
             }
         }

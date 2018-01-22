@@ -60,7 +60,6 @@ public class TARDISRoomRemover {
      *
      * @return false if the room has already been jettisoned
      */
-    @SuppressWarnings("deprecation")
     public boolean remove() {
         int check_distance = (r.equals("ARBORETUM")) ? 5 : 7;
         if (l.getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.valueOf(d.toString()), check_distance).getType().equals(Material.AIR)) {
@@ -112,8 +111,7 @@ public class TARDISRoomRemover {
                     block.setType(Material.AIR);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
                     if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
-                        byte data = block.getData();
-                        if ((data == (byte) 5 || data == (byte) 6) && block.getType().equals(Material.WOOL)) {
+                        if (block.getType().equals(Material.LIME_WOOL) || block.getType().equals(Material.PINK_WOOL)) {
                             String loc = new Location(w, x, y, z).toString();
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("location", loc);

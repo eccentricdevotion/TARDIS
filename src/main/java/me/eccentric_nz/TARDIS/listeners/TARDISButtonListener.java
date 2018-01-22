@@ -49,6 +49,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -82,16 +83,13 @@ public class TARDISButtonListener implements Listener {
 
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
-        validBlocks.add(Material.WOOD_BUTTON);
-        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
-        validBlocks.add(Material.STONE_BUTTON);
-        validBlocks.add(Material.LEVER);
-        validBlocks.add(Material.WALL_SIGN);
-        validBlocks.add(Material.NOTE_BLOCK);
+        validBlocks.add(Material.COMPARATOR);
         validBlocks.add(Material.JUKEBOX);
-        validBlocks.add(Material.STONE_PLATE);
-        validBlocks.add(Material.WOOD_PLATE);
+        validBlocks.add(Material.LEVER);
+        validBlocks.add(Material.NOTE_BLOCK);
+        validBlocks.add(Material.WALL_SIGN);
+        validBlocks.addAll(TARDISMaterials.buttons);
+        validBlocks.addAll(TARDISMaterials.pressure_plates);
     }
 
     /**
@@ -101,7 +99,6 @@ public class TARDISButtonListener implements Listener {
      *
      * @param event the player clicking a block
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onButtonInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -328,7 +325,7 @@ public class TARDISButtonListener implements Listener {
                                 case 22:
                                     if (player.isSneaking()) {
                                         // keyboard
-                                        if (block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)) {
+                                        if (block.getType().equals(Material.SIGN) || block.getType().equals(Material.WALL_SIGN)) {
                                             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                                                 tcc = new TARDISCircuitChecker(plugin, id);
                                                 tcc.getCircuits();

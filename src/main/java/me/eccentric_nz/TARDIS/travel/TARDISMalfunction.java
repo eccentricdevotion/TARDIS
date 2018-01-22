@@ -121,7 +121,7 @@ public class TARDISMalfunction {
                     TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
-                Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // flicker lights
                 final long start = System.currentTimeMillis() + 10000;
                 TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), start, light, rsp.isWoolLightsOn());

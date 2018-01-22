@@ -45,16 +45,15 @@ public class TARDISChameleonInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get consoles
-        for (int id : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
+        for (String id : plugin.getBlocksConfig().getStringList("chameleon_blocks")) {
             if (i > 52) {
                 break;
             }
-            Material m = Material.getMaterial(id);
+            Material m = Material.valueOf(id);
             ItemStack is = new ItemStack(m, 1);
             stack[i] = is;
             if (i % 9 == 7) {
@@ -93,5 +92,9 @@ public class TARDISChameleonInventory {
 
     public ItemStack[] getMenu() {
         return menu;
+    }
+
+    static {
+
     }
 }

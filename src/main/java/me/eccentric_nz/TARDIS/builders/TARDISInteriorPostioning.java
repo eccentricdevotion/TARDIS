@@ -164,7 +164,7 @@ public class TARDISInteriorPostioning {
                 int cx = sx + x;
                 int cz = sz + z;
                 w.regenerateChunk(cx, cz);
-                w.getChunkAt(cx, cz).unload(true, false);
+                w.getChunkAt(cx, cz).unload(true);
             }
         }
     }

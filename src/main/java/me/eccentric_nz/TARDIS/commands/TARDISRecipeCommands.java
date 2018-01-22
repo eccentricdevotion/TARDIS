@@ -121,11 +121,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
-        t.put("WAR", Material.STAINED_CLAY); // war doctor
+        t.put("WAR", Material.WHITE_TERRACOTTA); // war doctor
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put("MASTER", Material.NETHER_BRICK); // master schematic designed by ShadowAssociate
+        t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
         t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
-        t.put("LEGACY_BUDGET", Material.SILVER_GLAZED_TERRACOTTA);
+        t.put("LEGACY_BUDGET", Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
         t.put("LEGACY_DELUXE", Material.LIME_GLAZED_TERRACOTTA);
         t.put("LEGACY_ELEVENTH", Material.CYAN_GLAZED_TERRACOTTA);
         t.put("LEGACY_REDSTONE", Material.RED_GLAZED_TERRACOTTA);
@@ -426,7 +426,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setDisplayName("Acid Bucket");
                     item.setItemMeta(im);
                 }
-                if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK_ITEM)) {
+                if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     ItemMeta im = item.getItemMeta();
                     im.setDisplayName("Acid Battery");
                     item.setItemMeta(im);
@@ -469,7 +469,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 im.setDisplayName(getDisplayName(ingredients.get(i).getData().getData()));
                 ingredients.get(i).setItemMeta(im);
             }
-            if (ingredients.get(i).getType().equals(Material.RECORD_9)) {
+            if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 ItemMeta im = ingredients.get(i).getItemMeta();
                 im.setDisplayName("Blank Storage Disk");
                 ingredients.get(i).setItemMeta(im);
@@ -492,17 +492,17 @@ public class TARDISRecipeCommands implements CommandExecutor {
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, "§4TARDIS " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
         // redstone torch
-        ItemStack red = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
+        ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
         // lapis block
         ItemStack lapis = new ItemStack(Material.LAPIS_BLOCK, 1);
         // interior wall
-        ItemStack in_wall = new ItemStack(Material.WOOL, 1, (byte) 1);
+        ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
         in_meta.setDisplayName("Interior walls");
         in_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
         in_wall.setItemMeta(in_meta);
         // interior floor
-        ItemStack in_floor = new ItemStack(Material.WOOL, 1, (byte) 8);
+        ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
         fl_meta.setDisplayName("Interior floors");
         fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));

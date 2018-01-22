@@ -54,7 +54,7 @@ public class TARDISKeyboardPacketListener implements Listener {
                 StructureModifier<BlockPosition> ints = event.getPacket().getBlockPositionModifier();
                 Location loc = new Location(player.getWorld(), (double) ints.read(0).getX(), (double) ints.read(0).getY(), (double) ints.read(0).getZ());
                 // Allow
-                if (Objects.equal(EDITING.get(player), loc) && (loc.getBlock().getType().equals(Material.WALL_SIGN) || loc.getBlock().getType().equals(Material.SIGN_POST))) {
+                if (Objects.equal(EDITING.get(player), loc) && (loc.getBlock().getType().equals(Material.WALL_SIGN) || loc.getBlock().getType().equals(Material.SIGN))) {
                     setEditingPlayer((Sign) loc.getBlock().getState(), player);
                 }
             }
@@ -81,7 +81,7 @@ public class TARDISKeyboardPacketListener implements Listener {
             return;
         }
         Block b = event.getClickedBlock();
-        if (b != null && (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))) {
+        if (b != null && (b.getType().equals(Material.SIGN) || b.getType().equals(Material.WALL_SIGN))) {
             Player player = event.getPlayer();
             String loc = event.getClickedBlock().getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();

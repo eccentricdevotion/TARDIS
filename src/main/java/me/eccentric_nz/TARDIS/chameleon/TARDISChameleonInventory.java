@@ -52,8 +52,8 @@ public class TARDISChameleonInventory {
         this.plugin = plugin;
         this.adapt = adapt;
         this.preset = preset;
-        this.on = new ItemStack(Material.WOOL, 1, (byte) 5);
-        this.off = new ItemStack(Material.CARPET, 1, (byte) 8);
+        this.on = new ItemStack(Material.LIME_WOOL, 1);
+        this.off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
         this.terminal = getItemStack();
     }
 
@@ -65,7 +65,7 @@ public class TARDISChameleonInventory {
     private ItemStack[] getItemStack() {
 
         // Apply now
-        ItemStack apply = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
+        ItemStack apply = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta now = apply.getItemMeta();
         now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
         now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));

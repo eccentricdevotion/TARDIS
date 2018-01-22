@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,12 +47,11 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
-    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREEN_WOOL", "LIGHT_GREEN_CONCRETE", "LIGHT_GREEN_GLAZED_TERRACOTTA", "LIGHT_GREEN_CLAY", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "GREY_CONCRETE", "LIGHT_GREY_CONCRETE", "GREY_GLAZED_TERRACOTTA", "LIGHT_GREY_GLAZED_TERRACOTTA", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.rows = this.plugin.getTardisWalls().blocks.size() / 8 + 1;
+        this.rows = TARDISWalls.BLOCKS.size() / 8 + 1;
         this.blocks = getWallBlocks();
     }
 
@@ -108,7 +106,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
                         // get block type and data
                         ItemStack choice = inv.getItem(slot);
                         // set the tardis wall/floor block
-                        String str = choice.getType().toString() + ":" + choice.getData().getData();
+                        String str = choice.getType().toString();
                         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                         if (isWall) {
                             // open the floor block GUI
@@ -190,16 +188,13 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            if (!notthese.contains(entry.getKey())) {
-                Pair value = entry.getValue();
-                ItemStack is = new ItemStack(value.getType(), 1, value.getData());
-                stacks[r][c] = is;
-                c++;
-                if (c == 8) {
-                    r++;
-                    c = 0;
-                }
+        for (Material entry : TARDISWalls.BLOCKS) {
+            ItemStack is = new ItemStack(entry, 1);
+            stacks[r][c] = is;
+            c++;
+            if (c == 8) {
+                r++;
+                c = 0;
             }
         }
         return stacks;

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -55,7 +56,6 @@ public class TARDISSchematicBuilder {
         this.ez = ez;
     }
 
-    @SuppressWarnings("deprecation")
     public ArchiveData build() {
         boolean ars = true;
         // get locations of controls first and compare their coords...
@@ -148,15 +148,16 @@ public class TARDISSchematicBuilder {
                     byte d = b.getData();
                     // set ARS block
                     if (ars && m.equals(Material.AIR)) {
-                        mat = "MONSTER_EGGS";
+                        mat = "INFESTED_COBBLESTONE";
+//                        mat = "MONSTER_EGGS";
                         d = 2;
                         ars = false;
                     }
                     switch (m) {
-                        case DIODE_BLOCK_OFF:
+                        case REPEATER:
                             // random location blocks
                             if (isControlBlock(map.get(f), w, r, l, c)) {
-                                mat = "HUGE_MUSHROOM_2";
+                                mat = "BROWN_MUSHROOM_BLOCK";
                                 d = 15;
                                 f++;
                             }
@@ -164,7 +165,7 @@ public class TARDISSchematicBuilder {
                         case LEVER:
                             // handbrake
                             if (isControlBlock(h, w, r, l, c)) {
-                                mat = "CAKE_BLOCK";
+                                mat = "CAKE";
                                 d = 0;
                             }
                             break;
@@ -183,7 +184,7 @@ public class TARDISSchematicBuilder {
                     obj.put("type", mat);
                     obj.put("data", d);
                     // banners
-                    if (m.equals(Material.STANDING_BANNER) || m.equals(Material.WALL_BANNER)) {
+                    if (TARDISStaticUtils.isBanner(m)) {
                         JSONObject state = new JSONObject();
                         Banner banner = (Banner) b.getState();
                         state.put("colour", banner.getBaseColor().toString());
@@ -197,7 +198,7 @@ public class TARDISSchematicBuilder {
                             });
                         }
                         state.put("patterns", patterns);
-                        state.put("bdata", d);
+//                        state.put("bdata", d);
                         obj.put("banner", state);
                     }
                     columns.put(obj);

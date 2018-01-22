@@ -48,17 +48,17 @@ public class TARDISSeedRecipeInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
         // redstone torch
-        ItemStack red = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
+        ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
         // lapis block
         ItemStack lapis = new ItemStack(Material.LAPIS_BLOCK, 1);
         // interior wall
-        ItemStack in_wall = new ItemStack(Material.WOOL, 1, (byte) 1);
+        ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
         in_meta.setDisplayName("Interior walls");
         in_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
         in_wall.setItemMeta(in_meta);
         // interior floor
-        ItemStack in_floor = new ItemStack(Material.WOOL, 1, (byte) 8);
+        ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
         fl_meta.setDisplayName("Interior floors");
         fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));

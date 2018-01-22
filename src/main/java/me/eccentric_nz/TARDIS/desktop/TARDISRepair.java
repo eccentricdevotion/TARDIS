@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -67,8 +66,8 @@ public class TARDISRepair {
             if (master) {
                 new TARDISDelavafier(plugin, uuid).swap();
             }
-            String wall = "WOOL:1";
-            String floor = "WOOL:8";
+            String wall = "ORANGE_WOOL";
+            String floor = "LIGHT_GRAY_WOOL";
             if (perm.equals("archive")) {
                 new ArchiveUpdate(plugin, uuid.toString(), getArchiveName()).setInUse();
                 tud.setSchematic(CONSOLES.SCHEMATICFor("archive"));
@@ -79,10 +78,8 @@ public class TARDISRepair {
                 wherep.put("uuid", uuid.toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
-                    TARDISWalls.Pair w = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                    TARDISWalls.Pair f = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                    wall = w.getType().toString() + ":" + w.getData();
-                    floor = f.getType().toString() + ":" + f.getData();
+                    wall = rsp.getWall();
+                    floor = rsp.getFloor();
                 }
             }
             tud.setWall(wall);
@@ -131,21 +128,17 @@ public class TARDISRepair {
                 String[] split = tardis.getChunk().split(":");
                 World world = plugin.getServer().getWorld(split[0]);
                 String wall = "ORANGE_WOOL";
-                String floor = "LIGHT_GREY_WOOL";
-                Material wall_type = Material.WOOL;
-                Material floor_type = Material.WOOL;
+                String floor = "LIGHT_GRAY_WOOL";
+                Material wall_type = Material.ORANGE_WOOL;
+                Material floor_type = Material.LIGHT_GRAY_WOOL;
                 HashMap<String, Object> wherepp = new HashMap<>();
                 boolean hasPrefs = false;
                 wherepp.put("uuid", uuid);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
                     hasPrefs = true;
-                    wall = rsp.getWall();
-                    floor = rsp.getFloor();
-                    TARDISWalls.Pair wp = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                    wall_type = wp.getType();
-                    TARDISWalls.Pair fp = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                    floor_type = fp.getType();
+                    wall_type = Material.getMaterial(rsp.getWall());
+                    floor_type = Material.getMaterial(rsp.getFloor());
                 }
                 // loop like crazy
                 for (int level = 0; level < h; level++) {
@@ -218,16 +211,12 @@ public class TARDISRepair {
                 boolean hasRequired = true;
                 HashMap<String, Integer> item_counts = new HashMap<>();
                 for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
-                    String[] block_data = entry.getKey().split(":");
-                    String bid = block_data[0];
-                    String mat;
+                    String bid = entry.getKey();
                     String bkey;
                     String block_id;
-                    if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
-                        mat = (block_data[1].equals("1")) ? wall : floor;
-                        TARDISWalls.Pair iddata = plugin.getTardisWalls().blocks.get(mat);
-                        bkey = iddata.getType().toString();
-                        block_id = iddata.getType().toString();
+                    if (hasPrefs && (entry.getKey().equals("ORANGE_WOOL") || entry.getKey().equals("LIGHT_GRAY_WOOL"))) {
+                        bkey = (entry.getKey().equals("ORANGE_WOOL")) ? wall : floor;
+                        block_id = (entry.getKey().equals("ORANGE_WOOL")) ? wall : floor;
                     } else {
                         bkey = bid;
                         block_id = bid;

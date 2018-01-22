@@ -36,7 +36,6 @@ public class TARDISLampToggler {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
         // get lamp locations
         HashMap<String, Object> wherel = new HashMap<>();
@@ -51,23 +50,22 @@ public class TARDISLampToggler {
                 use_wool = rsp.isWoolLightsOn();
                 lantern = rsp.isLanternsOn();
             }
-            Material onlamp = (lantern) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+            Material onlamp = (lantern) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
             for (Block b : rsl.getData()) {
                 while (!b.getChunk().isLoaded()) {
                     b.getChunk().load();
                 }
                 if (on) {
-                    if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP_ON))) {
+                    if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         if (use_wool) {
-                            b.setType(Material.WOOL);
-                            b.setData((byte) 15);
+                            b.setType(Material.BLACK_WOOL);
                         } else if (lantern) {
-                            b.setType(Material.MONSTER_EGGS);
+                            b.setType(Material.INFESTED_STONE);
                         } else {
                             b.setType(Material.SPONGE);
                         }
                     }
-                } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.MONSTER_EGGS) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
                     b.setType(onlamp);
                 }
             }

@@ -32,6 +32,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -48,7 +49,6 @@ public class TARDISExteriorRenderer {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public void render(String interior, Location exterior, int id, final Player p, final COMPASS d, long time, Biome biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
@@ -92,18 +92,15 @@ public class TARDISExteriorRenderer {
                             Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
                             switch (eb.getType()) {
                                 case WATER:
-                                case STATIONARY_WATER:
-                                    ib.setType(Material.STAINED_GLASS);
-                                    ib.setData((byte) 3, true);
+                                case FLOWING_WATER:
+                                    ib.setType(Material.LIGHT_BLUE_STAINED_GLASS, true);
                                     break;
                                 case LAVA:
-                                case STATIONARY_LAVA:
-                                    ib.setType(Material.WOOL);
-                                    ib.setData((byte) 1, true);
+                                case FLOWING_LAVA:
+                                    ib.setType(Material.ORANGE_WOOL, true);
                                     break;
                                 default:
                                     ib.setType(eb.getType());
-                                    ib.setData(eb.getData(), true);
                             }
                         }
                         zz++;
@@ -125,11 +122,9 @@ public class TARDISExteriorRenderer {
             int minusz = (location.getBlockZ() - 1);
             TARDISChameleonColumn column = plugin.getPresets().getGlass(PRESET.RENDER, d);
             int px, pz;
-            int[][] ids = column.getId();
-            byte[][] data = column.getData();
+            BlockData[][] data = column.getBlockData();
             for (int i = 0; i < 9; i++) {
-                int[] colids = ids[i];
-                byte[] coldatas = data[i];
+                BlockData[] coldatas = data[i];
                 switch (i) {
                     case 0:
                         px = minusx;
@@ -169,26 +164,26 @@ public class TARDISExteriorRenderer {
                         break;
                 }
                 for (int py = 0; py < 4; py++) {
-                    TARDISBlockSetters.setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
+                    TARDISBlockSetters.setBlock(iw, px, (y + py), pz, coldatas[py]);
                 }
             }
             // change the black/blue/green wool to blue/black/ to reflect time of day and environment
-            byte sky;
+            Material sky;
             Material base;
             Material stone;
             switch (biome) {
                 case SKY:
-                    sky = 15;
-                    base = Material.ENDER_STONE;
+                    sky = Material.BLACK_WOOL;
+                    base = Material.END_STONE;
                     stone = Material.OBSIDIAN;
                     break;
                 case HELL:
-                    sky = 15;
+                    sky = Material.BLACK_WOOL;
                     base = Material.NETHERRACK;
-                    stone = Material.QUARTZ_ORE;
+                    stone = Material.NETHER_QUARTZ_ORE;
                     break;
                 default:
-                    sky = (time > 12500) ? (byte) 15 : 3;
+                    sky = (time > 12500) ? Material.BLACK_WOOL : Material.LIGHT_BLUE_WOOL;
                     base = Material.DIRT;
                     stone = Material.STONE;
                     break;
@@ -199,18 +194,33 @@ public class TARDISExteriorRenderer {
             // change the ceiling
             for (int cx = isx; cx < isx + 13; cx++) {
                 for (int cz = isz; cz < (isz + 13); cz++) {
-                    iw.getBlockAt(cx, topy, cz).setData(sky);
+                    iw.getBlockAt(cx, topy, cz).setType(sky);
                 }
             }
             // change the first and third walls
             for (int x1 = isx - 1; x1 <= endx; x1++) {
                 for (int y1 = isy; y1 < topy; y1++) {
                     switch (iw.getBlockAt(x1, y1, isz - 1).getType()) {
-                        case WOOL:
-                            iw.getBlockAt(x1, y1, isz - 1).setData(sky);
+                        case WHITE_WOOL:
+                        case ORANGE_WOOL:
+                        case MAGENTA_WOOL:
+                        case LIGHT_BLUE_WOOL:
+                        case YELLOW_WOOL:
+                        case LIME_WOOL:
+                        case PINK_WOOL:
+                        case GRAY_WOOL:
+                        case LIGHT_GRAY_WOOL:
+                        case CYAN_WOOL:
+                        case PURPLE_WOOL:
+                        case BLUE_WOOL:
+                        case BROWN_WOOL:
+                        case GREEN_WOOL:
+                        case RED_WOOL:
+                        case BLACK_WOOL:
+                            iw.getBlockAt(x1, y1, isz - 1).setType(sky);
                             break;
                         case DIRT:
-                        case ENDER_STONE:
+                        case END_STONE:
                         case NETHERRACK:
                             iw.getBlockAt(x1, y1, isz - 1).setType(base);
                             break;
@@ -219,11 +229,26 @@ public class TARDISExteriorRenderer {
                             break;
                     }
                     switch (iw.getBlockAt(x1, y1, endz).getType()) {
-                        case WOOL:
-                            iw.getBlockAt(x1, y1, endz).setData(sky);
+                        case WHITE_WOOL:
+                        case ORANGE_WOOL:
+                        case MAGENTA_WOOL:
+                        case LIGHT_BLUE_WOOL:
+                        case YELLOW_WOOL:
+                        case LIME_WOOL:
+                        case PINK_WOOL:
+                        case GRAY_WOOL:
+                        case LIGHT_GRAY_WOOL:
+                        case CYAN_WOOL:
+                        case PURPLE_WOOL:
+                        case BLUE_WOOL:
+                        case BROWN_WOOL:
+                        case GREEN_WOOL:
+                        case RED_WOOL:
+                        case BLACK_WOOL:
+                            iw.getBlockAt(x1, y1, endz).setType(sky);
                             break;
                         case DIRT:
-                        case ENDER_STONE:
+                        case END_STONE:
                         case NETHERRACK:
                             iw.getBlockAt(x1, y1, endz).setType(base);
                             break;
@@ -237,11 +262,26 @@ public class TARDISExteriorRenderer {
             for (int z2 = isz - 1; z2 <= endz; z2++) {
                 for (int y2 = isy; y2 < topy; y2++) {
                     switch (iw.getBlockAt(isx - 1, y2, z2).getType()) {
-                        case WOOL:
-                            iw.getBlockAt(isx - 1, y2, z2).setData(sky);
+                        case WHITE_WOOL:
+                        case ORANGE_WOOL:
+                        case MAGENTA_WOOL:
+                        case LIGHT_BLUE_WOOL:
+                        case YELLOW_WOOL:
+                        case LIME_WOOL:
+                        case PINK_WOOL:
+                        case GRAY_WOOL:
+                        case LIGHT_GRAY_WOOL:
+                        case CYAN_WOOL:
+                        case PURPLE_WOOL:
+                        case BLUE_WOOL:
+                        case BROWN_WOOL:
+                        case GREEN_WOOL:
+                        case RED_WOOL:
+                        case BLACK_WOOL:
+                            iw.getBlockAt(isx - 1, y2, z2).setType(sky);
                             break;
                         case DIRT:
-                        case ENDER_STONE:
+                        case END_STONE:
                         case NETHERRACK:
                             iw.getBlockAt(isx - 1, y2, z2).setType(base);
                             break;
@@ -250,11 +290,26 @@ public class TARDISExteriorRenderer {
                             break;
                     }
                     switch (iw.getBlockAt(endx, y2, z2).getType()) {
-                        case WOOL:
-                            iw.getBlockAt(endx, y2, z2).setData(sky);
+                        case WHITE_WOOL:
+                        case ORANGE_WOOL:
+                        case MAGENTA_WOOL:
+                        case LIGHT_BLUE_WOOL:
+                        case YELLOW_WOOL:
+                        case LIME_WOOL:
+                        case PINK_WOOL:
+                        case GRAY_WOOL:
+                        case LIGHT_GRAY_WOOL:
+                        case CYAN_WOOL:
+                        case PURPLE_WOOL:
+                        case BLUE_WOOL:
+                        case BROWN_WOOL:
+                        case GREEN_WOOL:
+                        case RED_WOOL:
+                        case BLACK_WOOL:
+                            iw.getBlockAt(endx, y2, z2).setType(sky);
                             break;
                         case DIRT:
-                        case ENDER_STONE:
+                        case END_STONE:
                         case NETHERRACK:
                             iw.getBlockAt(endx, y2, z2).setType(base);
                             break;

@@ -195,7 +195,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 // set block to AIR
                 b.setType(Material.AIR);
                 // drop a custom FLOWER_POT_ITEM
-                ItemStack is = new ItemStack(Material.FLOWER_POT_ITEM, 1);
+                ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Sonic Generator");
                 is.setItemMeta(im);
@@ -207,7 +207,7 @@ public class TARDISSonicGeneratorListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onTelepathicCircuitPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (!is.getType().equals(Material.FLOWER_POT_ITEM) || !is.hasItemMeta()) {
+        if (!is.getType().equals(Material.FLOWER_POT) || !is.hasItemMeta()) {
             return;
         }
         ItemMeta im = is.getItemMeta();

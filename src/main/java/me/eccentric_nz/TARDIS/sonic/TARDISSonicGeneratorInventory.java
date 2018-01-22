@@ -50,7 +50,7 @@ public class TARDISSonicGeneratorInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
+    
     private ItemStack[] getItemStack() {
         // \u00a7 = § (ChatColor code)
         // mark I

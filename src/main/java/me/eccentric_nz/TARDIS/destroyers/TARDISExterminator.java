@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
@@ -100,7 +101,7 @@ public class TARDISExterminator {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
                 }
-                int restore = getRestore(cw);
+                Material restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
                 }
@@ -123,7 +124,6 @@ public class TARDISExterminator {
      * @param block the block that represents the Police Box sign
      * @return true or false depending on whether the TARIS could be deleted
      */
-    @SuppressWarnings("deprecation")
     public boolean exterminate(final Player player, Block block) {
         int signx = 0, signz = 0;
         Location sign_loc = block.getLocation();
@@ -240,7 +240,7 @@ public class TARDISExterminator {
                     TARDISMessage.send(player, "WORLD_DELETED");
                     return true;
                 }
-                int restore = getRestore(cw);
+                Material restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
                 }
@@ -262,18 +262,17 @@ public class TARDISExterminator {
         }
     }
 
-    private int getRestore(World w) {
-        World.Environment env = w.getEnvironment();
+    private Material getRestore(World w) {
         if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
-            return 0;
+            return Material.AIR;
         }
-        switch (env) {
+        switch (w.getEnvironment()) {
             case NETHER:
-                return 87;
+                return Material.NETHERRACK;
             case THE_END:
-                return 121;
+                return Material.END_STONE;
             default:
-                return 1;
+                return Material.STONE;
         }
     }
 

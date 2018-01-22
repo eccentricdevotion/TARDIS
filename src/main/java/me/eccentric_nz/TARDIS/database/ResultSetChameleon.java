@@ -38,14 +38,6 @@ public class ResultSetChameleon {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-//    private int chameleon_id;
-//    private int tardis_id;
-//    private String blueprintID;
-//    private String blueprintData;
-//    private String stainID;
-//    private String stainData;
-//    private String glassID;
-//    private String glassData;
     private final HashMap<String, String> data = new HashMap<>();
     private final String prefix;
 

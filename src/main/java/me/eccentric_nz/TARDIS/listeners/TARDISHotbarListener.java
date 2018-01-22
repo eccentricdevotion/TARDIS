@@ -42,7 +42,7 @@ public class TARDISHotbarListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSelectLocator(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();

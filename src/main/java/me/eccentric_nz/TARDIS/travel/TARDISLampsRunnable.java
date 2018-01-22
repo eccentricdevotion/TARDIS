@@ -49,7 +49,6 @@ public class TARDISLampsRunnable implements Runnable {
         this.lights_on = (lamps.get(0).getType().equals(this.light));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void run() {
         // play smoke effect
@@ -59,12 +58,11 @@ public class TARDISLampsRunnable implements Runnable {
         lamps.forEach((b) -> {
             if (b.getType().equals(light)) {
                 if (use_wool) {
-                    b.setType(Material.WOOL);
-                    b.setData((byte) 15);
+                    b.setType(Material.BLACK_WOOL);
                 } else {
                     b.setType(Material.SPONGE);
                 }
-            } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+            } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
                 b.setType(light);
             }
         });
@@ -72,7 +70,7 @@ public class TARDISLampsRunnable implements Runnable {
             // set all lamps back to whatever they were when the malfunction happened
             if (lights_on) {
                 lamps.forEach((b) -> {
-                    if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                    if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
                         b.setType(light);
                     }
                 });
@@ -80,8 +78,7 @@ public class TARDISLampsRunnable implements Runnable {
                 lamps.forEach((b) -> {
                     if (b.getType().equals(light)) {
                         if (use_wool) {
-                            b.setType(Material.WOOL);
-                            b.setData((byte) 15);
+                            b.setType(Material.BLACK_WOOL);
                         } else {
                             b.setType(Material.SPONGE);
                         }

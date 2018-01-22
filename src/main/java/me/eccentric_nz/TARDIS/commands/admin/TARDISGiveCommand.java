@@ -117,7 +117,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
+    
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisgive then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
@@ -205,7 +205,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
             TARDISMessage.send(sender, "ARG_MAX");
@@ -251,7 +251,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean giveItem(String item, Player player) {
         ItemStack result;
         if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
@@ -267,7 +267,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean giveArtron(CommandSender sender, String player, int amount) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
@@ -309,7 +309,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean giveSeed(CommandSender sender, String p, String type) {
         if (plugin.getServer().getPlayer(p) == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
@@ -337,7 +337,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean giveTachyon(CommandSender sender, String player, String amount) {
         if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
@@ -358,7 +358,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    
     private boolean giveFullCell(CommandSender sender, int amount, Player player) {
         if (amount > 64) {
             TARDISMessage.send(sender, "ARG_MAX");

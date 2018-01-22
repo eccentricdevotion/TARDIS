@@ -38,6 +38,11 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,8 +58,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISChameleonConstructorListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Material, Integer> doors = new HashMap<>();
-    private final List<Material> doormats;
+    private final List<Material> doors = new ArrayList<>();
     private final List<Material> precious = new ArrayList<>();
     private final List<Material> lamps = new ArrayList<>();
     private final HashMap<UUID, Integer> currentDoor = new HashMap<>();
@@ -65,13 +69,13 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
     public TARDISChameleonConstructorListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.doors.put(Material.IRON_DOOR, 71);
-        this.doors.put(Material.WOOD_DOOR, 64);
-        this.doors.put(Material.SPRUCE_DOOR_ITEM, 193);
-        this.doors.put(Material.BIRCH_DOOR_ITEM, 194);
-        this.doors.put(Material.JUNGLE_DOOR_ITEM, 195);
-        this.doors.put(Material.ACACIA_DOOR_ITEM, 196);
-        this.doors.put(Material.DARK_OAK_DOOR_ITEM, 197);
+        this.doors.add(Material.IRON_DOOR);
+        this.doors.add(Material.OAK_DOOR);
+        this.doors.add(Material.SPRUCE_DOOR);
+        this.doors.add(Material.BIRCH_DOOR);
+        this.doors.add(Material.JUNGLE_DOOR);
+        this.doors.add(Material.ACACIA_DOOR);
+        this.doors.add(Material.DARK_OAK_DOOR);
         this.dn = this.doors.size();
         this.precious.add(Material.BEDROCK);
         this.precious.add(Material.COAL_ORE);
@@ -79,7 +83,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         this.precious.add(Material.DIAMOND_ORE);
         this.precious.add(Material.EMERALD_BLOCK);
         this.precious.add(Material.EMERALD_ORE);
-        this.precious.add(Material.QUARTZ_ORE);
+        this.precious.add(Material.NETHER_QUARTZ_ORE);
         this.precious.add(Material.GOLD_BLOCK);
         this.precious.add(Material.GOLD_ORE);
         this.precious.add(Material.IRON_BLOCK);
@@ -93,7 +97,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         this.precious.add(Material.REDSTONE_BLOCK);
         this.precious.add(Material.REDSTONE_ORE);
         this.precious.add(Material.SEA_LANTERN);
-        this.doormats = new ArrayList<>(this.doors.keySet());
         plugin.getBlocksConfig().getStringList("lamp_blocks").forEach((s) -> {
             try {
                 this.lamps.add(Material.valueOf(s));
@@ -111,7 +114,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    @SuppressWarnings("deprecation")
+
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -183,13 +186,11 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     buildConstruct(tardis.getPreset().toString(), id, new QueryFactory(plugin), tardis.getChameleon(), player);
                                     break;
                                 case 8:
+                                    String air = Material.AIR.createBlockData().getDataString();
                                     // process
-                                    int[][] blueID = new int[10][4];
-                                    int[][] stainID = new int[10][4];
-                                    int[][] glassID = new int[10][4];
-                                    byte[][] blueData = new byte[10][4];
-                                    byte[][] stainData = new byte[10][4];
-                                    byte[][] glassData = new byte[10][4];
+                                    String[][] blue = new String[10][4];
+                                    String[][] stain = new String[10][4];
+                                    String[][] glass = new String[10][4];
                                     int first = 0;
                                     int second;
                                     int nullcount = 0;
@@ -199,55 +200,47 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                             ItemStack d = inv.getItem(s + c);
                                             if (d != null) {
                                                 Material type = d.getType();
-                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && precious.contains(type)) || type.equals(Material.CARPET)) {
+                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
                                                     TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
                                                     return;
                                                 }
-                                                int tid = d.getTypeId();
-                                                blueID[first][second] = tid;
-                                                if (doors.containsKey(d.getType())) {
+                                                Material tid = d.getType();
+                                                blue[first][second] = tid.createBlockData().getDataString();
+                                                if (doors.contains(d.getType())) {
                                                     // doors
-                                                    int did = doors.get(d.getType());
-                                                    byte dd = ((s + c) == 52) ? (byte) 0 : 9;
-                                                    blueID[first][second] = did;
-                                                    blueData[first][second] = dd;
-                                                    stainID[first][second] = did;
-                                                    stainData[first][second] = dd;
-                                                    glassID[first][second] = did;
-                                                    glassData[first][second] = dd;
-                                                } else if (tid == 50 || tid == 76) {
+                                                    BlockData did = d.getType().createBlockData();
+                                                    Bisected bisected = (Bisected) did;
+                                                    if ((s + c) == 52) {
+                                                        bisected.setHalf(Bisected.Half.BOTTOM);
+                                                    } else {
+                                                        bisected.setHalf(Bisected.Half.TOP);
+                                                    }
+                                                    String dataStr = bisected.getDataString();
+                                                    blue[first][second] = dataStr;
+                                                    stain[first][second] = dataStr;
+                                                    glass[first][second] = dataStr;
+                                                } else if (tid.equals(Material.TORCH) || tid.equals(Material.REDSTONE_TORCH)) {
                                                     // check block under torch
                                                     if (inv.getItem(35) == null) {
-                                                        blueID[first][second] = 0;
-                                                        blueData[first][second] = 0;
-                                                        glassID[first][second] = 0;
-                                                        glassData[first][second] = 0;
-                                                        stainID[first][second] = 0;
-                                                        stainData[first][second] = 0;
+                                                        blue[first][second] = air;
+                                                        glass[first][second] = air;
+                                                        stain[first][second] = air;
                                                     } else {
                                                         // torches
-                                                        blueID[first][second] = tid;
-                                                        blueData[first][second] = (byte) 5;
-                                                        glassID[first][second] = 20;
-                                                        glassData[first][second] = (byte) 0;
-                                                        stainID[first][second] = 95;
-                                                        stainData[first][second] = (tid == 50) ? (byte) 4 : 14;
+                                                        blue[first][second] = tid.createBlockData().getDataString();
+//                                                        blueData[first][second] = (byte) 5;
+                                                        glass[first][second] = Material.GLASS.createBlockData().getDataString();
+                                                        stain[first][second] = (tid.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getDataString() : Material.RED_STAINED_GLASS.createBlockData().getDataString();
                                                     }
                                                 } else {
-                                                    blueID[first][second] = tid;
-                                                    blueData[first][second] = d.getData().getData();
-                                                    glassID[first][second] = 20;
-                                                    glassData[first][second] = (byte) 0;
-                                                    stainID[first][second] = 95;
-                                                    stainData[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(tid);
+                                                    blue[first][second] = tid.createBlockData().getDataString();
+                                                    glass[first][second] = Material.GLASS.createBlockData().getDataString();
+                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(tid).createBlockData().getDataString();
                                                 }
                                             } else {
-                                                blueID[first][second] = 0;
-                                                blueData[first][second] = 0;
-                                                stainID[first][second] = 0;
-                                                stainData[first][second] = 0;
-                                                glassID[first][second] = 0;
-                                                glassData[first][second] = 0;
+                                                blue[first][second] = air;
+                                                glass[first][second] = air;
+                                                stain[first][second] = air;
                                                 nullcount++;
                                             }
                                             second++;
@@ -259,33 +252,26 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         return;
                                     }
                                     // add sign
-                                    int[] signID = new int[]{0, 0, 68, 0};
-                                    byte[] signData = new byte[]{0, 0, 4, 0};
-                                    blueID[9] = signID;
-                                    stainID[9] = signID;
-                                    glassID[9] = signID;
-                                    blueData[9] = signData;
-                                    stainData[9] = signData;
-                                    glassData[9] = signData;
+                                    BlockData sign = Material.WALL_SIGN.createBlockData();
+                                    Directional directional = (Directional) sign;
+                                    directional.setFacing(BlockFace.WEST);
+                                    String[] signData = new String[]{air, air, directional.getDataString(), air};
+                                    blue[9] = signData;
+                                    stain[9] = signData;
+                                    glass[9] = signData;
                                     // json
-                                    String jsonBlueID = new JSONArray(blueID).toString();
-                                    String jsonBlueData = new JSONArray(blueData).toString();
-                                    String jsonStainID = new JSONArray(stainID).toString();
-                                    String jsonStainData = new JSONArray(stainData).toString();
-                                    String jsonGlassID = new JSONArray(glassID).toString();
-                                    String jsonGlassData = new JSONArray(glassData).toString();
+                                    String jsonBlue = new JSONArray(blue).toString();
+                                    String jsonStain = new JSONArray(stain).toString();
+                                    String jsonGlass = new JSONArray(glass).toString();
                                     // save chameleon construct
                                     HashMap<String, Object> wherec = new HashMap<>();
                                     wherec.put("tardis_id", id);
                                     ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> set = new HashMap<>();
-                                    set.put("blueprintID", jsonBlueID);
-                                    set.put("blueprintData", jsonBlueData);
-                                    set.put("stainID", jsonStainID);
-                                    set.put("stainData", jsonStainData);
-                                    set.put("glassID", jsonGlassID);
-                                    set.put("glassData", jsonGlassData);
+                                    set.put("blueprintID", jsonBlue);
+                                    set.put("stainID", jsonStain);
+                                    set.put("glassID", jsonGlass);
                                     if (rsc.resultSet()) {
                                         // update
                                         HashMap<String, Object> whereu = new HashMap<>();
@@ -346,8 +332,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         } else {
             d = 0;
         }
-        inv.setItem(43, new ItemStack(doormats.get(d)));
-        inv.setItem(52, new ItemStack(doormats.get(d)));
+        inv.setItem(43, new ItemStack(doors.get(d)));
+        inv.setItem(52, new ItemStack(doors.get(d)));
         currentDoor.put(uuid, d);
     }
 
@@ -374,4 +360,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
             new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
         }
     }
+
+    //TODO construct a list of valid chameleon Materials to default BlockData strings
 }

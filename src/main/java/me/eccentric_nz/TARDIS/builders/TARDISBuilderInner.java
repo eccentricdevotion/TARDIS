@@ -29,20 +29,27 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
+import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -78,16 +85,13 @@ public class TARDISBuilderInner {
      * @param wall_type a material type determined from the TARDIS seed block,
      * or the middle block in the TARDIS creation stack, this material
      * determines the makeup of the TARDIS walls.
-     * @param wall_data the data bit associated with the wall_type parameter.
      * @param floor_type a material type determined from the TARDIS seed block,
      * or 35 (if TARDIS was made via the creation stack), this material
      * determines the makeup of the TARDIS floors.
-     * @param floor_data the data bit associated with the floor_id parameter.
      * @param tips a boolean determining where this TARDIS will be built
      * -------- false:own world, underground - true:default world--------
      */
-    @SuppressWarnings("deprecation")
-    public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, Material wall_type, byte wall_data, Material floor_type, byte floor_data, boolean tips) {
+    public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, Material wall_type, Material floor_type, boolean tips) {
         Material type;
         int level, row, col, startx, startz, resetx, resetz, j = 2;
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
@@ -113,19 +117,19 @@ public class TARDISBuilderInner {
         int h = dimensions.getInt("height");
         int w = dimensions.getInt("width");
         int l = dimensions.getInt("length");
-        byte data;
+        BlockData data;
         String playerUUID = p.getUniqueId().toString();
-        HashMap<Block, Byte> postDoorBlocks = new HashMap<>();
-        HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<>();
-        HashMap<Block, Byte> postTorchBlocks = new HashMap<>();
-        HashMap<Block, Byte> postSignBlocks = new HashMap<>();
-        HashMap<Block, Byte> postRepeaterBlocks = new HashMap<>();
-        HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<>();
-        HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<>();
-        HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<>();
-        HashMap<Block, Byte> postLeverBlocks = new HashMap<>();
-        HashMap<Block, JSONObject> postStandingBanners = new HashMap<>();
-        HashMap<Block, JSONObject> postWallBanners = new HashMap<>();
+        HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
+        HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+        HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
+        HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
         Location ender = null;
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
@@ -181,7 +185,7 @@ public class TARDISBuilderInner {
             for (level = 0; level < h; level++) {
                 for (row = 0; row < w; row++) {
                     for (col = 0; col < l; col++) {
-                        TARDISBlockSetters.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                        TARDISBlockSetters.setBlock(world, startx, starty, startz, Material.AIR);
                         startx += 1;
                     }
                     startx = resetx;
@@ -214,7 +218,7 @@ public class TARDISBuilderInner {
                         world.setBiome(x, z, Biome.VOID);
                     }
                     type = Material.valueOf((String) c.get("type"));
-                    data = c.getByte("data");
+                    data = plugin.getServer().createBlockData(c.getString("data"));
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
                         String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
@@ -227,36 +231,54 @@ public class TARDISBuilderInner {
                     } catch (IllegalArgumentException e) {
                         use_clay = USE_CLAY.WOOL;
                     }
-                    Material use_mat = use_clay.getMaterial();
-                    if (type.equals(Material.WOOL)) {
-                        switch (data) {
-                            case 1:
+                    if (Tag.WOOL.isTagged(type)) {
+                        switch (type) {
+                            case ORANGE_WOOL:
                                 switch (wall_type) {
-                                    case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Stained Clay
-                                        type = use_mat;
+                                    case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Terracotta
+                                        switch (use_clay) {
+                                            case TERRACOTTA:
+                                                type = Material.ORANGE_TERRACOTTA;
+                                                break;
+                                            case CONCRETE:
+                                                type = Material.ORANGE_CONCRETE;
+                                                break;
+                                            default:
+                                                type = Material.ORANGE_WOOL;
+                                                break;
+                                        }
                                         break;
                                     default:
                                         type = wall_type;
-                                        data = wall_data;
                                 }
                                 break;
-                            case 8:
+                            case LIGHT_GRAY_WOOL:
                                 if (!schm.getPermission().equals("eleventh")) {
                                     switch (floor_type) {
-                                        case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
-                                            type = use_mat;
+                                        case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Terracotta
+                                            switch (use_clay) {
+                                                case TERRACOTTA:
+                                                    type = Material.LIGHT_GRAY_TERRACOTTA;
+                                                    break;
+                                                case CONCRETE:
+                                                    type = Material.LIGHT_GRAY_CONCRETE;
+                                                    break;
+                                                default:
+                                                    type = Material.LIGHT_GRAY_WOOL;
+                                                    break;
+                                            }
                                             break;
                                         default:
                                             type = floor_type;
-                                            data = floor_data;
                                     }
                                 } else {
-                                    type = use_mat;
+                                    String[] split = type.toString().split("_");
+                                    type = Material.getMaterial(split[0] + "_" + use_clay.toString());
                                 }
                                 break;
                             default:
-                                type = use_mat;
-                                break;
+                                String[] split = type.toString().split("_");
+                                type = Material.getMaterial(split[0] + "_" + use_clay.toString());
                         }
                     }
                     if (type.equals(Material.MOB_SPAWNER)) { // scanner button
@@ -272,8 +294,9 @@ public class TARDISBuilderInner {
                         String chest = world.getName() + ":" + x + ":" + y + ":" + z;
                         set.put("condenser", chest);
                     }
-                    if (type.equals(Material.IRON_DOOR_BLOCK)) {
-                        if (data < (byte) 8) { // iron door bottom
+                    if (type.equals(Material.IRON_DOOR)) {
+                        Bisected bisected = (Bisected) data;
+                        if (bisected.getHalf().equals(Bisected.Half.BOTTOM)) { // iron door bottom
                             HashMap<String, Object> setd = new HashMap<>();
                             String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
                             setd.put("tardis_id", dbID);
@@ -289,9 +312,6 @@ public class TARDISBuilderInner {
                                     world.setSpawnLocation(x, y, (z + 1));
                                 }
                             }
-                        } else {
-                            // iron door top
-                            data = (byte) 9;
                         }
                     }
                     if (type.equals(Material.STONE_BUTTON) && !schm.getPermission().equals("junk")) { // random button
@@ -306,7 +326,7 @@ public class TARDISBuilderInner {
                         // check if player has storage record, and update the tardis_id field
                         plugin.getUtils().updateStorageId(playerUUID, dbID, qf);
                     }
-                    if (type.equals(Material.CAKE_BLOCK) && !schm.getPermission().equals("junk")) {
+                    if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                         /*
                          * This block will be converted to a lever by
                          * setBlock(), but remember it so we can use it as the
@@ -315,15 +335,15 @@ public class TARDISBuilderInner {
                         String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                         // create default json for ARS
-                        int[][][] empty = new int[3][9][9];
+                        String[][][] empty = new String[3][9][9];
                         for (int ars_y = 0; ars_y < 3; ars_y++) {
                             for (int ars_x = 0; ars_x < 9; ars_x++) {
                                 for (int ars_z = 0; ars_z < 9; ars_z++) {
-                                    empty[ars_y][ars_x][ars_z] = 1;
+                                    empty[ars_y][ars_x][ars_z] = "STONE";
                                 }
                             }
                         }
-                        int control = schm.getSeedId();
+                        String control = schm.getSeedMaterial().toString();
                         empty[1][4][4] = control;
                         if (w > 16) {
                             empty[1][4][5] = control;
@@ -345,7 +365,7 @@ public class TARDISBuilderInner {
                         seta.put("json", json.toString());
                         qf.doInsert("ars", seta);
                     }
-                    if (type.equals(Material.REDSTONE_LAMP_ON) || type.equals(Material.SEA_LANTERN)) {
+                    if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                         // remember lamp blocks
                         Block lamp = world.getBlockAt(x, y, z);
                         lampblocks.add(lamp);
@@ -356,7 +376,7 @@ public class TARDISBuilderInner {
                         setlb.put("location", lloc);
                         qf.doInsert("lamps", setlb);
                     }
-                    if (type.equals(Material.COMMAND) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
+                    if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                         /*
                          * command block - remember it to spawn the creeper on.
                          * could also be a beacon block, as the creeper sits
@@ -364,16 +384,15 @@ public class TARDISBuilderInner {
                          */
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
-                        if (schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) {
-                            type = Material.BEACON;
-                        } else {
-                            type = Material.SMOOTH_BRICK;
+                        if (type.equals(Material.COMMAND_BLOCK)) {
+//                            type = Material.STONE_BRICKS;
+                            data = Material.STONE_BRICKS.createBlockData();
                             if (schm.getPermission().equals("ender")) {
-                                data = (byte) 3;
+                                data = Material.END_STONE_BRICKS.createBlockData();
                             }
                         }
                     }
-                    if (type.equals(Material.WOOD_BUTTON) && !schm.getPermission().equals("junk")) {
+                    if (Tag.BUTTONS.isTagged(type) && !schm.getPermission().equals("junk")) {
                         /*
                          * wood button - remember it for the Artron Energy
                          * Capacitor.
@@ -405,53 +424,64 @@ public class TARDISBuilderInner {
                         plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
                     }
                     // if it's the door, don't set it just remember its block then do it at the end
-                    if (type.equals(Material.IRON_DOOR_BLOCK)) { // doors
+                    if (type.equals(Material.IRON_DOOR)) { // doors
                         postDoorBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.REDSTONE_TORCH_ON)) {
+                    } else if (type.equals(Material.REDSTONE_TORCH)) {
                         postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.TORCH)) {
                         postTorchBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.PISTON_STICKY_BASE)) {
+                    } else if (type.equals(Material.STICKY_PISTON)) {
                         postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.PISTON_BASE)) {
+                    } else if (type.equals(Material.PISTON)) {
                         postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.PISTON_EXTENSION)) {
+                    } else if (type.equals(Material.PISTON_HEAD)) {
                         postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.LEVER)) {
                         postLeverBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.WALL_SIGN)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.STANDING_BANNER) || type.equals(Material.WALL_BANNER)) {
+                    } else if (TARDISStaticUtils.isBanner(type)) {
                         JSONObject state = c.optJSONObject("banner");
                         if (state != null) {
-                            if (type.equals(Material.STANDING_BANNER)) {
-                                postStandingBanners.put(world.getBlockAt(x, y, z), state);
+                            TARDISBannerData tbd = new TARDISBannerData(type, state);
+                            if (TARDISStaticUtils.isStandingBanner(type)) {
+                                postStandingBanners.put(world.getBlockAt(x, y, z), tbd);
                             } else {
-                                postWallBanners.put(world.getBlockAt(x, y, z), state);
+                                postWallBanners.put(world.getBlockAt(x, y, z), tbd);
                             }
                         }
-                    } else if (type.equals(Material.MONSTER_EGGS)) {
+                    } else if (TARDISStaticUtils.isInfested(type)) {
                         // legacy monster egg stone for controls
-                        TARDISBlockSetters.setBlock(world, x, y, z, 0, (byte) 0);
-                    } else if (type.equals(Material.HUGE_MUSHROOM_2) && data == 15) { // mushroom stem for repeaters
+                        TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                    } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                         // save repeater location
                         if (j < 6) {
                             String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
+                            data = Material.REPEATER.createBlockData();
+                            Directional directional = (Directional) data;
                             switch (j) {
                                 case 2:
-                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 1);
+                                    directional.setFacing(BlockFace.EAST);
+                                    data = directional;
+                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 3, repeater, 0);
                                     break;
                                 case 3:
-                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 2);
+                                    directional.setFacing(BlockFace.SOUTH);
+                                    data = directional;
+                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 2, repeater, 0);
                                     break;
                                 case 4:
-                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 0);
+                                    directional.setFacing(BlockFace.NORTH);
+                                    data = directional;
+                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 5, repeater, 0);
                                     break;
                                 default:
-                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 3);
+                                    directional.setFacing(BlockFace.WEST);
+                                    data = directional;
+                                    postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 4, repeater, 0);
                                     break;
                             }
@@ -464,7 +494,7 @@ public class TARDISBuilderInner {
                         } else {
                             swap = Material.STONE;
                         }
-                        TARDISBlockSetters.setBlock(world, x, y, z, swap, data);
+                        TARDISBlockSetters.setBlock(world, x, y, z, swap);
                     } else if (type.equals(Material.BEDROCK)) {
                         // remember bedrock location to block off the beacon light
                         String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -472,11 +502,11 @@ public class TARDISBuilderInner {
                         postBedrock = world.getBlockAt(x, y, z);
                     } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {
                         // spawn locations for two villagers
-                        TARDISBlockSetters.setBlock(world, x, y, z, 0, (byte) 0);
+                        TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                         plugin.setTardisSpawn(true);
                         world.spawnEntity(new Location(world, x + 0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
                     } else {
-                        TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                        TARDISBlockSetters.setBlock(world, x, y, z, data);
                     }
                 }
             }
@@ -484,61 +514,51 @@ public class TARDISBuilderInner {
         // put on the door, redstone torches, signs, and the repeaters
         postDoorBlocks.entrySet().forEach((entry) -> {
             Block pdb = entry.getKey();
-            byte pddata = entry.getValue();
-            pdb.setType(Material.IRON_DOOR_BLOCK);
-            pdb.setData(pddata, true);
+            pdb.setData(entry.getValue());
         });
         postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
             Block prtb = entry.getKey();
-            byte ptdata = entry.getValue();
-            prtb.setTypeIdAndData(76, ptdata, true);
+            prtb.setData(entry.getValue());
         });
         postTorchBlocks.entrySet().forEach((entry) -> {
             Block ptb = entry.getKey();
-            byte ptdata = entry.getValue();
-            ptb.setTypeIdAndData(50, ptdata, true);
+            ptb.setData(entry.getValue());
         });
         postRepeaterBlocks.entrySet().forEach((entry) -> {
             Block prb = entry.getKey();
-            byte ptdata = entry.getValue();
-            prb.setType(Material.DIODE_BLOCK_OFF);
-            prb.setData(ptdata, true);
+//            prb.setType(Material.REPEATER);
+            prb.setData(entry.getValue());
         });
         postStickyPistonBaseBlocks.entrySet().forEach((entry) -> {
             Block pspb = entry.getKey();
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-            byte pspdata = entry.getValue();
-            pspb.setType(Material.PISTON_STICKY_BASE);
-            pspb.setData(pspdata, true);
+//            pspb.setType(Material.STICKY_PISTON);
+            pspb.setData(entry.getValue());
         });
         postPistonBaseBlocks.entrySet().forEach((entry) -> {
             Block ppb = entry.getKey();
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-            byte ppbdata = entry.getValue();
-            ppb.setType(Material.PISTON_BASE);
-            ppb.setData(ppbdata, true);
+//            ppb.setType(Material.PISTON);
+            ppb.setData(entry.getValue());
         });
         postPistonExtensionBlocks.entrySet().forEach((entry) -> {
             Block ppeb = entry.getKey();
-            byte ppedata = entry.getValue();
-            ppeb.setType(Material.PISTON_EXTENSION);
-            ppeb.setData(ppedata, true);
+//            ppeb.setType(Material.PISTON_HEAD);
+            ppeb.setData(entry.getValue());
         });
         postLeverBlocks.entrySet().forEach((entry) -> {
             Block plb = entry.getKey();
-            byte pldata = entry.getValue();
-            plb.setType(Material.LEVER);
-            plb.setData(pldata, true);
+//            plb.setType(Material.LEVER);
+            plb.setData(entry.getValue());
         });
         int s = 0;
-        for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
+        for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
             if (s == 0) {
                 // always make the control centre the first sign
                 final Block psb = entry.getKey();
-                byte psdata = entry.getValue();
-                psb.setType(Material.WALL_SIGN);
-                psb.setData(psdata, true);
-                if (psb.getType().equals(Material.WALL_SIGN)) {
+//                psb.setType(Material.WALL_SIGN);
+                psb.setData(entry.getValue());
+                if (entry.getValue().getMaterial().equals(Material.WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
@@ -555,12 +575,12 @@ public class TARDISBuilderInner {
             postBedrock.setType(Material.REDSTONE_BLOCK);
         }
         lampblocks.forEach((lamp) -> {
-            Material lantern = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+            Material lantern = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
             lamp.setType(lantern);
         });
         lampblocks.clear();
-        setBanners(176, postStandingBanners);
-        setBanners(177, postWallBanners);
+        TARDISBannerSetter.setBanners(postStandingBanners);
+        TARDISBannerSetter.setBanners(postWallBanners);
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {

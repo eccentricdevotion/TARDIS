@@ -45,7 +45,7 @@ public class TARDISHomeCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -117,7 +117,7 @@ public class TARDISHomeCommand {
 
     private boolean isSub(Location l) {
         switch (l.getBlock().getType()) {
-            case STATIONARY_WATER:
+            case FLOWING_WATER:
             case WATER:
                 return true;
             default:

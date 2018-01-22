@@ -46,7 +46,7 @@ public class TARDISBiomeReaderListener implements Listener {
         }
         final Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.getType().equals(Material.CLAY_BRICK) && is.hasItemMeta()) {
+        if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
                 Biome biome = event.getClickedBlock().getBiome();
@@ -65,7 +65,7 @@ public class TARDISBiomeReaderListener implements Listener {
                         if (!hasBiomeDisk(disks1, biome.toString())) {
                             ItemStack[] disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
                             if (!hasBiomeDisk(disks2, biome.toString())) {
-                                ItemStack bd = new ItemStack(Material.GREEN_RECORD, 1);
+                                ItemStack bd = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                 ItemMeta dim = bd.getItemMeta();
                                 dim.setDisplayName("Biome Storage Disk");
                                 List<String> disk_lore = new ArrayList<>();

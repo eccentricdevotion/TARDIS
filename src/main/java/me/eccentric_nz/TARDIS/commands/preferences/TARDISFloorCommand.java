@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
@@ -57,13 +56,11 @@ public class TARDISFloorCommand {
         } else {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
-        if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
+        if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             TARDISMessage.send(player, message, pref);
-            List<String> sortedKeys = new ArrayList<>(plugin.getTardisWalls().blocks.keySet());
-            Collections.sort(sortedKeys);
-            sortedKeys.forEach((w) -> {
-                player.sendMessage(w);
+            TARDISWalls.BLOCKS.forEach((w) -> {
+                player.sendMessage(w.toString());
             });
             return true;
         }

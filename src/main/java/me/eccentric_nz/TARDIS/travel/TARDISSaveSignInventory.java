@@ -55,7 +55,6 @@ public class TARDISSaveSignInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         HashMap<Integer, ItemStack> dests = new HashMap<>();
         // home stack
@@ -134,7 +133,7 @@ public class TARDISSaveSignInventory {
         switchto.setDisplayName("Load TARDIS areas");
         map.setItemMeta(switchto);
         // add button to allow rearranging saves
-        ItemStack tool = new ItemStack(Material.YELLOW_FLOWER, 1);
+        ItemStack tool = new ItemStack(Material.DANDELION, 1);
         ItemMeta rearrange = tool.getItemMeta();
         rearrange.setDisplayName("Rearrange saves");
         tool.setItemMeta(rearrange);

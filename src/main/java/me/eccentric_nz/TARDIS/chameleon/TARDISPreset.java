@@ -30,23 +30,20 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 public class TARDISPreset {
 
     private String blueprint_id;
-    private String blueprint_data;
     private String stained_id;
-    private String stained_data;
     private String glass_id;
-    private String glass_data;
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
 
     public TARDISPreset() {
     }
 
-    public void makePresets(boolean assymetric, boolean duck, boolean torch) {
+    public void makePresets(boolean assymetric, boolean duck) {
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, assymetric, duck, torch));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained_id, stained_data, assymetric, duck, torch));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glass_id, glass_data, assymetric, duck, torch));
+            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint_id, assymetric, duck));
+            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained_id, assymetric, duck));
+            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glass_id, assymetric, duck));
         }
     }
 
@@ -70,14 +67,6 @@ public class TARDISPreset {
         this.blueprint_id = blueprint_id;
     }
 
-    public String getBlueprint_data() {
-        return blueprint_data;
-    }
-
-    public void setBlueprint_data(String blueprint_data) {
-        this.blueprint_data = blueprint_data;
-    }
-
     public String getStained_id() {
         return stained_id;
     }
@@ -86,27 +75,11 @@ public class TARDISPreset {
         this.stained_id = stained_id;
     }
 
-    public String getStained_data() {
-        return stained_data;
-    }
-
-    public void setStained_data(String stained_data) {
-        this.stained_data = stained_data;
-    }
-
     public String getGlass_id() {
         return glass_id;
     }
 
     public void setGlass_id(String glass_id) {
         this.glass_id = glass_id;
-    }
-
-    public String getGlass_data() {
-        return glass_data;
-    }
-
-    public void setGlass_data(String glass_data) {
-        this.glass_data = glass_data;
     }
 }

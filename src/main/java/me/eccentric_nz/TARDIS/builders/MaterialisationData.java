@@ -37,7 +37,7 @@ public class MaterialisationData {
     private Biome biome;
     private COMPASS direction;
     private Location location;
-    private Material lamp = Material.REDSTONE_LAMP_OFF;
+    private Material lamp = Material.REDSTONE_LAMP;
     private OfflinePlayer player;
     private boolean outside;
     private boolean submarine;

@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
@@ -60,7 +59,6 @@ public class TARDISSiegeMode {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public void toggleViaSwitch(int id, Player p) {
         // get the current siege status
         HashMap<String, Object> where = new HashMap<>();
@@ -218,8 +216,8 @@ public class TARDISSiegeMode {
         wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);
         if (rspp.resultSet()) {
-            Pair wall = plugin.getTardisWalls().blocks.get(rspp.getWall());
-            Pair floor = plugin.getTardisWalls().blocks.get(rspp.getFloor());
+            String wall = rspp.getWall();
+            String floor = rspp.getFloor();
             String sw = rspp.getSiegeWall();
             String sf = rspp.getSiegeFloor();
             // determine 'use_clay' material
@@ -239,14 +237,12 @@ public class TARDISSiegeMode {
                     sf = "BLACK_WOOL";
                 }
             }
-            Pair siege_wall = plugin.getTardisWalls().blocks.get(sw);
-            Pair siege_floor = plugin.getTardisWalls().blocks.get(sf);
             // change to a saved theme
             TARDISUpgradeData tud = new TARDISUpgradeData();
-            tud.setWall(wall.getType().toString() + ":" + wall.getData());
-            tud.setFloor(floor.getType().toString() + ":" + floor.getData());
-            tud.setSiegeWall(siege_wall.getType().toString() + ":" + siege_wall.getData());
-            tud.setSiegeFloor(siege_floor.getType().toString() + ":" + siege_floor.getData());
+            tud.setWall(wall);
+            tud.setFloor(floor);
+            tud.setSiegeWall(sw);
+            tud.setSiegeFloor(sf);
             tud.setSchematic(schm);
             tud.setPrevious(schm);
             // start the rebuild

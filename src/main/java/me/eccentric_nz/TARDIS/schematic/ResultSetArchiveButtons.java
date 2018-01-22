@@ -44,6 +44,7 @@ public class ResultSetArchiveButtons {
     private final String uuid;
     private final ItemStack[] buttons;
     private final String prefix;
+    private final Material[] terracotta = {Material.WHITE_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.MAGENTA_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.YELLOW_TERRACOTTA, Material.LIME_TERRACOTTA, Material.PINK_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.GREEN_TERRACOTTA, Material.RED_TERRACOTTA, Material.BLACK_TERRACOTTA};
 
     public ResultSetArchiveButtons(TARDIS plugin, String uuid) {
         this.plugin = plugin;
@@ -64,7 +65,7 @@ public class ResultSetArchiveButtons {
             int i = 0;
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (byte) i);
+                    ItemStack is = new ItemStack(terracotta[i], 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(rs.getString("name"));
                     List<String> lore = new ArrayList<>();

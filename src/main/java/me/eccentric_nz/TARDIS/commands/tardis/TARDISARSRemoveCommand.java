@@ -57,7 +57,7 @@ public class TARDISARSRemoveCommand {
             Location l = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
             if (l != null) {
                 Block b = l.getBlock();
-                if (b.getType().equals(Material.WALL_SIGN) || b.getType().equals(Material.SIGN_POST)) {
+                if (b.getType().equals(Material.WALL_SIGN) || b.getType().equals(Material.SIGN)) {
                     Sign sign = (Sign) b.getState();
                     for (int i = 0; i < 4; i++) {
                         sign.setLine(i, "");

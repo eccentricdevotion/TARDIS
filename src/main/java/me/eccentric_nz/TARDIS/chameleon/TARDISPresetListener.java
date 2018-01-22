@@ -468,14 +468,11 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                 case 52:
                                     // return to Chameleon Circuit GUI
                                     close(player);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ItemStack[] chameleon = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-                                            Inventory gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
-                                            gui.setContents(chameleon);
-                                            player.openInventory(gui);
-                                        }
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        ItemStack[] chameleon = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                        Inventory gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                                        gui.setContents(chameleon);
+                                        player.openInventory(gui);
                                     }, 2L);
                                     break;
                                 default:

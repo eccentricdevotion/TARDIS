@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
+import org.bukkit.Material;
 
 /**
  *
@@ -25,59 +26,59 @@ import java.util.HashMap;
 public enum TARDISARS implements ARS {
 
     // add offsets
-    ANTIGRAVITY(24, "ANTIGRAVITY", "Anti-gravity Well", 1),
-    ARBORETUM(18, "ARBORETUM", "Arboretum", 1),
-    BAKER(121, "BAKER", "4th Doctor's Secondary Console", 1),
-    BEDROOM(89, "BEDROOM", "Bedroom", 1),
-    BIRDCAGE(239, "BIRDCAGE", "Bird Cage", 1),
-    EMPTY(20, "EMPTY", "Empty", 1),
-    FARM(3, "FARM", "Mob Farm", 1),
-    GRAVITY(48, "GRAVITY", "Gravity Well", 1),
-    GREENHOUSE(103, "GREENHOUSE", "Greenhouse", 1),
-    HARMONY(109, "HARMONY", "Eye of Harmony", 1),
-    HUTCH(162, "HUTCH", "Rabbit Hutch", 1),
-    IGLOO(174, "IGLOO", "Igloo", 1),
-    KITCHEN(86, "KITCHEN", "Kitchen", 1),
-    LAZARUS(61, "LAZARUS", "Genetic Manipulator", 1),
-    LIBRARY(116, "LIBRARY", "Library", 1),
-    MUSHROOM(13, "MUSHROOM", "Mycellium", 1),
-    PASSAGE(82, "PASSAGE", "Passage", 1),
-    POOL(80, "POOL", "Pool", 1),
-    RAIL(154, "RAIL", "Rail Transfer Station", 1),
-    RENDERER(172, "RENDERER", "Exterior Renderer", 1),
-    SMELTER(54, "SMELTER", "Smelter", 1),
-    STABLE(170, "STABLE", "Horse Stable", 1),
-    STALL(214, "STALL", "Llama Stall", 1),
-    TRENZALORE(45, "TRENZALORE", "Trenzalore", 1),
-    VAULT(23, "VAULT", "Storage Vault", 1),
-    VILLAGE(17, "VILLAGE", "Village", 1),
-    WOOD(5, "WOOD", "Wood Secondary Console", 1),
-    WORKSHOP(215, "WORKSHOP", "Workshop", 1),
-    ZERO(2, "ZERO", "Zero Room", 0),
-    JETTISON(46, "JETTISON", "Jettison", 0),
-    SLOT(1, "SLOT", "Empty slot", 0);
-    private final int id;
+    ANTIGRAVITY("SANDSTONE", "ANTIGRAVITY", "Anti-gravity Well", 1),
+    ARBORETUM("OAK_LEAVES", "ARBORETUM", "Arboretum", 1),
+    BAKER("END_STON", "BAKER", "4th Doctor's Secondary Console", 1),
+    BEDROOM("GLOWSTONE", "BEDROOM", "Bedroom", 1),
+    BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "BIRDCAGE", "Bird Cage", 1),
+    EMPTY("GLASS", "EMPTY", "Empty", 1),
+    FARM("DIRT", "FARM", "Mob Farm", 1),
+    GRAVITY("MOSSY_COBBLESTONE", "GRAVITY", "Gravity Well", 1),
+    GREENHOUSE("MELON_BLOCK", "GREENHOUSE", "Greenhouse", 1),
+    HARMONY("STONE_BRICK_STAIRS", "HARMONY", "Eye of Harmony", 1),
+    HUTCH("ACACIA_LOG", "HUTCH", "Rabbit Hutch", 1),
+    IGLOO("PACKED_ICE", "IGLOO", "Igloo", 1),
+    KITCHEN("PUMPKIN", "KITCHEN", "Kitchen", 1),
+    LAZARUS("FURNACE", "LAZARUS", "Genetic Manipulator", 1),
+    LIBRARY("ENCHANTING_TABLE", "LIBRARY", "Library", 1),
+    MUSHROOM("GRAVEL", "MUSHROOM", "Mycellium", 1),
+    PASSAGE("CLAY", "PASSAGE", "Passage", 1),
+    POOL("SNOW_BLOCK", "POOL", "Pool", 1),
+    RAIL("HOPPER", "RAIL", "Rail Transfer Station", 1),
+    RENDERER("TERRACOTTA", "RENDERER", "Exterior Renderer", 1),
+    SMELTER("CHEST", "SMELTER", "Smelter", 1),
+    STABLE("HAY_BLOCK", "STABLE", "Horse Stable", 1),
+    STALL("NETHER_WART_BLOCK", "STALL", "Llama Stall", 1),
+    TRENZALORE("BRICKS", "TRENZALORE", "Trenzalore", 1),
+    VAULT("DISPENSER", "VAULT", "Storage Vault", 1),
+    VILLAGE("OAK_LOG", "VILLAGE", "Village", 1),
+    WOOD("OAK_PLANKS", "WOOD", "Wood Secondary Console", 1),
+    WORKSHOP("RED_NETHER_BRICKS", "WORKSHOP", "Workshop", 1),
+    ZERO("GRASS_BLOCK", "ZERO", "Zero Room", 0),
+    JETTISON("TNT", "JETTISON", "Jettison", 0),
+    SLOT("STONE", "SLOT", "Empty slot", 0);
+    private final String material;
     private final String name;
     private final String descriptiveName;
     private final int offset;
-    private final static HashMap<Integer, ARS> EXTENDED_ID = new HashMap<>();
+    private final static HashMap<Material, ARS> EXTENDED_MATERIAL = new HashMap<>();
     private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<>();
 
-    private TARDISARS(int id, String name, String descriptiveName, int offset) {
-        this.id = id;
+    private TARDISARS(String material, String name, String descriptiveName, int offset) {
+        this.material = material;
         this.name = name;
         this.descriptiveName = descriptiveName;
         this.offset = offset;
     }
 
     /**
-     * Gets the room seed block ID.
+     * Gets the room seed block material.
      *
-     * @return the ID
+     * @return the material
      */
     @Override
-    public int getId() {
-        return id;
+    public String getMaterial() {
+        return material;
     }
 
     /**
@@ -113,7 +114,7 @@ public enum TARDISARS implements ARS {
     static {
         for (ARS room : values()) {
             EXTENDED_NAME.put(room.getDescriptiveName(), room);
-            EXTENDED_ID.put(room.getId(), room);
+            EXTENDED_MATERIAL.put(Material.valueOf(room.getMaterial()), room);
         }
     }
 
@@ -130,12 +131,12 @@ public enum TARDISARS implements ARS {
     /**
      * Attempts to get the ARS room with the given ID
      *
-     * @param id ID of the ARS room to get
+     * @param material material of the ARS room to get
      * @return ARS room if found, or null
      */
-    public static ARS ARSFor(int id) {
-        if (EXTENDED_ID.containsKey(id)) {
-            return EXTENDED_ID.get(id);
+    public static ARS ARSFor(Material material) {
+        if (EXTENDED_MATERIAL.containsKey(material)) {
+            return EXTENDED_MATERIAL.get(material);
         } else {
             return SLOT;
         }
@@ -145,8 +146,9 @@ public enum TARDISARS implements ARS {
         if (!EXTENDED_NAME.containsKey(room.getDescriptiveName())) {
             EXTENDED_NAME.put(room.getDescriptiveName(), room);
         }
-        if (!EXTENDED_ID.containsKey(room.getId())) {
-            EXTENDED_ID.put(room.getId(), room);
+        Material material = Material.valueOf(room.getMaterial());
+        if (!EXTENDED_MATERIAL.containsKey(material)) {
+            EXTENDED_MATERIAL.put(material, room);
         }
     }
 }

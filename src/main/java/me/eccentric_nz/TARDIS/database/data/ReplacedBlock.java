@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import org.bukkit.Location;
+import org.bukkit.block.data.BlockData;
 
 /**
  *
@@ -28,16 +29,14 @@ public class ReplacedBlock {
     private final int tardis_id;
     private final Location location;
     private final String strLocation;
-    private final int blockId;
-    private final byte blockData;
+    private final BlockData blockData;
     private final int police_box;
 
-    public ReplacedBlock(int id, int tardis_id, Location location, String strLocation, int blockId, byte blockData, int police_box) {
+    public ReplacedBlock(int id, int tardis_id, Location location, String strLocation, BlockData blockData, int police_box) {
         this.id = id;
         this.tardis_id = tardis_id;
         this.location = location;
         this.strLocation = strLocation;
-        this.blockId = blockId;
         this.blockData = blockData;
         this.police_box = police_box;
     }
@@ -58,11 +57,7 @@ public class ReplacedBlock {
         return strLocation;
     }
 
-    public int getBlock() {
-        return blockId;
-    }
-
-    public byte getData() {
+    public BlockData getBlockData() {
         return blockData;
     }
 

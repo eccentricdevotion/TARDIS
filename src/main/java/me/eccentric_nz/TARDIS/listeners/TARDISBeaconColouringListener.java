@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -45,17 +46,11 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISBeaconColouringListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> glass = new ArrayList<>();
 
     public TARDISBeaconColouringListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.glass.add(Material.GLASS);
-        this.glass.add(Material.STAINED_GLASS);
-        this.glass.add(Material.STAINED_GLASS_PANE);
-        this.glass.add(Material.THIN_GLASS);
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -66,17 +61,17 @@ public class TARDISBeaconColouringListener implements Listener {
         if (!plugin.getTrackerKeeper().getBeaconColouring().contains(uuid)) {
             return;
         }
-        if (!player.getInventory().getItemInMainHand().getType().equals(Material.INK_SACK)) {
+        ItemStack dye = player.getInventory().getItemInMainHand();
+        if (dye == null || !TARDISMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
             TARDISMessage.send(player, "COLOUR_DYE");
             return;
         }
-        if (!glass.contains(event.getClickedBlock().getType())) {
+        if (!TARDISMaterials.glass.contains(event.getClickedBlock().getType())) {
             TARDISMessage.send(player, "COLOUR_GLASS");
             return;
         }
         Block b = event.getClickedBlock();
         Material original = b.getType();
-        byte block_data = b.getData();
         // check there is a beacon block below the clicked glass block
         boolean found = false;
         for (int i = 1; i < b.getLocation().getBlockY() - 63; i++) {
@@ -91,28 +86,109 @@ public class TARDISBeaconColouringListener implements Listener {
             plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
             return;
         }
-        ItemStack dye = player.getInventory().getItemInMainHand();
         int amount = dye.getAmount();
-        byte dye_data = dye.getData().getData();
-        byte new_data = (byte) (15 - dye_data);
         // don't do anything if it is the same colour
-        if (new_data == block_data) {
-            plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
-            return;
-        }
-        int u = 1;
-        Material change;
         switch (original) {
-            case GLASS:
-                change = Material.STAINED_GLASS;
+            case BLACK_STAINED_GLASS:
+            case BLACK_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.INK_SAC)) {
+                    return;
+                }
                 break;
-            case THIN_GLASS:
-                change = Material.STAINED_GLASS_PANE;
+            case BLUE_STAINED_GLASS:
+            case BLUE_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.LAPIS_LAZULI)) {
+                    return;
+                }
+                break;
+            case BROWN_STAINED_GLASS:
+            case BROWN_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.COCOA_BEANS)) {
+                    return;
+                }
+                break;
+            case CYAN_STAINED_GLASS:
+            case CYAN_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.CYAN_DYE)) {
+                    return;
+                }
+                break;
+            case GRAY_STAINED_GLASS:
+            case GRAY_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.GRAY_DYE)) {
+                    return;
+                }
+                break;
+            case GREEN_STAINED_GLASS:
+            case GREEN_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.CACTUS_GREEN)) {
+                    return;
+                }
+                break;
+            case LIGHT_BLUE_STAINED_GLASS:
+            case LIGHT_BLUE_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.LIGHT_BLUE_DYE)) {
+                    return;
+                }
+                break;
+            case LIGHT_GRAY_STAINED_GLASS:
+            case LIGHT_GRAY_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.LIGHT_GRAY_DYE)) {
+                    return;
+                }
+                break;
+            case LIME_STAINED_GLASS:
+            case LIME_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.LIME_DYE)) {
+                    return;
+                }
+                break;
+            case MAGENTA_STAINED_GLASS:
+            case MAGENTA_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.MAGENTA_DYE)) {
+                    return;
+                }
+                break;
+            case ORANGE_STAINED_GLASS:
+            case ORANGE_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.ORANGE_DYE)) {
+                    return;
+                }
+                break;
+            case PINK_STAINED_GLASS:
+            case PINK_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.PINK_DYE)) {
+                    return;
+                }
+                break;
+            case PURPLE_STAINED_GLASS:
+            case PURPLE_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.PURPLE_DYE)) {
+                    return;
+                }
+                break;
+            case RED_STAINED_GLASS:
+            case RED_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.ROSE_RED)) {
+                    return;
+                }
+                break;
+            case WHITE_STAINED_GLASS:
+            case WHITE_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.BONE_MEAL)) {
+                    return;
+                }
+                break;
+            case YELLOW_STAINED_GLASS:
+            case YELLOW_STAINED_GLASS_PANE:
+                if (dye.getType().equals(Material.DANDELION_YELLOW)) {
+                    return;
+                }
                 break;
             default:
-                change = original;
                 break;
         }
+        int u = 1;
         List<Block> candidates = new ArrayList<>();
         candidates.add(b);
         while (b.getRelative(BlockFace.UP, u).getType().equals(original)) {
@@ -128,12 +204,11 @@ public class TARDISBeaconColouringListener implements Listener {
         if (amount > needed) {
             player.getInventory().getItemInMainHand().setAmount(amount - needed);
         } else {
-            player.getInventory().removeItem(new ItemStack(dye.getType(), needed, dye.getDurability()));
+            player.getInventory().removeItem(new ItemStack(dye.getType(), needed));
         }
         player.updateInventory();
         candidates.forEach((bb) -> {
-            bb.setType(change);
-            bb.setData(new_data, true);
+            changeColour(bb, dye);
         });
         // take the Artron Energy
         HashMap<String, Object> wherea = new HashMap<>();
@@ -141,5 +216,70 @@ public class TARDISBeaconColouringListener implements Listener {
         int energy = plugin.getCondensables().get("GLASS") * needed;
         new QueryFactory(plugin).alterEnergyLevel("tardis", -energy, wherea, player);
         plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
+    }
+
+    private void changeColour(Block block, ItemStack dye) {
+        // determine colour
+        String[] split = block.getType().toString().split("_");
+        if (split.length == 1) {
+            split = new String[]{"", "STAINED", "GLASS"};
+        } else if (split.length == 2) {
+            split = new String[]{"", "STAINED", "GLASS", "PANE"};
+        }
+        switch (dye.getType()) {
+            case BONE_MEAL:
+                split[0] = "WHITE";
+                break;
+            case CACTUS_GREEN:
+                split[0] = "GREEN";
+                break;
+            case COCOA_BEANS:
+                split[0] = "BROWN";
+                break;
+            case CYAN_DYE:
+                split[0] = "CYAN";
+                break;
+            case DANDELION_YELLOW:
+                split[0] = "YELLOW";
+                break;
+            case GRAY_DYE:
+                split[0] = "GRAY";
+                break;
+            case INK_SAC:
+                split[0] = "BLACK";
+                break;
+            case LAPIS_LAZULI:
+                split[0] = "BLUE";
+                break;
+            case LIGHT_BLUE_DYE:
+                split[0] = "LIGHT_BLUE";
+                break;
+            case LIGHT_GRAY_DYE:
+                split[0] = "LIGHT_GRAY";
+                break;
+            case LIME_DYE:
+                split[0] = "LIME";
+                break;
+            case MAGENTA_DYE:
+                split[0] = "MAGENTA";
+                break;
+            case ORANGE_DYE:
+                split[0] = "ORANGE";
+                break;
+            case PINK_DYE:
+                split[0] = "PINK";
+                break;
+            case PURPLE_DYE:
+                split[0] = "PURPLE";
+                break;
+            case ROSE_RED:
+                split[0] = "RED";
+                break;
+            default:
+                break;
+        }
+        String joined = String.join("_", split);
+        Material material = Material.valueOf(joined);
+        block.setType(material, true);
     }
 }

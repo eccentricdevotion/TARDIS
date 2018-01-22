@@ -26,7 +26,7 @@ public class TARDISVaultListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    @SuppressWarnings("deprecation")
+    
     public void onVaultDropChestClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();

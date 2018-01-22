@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
@@ -30,8 +29,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
@@ -145,9 +142,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
                 HashMap<String, Object> setpp = new HashMap<>();
                 Material wall_type = seed.getWallType();
-                byte wall_data = seed.getWallData();
                 Material floor_type = seed.getFloorType();
-                byte floor_data = seed.getFloorData();
                 Long now;
                 if (player.hasPermission("tardis.prune.bypass")) {
                     now = Long.MAX_VALUE;
@@ -160,8 +155,8 @@ public class TARDISSeedBlockProcessor {
                 set.put("chameleon_preset", preset);
                 set.put("chameleon_demat", preset);
                 // determine wall block material from HashMap
-                setpp.put("wall", getWallKey(wall_type, wall_data));
-                setpp.put("floor", getWallKey(floor_type, floor_data));
+                setpp.put("wall", wall_type.toString());
+                setpp.put("floor", floor_type.toString());
                 setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
@@ -202,7 +197,7 @@ public class TARDISSeedBlockProcessor {
                 // police box needs to use chameleon id/data
                 plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
                 plugin.getPresetBuilder().buildPreset(bd);
-                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, floor_type, floor_data, tips);
+                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<>();
@@ -248,19 +243,9 @@ public class TARDISSeedBlockProcessor {
         }
     }
 
-    private String getWallKey(Material i, byte d) {
-        for (Map.Entry<String, TARDISWalls.Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            Pair value = entry.getValue();
-            if (value.getType().equals(i) && value.getData() == d) {
-                return entry.getKey();
-            }
-        }
-        return "ORANGE_WOOL";
-    }
-
     private boolean isSub(Location l) {
         switch (l.getBlock().getRelative(BlockFace.UP).getType()) {
-            case STATIONARY_WATER:
+            case FLOWING_WATER:
             case WATER:
                 return true;
             default:

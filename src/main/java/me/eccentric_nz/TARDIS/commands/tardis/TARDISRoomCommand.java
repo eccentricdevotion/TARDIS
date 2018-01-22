@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -116,7 +115,7 @@ public class TARDISRoomCommand {
             boolean hasRequired = true;
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
-            String floor = "LIGHT_GREY_WOOL";
+            String floor = "LIGHT_GRAY_WOOL";
             HashMap<String, Object> wherepp = new HashMap<>();
             boolean hasPrefs = false;
             wherepp.put("uuid", player.getUniqueId().toString());
@@ -131,15 +130,11 @@ public class TARDISRoomCommand {
                 String[] block_data = entry.getKey().split(":");
                 String bid = block_data[0];
                 String mat;
-                String bkey;
                 String block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
-                    Pair iddata = plugin.getTardisWalls().blocks.get(mat);
-                    bkey = iddata.getType().toString();
-                    block_id = iddata.getType().toString();
+                    block_id = mat;
                 } else {
-                    bkey = bid;
                     block_id = bid;
                 }
                 int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));

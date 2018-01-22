@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -39,125 +40,68 @@ public class TARDISChameleonCircuit {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
-    public int[] getChameleonBlock(Block b, OfflinePlayer p) {
-        int[] data = new int[2];
-        int chameleonType = b.getTypeId();
-        int wall_block = 159;
-        byte chameleonData = 8;
+    public Material getChameleonBlock(Block b, OfflinePlayer p) {
+        Material chameleonType = b.getType();
+        Material wall_block = Material.LIGHT_GRAY_TERRACOTTA;
         // determine wall_block
-        if (plugin.getBlocksConfig().getIntegerList("chameleon_blocks").contains((Integer) chameleonType)) {
+        if (plugin.getBlocksConfig().getStringList("chameleon_blocks").contains(chameleonType.toString())) {
             wall_block = chameleonType;
-            chameleonData = b.getData();
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
+        if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
             TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
-            wall_block = swapId(chameleonType);
-            switch (chameleonType) {
-                case 12:
-                    if (b.getData() == (byte) 1) {
-                        wall_block = 179;
-                        chameleonData = 0;
-                    }
-                    break;
-                case 22:
-                    chameleonData = 11;
-                    break;
-                case 41:
-                    chameleonData = 4;
-                    break;
-                case 42:
-                    chameleonData = 8;
-                    break;
-                case 57:
-                    chameleonData = 3;
-                    break;
-                case 133:
-                    chameleonData = 5;
-                    break;
-                case 134:
-                    chameleonData = 1;
-                    break;
-                case 135:
-                    chameleonData = 2;
-                    break;
-                case 136:
-                    chameleonData = 3;
-                    break;
-                default:
-                    chameleonData = b.getData();
-                    break;
-            }
+        if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
+            wall_block = swapMaterial(chameleonType);
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
+        if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains(chameleonType)) {
             // try the surrounding blocks
             for (BlockFace bf : plugin.getGeneralKeeper().getSurrounding()) {
                 Block surroundblock = b.getRelative(bf);
-                int eid = surroundblock.getTypeId();
-                if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) eid)) {
-                    wall_block = eid;
-                    chameleonData = surroundblock.getData();
+                Material emat = surroundblock.getType();
+                if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains(emat)) {
+                    wall_block = emat;
                     break;
                 }
-                if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) eid)) {
-                    wall_block = swapId(eid);
-                    switch (eid) {
-                        case 134:
-                            chameleonData = 1;
-                            break;
-                        case 135:
-                            chameleonData = 2;
-                            break;
-                        case 136:
-                            chameleonData = 3;
-                            break;
-                        default:
-                            chameleonData = b.getData();
-                            break;
-                    }
+                if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(emat)) {
+                    wall_block = swapMaterial(emat);
                     break;
                 }
             }
         }
         // if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
-        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains((Integer) chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
-            wall_block = 35;
+        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             switch (chameleonType) {
-                case 41:
-                    chameleonData = (byte) 8;
+                case GOLD_BLOCK:
+                    wall_block = Material.BLUE_WOOL;
                     break;
-                case 42:
-                    chameleonData = (byte) 4;
+                case IRON_BLOCK:
+                    wall_block = Material.YELLOW_WOOL;
                     break;
-                case 46:
-                    chameleonData = (byte) 14;
+                case TNT:
+                    wall_block = Material.RED_WOOL;
                     break;
-                case 57:
-                    chameleonData = (byte) 3;
+                case DIAMOND_BLOCK:
+                    wall_block = Material.LIGHT_BLUE_WOOL;
                     break;
-                case 133:
-                    chameleonData = (byte) 5;
+                case EMERALD_BLOCK:
+                    wall_block = Material.LIME_WOOL;
                     break;
-                case 152:
-                    chameleonData = (byte) 14;
+                case REDSTONE_BLOCK:
+                    wall_block = Material.RED_WOOL;
                     break;
-                case 173:
-                    chameleonData = (byte) 15;
+                case COAL_BLOCK:
+                    wall_block = Material.BLACK_WOOL;
                     break;
                 default:
-                    chameleonData = (byte) 0;
+                    wall_block = Material.BLUE_WOOL;
                     break;
             }
         }
-        data[0] = wall_block;
-        data[1] = chameleonData;
-        return data;
+        return wall_block;
     }
 
-    public int swapId(int id) {
-        int swappedId = TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(id);
+    public Material swapMaterial(Material material) {
+        Material swappedId = TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
         return swappedId;
     }
 }

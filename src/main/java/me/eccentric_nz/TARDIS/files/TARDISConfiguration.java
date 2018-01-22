@@ -25,9 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -131,6 +129,7 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.set_biome", true);
         boolOptions.put("preferences.nerf_pistons.enabled", false);
         boolOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
+        boolOptions.put("preferences.no_coords", false);
         boolOptions.put("preferences.no_creative_condense", false);
         boolOptions.put("preferences.open_door_policy", false);
         boolOptions.put("preferences.render_entities", false);
@@ -305,8 +304,6 @@ public class TARDISConfiguration {
         intOptions.put("junk.return", -1);
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.rebuild_cooldown", 10000);
-        intOptions.put("police_box.wall_data", 11);
-        intOptions.put("police_box.wall_id", 35);
         intOptions.put("preferences.freeze_cooldown", 60);
         intOptions.put("preferences.hads_damage", 10);
         intOptions.put("preferences.hads_distance", 10);
@@ -388,13 +385,12 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
         strOptions.put("creation.area", "none");
-        strOptions.put("creation.custom_creeper_id", "BEACON");
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("creation.use_clay", "WOOL");
         strOptions.put("police_box.default_preset", "FACTORY");
-        strOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP_OFF");
+        strOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP");
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.default_key", "eleventh");
         strOptions.put("preferences.default_sonic", "eleventh");
@@ -414,8 +410,8 @@ public class TARDISConfiguration {
         strOptions.put("travel.terminal.the_end", "world");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
-        roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
-        roomStrOptions.put("rooms.BAKER.seed", "ENDER_STONE");
+        roomStrOptions.put("rooms.ARBORETUM.seed", "OAK_LEAVES");
+        roomStrOptions.put("rooms.BAKER.seed", "END_STONE");
         roomStrOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
         roomStrOptions.put("rooms.EMPTY.seed", "GLASS");
         roomStrOptions.put("rooms.FARM.seed", "DIRT");
@@ -423,7 +419,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
         roomStrOptions.put("rooms.GREENHOUSE.seed", "MELON_BLOCK");
         roomStrOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
-        roomStrOptions.put("rooms.HUTCH.seed", "LOG_2");
+        roomStrOptions.put("rooms.HUTCH.seed", "ACACIA_LOG");
         roomStrOptions.put("rooms.IGLOO.seed", "PACKED_ICE");
         roomStrOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         roomStrOptions.put("rooms.LAZARUS.seed", "FURNACE");
@@ -432,7 +428,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
-        roomStrOptions.put("rooms.RENDERER.seed", "HARD_CLAY");
+        roomStrOptions.put("rooms.RENDERER.seed", "TERRACOTTA");
         roomStrOptions.put("rooms.SMELTER.seed", "CHEST");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
@@ -512,14 +508,6 @@ public class TARDISConfiguration {
                 if (!config.contains(entry.getKey())) {
                     plugin.getConfig().set(entry.getKey(), entry.getValue());
                     i++;
-                } else if (entry.getKey().equals("creation.custom_creeper_id")) {
-                    try {
-                        int id = Integer.parseInt(plugin.getConfig().getString("creation.custom_creeper_id"));
-                        String set = Material.getMaterial(id).toString();
-                        plugin.getConfig().set("creation.custom_creeper_id", set);
-                    } catch (NumberFormatException e) {
-                        // no conversion necessary
-                    }
                 }
             }
             if (!config.isConfigurationSection("rechargers")) {
@@ -540,14 +528,6 @@ public class TARDISConfiguration {
             }
             if (config.contains("police_box.default_preset") && config.getString("police_box.default_preset").equals("NEW")) {
                 plugin.getConfig().set("police_box.default_preset", "FACTORY");
-            }
-            if (config.contains("police_box.tardis_lamp") && NumberUtils.isNumber(config.getString("police_box.tardis_lamp"))) {
-                String setlamp = "REDSTONE_LAMP_OFF";
-                int lampint = config.getInt("police_box.tardis_lamp");
-                if (lampint != 50) {
-                    setlamp = Material.getMaterial(lampint).toString();
-                }
-                plugin.getConfig().set("police_box.tardis_lamp", setlamp);
             }
             if (i > 0) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
@@ -611,7 +591,7 @@ public class TARDISConfiguration {
             }
         }
         // replace room seed block for Llama STALL
-        if (rooms_config.contains("rooms.WORKSHOP.seed") && rooms_config.get("rooms.WORKSHOP.seed").equals("NETHER_BRICK")) {
+        if (rooms_config.contains("rooms.WORKSHOP.seed") && rooms_config.get("rooms.WORKSHOP.seed").equals("NETHER_BRICKS")) {
             rooms_config.set("rooms.WORKSHOP.seed", "WORKBENCH");
             i++;
         }
@@ -651,142 +631,21 @@ public class TARDISConfiguration {
             blocks_config.set("keys", KEYS);
             i++;
         }
-        if (!blocks_config.contains("tardis_blocks")) {
-            List<String> MIDDLE_BLOCKS;
-            if (config.contains("tardis_blocks")) {
-                MIDDLE_BLOCKS = config.getStringList("tardis_blocks");
-                // remove old tardis_blocks section
-                plugin.getConfig().set("tardis_blocks", null);
-            } else {
-                MIDDLE_BLOCKS = Arrays.asList("COBBLESTONE", "MOSSY_COBBLESTONE", "LOG", "LOG_2", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY", "PACKED_ICE");
-            }
-            blocks_config.set("tardis_blocks", MIDDLE_BLOCKS);
-            i++;
-        } else {
-            List<String> tblocs = blocks_config.getStringList("tardis_blocks");
-            if (!tblocs.contains("STAINED_CLAY")) {
-                tblocs.add("STAINED_CLAY");
-                tblocs.add("HAY_BLOCK");
-                tblocs.add("HARD_CLAY");
-                blocks_config.set("tardis_blocks", tblocs);
-                i++;
-            }
-            if (!tblocs.contains("LOG")) {
-                tblocs.add("COBBLESTONE");
-                tblocs.add("MOSSY_COBBLESTONE");
-                tblocs.add("LOG");
-                blocks_config.set("tardis_blocks", tblocs);
-                i++;
-            }
-            if (!tblocs.contains("LOG_2")) {
-                tblocs.add("LOG_2");
-                tblocs.add("PACKED_ICE");
-                blocks_config.set("tardis_blocks", tblocs);
-                i++;
-            }
-            if (!tblocs.contains("NETHER_WART_BLOCK")) {
-                tblocs.add("NETHER_WART_BLOCK");
-                tblocs.add("RED_NETHER_BRICK");
-                tblocs.add("BONE_BLOCK");
-                blocks_config.set("tardis_blocks", tblocs);
-                i++;
-            }
-        }
-        if (!blocks_config.contains("chameleon_blocks")) {
-            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 45, 46, 47, 48, 49, 56, 57, 58, 73, 79, 80, 82, 84, 86, 87, 88, 89, 91, 95, 98, 99, 100, 103, 110, 112, 121, 123, 129, 133, 155, 159, 161, 162, 165, 168, 170, 172, 173, 174, 201, 202, 206, 214, 215, 216);
+        if (!blocks_config.contains("version")) {
+            List<String> CHAM_BLOCKS = Arrays.asList("STONE", "DIRT", "COBBLESTONE", "OAK_PLANKS", "BIRCH_PLANKS", "SPRUCE_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "GOLD_ORE", "IRON_ORE", "COAL_ORE", "OAK_LOG", "BIRCH_LOG", "SPRUCE_LOG", "JUNGLE_LOG", "ACACIA_LOG", "DARK_OAK_LOG", "OAK_LEAVES", "BIRCH_LEAVES", "SPRUCE_LEAVES", "JUNGLE_LEAVES", "ACACIA_LEAVES", "DARK_OAK_LEAVES", "SPONGE", "GLASS", "LAPIS_ORE", "LAPIS_BLOCK", "SANDSTONE", "NOTE_BLOCK", "WHITE_WOOL", "ORANGE_WOOL", "MAGENTA_WOOL", "LIGHT_BLUE_WOOL", "YELLOW_WOOL", "LIME_WOOL", "PINK_WOOL", "GRAY_WOOL", "LIGHT_GRAY_WOOL", "CYAN_WOOL", "PURPLE_WOOL", "BLUE_WOOL", "BROWN_WOOL", "GREEN_WOOL", "RED_WOOL", "BLACK_WOOL", "GOLD_BLOCK", "IRON_BLOCK", "BRICK", "TNT", "BOOKSHELF", "MOSSY_COBBLESTONE", "OBSIDIAN", "DIAMOND_ORE", "DIAMOND_BLOCK", "CRAFTING_TABLE", "REDSTONE_ORE", "ICE", "SNOW_BLOCK", "CLAY", "JUKEBOX", "PUMPKIN", "NETHERRACK", "SOUL_SAND", "GLOWSTONE", "JACK_O_LANTERN", "WHITE_STAINED_GLASS", "ORANGE_STAINED_GLASS", "MAGENTA_STAINED_GLASS", "LIGHT_BLUE_STAINED_GLASS", "YELLOW_STAINED_GLASS", "LIME_STAINED_GLASS", "PINK_STAINED_GLASS", "GRAY_STAINED_GLASS", "LIGHT_GRAY_STAINED_GLASS", "CYAN_STAINED_GLASS", "PURPLE_STAINED_GLASS", "BLUE_STAINED_GLASS", "BROWN_STAINED_GLASS", "GREEN_STAINED_GLASS", "RED_STAINED_GLASS", "BLACK_STAINED_GLASS", "STONE_BRICKS", "BROWN_MUSHROOM_BLOCK", "RED_MUSHROOM_BLOCK", "MELON_BLOCK", "MYCELIUM", "NETHER_BRICKS", "END_STONE", "REDSTONE_LAMP", "EMERALD_ORE", "EMERALD_BLOCK", "QUARTZ_BLOCK", "WHITE_TERRACOTTA", "ORANGE_TERRACOTTA", "MAGENTA_TERRACOTTA", "LIGHT_BLUE_TERRACOTTA", "YELLOW_TERRACOTTA", "LIME_TERRACOTTA", "PINK_TERRACOTTA", "GRAY_TERRACOTTA", "LIGHT_GRAY_TERRACOTTA", "CYAN_TERRACOTTA", "PURPLE_TERRACOTTA", "BLUE_TERRACOTTA", "BROWN_TERRACOTTA", "GREEN_TERRACOTTA", "RED_TERRACOTTA", "BLACK_TERRACOTTA", "SLIME_BLOCK", "BARRIER", "PRISMARINE", "HAY_BLOCK", "WHITE_CARPET", "ORANGE_CARPET", "MAGENTA_CARPET", "LIGHT_BLUE_CARPET", "YELLOW_CARPET", "LIME_CARPET", "PINK_CARPET", "GRAY_CARPET", "LIGHT_GRAY_CARPET", "CYAN_CARPET", "PURPLE_CARPET", "BLUE_CARPET", "BROWN_CARPET", "GREEN_CARPET", "RED_CARPET", "BLACK_CARPET", "TERRACOTTA", "COAL_BLOCK", "PACKED_ICE", "RED_SANDSTONE", "PURPUR_BLOCK", "PURPUR_PILLAR", "END_STONE_BRICKS", "WHITE_GLAZED_TERRACOTTA", "ORANGE_GLAZED_TERRACOTTA", "MAGENTA_GLAZED_TERRACOTTA", "LIGHT_BLUE_GLAZED_TERRACOTTA", "YELLOW_GLAZED_TERRACOTTA", "LIME_GLAZED_TERRACOTTA", "PINK_GLAZED_TERRACOTTA", "GRAY_GLAZED_TERRACOTTA", "LIGHT_GRAY_GLAZED_TERRACOTTA", "CYAN_GLAZED_TERRACOTTA", "PURPLE_GLAZED_TERRACOTTA", "BLUE_GLAZED_TERRACOTTA", "BROWN_GLAZED_TERRACOTTA", "GREEN_GLAZED_TERRACOTTA", "RED_GLAZED_TERRACOTTA", "BLACK_GLAZED_TERRACOTTA", "WHITE_CONCRETE", "ORANGE_CONCRETE", "MAGENTA_CONCRETE", "LIGHT_BLUE_CONCRETE", "YELLOW_CONCRETE", "LIME_CONCRETE", "PINK_CONCRETE", "GRAY_CONCRETE", "LIGHT_GRAY_CONCRETE", "CYAN_CONCRETE", "PURPLE_CONCRETE", "BLUE_CONCRETE", "BROWN_CONCRETE", "GREEN_CONCRETE", "RED_CONCRETE", "BLACK_CONCRETE");
             blocks_config.set("chameleon_blocks", CHAM_BLOCKS);
-            i++;
-        } else {
-            List<Integer> cblocs = blocks_config.getIntegerList("chameleon_blocks");
-            if (!cblocs.contains(159)) {
-                cblocs.add(159);
-                cblocs.add(170);
-                cblocs.add(172);
-                cblocs.add(173);
-                blocks_config.set("chameleon_blocks", cblocs);
-                i++;
-            }
-            if (!cblocs.contains(161)) {
-                cblocs.add(161);
-                cblocs.add(162);
-                cblocs.add(174);
-                blocks_config.set("chameleon_blocks", cblocs);
-                i++;
-            }
-            if (!cblocs.contains(179)) {
-                cblocs.add(179);
-                blocks_config.set("chameleon_blocks", cblocs);
-                i++;
-            }
-            if (!cblocs.contains(95)) {
-                cblocs.add(95);
-                cblocs.add(165);
-                cblocs.add(168);
-                cblocs.add(201);
-                cblocs.add(202);
-                cblocs.add(206);
-                blocks_config.set("chameleon_blocks", cblocs);
-                i++;
-            }
-            if (!cblocs.contains(214)) {
-                cblocs.add(214);
-                cblocs.add(215);
-                cblocs.add(216);
-                blocks_config.set("chameleon_blocks", cblocs);
-                i++;
-            }
-            if (cblocs.contains(43)) {
-                cblocs.remove(Integer.valueOf(43));
-                cblocs.remove(Integer.valueOf(74));
-                cblocs.remove(Integer.valueOf(124));
-                blocks_config.set("chameleon_blocks", cblocs);
-            }
+            List<String> UNDER_BLOCKS = Arrays.asList("AIR", "OAK_LEAVES", "BIRCH_LEAVES", "SPRUCE_LEAVES", "JUNGLE_LEAVES", "ACACIA_LEAVES", "DARK_OAK_LEAVES", "WATER", "FLOWING_WATER", "LAVA", "FLOWING_LAVA", "OAK_SAPLING", "BIRCH_SAPLING", "SPRUCE_SAPLING", "JUNGLE_SAPLING", "ACACIA_SAPLING", "DARK_OAK_SAPLING", "GLASS", "WHITE_BED", "ORANGE_BED", "MAGENTA_BED", "LIGHT_BLUE_BED", "YELLOW_BED", "LIME_BED", "PINK_BED", "GRAY_BED", "LIGHT_GRAY_BED", "CYAN_BED", "PURPLE_BED", "BLUE_BED", "BROWN_BED", "GREEN_BED", "RED_BED", "BLACK_BED", "POWERED_RAIL", "DETECTOR_RAIL", "COBWEB", "GRASS", "DEAD_BUSH", "PISTON", "STICKY_PISTON", "PISTON_HEAD", "ALLIUM", "AZURE_BLUET", "BLUE_ORCHID", "FERN", "LARGE_FERN", "LILAC", "ORANGE_TULIP", "OXEYE_DAISY", "PEONY", "PINK_TULIP", "POPPY", "RED_TULIP", "ROSE_BUSH", "SUNFLOWER", "TALL_GRASS", "WHITE_TULIP", "RED_MUSHROOM", "BROWN_MUSHROOM", "TNT", "TORCH", "FIRE", "OAK_STAIRS", "BIRCH_STAIRS", "SPRUCE_STAIRS", "JUNGLE_STAIRS", "ACACIA_STAIRS", "DARK_OAK_STAIRS", "CHEST", "REDSTONE_WIRE", "FARMLAND", "FURNACE", "SIGN", "OAK_DOOR", "BIRCH_DOOR", "SPRUCE_DOOR", "JUNGLE_DOOR", "ACACIA_DOOR", "DARK_OAK_DOOR", "LADDER", "RAIL", "COBBLESTONE_STAIRS", "WALL_SIGN", "LEVER", "STONE_PRESSURE_PLATE", "HEAVY_WEIGHTED_PRESSURE_PLATE", "LIGHT_WEIGHTED_PRESSURE_PLATE", "IRON_DOOR", "OAK_PRESSURE_PLATE", "BIRCH_PRESSURE_PLATE", "SPRUCE_PRESSURE_PLATE", "JUNGLE_PRESSURE_PLATE", "ACACIA_PRESSURE_PLATE", "DARK_OAK_PRESSURE_PLATE", "REDSTONE_TORCH", "STONE_BUTTON", "SNOW", "ICE", "CACTUS", "SUGAR_CANE", "OAK_FENCE", "BIRCH_FENCE", "SPRUCE_FENCE", "JUNGLE_FENCE", "ACACIA_FENCE", "DARK_OAK_FENCE", "GLOWSTONE", "CAKE", "REPEATER", "OAK_TRAPDOOR", "BIRCH_TRAPDOOR", "SPRUCE_TRAPDOOR", "JUNGLE_TRAPDOOR", "ACACIA_TRAPDOOR", "DARK_OAK_TRAPDOOR", "IRON_BARS", "GLASS_PANE", "PUMPKIN_STEM", "MELON_STEM", "VINE", "OAK_FENCE_GATE", "BIRCH_FENCE_GATE", "SPRUCE_FENCE_GATE", "JUNGLE_FENCE_GATE", "ACACIA_FENCE_GATE", "DARK_OAK_FENCE_GATE", "BRICK_STAIRS", "STONE_BRICK_STAIRS", "LILY_PAD", "NETHER_BRICK_FENCE", "NETHER_BRICK_STAIRS", "NETHER_WART", "ENCHANTING_TABLE", "BREWING_STAND", "CAULDRON", "END_PORTAL", "END_PORTAL_FRAME", "DRAGON_EGG", "OAK_SLAB", "BIRCH_SLAB", "SPRUCE_SLAB", "JUNGLE_SLAB", "ACACIA_SLAB", "DARK_OAK_SLAB", "SANDSTONE_STAIRS", "ENDER_CHEST", "TRIPWIRE_HOOK", "TRIPWIRE", "IRON_TRAPDOOR", "WHITE_CARPET", "ORANGE_CARPET", "MAGENTA_CARPET", "LIGHT_BLUE_CARPET", "YELLOW_CARPET", "LIME_CARPET", "PINK_CARPET", "GRAY_CARPET", "LIGHT_GRAY_CARPET", "CYAN_CARPET", "PURPLE_CARPET", "BLUE_CARPET", "BROWN_CARPET", "GREEN_CARPET", "RED_CARPET", "BLACK_CARPET", "WHITE_BANNER", "ORANGE_BANNER", "MAGENTA_BANNER", "LIGHT_BLUE_BANNER", "YELLOW_BANNER", "LIME_BANNER", "PINK_BANNER", "GRAY_BANNER", "LIGHT_GRAY_BANNER", "CYAN_BANNER", "PURPLE_BANNER", "BLUE_BANNER", "BROWN_BANNER", "GREEN_BANNER", "RED_BANNER", "BLACK_BANNER", "WHITE_WALL_BANNER", "ORANGE_WALL_BANNER", "MAGENTA_WALL_BANNER", "LIGHT_BLUE_WALL_BANNER", "YELLOW_WALL_BANNER", "LIME_WALL_BANNER", "PINK_WALL_BANNER", "GRAY_WALL_BANNER", "LIGHT_GRAY_WALL_BANNER", "CYAN_WALL_BANNER", "PURPLE_WALL_BANNER", "BLUE_WALL_BANNER", "BROWN_WALL_BANNER", "GREEN_WALL_BANNER", "RED_WALL_BANNER", "BLACK_WALL_BANNER", "DAYLIGHT_DETECTOR", "RED_SANDSTONE_STAIRS", "END_ROD", "CHORUS_PLANT", "CHORUS_FLOWER", "PURPUR_STAIRS", "PURPUR_SLAB", "BEETROOTS", "GRASS_PATH", "FROSTED_ICE", "STRUCTURE_VOID", "WHITE_SHULKER_BOX", "ORANGE_SHULKER_BOX", "MAGENTA_SHULKER_BOX", "LIGHT_BLUE_SHULKER_BOX", "YELLOW_SHULKER_BOX", "LIME_SHULKER_BOX", "PINK_SHULKER_BOX", "GRAY_SHULKER_BOX", "LIGHT_GRAY_SHULKER_BOX", "CYAN_SHULKER_BOX", "PURPLE_SHULKER_BOX", "BLUE_SHULKER_BOX", "BROWN_SHULKER_BOX", "GREEN_SHULKER_BOX", "RED_SHULKER_BOX", "BLACK_SHULKER_BOX", "STRUCTURE_BLOCK");
+            blocks_config.set("under_door_blocks", UNDER_BLOCKS);
+            List<String> MIDDLE_BLOCKS = Arrays.asList("LAPIS_BLOCK", "STONE", "COBBLESTONE", "MOSSY_COBBLESTONE", "DIRT", "OAK_PLANKS", "BIRCH_PLANKS", "SPRUCE_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "OAK_LOG", "BIRCH_LOG", "SPRUCE_LOG", "JUNGLE_LOG", "ACACIA_LOG", "DARK_OAK_LOG", "SANDSTONE", "WHITE_WOOL", "ORANGE_WOOL", "MAGENTA_WOOL", "LIGHT_BLUE_WOOL", "YELLOW_WOOL", "LIME_WOOL", "PINK_WOOL", "GRAY_WOOL", "LIGHT_GRAY_WOOL", "CYAN_WOOL", "PURPLE_WOOL", "BLUE_WOOL", "BROWN_WOOL", "GREEN_WOOL", "RED_WOOL", "BLACK_WOOL", "BRICKS", "NETHERRACK", "SOUL_SAND", "STONE_BRICKS", "BROWN_MUSHROOM_BLOCK", "RED_MUSHROOM_BLOCK", "END_STONE", "QUARTZ_BLOCK", "CLAY", "WHITE_TERRACOTTA", "ORANGE_TERRACOTTA", "MAGENTA_TERRACOTTA", "LIGHT_BLUE_TERRACOTTA", "YELLOW_TERRACOTTA", "LIME_TERRACOTTA", "PINK_TERRACOTTA", "GRAY_TERRACOTTA", "LIGHT_GRAY_TERRACOTTA", "CYAN_TERRACOTTA", "PURPLE_TERRACOTTA", "BLUE_TERRACOTTA", "BROWN_TERRACOTTA", "GREEN_TERRACOTTA", "RED_TERRACOTTA", "BLACK_TERRACOTTA", "HAY_BLOCK", "TERRACOTTA", "PACKED_ICE");
+            blocks_config.set("tardis_blocks", MIDDLE_BLOCKS);
+            blocks_config.set("version", 4);
+            i += 4;
         }
         // add lamp blocks
         if (!blocks_config.contains("lamp_blocks")) {
-            List<String> LAMP_BLOCKS = Arrays.asList("TORCH", "REDSTONE_TORCH_ON", "GLOWSTONE", "JACK_O_LANTERN", "REDSTONE_LAMP_OFF", "SEA_LANTERN");
+            List<String> LAMP_BLOCKS = Arrays.asList("TORCH", "REDSTONE_TORCH", "GLOWSTONE", "JACK_O_LANTERN", "REDSTONE_LAMP", "SEA_LANTERN");
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
-        } else if (blocks_config.getStringList("lamp_blocks").get(0).equals("50")) {
-            List<String> lstrs = new ArrayList<>();
-            blocks_config.getIntegerList("lamp_blocks").forEach((l) -> {
-                try {
-                    lstrs.add(Material.getMaterial(l).toString());
-                } catch (Exception e) {
-                    plugin.debug("Invalid Material ID in lamp_blocks section.");
-                }
-            });
-            blocks_config.set("lamp_blocks", lstrs);
-            i++;
-        }
-        if (!blocks_config.contains("under_door_blocks")) {
-            List<Integer> UNDER_BLOCKS = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171);
-            blocks_config.set("under_door_blocks", UNDER_BLOCKS);
-            i++;
-        } else {
-            List<Integer> udblocs = blocks_config.getIntegerList("under_door_blocks");
-            if (!udblocs.contains(161)) {
-                udblocs.add(161);
-                blocks_config.set("under_door_blocks", udblocs);
-                i++;
-            }
-            if (!udblocs.contains(171)) {
-                udblocs.add(171);
-                blocks_config.set("under_door_blocks", udblocs);
-                i++;
-            }
-            if (!udblocs.contains(208)) {
-                udblocs.add(208);
-                blocks_config.set("under_door_blocks", udblocs);
-                i++;
-            }
-            if (!udblocs.contains(219)) {
-                for (int s = 219; s < 235; s++) {
-                    udblocs.add(s);
-                }
-                blocks_config.set("under_door_blocks", udblocs);
-                i++;
-            }
         }
         if (!blocks_config.contains("no_artron_value")) {
             blocks_config.set("no_artron_value", new ArrayList<>());

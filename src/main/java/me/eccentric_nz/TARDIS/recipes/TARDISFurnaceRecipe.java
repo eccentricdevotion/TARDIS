@@ -41,14 +41,9 @@ public class TARDISFurnaceRecipe {
          lore: "Done to a crisp"
          */
         ItemStack is;
-        String[] result = plugin.getRecipesConfig().getString("furnace." + s + ".result").split(":");
-        Material result_m = Material.valueOf(result[0]);
-        if (result.length == 2) {
-            short result_data = Short.parseShort(result[1]);
-            is = new ItemStack(result_m, 1, result_data);
-        } else {
-            is = new ItemStack(result_m, 1);
-        }
+        String result = plugin.getRecipesConfig().getString("furnace." + s + ".result");
+        Material result_m = Material.valueOf(result);
+        is = new ItemStack(result_m, 1);
         ItemMeta im = is.getItemMeta();
         boolean set_meta = false;
         if (plugin.getRecipesConfig().getBoolean("furnace." + s + ".displayname")) {
@@ -66,15 +61,9 @@ public class TARDISFurnaceRecipe {
         if (set_meta) {
             is.setItemMeta(im);
         }
-        String[] ingredient = plugin.getRecipesConfig().getString("furnace." + s + ".recipe").split(":");
-        int recipe_id = Integer.parseInt(ingredient[0]);
-        Material recipe_m = Material.getMaterial(recipe_id);
-        if (ingredient.length == 2) {
-            int recipe_data = Integer.parseInt(ingredient[1]);
-            f = new FurnaceRecipe(is, recipe_m, recipe_data);
-        } else {
-            f = new FurnaceRecipe(is, recipe_m);
-        }
+        String ingredient = plugin.getRecipesConfig().getString("furnace." + s + ".recipe");
+        Material recipe_m = Material.valueOf(ingredient);
+        f = new FurnaceRecipe(is, recipe_m);
         return f;
     }
 }

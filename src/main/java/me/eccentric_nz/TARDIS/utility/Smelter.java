@@ -67,28 +67,54 @@ public class Smelter {
 
     public static boolean isSmeltable(Material material) {
         switch (material) {
+            case ACACIA_BARK:
+            case ACACIA_LOG:
+            case BEEF:
+            case BIRCH_BARK:
+            case BIRCH_LOG:
+            case BLACK_TERRACOTTA:
+            case BLUE_TERRACOTTA:
+            case BROWN_TERRACOTTA:
             case CACTUS:
+            case CHICKEN:
             case CHORUS_FRUIT:
             case CLAY:
             case CLAY_BALL:
             case COBBLESTONE:
+            case COD:
+            case CYAN_TERRACOTTA:
+            case DARK_OAK_BARK:
+            case DARK_OAK_LOG:
             case GOLD_ORE:
+            case GRAY_TERRACOTTA:
+            case GREEN_TERRACOTTA:
             case IRON_ORE:
-            case LOG:
-            case LOG_2:
+            case JUNGLE_BARK:
+            case JUNGLE_LOG:
+            case LIGHT_BLUE_TERRACOTTA:
+            case LIGHT_GRAY_TERRACOTTA:
+            case LIME_TERRACOTTA:
+            case MAGENTA_TERRACOTTA:
             case MUTTON:
             case NETHERRACK:
-            case PORK:
-            case POTATO_ITEM:
+            case OAK_BARK:
+            case OAK_LOG:
+            case ORANGE_TERRACOTTA:
+            case PINK_TERRACOTTA:
+            case PORKCHOP:
+            case POTATO:
+            case PURPLE_TERRACOTTA:
             case RABBIT:
-            case RAW_BEEF:
-            case RAW_CHICKEN:
-            case RAW_FISH:
+            case RED_TERRACOTTA:
+            case SALMON:
             case SAND:
-            case SMOOTH_BRICK:
             case SPONGE:
-            // available in minecraft 1.12
-            case STAINED_CLAY:
+            case SPRUCE_BARK:
+            case SPRUCE_LOG:
+            case STONE_BRICKS:
+            case WET_SPONGE:
+            case WHITE_TERRACOTTA:
+            case YELLOW_TERRACOTTA:
                 return true;
             default:
                 return false;
@@ -97,72 +123,169 @@ public class Smelter {
 
     public static boolean isFuel(Material material) {
         switch (material) {
+            case ACACIA_BARK:
+            case ACACIA_BOAT:
+            case ACACIA_BUTTON:
+            case ACACIA_DOOR:
             case ACACIA_FENCE:
             case ACACIA_FENCE_GATE:
+            case ACACIA_PLANKS:
+            case ACACIA_PRESSURE_PLATE:
+            case ACACIA_SAPLING:
+            case ACACIA_SLAB:
             case ACACIA_STAIRS:
-            case BANNER:
+            case ACACIA_TRAPDOOR:
+            case BIRCH_BARK:
+            case BIRCH_BOAT:
+            case BIRCH_BUTTON:
+            case BIRCH_DOOR:
             case BIRCH_FENCE:
             case BIRCH_FENCE_GATE:
-            case BIRCH_WOOD_STAIRS:
+            case BIRCH_PLANKS:
+            case BIRCH_PRESSURE_PLATE:
+            case BIRCH_SAPLING:
+            case BIRCH_SLAB:
+            case BIRCH_STAIRS:
+            case BIRCH_TRAPDOOR:
+            case BLACK_BANNER:
+            case BLACK_CARPET:
+            case BLACK_WALL_BANNER:
+            case BLACK_WOOL:
             case BLAZE_ROD:
+            case BLUE_BANNER:
+            case BLUE_CARPET:
+            case BLUE_WALL_BANNER:
+            case BLUE_WOOL:
             case BOOKSHELF:
+            case BOW:
+            case BOWL:
+            case BROWN_BANNER:
+            case BROWN_CARPET:
+            case BROWN_MUSHROOM_BLOCK:
+            case BROWN_WALL_BANNER:
+            case BROWN_WOOL:
+            case CHARCOAL:
             case CHEST:
             case COAL:
             case COAL_BLOCK:
+            case CRAFTING_TABLE:
+            case CYAN_BANNER:
+            case CYAN_CARPET:
+            case CYAN_WALL_BANNER:
+            case CYAN_WOOL:
+            case DARK_OAK_BARK:
+            case DARK_OAK_BOAT:
+            case DARK_OAK_BUTTON:
+            case DARK_OAK_DOOR:
             case DARK_OAK_FENCE:
             case DARK_OAK_FENCE_GATE:
+            case DARK_OAK_PLANKS:
+            case DARK_OAK_PRESSURE_PLATE:
+            case DARK_OAK_SAPLING:
+            case DARK_OAK_SLAB:
             case DARK_OAK_STAIRS:
+            case DARK_OAK_TRAPDOOR:
             case DAYLIGHT_DETECTOR:
-            case DAYLIGHT_DETECTOR_INVERTED:
-            case FENCE:
-            case FENCE_GATE:
-            case HUGE_MUSHROOM_1:
-            case HUGE_MUSHROOM_2:
+            case FISHING_ROD:
+            case GRAY_BANNER:
+            case GRAY_CARPET:
+            case GRAY_WALL_BANNER:
+            case GRAY_WOOL:
+            case GREEN_BANNER:
+            case GREEN_CARPET:
+            case GREEN_WALL_BANNER:
+            case GREEN_WOOL:
             case JUKEBOX:
+            case JUNGLE_BARK:
+            case JUNGLE_BOAT:
+            case JUNGLE_BUTTON:
+            case JUNGLE_DOOR:
             case JUNGLE_FENCE:
             case JUNGLE_FENCE_GATE:
-            case JUNGLE_WOOD_STAIRS:
+            case JUNGLE_PLANKS:
+            case JUNGLE_PRESSURE_PLATE:
+            case JUNGLE_SAPLING:
+            case JUNGLE_SLAB:
+            case JUNGLE_STAIRS:
+            case JUNGLE_TRAPDOOR:
+            case LADDER:
             case LAVA_BUCKET:
+            case LIGHT_BLUE_BANNER:
+            case LIGHT_BLUE_CARPET:
+            case LIGHT_BLUE_WALL_BANNER:
+            case LIGHT_BLUE_WOOL:
+            case LIGHT_GRAY_BANNER:
+            case LIGHT_GRAY_CARPET:
+            case LIGHT_GRAY_WALL_BANNER:
+            case LIGHT_GRAY_WOOL:
+            case LIME_BANNER:
+            case LIME_CARPET:
+            case LIME_WALL_BANNER:
+            case LIME_WOOL:
+            case MAGENTA_BANNER:
+            case MAGENTA_CARPET:
+            case MAGENTA_WALL_BANNER:
+            case MAGENTA_WOOL:
+            case MUSHROOM_STEM:
             case NOTE_BLOCK:
-            case SAPLING:
+            case OAK_BARK:
+            case OAK_BOAT:
+            case OAK_BUTTON:
+            case OAK_DOOR:
+            case OAK_FENCE:
+            case OAK_FENCE_GATE:
+            case OAK_PLANKS:
+            case OAK_PRESSURE_PLATE:
+            case OAK_SAPLING:
+            case OAK_SLAB:
+            case OAK_STAIRS:
+            case OAK_TRAPDOOR:
+            case ORANGE_BANNER:
+            case ORANGE_CARPET:
+            case ORANGE_WALL_BANNER:
+            case ORANGE_WOOL:
+            case PINK_BANNER:
+            case PINK_CARPET:
+            case PINK_WALL_BANNER:
+            case PINK_WOOL:
+            case PURPLE_BANNER:
+            case PURPLE_CARPET:
+            case PURPLE_WALL_BANNER:
+            case PURPLE_WOOL:
+            case RED_BANNER:
+            case RED_CARPET:
+            case RED_MUSHROOM_BLOCK:
+            case RED_WALL_BANNER:
+            case RED_WOOL:
+            case SIGN:
+            case SPRUCE_BARK:
+            case SPRUCE_BOAT:
+            case SPRUCE_BUTTON:
+            case SPRUCE_DOOR:
             case SPRUCE_FENCE:
             case SPRUCE_FENCE_GATE:
-            case SPRUCE_WOOD_STAIRS:
+            case SPRUCE_PLANKS:
+            case SPRUCE_PRESSURE_PLATE:
+            case SPRUCE_SAPLING:
+            case SPRUCE_SLAB:
+            case SPRUCE_STAIRS:
+            case SPRUCE_TRAPDOOR:
             case STICK:
             case TRAPPED_CHEST:
-            case TRAP_DOOR:
-            case WOOD:
-            case WOOD_AXE:
-            case WOOD_DOUBLE_STEP:
-            case WOOD_HOE:
-            case WOOD_PICKAXE:
-            case WOOD_PLATE:
-            case WOOD_SPADE:
-            case WOOD_STAIRS:
-            case WOOD_STEP:
-            case WOOD_SWORD:
-            case WORKBENCH:
-            // available in Minecraft 1.11.x
-            case ACACIA_DOOR_ITEM:
-            case BIRCH_DOOR_ITEM:
-            case BOAT:
-            case BOAT_ACACIA:
-            case BOAT_BIRCH:
-            case BOAT_DARK_OAK:
-            case BOAT_JUNGLE:
-            case BOAT_SPRUCE:
-            case BOW:
-            case BOWL:
-            case CARPET:
-            case DARK_OAK_DOOR_ITEM:
-            case FISHING_ROD:
-            case JUNGLE_DOOR_ITEM:
-            case LADDER:
-            case SIGN:
-            case SPRUCE_DOOR_ITEM:
-            case WOOD_BUTTON:
-            case WOOD_DOOR:
-            case WOOL:
+            case WALL_SIGN:
+            case WHITE_BANNER:
+            case WHITE_CARPET:
+            case WHITE_WALL_BANNER:
+            case WHITE_WOOL:
+            case WOODEN_AXE:
+            case WOODEN_HOE:
+            case WOODEN_PICKAXE:
+            case WOODEN_SHOVEL:
+            case WOODEN_SWORD:
+            case YELLOW_BANNER:
+            case YELLOW_CARPET:
+            case YELLOW_WALL_BANNER:
+            case YELLOW_WOOL:
                 return true;
             default:
                 return false;

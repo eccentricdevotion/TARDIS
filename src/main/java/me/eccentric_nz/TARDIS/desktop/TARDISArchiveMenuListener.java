@@ -119,8 +119,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             if (tud.getLevel() >= upgrade) {
                                 new ArchiveUpdate(plugin, uuid.toString(), im.getDisplayName()).setInUse();
                                 tud.setSchematic(CONSOLES.SCHEMATICFor(size));
-                                tud.setWall("WOOL:1");
-                                tud.setFloor("WOOL:8");
+                                tud.setWall("ORANGE_WOOL");
+                                tud.setFloor("LIGHT_GRAY_WOOL");
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                                     // process upgrade
@@ -157,8 +157,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             if (tud.getLevel() >= upgrade) {
                                 new ArchiveUpdate(plugin, uuid.toString(), im.getDisplayName()).setInUse();
                                 tud.setSchematic(schm);
-                                tud.setWall("WOOL:1");
-                                tud.setFloor("WOOL:8");
+                                tud.setWall("ORANGE_WOOL");
+                                tud.setFloor("LIGHT_GRAY_WOOL");
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                                     // process upgrade

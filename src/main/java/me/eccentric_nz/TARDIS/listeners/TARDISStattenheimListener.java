@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -75,19 +76,13 @@ public class TARDISStattenheimListener implements Listener {
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
         // add useless blocks
-        useless.add(Material.BROWN_MUSHROOM);
-        useless.add(Material.CARPET);
-        useless.add(Material.DEAD_BUSH);
-        useless.add(Material.LONG_GRASS);
-        useless.add(Material.RED_MUSHROOM);
-        useless.add(Material.RED_ROSE);
-        useless.add(Material.SAPLING);
         useless.add(Material.SNOW);
-        useless.add(Material.YELLOW_FLOWER);
+        useless.addAll(TARDISMaterials.carpet);
+        useless.addAll(TARDISMaterials.plants);
+        useless.addAll(TARDISMaterials.saplings);
         remote = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.result"));
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onStattenheimInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -196,7 +191,7 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                         int count;
                         boolean sub = false;
-                        if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.STATIONARY_WATER)) {
+                        if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.FLOWING_WATER)) {
                             count = (tt.isSafeSubmarine(remoteLocation, player_d)) ? 0 : 1;
                             if (count == 0) {
                                 sub = true;

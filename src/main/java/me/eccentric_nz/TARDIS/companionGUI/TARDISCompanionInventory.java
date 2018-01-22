@@ -47,7 +47,7 @@ public class TARDISCompanionInventory {
         for (String c : companionData) {
             if (!c.isEmpty() && i < 45) {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(UUID.fromString(c));
-                ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                 SkullMeta skull = (SkullMeta) head.getItemMeta();
                 skull.setOwner(op.getName());
                 skull.setDisplayName(op.getName());

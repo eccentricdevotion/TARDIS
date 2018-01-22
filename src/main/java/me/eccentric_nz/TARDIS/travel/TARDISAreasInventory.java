@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.data.Area;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -50,7 +51,6 @@ public class TARDISAreasInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         List<ItemStack> areas = new ArrayList<>();
         // saved destinations
@@ -83,7 +83,7 @@ public class TARDISAreasInventory {
             }
         }
         // add button to load TARDIS areas
-        ItemStack map = new ItemStack(358, 1);
+        ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
         switchto.setDisplayName("Load TARDIS saves");
         map.setItemMeta(switchto);

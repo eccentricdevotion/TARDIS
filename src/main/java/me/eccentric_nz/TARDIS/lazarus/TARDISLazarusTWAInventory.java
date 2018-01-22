@@ -54,7 +54,7 @@ public class TARDISLazarusTWAInventory {
         int i = 0;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.checkTWA()) {
-            ItemStack weep = new ItemStack(Material.CLAY_BRICK, 1);
+            ItemStack weep = new ItemStack(Material.BRICK, 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("WEEPING ANGEL");
             weep.setItemMeta(ing);
@@ -66,7 +66,7 @@ public class TARDISLazarusTWAInventory {
             cyber.setItemMeta(men);
             eggs[i] = cyber;
             i++;
-            ItemStack ice = new ItemStack(Material.SNOW_BALL, 1);
+            ItemStack ice = new ItemStack(Material.SNOWBALL, 1);
             ItemMeta war = ice.getItemMeta();
             war.setDisplayName("ICE WARRIOR");
             ice.setItemMeta(war);
@@ -84,7 +84,7 @@ public class TARDISLazarusTWAInventory {
             sil.setItemMeta(uri);
             eggs[i] = sil;
             i++;
-            ItemStack son = new ItemStack(Material.POTATO_ITEM, 1);
+            ItemStack son = new ItemStack(Material.POTATO, 1);
             ItemMeta tar = son.getItemMeta();
             tar.setDisplayName("SONTARAN");
             son.setItemMeta(tar);
@@ -109,7 +109,7 @@ public class TARDISLazarusTWAInventory {
             eggs[i] = zyg;
         }
         // add options
-        ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
+        ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Arrays.asList(plugin.getLanguage().getString("SET_OFF")));
@@ -121,13 +121,13 @@ public class TARDISLazarusTWAInventory {
         baby.setLore(Arrays.asList("ADULT"));
         adult.setItemMeta(baby);
         eggs[47] = adult;
-        ItemStack typ = new ItemStack(Material.INK_SACK, 1, (byte) 6);
+        ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Arrays.asList("WHITE"));
         typ.setItemMeta(col);
         eggs[48] = typ;
-        ItemStack tamed = new ItemStack(Material.LEASH, 1);
+        ItemStack tamed = new ItemStack(Material.LEAD, 1);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         tf.setLore(Arrays.asList("FALSE"));
@@ -140,7 +140,7 @@ public class TARDISLazarusTWAInventory {
         rem.setItemMeta(ove);
         eggs[51] = rem;
         // set
-        ItemStack s = new ItemStack(Material.BOOK_AND_QUILL, 1);
+        ItemStack s = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
         s.setItemMeta(sim);

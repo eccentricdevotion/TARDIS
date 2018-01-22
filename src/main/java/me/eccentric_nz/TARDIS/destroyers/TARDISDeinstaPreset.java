@@ -32,6 +32,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.MultipleFacing;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -58,7 +59,6 @@ public class TARDISDeinstaPreset {
      * Box blocks.
      * @param preset the preset to destroy
      */
-    @SuppressWarnings("deprecation")
     public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
         Location l = dd.getLocation();
         COMPASS d = dd.getDirection();
@@ -117,7 +117,7 @@ public class TARDISDeinstaPreset {
                         flowerz = l.getBlockZ();
                         break;
                 }
-                TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
                 break;
             case DUCK:
                 plugin.getPresetDestroyer().destroyDuckEyes(l, d);
@@ -175,7 +175,7 @@ public class TARDISDeinstaPreset {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
         if (rsb.resultSet()) {
             rsb.getData().forEach((rb) -> {
-                TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlock(), rb.getData());
+                TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
             });
         }
         // if just hiding don't remove block protection
@@ -184,8 +184,12 @@ public class TARDISDeinstaPreset {
         }
         if (dd.isSiege()) {
             Block siege = dd.getLocation().getBlock();
-            siege.setType(Material.HUGE_MUSHROOM_1);
-            siege.setData((byte) 14, true);
+            siege.setType(Material.BROWN_MUSHROOM_BLOCK);
+            MultipleFacing mf = (MultipleFacing) siege.getBlockData();
+            mf.getAllowedFaces().forEach((face) -> {
+                mf.setFace(face, true);
+            });
+            siege.setData(mf);
         }
         // refresh chunk
         plugin.getTardisHelper().refreshChunk(chunk);

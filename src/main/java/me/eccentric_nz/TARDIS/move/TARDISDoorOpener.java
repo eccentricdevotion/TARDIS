@@ -70,7 +70,7 @@ public class TARDISDoorOpener {
      * Open the door.
      *
      */
-    @SuppressWarnings("deprecation")
+    
     private void open(Block block, Block other, boolean add, COMPASS dd) {
         if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             byte door_data = block.getData();

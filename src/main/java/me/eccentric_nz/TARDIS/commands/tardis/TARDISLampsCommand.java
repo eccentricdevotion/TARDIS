@@ -58,7 +58,7 @@ public class TARDISLampsCommand {
      * @param owner the Timelord of the TARDIS
      * @return true if the TARDIS has not been updated, otherwise false
      */
-    @SuppressWarnings("deprecation")
+    
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
@@ -89,7 +89,7 @@ public class TARDISLampsCommand {
             if (rsc.resultSet()) {
                 int starty, endy;
                 SCHEMATIC schm = tardis.getSchematic();
-                Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // player preference
                 HashMap<String, Object> wherepp = new HashMap<>();
                 wherepp.put("uuid", owner.getUniqueId().toString());

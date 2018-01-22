@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -114,11 +113,9 @@ public class TARDISThemeProcessor {
             }
         }
         // update player prefs
-        String wall_pref = new TARDISWallsLookup(plugin).wall_lookup.get(tud.getWall());
-        String floor_pref = new TARDISWallsLookup(plugin).wall_lookup.get(tud.getFloor());
         HashMap<String, Object> setp = new HashMap<>();
-        setp.put("wall", wall_pref);
-        setp.put("floor", floor_pref);
+        setp.put("wall", tud.getWall());
+        setp.put("floor", tud.getFloor());
         setp.put("lanterns_on", (tud.getSchematic().hasLanterns()) ? 1 : 0);
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
@@ -176,18 +173,18 @@ public class TARDISThemeProcessor {
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             String json = rs.getJson();
-            int[][][] grid = TARDISARSMethods.getGridFromJSON(json);
+            String[][][] grid = TARDISARSMethods.getGridFromJSON(json);
             if (prev.getConsoleSize().equals(ConsoleSize.SMALL) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.SMALL))) {
                 if (next.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
-                    return (grid[1][4][5] != 1 || grid[1][5][4] != 1 || grid[1][5][5] != 1);
+                    return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE"));
                 } else if (next.getConsoleSize().equals(ConsoleSize.TALL) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.TALL))) {
-                    return (grid[1][4][5] != 1 || grid[1][5][4] != 1 || grid[1][5][5] != 1 || grid[2][4][4] != 1 || grid[2][4][5] != 1 || grid[2][5][4] != 1 || grid[2][5][5] != 1);
+                    return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
                 } else {
                     return false;
                 }
             } else if (prev.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_prev != null && archive_next.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
                 if (next.getConsoleSize().equals(ConsoleSize.TALL) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.TALL))) {
-                    return (grid[2][4][4] != 1 || grid[2][4][5] != 1 || grid[2][5][4] != 1 || grid[2][5][5] != 1);
+                    return (!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
                 } else {
                     return false;
                 }

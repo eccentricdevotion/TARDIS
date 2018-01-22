@@ -264,11 +264,11 @@ public class TARDISMonsterRunnable implements Runnable {
             if (rsa.resultSet()) {
                 int l = 0, r = 0, c = 0;
                 // check there is a pool
-                int[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
-                for (int[][] level : json) {
-                    for (int[] row : level) {
-                        for (int col : row) {
-                            if (col == 80) {
+                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                for (String[][] level : json) {
+                    for (String[] row : level) {
+                        for (String col : row) {
+                            if (col.equals("SNOW_BLOCK")) {
                                 // need to get the console location - will be different for non-TIPS TARDISes
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", tpl.getTardisId());

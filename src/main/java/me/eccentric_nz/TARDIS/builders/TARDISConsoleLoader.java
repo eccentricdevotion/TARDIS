@@ -58,7 +58,7 @@ public class TARDISConsoleLoader {
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         CONSOLES.getBY_NAMES().put("ENDER", new SCHEMATIC("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, true, false));
         // MASTER's schematic designed by ShadowAssociate
-        CONSOLES.getBY_NAMES().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("MASTER", new SCHEMATIC("NETHER_BRICKS", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
         CONSOLES.getBY_NAMES().put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
@@ -66,7 +66,7 @@ public class TARDISConsoleLoader {
         CONSOLES.getBY_NAMES().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, false, false));
         CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
-        CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("WHITE_TERRACOTTA", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));
         // cobblestone templates
         CONSOLES.getBY_NAMES().put("SMALL", new SCHEMATIC("COBBLESTONE", "small", "16x16x16 cobblestone template", ConsoleSize.SMALL, false, true, false));
         CONSOLES.getBY_NAMES().put("MEDIUM", new SCHEMATIC("COBBLESTONE", "medium", "32x16x32 cobblestone template", ConsoleSize.MEDIUM, false, true, false));
@@ -74,7 +74,7 @@ public class TARDISConsoleLoader {
         // legacy consoles
         if (plugin.getConfig().getBoolean("creation.enable_legacy")) {
             CONSOLES.getBY_NAMES().put("LEGACY_BIGGER", new SCHEMATIC("ORANGE_GLAZED_TERRACOTTA", "legacy_bigger", "The original Bigger Console", ConsoleSize.MEDIUM, true, false, false));
-            CONSOLES.getBY_NAMES().put("LEGACY_BUDGET", new SCHEMATIC("SILVER_GLAZED_TERRACOTTA", "legacy_budget", "The original Default Console", ConsoleSize.SMALL, true, false, false));
+            CONSOLES.getBY_NAMES().put("LEGACY_BUDGET", new SCHEMATIC("LIGHT_GRAY_GLAZED_TERRACOTTA", "legacy_budget", "The original Default Console", ConsoleSize.SMALL, true, false, false));
             CONSOLES.getBY_NAMES().put("LEGACY_DELUXE", new SCHEMATIC("LIME_GLAZED_TERRACOTTA", "legacy_deluxe", "The original Deluxe Console", ConsoleSize.TALL, true, false, false));
             CONSOLES.getBY_NAMES().put("LEGACY_ELEVENTH", new SCHEMATIC("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "The original 11th Doctor's Console", ConsoleSize.TALL, true, true, false));
             CONSOLES.getBY_NAMES().put("LEGACY_REDSTONE", new SCHEMATIC("RED_GLAZED_TERRACOTTA", "legacy_redstone", "The original Redstone Console", ConsoleSize.TALL, true, false, false));

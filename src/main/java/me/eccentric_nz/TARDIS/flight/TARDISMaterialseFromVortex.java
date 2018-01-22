@@ -297,6 +297,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
         while (!b.getType().equals(Material.BEACON) && b.getLocation().getBlockY() > 0) {
             b = b.getRelative(BlockFace.DOWN);
         }
-        TARDISBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.STAINED_GLASS, (byte) 14, id, 2);
+        TARDISBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.RED_STAINED_GLASS, id, 2);
     }
 }

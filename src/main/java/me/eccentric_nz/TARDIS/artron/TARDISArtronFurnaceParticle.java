@@ -16,7 +16,6 @@ public class TARDISArtronFurnaceParticle {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public void addParticles() {
 
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
@@ -40,7 +39,7 @@ public class TARDISArtronFurnaceParticle {
 
     private boolean isArtronFurnace(Block b) {
         try {
-            if (b == null || (!b.getType().equals(Material.BURNING_FURNACE) && !b.getType().equals(Material.FURNACE))) {
+            if (b == null || !b.getType().equals(Material.FURNACE)) {
                 return false;
             }
             Furnace furnace = (Furnace) b.getState();

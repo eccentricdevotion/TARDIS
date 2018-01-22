@@ -233,14 +233,14 @@ WaterLevelMax: 40
 WaterLevelMin: 0
 
 # Block used as water in WaterLevelMax
-WaterBlock: STATIONARY_WATER
+WaterBlock: FLOWING_WATER
 
 # Block used as ice. Ice only spawns if the BiomeTemperture is low enough.
 IceBlock: ICE
 
 # Block used as cooled or frozen lava.
 # Set this to OBSIDIAN for "frozen" lava lakes in cold biomes
-CooledLavaBlock: STATIONARY_LAVA
+CooledLavaBlock: FLOWING_LAVA
 
 
 #######################################################################
@@ -360,10 +360,10 @@ Ore(DIAMOND_ORE,8,1,100.0,0,128,STONE)
 Ore(LAPIS_ORE,7,1,100.0,0,128,STONE)
 Ore(GLOWSTONE,18,18,100.0,112,118,AIR,STONE)
 UnderGroundLake(25,60,5,5.0,0,128)
-Liquid(STATIONARY_WATER,20,100.0,8,128,STONE)
-Liquid(STATIONARY_LAVA,10,100.0,8,128,STONE)
-SmallLake(STATIONARY_WATER,4,7.0,8,128)
-SmallLake(STATIONARY_LAVA,2,3.0,8,120)
+Liquid(FLOWING_WATER,20,100.0,8,128,STONE)
+Liquid(FLOWING_LAVA,10,100.0,8,128,STONE)
+SmallLake(FLOWING_WATER,4,7.0,8,128)
+SmallLake(FLOWING_LAVA,2,3.0,8,120)
 UnderWaterOre(SAND,7,3,100.0,DIRT,GRASS)
 UnderWaterOre(CLAY,4,1,100.0,DIRT,CLAY)
 UnderWaterOre(GRAVEL,6,1,100.0,DIRT,GRASS)

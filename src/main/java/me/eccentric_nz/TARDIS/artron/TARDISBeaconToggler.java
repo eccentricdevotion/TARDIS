@@ -88,8 +88,8 @@ public class TARDISBeaconToggler {
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setSchematic(schm);
         tud.setPrevious(schm);
-        tud.setWall("WOOL:1");
-        tud.setFloor("WOOL:8");
+        tud.setWall("ORANGE_WOOL");
+        tud.setFloor("LIGHT_GRAY_WOOL");
         TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
         TARDISBlockScannerData check = scanner.check();
         if (!check.getBeacon().isEmpty()) {

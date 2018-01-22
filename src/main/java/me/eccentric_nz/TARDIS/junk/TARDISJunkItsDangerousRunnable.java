@@ -40,7 +40,7 @@ public class TARDISJunkItsDangerousRunnable implements Runnable {
     @Override
     public void run() {
         if (c % 5 < 3) {
-            t.setType(Material.REDSTONE_TORCH_OFF);
+            t.setType(Material.REDSTONE_TORCH);
         }
         // check if player is in Junk TARDIS effects zone
         List<UUID> remove = new ArrayList<>();

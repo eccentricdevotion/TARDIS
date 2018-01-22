@@ -54,7 +54,7 @@ public class TARDISRemoteComehereCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean doRemoteComeHere(Player player, UUID uuid) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
@@ -117,7 +117,7 @@ public class TARDISRemoteComehereCommand {
         int count;
         boolean sub = false;
         Block b = eyeLocation.getBlock();
-        if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.STATIONARY_WATER)) {
+        if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.FLOWING_WATER)) {
             count = (tt.isSafeSubmarine(eyeLocation, player_d)) ? 0 : 1;
             if (count == 0) {
                 sub = true;

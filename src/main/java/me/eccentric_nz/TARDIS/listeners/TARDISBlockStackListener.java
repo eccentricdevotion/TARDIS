@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
@@ -35,7 +34,6 @@ import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
@@ -95,16 +93,14 @@ public class TARDISBlockStackListener implements Listener {
      *
      * @param event a player placing a block
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         // only listen for redstone torches
-        if (block.getType() == Material.REDSTONE_TORCH_ON) {
+        if (block.getType() == Material.REDSTONE_TORCH) {
             Player player = event.getPlayer();
             Block blockBelow = block.getRelative(BlockFace.DOWN);
             Material wall_type = blockBelow.getType();
-            byte wall_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
@@ -215,13 +211,13 @@ public class TARDISBlockStackListener implements Listener {
                         HashMap<String, Object> setpp = new HashMap<>();
                         if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
-                                setpp.put("wall", "LIGHT_GREY_WOOL");
+                                setpp.put("wall", "LIGHT_GRAY_WOOL");
                             } else {
                                 setpp.put("wall", "ORANGE_WOOL");
                             }
                         } else {
                             // determine wall block material from HashMap
-                            setpp.put("wall", getWallKey(wall_type, wall_data));
+                            setpp.put("wall", wall_type.toString());
                         }
                         setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                         final int lastInsertId = qf.doSyncInsert("tardis", set);
@@ -262,7 +258,7 @@ public class TARDISBlockStackListener implements Listener {
                         bd.setTardisID(lastInsertId);
                         plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, block_loc));
                         plugin.getPresetBuilder().buildPreset(bd);
-                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, Material.WOOL, (byte) 8, tips);
+                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, Material.LIGHT_GRAY_WOOL, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
                             HashMap<String, Object> seta = new HashMap<>();
@@ -307,19 +303,9 @@ public class TARDISBlockStackListener implements Listener {
         }
     }
 
-    private String getWallKey(Material i, byte d) {
-        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            Pair value = entry.getValue();
-            if (value.getType().equals(i) && value.getData() == d) {
-                return entry.getKey();
-            }
-        }
-        return "ORANGE_WOOL";
-    }
-
     private boolean isSub(Block b) {
         switch (b.getRelative(BlockFace.EAST).getType()) {
-            case STATIONARY_WATER:
+            case FLOWING_WATER:
             case WATER:
                 return true;
             default:

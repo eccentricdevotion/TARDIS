@@ -60,7 +60,7 @@ public class TARDISKeyboardListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
-        if (block.getType() != Material.WALL_SIGN && block.getType() != Material.SIGN_POST) {
+        if (block.getType() != Material.WALL_SIGN && block.getType() != Material.SIGN) {
             return;
         }
         Block against = event.getBlockAgainst();

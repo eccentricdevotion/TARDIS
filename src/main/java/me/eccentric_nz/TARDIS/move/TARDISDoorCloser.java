@@ -67,7 +67,7 @@ public class TARDISDoorCloser {
      * @param remove whether to clear the
      * @param dd the door direction
      */
-    @SuppressWarnings("deprecation")
+    
     private void close(Block block, Location inportal, COMPASS dd) {
         if (block != null && plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             byte door_data = block.getData();

@@ -41,7 +41,7 @@ public class TARDISLazarusRunnable implements Runnable {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
+    
     public void run() {
         if (i < LOOPS) {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {

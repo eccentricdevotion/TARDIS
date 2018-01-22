@@ -66,8 +66,7 @@ public class TARDISPresetDestroyerFactory {
                 dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
             }
             if (!demat.equals(PRESET.INVISIBLE)) {
-                int cham_id = 159;
-                byte cham_data = 8;
+                Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
                 if ((tardis.getAdaption().equals(ADAPTION.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(ADAPTION.BLOCK)) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
@@ -78,9 +77,7 @@ public class TARDISPresetDestroyerFactory {
                     }
                     // determine cham_id
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
-                    cham_id = b_data[0];
-                    cham_data = (byte) b_data[1];
+                    cham_id = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
                 }
                 int loops = 18;
                 if (dd.isHide() || dd.isSiege()) {
@@ -98,7 +95,7 @@ public class TARDISPresetDestroyerFactory {
                     runnable.setTask(taskID);
                 } else {
                     plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
-                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, dd, demat, cham_id, cham_data, loops);
+                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, dd, demat, cham_id.createBlockData(), loops);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
@@ -253,9 +250,9 @@ public class TARDISPresetDestroyerFactory {
                 signy = 2;
                 break;
         }
-        TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
         if (p.equals(PRESET.SWAMP)) {
-            TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
         }
     }
 
@@ -284,7 +281,7 @@ public class TARDISPresetDestroyerFactory {
         int tx = l.getBlockX() + lx;
         int ty = l.getBlockY() + 2;
         int tz = l.getBlockZ() + lz;
-        TARDISBlockSetters.setBlock(w, tx, ty, tz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
     }
 
     public void destroyLamp(Location l, PRESET p) {
@@ -295,11 +292,11 @@ public class TARDISPresetDestroyerFactory {
         if (p.equals(PRESET.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
-                    TARDISBlockSetters.setBlock(w, i, ty, j, 0, (byte) 0);
+                    TARDISBlockSetters.setBlock(w, i, ty, j, Material.AIR);
                 }
             }
         } else {
-            TARDISBlockSetters.setBlock(w, tx, ty, tz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
         }
     }
 
@@ -333,8 +330,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
+        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
     }
 
     public void destroyMineshaftTorches(Location l, COMPASS d) {
@@ -356,8 +353,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
+        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
     }
 
     public void destroyLampTrapdoors(Location l, COMPASS d) {

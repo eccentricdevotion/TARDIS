@@ -62,7 +62,7 @@ public class TARDISAreaDisks {
             rsa.getData().forEach((a) -> {
                 String name = a.getAreaName();
                 if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
-                    ItemStack is = new ItemStack(Material.RECORD_3, 1);
+                    ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Area Storage Disk");
                     List<String> lore = new ArrayList<>();
@@ -110,7 +110,7 @@ public class TARDISAreaDisks {
                 // check storage inventory
                 ItemStack[] areas = TARDISSerializeInventory.itemStacksFromString(serilized_areas);
                 for (ItemStack a : areas) {
-                    if (a != null && a.getType().equals(Material.RECORD_3) && a.hasItemMeta()) {
+                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
                         ItemMeta ima = a.getItemMeta();
                         if (ima.hasLore()) {
                             player_has.add(ima.getLore().get(0));
@@ -120,7 +120,7 @@ public class TARDISAreaDisks {
                 // check console inventory
                 ItemStack[] console = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack c : console) {
-                    if (c != null && c.getType().equals(Material.RECORD_3) && c.hasItemMeta()) {
+                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
                         ItemMeta imc = c.getItemMeta();
                         if (imc.hasLore()) {
                             player_has.add(imc.getLore().get(0));
@@ -130,7 +130,7 @@ public class TARDISAreaDisks {
                 // check player inventory
                 ItemStack[] player = p.getInventory().getContents();
                 for (ItemStack y : player) {
-                    if (y != null && y.getType().equals(Material.RECORD_3) && y.hasItemMeta()) {
+                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
                         ItemMeta imy = y.getItemMeta();
                         if (imy.hasLore()) {
                             player_has.add(imy.getLore().get(0));
@@ -149,7 +149,7 @@ public class TARDISAreaDisks {
                             // add new area if there is room
                             int empty = getNextEmptySlot(inv);
                             if (empty != -1) {
-                                ItemStack is = new ItemStack(Material.RECORD_3, 1);
+                                ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                                 ItemMeta im = is.getItemMeta();
                                 im.setDisplayName("Area Storage Disk");
                                 List<String> lore = new ArrayList<>();

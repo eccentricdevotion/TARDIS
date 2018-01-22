@@ -9,7 +9,7 @@ shaped:
         easy_ingredients:
             O: GRAVEL
             I: IRON_INGOT
-            C: 'WOOL:14'
+            C: RED_WOOL
         hard_shape: OIO,ICI,OIO
         hard_ingredients:
             O: OBSIDIAN
@@ -23,7 +23,7 @@ shaped:
         easy_ingredients:
             O: OBSIDIAN
             B: STONE_BUTTON
-            L: 'INK_SACK:4'
+            L: LAPIS_LAZULI
             R: REDSTONE
         hard_shape: OBO,OLO,RRR
         hard_ingredients:
@@ -38,13 +38,13 @@ shaped:
         easy_shape: RCR,-K-,-T-
         easy_ingredients:
             R: REDSTONE
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
             K: GOLD_NUGGET
-            T: REDSTONE_TORCH_ON
+            T: REDSTONE_TORCH
         hard_shape: RCR,-K-,-T-
         hard_ingredients:
             R: REDSTONE
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
             K: GOLD_NUGGET
             T: 'MAP:1964'
         result: GOLD_NUGGET
@@ -56,15 +56,15 @@ shaped:
             R: REDSTONE
             Q: QUARTZ
             I: IRON_INGOT
-            D: DIODE
-            L: 'INK_SACK:4'
+            D: REPEATER
+            L: LAPIS_LAZULI
         hard_shape: RQR,RIR,DRL
         hard_ingredients:
             R: REDSTONE
             Q: QUARTZ
             I: IRON_INGOT
-            D: DIODE
-            L: 'INK_SACK:4'
+            D: REPEATER
+            L: LAPIS_LAZULI
         result: 'MAP:1965'
         amount: 1
         lore: ""
@@ -73,14 +73,14 @@ shaped:
         easy_ingredients:
             I: IRON_INGOT
             R: REDSTONE
-            L: 'INK_SACK:4'
+            L: LAPIS_LAZULI
             Q: QUARTZ
         hard_shape: IDI,DLD,QRQ
         hard_ingredients:
-            I: EYE_OF_ENDER
-            D: DIODE
+            I: ENDER_EYE
+            D: REPEATER
             R: REDSTONE
-            L: 'INK_SACK:4'
+            L: LAPIS_LAZULI
             Q: QUARTZ
         result: 'MAP:1964'
         amount: 1
@@ -109,7 +109,7 @@ shaped:
             R: REDSTONE
         hard_shape: DGD,GEG,RMR
         hard_ingredients:
-            D: DIODE
+            D: REPEATER
             G: GOLD_INGOT
             E: DETECTOR_RAIL
             R: REDSTONE
@@ -120,15 +120,15 @@ shaped:
     TARDIS ARS Circuit:
         easy_shape: SSS,T-T,RRR
         easy_ingredients:
-            S: SEEDS
-            T: REDSTONE_TORCH_ON
+            S: WHEAT_SEEDS
+            T: REDSTONE_TORCH
             R: REDSTONE
         hard_shape: SSS,DPT,RRR
         hard_ingredients:
-            S: SEEDS
-            D: DIODE
-            P: PISTON_BASE
-            T: REDSTONE_TORCH_ON
+            S: WHEAT_SEEDS
+            D: REPEATER
+            P: PISTON
+            T: REDSTONE_TORCH
             R: REDSTONE
         result: 'MAP:1973'
         amount: 1
@@ -138,12 +138,12 @@ shaped:
         easy_ingredients:
             I: IRON_INGOT
             R: REDSTONE
-            W: WATCH
+            W: CLOCK
         hard_shape: -I-,RWR,QIQ
         hard_ingredients:
             I: IRON_INGOT
             R: REDSTONE
-            W: WATCH
+            W: CLOCK
             Q: QUARTZ
         result: 'MAP:1974'
         amount: 1
@@ -151,12 +151,12 @@ shaped:
     TARDIS Memory Circuit:
         easy_shape: -T-,TCT,-T-
         easy_ingredients:
-            T: REDSTONE_TORCH_ON
+            T: REDSTONE_TORCH
             C: CHEST
         hard_shape: RTR,TCT,RTR
         hard_ingredients:
-            R: 'SAND:1'
-            T: REDSTONE_TORCH_ON
+            R: RED_SAND
+            T: REDSTONE_TORCH
             C: TRAPPED_CHEST
         result: 'MAP:1975'
         amount: 1
@@ -176,7 +176,7 @@ shaped:
     TARDIS Scanner Circuit:
         easy_shape: GRG,RGR,GRG
         easy_ingredients:
-            G: THIN_GLASS
+            G: GLASS_PANE
             R: REDSTONE
         hard_shape: GRG,RER,GRG
         hard_ingredients:
@@ -192,14 +192,14 @@ shaped:
             D: DIRT
             N: NETHERRACK
             C: COMPASS
-            E: ENDER_STONE
+            E: END_STONE
             W: WATER_BUCKET
         hard_shape: -D-,NCE,-W-
         hard_ingredients:
             D: DIRT
             N: NETHERRACK
             C: COMPASS
-            E: ENDER_STONE
+            E: END_STONE
             W: WATER_BUCKET
         result: 'MAP:1980'
         amount: 1
@@ -239,7 +239,7 @@ shaped:
             S: STRING
             R: REDSTONE
             G: GOLD_NUGGET
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
         hard_shape: S-S,-S-,RGC
         hard_ingredients:
             S: STRING
@@ -254,18 +254,18 @@ shaped:
         easy_ingredients:
             I: IRON_INGOT
             G: GOLDEN_CARROT
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
             E: FERMENTED_SPIDER_EYE
-            D: DIODE
-            T: REDSTONE_TORCH_ON
+            D: REPEATER
+            T: REDSTONE_TORCH
         hard_shape: IGI,CEC,DTD
         hard_ingredients:
             I: IRON_INGOT
             G: GOLDEN_CARROT
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
             E: FERMENTED_SPIDER_EYE
-            D: DIODE
-            T: REDSTONE_TORCH_ON
+            D: REPEATER
+            T: REDSTONE_TORCH
         result: 'MAP:1978'
         amount: 1
         lore: ""
@@ -276,7 +276,7 @@ shaped:
             G: GOLD_NUGGET
         hard_shape: ---,-C-,-G-
         hard_ingredients:
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
             G: GOLD_NUGGET
         result: GOLD_NUGGET
         amount: 1
@@ -288,7 +288,7 @@ shaped:
         hard_shape: QQQ,Q-Q,QQQ
         hard_ingredients:
             Q: QUARTZ
-        result: RECORD_9
+        result: MUSIC_DISC_STRAD
         amount: 1
         lore: ""
     Sonic Oscillator:
@@ -322,15 +322,15 @@ shaped:
         easy_ingredients:
             G: GOLD_NUGGET
             R: REDSTONE
-            F: FLOWER_POT_ITEM
+            F: FLOWER_POT
             S: BLAZE_ROD
         hard_shape: GRG,-F-,-S-
         hard_ingredients:
             G: GOLD_INGOT
             R: REDSTONE_BLOCK
-            F: FLOWER_POT_ITEM
+            F: FLOWER_POT
             S: BLAZE_ROD
-        result: FLOWER_POT_ITEM
+        result: FLOWER_POT
         amount: 1
         lore: ""
     Server Admin Circuit:
@@ -353,7 +353,7 @@ shaped:
             B: BONE
         hard_shape: -E-,BRB,-E-
         hard_ingredients:
-            R: DIODE
+            R: REPEATER
             E: SPIDER_EYE
             B: BONE
         result: 'MAP:1969'
@@ -363,12 +363,12 @@ shaped:
         easy_shape: RCR,-I-,RCR
         easy_ingredients:
             R: REDSTONE
-            C: REDSTONE_COMPARATOR
+            C: COMPARATOR
             I: IRON_INGOT
         hard_shape: RCR,-I-,RCR
         hard_ingredients:
-            R: DIODE
-            C: REDSTONE_COMPARATOR
+            R: REPEATER
+            C: COMPARATOR
             I: IRON_INGOT
         result: 'MAP:1970'
         amount: 1
@@ -392,11 +392,11 @@ shaped:
         easy_ingredients:
             E: EMERALD
             D: DIRT
-            L: LEAVES
+            L: OAK_LEAVES
         hard_shape: -S-,LEL,-S-
         hard_ingredients:
             E: EMERALD
-            L: LEAVES
+            L: OAK_LEAVES
             S: STONE
         result: 'MAP:1972'
         amount: 1
@@ -404,13 +404,13 @@ shaped:
     Painter Circuit:
         easy_shape: -I-,DGD,-I-
         easy_ingredients:
-            I: 'INK_SACK:0'
-            D: 'INK_SACK:5'
+            I: INK_SAC
+            D: PURPLE_DYE
             G: GOLD_NUGGET
         hard_shape: -I-,DGD,-I-
         hard_ingredients:
-            I: 'INK_SACK:0'
-            D: 'INK_SACK:5'
+            I: INK_SAC
+            D: PURPLE_DYE
             G: GOLD_BLOCK
         result: 'MAP:1979'
         amount: 1
@@ -433,11 +433,11 @@ shaped:
         easy_ingredients:
             B: BUCKET
             R: REDSTONE
-            L: 'STAINED_GLASS:5'
+            L: LIME_STAINED_GLASS
         hard_shape: -B-,LRL,-L-
         hard_ingredients:
             B: BUCKET
-            L: 'STAINED_GLASS:5'
+            L: LIME_STAINED_GLASS
             R: REDSTONE_BLOCK
         result: BUCKET
         amount: 1
@@ -460,11 +460,11 @@ shaped:
         easy_shape: ---,WRW,---
         easy_ingredients:
             W: WHEAT
-            R: 'INK_SACK:1'
+            R: ROSE_RED
         hard_shape: ---,WRW,---
         hard_ingredients:
             W: WHEAT
-            R: 'INK_SACK:1'
+            R: ROSE_RED
         result: COOKIE
         amount: 8
         lore: ""
@@ -472,25 +472,25 @@ shaped:
         easy_shape: -B-,-F-,-B-
         easy_ingredients:
             B: BREAD
-            F: RAW_FISH
+            F: COD
         hard_shape: -B-,-F-,-B-
         hard_ingredients:
             B: BREAD
-            F: RAW_FISH
-        result: COOKED_FISH
+            F: COD
+        result: COOKED_COD
         amount: 3
         lore: "Best eaten with custard!"
     White Bow Tie:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:0
+            W: WHITE_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:0
+            W: WHITE_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -498,13 +498,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:1
+            W: ORANGE_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:1
+            W: ORANGE_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -512,13 +512,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:2
+            W: MAGENTA_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:2
+            W: MAGENTA_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -526,13 +526,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:3
+            W: LIGHT_BLUE_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:3
+            W: LIGHT_BLUE_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -540,13 +540,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:4
+            W: YELLOW_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:4
+            W: YELLOW_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -554,13 +554,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:5
+            W: LIME_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:5
+            W: LIME_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -568,13 +568,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:6
+            W: PINK_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:6
+            W: PINK_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -582,13 +582,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:7
+            W: GRAY_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:7
+            W: GRAY_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -596,13 +596,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:8
+            W: LIGHT_GRAY_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:8
+            W: LIGHT_GRAY_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -610,13 +610,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:9
+            W: CYAN_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:9
+            W: CYAN_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -624,13 +624,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:10
+            W: PURPLE_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:10
+            W: PURPLE_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -638,13 +638,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:11
+            W: BLUE_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:11
+            W: BLUE_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -652,13 +652,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:12
+            W: BROWN_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:12
+            W: BROWN_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -666,13 +666,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:13
+            W: GREEN_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:13
+            W: GREEN_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -680,13 +680,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:14
+            W: RED_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:14
+            W: RED_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -694,13 +694,13 @@ shaped:
         easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL:15
+            W: BLACK_WOOL
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL:15
+            W: BLACK_WOOL
         result: LEATHER_CHESTPLATE
         amount: 1
         lore: Bow ties are cool!
@@ -708,15 +708,15 @@ shaped:
         easy_shape: ---,P-P,CPM
         easy_ingredients:
             P: PAPER
-            C: 'STAINED_GLASS_PANE:9'
-            M: 'STAINED_GLASS_PANE:2'
+            C: CYAN_STAINED_GLASS_PANE
+            M: MAGENTA_STAINED_GLASS_PANE
         hard_shape: R-T,P-P,CPM
         hard_ingredients:
-            R: REDSTONE_COMPARATOR
-            T: REDSTONE_TORCH_ON
+            R: COMPARATOR
+            T: REDSTONE_TORCH
             P: PAPER
-            C: 'STAINED_GLASS_PANE:9'
-            M: 'STAINED_GLASS_PANE:2'
+            C: CYAN_STAINED_GLASS_PANE
+            M: MAGENTA_STAINED_GLASS_PANE
         result: LEATHER_HELMET
         amount: 1
         lore: ""
@@ -724,15 +724,15 @@ shaped:
         easy_shape: -C-,-W-,R-R
         easy_ingredients:
             C: 'MAP:1966'
-            W: WATCH
+            W: CLOCK
             R: REDSTONE
         hard_shape: -C-,IWI,R-R
         hard_ingredients:
             C: 'MAP:1966'
             I: IRON_INGOT
-            W: WATCH
+            W: CLOCK
             R: REDSTONE
-        result: WATCH
+        result: CLOCK
         amount: 1
         lore: ""
     TARDIS Biome Reader:
@@ -763,7 +763,7 @@ shaped:
         hard_ingredients:
             A: WATER_BUCKET
             R: REDSTONE_BLOCK
-        result: NETHER_BRICK_ITEM
+        result: NETHER_BRICK
         amount: 1
         lore: ""
     Rift Circuit:
@@ -781,12 +781,12 @@ shaped:
     Rift Manipulator:
         easy_shape: -A-,ACA,RAR
         easy_ingredients:
-            A: NETHER_BRICK_ITEM
+            A: NETHER_BRICK
             C: 'MAP:1983'
             R: REDSTONE
         hard_shape: -A-,ACA,NAN
         hard_ingredients:
-            A: NETHER_BRICK_ITEM
+            A: NETHER_BRICK
             C: 'MAP:1983'
             N: NETHER_STAR
         result: BEACON
@@ -812,23 +812,23 @@ shaped:
 # -------------------
 shapeless:
     Save Storage Disk:
-        recipe: RECORD_9,REDSTONE
-        result: RECORD_4
+        recipe: MUSIC_DISC_STRAD,REDSTONE
+        result: MUSIC_DISC_CHIRP
         amount: 1
         lore: "Blank"
     Player Storage Disk:
-        recipe: RECORD_9,LAPIS_BLOCK
-        result: RECORD_12
+        recipe: MUSIC_DISC_STRAD,LAPIS_BLOCK
+        result: MUSIC_DISC_WAIT
         amount: 1
         lore: "Blank"
     Biome Storage Disk:
-        recipe: RECORD_9,EMERALD
-        result: GREEN_RECORD
+        recipe: MUSIC_DISC_STRAD,EMERALD
+        result: MUSIC_DISC_CAT
         amount: 1
         lore: "Blank"
     Preset Storage Disk:
-        recipe: 'RECORD_9,MAP:1966'
-        result: RECORD_6
+        recipe: 'MUSIC_DISC_STRAD,MAP:1966'
+        result: MUSIC_DISC_MALL
         amount: 1
         lore: "Blank"
     Admin Upgrade:
@@ -867,87 +867,87 @@ shapeless:
         amount: 1
         lore: ""
     Bowl of Custard:
-        recipe: 'BOWL,MILK_BUCKET,EGG'
+        recipe: BOWL,MILK_BUCKET,EGG
         result: MUSHROOM_SOUP
         amount: 1
         lore: ""
     Vanilla Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:15
+        recipe: SUGAR,SLIME_BALL,BONE_MEAL
         result: MELON
         amount: 4
         lore: ''
     Orange Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:14
+        recipe: SUGAR,SLIME_BALL,ORANGE_DYE
         result: MELON
         amount: 4
         lore: ''
     Watermelon Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:13
+        recipe: SUGAR,SLIME_BALL,MAGENTA_DYE
         result: MELON
         amount: 4
         lore: ''
     Bubblegum Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:12
+        recipe: SUGAR,SLIME_BALL,LIGHT_BLUE_DYE
         result: MELON
         amount: 4
         lore: ''
     Lemon Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:11
+        recipe: SUGAR,SLIME_BALL,YELLOW_DYE
         result: MELON
         amount: 4
         lore: ''
     Lime Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:10
+        recipe: SUGAR,SLIME_BALL,LIME_DYE
         result: MELON
         amount: 4
         lore: ''
     Strawberry Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:9
+        recipe: SUGAR,SLIME_BALL,PINK_DYE
         result: MELON
         amount: 4
         lore: ''
     Earl Grey Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:8
+        recipe: SUGAR,SLIME_BALL,GRAY_DYE
         result: MELON
         amount: 4
         lore: ''
     Vodka Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:7
+        recipe: SUGAR,SLIME_BALL,LIGHT_GRAY_DYE
         result: MELON
         amount: 4
         lore: ''
     Island Punch Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:6
+        recipe: SUGAR,SLIME_BALL,CYAN_DYE
         result: MELON
         amount: 4
         lore: 'Orange'
     Grape Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:5
+        recipe: SUGAR,SLIME_BALL,PURPLE_DYE
         result: MELON
         amount: 4
         lore: ''
     Blueberry Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:4
+        recipe: SUGAR,SLIME_BALL,LAPIS_LAZULI
         result: MELON
         amount: 4
         lore: ''
     Cappuccino Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:3
+        recipe: SUGAR,SLIME_BALL,COCOA_BEANS
         result: MELON
         amount: 4
         lore: ''
     Apple Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:2
+        recipe: SUGAR,SLIME_BALL,CACTUS_GREEN
         result: MELON
         amount: 4
         lore: ''
     Raspberry Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:1
+        recipe: SUGAR,SLIME_BALL,ROSE_RED
         result: MELON
         amount: 4
         lore: ''
     Licorice Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SACK:0
+        recipe: SUGAR,SLIME_BALL,INK_SAC
         result: MELON
         amount: 4
         lore: ''
@@ -956,6 +956,6 @@ shapeless:
 # -------------------
 furnace:
     Nuclear Wool:
-        recipe: '35:0'
-        result: '35:15'
+        recipe: WHITE_WOOL
+        result: BLACK_WOOL
         lore: "Done to a crisp"

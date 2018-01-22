@@ -119,19 +119,19 @@ public class TARDISControlInventory {
         rade.setDisplayName(plugin.getLanguage().getString("BUTTON_THEME"));
         upg.setItemMeta(rade);
         // power up/down
-        ItemStack pow = new ItemStack(Material.DIODE, 1);
+        ItemStack pow = new ItemStack(Material.REPEATER, 1);
         ItemMeta dwn = pow.getItemMeta();
         dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
         dwn.setLore(Arrays.asList(power_onoff));
         pow.setItemMeta(dwn);
         // light
-        ItemStack lig = new ItemStack(Material.DIODE, 1);
+        ItemStack lig = new ItemStack(Material.REPEATER, 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
         swi.setLore(Arrays.asList(lights_onoff));
         lig.setItemMeta(swi);
         // toggle wool
-        ItemStack tog = new ItemStack(Material.DIODE, 1);
+        ItemStack tog = new ItemStack(Material.REPEATER, 1);
         ItemMeta gle = tog.getItemMeta();
         gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
         gle.setLore(Arrays.asList(toggle_openclosed));
@@ -150,7 +150,7 @@ public class TARDISControlInventory {
         eleon.setDisplayName(plugin.getLanguage().getString("BUTTON_CHAMELEON"));
         cham.setItemMeta(eleon);
         // siege
-        ItemStack siege = new ItemStack(Material.DIODE, 1);
+        ItemStack siege = new ItemStack(Material.REPEATER, 1);
         ItemMeta mode = siege.getItemMeta();
         mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
         mode.setLore(Arrays.asList(siege_onoff));

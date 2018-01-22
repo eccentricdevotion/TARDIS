@@ -80,7 +80,6 @@ public class TARDISTimeTravel {
      * @param current
      * @return a random Location
      */
-    @SuppressWarnings("deprecation")
     public Location randomDestination(Player p, byte rx, byte rz, byte ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen;
         World randworld;
@@ -205,7 +204,7 @@ public class TARDISTimeTravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.FLOWING_WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("uuid", p.getUniqueId().toString());
@@ -287,7 +286,6 @@ public class TARDISTimeTravel {
      * @param d the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
-    @SuppressWarnings("deprecation")
     public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
@@ -307,7 +305,8 @@ public class TARDISTimeTravel {
                     Material mat = w.getBlockAt(startx, starty, startz).getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         // check for siege cube
-                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.HUGE_MUSHROOM_1) && w.getBlockAt(startx, starty, startz).getData() == (byte) 14) {
+                        // TODO use MultipleFacing BlockData
+                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK) && w.getBlockAt(startx, starty, startz).getData() == (byte) 14) {
                             continue;
                         } else {
                             count++;
@@ -366,23 +365,23 @@ public class TARDISTimeTravel {
         final int c = col;
         final int startx = sx;
         final int startz = sz;
-        TARDISBlockSetters.setBlock(w, startx, starty, startz, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx, starty, startz + row, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx + col, starty, startz, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx + col, starty, startz + row, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
-        TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx, starty, startz, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx, starty, startz + row, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx + col, starty, startz, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx + col, starty, startz + row, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + row, Material.SNOW_BLOCK);
+        TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz + row, Material.SNOW_BLOCK);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TARDISBlockSetters.setBlock(w, startx, starty, startz, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx + c, starty, startz, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
-            TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, startx, starty, startz, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx, starty, startz + r, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx + c, starty, startz, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx + c, starty, startz + r, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + r, Material.AIR);
+            TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz + r, Material.AIR);
         }, 300L);
     }
 
@@ -427,7 +426,6 @@ public class TARDISTimeTravel {
      * @param p the player to check permissions for
      * @return true or false
      */
-    @SuppressWarnings("deprecation")
     public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
@@ -554,12 +552,11 @@ public class TARDISTimeTravel {
         return wherez + currentz;
     }
 
-    @SuppressWarnings("deprecation")
     public Location submarine(Block b, COMPASS d) {
         Block block = b;
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
+            if (!block.getType().equals(Material.FLOWING_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
                 break;
             }
         }
@@ -574,7 +571,6 @@ public class TARDISTimeTravel {
         return (isSafeSubmarine(loc, d)) ? loc : null;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean isSafeSubmarine(Location l, COMPASS d) {
         int[] s = getStartLocation(l, d);
         int level, row, col, rowcount, colcount, count = 0;

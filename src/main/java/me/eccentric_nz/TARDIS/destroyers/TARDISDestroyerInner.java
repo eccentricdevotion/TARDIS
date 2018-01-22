@@ -59,13 +59,12 @@ public class TARDISDestroyerInner {
      * or DELUXE.
      * @param id the unique key of the record for this TARDIS in the database.
      * @param w the world where the TARDIS is to be built.
-     * @param i the Material type id of the replacement block, this will either
-     * be 0 (AIR) or 1 (STONE).
+     * @param m the Material type of the replacement block, this will either be
+     * AIR or STONE.
      * @param p the name of the player who owns the TARDIS.
      * @param slot the TIPS slot number
      */
-    @SuppressWarnings("deprecation")
-    public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
+    public void destroyInner(SCHEMATIC schm, int id, World w, Material m, String p, int slot) {
         // destroy TARDIS
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         Location wgl;
@@ -99,9 +98,9 @@ public class TARDISDestroyerInner {
                     for (col = 0; col < l; col++) {
                         // set the block to stone / air
                         Block b = w.getBlockAt(startx, starty, startz);
-                        Material m = b.getType();
+                        Material mat = b.getType();
                         // if it's a chest clear the inventory first
-                        if (m.equals(Material.CHEST)) {
+                        if (mat.equals(Material.CHEST)) {
                             Chest container = (Chest) b.getState();
                             //Is it a double chest?
                             Chest chest = getDoubleChest(b);
@@ -115,13 +114,13 @@ public class TARDISDestroyerInner {
                             }
                         }
                         // if it's a furnace clear the inventory first
-                        if (m.equals(Material.FURNACE)) {
+                        if (mat.equals(Material.FURNACE)) {
                             Furnace fur = (Furnace) b.getState();
                             fur.getInventory().clear();
                         }
-                        if (!m.equals(Material.CHEST)) {
-                            if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
-                                TARDISBlockSetters.setBlock(w, startx, starty, startz, i, (byte) 0);
+                        if (!mat.equals(Material.CHEST)) {
+                            if (w.getBlockAt(startx, starty, startz).getType().equals(m)) {
+                                TARDISBlockSetters.setBlock(w, startx, starty, startz, m);
                             }
                         }
                         startx += 1;
@@ -156,7 +155,6 @@ public class TARDISDestroyerInner {
     }
 
     //Originally stolen from Babarix. Thank you :)
-    @SuppressWarnings("deprecation")
     public Chest getDoubleChest(Block block) {
         Chest chest = null;
         if (block.getRelative(BlockFace.NORTH).getType().equals(Material.CHEST)) {

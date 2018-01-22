@@ -119,7 +119,7 @@ public class TARDISSiegeListener implements Listener {
             }
         }
         String tl = tardis.getOwner();
-        ItemStack is = new ItemStack(Material.HUGE_MUSHROOM_1, 1, (byte) 14);
+        ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1, (byte) 14);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
         List<String> lore = new ArrayList<>();
@@ -178,44 +178,41 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         item.setInvulnerable(true);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            @SuppressWarnings("deprecation")
-            public void run() {
-                // check there is space
-                Location loc = item.getLocation();
-                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
-                int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-                int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
-                if (count > 0) {
-                    TARDISMessage.send(p, "SIEGE_NO_SPACE");
-                    return;
-                }
-                List<String> lore = is.getItemMeta().getLore();
-                if (lore == null || lore.size() < 2) {
-                    TARDISMessage.send(p, "SIEGE_NO_ID");
-                    return;
-                }
-                String[] line2 = lore.get(1).split(": ");
-                int id = TARDISNumberParsers.parseInt(line2[1]);
-                // turn the drop into a block
-                item.remove();
-                loc.getBlock().setType(Material.HUGE_MUSHROOM_1);
-                loc.getBlock().setData((byte) 14, true);
-                // remove trackers
-                plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
-                plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
-                // update the current location
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", id);
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("world", loc.getWorld().getName());
-                set.put("x", loc.getBlockX());
-                set.put("y", loc.getBlockY());
-                set.put("z", loc.getBlockZ());
-                set.put("direction", d.toString());
-                new QueryFactory(plugin).doUpdate("current", set, where);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            // check there is space
+            Location loc = item.getLocation();
+            COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
+            int[] start = TARDISTimeTravel.getStartLocation(loc, d);
+            int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
+            if (count > 0) {
+                TARDISMessage.send(p, "SIEGE_NO_SPACE");
+                return;
             }
+            List<String> lore = is.getItemMeta().getLore();
+            if (lore == null || lore.size() < 2) {
+                TARDISMessage.send(p, "SIEGE_NO_ID");
+                return;
+            }
+            String[] line2 = lore.get(1).split(": ");
+            int id = TARDISNumberParsers.parseInt(line2[1]);
+            // turn the drop into a block
+            item.remove();
+            loc.getBlock().setType(Material.BROWN_MUSHROOM_BLOCK);
+            // TODO use MultipleFacing to set the mushroom faces
+            loc.getBlock().setData((byte) 14, true);
+            // remove trackers
+            plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
+            plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
+            // update the current location
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("world", loc.getWorld().getName());
+            set.put("x", loc.getBlockX());
+            set.put("y", loc.getBlockY());
+            set.put("z", loc.getBlockZ());
+            set.put("direction", d.toString());
+            new QueryFactory(plugin).doUpdate("current", set, where);
         }, 10L);
     }
 
@@ -384,15 +381,13 @@ public class TARDISSiegeListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private boolean isSiegeCube(ItemStack is) {
-//        return (is.getType().equals(Material.HUGE_MUSHROOM_1) && is.getData().getData() == (byte) 14);
-        return is.getType().equals(Material.HUGE_MUSHROOM_1);
+//        return (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && is.getData().getData() == (byte) 14);
+        return is.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
     }
 
-    @SuppressWarnings("deprecation")
     private boolean isSiegeCube(Block b) {
-        return (b.getType().equals(Material.HUGE_MUSHROOM_1) && b.getData() == (byte) 14);
+        return (b.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && b.getData() == (byte) 14);
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {

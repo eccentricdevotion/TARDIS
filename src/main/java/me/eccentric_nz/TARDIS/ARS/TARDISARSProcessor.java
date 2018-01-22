@@ -43,15 +43,15 @@ public class TARDISARSProcessor {
         this.limit = this.plugin.getConfig().getInt("growth.ars_limit");
     }
 
-    public boolean compare3DArray(int[][][] start, int[][][] end) {
+    public boolean compare3DArray(String[][][] start, String[][][] end) {
         changed = new HashMap<>();
         jettison = new HashMap<>();
         Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
         for (int l = 0; l < 3; l++) {
             for (int x = 0; x < 9; x++) {
                 for (int z = 0; z < 9; z++) {
-                    if (start[l][x][z] != end[l][x][z]) {
-                        if (end[l][x][z] == 46) {
+                    if (!start[l][x][z].equals(end[l][x][z])) {
+                        if (end[l][x][z].equals("TNT")) {
                             // found TNT in this slot
                             TARDISARSJettison slot = new TARDISARSJettison();
                             slot.setChunk(c);
@@ -60,29 +60,29 @@ public class TARDISARSProcessor {
                             slot.setZ(z);
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                             // if it is a gravity well on the top or bottom levels jettison the other half too
-                            if (start[l][x][z] == 24 && l == 2) {
+                            if (start[l][x][z].equals("SANDSTONE") && l == 2) {
                                 TARDISARSJettison uslot = new TARDISARSJettison();
                                 uslot.setChunk(c);
                                 uslot.setY(3);
                                 uslot.setX(x);
                                 uslot.setZ(z);
-                                jettison.put(uslot, TARDISARS.ARSFor(24));
+                                jettison.put(uslot, TARDISARS.ANTIGRAVITY);
                             }
-                            if (start[l][x][z] == 48 && l == 0) {
+                            if (start[l][x][z].equals("MOSSY_COBBLESTONE") && l == 0) {
                                 TARDISARSJettison lslot = new TARDISARSJettison();
                                 lslot.setChunk(c);
                                 lslot.setY(-1);
                                 lslot.setX(x);
                                 lslot.setZ(z);
-                                jettison.put(lslot, TARDISARS.ARSFor(48));
+                                jettison.put(lslot, TARDISARS.GRAVITY);
                             }
                         } else {
                             switch (end[l][x][z]) {
-                                case 24:
+                                case "SANDSTONE":
                                     if (l == 0
-                                            || (l == 1 && end[l - 1][x][z] != 24)
-                                            || (l == 2 && end[l - 1][x][z] != 24)
-                                            || (l == 2 && end[l - 1][x][z] == 24 && end[l - 2][x][z] == 24)) {
+                                            || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE"))
+                                            || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE"))
+                                            || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an anti-gravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
                                         slot.setChunk(c);
@@ -92,11 +92,11 @@ public class TARDISARSProcessor {
                                         changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                     }
                                     break;
-                                case 48:
+                                case "MOSSY_COBBLESTONE":
                                     if (l == 2
-                                            || (l == 1 && end[l + 1][x][z] != 48)
-                                            || (l == 0 && end[l + 1][x][z] != 48)
-                                            || (l == 0 && end[l + 1][x][z] == 48 && end[l + 2][x][z] == 48)) {
+                                            || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE"))
+                                            || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE"))
+                                            || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
                                         // only remember the top slot of a gravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
                                         slot.setChunk(c);

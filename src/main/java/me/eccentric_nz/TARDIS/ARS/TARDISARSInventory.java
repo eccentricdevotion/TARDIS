@@ -49,13 +49,13 @@ public class TARDISARSInventory {
 
         ItemStack[] is = new ItemStack[54];
         // direction pad up
-        ItemStack pad_up = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_up = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta up = pad_up.getItemMeta();
         up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
         pad_up.setItemMeta(up);
         is[1] = pad_up;
         // black wool
-        ItemStack black = new ItemStack(Material.WOOL, 1, (byte) 15);
+        ItemStack black = new ItemStack(Material.BLACK_WOOL, 1);
         ItemMeta wool = black.getItemMeta();
         wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_NO"));
         black.setItemMeta(wool);
@@ -67,7 +67,7 @@ public class TARDISARSInventory {
             }
         }
         // direction pad left
-        ItemStack pad_left = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_left = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta left = pad_left.getItemMeta();
         left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
         pad_left.setItemMeta(left);
@@ -79,37 +79,37 @@ public class TARDISARSInventory {
         map.setItemMeta(load);
         is[10] = map;
         // direction pad right
-        ItemStack pad_right = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_right = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta right = pad_right.getItemMeta();
         right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
         pad_right.setItemMeta(right);
         is[11] = pad_right;
         // set
-        ItemStack s = new ItemStack(Material.WOOL, 1, (byte) 6);
+        ItemStack s = new ItemStack(Material.PINK_WOOL, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_RECON"));
         s.setItemMeta(sim);
         is[12] = s;
         // direction pad down
-        ItemStack pad_down = new ItemStack(Material.WOOL, 1, (byte) 9);
+        ItemStack pad_down = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta down = pad_down.getItemMeta();
         down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
         pad_down.setItemMeta(down);
         is[19] = pad_down;
         // level bottom
-        ItemStack level_bot = new ItemStack(Material.WOOL, 1, (byte) 0);
+        ItemStack level_bot = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta bot = level_bot.getItemMeta();
         bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
         level_bot.setItemMeta(bot);
         is[27] = level_bot;
         // level selected
-        ItemStack level_sel = new ItemStack(Material.WOOL, 1, (byte) 4);
+        ItemStack level_sel = new ItemStack(Material.YELLOW_WOOL, 1);
         ItemMeta main = level_sel.getItemMeta();
         main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
         level_sel.setItemMeta(main);
         is[28] = level_sel;
         // level top
-        ItemStack level_top = new ItemStack(Material.WOOL, 1, (byte) 0);
+        ItemStack level_top = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta top = level_top.getItemMeta();
         top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
         level_top.setItemMeta(top);
@@ -121,13 +121,13 @@ public class TARDISARSInventory {
         reset.setItemMeta(cobble);
         is[30] = reset;
         // scroll left
-        ItemStack scroll_left = new ItemStack(Material.WOOL, 1, (byte) 14);
+        ItemStack scroll_left = new ItemStack(Material.RED_WOOL, 1);
         ItemMeta nim = scroll_left.getItemMeta();
         nim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_L"));
         scroll_left.setItemMeta(nim);
         is[36] = scroll_left;
         // scroll right
-        ItemStack scroll_right = new ItemStack(Material.WOOL, 1, (byte) 5);
+        ItemStack scroll_right = new ItemStack(Material.LIME_WOOL, 1);
         ItemMeta pim = scroll_right.getItemMeta();
         pim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_R"));
         scroll_right.setItemMeta(pim);
@@ -142,7 +142,7 @@ public class TARDISARSInventory {
         int i = 45;
         for (TARDISARS a : TARDISARS.values()) {
             if (a.getOffset() != 0 && i < 54) {
-                ItemStack room = new ItemStack(a.getId(), 1);
+                ItemStack room = new ItemStack(Material.getMaterial(a.getMaterial()), 1);
                 ItemMeta im = room.getItemMeta();
                 im.setDisplayName(a.getDescriptiveName());
                 List<String> lore = Arrays.asList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a.getActualName() + ".cost"));

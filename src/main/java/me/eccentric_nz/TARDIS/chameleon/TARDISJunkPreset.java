@@ -32,38 +32,29 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 public class TARDISJunkPreset extends TARDISPreset {
 
     private final String blueprint_id = "[[35,98,35,98],[35,98,35,98],[35,35,35,35],[35,35,35,35],[35,35,35,35],[44,0,68,139],[159,44,69,35],[44,0,0,139],[35,0,0,0],[0,0,0,0]]";
-    private final String blueprint_data = "[[8,0,1,0],[8,0,1,0],[8,1,1,1],[8,1,1,1],[8,1,1,1],[0,0,4,0],[14,8,5,8],[0,0,0,0],[8,0,0,0],[0,0,0,0]]";
     private final String stained_id = "[[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,0,68,95],[95,95,95,95],[95,0,0,95],[95,0,0,0],[0,0,0,0]]";
-    private final String stained_data = "[[8,8,1,8],[8,8,1,8],[8,1,1,1],[8,1,1,1],[8,1,1,1],[8,0,4,8],[14,8,8,8],[8,0,0,8],[8,0,0,0],[0,0,0,0]]";
     private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,0,68,20],[20,20,20,20],[20,0,0,20],[20,0,0,0],[0,0,0,0]]";
-    private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,4,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]";
     private final String west_blueprint_id = "[[35,35,35,35],[44,0,68,139],[159,44,69,35],[44,0,0,139],[35,98,35,98],[35,98,35,98],[35,35,35,35],[35,35,35,35],[35,0,0,0],[0,0,0,0]]";
-    private final String west_blueprint_data = "[[8,1,1,1],[0,0,5,0],[14,8,5,8],[0,0,0,0],[8,0,1,0],[8,0,1,0],[8,1,1,1],[8,1,1,1],[8,0,0,0],[0,0,0,0]]";
     private final String west_stained_id = "[[95,95,95,95],[95,0,68,95],[95,95,95,95],[95,0,0,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,0,0,0],[0,0,0,0]]";
-    private final String west_stained_data = "[[8,1,1,1],[8,0,5,8],[14,8,8,8],[8,0,0,8],[8,8,1,8],[8,8,1,8],[8,1,1,1],[8,1,1,1],[8,0,0,0],[0,0,0,0]]";
     private final String west_glass_id = "[[20,20,20,20],[20,0,68,20],[20,20,20,20],[20,0,0,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,0,0,0],[0,0,0,0]]";
-    private final String west_glass_data = "[[0,0,0,0],[0,0,5,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]";
 
     public TARDISJunkPreset() {
         setBlueprint_id(blueprint_id);
-        setBlueprint_data(blueprint_data);
         setStained_id(stained_id);
-        setStained_data(stained_data);
         setGlass_id(glass_id);
-        setGlass_data(glass_data);
     }
 
     @Override
-    public void makePresets(boolean assymetric, boolean duck, boolean torch) {
+    public void makePresets(boolean assymetric, boolean duck) {
         for (COMPASS d : COMPASS.values()) {
             if (d.equals(COMPASS.WEST)) {
-                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, west_blueprint_id, west_blueprint_data, false, false, false));
-                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, west_stained_id, west_stained_data, false, false, false));
-                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, west_glass_id, west_glass_data, false, false, false));
+                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, west_blueprint_id, false, false));
+                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, west_stained_id, false, false));
+                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, west_glass_id, false, false));
             } else {
-                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, false, false, false));
-                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained_id, stained_data, false, false, false));
-                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glass_id, glass_data, false, false, false));
+                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint_id, false, false));
+                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained_id, false, false));
+                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glass_id, false, false));
             }
         }
     }

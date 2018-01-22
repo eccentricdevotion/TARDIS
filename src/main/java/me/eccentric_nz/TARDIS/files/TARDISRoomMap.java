@@ -74,7 +74,7 @@ public class TARDISRoomMap {
      * @return true if the schematic was loaded successfully
      */
     public boolean makeRoomMap(String fileStr, String s) {
-        HashMap<String, Integer> blockIDs = new HashMap<>();
+        HashMap<String, Integer> blockTypes = new HashMap<>();
         File f = new File(fileStr + ".tschm");
         if (!f.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -107,22 +107,14 @@ public class TARDISRoomMap {
                         if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
                             bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
                         }
-                        if (bid.equals("WOOL") && (c.getByte("data") == 1 || c.getByte("data") == 8)) {
-                            String bstr = bid + ":" + c.getByte("data");
-                            if (blockIDs.containsKey(bstr)) {
-                                Integer count = blockIDs.get(bstr) + 1;
-                                blockIDs.put(bstr, count);
-                            } else {
-                                blockIDs.put(bstr, 1);
-                            }
-                        } else if (blockIDs.containsKey(bid)) {
-                            Integer count = blockIDs.get(bid) + 1;
-                            blockIDs.put(bid, count);
+                        if (blockTypes.containsKey(bid)) {
+                            Integer count = blockTypes.get(bid) + 1;
+                            blockTypes.put(bid, count);
                         } else {
-                            blockIDs.put(bid, 1);
+                            blockTypes.put(bid, 1);
                         }
                     }
-                    plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockIDs);
+                    plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockTypes);
                 }
             }
             return true;

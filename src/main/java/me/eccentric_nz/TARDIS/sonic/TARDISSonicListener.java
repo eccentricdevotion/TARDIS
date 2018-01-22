@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -46,11 +47,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.Bisected.Half;
+import org.bukkit.block.data.type.Snow;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -101,39 +106,47 @@ public class TARDISSonicListener implements Listener {
         this.plugin = plugin;
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonic = Material.valueOf(split[0]);
-        diamond.add(Material.GLASS);
-        diamond.add(Material.IRON_FENCE);
+        diamond.add(Material.COBWEB);
+        diamond.add(Material.IRON_BARS);
         diamond.add(Material.SNOW);
         diamond.add(Material.SNOW_BLOCK);
-        diamond.add(Material.STAINED_GLASS);
-        diamond.add(Material.STAINED_GLASS_PANE);
-        diamond.add(Material.THIN_GLASS);
-        diamond.add(Material.WEB);
+        diamond.addAll(TARDISMaterials.glass);
+        distance.add(Material.ACACIA_BUTTON);
         distance.add(Material.ACACIA_DOOR);
+        distance.add(Material.BIRCH_BUTTON);
         distance.add(Material.BIRCH_DOOR);
+        distance.add(Material.DARK_OAK_BUTTON);
         distance.add(Material.DARK_OAK_DOOR);
-        distance.add(Material.IRON_DOOR_BLOCK);
+        distance.add(Material.IRON_DOOR);
+        distance.add(Material.JUNGLE_BUTTON);
         distance.add(Material.JUNGLE_DOOR);
         distance.add(Material.LEVER);
+        distance.add(Material.OAK_BUTTON);
+        distance.add(Material.OAK_DOOR);
+        distance.add(Material.SPRUCE_BUTTON);
         distance.add(Material.SPRUCE_DOOR);
         distance.add(Material.STONE_BUTTON);
-        distance.add(Material.WOODEN_DOOR);
-        distance.add(Material.WOOD_BUTTON);
         doors.add(Material.ACACIA_DOOR);
+        doors.add(Material.ACACIA_TRAPDOOR);
         doors.add(Material.BIRCH_DOOR);
+        doors.add(Material.BIRCH_TRAPDOOR);
         doors.add(Material.DARK_OAK_DOOR);
-        doors.add(Material.IRON_DOOR_BLOCK);
+        doors.add(Material.DARK_OAK_TRAPDOOR);
+        doors.add(Material.IRON_DOOR);
+        doors.add(Material.IRON_TRAPDOOR);
         doors.add(Material.JUNGLE_DOOR);
+        doors.add(Material.JUNGLE_TRAPDOOR);
+        doors.add(Material.OAK_DOOR);
+        doors.add(Material.OAK_TRAPDOOR);
         doors.add(Material.SPRUCE_DOOR);
-        doors.add(Material.TRAP_DOOR);
-        doors.add(Material.WOODEN_DOOR);
+        doors.add(Material.SPRUCE_TRAPDOOR);
         redstone.add(Material.DETECTOR_RAIL);
-        redstone.add(Material.IRON_DOOR_BLOCK);
-        redstone.add(Material.PISTON_BASE);
-        redstone.add(Material.PISTON_STICKY_BASE);
+        redstone.add(Material.IRON_DOOR);
+        redstone.add(Material.IRON_TRAPDOOR);
+        redstone.add(Material.PISTON);
+        redstone.add(Material.STICKY_PISTON);
         redstone.add(Material.POWERED_RAIL);
-        redstone.add(Material.REDSTONE_LAMP_OFF);
-        redstone.add(Material.REDSTONE_LAMP_ON);
+        redstone.add(Material.REDSTONE_LAMP);
         redstone.add(Material.REDSTONE_WIRE);
         faces.add(BlockFace.NORTH);
         faces.add(BlockFace.SOUTH);
@@ -141,14 +154,88 @@ public class TARDISSonicListener implements Listener {
         faces.add(BlockFace.WEST);
         faces.add(BlockFace.UP);
         faces.add(BlockFace.DOWN);
-        this.paintable.add(Material.CARPET);
-        this.paintable.add(Material.STAINED_CLAY);
-        this.paintable.add(Material.STAINED_GLASS);
-        this.paintable.add(Material.STAINED_GLASS_PANE);
-        this.paintable.add(Material.WOOL);
+        this.paintable.add(Material.BLACK_CARPET);
+        this.paintable.add(Material.BLACK_STAINED_GLASS);
+        this.paintable.add(Material.BLACK_STAINED_GLASS_PANE);
+        this.paintable.add(Material.BLACK_TERRACOTTA);
+        this.paintable.add(Material.BLACK_WOOL);
+        this.paintable.add(Material.BLUE_CARPET);
+        this.paintable.add(Material.BLUE_STAINED_GLASS);
+        this.paintable.add(Material.BLUE_STAINED_GLASS_PANE);
+        this.paintable.add(Material.BLUE_TERRACOTTA);
+        this.paintable.add(Material.BLUE_WOOL);
+        this.paintable.add(Material.BROWN_CARPET);
+        this.paintable.add(Material.BROWN_STAINED_GLASS);
+        this.paintable.add(Material.BROWN_STAINED_GLASS_PANE);
+        this.paintable.add(Material.BROWN_TERRACOTTA);
+        this.paintable.add(Material.BROWN_WOOL);
+        this.paintable.add(Material.CYAN_CARPET);
+        this.paintable.add(Material.CYAN_STAINED_GLASS);
+        this.paintable.add(Material.CYAN_STAINED_GLASS_PANE);
+        this.paintable.add(Material.CYAN_TERRACOTTA);
+        this.paintable.add(Material.CYAN_WOOL);
+        this.paintable.add(Material.GRAY_CARPET);
+        this.paintable.add(Material.GRAY_STAINED_GLASS);
+        this.paintable.add(Material.GRAY_STAINED_GLASS_PANE);
+        this.paintable.add(Material.GRAY_TERRACOTTA);
+        this.paintable.add(Material.GRAY_WOOL);
+        this.paintable.add(Material.GREEN_CARPET);
+        this.paintable.add(Material.GREEN_STAINED_GLASS);
+        this.paintable.add(Material.GREEN_STAINED_GLASS_PANE);
+        this.paintable.add(Material.GREEN_TERRACOTTA);
+        this.paintable.add(Material.GREEN_WOOL);
+        this.paintable.add(Material.LIGHT_BLUE_CARPET);
+        this.paintable.add(Material.LIGHT_BLUE_STAINED_GLASS);
+        this.paintable.add(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        this.paintable.add(Material.LIGHT_BLUE_TERRACOTTA);
+        this.paintable.add(Material.LIGHT_BLUE_WOOL);
+        this.paintable.add(Material.LIGHT_GRAY_CARPET);
+        this.paintable.add(Material.LIGHT_GRAY_STAINED_GLASS);
+        this.paintable.add(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+        this.paintable.add(Material.LIGHT_GRAY_TERRACOTTA);
+        this.paintable.add(Material.LIGHT_GRAY_WOOL);
+        this.paintable.add(Material.LIME_CARPET);
+        this.paintable.add(Material.LIME_STAINED_GLASS);
+        this.paintable.add(Material.LIME_STAINED_GLASS_PANE);
+        this.paintable.add(Material.LIME_TERRACOTTA);
+        this.paintable.add(Material.LIME_WOOL);
+        this.paintable.add(Material.MAGENTA_CARPET);
+        this.paintable.add(Material.MAGENTA_STAINED_GLASS);
+        this.paintable.add(Material.MAGENTA_STAINED_GLASS_PANE);
+        this.paintable.add(Material.MAGENTA_TERRACOTTA);
+        this.paintable.add(Material.MAGENTA_WOOL);
+        this.paintable.add(Material.ORANGE_CARPET);
+        this.paintable.add(Material.ORANGE_STAINED_GLASS);
+        this.paintable.add(Material.ORANGE_STAINED_GLASS_PANE);
+        this.paintable.add(Material.ORANGE_TERRACOTTA);
+        this.paintable.add(Material.ORANGE_WOOL);
+        this.paintable.add(Material.PINK_CARPET);
+        this.paintable.add(Material.PINK_STAINED_GLASS);
+        this.paintable.add(Material.PINK_STAINED_GLASS_PANE);
+        this.paintable.add(Material.PINK_TERRACOTTA);
+        this.paintable.add(Material.PINK_WOOL);
+        this.paintable.add(Material.PURPLE_CARPET);
+        this.paintable.add(Material.PURPLE_STAINED_GLASS);
+        this.paintable.add(Material.PURPLE_STAINED_GLASS_PANE);
+        this.paintable.add(Material.PURPLE_TERRACOTTA);
+        this.paintable.add(Material.PURPLE_WOOL);
+        this.paintable.add(Material.RED_CARPET);
+        this.paintable.add(Material.RED_STAINED_GLASS);
+        this.paintable.add(Material.RED_STAINED_GLASS_PANE);
+        this.paintable.add(Material.RED_TERRACOTTA);
+        this.paintable.add(Material.RED_WOOL);
+        this.paintable.add(Material.WHITE_CARPET);
+        this.paintable.add(Material.WHITE_STAINED_GLASS);
+        this.paintable.add(Material.WHITE_STAINED_GLASS_PANE);
+        this.paintable.add(Material.WHITE_TERRACOTTA);
+        this.paintable.add(Material.WHITE_WOOL);
+        this.paintable.add(Material.YELLOW_CARPET);
+        this.paintable.add(Material.YELLOW_STAINED_GLASS);
+        this.paintable.add(Material.YELLOW_STAINED_GLASS_PANE);
+        this.paintable.add(Material.YELLOW_TERRACOTTA);
+        this.paintable.add(Material.YELLOW_WOOL);
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -244,8 +331,11 @@ public class TARDISSonicListener implements Listener {
                             int bx = loc.getBlockX();
                             int by = loc.getBlockY();
                             int bz = loc.getBlockZ();
-                            if (b.getData() >= 8 && !b.getType().equals(Material.TRAP_DOOR)) {
-                                by = (by - 1);
+                            if (Tag.DOORS.isTagged(b.getType())) {
+                                Bisected bisected = (Bisected) b;
+                                if (bisected.getHalf().equals(Half.TOP)) {
+                                    by = (by - 1);
+                                }
                             }
                             String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
                             wheredoor.put("door_location", doorloc);
@@ -361,7 +451,7 @@ public class TARDISSonicListener implements Listener {
                                     b.setData((byte) (drail.getData() + 8));
                                 }
                                 break;
-                            case IRON_DOOR_BLOCK:
+                            case IRON_DOOR:
                                 // get bottom door block
                                 Block tmp = b;
                                 if (b.getData() >= 8) {
@@ -426,16 +516,16 @@ public class TARDISSonicListener implements Listener {
                                     b.setData((byte) (rail.getData() + 8));
                                 }
                                 break;
-                            case PISTON_BASE:
-                            case PISTON_STICKY_BASE:
+                            case PISTON:
+                            case STICKY_PISTON:
                                 PistonBaseMaterial piston = (PistonBaseMaterial) bs.getData();
                                 // find the direction the piston is facing
                                 if (plugin.getGeneralKeeper().getSonicPistons().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicPistons().remove(b.getLocation().toString());
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
-                                            b.getRelative(f).setTypeIdAndData(20, (byte) 0, true);
-                                            b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
+                                            b.getRelative(f).setType(Material.GLASS, true);
+                                            b.getRelative(f).setType(Material.AIR, true);
                                             break;
                                         }
                                     }
@@ -447,21 +537,20 @@ public class TARDISSonicListener implements Listener {
                                 b.setData(piston.getData());
                                 bs.update(true);
                                 break;
-                            case REDSTONE_LAMP_OFF:
-                            case REDSTONE_LAMP_ON:
-                                if (blockType.equals(Material.REDSTONE_LAMP_OFF)) {
+                            case REDSTONE_LAMP:
+                                if (blockType.equals(Material.REDSTONE_LAMP)) {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
-                                            b.getRelative(f).setTypeIdAndData(152, (byte) 0, true);
-                                            b.setType(Material.REDSTONE_LAMP_ON);
-                                            b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
+                                            b.getRelative(f).setType(Material.REDSTONE_BLOCK, true);
+                                            b.setType(Material.REDSTONE_LAMP);
+                                            b.getRelative(f).setType(Material.AIR, true);
                                             break;
                                         }
                                     }
                                 } else if (plugin.getGeneralKeeper().getSonicLamps().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicLamps().remove(b.getLocation().toString());
-                                    b.setType(Material.REDSTONE_LAMP_OFF);
+                                    b.setType(Material.REDSTONE_LAMP);
                                 }
                                 break;
                             case REDSTONE_WIRE:
@@ -507,33 +596,11 @@ public class TARDISSonicListener implements Listener {
                             Material mat = b.getType();
                             if (player.hasPermission("tardis.sonic.silktouch")) {
                                 Location l = b.getLocation();
-                                switch (mat) {
-                                    case GLASS:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.GLASS, 1));
-                                        break;
-                                    case IRON_FENCE:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_FENCE, 1));
-                                        break;
-                                    case SNOW:
-                                        b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, 1 + b.getData()));
-                                        break;
-                                    case SNOW_BLOCK:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.SNOW_BLOCK, 1));
-                                        break;
-                                    case STAINED_GLASS:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS, 1, b.getData()));
-                                        break;
-                                    case STAINED_GLASS_PANE:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS_PANE, 1, b.getData()));
-                                        break;
-                                    case THIN_GLASS:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.THIN_GLASS, 1));
-                                        break;
-                                    case WEB:
-                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.WEB, 1));
-                                        break;
-                                    default:
-                                        break;
+                                if (mat.equals(Material.SNOW)) {
+                                    Snow snow = (Snow) b;
+                                    b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOWBALL, 1 + snow.getLayers()));
+                                } else {
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(b.getType(), 1));
                                 }
                                 l.getWorld().playSound(l, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
                                 // set the block to AIR
@@ -544,10 +611,11 @@ public class TARDISSonicListener implements Listener {
                                 if (mat.equals(Material.SNOW_BLOCK)) {
                                     balls = 4;
                                 } else {
-                                    balls = 1 + b.getData();
+                                    Snow snow = (Snow) b;
+                                    balls = 1 + snow.getLayers();
                                 }
                                 b.setType(Material.AIR);
-                                b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, balls));
+                                b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOWBALL, balls));
                             } else {
                                 b.breakNaturally();
                                 b.getLocation().getWorld().playSound(b.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
@@ -568,31 +636,245 @@ public class TARDISSonicListener implements Listener {
                         // check for dye in slot
                         PlayerInventory inv = player.getInventory();
                         ItemStack dye = inv.getItem(8);
-                        if (dye == null || !dye.getType().equals(Material.INK_SACK)) {
+                        if (dye == null || !TARDISMaterials.dyes.contains(dye.getType())) {
                             TARDISMessage.send(player, "SONIC_DYE");
                             return;
                         }
-                        byte dye_data = dye.getData().getData();
-                        byte block_data = b.getData();
-                        byte new_data = (byte) (15 - dye_data);
                         // don't do anything if it is the same colour
-                        if (new_data == block_data) {
-                            return;
+                        switch (b.getType()) {
+                            case BLACK_CARPET:
+                            case BLACK_STAINED_GLASS:
+                            case BLACK_STAINED_GLASS_PANE:
+                            case BLACK_TERRACOTTA:
+                            case BLACK_WOOL:
+                                if (!dye.getType().equals(Material.INK_SAC)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case BLUE_CARPET:
+                            case BLUE_STAINED_GLASS:
+                            case BLUE_STAINED_GLASS_PANE:
+                            case BLUE_TERRACOTTA:
+                            case BLUE_WOOL:
+                                if (!dye.getType().equals(Material.LAPIS_LAZULI)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case BROWN_CARPET:
+                            case BROWN_STAINED_GLASS:
+                            case BROWN_STAINED_GLASS_PANE:
+                            case BROWN_TERRACOTTA:
+                            case BROWN_WOOL:
+                                if (!dye.getType().equals(Material.COCOA_BEANS)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case CYAN_CARPET:
+                            case CYAN_STAINED_GLASS:
+                            case CYAN_STAINED_GLASS_PANE:
+                            case CYAN_TERRACOTTA:
+                            case CYAN_WOOL:
+                                if (!dye.getType().equals(Material.CYAN_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case GRAY_CARPET:
+                            case GRAY_STAINED_GLASS:
+                            case GRAY_STAINED_GLASS_PANE:
+                            case GRAY_TERRACOTTA:
+                            case GRAY_WOOL:
+                                if (!dye.getType().equals(Material.GRAY_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case GREEN_CARPET:
+                            case GREEN_STAINED_GLASS:
+                            case GREEN_STAINED_GLASS_PANE:
+                            case GREEN_TERRACOTTA:
+                            case GREEN_WOOL:
+                                if (!dye.getType().equals(Material.CACTUS_GREEN)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case LIGHT_BLUE_CARPET:
+                            case LIGHT_BLUE_STAINED_GLASS:
+                            case LIGHT_BLUE_STAINED_GLASS_PANE:
+                            case LIGHT_BLUE_TERRACOTTA:
+                            case LIGHT_BLUE_WOOL:
+                                if (!dye.getType().equals(Material.LIGHT_BLUE_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case LIGHT_GRAY_CARPET:
+                            case LIGHT_GRAY_STAINED_GLASS:
+                            case LIGHT_GRAY_STAINED_GLASS_PANE:
+                            case LIGHT_GRAY_TERRACOTTA:
+                            case LIGHT_GRAY_WOOL:
+                                if (!dye.getType().equals(Material.LIGHT_GRAY_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case LIME_CARPET:
+                            case LIME_STAINED_GLASS:
+                            case LIME_STAINED_GLASS_PANE:
+                            case LIME_TERRACOTTA:
+                            case LIME_WOOL:
+                                if (!dye.getType().equals(Material.LIME_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                }
+                                break;
+                            case MAGENTA_CARPET:
+                            case MAGENTA_STAINED_GLASS:
+                            case MAGENTA_STAINED_GLASS_PANE:
+                            case MAGENTA_TERRACOTTA:
+                            case MAGENTA_WOOL:
+                                if (!dye.getType().equals(Material.MAGENTA_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                }
+                                break;
+                            case ORANGE_CARPET:
+                            case ORANGE_STAINED_GLASS:
+                            case ORANGE_STAINED_GLASS_PANE:
+                            case ORANGE_TERRACOTTA:
+                            case ORANGE_WOOL:
+                                if (!dye.getType().equals(Material.ORANGE_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                }
+                                break;
+                            case PINK_CARPET:
+                            case PINK_STAINED_GLASS:
+                            case PINK_STAINED_GLASS_PANE:
+                            case PINK_TERRACOTTA:
+                            case PINK_WOOL:
+                                if (!dye.getType().equals(Material.PINK_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case PURPLE_CARPET:
+                            case PURPLE_STAINED_GLASS:
+                            case PURPLE_STAINED_GLASS_PANE:
+                            case PURPLE_TERRACOTTA:
+                            case PURPLE_WOOL:
+                                if (!dye.getType().equals(Material.PURPLE_DYE)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case RED_CARPET:
+                            case RED_STAINED_GLASS:
+                            case RED_STAINED_GLASS_PANE:
+                            case RED_TERRACOTTA:
+                            case RED_WOOL:
+                                if (!dye.getType().equals(Material.ROSE_RED)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case WHITE_CARPET:
+                            case WHITE_STAINED_GLASS:
+                            case WHITE_STAINED_GLASS_PANE:
+                            case WHITE_TERRACOTTA:
+                            case WHITE_WOOL:
+                                if (!dye.getType().equals(Material.BONE_MEAL)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            case YELLOW_CARPET:
+                            case YELLOW_STAINED_GLASS:
+                            case YELLOW_STAINED_GLASS_PANE:
+                            case YELLOW_TERRACOTTA:
+                            case YELLOW_WOOL:
+                                if (!dye.getType().equals(Material.DANDELION_YELLOW)) {
+                                    changeColour(b, dye, inv, player);
+                                } else {
+                                }
+                                break;
+                            default:
+                                break;
                         }
-                        // remove one dye
-                        int a = dye.getAmount();
-                        int a2 = a - 1;
-                        if (a2 > 0) {
-                            inv.getItem(8).setAmount(a2);
-                        } else {
-                            inv.setItem(8, null);
-                        }
-                        player.updateInventory();
-                        b.setData(new_data, true);
                     }
                 }
             }
         }
+    }
+
+    private void changeColour(Block block, ItemStack dye, Inventory inv, Player player) {
+        // remove one dye
+        int a = dye.getAmount();
+        int a2 = a - 1;
+        if (a2 > 0) {
+            inv.getItem(8).setAmount(a2);
+        } else {
+            inv.setItem(8, null);
+        }
+        player.updateInventory();
+        // determine colour
+        String[] split = block.getType().toString().split("_");
+        switch (dye.getType()) {
+            case BONE_MEAL:
+                split[0] = "WHITE";
+                break;
+            case CACTUS_GREEN:
+                split[0] = "GREEN";
+                break;
+            case COCOA_BEANS:
+                split[0] = "BROWN";
+                break;
+            case CYAN_DYE:
+                split[0] = "CYAN";
+                break;
+            case DANDELION_YELLOW:
+                split[0] = "YELLOW";
+                break;
+            case GRAY_DYE:
+                split[0] = "GRAY";
+                break;
+            case INK_SAC:
+                split[0] = "BLACK";
+                break;
+            case LAPIS_LAZULI:
+                split[0] = "BLUE";
+                break;
+            case LIGHT_BLUE_DYE:
+                split[0] = "LIGHT_BLUE";
+                break;
+            case LIGHT_GRAY_DYE:
+                split[0] = "LIGHT_GRAY";
+                break;
+            case LIME_DYE:
+                split[0] = "LIME";
+                break;
+            case MAGENTA_DYE:
+                split[0] = "MAGENTA";
+                break;
+            case ORANGE_DYE:
+                split[0] = "ORANGE";
+                break;
+            case PINK_DYE:
+                split[0] = "PINK";
+                break;
+            case PURPLE_DYE:
+                split[0] = "PURPLE";
+                break;
+            case ROSE_RED:
+                split[0] = "RED";
+                break;
+            default:
+                break;
+        }
+        String joined = String.join("_", split);
+        Material material = Material.valueOf(joined);
+        block.setType(material, true);
     }
 
     public void playSonicSound(final Player player, long now, long cooldown, String sound) {
@@ -777,7 +1059,6 @@ public class TARDISSonicListener implements Listener {
         }, 140L);
     }
 
-    @SuppressWarnings("deprecation")
     private void standardSonic(final Player player) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
@@ -787,10 +1068,10 @@ public class TARDISSonicListener implements Listener {
                 case ACACIA_DOOR:
                 case BIRCH_DOOR:
                 case DARK_OAK_DOOR:
-                case IRON_DOOR_BLOCK:
+                case IRON_DOOR:
                 case JUNGLE_DOOR:
+                case OAK_DOOR:
                 case SPRUCE_DOOR:
-                case WOODEN_DOOR:
                     final Block lowerdoor;
                     if (targetBlock.getData() >= 8) {
                         lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
@@ -815,7 +1096,7 @@ public class TARDISSonicListener implements Listener {
                             door.setOpen(!door.isOpen());
                             bsl.setData(door);
                             bsl.update(true);
-                            if (blockType.equals(Material.IRON_DOOR_BLOCK)) {
+                            if (blockType.equals(Material.IRON_DOOR)) {
                                 plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
                                 // return the door to its previous state after 3 seconds
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -834,8 +1115,13 @@ public class TARDISSonicListener implements Listener {
                     bs.setData(lever);
                     bs.update(true);
                     break;
+                case ACACIA_BUTTON:
+                case BIRCH_BUTTON:
+                case DARK_OAK_BUTTON:
+                case JUNGLE_BUTTON:
+                case OAK_BUTTON:
+                case SPRUCE_BUTTON:
                 case STONE_BUTTON:
-                case WOOD_BUTTON:
                     final Button button = (Button) bs.getData();
                     button.setPowered(true);
                     bs.setData(button);
@@ -853,14 +1139,13 @@ public class TARDISSonicListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public boolean setExtension(Block b) {
         BlockFace face = ((PistonBaseMaterial) b.getState().getData()).getFacing();
         Block l = b.getRelative(face);
         Material mat = l.getType();
         byte data = l.getData();
         // check if there is a block there
-        if (!mat.equals(Material.PISTON_EXTENSION)) {
+        if (!mat.equals(Material.PISTON_HEAD)) {
             if (mat.equals(Material.AIR)) {
                 extend(b, l);
                 return true;
@@ -878,10 +1163,9 @@ public class TARDISSonicListener implements Listener {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     private void extend(final Block b, final Block l) {
-        l.setType(Material.PISTON_EXTENSION);
-        if (b.getType().equals(Material.PISTON_STICKY_BASE)) {
+        l.setType(Material.PISTON_HEAD);
+        if (b.getType().equals(Material.STICKY_PISTON)) {
             l.setData((byte) (b.getData() - 8));
         } else {
             l.setData(b.getData());

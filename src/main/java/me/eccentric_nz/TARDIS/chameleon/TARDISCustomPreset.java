@@ -34,9 +34,9 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
  */
 public class TARDISCustomPreset {
 
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
     String firstLine;
     String secondLine;
 
@@ -72,20 +72,20 @@ public class TARDISCustomPreset {
             }
         }
         boolean asymmetric;
-        if (custom_data[8] != null && !custom_data[8].isEmpty()) {
-            asymmetric = Boolean.valueOf(custom_data[8]);
+        if (custom_data[5] != null && !custom_data[5].isEmpty()) {
+            asymmetric = Boolean.valueOf(custom_data[5]);
         } else {
             // assume true if not set
             asymmetric = true;
         }
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], custom_data[1], asymmetric, false, false));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric, false, false));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric, false, false));
+            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric, false));
+            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric, false));
+            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric, false));
         }
-        if (custom_data[6] != null && !custom_data[6].isEmpty()) {
-            this.firstLine = custom_data[6];
-            this.secondLine = custom_data[7];
+        if (custom_data[3] != null && !custom_data[3].isEmpty()) {
+            this.firstLine = custom_data[3];
+            this.secondLine = custom_data[4];
         } else {
             this.firstLine = "CUSTOM TEXT";
             this.secondLine = "GOES HERE";

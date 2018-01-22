@@ -81,6 +81,7 @@ public class TARDISCircuitRepairListener implements Listener {
                                 // get the uses left
                                 int left = TARDISNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
+                                @SuppressWarnings("deprecation")
                                 int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(first.getData().getData()));
                                 // is it used?
                                 if (left < uses) {

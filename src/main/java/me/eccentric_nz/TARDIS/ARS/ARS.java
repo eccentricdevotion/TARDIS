@@ -24,11 +24,13 @@ package me.eccentric_nz.TARDIS.ARS;
  */
 public interface ARS {
 
-    public int getId();
+    public String getMaterial();
 
     public String getActualName();
 
     public String getDescriptiveName();
 
     public int getOffset();
+
+    // TODO convert ARS data from Material ids to Material names
 }

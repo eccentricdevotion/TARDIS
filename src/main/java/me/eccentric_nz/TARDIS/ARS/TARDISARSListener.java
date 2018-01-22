@@ -45,7 +45,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISARSListener extends TARDISARSMethods implements Listener {
 
-    private List<Integer> room_ids;
+    private List<Material> room_materials;
     private List<String> room_names;
 
     public TARDISARSListener(TARDIS plugin) {
@@ -155,7 +155,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 36:
                         // scroll left
                         int startl;
-                        int max = room_ids.size() - 9;
+                        int max = room_materials.size() - 9;
                         if (scroll_start.containsKey(uuid)) {
                             startl = scroll_start.get(uuid) + 1;
                             if (startl >= max) {
@@ -167,7 +167,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         scroll_start.put(uuid, startl);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-                            setSlot(inv, (45 + i), room_ids.get(startl + i), room_names.get(startl + i), uuid, false);
+                            setSlot(inv, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), uuid, false);
                         }
                         break;
                     case 38:
@@ -184,7 +184,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         scroll_start.put(uuid, startr);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-                            setSlot(inv, (45 + i), room_ids.get(startr + i), room_names.get(startr + i), uuid, false);
+                            setSlot(inv, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), uuid, false);
                         }
                         break;
                     case 39:
@@ -237,7 +237,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
                                 setSlot(inv, selected_slot.get(uuid), ris, uuid, true);
-                                setSlot(inv, slot, ris.getTypeId(), displayName, uuid, false);
+                                setSlot(inv, slot, ris.getType(), displayName, uuid, false);
                             }
                         } else {
                             setLore(inv, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
@@ -261,7 +261,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     public boolean checkSavedGrid(UUID uuid, int slot, int updown) {
         TARDISARSMapData md = map_data.get(uuid);
         TARDISARSSaveData sd = save_map_data.get(uuid);
-        int[][][] grid = sd.getData();
+        String[][][] grid = sd.getData();
         int yy = md.getY() + updown;
         // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
         if (yy < 0 || yy > 2) {
@@ -270,39 +270,38 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         int[] coords = getCoords(slot, md);
         int xx = coords[0];
         int zz = coords[1];
-        int prior = grid[yy][xx][zz];
-        if (room_ids.stream().anyMatch((i) -> (prior == i))) {
+        Material prior = Material.valueOf(grid[yy][xx][zz]);
+        if (room_materials.stream().anyMatch((i) -> (prior == i))) {
             return true;
         }
-        String console = Material.getMaterial(prior).toString();
-        return consoleBlocks.contains(console);
+        return consoleBlocks.contains(grid[yy][xx][zz]);
     }
 
     /**
      * Populates arrays of room names and seed IDs for the scrollable room
      * buttons.
      */
-    @SuppressWarnings("deprecation")
+    
     public final void getRoomIdAndNames() {
         List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();
         // less non-room types
-        this.room_ids = new ArrayList<>();
+        this.room_materials = new ArrayList<>();
         this.room_names = new ArrayList<>();
         for (TARDISARS a : ars) {
             if (a.getOffset() != 0) {
-                this.room_ids.add(a.getId());
+                this.room_materials.add(Material.valueOf(a.getMaterial()));
                 this.room_names.add(a.getDescriptiveName());
             }
         }
         custom_names.forEach((c) -> {
-            this.room_ids.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId());
+            this.room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
             final String uc = ucfirst(c);
             this.room_names.add(uc);
             TARDISARS.addNewARS(new ARS() {
                 @Override
-                public int getId() {
-                    return Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId();
+                public String getMaterial() {
+                    return plugin.getRoomsConfig().getString("rooms." + c + ".seed");
                 }
 
                 @Override

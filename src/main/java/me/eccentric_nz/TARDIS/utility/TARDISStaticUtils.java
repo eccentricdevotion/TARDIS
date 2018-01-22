@@ -98,68 +98,6 @@ public class TARDISStaticUtils {
     }
 
     /**
-     * Get the wood type from the material and data type.
-     *
-     * @param m the block's material
-     * @param d the block's data value
-     * @return the wood type
-     */
-    public static String getWoodType(Material m, byte d) {
-        String type;
-        switch (m) {
-            case WOOD:
-                switch (d) {
-                    case 0:
-                        type = "OAK";
-                        break;
-                    case 1:
-                        type = "SPRUCE";
-                        break;
-                    case 2:
-                        type = "BIRCH";
-                        break;
-                    case 3:
-                        type = "JUNGLE";
-                        break;
-                    case 4:
-                        type = "ACACIA";
-                        break;
-                    default:
-                        type = "DARK_OAK";
-                        break;
-                }
-                break;
-            case LOG:
-                switch (d) {
-                    case 0:
-                        type = "OAK";
-                        break;
-                    case 1:
-                        type = "SPRUCE";
-                        break;
-                    case 2:
-                        type = "BIRCH";
-                        break;
-                    default:
-                        type = "JUNGLE";
-                        break;
-                }
-                break;
-            default: // LOG_2
-                switch (d) {
-                    case 0:
-                        type = "ACACIA";
-                        break;
-                    default:
-                        type = "DARK_OAK";
-                        break;
-                }
-                break;
-        }
-        return type;
-    }
-
-    /**
      * Get whether the biome is ocean.
      *
      * @param b the biome to check
@@ -226,7 +164,6 @@ public class TARDISStaticUtils {
      * @param dd the direction the door is facing
      * @return true or false
      */
-    @SuppressWarnings("deprecation")
     public static boolean isOpen(Block door_bottom, COMPASS dd) {
         byte door_data = door_bottom.getData();
         switch (dd) {
@@ -305,7 +242,7 @@ public class TARDISStaticUtils {
                 chunk.load();
             }
             Block cc = l.getBlock();
-            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN_POST) {
+            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN) {
                 Sign sign = (Sign) cc.getState();
                 sign.setLine(line, text);
                 sign.update();
@@ -327,11 +264,89 @@ public class TARDISStaticUtils {
         Location l = TARDISLocationGetters.getLocationFromDB(loc, 0, 0);
         if (l != null) {
             Block cc = l.getBlock();
-            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN_POST) {
+            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN) {
                 Sign sign = (Sign) cc.getState();
                 str = sign.getLine(3);
             }
         }
         return str;
+    }
+
+    public static boolean isInfested(Material material) {
+        switch (material) {
+            case INFESTED_CHISELED_STONE_BRICKS:
+            case INFESTED_COBBLESTONE:
+            case INFESTED_CRACKED_STONE_BRICKS:
+            case INFESTED_MOSSY_STONE_BRICKS:
+            case INFESTED_STONE:
+            case INFESTED_STONE_BRICKS:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isBanner(Material material) {
+        switch (material) {
+            case BLACK_BANNER:
+            case BLUE_BANNER:
+            case BROWN_BANNER:
+            case CYAN_BANNER:
+            case GRAY_BANNER:
+            case GREEN_BANNER:
+            case LIGHT_BLUE_BANNER:
+            case LIGHT_GRAY_BANNER:
+            case LIME_BANNER:
+            case MAGENTA_BANNER:
+            case ORANGE_BANNER:
+            case PINK_BANNER:
+            case PURPLE_BANNER:
+            case RED_BANNER:
+            case WHITE_BANNER:
+            case YELLOW_BANNER:
+            case BLACK_WALL_BANNER:
+            case BLUE_WALL_BANNER:
+            case BROWN_WALL_BANNER:
+            case CYAN_WALL_BANNER:
+            case GRAY_WALL_BANNER:
+            case GREEN_WALL_BANNER:
+            case LIGHT_BLUE_WALL_BANNER:
+            case LIGHT_GRAY_WALL_BANNER:
+            case LIME_WALL_BANNER:
+            case MAGENTA_WALL_BANNER:
+            case ORANGE_WALL_BANNER:
+            case PINK_WALL_BANNER:
+            case PURPLE_WALL_BANNER:
+            case RED_WALL_BANNER:
+            case WHITE_WALL_BANNER:
+            case YELLOW_WALL_BANNER:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isStandingBanner(Material material) {
+        switch (material) {
+            case BLACK_BANNER:
+            case BLUE_BANNER:
+            case BROWN_BANNER:
+            case CYAN_BANNER:
+            case GRAY_BANNER:
+            case GREEN_BANNER:
+            case LIGHT_BLUE_BANNER:
+            case LIGHT_GRAY_BANNER:
+            case LIME_BANNER:
+            case MAGENTA_BANNER:
+            case ORANGE_BANNER:
+            case PINK_BANNER:
+            case PURPLE_BANNER:
+            case RED_BANNER:
+            case WHITE_BANNER:
+            case YELLOW_BANNER:
+                return true;
+            default:
+                return false;
+        }
     }
 }

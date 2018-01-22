@@ -55,7 +55,7 @@ public class TARDISCompanionAddInventory {
                 if (i < 45) {
                     UUID puid = p.getUniqueId();
                     if (puid != uuid && !comps.contains(puid.toString())) {
-                        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                        ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                         SkullMeta skull = (SkullMeta) head.getItemMeta();
                         skull.setOwner(p.getName());
                         skull.setDisplayName(p.getName());
@@ -79,7 +79,7 @@ public class TARDISCompanionAddInventory {
         ii.setLore(info_lore);
         info.setItemMeta(ii);
         heads[45] = info;
-        ItemStack list = new ItemStack(Material.BOOK_AND_QUILL, 1);
+        ItemStack list = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta ll = list.getItemMeta();
         ll.setDisplayName("List companions");
         list.setItemMeta(ll);

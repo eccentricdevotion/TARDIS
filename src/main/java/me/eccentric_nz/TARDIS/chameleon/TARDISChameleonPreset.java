@@ -27,6 +27,14 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMushroomRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISStairRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTorchRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.Bisected.Half;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Rail;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on
@@ -38,7 +46,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private static final List<Integer> PROBLEM_BLOCKS = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164, 193, 194, 195, 196, 197, 203);
+    private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.WALL_TORCH, Material.OAK_STAIRS, Material.SIGN, Material.OAK_DOOR, Material.RAIL, Material.COBBLESTONE_STAIRS, Material.WALL_SIGN, Material.LEVER, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.STONE_BUTTON, Material.JACK_O_LANTERN, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.BROWN_MUSHROOM_BLOCK, Material.VINE, Material.BRICK_STAIRS, Material.STONE_BRICK_STAIRS, Material.NETHER_BRICK_STAIRS, Material.SANDSTONE_STAIRS, Material.SPRUCE_STAIRS, Material.JUNGLE_STAIRS, Material.ACACIA_STAIRS, Material.BIRCH_STAIRS, Material.DARK_OAK_STAIRS, Material.OAK_BUTTON, Material.ANVIL, Material.CHIPPED_ANVIL, Material.DAMAGED_ANVIL, Material.QUARTZ_STAIRS, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR, Material.PURPUR_STAIRS, Material.RED_SANDSTONE_STAIRS);
     public final TARDISAndesitePreset andesite;
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
@@ -176,83 +184,80 @@ public class TARDISChameleonPreset {
     }
 
     public void makePresets() {
-        andesite.makePresets(false, false, false);
-        angeld.makePresets(true, false, false);
-        angelu.makePresets(true, false, false);
-        apperture.makePresets(false, false, false);
-        cake.makePresets(false, false, false);
-        candy.makePresets(true, false, true);
-        chalice.makePresets(false, false, false);
-        chorus.makePresets(false, false, false);
-        column.makePresets(false, false, false);
-        creepy.makePresets(false, false, false);
-        desert.makePresets(false, false, false);
-        diorite.makePresets(false, false, false);
-        duck.makePresets(true, true, false);
-        factory.makePresets(false, false, false);
-        fence.makePresets(true, false, false);
-        flower.makePresets(false, false, false);
-        gazebo.makePresets(false, false, false);
-        granite.makePresets(false, false, false);
-        gravestone.makePresets(true, false, false);
-        helix.makePresets(false, false, false);
-        invisible.makePresets(true, true, true);
-        jail.makePresets(false, false, false);
-        jungle.makePresets(false, false, false);
-        junk.makePresets(true, false, false);
-        lamp.makePresets(true, false, true);
-        library.makePresets(false, false, false);
-        lighthouse.makePresets(false, false, false);
-        mine.makePresets(false, false, false);
-        nether.makePresets(false, false, false);
-        pandorica.makePresets(false, false, false);
-        party.makePresets(false, false, false);
-        peanut.makePresets(false, false, false);
-        pine.makePresets(false, false, false);
-        police.makePresets(false, false, false);
-        portal.makePresets(false, false, false);
-        prismarine.makePresets(false, false, false);
-        punked.makePresets(false, false, false);
-        robot.makePresets(true, false, false);
-        shroom.makePresets(false, false, false);
-        snowman.makePresets(true, false, false);
-        submerged.makePresets(true, false, false);
-        swamp.makePresets(false, false, false);
-        taller.makePresets(false, false, false);
-        telephone.makePresets(false, false, false);
-        theend.makePresets(false, false, false);
-        toilet.makePresets(true, false, false);
-        topsyturvey.makePresets(false, false, false);
-        torch.makePresets(true, false, true);
-        village.makePresets(false, false, false);
-        well.makePresets(false, false, false);
-        windmill.makePresets(true, false, false);
-        yellow.makePresets(false, false, false);
+        andesite.makePresets(false, false);
+        angeld.makePresets(true, false);
+        angelu.makePresets(true, false);
+        apperture.makePresets(false, false);
+        cake.makePresets(false, false);
+        candy.makePresets(true, false);
+        chalice.makePresets(false, false);
+        chorus.makePresets(false, false);
+        column.makePresets(false, false);
+        creepy.makePresets(false, false);
+        desert.makePresets(false, false);
+        diorite.makePresets(false, false);
+        duck.makePresets(true, true);
+        factory.makePresets(false, false);
+        fence.makePresets(true, false);
+        flower.makePresets(false, false);
+        gazebo.makePresets(false, false);
+        granite.makePresets(false, false);
+        gravestone.makePresets(true, false);
+        helix.makePresets(false, false);
+        invisible.makePresets(true, true);
+        jail.makePresets(false, false);
+        jungle.makePresets(false, false);
+        junk.makePresets(true, false);
+        lamp.makePresets(true, false);
+        library.makePresets(false, false);
+        lighthouse.makePresets(false, false);
+        mine.makePresets(false, false);
+        nether.makePresets(false, false);
+        pandorica.makePresets(false, false);
+        party.makePresets(false, false);
+        peanut.makePresets(false, false);
+        pine.makePresets(false, false);
+        police.makePresets(false, false);
+        portal.makePresets(false, false);
+        prismarine.makePresets(false, false);
+        punked.makePresets(false, false);
+        robot.makePresets(true, false);
+        shroom.makePresets(false, false);
+        snowman.makePresets(true, false);
+        submerged.makePresets(true, false);
+        swamp.makePresets(false, false);
+        taller.makePresets(false, false);
+        telephone.makePresets(false, false);
+        theend.makePresets(false, false);
+        toilet.makePresets(true, false);
+        topsyturvey.makePresets(false, false);
+        torch.makePresets(true, false);
+        village.makePresets(false, false);
+        well.makePresets(false, false);
+        windmill.makePresets(true, false);
+        yellow.makePresets(false, false);
         custom.makePresets();
-        render.makePresets(false, false, false);
-        extreme.makePresets(false, false, false);
-        forest.makePresets(true, false, false);
-        flats.makePresets(true, false, false);
-        spikes.makePresets(false, false, false);
-        mesa.makePresets(true, false, false);
-        plains.makePresets(false, false, false);
-        roofed.makePresets(false, false, false);
-        savanna.makePresets(true, false, false);
-        taiga.makePresets(false, false, false);
-        cold.makePresets(false, false, false);
-        boat.makePresets(true, false, false);
+        render.makePresets(false, false);
+        extreme.makePresets(false, false);
+        forest.makePresets(true, false);
+        flats.makePresets(true, false);
+        spikes.makePresets(false, false);
+        mesa.makePresets(true, false);
+        plains.makePresets(false, false);
+        roofed.makePresets(false, false);
+        savanna.makePresets(true, false);
+        taiga.makePresets(false, false);
+        cold.makePresets(false, false);
+        boat.makePresets(true, false);
     }
 
-    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String id, String data, boolean asymmetric, boolean duck, boolean istorch) {
-        TARDISChameleonColumn tcc = new TARDISChameleonColumn();
+    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric, boolean duck) {
+        TARDISChameleonColumn tcc;
+        BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(COMPASS.EAST)) {
-            tcc.setId(getIntArrayFromJSON(id));
-            tcc.setData(getByteArrayFromJSON(data));
+            tcc = new TARDISChameleonColumn(blockDataArr);
         } else {
-            int[][] id_arr = rotate2DIntArray(getIntArrayFromJSON(id), d, asymmetric);
-            byte[][] data_arr = rotate2DByteArray(getByteArrayFromJSON(data), d, asymmetric);
-            tcc.setId(id_arr);
-            tcc.setData(convertData(id_arr, data_arr, d, duck, istorch));
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
         }
         return tcc;
     }
@@ -261,288 +266,240 @@ public class TARDISChameleonPreset {
      * Converts a JSON data string to a 2D array.
      *
      * @param js the JSON string
-     * @return a 2D array of ints
+     * @return a 2D array of strings
      */
-    private static int[][] getIntArrayFromJSON(String js) {
-        int[][] preset = new int[10][4];
+    private static BlockData[][] getStringArrayFromJSON(String js) {
+        BlockData[][] preset = new BlockData[10][4];
         JSONArray json = new JSONArray(js);
         for (int col = 0; col < 10; col++) {
             JSONArray jsoncol = json.getJSONArray(col);
             for (int block = 0; block < 4; block++) {
-                preset[col][block] = jsoncol.getInt(block);
+                preset[col][block] = Bukkit.createBlockData(jsoncol.getString(block));
             }
         }
         return preset;
     }
 
-    /**
-     * Converts a JSON data string to a 2D array.
-     *
-     * @param js the JSON string
-     * @return a 2D array of bytes
-     */
-    private static byte[][] getByteArrayFromJSON(String js) {
-        byte[][] preset = new byte[10][4];
-        JSONArray json = new JSONArray(js);
-        for (byte col = 0; col < 10; col++) {
-            JSONArray jsoncol = json.getJSONArray(col);
-            for (byte block = 0; block < 4; block++) {
-                preset[col][block] = jsoncol.getByte(block);
-            }
-        }
-        return preset;
-    }
-
-    private static int[][] rotate2DIntArray(int[][] id, COMPASS d, boolean assymetric) {
+    private static BlockData[][] rotate2DArray(BlockData[][] arr, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
-                int[] zero_s = id[0];
-                int[] one_s = id[1];
-                int[] two_s = id[2];
-                int[] three_s = id[3];
-                int[] four_s = id[4];
-                int[] five_s = id[5];
-                int[] six_s = id[6];
-                int[] seven_s = id[7];
-                id[0] = two_s;
-                id[1] = three_s;
-                id[2] = four_s;
-                id[3] = five_s;
-                id[4] = six_s;
-                id[5] = seven_s;
-                id[6] = zero_s;
-                id[7] = one_s;
-                return id;
+                BlockData[] zero_s = arr[0];
+                BlockData[] one_s = arr[1];
+                BlockData[] two_s = arr[2];
+                BlockData[] three_s = arr[3];
+                BlockData[] four_s = arr[4];
+                BlockData[] five_s = arr[5];
+                BlockData[] six_s = arr[6];
+                BlockData[] seven_s = arr[7];
+                arr[0] = two_s;
+                arr[1] = three_s;
+                arr[2] = four_s;
+                arr[3] = five_s;
+                arr[4] = six_s;
+                arr[5] = seven_s;
+                arr[6] = zero_s;
+                arr[7] = one_s;
+                return arr;
             case WEST:
                 if (assymetric) {
-                    int[] zero_w = id[0];
-                    int[] one_w = id[1];
-                    int[] two_w = id[2];
-                    int[] four_w = id[4];
-                    int[] five_w = id[5];
-                    int[] six_w = id[6];
-                    id[1] = five_w;
-                    id[2] = zero_w;
-                    id[0] = two_w;
-                    id[4] = six_w;
-                    id[5] = one_w;
-                    id[6] = four_w;
+                    BlockData[] zero_w = arr[0];
+                    BlockData[] one_w = arr[1];
+                    BlockData[] two_w = arr[2];
+                    BlockData[] four_w = arr[4];
+                    BlockData[] five_w = arr[5];
+                    BlockData[] six_w = arr[6];
+                    arr[1] = five_w;
+                    arr[2] = zero_w;
+                    arr[0] = two_w;
+                    arr[4] = six_w;
+                    arr[5] = one_w;
+                    arr[6] = four_w;
                 }
-                int[] three_w = id[3];
-                id[3] = id[7];
-                id[7] = three_w;
-                return id;
+                BlockData[] three_w = arr[3];
+                arr[3] = arr[7];
+                arr[7] = three_w;
+                return arr;
             default:
-                int[] zero_n = id[0];
-                int[] one_n = id[1];
-                int[] two_n = id[2];
-                int[] three_n = id[3];
-                int[] four_n = id[4];
-                int[] five_n = id[5];
-                int[] six_n = id[6];
-                int[] seven_n = id[7];
-                id[0] = six_n;
-                id[1] = seven_n;
-                id[2] = zero_n;
-                id[3] = one_n;
-                id[4] = two_n;
-                id[5] = three_n;
-                id[6] = four_n;
-                id[7] = five_n;
-                return id;
+                BlockData[] zero_n = arr[0];
+                BlockData[] one_n = arr[1];
+                BlockData[] two_n = arr[2];
+                BlockData[] three_n = arr[3];
+                BlockData[] four_n = arr[4];
+                BlockData[] five_n = arr[5];
+                BlockData[] six_n = arr[6];
+                BlockData[] seven_n = arr[7];
+                arr[0] = six_n;
+                arr[1] = seven_n;
+                arr[2] = zero_n;
+                arr[3] = one_n;
+                arr[4] = two_n;
+                arr[5] = three_n;
+                arr[6] = four_n;
+                arr[7] = five_n;
+                return arr;
         }
     }
 
-    private static byte[][] rotate2DByteArray(byte[][] data, COMPASS d, boolean assymetric) {
-        switch (d) {
-            case NORTH:
-                byte[] zero_s = data[0];
-                byte[] one_s = data[1];
-                byte[] two_s = data[2];
-                byte[] three_s = data[3];
-                byte[] four_s = data[4];
-                byte[] five_s = data[5];
-                byte[] six_s = data[6];
-                byte[] seven_s = data[7];
-                data[0] = two_s;
-                data[1] = three_s;
-                data[2] = four_s;
-                data[3] = five_s;
-                data[4] = six_s;
-                data[5] = seven_s;
-                data[6] = zero_s;
-                data[7] = one_s;
-                return data;
-            case WEST:
-                if (assymetric) {
-                    byte[] two_w = data[2];
-                    byte[] four_w = data[4];
-                    data[2] = data[0];
-                    data[0] = two_w;
-                    data[4] = data[6];
-                    data[6] = four_w;
-                }
-                //byte[] one_w = data[1];
-                byte[] three_w = data[3];
-                //data[1] = data[5];
-                //data[5] = one_w;
-                data[3] = data[7];
-                data[7] = three_w;
-                return data;
-            default:
-                byte[] zero_n = data[0];
-                byte[] one_n = data[1];
-                byte[] two_n = data[2];
-                byte[] three_n = data[3];
-                byte[] four_n = data[4];
-                byte[] five_n = data[5];
-                byte[] six_n = data[6];
-                byte[] seven_n = data[7];
-                data[0] = six_n;
-                data[1] = seven_n;
-                data[2] = zero_n;
-                data[3] = one_n;
-                data[4] = two_n;
-                data[5] = three_n;
-                data[6] = four_n;
-                data[7] = five_n;
-                return data;
-        }
-    }
-
-    private static byte[][] convertData(int[][] id, byte[][] data, COMPASS d, boolean duck, boolean istorch) {
+    private static BlockData[][] convertData(BlockData[][] data, COMPASS d, boolean duck) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
-                if (PROBLEM_BLOCKS.contains(id[col][block])) {
-                    switch (id[col][block]) {
-                        case 50: // torches
+                Material mat = data[col][block].getMaterial();
+                if (PROBLEM_BLOCKS.contains(mat)) {
+                    switch (mat) {
+                        case WALL_TORCH:
                             data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
                             break;
-                        case 64: // oak door
-                        case 71: // iron door
-                        case 193: // spruce door
-                        case 194: // birch door
-                        case 195: // jungle door
-                        case 196: // acacia door
-                        case 197: // dark oak door
-                            if (data[col][block] < 8) {
+                        case IRON_DOOR:
+                        case OAK_DOOR:
+                        case BIRCH_DOOR:
+                        case SPRUCE_DOOR:
+                        case JUNGLE_DOOR:
+                        case ACACIA_DOOR:
+                        case DARK_OAK_DOOR:
+                            Bisected bisected = (Bisected) data[col][block];
+                            if (bisected.getHalf().equals(Half.BOTTOM)) {
                                 // data is either a 0 or a 2
+                                Directional door = (Directional) data[col][block];
                                 switch (d) {
                                     case SOUTH:
-                                        if (data[col][block] == (byte) 0) {
-                                            data[col][block] = (byte) 1;
+                                        if (door.getFacing().equals(BlockFace.EAST)) {
+                                            door.setFacing(BlockFace.SOUTH);
                                         } else {
-                                            data[col][block] = (byte) 3;
+                                            door.setFacing(BlockFace.NORTH);
                                         }
                                         break;
                                     case WEST:
-                                        if (data[col][block] == (byte) 0) {
-                                            data[col][block] = (byte) 2;
+                                        if (door.getFacing().equals(BlockFace.EAST)) {
+                                            door.setFacing(BlockFace.WEST);
                                         } else {
-                                            data[col][block] = (byte) 0;
+                                            door.setFacing(BlockFace.EAST);
                                         }
                                         break;
                                     default:
-                                        if (data[col][block] == (byte) 0) {
-                                            data[col][block] = (byte) 3;
+                                        if (door.getFacing().equals(BlockFace.EAST)) {
+                                            door.setFacing(BlockFace.NORTH);
                                         } else {
-                                            data[col][block] = (byte) 1;
+                                            door.setFacing(BlockFace.SOUTH);
                                         }
                                         break;
                                 }
                             }
                             break;
-                        case 66: // rails
+                        case RAIL:
+                            Rail rail = (Rail) data[col][block];
                             switch (d) {
                                 case WEST:
-                                    data[col][block] = (byte) 1;
+                                    rail.setShape(Rail.Shape.EAST_WEST);
                                     break;
                                 default:
-                                    data[col][block] = (byte) 0;
+                                    rail.setShape(Rail.Shape.NORTH_SOUTH);
                                     break;
                             }
+                            data[col][block] = rail;
                             break;
-                        case 69: // lever
+                        case LEVER:
                             data[col][block] = new TARDISLeverRecalculator().recalculate(data[col][block], d);
                             break;
-                        case 63: // sign post
-                        case 68: // wall sign
+                        case SIGN:
+                        case WALL_SIGN:
+                            Directional sign = (Directional) data[col][block];
                             switch (d) {
                                 case SOUTH:
-                                    data[col][block] = (id[col][block] == 63) ? (byte) 8 : (byte) 2;
+                                    sign.setFacing(BlockFace.NORTH);
                                     break;
                                 case WEST:
-                                    data[col][block] = (id[col][block] == 63) ? (byte) 12 : (byte) 5;
+                                    sign.setFacing(BlockFace.EAST);
                                     break;
                                 default:
-                                    data[col][block] = (id[col][block] == 63) ? (byte) 0 : (byte) 3;
+                                    sign.setFacing(BlockFace.SOUTH);
                                     break;
                             }
+                            data[col][block] = sign;
                             break;
-                        case 53: // oak wood stair
-                        case 67: // cobble stair
-                        case 108: // brick stair
-                        case 109: // smooth stair
-                        case 114: // nether brick stair
-                        case 128: // sandstone stair
-                        case 134: // spruce stair
-                        case 135: // birch stair
-                        case 136: // jungle stair
-                        case 156: // quartz stair
-                        case 163: // acacia stair
-                        case 164: // dark oak stair
-                        case 203: // purpur stair
+                        case OAK_STAIRS:
+                        case COBBLESTONE_STAIRS:
+                        case BRICK_STAIRS:
+                        case STONE_BRICK_STAIRS:
+                        case NETHER_BRICK_STAIRS:
+                        case SANDSTONE_STAIRS:
+                        case SPRUCE_STAIRS:
+                        case BIRCH_STAIRS:
+                        case JUNGLE_STAIRS:
+                        case QUARTZ_STAIRS:
+                        case ACACIA_STAIRS:
+                        case DARK_OAK_STAIRS:
+                        case PURPUR_STAIRS:
+                        case RED_SANDSTONE_STAIRS:
                             data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
                             break;
-                        case 77: // stone button
-                        case 143: // wood button
+                        case STONE_BUTTON:
+                        case OAK_BUTTON:
+                        case SPRUCE_BUTTON:
+                        case BIRCH_BUTTON:
+                        case JUNGLE_BUTTON:
+                        case ACACIA_BUTTON:
+                        case DARK_OAK_BUTTON:
                             data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
                             break;
-                        case 96: // trapdoor
-                            data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d, istorch);
+                        case OAK_TRAPDOOR:
+                        case BIRCH_TRAPDOOR:
+                        case SPRUCE_TRAPDOOR:
+                        case JUNGLE_TRAPDOOR:
+                        case ACACIA_TRAPDOOR:
+                        case DARK_OAK_TRAPDOOR:
+                        case IRON_TRAPDOOR:
+                            data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
                             break;
-                        case 99: // mushroom
+                        case BROWN_MUSHROOM_BLOCK: // mushroom
                             data[col][block] = new TARDISMushroomRecalculator().recalculate(data[col][block], d, col);
                             break;
-                        case 145: //
+                        case ANVIL:
+                        case CHIPPED_ANVIL:
+                        case DAMAGED_ANVIL:
+                            Directional anvil = (Directional) data[col][block];
                             switch (d) {
                                 case WEST:
                                     break;
                                 default:
-                                    switch (data[col][block]) {
-                                        case 1:
-                                            data[col][block] = (byte) 3;
+                                    switch (anvil.getFacing()) {
+                                        case SOUTH:
+                                            anvil.setFacing(BlockFace.WEST);
                                             break;
                                         default:
-                                            data[col][block] = (byte) 1;
+                                            anvil.setFacing(BlockFace.EAST);
                                     }
                             }
+                            data[col][block] = anvil;
                             break;
-                        case 91: // Jack-o-lantern
+                        case JACK_O_LANTERN:
+                            Directional jack = (Directional) data[col][block];
                             switch (d) {
                                 case SOUTH:
-                                    data[col][block] = (byte) 2;
+                                    jack.setFacing(BlockFace.NORTH);
                                     break;
                                 case WEST:
-                                    data[col][block] = (byte) 3;
+                                    jack.setFacing(BlockFace.EAST);
                                     break;
                                 default:
-                                    data[col][block] = (byte) 0;
+                                    jack.setFacing(BlockFace.SOUTH);
                                     break;
                             }
+                            data[col][block] = jack;
                             break;
                         default: // vine
+                            Directional vine = (Directional) data[col][block];
                             switch (d) {
                                 case SOUTH:
-                                    data[col][block] = (byte) 1;
+                                    vine.setFacing(BlockFace.SOUTH);
                                     break;
                                 case WEST:
-                                    data[col][block] = (byte) 2;
+                                    vine.setFacing(BlockFace.WEST);
                                     break;
                                 default:
-                                    data[col][block] = (byte) 4;
+                                    vine.setFacing(BlockFace.NORTH);
                                     break;
                             }
+                            data[col][block] = vine;
                             break;
                     }
                 }

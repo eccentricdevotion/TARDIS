@@ -165,7 +165,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (int id : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
+        for (String id : plugin.getBlocksConfig().getStringList("chameleon_blocks")) {
             ItemStack is = new ItemStack(Material.getMaterial(id), 1);
             stacks[r][c] = is;
             c++;

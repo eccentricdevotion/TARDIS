@@ -61,16 +61,6 @@ public class SCHEMATIC {
     }
 
     /**
-     * Gets the block id of this SCHEMATIC.
-     *
-     * @return a block id.
-     */
-    @SuppressWarnings("deprecation")
-    public int getSeedId() {
-        return Material.valueOf(seed).getId();
-    }
-
-    /**
      * Gets the SCHEMATIC permission node.
      *
      * @return the Material.toString().

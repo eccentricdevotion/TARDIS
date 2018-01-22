@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,33 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.TARDIS.utility;
+
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import org.bukkit.Material;
 
 /**
- * Architectural Configuration is the ability a TARDIS has to move rooms around
- * and delete rooms as if it were a computer. If a TARDIS is sluggish, a room
- * could be jettisoned (or "deleted").
  *
  * @author eccentric_nz
  */
-public class TARDISARSSaveData {
+public class TARDISBannerData {
 
-    private String[][][] data;
-    private int id;
+    private final Material material;
+    private final JSONObject state;
 
-    public String[][][] getData() {
-        return data;
+    public TARDISBannerData(Material material, JSONObject state) {
+        this.material = material;
+        this.state = state;
     }
 
-    public void setData(String[][][] data) {
-        this.data = data;
+    public Material getMaterial() {
+        return material;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public JSONObject getState() {
+        return state;
     }
 }

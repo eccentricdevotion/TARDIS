@@ -92,17 +92,25 @@ public class TARDISUpdateListener implements Listener {
         controls.put("control", 22);
         controls.put("telepathic", 23);
         controls.put("generator", 24);
+        validBlocks.add(Material.ACACIA_BUTTON);
+        validBlocks.add(Material.BIRCH_BUTTON);
+        validBlocks.add(Material.COMPARATOR);
+        validBlocks.add(Material.DARK_OAK_BUTTON);
+        validBlocks.add(Material.JUNGLE_BUTTON);
         validBlocks.add(Material.LEVER);
-        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        validBlocks.add(Material.OAK_BUTTON);
+        validBlocks.add(Material.SPRUCE_BUTTON);
         validBlocks.add(Material.STONE_BUTTON);
-        validBlocks.add(Material.WOOD_BUTTON);
-        validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
-        validSigns.add(Material.REDSTONE_COMPARATOR_ON);
-        validSigns.add(Material.SIGN_POST);
+        validSigns.add(Material.COMPARATOR);
+        validSigns.add(Material.SIGN);
         validSigns.add(Material.WALL_SIGN);
-        plates.add(Material.STONE_PLATE);
-        plates.add(Material.WOOD_PLATE);
+        plates.add(Material.ACACIA_PRESSURE_PLATE);
+        plates.add(Material.BIRCH_PRESSURE_PLATE);
+        plates.add(Material.DARK_OAK_PRESSURE_PLATE);
+        plates.add(Material.JUNGLE_PRESSURE_PLATE);
+        plates.add(Material.OAK_PRESSURE_PLATE);
+        plates.add(Material.SPRUCE_PRESSURE_PLATE);
+        plates.add(Material.STONE_PRESSURE_PLATE);
     }
 
     /**
@@ -113,7 +121,6 @@ public class TARDISUpdateListener implements Listener {
      *
      * @param event a player clicking on a block
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onUpdateInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -141,7 +148,7 @@ public class TARDISUpdateListener implements Listener {
             int by = block_loc.getBlockY();
             int bz = block_loc.getBlockZ();
             byte blockData = block.getData();
-            if (blockData >= 8 && blockType == Material.IRON_DOOR_BLOCK) {
+            if (blockData >= 8 && blockType.equals(Material.IRON_DOOR)) {
                 by = (by - 1);
                 blockData = block.getRelative(BlockFace.DOWN).getData();
             }
@@ -175,7 +182,7 @@ public class TARDISUpdateListener implements Listener {
             } else {
                 plugin.getTrackerKeeper().getPlayers().remove(uuid);
             }
-            if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
+            if (blockName.equalsIgnoreCase("door") && blockType.equals(Material.IRON_DOOR) && !secondary) {
                 // if portals are on, remove the current portal first
                 if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                     ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
@@ -190,7 +197,7 @@ public class TARDISUpdateListener implements Listener {
                 set.put("door_direction", d);
                 tid.put("door_type", 1);
             }
-            if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType == Material.IRON_DOOR_BLOCK) {
+            if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType.equals(Material.IRON_DOOR)) {
                 // get door data - this should let us determine the direction
                 String d = TARDISStaticUtils.getPlayersDirection(player, true);
                 table = "doors";
@@ -258,7 +265,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("telepathic") && (blockType.equals(Material.DAYLIGHT_DETECTOR) || blockType.equals(Material.DAYLIGHT_DETECTOR_INVERTED))) {
+            if (blockName.equalsIgnoreCase("telepathic") && blockType.equals(Material.DAYLIGHT_DETECTOR)) {
                 if (!plugin.getTrackerKeeper().getTelepathicPlacements().containsKey(uuid)) {
                     TARDISMessage.send(player, "TELEPATHIC_PLACE");
                     return;
@@ -280,7 +287,7 @@ public class TARDISUpdateListener implements Listener {
                     block.setType(Material.DAYLIGHT_DETECTOR);
                 }, 3L);
             }
-            if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
+            if (blockName.equalsIgnoreCase("handbrake") && blockType.equals(Material.LEVER)) {
                 // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
@@ -298,7 +305,7 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("beacon")) {
                 set.put("beacon", blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("condenser") && blockType == Material.CHEST) {
+            if (blockName.equalsIgnoreCase("condenser") && blockType.equals(Material.CHEST)) {
                 set.put("condenser", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("eps")) {
@@ -313,11 +320,12 @@ public class TARDISUpdateListener implements Listener {
                 blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                 set.put("creeper", blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("rail") && blockType == Material.FENCE) {
+            // TODO add other fence types
+            if (blockName.equalsIgnoreCase("rail") && blockType.equals(Material.OAK_FENCE)) {
                 blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
                 set.put("rail", blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("world-repeater") && blockType.equals(Material.REPEATER)) {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 2);
@@ -328,7 +336,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("x-repeater") && blockType.equals(Material.REPEATER)) {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 3);
@@ -339,7 +347,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("z-repeater") && blockType.equals(Material.REPEATER)) {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 4);
@@ -350,7 +358,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("y-repeater") && blockType.equals(Material.REPEATER)) {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 5);
@@ -363,7 +371,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("chameleon") && validSigns.contains(blockType)) {
                 set.put("chameleon", blockLocStr);
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
@@ -375,7 +383,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("save-sign") && validSigns.contains(blockType)) {
                 set.put("save_sign", blockLocStr);
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
@@ -385,7 +393,7 @@ public class TARDISUpdateListener implements Listener {
                     s.update();
                 }
             }
-            if (blockName.equalsIgnoreCase("keyboard") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("keyboard") && (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN))) {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 7);
@@ -445,7 +453,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
@@ -467,7 +475,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
@@ -491,15 +499,15 @@ public class TARDISUpdateListener implements Listener {
                     ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                     if (!rsa.resultSet()) {
                         // create default json
-                        int[][][] empty = new int[3][9][9];
+                        String[][][] empty = new String[3][9][9];
                         for (int y = 0; y < 3; y++) {
                             for (int x = 0; x < 9; x++) {
                                 for (int z = 0; z < 9; z++) {
-                                    empty[y][x][z] = 1;
+                                    empty[y][x][z] = "STONE";
                                 }
                             }
                         }
-                        int control = schm.getSeedId();
+                        String control = schm.getSeedMaterial().toString();
                         if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
                             empty[0][4][4] = control;
                             empty[0][4][5] = control;
@@ -525,7 +533,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
@@ -547,7 +555,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
@@ -568,7 +576,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "-----");

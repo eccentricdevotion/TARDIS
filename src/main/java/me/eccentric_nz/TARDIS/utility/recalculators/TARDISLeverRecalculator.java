@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 
 /**
  *
@@ -28,167 +31,68 @@ public class TARDISLeverRecalculator {
      * Recalculate the data for directional block (TRAPDOOR) when the TARDIS
      * preset changes direction.
      *
-     * @param b the byte stored in the preset data
+     * @param b the block data stored in the preset data
      * @param d the new direction of the TARDIS
-     * @return the recalculated byte
+     * @return the recalculated block data
      */
-    public byte recalculate(byte b, COMPASS d) {
-        byte recalc;
+    public BlockData recalculate(BlockData b, COMPASS d) {
+        Directional lever = (Directional) b;
         switch (d) {
             case SOUTH:
-                switch (b) {
-                    case 0:
-                        recalc = 7;
+                switch (lever.getFacing()) {
+                    case EAST:
+                        lever.setFacing(BlockFace.SOUTH); // 3
                         break;
-                    case 1:
-                        recalc = 3;
+                    case WEST:
+                        lever.setFacing(BlockFace.NORTH); // 4
                         break;
-                    case 2:
-                        recalc = 4;
+                    case SOUTH:
+                        lever.setFacing(BlockFace.WEST); // 2
                         break;
-                    case 3:
-                        recalc = 2;
-                        break;
-                    case 4:
-                        recalc = 1;
-                        break;
-                    case 5:
-                        recalc = 14;
-                        break;
-                    case 6:
-                        recalc = 5;
-                        break;
-                    case 7:
-                        recalc = 8;
-                        break;
-                    case 8:
-                        recalc = 15;
-                        break;
-                    case 9:
-                        recalc = 11;
-                        break;
-                    case 10:
-                        recalc = 12;
-                        break;
-                    case 11:
-                        recalc = 10;
-                        break;
-                    case 12:
-                        recalc = 9;
-                        break;
-                    case 13:
-                        recalc = 6;
-                        break;
-                    case 14:
-                        recalc = 13;
+                    case NORTH:
+                        lever.setFacing(BlockFace.EAST); // 1
                         break;
                     default:
-                        recalc = 0;
+                        break;
                 }
                 break;
             case WEST:
-                switch (b) {
-                    case 0:
-                        recalc = 8;
+                switch (lever.getFacing()) {
+                    case EAST:
+                        lever.setFacing(BlockFace.WEST); // 2
                         break;
-                    case 1:
-                        recalc = 2;
+                    case WEST:
+                        lever.setFacing(BlockFace.EAST); // 1
                         break;
-                    case 2:
-                        recalc = 1;
+                    case SOUTH:
+                        lever.setFacing(BlockFace.NORTH); // 4
                         break;
-                    case 3:
-                        recalc = 4;
-                        break;
-                    case 4:
-                        recalc = 3;
-                        break;
-                    case 5:
-                        recalc = 13;
-                        break;
-                    case 6:
-                        recalc = 14;
-                        break;
-                    case 7:
-                        recalc = 15;
-                        break;
-                    case 8:
-                        recalc = 0;
-                        break;
-                    case 9:
-                        recalc = 10;
-                        break;
-                    case 10:
-                        recalc = 9;
-                        break;
-                    case 11:
-                        recalc = 12;
-                        break;
-                    case 12:
-                        recalc = 11;
-                        break;
-                    case 13:
-                        recalc = 5;
-                        break;
-                    case 14:
-                        recalc = 6;
+                    case NORTH:
+                        lever.setFacing(BlockFace.SOUTH); // 3
                         break;
                     default:
-                        recalc = 7;
+                        break;
                 }
                 break;
             default:
-                switch (b) {
-                    case 0:
-                        recalc = 15;
+                switch (lever.getFacing()) {
+                    case EAST:
+                        lever.setFacing(BlockFace.NORTH); // 4
                         break;
-                    case 1:
-                        recalc = 4;
+                    case WEST:
+                        lever.setFacing(BlockFace.SOUTH); // 3
                         break;
-                    case 2:
-                        recalc = 3;
+                    case SOUTH:
+                        lever.setFacing(BlockFace.EAST); // 1
                         break;
-                    case 3:
-                        recalc = 1;
-                        break;
-                    case 4:
-                        recalc = 2;
-                        break;
-                    case 5:
-                        recalc = 6;
-                        break;
-                    case 6:
-                        recalc = 13;
-                        break;
-                    case 7:
-                        recalc = 0;
-                        break;
-                    case 8:
-                        recalc = 7;
-                        break;
-                    case 9:
-                        recalc = 12;
-                        break;
-                    case 10:
-                        recalc = 11;
-                        break;
-                    case 11:
-                        recalc = 9;
-                        break;
-                    case 12:
-                        recalc = 10;
-                        break;
-                    case 13:
-                        recalc = 14;
-                        break;
-                    case 14:
-                        recalc = 5;
+                    case NORTH:
+                        lever.setFacing(BlockFace.WEST); // 2
                         break;
                     default:
-                        recalc = 8;
+                        break;
                 }
         }
-        return recalc;
+        return lever;
     }
 
 }

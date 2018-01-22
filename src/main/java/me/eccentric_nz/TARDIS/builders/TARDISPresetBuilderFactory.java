@@ -107,8 +107,7 @@ public class TARDISPresetBuilderFactory {
                 preset = adapt(biome, tardis.getAdaption());
             }
             PRESET demat = tardis.getDemat();
-            int cham_id = 159;
-            byte cham_data = 8;
+            Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
             if ((tardis.getAdaption().equals(ADAPTION.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(ADAPTION.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
@@ -119,9 +118,7 @@ public class TARDISPresetBuilderFactory {
                 }
                 // determine cham_id
                 TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                int[] b_data = tcc.getChameleonBlock(chameleonBlock, bd.getPlayer());
-                cham_id = b_data[0];
-                cham_data = (byte) b_data[1];
+                cham_id = tcc.getChameleonBlock(chameleonBlock, bd.getPlayer());
             }
             boolean hidden = tardis.isHidden();
             // get submarine preferences
@@ -145,7 +142,7 @@ public class TARDISPresetBuilderFactory {
                     deinsta.instaDestroyPreset(bd, false, demat);
                 }
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id, cham_data, 3);
+                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id.createBlockData(), 3);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
@@ -159,17 +156,16 @@ public class TARDISPresetBuilderFactory {
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id, cham_data, 18);
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id.createBlockData(), 18);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
             } else {
-                final int id = cham_id;
-                final byte data = cham_data;
+                final Material id = cham_id;
                 // delay by the usual time so handbrake message shows after materialisation sound
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id, data, false);
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id.createBlockData(), false);
                     insta.buildPreset();
                 }, 375L);
             }

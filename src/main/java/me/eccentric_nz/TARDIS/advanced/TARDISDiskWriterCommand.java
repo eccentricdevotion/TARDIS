@@ -57,7 +57,7 @@ public class TARDISDiskWriterCommand {
     public boolean writeSave(Player player, String[] args) {
         ItemStack is;
         if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
-            is = new ItemStack(Material.RECORD_4, 1);
+            is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Save Storage Disk");
             im.setLore(Arrays.asList("Blank"));

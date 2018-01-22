@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -52,16 +51,13 @@ import org.bukkit.util.Vector;
 public class TARDISHostileDispersal {
 
     private final TARDIS plugin;
-    private final List<Material> has_colour;
     private final List<Material> replace_with_barrier;
 
     public TARDISHostileDispersal(TARDIS plugin) {
         this.plugin = plugin;
-        this.has_colour = Arrays.asList(Material.WOOL, Material.STAINED_GLASS, Material.STAINED_GLASS_PANE, Material.STAINED_CLAY);
         this.replace_with_barrier = buildList();
     }
 
-    @SuppressWarnings("deprecation")
     public void disperseTARDIS(final int id, UUID uuid, Player hostile, PRESET preset) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
@@ -129,7 +125,7 @@ public class TARDISHostileDispersal {
                         flowerz = l.getBlockZ();
                         break;
                 }
-                TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
                 break;
             case DUCK:
                 plugin.getPresetDestroyer().destroyDuckEyes(l, d);
@@ -156,7 +152,7 @@ public class TARDISHostileDispersal {
         }
         // remove blue wool
         final List<FallingBlock> falls = new ArrayList<>();
-        byte tmp = 0;
+        Material tmp = Material.BLUE_CARPET;
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
@@ -169,11 +165,11 @@ public class TARDISHostileDispersal {
                     }
                     if (!b.getType().equals(Material.AIR)) {
                         float v = (float) -0.5 + (float) (Math.random() * ((0.5 - -0.5) + 1));
-                        byte colour = (has_colour.contains(b.getType())) ? b.getData() : plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getTypeId());
+                        Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType());
                         if (yy == 1 && xx == 0 && zz == 0) {
                             tmp = colour;
                         }
-                        FallingBlock fb = w.spawnFallingBlock(b.getLocation(), Material.CARPET, colour);
+                        FallingBlock fb = w.spawnFallingBlock(b.getLocation(), colour.createBlockData());
                         falls.add(fb);
                         fb.setDropItem(false);
                         fb.setVelocity(new Vector(v, v, v));
@@ -182,7 +178,7 @@ public class TARDISHostileDispersal {
                 }
             }
         }
-        final byte data = tmp;
+        final Material mat = tmp;
         // schedule task to remove fallen blocks
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             falls.forEach((f) -> {
@@ -195,8 +191,7 @@ public class TARDISHostileDispersal {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block block = w.getBlockAt((sbx + xx), (sby), (sbz + zz));
-                    block.setType(Material.CARPET);
-                    block.setData(data);
+                    block.setType(mat);
                 }
             }
         }, 15L);
@@ -207,8 +202,8 @@ public class TARDISHostileDispersal {
 
     private List<Material> buildList() {
         List<Material> list = new ArrayList<>();
-        plugin.getBlocksConfig().getIntegerList("under_door_blocks").forEach((i) -> {
-            list.add(Material.getMaterial(i));
+        plugin.getBlocksConfig().getStringList("under_door_blocks").forEach((str) -> {
+            list.add(Material.getMaterial(str));
         });
         return list;
     }

@@ -78,28 +78,28 @@ public class TARDISTemporalLocatorInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] clocks = new ItemStack[27];
         // add morning
-        ItemStack morn = new ItemStack(Material.WATCH, 1);
+        ItemStack morn = new ItemStack(Material.CLOCK, 1);
         ItemMeta ing = morn.getItemMeta();
         ing.setDisplayName(plugin.getLanguage().getString("BUTTON_Morn"));
         ing.setLore(Arrays.asList("0 ticks", "6 AM"));
         morn.setItemMeta(ing);
         clocks[0] = morn;
         // add midday
-        ItemStack mid = new ItemStack(Material.WATCH, 1);
+        ItemStack mid = new ItemStack(Material.CLOCK, 1);
         ItemMeta day = mid.getItemMeta();
         day.setDisplayName(plugin.getLanguage().getString("BUTTON_NOON"));
         day.setLore(Arrays.asList("6000 ticks", "12 Noon"));
         mid.setItemMeta(day);
         clocks[1] = mid;
         // add night
-        ItemStack nig = new ItemStack(Material.WATCH, 1);
+        ItemStack nig = new ItemStack(Material.CLOCK, 1);
         ItemMeta ht = nig.getItemMeta();
         ht.setDisplayName(plugin.getLanguage().getString("BUTTON_NIGHT"));
         ht.setLore(Arrays.asList("12000 ticks", "6 PM"));
         nig.setItemMeta(ht);
         clocks[2] = nig;
         // add midnight
-        ItemStack zero = new ItemStack(Material.WATCH, 1);
+        ItemStack zero = new ItemStack(Material.CLOCK, 1);
         ItemMeta hrs = zero.getItemMeta();
         hrs.setDisplayName(plugin.getLanguage().getString("BUTTON_MID"));
         hrs.setLore(Arrays.asList("18000 ticks", "12 PM"));
@@ -109,7 +109,7 @@ public class TARDISTemporalLocatorInventory {
         // add some clocks
         int c = 4;
         for (int i = 1000; i < 24000; i += 1000) {
-            ItemStack is = new ItemStack(Material.WATCH, 1);
+            ItemStack is = new ItemStack(Material.CLOCK, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(time.get(c));
             List<String> lore = new ArrayList<>();

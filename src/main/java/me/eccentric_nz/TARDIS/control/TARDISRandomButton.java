@@ -163,7 +163,7 @@ public class TARDISRandomButton {
                                 wherec.put("tardis_id", id);
                                 wherec.put("uuid", c);
                                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
-                                if (rsv.resultSet()) {
+                                if (rsv.resultSet() && !plugin.getConfig().getBoolean("preferences.no_coords")) {
                                     TARDISMessage.send(plugin.getServer().getPlayer(cuuid), "DEST", dchat);
                                 }
                             }
@@ -172,10 +172,12 @@ public class TARDISRandomButton {
                             }
                         }
                     }
-                    if (isTL == true) {
-                        TARDISMessage.send(player, "DEST", dchat);
-                    } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
-                        TARDISMessage.send(plugin.getServer().getPlayer(ownerUUID), "DEST", dchat);
+                    if (!plugin.getConfig().getBoolean("preferences.no_coords")) {
+                        if (isTL == true) {
+                            TARDISMessage.send(player, "DEST", dchat);
+                        } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
+                            TARDISMessage.send(plugin.getServer().getPlayer(ownerUUID), "DEST", dchat);
+                        }
                     }
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);

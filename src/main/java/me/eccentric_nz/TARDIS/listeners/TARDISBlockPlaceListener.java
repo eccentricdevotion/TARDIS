@@ -54,7 +54,7 @@ public class TARDISBlockPlaceListener implements Listener {
      *
      * @param event a player placing a block
      */
-    @SuppressWarnings("deprecation")
+    
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();

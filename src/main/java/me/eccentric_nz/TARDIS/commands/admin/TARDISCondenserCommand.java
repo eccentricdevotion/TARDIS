@@ -37,7 +37,7 @@ public class TARDISCondenserCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean set(CommandSender sender) {
         if (!(sender instanceof Player)) {
             TARDISMessage.send(sender, "CMD_ONLY_PLAYER");

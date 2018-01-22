@@ -18,16 +18,12 @@ package me.eccentric_nz.TARDIS.lazarus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SpawnEggMeta;
 
 /**
  * The Genetic Manipulation Device was invented by Professor Richard Lazarus.
@@ -42,52 +38,54 @@ public class TARDISLazarusInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<>();
+    List<Material> disguises = new ArrayList<>();
 
     public TARDISLazarusInventory(TARDIS plugin) {
         this.plugin = plugin;
-        disguises.put("BAT", EntityType.BAT);
-        disguises.put("BLAZE", EntityType.BLAZE);
-        disguises.put("CAVE_SPIDER", EntityType.CAVE_SPIDER);
-        disguises.put("CHICKEN", EntityType.CHICKEN);
-        disguises.put("COW", EntityType.COW);
-        disguises.put("CREEPER", EntityType.CREEPER);
-        disguises.put("ENDERMAN", EntityType.ENDERMAN);
-        disguises.put("ENDERMITE", EntityType.ENDERMITE);
-        disguises.put("GUARDIAN", EntityType.GUARDIAN);
-        disguises.put("ELDER_GUARDIAN", EntityType.ELDER_GUARDIAN);
-        disguises.put("HORSE", EntityType.HORSE);
-        disguises.put("DONKEY", EntityType.DONKEY);
-        disguises.put("MULE", EntityType.MULE);
-        disguises.put("SKELETON_HORSE", EntityType.SKELETON_HORSE);
-        disguises.put("ZOMBIE_HORSE", EntityType.ZOMBIE_HORSE);
-        disguises.put("LLAMA", EntityType.LLAMA);
-        disguises.put("MAGMA_CUBE", EntityType.MAGMA_CUBE);
-        disguises.put("MUSHROOM_COW", EntityType.MUSHROOM_COW);
-        disguises.put("OCELOT", EntityType.OCELOT);
-        disguises.put("PARROT", EntityType.PARROT);
-        disguises.put("PIG", EntityType.PIG);
-        disguises.put("PIG_ZOMBIE", EntityType.PIG_ZOMBIE);
-        disguises.put("POLAR_BEAR", EntityType.POLAR_BEAR);
-        disguises.put("RABBIT", EntityType.RABBIT);
-        disguises.put("SHEEP", EntityType.SHEEP);
-        disguises.put("SILVERFISH", EntityType.SILVERFISH);
-        disguises.put("SKELETON", EntityType.SKELETON);
-        disguises.put("WITHER_SKELETON", EntityType.WITHER_SKELETON);
-        disguises.put("STRAY", EntityType.STRAY);
-        disguises.put("SLIME", EntityType.SLIME);
-        disguises.put("SPIDER", EntityType.SPIDER);
-        disguises.put("SQUID", EntityType.SQUID);
-        disguises.put("VILLAGER", EntityType.VILLAGER);
-        disguises.put("WITCH", EntityType.WITCH);
-        disguises.put("WOLF", EntityType.WOLF);
-        disguises.put("ZOMBIE", EntityType.ZOMBIE);
-        disguises.put("ZOMBIE_VILLAGER", EntityType.ZOMBIE_VILLAGER);
-        disguises.put("HUSK", EntityType.HUSK);
-        disguises.put("EVOKER", EntityType.EVOKER);
-        disguises.put("VINDICATOR", EntityType.VINDICATOR);
-        disguises.put("ILLUSIONER", EntityType.ILLUSIONER);
-        disguises.put("VEX", EntityType.VEX);
+        disguises.add(Material.BAT_SPAWN_EGG);
+        disguises.add(Material.BLAZE_SPAWN_EGG);
+        disguises.add(Material.CAVE_SPIDER_SPAWN_EGG);
+        disguises.add(Material.CHICKEN_SPAWN_EGG);
+        disguises.add(Material.COW_SPAWN_EGG);
+        disguises.add(Material.CREEPER_SPAWN_EGG);
+        disguises.add(Material.DONKEY_SPAWN_EGG);
+        disguises.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
+        disguises.add(Material.ENDERMAN_SPAWN_EGG);
+        disguises.add(Material.ENDERMITE_SPAWN_EGG);
+        disguises.add(Material.EVOCATION_ILLAGER_SPAWN_EGG);
+        disguises.add(Material.GHAST_SPAWN_EGG);
+        disguises.add(Material.GUARDIAN_SPAWN_EGG);
+        disguises.add(Material.HOPPER_MINECART);
+        disguises.add(Material.HORSE_SPAWN_EGG);
+        disguises.add(Material.HUSK_SPAWN_EGG);
+        disguises.add(Material.LLAMA_SPAWN_EGG);
+        disguises.add(Material.MAGMA_CUBE_SPAWN_EGG);
+        disguises.add(Material.MOOSHROOM_SPAWN_EGG);
+        disguises.add(Material.MULE_SPAWN_EGG);
+        disguises.add(Material.OCELOT_SPAWN_EGG);
+        disguises.add(Material.PARROT_SPAWN_EGG);
+        disguises.add(Material.PIG_SPAWN_EGG);
+        disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
+        disguises.add(Material.RABBIT_SPAWN_EGG);
+        disguises.add(Material.SHEEP_SPAWN_EGG);
+        disguises.add(Material.SHULKER_SPAWN_EGG);
+        disguises.add(Material.SILVERFISH_SPAWN_EGG);
+        disguises.add(Material.SKELETON_HORSE_SPAWN_EGG);
+        disguises.add(Material.SKELETON_SPAWN_EGG);
+        disguises.add(Material.SLIME_SPAWN_EGG);
+        disguises.add(Material.SPIDER_SPAWN_EGG);
+        disguises.add(Material.SQUID_SPAWN_EGG);
+        disguises.add(Material.STRAY_SPAWN_EGG);
+        disguises.add(Material.VEX_SPAWN_EGG);
+        disguises.add(Material.VILLAGER_SPAWN_EGG);
+        disguises.add(Material.VINDICATION_ILLAGER_SPAWN_EGG);
+        disguises.add(Material.WITCH_SPAWN_EGG);
+        disguises.add(Material.WITHER_SKELETON_SPAWN_EGG);
+        disguises.add(Material.WOLF_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_PIGMAN_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
         this.terminal = getItemStack();
     }
 
@@ -99,12 +97,11 @@ public class TARDISLazarusInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] eggs = new ItemStack[54];
         int i = 0;
-        for (Map.Entry<String, EntityType> map : disguises.entrySet()) {
-            ItemStack egg = new ItemStack(Material.MONSTER_EGG, 1);
-            SpawnEggMeta ime = (SpawnEggMeta) egg.getItemMeta();
-            ime.setSpawnedType(map.getValue());
-            ime.setDisplayName(map.getKey());
-            egg.setItemMeta(ime);
+        for (Material m : disguises) {
+            ItemStack egg = new ItemStack(m, 1);
+            ItemMeta me = egg.getItemMeta();
+            me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
+            egg.setItemMeta(me);
             eggs[i] = egg;
             i++;
         }
@@ -116,20 +113,20 @@ public class TARDISLazarusInventory {
         eggs[i] = iron;
         i++;
         // put snowman
-        ItemStack snow = new ItemStack(Material.SNOW_BALL, 1);
+        ItemStack snow = new ItemStack(Material.SNOWBALL, 1);
         ItemMeta man = snow.getItemMeta();
         man.setDisplayName("SNOWMAN");
         snow.setItemMeta(man);
         eggs[i] = snow;
         i++;
         // put wither
-        ItemStack wit = new ItemStack(Material.SKULL_ITEM, 1, (byte) 1);
+        ItemStack wit = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
         ItemMeta her = wit.getItemMeta();
         her.setDisplayName("WITHER");
         wit.setItemMeta(her);
         eggs[i] = wit;
         // add options
-        ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
+        ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Arrays.asList(plugin.getLanguage().getString("SET_OFF")));
@@ -141,13 +138,13 @@ public class TARDISLazarusInventory {
         baby.setLore(Arrays.asList("ADULT"));
         adult.setItemMeta(baby);
         eggs[47] = adult;
-        ItemStack typ = new ItemStack(Material.INK_SACK, 1, (byte) 6);
+        ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Arrays.asList("WHITE"));
         typ.setItemMeta(col);
         eggs[48] = typ;
-        ItemStack tamed = new ItemStack(Material.LEASH, 1);
+        ItemStack tamed = new ItemStack(Material.LEAD, 1);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         List<String> opts = new ArrayList<>();
@@ -165,7 +162,7 @@ public class TARDISLazarusInventory {
         rem.setItemMeta(ove);
         eggs[51] = rem;
         // set
-        ItemStack s = new ItemStack(Material.BOOK_AND_QUILL, 1);
+        ItemStack s = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
         s.setItemMeta(sim);

@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -59,7 +59,6 @@ public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
     private final HashMap<Material, String> t = new HashMap<>();
-    private final TARDISWallsLookup twl;
     private final List<UUID> crafters = new ArrayList<>();
     private final List<Integer> spaces = Arrays.asList(1, 4, 7, 6, 9);
 
@@ -80,12 +79,12 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put(Material.STAINED_CLAY, "WAR"); // war doctor
+        t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
         t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
         t.put(Material.LIME_GLAZED_TERRACOTTA, "LEGACY_DELUXE"); // legacy_deluxe
         t.put(Material.ORANGE_GLAZED_TERRACOTTA, "LEGACY_BIGGER"); // legacy_bigger
         t.put(Material.RED_GLAZED_TERRACOTTA, "LEGACY_REDSTONE"); // legacy_redstone
-        t.put(Material.SILVER_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
+        t.put(Material.LIGHT_GRAY_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
         // custom seeds
         plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
@@ -97,7 +96,6 @@ public class TARDISCraftListener implements Listener {
                 }
             }
         });
-        twl = new TARDISWallsLookup(plugin);
     }
 
     @EventHandler
@@ -123,7 +121,6 @@ public class TARDISCraftListener implements Listener {
      *
      * @param event the player clicking the crafting result slot.
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockCraft(final InventoryClickEvent event) {
         final Inventory inv = event.getInventory();
@@ -146,8 +143,8 @@ public class TARDISCraftListener implements Listener {
                     im.setDisplayName("§6TARDIS Seed Block");
                     List<String> lore = new ArrayList<>();
                     lore.add(t.get(m7));
-                    lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
-                    lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
+                    lore.add("Walls: " + inv.getItem(6).getType().toString());
+                    lore.add("Floors: " + inv.getItem(9).getType().toString());
                     im.setLore(lore);
                     is.setItemMeta(im);
                     if (checkPerms(player, m7)) {
@@ -182,7 +179,6 @@ public class TARDISCraftListener implements Listener {
      * @param inv
      * @return whether it is a valid seed block
      */
-    @SuppressWarnings("deprecation")
     private boolean checkSlots(Inventory inv) {
         for (int s : spaces) {
             ItemStack is = inv.getItem(s);
@@ -192,7 +188,7 @@ public class TARDISCraftListener implements Listener {
             Material m = is.getType();
             switch (s) {
                 case 1:
-                    if (!m.equals(Material.REDSTONE_TORCH_ON)) {
+                    if (!m.equals(Material.REDSTONE_TORCH)) {
                         return false;
                     }
                     break;
@@ -210,7 +206,7 @@ public class TARDISCraftListener implements Listener {
                     break;
                 default: // 6, 9
                     // must be a valid wall / floor block
-                    if (!twl.wall_lookup.containsKey(m.toString() + ":" + is.getData().getData())) {
+                    if (!TARDISWalls.BLOCKS.contains(m)) {
                         return false;
                     }
                     break;
@@ -242,7 +238,7 @@ public class TARDISCraftListener implements Listener {
                     ItemStack map = ci.getItem(slot);
                     if (map.hasItemMeta() && map.getItemMeta().hasDisplayName() && TARDISConstants.CIRCUITS.contains(map.getItemMeta().getDisplayName())) {
                         // disallow cloning
-                        if (ci.first(Material.EMPTY_MAP) != -1) {
+                        if (ci.first(Material.MAP) != -1) {
                             ci.setResult(null);
                             return;
                         }
@@ -271,7 +267,7 @@ public class TARDISCraftListener implements Listener {
                         is.setItemMeta(im);
                         ci.setResult(is);
                     }
-                } else if (is.getType().equals(Material.NETHER_BRICK_ITEM) && dn.equals("Acid Battery")) {
+                } else if (is.getType().equals(Material.NETHER_BRICK) && dn.equals("Acid Battery")) {
                     for (int i = 2; i < 9; i += 2) {
                         ItemStack water = ci.getItem(i);
                         if (!water.hasItemMeta() || !water.getItemMeta().hasDisplayName() || !water.getItemMeta().getDisplayName().equals("Acid Bucket")) {

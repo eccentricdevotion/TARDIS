@@ -43,7 +43,7 @@ public class TARDISHumInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
+    
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<>();
         // get HUM sounds

@@ -39,6 +39,8 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.Comparator;
+import org.bukkit.block.data.type.Repeater;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,16 +56,16 @@ import org.bukkit.material.Lever;
 public class TARDISJunkControlListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Byte, Integer> repeaterMap = new HashMap<>();
+    private final HashMap<Integer, Integer> repeaterMap = new HashMap<>();
     private final List<String> worlds;
     private final HashMap<UUID, Integer> worldMap = new HashMap<>();
 
     public TARDISJunkControlListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.repeaterMap.put((byte) 3, 1);
-        this.repeaterMap.put((byte) 7, 10);
-        this.repeaterMap.put((byte) 11, 100);
-        this.repeaterMap.put((byte) 15, 1000);
+        this.repeaterMap.put(1, 1);
+        this.repeaterMap.put(2, 10);
+        this.repeaterMap.put(3, 100);
+        this.repeaterMap.put(4, 1000);
         this.worlds = this.plugin.getTardisAPI().getOverWorlds();
     }
 
@@ -174,7 +176,7 @@ public class TARDISJunkControlListener implements Listener {
                     }
                 }
             }
-            if (blockType == Material.WOOD_BUTTON) {
+            if (blockType == Material.OAK_BUTTON) {
                 // 6
                 where.put("type", 6);
                 ResultSetControls rsh = new ResultSetControls(plugin, where, false);
@@ -261,16 +263,17 @@ public class TARDISJunkControlListener implements Listener {
         // get the destination sign
         Sign s = getDestinationSign(id);
         // get repeater data
-        Block r = getControlBlock(id, 2);
+        Repeater r = (Repeater) getControlBlock(id, 2).getBlockData();
         // get comparator data
-        Block c = getControlBlock(id, 3);
+        Comparator c = (Comparator) getControlBlock(id, 3).getBlockData();
         if (s != null && r != null && c != null) {
             String txt = s.getLine(line);
             if (txt.isEmpty()) {
                 txt = "0";
             }
-            int multiplier = repeaterMap.get(r.getData());
-            int positiveNegative = (c.getData() == 3) ? 1 : -1;
+            // TODO check delay values
+            int multiplier = repeaterMap.get(r.getDelay());
+            int positiveNegative = (c.getMode().equals(Comparator.Mode.COMPARE)) ? 1 : -1;
             // get current coord
             int current = TARDISNumberParsers.parseInt(txt);
             // increment / decrement sign coord value

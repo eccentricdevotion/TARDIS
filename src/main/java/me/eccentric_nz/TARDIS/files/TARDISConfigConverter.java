@@ -80,7 +80,6 @@ public class TARDISConfigConverter {
         sectionsInt.put("border_radius", "creation.border_radius");
         sectionsInt.put("confirm_timeout", "police_box.confirm_timeout");
         sectionsInt.put("count", "creation.count");
-        sectionsInt.put("custom_creeper_id", "creation.custom_creeper_id");
         sectionsInt.put("freeze_cooldown", "preferences.freeze_cooldown");
         sectionsInt.put("gravity_max_distance", "growth.gravity_max_distance");
         sectionsInt.put("gravity_max_velocity", "growth.gravity_max_velocity");
@@ -96,8 +95,6 @@ public class TARDISConfigConverter {
         sectionsInt.put("timeout", "travel.timeout");
         sectionsInt.put("timeout_height", "travel.timeout_height");
         sectionsInt.put("tp_radius", "travel.tp_radius");
-        sectionsInt.put("wall_data", "police_box.wall_data");
-        sectionsInt.put("wall_id", "police_box.wall_id");
         sectionsString.put("custom_schematic_seed", "creation.custom_schematic_seed");
         sectionsString.put("database", "storage.database");
         sectionsString.put("default_world_name", "creation.default_world_name");
@@ -108,7 +105,6 @@ public class TARDISConfigConverter {
         sectionsString.put("mysql.password", "storage.mysql.password");
         sectionsString.put("mysql.url", "storage.mysql.url");
         sectionsString.put("mysql.user", "storage.mysql.user");
-        sectionsString.put("tardis_lamp", "police_box.tardis_lamp");
     }
 
     public boolean convert() {

@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -71,10 +72,8 @@ public class TARDISScannerListener implements Listener {
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
         validBlocks.add(Material.LEVER);
-        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
-        validBlocks.add(Material.STONE_BUTTON);
-        validBlocks.add(Material.WOOD_BUTTON);
+        validBlocks.add(Material.COMPARATOR);
+        validBlocks.addAll(TARDISMaterials.buttons);
         twa.put("Cyberman Head", EntityType.AREA_EFFECT_CLOUD);
         twa.put("Empty Child Head", EntityType.ARMOR_STAND);
         twa.put("Ice Warrior Head", EntityType.ARROW);
@@ -233,7 +232,7 @@ public class TARDISScannerListener implements Listener {
                                 et = EntityType.COMPLEX_PART;
                                 break;
                             case IRON_HELMET:
-                            case GOLD_HELMET:
+                            case GOLDEN_HELMET:
                             case CHAINMAIL_HELMET:
                                 if (ee.getHelmet().hasItemMeta() && ee.getHelmet().getItemMeta().hasDisplayName()) {
                                     String dn = ee.getHelmet().getItemMeta().getDisplayName();

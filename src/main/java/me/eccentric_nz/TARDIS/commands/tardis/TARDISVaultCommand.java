@@ -39,7 +39,7 @@ public class TARDISVaultCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public boolean addDropChest(Player player) {
         // check permission
         if (!player.hasPermission("tardis.vault")) {

@@ -91,7 +91,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             // scan the inventory for area disks and spit them out
             for (int i = 0; i < isze; i++) {
                 ItemStack stack = inv.getItem(i);
-                if (stack != null && stack.getType().equals(Material.RECORD_3) && stack.hasItemMeta()) {
+                if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
                     ItemMeta ims = stack.getItemMeta();
                     if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                         Player p = (Player) event.getPlayer();
@@ -242,7 +242,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
         ItemStack stack = event.getItemDrop().getItemStack();
-        if (stack != null && stack.getType().equals(Material.RECORD_3) && stack.hasItemMeta()) {
+        if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
             ItemMeta ims = stack.getItemMeta();
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);

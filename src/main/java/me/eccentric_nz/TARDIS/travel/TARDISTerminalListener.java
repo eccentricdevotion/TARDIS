@@ -109,22 +109,22 @@ public class TARDISTerminalListener implements Listener {
                             terminalStep.put(uuid, 100);
                             break;
                         case 9:
-                            setSlots(inv, 10, 16, false, (byte) 3, "X", true, uuid);
+                            setSlots(inv, 10, 16, false, "X", true, uuid);
                             break;
                         case 17:
-                            setSlots(inv, 10, 16, true, (byte) 3, "X", true, uuid);
+                            setSlots(inv, 10, 16, true, "X", true, uuid);
                             break;
                         case 18:
-                            setSlots(inv, 19, 25, false, (byte) 4, "Z", true, uuid);
+                            setSlots(inv, 19, 25, false, "Z", true, uuid);
                             break;
                         case 26:
-                            setSlots(inv, 19, 25, true, (byte) 4, "Z", true, uuid);
+                            setSlots(inv, 19, 25, true, "Z", true, uuid);
                             break;
                         case 27:
-                            setSlots(inv, 28, 34, false, (byte) 10, "Multiplier", false, uuid);
+                            setSlots(inv, 28, 34, false, "Multiplier", false, uuid);
                             break;
                         case 35:
-                            setSlots(inv, 28, 34, true, (byte) 10, "Multiplier", false, uuid);
+                            setSlots(inv, 28, 34, true, "Multiplier", false, uuid);
                             break;
                         case 36:
                             setCurrent(inv, player, 36);
@@ -312,11 +312,22 @@ public class TARDISTerminalListener implements Listener {
         return intval;
     }
 
-    private void setSlots(Inventory inv, int min, int max, boolean pos, byte data, String row, boolean signed, UUID uuid) {
+    private void setSlots(Inventory inv, int min, int max, boolean pos, String row, boolean signed, UUID uuid) {
         int affected_slot = getSlot(inv, min, max);
         int new_slot = getNewSlot(affected_slot, min, max, pos);
         inv.setItem(affected_slot, null);
-        ItemStack is = new ItemStack(Material.WOOL, 1, data);
+        ItemStack is;
+        switch (row) {
+            case "X":
+                is = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
+                break;
+            case "Z":
+                is = new ItemStack(Material.YELLOW_WOOL, 1);
+                break;
+            default:
+                is = new ItemStack(Material.PURPLE_WOOL, 1);
+                break;
+        }
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(row);
         List<String> lore = getLoreValue(max, new_slot, signed, uuid);
@@ -552,23 +563,20 @@ public class TARDISTerminalListener implements Listener {
 
     private void close(final Player p) {
         final UUID uuid = p.getUniqueId();
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                if (terminalUsers.containsKey(uuid)) {
-                    terminalUsers.remove(uuid);
-                }
-                if (terminalStep.containsKey(uuid)) {
-                    terminalStep.remove(uuid);
-                }
-                if (terminalDestination.containsKey(uuid)) {
-                    terminalDestination.remove(uuid);
-                }
-                if (terminalSub.containsKey(uuid)) {
-                    terminalSub.remove(uuid);
-                }
-                p.closeInventory();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (terminalUsers.containsKey(uuid)) {
+                terminalUsers.remove(uuid);
             }
+            if (terminalStep.containsKey(uuid)) {
+                terminalStep.remove(uuid);
+            }
+            if (terminalDestination.containsKey(uuid)) {
+                terminalDestination.remove(uuid);
+            }
+            if (terminalSub.containsKey(uuid)) {
+                terminalSub.remove(uuid);
+            }
+            p.closeInventory();
         }, 1L);
     }
 }

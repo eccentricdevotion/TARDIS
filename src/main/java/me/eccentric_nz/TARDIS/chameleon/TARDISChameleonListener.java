@@ -231,20 +231,16 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
             ItemMeta im = is.getItemMeta();
             String onoff;
             Material m;
-            byte data;
             if (!co.equals(c)) {
                 onoff = co.getOffColour() + plugin.getLanguage().getString(co.getOff());
-                m = Material.CARPET;
-                data = 8;
+                m = Material.LIGHT_GRAY_CARPET;
             } else {
                 onoff = co.getOnColour() + plugin.getLanguage().getString(co.getOn());
-                m = Material.WOOL;
-                data = 5;
+                m = Material.LIME_WOOL;
             }
             im.setDisplayName(onoff);
             is.setItemMeta(im);
             is.setType(m);
-            is.setDurability(data);
         }
     }
 }

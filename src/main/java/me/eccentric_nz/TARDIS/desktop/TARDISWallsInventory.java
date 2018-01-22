@@ -16,11 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,7 +35,6 @@ public class TARDISWallsInventory {
 
     private final ItemStack[] menu;
     private final TARDIS plugin;
-    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREEN_WOOL", "LIGHT_GREEN_CONCRETE", "LIGHT_GREEN_GLAZED_TERRACOTTA", "LIGHT_GREEN_CLAY", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "GREY_CONCRETE", "LIGHT_GREY_CONCRETE", "GREY_GLAZED_TERRACOTTA", "LIGHT_GREY_GLAZED_TERRACOTTA", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallsInventory(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,24 +46,20 @@ public class TARDISWallsInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
-        // get blocks
-        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
+        // get BLOCKS
+        for (Material entry : TARDISWalls.BLOCKS) {
             if (i > 52) {
                 break;
             }
-            if (!notthese.contains(entry.getKey())) {
-                Pair value = entry.getValue();
-                ItemStack is = new ItemStack(value.getType(), 1, value.getData());
-                stack[i] = is;
-                if (i % 9 == 7) {
-                    i += 2;
-                } else {
-                    i++;
-                }
+            ItemStack is = new ItemStack(entry, 1);
+            stack[i] = is;
+            if (i % 9 == 7) {
+                i += 2;
+            } else {
+                i++;
             }
         }
 

@@ -54,7 +54,7 @@ public class TARDISManualFlightListener implements Listener {
         UUID uuid = player.getUniqueId();
         Block b = event.getClickedBlock();
         // only repeaters
-        if (b != null && (b.getType().equals(Material.DIODE_BLOCK_OFF) || b.getType().equals(Material.DIODE_BLOCK_ON))) {
+        if (b != null && b.getType().equals(Material.REPEATER)) {
             Location loc = b.getLocation();
             if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
                 if (loc.toString().equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {

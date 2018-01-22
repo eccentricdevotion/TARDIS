@@ -50,13 +50,14 @@ import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
@@ -423,7 +424,11 @@ public class TARDII implements TardisAPI {
 
     @Override
     public List<String> getWallFloorBlocks() {
-        return new ArrayList<>(TARDIS.plugin.getTardisWalls().blocks.keySet());
+        List<String> blocks = new ArrayList<>();
+        TARDISWalls.BLOCKS.forEach((m) -> {
+            blocks.add(m.toString());
+        });
+        return blocks;
     }
 
     @Override
@@ -622,10 +627,12 @@ public class TARDII implements TardisAPI {
 
     @Override
     public String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TARDISException {
-        if (!TARDIS.plugin.getTardisWalls().blocks.containsKey(wall.toUpperCase(Locale.ENGLISH))) {
+        Material w = Material.getMaterial(wall);
+        Material f = Material.getMaterial(floor);
+        if (!TARDISWalls.BLOCKS.contains(w)) {
             throw new TARDISException("Not a valid wall type");
         }
-        if (!TARDIS.plugin.getTardisWalls().blocks.containsKey(floor.toUpperCase(Locale.ENGLISH))) {
+        if (!TARDISWalls.BLOCKS.contains(f)) {
             throw new TARDISException("Not a valid wall type");
         }
         // get current SCHEMATIC
@@ -638,11 +645,8 @@ public class TARDII implements TardisAPI {
             tud.setSchematic(current_console);
             tud.setPrevious(current_console);
             tud.setLevel(rs.getTardis().getArtron_level());
-            // look up the wall and floor values
-            Pair w = TARDIS.plugin.getTardisWalls().blocks.get(wall);
-            tud.setWall(w.getType().toString() + ":" + w.getData());
-            Pair f = TARDIS.plugin.getTardisWalls().blocks.get(floor);
-            tud.setFloor(f.getType().toString() + ":" + f.getData());
+            tud.setWall(wall);
+            tud.setFloor(floor);
             // change the wall and floor
             TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(TARDIS.plugin, uuid, tud);
             long delay = Math.round(20 / TARDIS.plugin.getConfig().getDouble("growth.room_speed"));
@@ -654,7 +658,7 @@ public class TARDII implements TardisAPI {
             if (rsp.resultSet()) {
                 return rsp.getWall() + "," + rsp.getFloor();
             } else {
-                return "ORANGE_WOOL,LIGHT_GREY_WOOL";
+                return "ORANGE_WOOL,LIGHT_GRAY_WOOL";
             }
         } else {
             return "";

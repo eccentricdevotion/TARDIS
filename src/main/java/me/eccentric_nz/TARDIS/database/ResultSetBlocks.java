@@ -105,8 +105,7 @@ public class ResultSetBlocks {
                             rs.getInt("tardis_id"),
                             plugin.getLocationUtils().getLocationFromBukkitString(str),
                             str,
-                            rs.getInt("block"),
-                            rs.getByte("data"),
+                            plugin.getServer().createBlockData(rs.getString("data")),
                             rs.getInt("police_box")
                     );
                     if (multiple) {

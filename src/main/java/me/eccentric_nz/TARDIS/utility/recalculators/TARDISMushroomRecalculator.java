@@ -16,7 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
+import com.google.common.collect.Sets;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.MultipleFacing;
 
 /**
  *
@@ -24,96 +29,86 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
  */
 public class TARDISMushroomRecalculator {
 
+    private final Set<BlockFace> one = Sets.newHashSet(BlockFace.UP, BlockFace.WEST, BlockFace.NORTH);
+    private final Set<BlockFace> two = Sets.newHashSet(BlockFace.UP, BlockFace.NORTH);
+    private final Set<BlockFace> three = Sets.newHashSet(BlockFace.UP, BlockFace.NORTH, BlockFace.EAST);
+    private final Set<BlockFace> four = Sets.newHashSet(BlockFace.UP, BlockFace.WEST);
+    private final Set<BlockFace> six = Sets.newHashSet(BlockFace.UP, BlockFace.EAST);
+    private final Set<BlockFace> seven = Sets.newHashSet(BlockFace.UP, BlockFace.SOUTH, BlockFace.WEST);
+    private final Set<BlockFace> eight = Sets.newHashSet(BlockFace.UP, BlockFace.SOUTH);
+    private final Set<BlockFace> nine = Sets.newHashSet(BlockFace.UP, BlockFace.EAST, BlockFace.SOUTH);
+
     /**
      * Recalculate the data for directional block (TRAPDOOR) when the TARDIS
      * preset changes direction.
      *
-     * @param b the byte stored in the preset data
+     * @param b the block data stored in the preset data
      * @param d the new direction of the TARDIS
      * @param col the preset column that is being calculated
-     * @return the recalculated byte
+     * @return the recalculated block data
      */
-    public byte recalculate(byte b, COMPASS d, int col) {
-        byte recalc;
+    public BlockData recalculate(BlockData b, COMPASS d, int col) {
+        MultipleFacing mushroom = (MultipleFacing) b;
+        // get all set faces
+        Set<BlockFace> has = mushroom.getFaces();
+        Set<BlockFace> set = null;
         switch (d) {
             case SOUTH:
-                switch (b) {
-                    case 1:
-                        recalc = 3;
-                        break;
-                    case 2:
-                        recalc = 6;
-                        break;
-                    case 3:
-                        recalc = 9;
-                        break;
-                    case 4:
-                        recalc = 2;
-                        break;
-                    case 6:
-                        recalc = 8;
-                        break;
-                    case 7:
-                        recalc = 1;
-                        break;
-                    case 8:
-                        recalc = 4;
-                        break;
-                    case 9:
-                        recalc = 7;
-                        break;
-                    default:
-                        recalc = b;
+                if (has.equals(one)) {
+                    set = three;
+                } else if (has.equals(two)) {
+                    set = six;
+                } else if (has.equals(three)) {
+                    set = nine;
+                } else if (has.equals(four)) {
+                    set = two;
+                } else if (has.equals(six)) {
+                    set = eight;
+                } else if (has.equals(seven)) {
+                    set = one;
+                } else if (has.equals(eight)) {
+                    set = four;
+                } else if (has.equals(nine)) {
+                    set = seven;
                 }
                 break;
             case WEST:
                 if (col == 3 || col == 7) {
-                    switch (b) {
-                        case 4:
-                            recalc = (byte) 6;
-                            break;
-                        case 6:
-                            recalc = (byte) 4;
-                            break;
-                        default:
-                            recalc = b;
+                    if (has.equals(four)) {
+                        set = six;
+                    } else if (has.equals(six)) {
+                        set = four;
                     }
-                } else {
-                    recalc = b;
                 }
                 break;
-            default:
-                switch (b) {
-                    case 1:
-                        recalc = 7;
-                        break;
-                    case 2:
-                        recalc = 4;
-                        break;
-                    case 3:
-                        recalc = 1;
-                        break;
-                    case 4:
-                        recalc = 8;
-                        break;
-                    case 6:
-                        recalc = 2;
-                        break;
-                    case 7:
-                        recalc = 9;
-                        break;
-                    case 8:
-                        recalc = 6;
-                        break;
-                    case 9:
-                        recalc = 3;
-                        break;
-                    default:
-                        recalc = b;
+            default: // NORTH
+                if (has.equals(one)) {
+                    set = seven;
+                } else if (has.equals(two)) {
+                    set = four;
+                } else if (has.equals(three)) {
+                    set = one;
+                } else if (has.equals(four)) {
+                    set = eight;
+                } else if (has.equals(six)) {
+                    set = two;
+                } else if (has.equals(seven)) {
+                    set = nine;
+                } else if (has.equals(eight)) {
+                    set = six;
+                } else if (has.equals(nine)) {
+                    set = three;
                 }
                 break;
         }
-        return recalc;
+        if (set != null) {
+            has.forEach((f) -> {
+                mushroom.setFace(f, false);
+            });
+            set.forEach((f) -> {
+                mushroom.setFace(f, true);
+            });
+        }
+        return mushroom;
     }
-
 }

@@ -70,7 +70,7 @@ public class TARDISCondenserListener implements Listener {
      *
      * @param event a chest closing
      */
-    @SuppressWarnings("deprecation")
+    
     @EventHandler(ignoreCancelled = true)
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();

@@ -26,8 +26,6 @@ import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
-import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -51,12 +49,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISSeedBlockListener implements Listener {
 
     private final TARDIS plugin;
-    private final TARDISWallsLookup twl;
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
-        twl = new TARDISWallsLookup(plugin);
     }
 
     /**
@@ -79,14 +75,12 @@ public class TARDISSeedBlockListener implements Listener {
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
             SCHEMATIC schm = CONSOLES.getBY_NAMES().get(lore.get(0));
-            Pair wall_data = getValuesFromWallString(lore.get(1));
-            Pair floor_data = getValuesFromWallString(lore.get(2));
+            Material wall = Material.valueOf(getValuesFromWallString(lore.get(1)));
+            Material floor = Material.valueOf(getValuesFromWallString(lore.get(2)));
             TARDISBuildData seed = new TARDISBuildData();
             seed.setSchematic(schm);
-            seed.setWallType(wall_data.getType());
-            seed.setWallData(wall_data.getData());
-            seed.setFloorType(floor_data.getType());
-            seed.setFloorData(floor_data.getData());
+            seed.setWallType(wall);
+            seed.setFloorType(floor);
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
             TARDISMessage.send(player, "SEED_PLACE");
@@ -100,7 +94,7 @@ public class TARDISSeedBlockListener implements Listener {
      * @param event a block break event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    @SuppressWarnings("deprecation")
+
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         Player p = event.getPlayer();
@@ -118,8 +112,8 @@ public class TARDISSeedBlockListener implements Listener {
                 im.setDisplayName("§6TARDIS Seed Block");
                 List<String> lore = new ArrayList<>();
                 lore.add(data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
-                lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
-                lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
+                lore.add("Walls: " + data.getWallType().toString());
+                lore.add("Floors: " + data.getFloorType().toString());
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set the block to AIR
@@ -180,14 +174,14 @@ public class TARDISSeedBlockListener implements Listener {
     }
 
     /**
-     * Determines the id and data values of the block. Values are calculated by
+     * Determines the Material type of the block. Values are calculated by
      * converting the string values stored in a TARDIS Seed block.
      *
      * @param str the lore stored in the TARDIS Seed block's Item Meta
-     * @return an int and a byte stored in a simple data class
+     * @return an String representing the Material
      */
-    private Pair getValuesFromWallString(String str) {
+    private String getValuesFromWallString(String str) {
         String[] split = str.split(": ");
-        return plugin.getTardisWalls().blocks.get(split[1]);
+        return split[1];
     }
 }

@@ -228,14 +228,14 @@ WaterLevelMax: 63
 WaterLevelMin: 0
 
 # Block used as water in WaterLevelMax
-WaterBlock: STATIONARY_WATER
+WaterBlock: FLOWING_WATER
 
 # Block used as ice. Ice only spawns if the BiomeTemperture is low enough.
 IceBlock: ICE
 
 # Block used as cooled or frozen lava.
 # Set this to OBSIDIAN for "frozen" lava lakes in cold biomes
-CooledLavaBlock: STATIONARY_LAVA
+CooledLavaBlock: FLOWING_LAVA
 
 
 #######################################################################
@@ -352,15 +352,15 @@ Ore(REDSTONE_ORE,8,8,100.0,0,15,STONE)
 Ore(DIAMOND_ORE,8,1,100.0,0,15,STONE)
 Ore(LAPIS_ORE,7,1,100.0,0,15,STONE)
 UnderGroundLake(25,60,2,5.0,0,49)
-Liquid(STATIONARY_LAVA,10,100.0,8,128,STONE)
-SmallLake(STATIONARY_LAVA,2,1.0,8,119)
-Well(RED_SANDSTONE,STONE_SLAB2,STATIONARY_LAVA,1,0.1,2,128,SAND:1)
+Liquid(FLOWING_LAVA,10,100.0,8,128,STONE)
+SmallLake(FLOWING_LAVA,2,1.0,8,119)
+Well(RED_SANDSTONE,STONE_SLAB2,FLOWING_LAVA,1,0.1,2,128,SAND:1)
 UnderWaterOre(SAND,7,3,100.0,DIRT,GRASS)
 UnderWaterOre(CLAY,4,1,100.0,DIRT,CLAY)
 UnderWaterOre(GRAVEL,6,1,100.0,DIRT,GRASS)
 Dungeon(8,100.0,0,128)
 Fossil(1.156)
-Grass(DEAD_BUSH,NotGrouped,4,100.0,SAND,HARD_CLAY,STAINED_CLAY,DIRT)
+Grass(DEAD_BUSH,NotGrouped,4,100.0,SAND,TERRACOTTA,STAINED_CLAY,DIRT)
 Plant(Dandelion,2,100.0,0,128,GRASS,DIRT)
 Plant(PUMPKIN,1,3.0,0,128,GRASS)
 Reed(SUGAR_CANE_BLOCK,50,100.0,0,128,GRASS,DIRT,SAND)

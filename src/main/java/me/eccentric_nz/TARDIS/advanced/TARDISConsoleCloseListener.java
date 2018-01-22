@@ -99,7 +99,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                     // if no materialisation circuit exit
-                    if (!tcc.hasMaterialisation() && (inv.contains(Material.GREEN_RECORD) || inv.contains(Material.RECORD_3) || inv.contains(Material.RECORD_4) || inv.contains(Material.RECORD_12))) {
+                    if (!tcc.hasMaterialisation() && (inv.contains(Material.MUSIC_DISC_CAT) || inv.contains(Material.MUSIC_DISC_BLOCKS) || inv.contains(Material.MUSIC_DISC_CHIRP) || inv.contains(Material.MUSIC_DISC_WAIT))) {
                         TARDISMessage.send(p, "MAT_MISSING");
                         return;
                     }
@@ -130,7 +130,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                 String first = lore.get(0);
                                 if (!first.equals("Blank")) {
                                     switch (mat) {
-                                        case RECORD_3: // area
+                                        case MUSIC_DISC_BLOCKS: // area
                                             // check the current location is not in this area already
                                             if (!plugin.getTardisArea().areaCheckInExile(first, current)) {
                                                 continue;
@@ -160,7 +160,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             TARDISMessage.send(p, "TRAVEL_APPROVED", first);
                                             plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                             break;
-                                        case GREEN_RECORD: // biome
+                                        case MUSIC_DISC_CAT: // biome
                                             // find a biome location
                                             if (!p.hasPermission("tardis.timetravel.biome")) {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_BIOME");
@@ -213,7 +213,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                             }
                                             break;
-                                        case RECORD_12: // player
+                                        case MUSIC_DISC_WAIT: // player
                                             // get the player's location
                                             if (p.hasPermission("tardis.timetravel.player")) {
                                                 if (p.getName().equalsIgnoreCase(first)) {
@@ -242,13 +242,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 continue;
                                             }
                                             break;
-                                        case RECORD_6: // preset
+                                        case MUSIC_DISC_MALL: // preset
                                             if (!ignore) {
                                                 // apply the preset
                                                 set_tardis.put("chameleon_preset", first);
                                             }
                                             break;
-                                        case RECORD_4: // save
+                                        case MUSIC_DISC_CHIRP: // save
                                             if (p.hasPermission("tardis.save")) {
                                                 String world = lore.get(1);
                                                 int x = TARDISNumberParsers.parseInt(lore.get(2));

@@ -404,7 +404,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         UUID uuid = event.getPlayer().getUniqueId();
         if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
-            if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLE_WALL)) {
+            if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
                 b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
             }

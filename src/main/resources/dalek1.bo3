@@ -3958,7 +3958,7 @@ Block(7,16,7,AIR)
 #   BlockCheck(0,-1,0,WOOL:0)      Require white wool just below the object
 #   BlockCheckNot(0,-1,0,WOOL:0)   Require that there is no white wool below the object
 #   LightCheck(0,0,0,0,1)          Require almost complete darkness just below the object
-BlockCheck(0,-1,0,SAND,HARD_CLAY,DIRT,GRASS)
+BlockCheck(0,-1,0,SAND,TERRACOTTA,DIRT,GRASS)
 
 #######################################################################
 # +-----------------------------------------------------------------+ #

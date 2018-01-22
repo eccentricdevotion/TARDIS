@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -76,24 +75,15 @@ public class TARDISRoomBuilder {
             roomData.setTardis_id(rs.getTardis_id());
             // get wall data, default to orange wool if not set
             Material wall_type, floor_type;
-            byte wall_data, floor_data;
             if (rsp.resultSet()) {
-                Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                wall_type = wid_data.getType();
-                wall_data = wid_data.getData();
-                Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                floor_type = fid_data.getType();
-                floor_data = fid_data.getData();
+                wall_type = Material.getMaterial(rsp.getWall());
+                floor_type = Material.getMaterial(rsp.getFloor());
             } else {
-                wall_type = Material.WOOL;
-                wall_data = 1;
-                floor_type = Material.WOOL;
-                floor_data = 8;
+                wall_type = Material.ORANGE_WOOL;
+                floor_type = Material.LIGHT_GRAY_WOOL;
             }
             roomData.setMiddleType(wall_type);
-            roomData.setMiddleData(wall_data);
             roomData.setFloorType(floor_type);
-            roomData.setFloorData(floor_data);
             // get start locations
             Block b = l.getBlock();
             roomData.setBlock(b);
@@ -127,7 +117,7 @@ public class TARDISRoomBuilder {
             roomData.setRoom(r);
             roomData.setSchematic(obj);
 
-            // determine how often to place a block (in ticks) - `room_speed` is the number of blocks to place in a second (20 ticks)
+            // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, null, null, roomData));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);

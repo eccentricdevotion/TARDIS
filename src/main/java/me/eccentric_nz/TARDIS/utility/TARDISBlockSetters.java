@@ -20,10 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Switch;
 
 /**
  *
@@ -38,59 +42,102 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified typeId and data.
-     *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
-     * @param m the typeId to set the block to.
-     * @param d the data bit to set the block to.
-     */
-    @SuppressWarnings("deprecation")
-    public static void setBlock(World w, int x, int y, int z, int m, byte d) {
-        final Block b = w.getBlockAt(x, y, z);
-        if (m < 0) {
-            m += 256;
-        }
-        if (m == 92) { //cake -> handbrake
-            m = 69;
-            d = (byte) 5;
-        }
-        if (m == 52) { //mob spawner -> scanner button
-            m = 143;
-            d = (byte) 3;
-        }
-        if (b != null) {
-            b.setTypeId(m);
-            b.setData(d, true);
-        }
-    }
-
-    /**
-     * Sets a block to the specified typeId and data.
+     * Sets a block to the specified block data.
      *
      * @param l the location of the block.
-     * @param m the typeId to set the block to.
-     * @param d the data bit to set the block to.
+     * @param d the block data to set the block to.
      */
-    @SuppressWarnings("deprecation")
-    public static void setBlock(Location l, int m, byte d) {
+    public static void setBlock(Location l, String d) {
         final Block b = l.getBlock();
-        if (m < 0) {
-            m += 256;
-        }
-        if (m == 92) { //cake -> handbrake
-            m = 69;
-            d = (byte) 5;
-        }
-        if (m == 52) { //mob spawner -> scanner button
-            m = 143;
-            d = (byte) 3;
-        }
         if (b != null) {
-            b.setTypeId(m);
-            b.setData(d, true);
+            BlockData blockData = Bukkit.createBlockData(d);
+            switch (blockData.getMaterial()) {
+                case CAKE:
+                    // cake -> handbrake
+                    b.setType(Material.LEVER);
+                    Switch lever = (Switch) b.getBlockData();
+                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setFacing(BlockFace.SOUTH);
+                    b.setData(lever);
+                    break;
+                case MOB_SPAWNER:
+                    // mob spawner -> scanner button
+                    b.setType(Material.OAK_BUTTON);
+                    Switch button = (Switch) b.getBlockData();
+                    button.setFace(Switch.Face.WALL);
+                    button.setFacing(BlockFace.SOUTH);
+                    b.setData(button);
+                    break;
+                default:
+                    b.setData(blockData);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Sets a block to the specified block data.
+     *
+     * @param l the location of the block.
+     * @param bd the block data to set the block to.
+     */
+    public static void setBlock(Location l, BlockData bd) {
+        final Block b = l.getBlock();
+        if (b != null) {
+            switch (bd.getMaterial()) {
+                case CAKE:
+                    // cake -> handbrake
+                    b.setType(Material.LEVER);
+                    Switch lever = (Switch) b.getBlockData();
+                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setFacing(BlockFace.SOUTH);
+                    b.setData(lever);
+                    break;
+                case MOB_SPAWNER:
+                    // mob spawner -> scanner button
+                    b.setType(Material.OAK_BUTTON);
+                    Switch button = (Switch) b.getBlockData();
+                    button.setFace(Switch.Face.WALL);
+                    button.setFacing(BlockFace.SOUTH);
+                    b.setData(button);
+                    break;
+                default:
+                    b.setData(bd);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Sets a block to the specified block data.
+     *
+     * @param l the location of the block.
+     * @param bd the block data to set the block to.
+     */
+    public static void setBlock(Location l, Material material) {
+        final Block b = l.getBlock();
+        if (b != null) {
+            switch (material) {
+                case CAKE:
+                    // cake -> handbrake
+                    b.setType(Material.LEVER);
+                    Switch lever = (Switch) b.getBlockData();
+                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setFacing(BlockFace.SOUTH);
+                    b.setData(lever);
+                    break;
+                case MOB_SPAWNER:
+                    // mob spawner -> scanner button
+                    b.setType(Material.OAK_BUTTON);
+                    Switch button = (Switch) b.getBlockData();
+                    button.setFace(Switch.Face.WALL);
+                    button.setFacing(BlockFace.SOUTH);
+                    b.setData(button);
+                    break;
+                default:
+                    b.setType(material, true);
+                    break;
+            }
         }
     }
 
@@ -101,23 +148,105 @@ public class TARDISBlockSetters {
      * @param x the x co-ordinate of the block.
      * @param y the y co-ordinate of the block.
      * @param z the z co-ordinate of the block.
-     * @param m the material to set the block to.
-     * @param d the data bit to set the block to.
+     * @param data the block data to apply to the block.
      */
-    @SuppressWarnings("deprecation")
-    public static void setBlock(World w, int x, int y, int z, Material m, byte d) {
+    public static void setBlock(World w, int x, int y, int z, BlockData data) {
         final Block b = w.getBlockAt(x, y, z);
-        if (m.equals(Material.CAKE_BLOCK)) { //cake -> handbrake
-            m = Material.LEVER;
-            d = (byte) 5;
-        }
-        if (m.equals(Material.MOB_SPAWNER)) { //mob spawner -> scanner button
-            m = Material.WOOD_BUTTON;
-            d = (byte) 3;
-        }
         if (b != null) {
-            b.setType(m);
-            b.setData(d, true);
+            switch (data.getMaterial()) {
+                case CAKE:
+                    // cake -> handbrake
+                    b.setType(Material.LEVER);
+                    Switch lever = (Switch) b.getBlockData();
+                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setFacing(BlockFace.SOUTH);
+                    b.setData(lever);
+                    break;
+                case MOB_SPAWNER:
+                    // mob spawner -> scanner button
+                    b.setType(Material.OAK_BUTTON);
+                    Switch button = (Switch) b.getBlockData();
+                    button.setFace(Switch.Face.WALL);
+                    button.setFacing(BlockFace.SOUTH);
+                    b.setData(button);
+                    break;
+                default:
+                    b.setData(data);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Sets a block to the specified block data.
+     *
+     * @param w the world the block is in.
+     * @param x the x co-ordinate of the block.
+     * @param y the y co-ordinate of the block.
+     * @param z the z co-ordinate of the block.
+     * @param data the block data to apply to the block.
+     */
+    public static void setBlock(World w, int x, int y, int z, String data) {
+        final Block b = w.getBlockAt(x, y, z);
+        if (b != null) {
+            BlockData blockData = Bukkit.createBlockData(data);
+            switch (blockData.getMaterial()) {
+                case CAKE:
+                    // cake -> handbrake
+                    b.setType(Material.LEVER);
+                    Switch lever = (Switch) b.getBlockData();
+                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setFacing(BlockFace.SOUTH);
+                    b.setData(lever);
+                    break;
+                case MOB_SPAWNER:
+                    // mob spawner -> scanner button
+                    b.setType(Material.OAK_BUTTON);
+                    Switch button = (Switch) b.getBlockData();
+                    button.setFace(Switch.Face.WALL);
+                    button.setFacing(BlockFace.SOUTH);
+                    b.setData(button);
+                    break;
+                default:
+                    b.setData(blockData);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Sets a block to the specified typeId and data.
+     *
+     * @param w the world the block is in.
+     * @param x the x co-ordinate of the block.
+     * @param y the y co-ordinate of the block.
+     * @param z the z co-ordinate of the block.
+     * @param data the block data to apply to the block.
+     */
+    public static void setBlock(World w, int x, int y, int z, Material material) {
+        final Block b = w.getBlockAt(x, y, z);
+        if (b != null) {
+            switch (material) {
+                case CAKE:
+                    // cake -> handbrake
+                    b.setType(Material.LEVER);
+                    Switch lever = (Switch) b.getBlockData();
+                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setFacing(BlockFace.SOUTH);
+                    b.setData(lever);
+                    break;
+                case MOB_SPAWNER:
+                    // mob spawner -> scanner button
+                    b.setType(Material.OAK_BUTTON);
+                    Switch button = (Switch) b.getBlockData();
+                    button.setFace(Switch.Face.WALL);
+                    button.setFacing(BlockFace.SOUTH);
+                    b.setData(button);
+                    break;
+                default:
+                    b.setType(material);
+                    break;
+            }
         }
     }
 
@@ -129,12 +258,10 @@ public class TARDISBlockSetters {
      * @param x the x co-ordinate of the block.
      * @param y the y co-ordinate of the block.
      * @param z the z co-ordinate of the block.
-     * @param m the typeId to set the block to.
-     * @param d the data bit to set the block to.
+     * @param data the block data to apply to the block.
      * @param id the TARDIS this block belongs to.
      */
-    @SuppressWarnings("deprecation")
-    public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
+    public void setBlockAndRemember(World w, int x, int y, int z, BlockData data, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
@@ -142,16 +269,12 @@ public class TARDISBlockSetters {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
-        int bid = b.getTypeId();
-        byte data = b.getData();
-        set.put("block", bid);
-        set.put("data", data);
+        set.put("data", b.getBlockData().getDataString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
-        b.setTypeId(m);
-        b.setData(d, true);
+        b.setData(data);
     }
 
     /**
@@ -162,12 +285,10 @@ public class TARDISBlockSetters {
      * @param x the x co-ordinate of the block.
      * @param y the y co-ordinate of the block.
      * @param z the z co-ordinate of the block.
-     * @param m the typeId to set the block to.
-     * @param d the data bit to set the block to.
+     * @param data the block data to apply to the block.
      * @param id the TARDIS this block belongs to.
      */
-    @SuppressWarnings("deprecation")
-    public void setBlockAndRemember(World w, int x, int y, int z, Material m, byte d, int id) {
+    public void setBlockAndRemember(World w, int x, int y, int z, String data, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
@@ -175,16 +296,40 @@ public class TARDISBlockSetters {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
-        int bid = b.getTypeId();
-        byte data = b.getData();
-        set.put("block", bid);
-        set.put("data", data);
+        set.put("data", b.getBlockData().getDataString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
-        b.setType(m);
-        b.setData(d, true);
+        BlockData blockData = Bukkit.createBlockData(data);
+        b.setData(blockData);
+    }
+
+    /**
+     * Sets a block to the specified type and data and remembers its location,
+     * typeId and data.
+     *
+     * @param w the world the block is in.
+     * @param x the x co-ordinate of the block.
+     * @param y the y co-ordinate of the block.
+     * @param z the z co-ordinate of the block.
+     * @param material the material to set the block.
+     * @param id the TARDIS this block belongs to.
+     */
+    public void setBlockAndRemember(World w, int x, int y, int z, Material material, int id) {
+        Block b = w.getBlockAt(x, y, z);
+        // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
+        String l = b.getLocation().toString();
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("tardis_id", id);
+        set.put("location", l);
+        set.put("data", b.getBlockData().getDataString());
+        set.put("police_box", 1);
+        qf.doInsert("blocks", set);
+        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+        // set the block
+        b.setType(material);
     }
 
     /**
@@ -199,21 +344,18 @@ public class TARDISBlockSetters {
      * up block)
      */
     @SuppressWarnings("deprecation")
-    public static void setBlockAndRemember(Block b, Material m, byte d, int id, int type) {
+    public static void setBlockAndRemember(Block b, Material m, int id, int type) {
         // save the block location so that we can restore it (if it wasn't air)!
         String l = b.getLocation().toString();
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
-        int bid = b.getTypeId();
-        byte data = b.getData();
-        set.put("block", bid);
-        set.put("data", data);
+        BlockData data = b.getBlockData();
+        set.put("data", data.getDataString());
         set.put("police_box", type);
         new QueryFactory(TARDIS.plugin).doInsert("blocks", set);
         // set the block
-        b.setType(m);
-        b.setData(d, true);
+        b.setType(m, true);
     }
 
     /**
@@ -227,24 +369,22 @@ public class TARDISBlockSetters {
      * @param id the TARDIS this block belongs to.
      * @param portal whether a chest can be in the portal block location
      */
-    @SuppressWarnings("deprecation")
     public void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {
         // List of blocks that a door cannot be placed on
-        List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
+        List<String> ids = plugin.getBlocksConfig().getStringList("under_door_blocks");
         if (portal) {
-            ids.remove(Integer.valueOf(54));
+            ids.remove("CHEST");
         }
         Block b = w.getBlockAt(x, y, z);
-        int bid = b.getTypeId();
-        if (ids.contains(bid)) {
-            // remember replaced block location, TypeId and Data so we can restore it later
+        String blockData = b.getBlockData().getDataString();
+        if (ids.contains(b.getBlockData().getMaterial().toString())) {
+            // remember replaced block location and BlockData so we can restore it later
             String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             set.put("location", l);
-            set.put("block", bid);
-            set.put("data", b.getData());
+            set.put("data", blockData);
             set.put("police_box", 1);
             qf.doInsert("blocks", set);
             plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);

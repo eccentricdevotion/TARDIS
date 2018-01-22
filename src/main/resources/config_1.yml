@@ -23,7 +23,6 @@ creation:
     enable_legacy: true
     custom_schematic: false
     custom_schematic_seed: OBSIDIAN
-    custom_creeper_id: 138
     use_block_stack: false
     use_clay: false
     count: 0
@@ -33,9 +32,6 @@ creation:
 police_box:
     default_preset: NEW
     name_tardis: false
-    wall_id: 35
-    wall_data: 11
-    tardis_lamp: REDSTONE_LAMP_OFF
     materialise: true
     confirm_timeout: 15
     sign_colour: WHITE
@@ -98,6 +94,7 @@ preferences:
     render_entities: false
     spawn_random_monsters: true
     spawn_limit: 10
+    no_coords: false
     no_creative_condense: false
     vortex_fall: kill
 # desktop theme
@@ -185,4 +182,3 @@ conversions:
     companion_clearing_done: false
     condenser_done: false
     lastknownname_conversion_done: false
-    constructs_done: true

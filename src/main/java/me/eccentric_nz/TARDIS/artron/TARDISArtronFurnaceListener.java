@@ -110,7 +110,6 @@ public class TARDISArtronFurnaceListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getInventory() instanceof FurnaceInventory)) {
@@ -165,7 +164,7 @@ public class TARDISArtronFurnaceListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onArtronFurnaceBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (!block.getType().equals(Material.FURNACE) && !block.getType().equals(Material.BURNING_FURNACE)) {
+        if (!block.getType().equals(Material.FURNACE)) {
             return;
         }
         Furnace furnace = (Furnace) event.getBlock().getState();

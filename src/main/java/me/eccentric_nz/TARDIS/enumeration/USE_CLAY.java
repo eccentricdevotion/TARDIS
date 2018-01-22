@@ -16,25 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.Material;
-
 /**
  *
  * @author eccentric_nz
  */
 public enum USE_CLAY {
 
-    WOOL(Material.WOOL),
-    TERRACOTTA(Material.STAINED_CLAY),
-    CONCRETE(Material.CONCRETE);
-
-    Material material;
-
-    private USE_CLAY(Material material) {
-        this.material = material;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
+    WOOL,
+    TERRACOTTA,
+    CONCRETE;
 }

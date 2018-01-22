@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -54,7 +53,6 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     World world;
     JSONArray arr;
     Material wall_type, floor_type;
-    byte wall_data, floor_data;
     QueryFactory qf;
     Player player;
 
@@ -66,7 +64,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
+
     public void run() {
         // initialise
         if (!running) {
@@ -111,12 +109,8 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             String[] split = tardis.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
             // wall/floor block prefs
-            String wall[] = tud.getWall().split(":");
-            String floor[] = tud.getFloor().split(":");
-            wall_type = Material.valueOf(wall[0]);
-            floor_type = Material.valueOf(floor[0]);
-            wall_data = TARDISNumberParsers.parseByte(wall[1]);
-            floor_data = TARDISNumberParsers.parseByte(floor[1]);
+            wall_type = Material.valueOf(tud.getWall());
+            floor_type = Material.valueOf(tud.getFloor());
             // get input array
             arr = (JSONArray) obj.get("input");
             // set running
@@ -144,22 +138,14 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                     world.setBiome(x, z, Biome.VOID);
                 }
-                Material type = Material.valueOf((String) bb.get("type"));
-                byte data = bb.getByte("data");
-                if (type.equals(Material.WOOL)) {
-                    switch (data) {
-                        case 1:
-                            type = wall_type;
-                            data = wall_data;
-                            break;
-                        case 8:
-                            type = floor_type;
-                            data = floor_data;
-                            break;
-                        default:
-                            break;
-                    }
-                    TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                Material type = Material.getMaterial(bb.getString("type"));
+                if (type.equals(Material.ORANGE_WOOL)) {
+                    type = wall_type;
+                    TARDISBlockSetters.setBlock(world, x, y, z, type);
+                }
+                if (type.equals(Material.LIGHT_GRAY_WOOL)) {
+                    type = floor_type;
+                    TARDISBlockSetters.setBlock(world, x, y, z, type);
                 }
             }
             if (row < w) {

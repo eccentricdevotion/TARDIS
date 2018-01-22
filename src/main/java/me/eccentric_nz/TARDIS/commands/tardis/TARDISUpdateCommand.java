@@ -44,7 +44,6 @@ public class TARDISUpdateCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
             if (args.length == 1 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
@@ -77,7 +76,8 @@ public class TARDISUpdateCommand {
             }
             if (tardis_block.equals("hinge")) {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
-                if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
+                if (block.getType().equals(Material.IRON_DOOR)) {
+                    // TODO use BlockData
                     if (args.length == 3) {
                         byte b = TARDISNumberParsers.parseByte(args[2]);
                         block.setData(b, true);

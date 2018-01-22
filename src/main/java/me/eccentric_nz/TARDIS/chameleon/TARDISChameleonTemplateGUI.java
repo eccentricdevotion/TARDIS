@@ -110,7 +110,7 @@ public class TARDISChameleonTemplateGUI {
         ne.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
         nine.setItemMeta(ne);
         // redstone lamp
-        ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
+        ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP, 1);
         ItemMeta lp = lamp.getItemMeta();
         List<String> lampList = plugin.getChameleonGuis().getStringList("PB_LAMP");
         lp.setDisplayName(lampList.get(0));
@@ -122,12 +122,12 @@ public class TARDISChameleonTemplateGUI {
         pr.setDisplayName(plugin.getChameleonGuis().getString("POWER"));
         power.setItemMeta(pr);
         // stone slab
-        ItemStack slab = new ItemStack(Material.STEP, 1);
+        ItemStack slab = new ItemStack(Material.STONE_SLAB, 1);
         ItemMeta sb = slab.getItemMeta();
         sb.setDisplayName(plugin.getChameleonGuis().getString("PB_SIGN"));
         slab.setItemMeta(sb);
         // blue wool
-        ItemStack blue = new ItemStack(Material.WOOL, 1, (byte) 11);
+        ItemStack blue = new ItemStack(Material.BLUE_WOOL, 1);
         ItemMeta be = blue.getItemMeta();
         be.setDisplayName(plugin.getChameleonGuis().getString("PB_WALL"));
         blue.setItemMeta(be);

@@ -26,8 +26,10 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,30 +50,34 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final List<Integer> not_glass = new ArrayList<>();
+    private final List<Material> not_glass = new ArrayList<>();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;
         this.orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
         this.orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
-        this.not_glass.add(0); // air
-        this.not_glass.add(20); // glass
-        this.not_glass.add(50); // torch
-        this.not_glass.add(63); // sign post
-        this.not_glass.add(64); // wood door
-        this.not_glass.add(68); // wall sign
-        this.not_glass.add(71); // iron door
-        this.not_glass.add(75); // redstone torch off
-        this.not_glass.add(76); // redstone torch on
-        this.not_glass.add(96); // trap door
-        this.not_glass.add(106); // vine
-        this.not_glass.add(123); // redstone lamp off
-        this.not_glass.add(124); // redstone lamp on
-        this.not_glass.add(193); // spruce door
-        this.not_glass.add(194); // birch door
-        this.not_glass.add(195); // jungle door
-        this.not_glass.add(196); // acacia door
-        this.not_glass.add(197); // dark oak door
+        this.not_glass.add(Material.AIR); // air
+        this.not_glass.add(Material.GLASS); // glass
+        this.not_glass.add(Material.TORCH); // torch
+        this.not_glass.add(Material.SIGN); // sign post
+        this.not_glass.add(Material.OAK_DOOR); // wood door
+        this.not_glass.add(Material.BIRCH_DOOR); // wood door
+        this.not_glass.add(Material.SPRUCE_DOOR); // wood door
+        this.not_glass.add(Material.JUNGLE_DOOR); // wood door
+        this.not_glass.add(Material.ACACIA_DOOR); // wood door
+        this.not_glass.add(Material.DARK_OAK_DOOR); // wood door
+        this.not_glass.add(Material.WALL_SIGN); // wall sign
+        this.not_glass.add(Material.IRON_DOOR); // iron door
+        this.not_glass.add(Material.REDSTONE_TORCH); // redstone torch
+        this.not_glass.add(Material.REDSTONE_WALL_TORCH); // redstone torch
+        this.not_glass.add(Material.OAK_TRAPDOOR); // trap door
+        this.not_glass.add(Material.BIRCH_TRAPDOOR); // trap door
+        this.not_glass.add(Material.SPRUCE_TRAPDOOR); // trap door
+        this.not_glass.add(Material.JUNGLE_TRAPDOOR); // trap door
+        this.not_glass.add(Material.ACACIA_TRAPDOOR); // trap door
+        this.not_glass.add(Material.DARK_OAK_TRAPDOOR); // trap door
+        this.not_glass.add(Material.VINE); // vine
+        this.not_glass.add(Material.REDSTONE_LAMP); // redstone lamp
     }
 
     /**
@@ -102,92 +108,65 @@ public class TARDISMakePresetListener implements Listener {
                 TARDISMessage.send(player, "PRESET_SCAN");
                 StringBuilder sb_id = new StringBuilder("[");
                 StringBuilder sb_data = new StringBuilder("[");
-                StringBuilder sb_stain_id = new StringBuilder("[");
-                StringBuilder sb_stain_data = new StringBuilder("[");
+                StringBuilder sb_stain_mat = new StringBuilder("[");
                 StringBuilder sb_glass_id = new StringBuilder("[");
-                StringBuilder sb_glass_data = new StringBuilder("[");
                 for (int c = 0; c < 10; c++) {
                     sb_id.append("[");
                     sb_data.append("[");
-                    sb_stain_id.append("[");
-                    sb_stain_data.append("[");
+                    sb_stain_mat.append("[");
                     sb_glass_id.append("[");
-                    sb_glass_data.append("[");
                     for (int y = fy; y < (fy + 4); y++) {
                         Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
-                        int id = b.getTypeId();
-                        if (id == 19) {
-                            id = 0; // convert sponge to air
+                        Material material = b.getType();
+                        String matStr = material.toString();
+                        if (material.equals(Material.SPONGE)) {
+                            matStr = "AIR"; // convert sponge to air
                         }
-                        byte data = b.getData();
+                        BlockData data = b.getBlockData();
                         if (y == (fy + 3)) {
-                            sb_id.append(id);
-                            sb_data.append(data);
-                            if (not_glass.contains(id)) {
-                                sb_stain_id.append(id);
-                                sb_stain_data.append(data);
-                                sb_glass_id.append(id);
-                                sb_glass_data.append(data);
+                            sb_id.append(matStr);
+                            sb_data.append(data.getDataString());
+                            if (not_glass.contains(material)) {
+                                sb_stain_mat.append(matStr);
+                                sb_glass_id.append(matStr);
                             } else {
-                                sb_stain_id.append(95);
-                                byte colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(id);
-                                if (colour == -1) {
-                                    // use the same data as the original block
-                                    colour = data;
-                                }
-                                sb_stain_data.append(colour); // get the appropiately coloured stained glass
-                                sb_glass_id.append(20);
-                                sb_glass_data.append(0);
+                                String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
+                                sb_stain_mat.append(colour);
+                                sb_glass_id.append("GLASS");
                             }
                         } else {
-                            sb_id.append(id).append(",");
-                            sb_data.append(data).append(",");
-                            if (not_glass.contains(id)) {
-                                sb_stain_id.append(id).append(",");
-                                sb_stain_data.append(data).append(",");
-                                sb_glass_id.append(id).append(",");
-                                sb_glass_data.append(data).append(",");
+                            sb_id.append(matStr).append(",");
+                            sb_data.append(data.getDataString()).append(",");
+                            if (not_glass.contains(material)) {
+                                sb_stain_mat.append(matStr).append(",");
+                                sb_glass_id.append(matStr).append(",");
                             } else {
-                                sb_stain_id.append(95).append(",");
-                                byte colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(id);
-                                if (colour == -1) {
-                                    // use the same data as the original block
-                                    colour = data;
-                                }
-                                sb_stain_data.append(colour).append(","); // get the appropiately coloured stained glass
-                                sb_glass_id.append(20).append(",");
-                                sb_glass_data.append(0).append(",");
+                                String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
+                                sb_stain_mat.append(colour).append(",");
+                                sb_glass_id.append("GLASS,");
                             }
                         }
                     }
                     if (c == 9) {
                         sb_id.append("]");
                         sb_data.append("]");
-                        sb_stain_id.append("]");
-                        sb_stain_data.append("]");
+                        sb_stain_mat.append("]");
                         sb_glass_id.append("]");
-                        sb_glass_data.append("]");
                     } else {
                         sb_id.append("],");
                         sb_data.append("],");
-                        sb_stain_id.append("],");
-                        sb_stain_data.append("],");
+                        sb_stain_mat.append("],");
                         sb_glass_id.append("],");
-                        sb_glass_data.append("],");
                     }
                 }
                 sb_id.append("]");
                 sb_data.append("]");
-                sb_stain_id.append("]");
-                sb_stain_data.append("]");
+                sb_stain_mat.append("]");
                 sb_glass_id.append("]");
-                sb_glass_data.append("]");
                 String ids = sb_id.toString();
                 String datas = sb_data.toString();
-                String stain_ids = sb_stain_id.toString();
-                String stain_datas = sb_stain_data.toString();
+                String stain_ids = sb_stain_mat.toString();
                 String glass_ids = sb_glass_id.toString();
-                String glass_datas = sb_glass_data.toString();
                 String filename = "custom_preset_" + name + ".txt";
                 String file = plugin.getDataFolder() + File.separator + filename;
                 try {
@@ -208,19 +187,11 @@ public class TARDISMakePresetListener implements Listener {
                     bw.newLine();
                     bw.write(stain_ids);
                     bw.newLine();
-                    bw.write("#data");
-                    bw.newLine();
-                    bw.write(stain_datas);
-                    bw.newLine();
                     bw.write("##start custom glass");
                     bw.newLine();
                     bw.write("#id");
                     bw.newLine();
                     bw.write(glass_ids);
-                    bw.newLine();
-                    bw.write("#data");
-                    bw.newLine();
-                    bw.write(glass_datas);
                     bw.newLine();
                     bw.write("##sign text - first line is player's name");
                     bw.newLine();

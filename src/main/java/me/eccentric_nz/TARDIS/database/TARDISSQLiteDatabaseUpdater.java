@@ -79,7 +79,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("eps_message TEXT DEFAULT ''");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
         prefsupdates.add("farm_on INTEGER DEFAULT 0");
-        prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
+        prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GRAY_WOOL'");
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("hads_type TEXT DEFAULT 'DISPLACEMENT'");

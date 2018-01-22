@@ -147,7 +147,7 @@ public class TARDISUtils {
         return colour;
     }
 
-    @SuppressWarnings("deprecation")
+    
     public int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);

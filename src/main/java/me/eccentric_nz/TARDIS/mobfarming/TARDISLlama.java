@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import org.bukkit.entity.Llama;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an
@@ -30,6 +31,7 @@ public class TARDISLlama extends TARDISHorse {
 
     private Llama.Color llamacolor;
     private int strength;
+    private ItemStack decor;
 
     /**
      * Data storage class for TARDIS Llama.
@@ -51,5 +53,13 @@ public class TARDISLlama extends TARDISHorse {
 
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+
+    public ItemStack getDecor() {
+        return decor;
+    }
+
+    public void setDecor(ItemStack decor) {
+        this.decor = decor;
     }
 }

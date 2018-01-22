@@ -63,7 +63,7 @@ public class TARDISHorseListener implements Listener {
             AbstractHorse h = (AbstractHorse) e;
             Material m = event.getBlock().getType();
             Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
-            if (passenger != null && m.equals(Material.WOOD_PLATE)) {
+            if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
                 if (passenger instanceof Player) {
                     final Player p = (Player) passenger;
                     String pworld = p.getLocation().getWorld().getName();

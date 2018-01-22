@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -59,7 +60,7 @@ public class TARDISEmergencyRelocation {
                 bd.setSubmarine(false);
                 // TODO get player preferences
                 Tardis tardis = rs.getTardis();
-                new TARDISInstaPreset(plugin, bd, tardis.getPreset(), 159, (byte) 8, false).buildPreset();
+                new TARDISInstaPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);

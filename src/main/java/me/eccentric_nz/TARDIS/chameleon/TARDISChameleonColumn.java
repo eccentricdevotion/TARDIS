@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import org.bukkit.block.data.BlockData;
+
 /**
  * Data storage class for Chameleon Circuit presets. Each sub-array corresponds
  * to a column of blocks of a 3x3x4 area + the sign column.
@@ -24,25 +26,13 @@ package me.eccentric_nz.TARDIS.chameleon;
  */
 public class TARDISChameleonColumn {
 
-    private int[][] id = new int[10][4];
-    private byte[][] data = new byte[10][4];
+    private final BlockData[][] blockData;
 
-    public TARDISChameleonColumn() {
+    public TARDISChameleonColumn(BlockData[][] blockData) {
+        this.blockData = blockData;
     }
 
-    public int[][] getId() {
-        return id;
-    }
-
-    public void setId(int[][] id) {
-        this.id = id;
-    }
-
-    public byte[][] getData() {
-        return data;
-    }
-
-    public void setData(byte[][] data) {
-        this.data = data;
+    public BlockData[][] getBlockData() {
+        return blockData;
     }
 }

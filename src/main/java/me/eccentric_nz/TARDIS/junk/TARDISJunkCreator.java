@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -79,21 +78,15 @@ public class TARDISJunkCreator {
         set.put("lastuse", System.currentTimeMillis());
         final int lastInsertId = qf.doSyncInsert("tardis", set);
         // get wall floor prefs
-        Material wall_type = Material.WOOL;
-        byte wall_data = 1;
-        Material floor_type = Material.WOOL;
-        byte floor_data = 7;
+        Material wall_type = Material.ORANGE_WOOL;
+        Material floor_type = Material.GRAY_WOOL;
         // check if player_prefs record
         HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
         if (rsp.resultSet()) {
-            TARDISWalls.Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-            floor_type = fid_data.getType();
-            floor_data = fid_data.getData();
-            TARDISWalls.Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
-            wall_type = wid_data.getType();
-            wall_data = wid_data.getData();
+            floor_type = Material.valueOf(rsp.getFloor());
+            wall_type = Material.valueOf(rsp.getWall());
         } else {
             // create a player_prefs record
             HashMap<String, Object> setpp = new HashMap<>();
@@ -101,7 +94,7 @@ public class TARDISJunkCreator {
             setpp.put("player", "junk");
             setpp.put("wall", "ORANGE_WOOL");
             setpp.put("floor", "GREY_WOOL");
-            setpp.put("lamp", "REDSTONE_LAMP_OFF");
+            setpp.put("lamp", "REDSTONE_LAMP");
             qf.doInsert("player_prefs", setpp);
         }
         World chunkworld = plugin.getServer().getWorld(cw);
@@ -126,7 +119,7 @@ public class TARDISJunkCreator {
         bd.setTardisID(lastInsertId);
         bd.setBiome(l.getBlock().getBiome());
         // build the TARDIS in the Vortex
-        plugin.getInteriorBuilder().buildInner(CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, wall_data, floor_type, floor_data, true);
+        plugin.getInteriorBuilder().buildInner(CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);
         // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             plugin.getPresetBuilder().buildPreset(bd);

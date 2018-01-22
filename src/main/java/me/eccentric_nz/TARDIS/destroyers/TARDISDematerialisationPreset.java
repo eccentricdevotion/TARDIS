@@ -25,15 +25,18 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -53,12 +56,11 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final PRESET preset;
     public int task;
     private int i;
-    private final int cham_id;
-    private final byte cham_data;
+    private final BlockData cham_id;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
-    private byte the_colour;
+    private BlockData the_colour;
 
     /**
      * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic
@@ -69,17 +71,15 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param dd the DestroyData
      * @param preset the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
-     * @param cham_data the chameleon block data for the police box
      * @param loops the number of loops to run
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, DestroyData dd, PRESET preset, int cham_id, byte cham_data, int loops) {
+    public TARDISDematerialisationPreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
         this.plugin = plugin;
         this.dd = dd;
         this.loops = loops;
         this.preset = preset;
         this.i = 0;
         this.cham_id = cham_id;
-        this.cham_data = cham_data;
         if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprint", dd.getDirection()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stain", dd.getDirection()).getColumn();
@@ -93,8 +93,7 @@ public class TARDISDematerialisationPreset implements Runnable {
 
     @Override
     public void run() {
-        int[][] ids;
-        byte[][] datas;
+        BlockData[][] datas;
         // get relative locations
         int x = dd.getLocation().getBlockX(), plusx = dd.getLocation().getBlockX() + 1, minusx = dd.getLocation().getBlockX() - 1;
         int y;
@@ -110,16 +109,13 @@ public class TARDISDematerialisationPreset implements Runnable {
             // expand placed blocks to a police box
             switch (i % 3) {
                 case 2: // stained
-                    ids = stained_column.getId();
-                    datas = stained_column.getData();
+                    datas = stained_column.getBlockData();
                     break;
                 case 1: // glass
-                    ids = glass_column.getId();
-                    datas = glass_column.getData();
+                    datas = glass_column.getBlockData();
                     break;
                 default: // preset
-                    ids = column.getId();
-                    datas = column.getData();
+                    datas = column.getBlockData();
                     break;
             }
             // first run - play sound
@@ -148,7 +144,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 flowerz = dd.getLocation().getBlockZ();
                                 break;
                         }
-                        TARDISBlockSetters.setBlock(world, flowerx, flowery, flowerz, 0, (byte) 0);
+                        TARDISBlockSetters.setBlock(world, flowerx, flowery, flowerz, Material.AIR);
                         break;
                     case CAKE:
                         plugin.getPresetDestroyer().destroyLamp(dd.getLocation(), preset);
@@ -190,8 +186,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                 // just change the walls
                 int xx, zz;
                 for (int n = 0; n < 9; n++) {
-                    int[] colids = ids[n];
-                    byte[] coldatas = datas[n];
+                    BlockData[] coldatas = datas[n];
                     switch (n) {
                         case 0:
                             xx = minusx;
@@ -234,76 +229,135 @@ public class TARDISDematerialisationPreset implements Runnable {
                         boolean change = true;
                         if (yy == 0 && n == 9) {
                             Block rail = world.getBlockAt(xx, y, zz);
-                            if (rail.getType().equals(Material.RAILS) || rail.getType().equals(Material.POWERED_RAIL)) {
+                            if (rail.getType().equals(Material.RAIL) || rail.getType().equals(Material.POWERED_RAIL)) {
                                 change = false;
                             }
                         }
-                        switch (colids[yy]) {
-                            case 2:
-                            case 3:
-                                int subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colids[yy];
-                                byte subd = (preset.equals(PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi, subd);
+                        Material mat = coldatas[yy].getMaterial();
+                        switch (mat) {
+                            case GRASS:
+                            case DIRT:
+                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : coldatas[yy];
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                                 break;
-                            case 35: // wool
-                                byte chad = coldatas[yy];
-                                if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
+                            case WHITE_WOOL:
+                            case ORANGE_WOOL:
+                            case MAGENTA_WOOL:
+                            case LIGHT_BLUE_WOOL:
+                            case YELLOW_WOOL:
+                            case LIME_WOOL:
+                            case PINK_WOOL:
+                            case GRAY_WOOL:
+                            case LIGHT_GRAY_WOOL:
+                            case CYAN_WOOL:
+                            case PURPLE_WOOL:
+                            case BLUE_WOOL:
+                            case BROWN_WOOL:
+                            case GREEN_WOOL:
+                            case RED_WOOL:
+                            case BLACK_WOOL:
+                                BlockData chad = coldatas[yy];
+                                if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                                     chad = the_colour;
                                 }
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], chad);
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
                                 break;
-                            case 31:
-                            case 32:
-                            case 37:
-                            case 38:
-                            case 175:
+                            case ALLIUM:
+                            case AZURE_BLUET:
+                            case BLUE_ORCHID:
+                            case DEAD_BUSH:
+                            case FERN:
+                            case LARGE_FERN:
+                            case LILAC:
+                            case ORANGE_TULIP:
+                            case OXEYE_DAISY:
+                            case PEONY:
+                            case PINK_TULIP:
+                            case POPPY:
+                            case RED_TULIP:
+                            case ROSE_BUSH:
+                            case SUNFLOWER:
+                            case TALL_GRASS:
+                            case WHITE_TULIP:
                                 break;
-                            case 50: // lamps, glowstone and torches
-                            case 89:
-                            case 124:
-                                Material light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? dd.getLamp() : Material.getMaterial(colids[yy]);
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                            case TORCH: // lamps, glowstone and torches
+                            case GLOWSTONE:
+                            case REDSTONE_LAMP:
+                                BlockData light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? dd.getLamp().createBlockData() : coldatas[yy];
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                                 break;
-                            case 64:
-                            case 68: // except the sign and doors
-                            case 71:
-                            case 193:
-                            case 194:
-                            case 195:
-                            case 196:
-                            case 197:
+                            case IRON_DOOR: // wood, iron & trap doors
+                            case OAK_DOOR:
+                            case BIRCH_DOOR:
+                            case SPRUCE_DOOR:
+                            case JUNGLE_DOOR:
+                            case ACACIA_DOOR:
+                            case DARK_OAK_DOOR:
+                            case OAK_TRAPDOOR:
+                            case BIRCH_TRAPDOOR:
+                            case SPRUCE_TRAPDOOR:
+                            case JUNGLE_TRAPDOOR:
+                            case ACACIA_TRAPDOOR:
+                            case DARK_OAK_TRAPDOOR:
+                            case WALL_SIGN:
                                 break;
-                            case 95:
-                                if (coldatas[yy] == -1) {
-                                    if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
-                                        chad = the_colour;
-                                    } else {
-                                        // if it was a wool / stained glass / stained clay block get the data from that
-                                        int[] finalids = column.getId()[n];
-                                        byte[] finaldatas = column.getData()[n];
-                                        if (finalids[yy] == 35 || finalids[yy] == 95 || finalids[yy] == 159 || finalids[yy] == 160 || finalids[yy] == 171) {
-                                            if (preset.equals(PRESET.FACTORY)) {
-                                                chad = cham_data;
-                                            } else {
-                                                chad = finaldatas[yy];
-                                            }
-                                        } else {
-                                            chad = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id);
-                                        }
-                                    }
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 95, chad);
+                            case WHITE_STAINED_GLASS:
+                            case ORANGE_STAINED_GLASS:
+                            case MAGENTA_STAINED_GLASS:
+                            case LIGHT_BLUE_STAINED_GLASS:
+                            case YELLOW_STAINED_GLASS:
+                            case LIME_STAINED_GLASS:
+                            case PINK_STAINED_GLASS:
+                            case GRAY_STAINED_GLASS:
+                            case LIGHT_GRAY_STAINED_GLASS:
+                            case CYAN_STAINED_GLASS:
+                            case PURPLE_STAINED_GLASS:
+                            case BLUE_STAINED_GLASS:
+                            case BROWN_STAINED_GLASS:
+                            case GREEN_STAINED_GLASS:
+                            case RED_STAINED_GLASS:
+                            case BLACK_STAINED_GLASS:
+                                Material cham;
+                                if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_STAINED_GLASS))) {
+                                    cham = the_colour.getMaterial();
                                 } else {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    // if it was a wool / stained glass / stained clay block get the data from that
+                                    BlockData[] finaldatas = column.getBlockData()[n];
+                                    Material finalMat = finaldatas[yy].getMaterial();
+                                    if (TARDISMaterials.has_colour.contains(finalMat)) {
+                                        if (preset.equals(PRESET.FACTORY)) {
+                                            cham = cham_id.getMaterial();
+                                        } else {
+                                            cham = finaldatas[yy].getMaterial();
+                                        }
+                                    } else {
+                                        cham = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial());
+                                    }
                                 }
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham);
                                 break;
-                            case 159:
-                                int chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colids[yy];
-                                byte chaf = (preset.equals(PRESET.FACTORY)) ? cham_data : coldatas[yy];
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai, chaf);
+                            case WHITE_TERRACOTTA:
+                            case ORANGE_TERRACOTTA:
+                            case MAGENTA_TERRACOTTA:
+                            case LIGHT_BLUE_TERRACOTTA:
+                            case YELLOW_TERRACOTTA:
+                            case LIME_TERRACOTTA:
+                            case PINK_TERRACOTTA:
+                            case GRAY_TERRACOTTA:
+                            case LIGHT_GRAY_TERRACOTTA:
+                            case CYAN_TERRACOTTA:
+                            case PURPLE_TERRACOTTA:
+                            case BLUE_TERRACOTTA:
+                            case BROWN_TERRACOTTA:
+                            case GREEN_TERRACOTTA:
+                            case RED_TERRACOTTA:
+                            case BLACK_TERRACOTTA:
+                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : coldatas[yy];
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                                 break;
                             default: // everything else
                                 if (change) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }
                                 break;
                         }
@@ -350,8 +404,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         return ents;
     }
 
-    @SuppressWarnings("deprecation")
-    private byte getWoolColour(int id, PRESET p) {
+    private BlockData getWoolColour(int id, PRESET p) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
@@ -360,19 +413,19 @@ public class TARDISDematerialisationPreset implements Runnable {
             try {
                 Block b = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
                 if (p.equals(PRESET.FLOWER)) {
-                    return b.getRelative(BlockFace.UP, 3).getData();
+                    return b.getRelative(BlockFace.UP, 3).getBlockData();
                 } else {
                     for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
-                        if (b.getRelative(f).getType().equals(Material.WOOL)) {
-                            return b.getRelative(f).getData();
+                        if (Tag.WOOL.isTagged(b.getRelative(f).getType())) {
+                            return b.getRelative(f).getBlockData();
                         }
                     }
                 }
             } catch (Exception e) {
-                return (byte) 0;
+                return Material.BLUE_WOOL.createBlockData();
             }
         }
-        return (byte) 0;
+        return Material.BLUE_WOOL.createBlockData();
     }
 
     public void setTask(int task) {

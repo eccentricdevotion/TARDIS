@@ -148,7 +148,7 @@ public class ResultSetPlayerPrefs {
                 try {
                     default_lamp = Material.valueOf(plugin.getConfig().getString("police_box.tardis_lamp"));
                 } catch (IllegalArgumentException e) {
-                    default_lamp = Material.REDSTONE_LAMP_OFF;
+                    default_lamp = Material.REDSTONE_LAMP;
                 }
                 if (rs.wasNull()) {
                     this.lamp = default_lamp;

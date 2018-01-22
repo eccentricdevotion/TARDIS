@@ -106,7 +106,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Check if they are in water
-        if (block.getType().equals(Material.STATIONARY_WATER) || block.getType().equals(Material.WATER) || head.getType().equals(Material.STATIONARY_WATER) || head.getType().equals(Material.WATER)) {
+        if (block.getType().equals(Material.FLOWING_WATER) || block.getType().equals(Material.WATER) || head.getType().equals(Material.FLOWING_WATER) || head.getType().equals(Material.WATER)) {
             // Check if player is in a boat
             Entity playersVehicle = player.getVehicle();
             if (playersVehicle != null) {
@@ -185,7 +185,7 @@ public class TARDISAcidWater implements Listener {
                 case LEATHER_HELMET:
                     red += 0.04;
                     break;
-                case GOLD_HELMET:
+                case GOLDEN_HELMET:
                     red += 0.08;
                     break;
                 case CHAINMAIL_HELMET:
@@ -206,7 +206,7 @@ public class TARDISAcidWater implements Listener {
                 case LEATHER_BOOTS:
                     red += 0.04;
                     break;
-                case GOLD_BOOTS:
+                case GOLDEN_BOOTS:
                     red += 0.04;
                     break;
                 case CHAINMAIL_BOOTS:
@@ -228,7 +228,7 @@ public class TARDISAcidWater implements Listener {
                 case LEATHER_LEGGINGS:
                     red += 0.08;
                     break;
-                case GOLD_LEGGINGS:
+                case GOLDEN_LEGGINGS:
                     red += 0.12;
                     break;
                 case CHAINMAIL_LEGGINGS:
@@ -250,7 +250,7 @@ public class TARDISAcidWater implements Listener {
                 case LEATHER_CHESTPLATE:
                     red += 0.12;
                     break;
-                case GOLD_CHESTPLATE:
+                case GOLDEN_CHESTPLATE:
                     red += 0.20;
                     break;
                 case CHAINMAIL_CHESTPLATE:
@@ -278,10 +278,10 @@ public class TARDISAcidWater implements Listener {
         Material type = event.getBlockClicked().getType();
         ItemStack bucket = event.getItemStack();
         ItemMeta im = bucket.getItemMeta();
-        if (type.equals(Material.WATER) || type.equals(Material.STATIONARY_WATER)) {
+        if (type.equals(Material.WATER) || type.equals(Material.FLOWING_WATER)) {
             im.setDisplayName("Acid Bucket");
         }
-        if (type.equals(Material.LAVA) || type.equals(Material.STATIONARY_LAVA)) {
+        if (type.equals(Material.LAVA) || type.equals(Material.FLOWING_LAVA)) {
             im.setDisplayName("Rust Bucket");
         }
         bucket.setItemMeta(im);

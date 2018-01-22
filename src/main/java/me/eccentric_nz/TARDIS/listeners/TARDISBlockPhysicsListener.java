@@ -18,16 +18,16 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISRecordingQueue;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.SimpleAttachableMaterialData;
 
 /**
  *
@@ -53,15 +53,14 @@ public class TARDISBlockPhysicsListener implements Listener {
         }
         if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {
             if (block != null) {
-                BlockState state;
+                BlockData state;
                 try {
-                    state = block.getState();
+                    state = block.getBlockData();
                     if (state != null) {
-                        MaterialData md = state.getData();
-                        if (md instanceof SimpleAttachableMaterialData) {
-                            Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
+                        if (state instanceof TrapDoor) {
+                            Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
                             if (blockBehind != null) {
-                                if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
+                                if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
                                     event.setCancelled(true);
                                 }
                             }
@@ -76,7 +75,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                 if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
                     Block blockBelow = getBlockBelow(block);
                     if (blockBelow != null) {
-                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                             event.setCancelled(true);
                         }
                     }

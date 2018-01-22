@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -30,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,7 +48,6 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> doors = Arrays.asList(Material.IRON_DOOR_BLOCK, Material.WOODEN_DOOR, Material.TRAP_DOOR);
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -84,7 +82,7 @@ public class TARDISBlockDamageListener implements Listener {
             boolean m = false;
             boolean isDoor = false;
             if (plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id) && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                if (doors.contains(b.getType())) {
+                if (TARDISMaterials.doors.contains(b.getType())) {
                     if (isOwner(id, p.getUniqueId().toString())) {
                         isDoor = true;
                     }
