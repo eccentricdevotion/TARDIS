@@ -33,6 +33,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Openable;
 
 /**
  *
@@ -55,47 +56,24 @@ public class TARDISDoorOpener {
         // inner
         final ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
-            open(rs.getInnerBlock(), rs.getOuterBlock(), true, rs.getInnerDirection());
+            open(rs.getInnerBlock(), rs.getOuterBlock(), true);
             // outer
             if (!rs.getOuterBlock().getChunk().isLoaded()) {
                 rs.getOuterBlock().getChunk().load();
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                open(rs.getOuterBlock(), rs.getInnerBlock(), false, rs.getOuterDirection());
+                open(rs.getOuterBlock(), rs.getInnerBlock(), false);
             }, 5L);
         }
     }
 
     /**
      * Open the door.
-     *
      */
-    
-    private void open(Block block, Block other, boolean add, COMPASS dd) {
+    private void open(Block block, Block other, boolean add) {
         if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
-            byte door_data = block.getData();
-            switch (dd) {
-                case NORTH:
-                    if (door_data == 3) {
-                        block.setData((byte) 7, false);
-                    }
-                    break;
-                case WEST:
-                    if (door_data == 2) {
-                        block.setData((byte) 6, false);
-                    }
-                    break;
-                case SOUTH:
-                    if (door_data == 1) {
-                        block.setData((byte) 5, true);
-                    }
-                    break;
-                default:
-                    if (door_data == 0) {
-                        block.setData((byte) 4, false);
-                    }
-                    break;
-            }
+            Openable openable = (Openable) block.getBlockData();
+            openable.setOpen(true);
             if (add && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                 // get all companion UUIDs
                 List<UUID> uuids = new ArrayList<>();

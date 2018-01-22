@@ -174,7 +174,6 @@ public class TARDISRoomRunnable implements Runnable {
             if (room.equals("BAKER") || room.equals("WOOD")) {
                 // set the repeaters
                 mushroomblocks.entrySet().forEach((entry) -> {
-//                    entry.getKey().setType(Material.REPEATER);
                     BlockData repeater = Material.REPEATER.createBlockData();
                     Directional directional = (Directional) repeater;
                     directional.setFacing(entry.getValue());
@@ -412,29 +411,23 @@ public class TARDISRoomRunnable implements Runnable {
                 switch (ROOM.valueOf(room)) {
                     case VILLAGE:
                         type = Material.COBBLESTONE;
-//                        data = 0;
                         break;
                     case HUTCH:
                     case STABLE:
                     case STALL:
                         type = Material.GRASS;
-//                        data = 0;
                         break;
                     case BIRDCAGE:
                         type = Material.PODZOL;
-//                        data = 2;
                         break;
                     case IGLOO:
                         type = Material.PACKED_ICE;
-//                        data = 0;
                         break;
                     case ZERO:
                         type = Material.PINK_CARPET;
-//                        data = 6;
                         break;
                     default:
                         type = Material.BLACK_WOOL;
-//                        data = 15;
                         // add WorldGuard region
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                             Location one = new Location(world, startx - 6, starty, startz - 6);
@@ -482,7 +475,7 @@ public class TARDISRoomRunnable implements Runnable {
                 Block banner = world.getBlockAt(startx, starty, startz);
                 JSONObject state = v.optJSONObject("banner");
                 if (state != null) {
-                    TARDISBannerData tbd = new TARDISBannerData(type, state);
+                    TARDISBannerData tbd = new TARDISBannerData(type, data, state);
                     if (TARDISStaticUtils.isStandingBanner(type)) {
                         standingBanners.put(banner, tbd);
                     } else {

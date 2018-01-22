@@ -15,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 /**
@@ -25,7 +26,7 @@ public class TARDISSchematicPaster {
 
     private final TARDIS plugin;
     private final Player player;
-    HashMap<Block, Byte> postRedstoneTorches = new HashMap<>();
+    HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
     HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
     HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
 
@@ -65,18 +66,17 @@ public class TARDISSchematicPaster {
                 for (int l = 0; l < len; l++) {
                     JSONObject col = (JSONObject) row.get(l);
                     Material m = Material.valueOf((String) col.get("type"));
-                    byte b = col.getByte("data");
+                    BlockData data = plugin.getServer().createBlockData(col.getString("data"));
                     Block block = world.getBlockAt(x + w, y + h, z + l);
                     switch (m) {
                         case REDSTONE_TORCH:
-                            postRedstoneTorches.put(block, b);
+                            postRedstoneTorches.put(block, data);
                             break;
                         case WHITE_BANNER:
                         case WHITE_WALL_BANNER:
                             JSONObject state = col.optJSONObject("banner");
                             if (state != null) {
-                                TARDISBannerData tbd = new TARDISBannerData(m, state);
-
+                                TARDISBannerData tbd = new TARDISBannerData(m, data, state);
                                 if (TARDISStaticUtils.isStandingBanner(m)) {
                                     postStandingBanners.put(block, tbd);
                                 } else {
@@ -85,8 +85,8 @@ public class TARDISSchematicPaster {
                             }
                             break;
                         default:
-                            block.setType(m);
-                            block.setData(b, true);
+//                            block.setType(m);
+                            block.setData(data, true);
                             break;
                     }
                 }
@@ -94,9 +94,9 @@ public class TARDISSchematicPaster {
         }
         postRedstoneTorches.entrySet().forEach((entry) -> {
             Block prtb = entry.getKey();
-            byte ptdata = entry.getValue();
-            // TODO set block data (also is it redstone torch or redstone wall torch?)
+            BlockData ptdata = entry.getValue();
             prtb.setType(Material.REDSTONE_TORCH, true);
+            prtb.setData(ptdata);
         });
         setBanners(postStandingBanners);
         setBanners(postWallBanners);

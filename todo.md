@@ -7,14 +7,11 @@
 1. Update to Minecraft/Spigot 1.13 - _started_
    * Update ARS records at first run - _started_
    * Update configs - _started_
+   * Update / test schematic creation / pasting - _started_
    * Tidy up database creation (remove unused fields where necessary)
-   * Update Lazarus GUI with new spawn eggs, remove deprecated data value use when running genetic change
-   * Remove deprecated data value use in gravity wells
-   * Remove deprecated data value use in chest, smelter and vault sorters
-   * Use BlockData for `isDoorOpen()` check, getting lower door blocks and opening/closing doors/trapdoors
-   * Use BlockData to set Junk TARDIS sign
-   * Find alternative to MaterialData for Enderman block carrying
-   * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code...
+   * Update Lazarus GUI with new spawn eggs (waiting on LibsDisguises update) - _started_
+   * Check sonic replanter / chest sorter features still work
+   * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code... - _md_5 knows, waiting on API preview 3_
 2. Add glazed terracotta chameleon presets?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
 

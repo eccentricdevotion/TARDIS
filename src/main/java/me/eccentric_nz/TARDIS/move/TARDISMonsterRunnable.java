@@ -134,7 +134,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                             break;
                                         case ENDERMAN:
                                             Enderman enderman = (Enderman) e;
-                                            tm.setCarried(enderman.getCarriedMaterial());
+                                            tm.setCarried(enderman.getCarriedBlock());
                                             if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                                                 dn = "Silent";
                                             }
@@ -350,7 +350,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 case ENDERMAN:
                     Enderman enderman = (Enderman) ent;
                     if (m.getCarried() != null) {
-                        enderman.setCarriedMaterial(m.getCarried());
+                        enderman.setCarriedBlock(m.getCarried());
                     }
                     break;
                 case PIG_ZOMBIE:

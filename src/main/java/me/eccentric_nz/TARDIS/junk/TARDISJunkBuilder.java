@@ -35,8 +35,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 
 /**
@@ -193,7 +195,9 @@ public class TARDISJunkBuilder implements Runnable {
                     }
                     if (postTerminalBlock != null) {
                         postTerminalBlock.setType(Material.WALL_SIGN);
-                        postTerminalBlock.setData((byte) 5, true);
+                        Directional sign = (Directional) Material.WALL_SIGN.createBlockData();
+                        sign.setFacing(BlockFace.EAST);
+                        postTerminalBlock.setData(sign);
                         if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                             Sign ts = (Sign) postTerminalBlock.getState();
                             ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));

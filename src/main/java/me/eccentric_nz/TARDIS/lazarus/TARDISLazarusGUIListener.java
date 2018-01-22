@@ -34,6 +34,8 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.RabbitType;
+import me.libraryaddict.disguise.disguisetypes.VillagerProfession;
+import me.libraryaddict.disguise.disguisetypes.ZombieProfession;
 import me.libraryaddict.disguise.disguisetypes.watchers.AgeableWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BatWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BlazeWatcher;
@@ -62,7 +64,6 @@ import org.bukkit.entity.Llama;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -522,7 +523,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 } else {
                     o = 1;
                 }
-                t = Profession.values()[o].toString();
+                t = VillagerProfession.values()[o].toString();
                 professions.put(uuid, o);
                 break;
             case "SLIME":
@@ -612,23 +613,23 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private Profession getProfession(Inventory i) {
+    private VillagerProfession getProfession(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return Profession.valueOf(im.getLore().get(0));
+            return VillagerProfession.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return Profession.FARMER;
+            return VillagerProfession.FARMER;
         }
     }
 
-    private Profession getZombieProfession(Inventory i) {
+    private ZombieProfession getZombieProfession(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return Profession.valueOf(im.getLore().get(0));
+            return ZombieProfession.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return Profession.NORMAL;
+            return ZombieProfession.NORMAL;
         }
     }
 

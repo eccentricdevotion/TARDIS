@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.material.MaterialData;
 
 /**
  *
@@ -33,7 +33,7 @@ public class TARDISMonster extends TARDISMob {
     private boolean charged;
     private Profession profession;
     private EntityEquipment equipment;
-    private MaterialData carried;
+    private BlockData carried;
     private EntityType passenger;
     private String displayName;
     private int size;
@@ -78,11 +78,11 @@ public class TARDISMonster extends TARDISMob {
         this.equipment = equipment;
     }
 
-    public MaterialData getCarried() {
+    public BlockData getCarried() {
         return carried;
     }
 
-    public void setCarried(MaterialData carried) {
+    public void setCarried(BlockData carried) {
         this.carried = carried;
     }
 

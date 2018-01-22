@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -47,6 +48,8 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -95,14 +98,16 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     final UUID playerUUID = player.getUniqueId();
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
-                    byte doorData = block.getData();
                     String bw = block_loc.getWorld().getName();
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
-                    if (doorData >= 8 && !blockType.equals(Material.OAK_TRAPDOOR)) {
-                        by = (by - 1);
-                        block = block.getRelative(BlockFace.DOWN);
+                    if (!TARDISMaterials.trapdoors.contains(blockType)) {
+                        Bisected bisected = (Bisected) block.getBlockData();
+                        if (bisected.getHalf().equals(Bisected.Half.TOP)) {
+                            by = (by - 1);
+                            block = block.getRelative(BlockFace.DOWN);
+                        }
                     }
                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
                     ItemStack stack = player.getInventory().getItemInMainHand();
@@ -203,7 +208,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             // toogle the door open/closed
                                             if (plugin.getGeneralKeeper().getDoors().contains(blockType)) {
                                                 if (doortype == 0 || doortype == 1) {
-                                                    boolean open = TARDISStaticUtils.isOpen(block, dd);
+                                                    boolean open = TARDISStaticUtils.isDoorOpen(block);
                                                     if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
                                                         plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
                                                         // toggle handbrake && dematerialise
@@ -212,55 +217,9 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     // toggle the doors
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 }
-                                            } else if (blockType.equals(Material.OAK_TRAPDOOR)) {
-                                                byte door_data = block.getData();
-                                                switch (door_data) {
-                                                    case 0:
-                                                        block.setData((byte) 4, false);
-                                                        break;
-                                                    case 1:
-                                                        block.setData((byte) 5, false);
-                                                        break;
-                                                    case 2:
-                                                        block.setData((byte) 6, false);
-                                                        break;
-                                                    case 4:
-                                                        block.setData((byte) 0, false);
-                                                        break;
-                                                    case 5:
-                                                        block.setData((byte) 1, false);
-                                                        break;
-                                                    case 6:
-                                                        block.setData((byte) 2, false);
-                                                        break;
-                                                    case 7:
-                                                        block.setData((byte) 3, false);
-                                                        break;
-                                                    case 8:
-                                                        block.setData((byte) 12, false);
-                                                        break;
-                                                    case 9:
-                                                        block.setData((byte) 13, false);
-                                                        break;
-                                                    case 10:
-                                                        block.setData((byte) 14, false);
-                                                        break;
-                                                    case 11:
-                                                        block.setData((byte) 15, false);
-                                                        break;
-                                                    case 12:
-                                                        block.setData((byte) 8, false);
-                                                        break;
-                                                    case 13:
-                                                        block.setData((byte) 9, false);
-                                                        break;
-                                                    case 14:
-                                                        block.setData((byte) 10, false);
-                                                        break;
-                                                    default: // 15
-                                                        block.setData((byte) 11, false);
-                                                        break;
-                                                }
+                                            } else if (TARDISMaterials.trapdoors.contains(blockType)) {
+                                                TrapDoor door_data = (TrapDoor) block.getBlockData();
+                                                door_data.setOpen(!door_data.isOpen());
                                             }
                                         } else if (rs.getTardis().getUuid() != playerUUID) {
                                             TARDISMessage.send(player, "DOOR_DEADLOCKED");
@@ -334,7 +293,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             Block door_bottom;
                                             Door door = (Door) block.getState().getData();
                                             door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-                                            boolean opened = isDoorOpen(door_bottom.getData(), dd);
+                                            boolean opened = TARDISStaticUtils.isDoorOpen(door_bottom);
                                             if (opened && preset.hasDoor()) {
                                                 exitLoc = TARDISLocationGetters.getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
                                             } else {

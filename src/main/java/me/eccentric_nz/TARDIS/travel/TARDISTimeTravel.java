@@ -37,6 +37,7 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 
 /**
@@ -80,7 +81,7 @@ public class TARDISTimeTravel {
      * @param current
      * @return a random Location
      */
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
+    public Location randomDestination(Player p, int rx, int rz, int ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen;
         World randworld;
         int count;
@@ -302,11 +303,18 @@ public class TARDISTimeTravel {
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
-                    Material mat = w.getBlockAt(startx, starty, startz).getType();
+                    Block block = w.getBlockAt(startx, starty, startz);
+                    Material mat = block.getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         // check for siege cube
-                        // TODO use MultipleFacing BlockData
-                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK) && w.getBlockAt(startx, starty, startz).getData() == (byte) 14) {
+                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
+                            MultipleFacing mf = (MultipleFacing) block.getBlockData();
+                            for (BlockFace face : mf.getAllowedFaces()) {
+                                if (!mf.hasFace(face)) {
+                                    count++;
+                                    break;
+                                }
+                            }
                             continue;
                         } else {
                             count++;
@@ -474,7 +482,7 @@ public class TARDISTimeTravel {
      * @param ry the data bit of the y-repeater setting.
      * @param max the max_distance config option.
      */
-    private int randomX(Random rand, int range, int quarter, byte rx, byte ry, String e, Location l) {
+    private int randomX(Random rand, int range, int quarter, int rx, int ry, String e, Location l) {
         int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
         int wherex;
         wherex = rand.nextInt(range);
@@ -518,7 +526,7 @@ public class TARDISTimeTravel {
      * @param ry the data bit of the y-repeater setting.
      * @param max the max_distance config option.
      */
-    private int randomZ(Random rand, int range, int quarter, byte rz, byte ry, String e, Location l) {
+    private int randomZ(Random rand, int range, int quarter, int rz, int ry, String e, Location l) {
         int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
         int wherez;
         wherez = rand.nextInt(range);

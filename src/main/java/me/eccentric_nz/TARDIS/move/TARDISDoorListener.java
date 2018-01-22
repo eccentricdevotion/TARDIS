@@ -96,7 +96,6 @@ public class TARDISDoorListener {
      * @param sound an integer representing the sound to play
      * @param m whether to play the resource pack sound
      */
-    
     public void movePlayer(final Player p, final Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
         final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         final World to = l.getWorld();
@@ -276,7 +275,6 @@ public class TARDISDoorListener {
      *
      * @param p the player to give the key to
      */
-    
     private void giveKey(Player p) {
         String key;
         HashMap<String, Object> where = new HashMap<>();
@@ -412,32 +410,10 @@ public class TARDISDoorListener {
         }
     }
 
-    public boolean isDoorOpen(byte door_data, COMPASS d) {
-        switch (d) {
-            case NORTH:
-                if (door_data == 7) {
-                    return true;
-                }
-                break;
-            case WEST:
-                if (door_data == 6) {
-                    return true;
-                }
-                break;
-            case SOUTH:
-                if (door_data == 5) {
-                    return true;
-                }
-                break;
-            default:
-                if (door_data == 4) {
-                    return true;
-                }
-                break;
-        }
-        return false;
-    }
-
+//    public boolean isDoorOpen(Block door) {
+//        Openable openable = (Openable) door.getBlockData();
+//        return openable.isOpen();
+//    }
     /**
      * Set a player's time relative to the server time. Based on Essentials
      * /ptime command.

@@ -45,19 +45,14 @@ public class TARDISBlackWoolToggler {
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
             Material mat;
-            byte data;
             if (isAir(b)) {
                 mat = Material.BLACK_WOOL;
-//                data = (byte) 15;
             } else {
                 mat = Material.AIR;
-                data = (byte) 0;
             }
             b.setType(mat);
-//            b.setData(data);
             b.getRelative(BlockFace.UP).setType(mat);
-//            b.getRelative(BlockFace.UP).setData(data);
-            if (TARDISStaticUtils.isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
+            if (TARDISStaticUtils.isDoorOpen(b.getRelative(BlockFace.SOUTH))) {
                 // toggle doors shut
                 new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
             }

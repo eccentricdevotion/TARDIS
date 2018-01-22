@@ -26,7 +26,7 @@ public class TARDISVaultListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    
+
     public void onVaultDropChestClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
@@ -60,50 +60,29 @@ public class TARDISVaultListener implements Listener {
                             if (cinv.firstEmpty() != -1) {
                                 ItemStack[] cc = cinv.getContents();
                                 List<Material> mats = new ArrayList<>();
-                                List<MatData> mds = new ArrayList<>();
                                 // find unique item stack materials
                                 for (ItemStack is : cc) {
                                     if (is != null) {
                                         Material m = is.getType();
-                                        MatData md = new MatData();
-                                        md.setMaterial(m);
-                                        md.setData(is.getData().getData());
-                                        if (mats.contains(m)) {
-                                            boolean found = false;
-                                            for (MatData dm : mds) {
-                                                if (dm.equals(md)) {
-                                                    found = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (!found) {
-                                                mds.add(md);
-                                            }
-                                        } else {
-                                            // just add the material data
-                                            mds.add(md);
+                                        if (!mats.contains(m)) {
                                             mats.add(m);
                                         }
                                     }
                                 }
                                 // for each material found, see if there are any stacks of it in the drop chest
-                                mds.forEach((m) -> {
-                                    int slot = inv.first(m.getMaterial());
+                                mats.forEach((m) -> {
+                                    int slot = inv.first(m);
                                     while (slot != -1 && cinv.firstEmpty() != -1) {
                                         // get the item stack
                                         ItemStack get = inv.getItem(slot);
-                                        if (get.getData().getData() == m.getData()) {
-                                            // remove the stack from the drop chest
-                                            inv.setItem(slot, null);
-                                            // put it in the chest
-                                            cinv.setItem(cinv.firstEmpty(), get);
-                                            // sort the chest
-                                            TARDISSonicSorterListener.sortInventory(cinv, 0, cinv.getSize());
-                                            // get any other stacks
-                                            slot = inv.first(m.getMaterial());
-                                        } else {
-                                            slot = -1;
-                                        }
+                                        // remove the stack from the drop chest
+                                        inv.setItem(slot, null);
+                                        // put it in the chest
+                                        cinv.setItem(cinv.firstEmpty(), get);
+                                        // sort the chest
+                                        TARDISSonicSorterListener.sortInventory(cinv, 0, cinv.getSize());
+                                        // get any other stacks
+                                        slot = inv.first(m);
                                     }
                                 });
                             }
@@ -111,54 +90,6 @@ public class TARDISVaultListener implements Listener {
                     }
                 }
             }
-        }
-    }
-
-    public static class MatData {
-
-        private Material material;
-        private byte data;
-
-        public Material getMaterial() {
-            return material;
-        }
-
-        public void setMaterial(Material material) {
-            this.material = material;
-        }
-
-        public byte getData() {
-            return data;
-        }
-
-        public void setData(byte data) {
-            this.data = data;
-        }
-
-        /**
-         * Define equality of state.
-         *
-         * @param md the MatData to compare to
-         * @return true or false
-         */
-        @Override
-        public boolean equals(Object md) {
-            if (this == md) {
-                return true;
-            }
-            if (!(md instanceof MatData)) {
-                return false;
-            }
-            MatData that = (MatData) md;
-            return (this.material == that.material && this.data == that.data);
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 67 * hash + (this.material != null ? this.material.hashCode() : 0);
-            hash = 67 * hash + this.data;
-            return hash;
         }
     }
 }

@@ -36,6 +36,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -197,9 +199,14 @@ public class TARDISSiegeListener implements Listener {
             int id = TARDISNumberParsers.parseInt(line2[1]);
             // turn the drop into a block
             item.remove();
-            loc.getBlock().setType(Material.BROWN_MUSHROOM_BLOCK);
-            // TODO use MultipleFacing to set the mushroom faces
-            loc.getBlock().setData((byte) 14, true);
+            Block siege = loc.getBlock();
+            siege.setType(Material.BROWN_MUSHROOM_BLOCK);
+            // set the mushroom faces
+            MultipleFacing mf = (MultipleFacing) siege.getBlockData();
+            mf.getAllowedFaces().forEach((face) -> {
+                mf.setFace(face, true);
+            });
+            siege.setData(mf);
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
@@ -387,7 +394,14 @@ public class TARDISSiegeListener implements Listener {
     }
 
     private boolean isSiegeCube(Block b) {
-        return (b.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && b.getData() == (byte) 14);
+        boolean faced = true;
+        MultipleFacing mf = (MultipleFacing) b.getBlockData();
+        for (BlockFace face : mf.getAllowedFaces()) {
+            if (!mf.hasFace(face)) {
+                return false;
+            }
+        }
+        return faced;
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {

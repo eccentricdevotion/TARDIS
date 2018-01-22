@@ -24,10 +24,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Openable;
 
 /**
  *
@@ -49,13 +49,13 @@ public class TARDISDoorCloser {
         // get door locations
         final ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
-            close(rs.getOuterBlock(), rs.getInnerBlock().getLocation(), rs.getOuterDirection());
+            close(rs.getOuterBlock(), rs.getInnerBlock().getLocation());
             // inner
             if (!rs.getInnerBlock().getChunk().isLoaded()) {
                 rs.getInnerBlock().getChunk().load();
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                close(rs.getInnerBlock(), null, rs.getInnerDirection());
+                close(rs.getInnerBlock(), null);
             }, 5L);
         }
     }
@@ -65,34 +65,11 @@ public class TARDISDoorCloser {
      *
      * @param block the bottom door block
      * @param remove whether to clear the
-     * @param dd the door direction
      */
-    
-    private void close(Block block, Location inportal, COMPASS dd) {
+    private void close(Block block, Location inportal) {
         if (block != null && plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
-            byte door_data = block.getData();
-            switch (dd) {
-                case NORTH:
-                    if (door_data == 7) {
-                        block.setData((byte) 3, false);
-                    }
-                    break;
-                case WEST:
-                    if (door_data == 6) {
-                        block.setData((byte) 2, false);
-                    }
-                    break;
-                case SOUTH:
-                    if (door_data == 5) {
-                        block.setData((byte) 1, false);
-                    }
-                    break;
-                default:
-                    if (door_data == 4) {
-                        block.setData((byte) 0, false);
-                    }
-                    break;
-            }
+            Openable closeable = (Openable) block.getBlockData();
+            closeable.setOpen(false);
         }
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // get all companion UUIDs

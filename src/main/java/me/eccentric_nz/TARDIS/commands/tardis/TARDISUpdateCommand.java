@@ -26,9 +26,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Door;
+import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.entity.Player;
 
 /**
@@ -78,17 +79,19 @@ public class TARDISUpdateCommand {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     // TODO use BlockData
+                    Door door = (Door) block.getBlockData();
                     if (args.length == 3) {
-                        byte b = TARDISNumberParsers.parseByte(args[2]);
-                        block.setData(b, true);
+                        Hinge setHinge = Hinge.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                        door.setHinge(setHinge);
                     } else {
-                        byte blockData = block.getData();
-                        if (blockData == 8) {
-                            block.setData((byte) 9, true);
+                        Hinge hinge = door.getHinge();
+                        if (hinge.equals(Hinge.LEFT)) {
+                            door.setHinge(Hinge.RIGHT);
                         } else {
-                            block.setData((byte) 8, true);
+                            door.setHinge(Hinge.LEFT);
                         }
                     }
+                    block.setData(door);
                 }
                 return true;
             }

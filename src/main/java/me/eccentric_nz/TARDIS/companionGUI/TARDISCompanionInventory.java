@@ -49,7 +49,7 @@ public class TARDISCompanionInventory {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(UUID.fromString(c));
                 ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                 SkullMeta skull = (SkullMeta) head.getItemMeta();
-                skull.setOwner(op.getName());
+                skull.setOwningPlayer(op);
                 skull.setDisplayName(op.getName());
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add(c);

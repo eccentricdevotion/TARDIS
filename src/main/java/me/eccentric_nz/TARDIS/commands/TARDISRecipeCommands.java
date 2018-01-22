@@ -393,6 +393,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         return false;
     }
 
+    @SuppressWarnings("deprecation") // Maps still seem to use numeric values
     public void showShapedRecipe(Player p, String str) {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         p.closeInventory();
@@ -458,6 +459,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         p.openInventory(inv);
     }
 
+    @SuppressWarnings("deprecation") // Maps still seem to use numeric values
     public void showShapelessRecipe(Player player, String str) {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         final List<ItemStack> ingredients = recipe.getIngredientList();

@@ -23,6 +23,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
 /**
@@ -160,35 +161,12 @@ public class TARDISStaticUtils {
     /**
      * Checks whether a door is open.
      *
-     * @param door_bottom the bottom door block
-     * @param dd the direction the door is facing
+     * @param door the door block
      * @return true or false
      */
-    public static boolean isOpen(Block door_bottom, COMPASS dd) {
-        byte door_data = door_bottom.getData();
-        switch (dd) {
-            case NORTH:
-                if (door_data == 7) {
-                    return true;
-                }
-                break;
-            case WEST:
-                if (door_data == 6) {
-                    return true;
-                }
-                break;
-            case SOUTH:
-                if (door_data == 5) {
-                    return true;
-                }
-                break;
-            default:
-                if (door_data == 4) {
-                    return true;
-                }
-                break;
-        }
-        return false;
+    public static boolean isDoorOpen(Block door) {
+        Openable openable = (Openable) door.getBlockData();
+        return openable.isOpen();
     }
 
     /**

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -41,25 +42,25 @@ public class TARDISLazarusRunnable implements Runnable {
     }
 
     @Override
-    
+
     public void run() {
         if (i < LOOPS) {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
-                    b.getRelative(face).setData((byte) 1);
-                    b.getRelative(face).getRelative(BlockFace.UP).setData((byte) 1);
+                    b.getRelative(face).setType(Material.MOSSY_COBBLESTONE_WALL);
+                    b.getRelative(face).getRelative(BlockFace.UP).setType(Material.MOSSY_COBBLESTONE_WALL);
                 } else {
                     // set plain
-                    b.getRelative(face).setData((byte) 0);
-                    b.getRelative(face).getRelative(BlockFace.UP).setData((byte) 0);
+                    b.getRelative(face).setType(Material.COBBLESTONE_WALL);
+                    b.getRelative(face).getRelative(BlockFace.UP).setType(Material.COBBLESTONE_WALL);
                 }
             });
             i++;
         } else {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
-                b.getRelative(face).setData((byte) 0);
-                b.getRelative(face).getRelative(BlockFace.UP).setData((byte) 0);
+                b.getRelative(face).setType(Material.COBBLESTONE_WALL);
+                b.getRelative(face).getRelative(BlockFace.UP).setType(Material.COBBLESTONE_WALL);
             });
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;

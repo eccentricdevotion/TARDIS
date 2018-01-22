@@ -49,19 +49,19 @@ import org.bukkit.inventory.EquipmentSlot;
 public class TARDISGravityWellListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Double, Byte> woolData = new HashMap<>();
+    private final HashMap<Double, Material> woolType = new HashMap<>();
     private final HashMap<Double, String> woolColour = new HashMap<>();
 
     public TARDISGravityWellListener(TARDIS plugin) {
         this.plugin = plugin;
-        woolData.put(0D, (byte) 6);
-        woolData.put(1D, (byte) 5);
-        woolData.put(2D, (byte) 15);
-        woolData.put(3D, (byte) 10);
-        woolData.put(4D, (byte) 14);
-        woolData.put(5D, (byte) 4);
+        woolType.put(0D, Material.PINK_WOOL);
+        woolType.put(1D, Material.LIME_WOOL);
+        woolType.put(2D, Material.BLACK_WOOL);
+        woolType.put(3D, Material.PURPLE_WOOL);
+        woolType.put(4D, Material.RED_WOOL);
+        woolType.put(5D, Material.YELLOW_WOOL);
         woolColour.put(0D, "PINK");
-        woolColour.put(1D, "LIGHT GREEN");
+        woolColour.put(1D, "LIME");
         woolColour.put(2D, "BLACK");
         woolColour.put(3D, "PURPLE");
         woolColour.put(4D, "RED");
@@ -254,8 +254,8 @@ public class TARDISGravityWellListener implements Listener {
                     }
                 } else {
                     // check the wool block is the right colour
-                    byte bit = woolData.get(values[0]);
-                    if (b.getData() != bit) {
+                    Material bit = woolType.get(values[0]);
+                    if (!b.getType().equals(bit)) {
                         TARDISMessage.send(player, "GRAVITY_COLOUR", woolColour.get(values[0]) + ".");
                         return;
                     }

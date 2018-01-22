@@ -143,6 +143,12 @@ public class JSONObject {
         public String toString() {
             return "null";
         }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            return hash;
+        }
     }
     /**
      * The map where the JSONObject's properties are kept.
@@ -380,7 +386,7 @@ public class JSONObject {
         if (object == null) {
             this.put(key,
                     value instanceof JSONArray ? new JSONArray().put(value)
-                    : value);
+                            : value);
         } else if (object instanceof JSONArray) {
             ((JSONArray) object).put(value);
         } else {
@@ -471,7 +477,7 @@ public class JSONObject {
         Object object = this.get(key);
         if (object.equals(Boolean.FALSE)
                 || (object instanceof String && ((String) object)
-                .equalsIgnoreCase("false"))) {
+                        .equalsIgnoreCase("false"))) {
             return false;
         } else if (object.equals(Boolean.TRUE)
                 || (object instanceof String && ((String) object).equalsIgnoreCase("true"))) {

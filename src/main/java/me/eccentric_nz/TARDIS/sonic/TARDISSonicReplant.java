@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.inventory.ItemStack;
 
 public class TARDISSonicReplant implements Runnable {
@@ -20,19 +21,20 @@ public class TARDISSonicReplant implements Runnable {
     private final Material sand = Material.SAND;
     private final Material soil = Material.FARMLAND;
     private final Material soul = Material.SOUL_SAND;
-    private final HashMap<BlockFace, Byte> c_data = new HashMap<>();
+    private final HashMap<BlockFace, BlockFace> c_data = new HashMap<>();
 
     public TARDISSonicReplant(TARDIS plugin, Block block, Material type) {
         this.plugin = plugin;
         this.block = block;
         this.under = block.getRelative(BlockFace.DOWN);
         this.type = type;
-        this.c_data.put(BlockFace.NORTH, (byte) 2);
-        this.c_data.put(BlockFace.WEST, (byte) 1);
-        this.c_data.put(BlockFace.SOUTH, (byte) 0);
-        this.c_data.put(BlockFace.EAST, (byte) 3);
+        this.c_data.put(BlockFace.NORTH, BlockFace.SOUTH);
+        this.c_data.put(BlockFace.WEST, BlockFace.EAST);
+        this.c_data.put(BlockFace.SOUTH, BlockFace.NORTH);
+        this.c_data.put(BlockFace.EAST, BlockFace.WEST);
     }
 
+    // TODO check if we need to set the Ageable BlockData for all plant types
     @Override
     public void run() {
         switch (type) {
@@ -45,7 +47,7 @@ public class TARDISSonicReplant implements Runnable {
                 break;
             case CARROT:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.CARROT);
+                    block.setType(Material.CARROTS);
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.CARROT));
                 }
@@ -56,8 +58,10 @@ public class TARDISSonicReplant implements Runnable {
                         // only jungle logs
                         if (block.getRelative(f).getType().equals(log)) {
                             block.setType(Material.COCOA);
-                            // TODO use BlockData
-                            block.setData(c_data.get(f));
+                            Cocoa cocoa = (Cocoa) block.getBlockData();
+                            cocoa.setFacing(c_data.get(f));
+                            cocoa.setAge(0);
+                            block.setData(cocoa);
                         }
                     });
                 } else {
@@ -80,7 +84,7 @@ public class TARDISSonicReplant implements Runnable {
                 break;
             case POTATO:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.POTATO);
+                    block.setType(Material.POTATOES);
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.POTATO));
                 }

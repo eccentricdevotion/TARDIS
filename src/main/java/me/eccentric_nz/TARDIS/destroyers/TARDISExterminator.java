@@ -44,6 +44,7 @@ import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 
 /**
@@ -131,17 +132,17 @@ public class TARDISExterminator {
         ResultSetTardis rs;
         if (player.hasPermission("tardis.delete")) {
             Block blockbehind = null;
-            byte data = block.getData();
-            if (data == 4) {
+            Directional sign = (Directional) block.getBlockData();
+            if (sign.getFacing().equals(BlockFace.WEST)) {
                 blockbehind = block.getRelative(BlockFace.EAST, 2);
             }
-            if (data == 5) {
+            if (sign.getFacing().equals(BlockFace.EAST)) {
                 blockbehind = block.getRelative(BlockFace.WEST, 2);
             }
-            if (data == 3) {
+            if (sign.getFacing().equals(BlockFace.SOUTH)) {
                 blockbehind = block.getRelative(BlockFace.NORTH, 2);
             }
-            if (data == 2) {
+            if (sign.getFacing().equals(BlockFace.NORTH)) {
                 blockbehind = block.getRelative(BlockFace.SOUTH, 2);
             }
             if (blockbehind != null) {

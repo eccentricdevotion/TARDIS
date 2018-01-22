@@ -145,12 +145,9 @@ public class TARDISSchematicBuilder {
                     Block b = w.getBlockAt(r, l, c);
                     Material m = b.getType();
                     String mat = m.toString();
-                    byte d = b.getData();
                     // set ARS block
                     if (ars && m.equals(Material.AIR)) {
                         mat = "INFESTED_COBBLESTONE";
-//                        mat = "MONSTER_EGGS";
-                        d = 2;
                         ars = false;
                     }
                     switch (m) {
@@ -158,7 +155,6 @@ public class TARDISSchematicBuilder {
                             // random location blocks
                             if (isControlBlock(map.get(f), w, r, l, c)) {
                                 mat = "BROWN_MUSHROOM_BLOCK";
-                                d = 15;
                                 f++;
                             }
                             break;
@@ -166,7 +162,6 @@ public class TARDISSchematicBuilder {
                             // handbrake
                             if (isControlBlock(h, w, r, l, c)) {
                                 mat = "CAKE";
-                                d = 0;
                             }
                             break;
                         default:
@@ -174,15 +169,13 @@ public class TARDISSchematicBuilder {
                     }
                     if (l == by && r == bx && c == bz) {
                         mat = "BEDROCK";
-                        d = 0;
                     }
                     if (l == cy && r == cx && c == cz) {
                         mat = (m.equals(Material.BEACON)) ? "BEACON" : "COMMAND";
                         beacon = (m.equals(Material.BEACON)) ? 1 : 0;
-                        d = 0;
                     }
                     obj.put("type", mat);
-                    obj.put("data", d);
+                    obj.put("data", b.getBlockData().getDataString());
                     // banners
                     if (TARDISStaticUtils.isBanner(m)) {
                         JSONObject state = new JSONObject();
@@ -198,7 +191,6 @@ public class TARDISSchematicBuilder {
                             });
                         }
                         state.put("patterns", patterns);
-//                        state.put("bdata", d);
                         obj.put("banner", state);
                     }
                     columns.put(obj);

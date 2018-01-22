@@ -51,6 +51,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -305,7 +306,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // place siege block
                                     siege.setType(Material.BROWN_MUSHROOM_BLOCK);
-                                    siege.setData((byte) 14, true);
+                                    MultipleFacing mf = (MultipleFacing) siege.getBlockData();
+                                    mf.getAllowedFaces().forEach((face) -> {
+                                        mf.setFace(face, true);
+                                    });
+                                    siege.setData(mf);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);

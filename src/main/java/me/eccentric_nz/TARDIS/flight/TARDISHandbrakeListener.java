@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -261,15 +262,14 @@ public class TARDISHandbrakeListener implements Listener {
         b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
     }
 
-    
     private boolean isDoorOpen(int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            byte data = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getData();
-            return plugin.getGeneralKeeper().getDoorListener().isDoorOpen(data, rs.getDoor_direction());
+            Block door = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock();
+            return TARDISStaticUtils.isDoorOpen(door);
         }
         return false;
     }

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import org.bukkit.block.data.type.Repeater;
 
 /**
  * The sonic screwdriver is a highly versatile tool used by many, but not all,
@@ -42,7 +43,7 @@ public class ResultSetRepeaters {
     private final TARDIS plugin;
     private final int id;
     private final int secondary;
-    private final byte[] diodes = new byte[4];
+    private final int[] diodes = new int[4];
     List<String> locations = new ArrayList<>();
     private final String prefix;
 
@@ -104,16 +105,19 @@ public class ResultSetRepeaters {
         return true;
     }
 
-    
-    public byte[] getRepeaters() {
+    public int[] getRepeaters() {
         if (locations.size() == 4) {
+            Repeater r0 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(0), 0, 0).getBlock().getBlockData();
+            Repeater r1 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(1), 0, 0).getBlock().getBlockData();
+            Repeater r2 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(2), 0, 0).getBlock().getBlockData();
+            Repeater r3 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(3), 0, 0).getBlock().getBlockData();
             // get repeater settings
-            diodes[0] = TARDISLocationGetters.getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
-            diodes[1] = TARDISLocationGetters.getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
-            diodes[2] = TARDISLocationGetters.getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
-            diodes[3] = TARDISLocationGetters.getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
+            diodes[0] = r0.getDelay();
+            diodes[1] = r1.getDelay();
+            diodes[2] = r2.getDelay();
+            diodes[3] = r3.getDelay();
         } else {
-            diodes[0] = (byte) -1;
+            diodes[0] = -1;
         }
         return diodes;
     }

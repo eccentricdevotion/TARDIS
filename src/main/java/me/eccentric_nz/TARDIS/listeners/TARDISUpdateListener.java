@@ -41,6 +41,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.Bisected.Half;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -139,7 +143,7 @@ public class TARDISUpdateListener implements Listener {
         } else {
             return;
         }
-        final Block block = event.getClickedBlock();
+        Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
             Location block_loc = block.getLocation();
@@ -147,10 +151,13 @@ public class TARDISUpdateListener implements Listener {
             int bx = block_loc.getBlockX();
             int by = block_loc.getBlockY();
             int bz = block_loc.getBlockZ();
-            byte blockData = block.getData();
-            if (blockData >= 8 && blockType.equals(Material.IRON_DOOR)) {
-                by = (by - 1);
-                blockData = block.getRelative(BlockFace.DOWN).getData();
+            BlockData data = block.getBlockData();
+            if (blockType.equals(Material.IRON_DOOR)) {
+                Bisected bisected = (Bisected) data;
+                if (bisected.getHalf().equals(Half.TOP)) {
+                    by = (by - 1);
+                    block = block.getRelative(BlockFace.DOWN);
+                }
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", playerUUID);
@@ -191,10 +198,10 @@ public class TARDISUpdateListener implements Listener {
                     }
                 }
                 // get door data this should let us determine the direction
-                String d = getDirection(blockData);
+                Directional d = (Directional) block.getBlockData();
                 table = "doors";
                 set.put("door_location", blockLocStr);
-                set.put("door_direction", d);
+                set.put("door_direction", d.getFacing().toString());
                 tid.put("door_type", 1);
             }
             if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType.equals(Material.IRON_DOOR)) {
@@ -283,8 +290,9 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
+                final Block detector = block;
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    block.setType(Material.DAYLIGHT_DETECTOR);
+                    detector.setType(Material.DAYLIGHT_DETECTOR);
                 }, 3L);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType.equals(Material.LEVER)) {
@@ -655,16 +663,7 @@ public class TARDISUpdateListener implements Listener {
         }
     }
 
-    private String getDirection(Byte blockData) {
-        switch (blockData) {
-            case 1:
-                return "SOUTH";
-            case 2:
-                return "WEST";
-            case 3:
-                return "NORTH";
-            default:
-                return "EAST";
-        }
-    }
+//    private String getDirection(Directional blockData) {
+//        return blockData.getFacing().toString();
+//    }
 }

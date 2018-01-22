@@ -237,7 +237,7 @@ public class TARDISBuildGallifreyanStructure {
                         case YELLOW_WALL_BANNER:
                             JSONObject state = c.optJSONObject("banner");
                             if (state != null) {
-                                TARDISBannerData tbd = new TARDISBannerData(type, state);
+                                TARDISBannerData tbd = new TARDISBannerData(type, data, state);
                                 if (TARDISStaticUtils.isStandingBanner(type)) {
                                     postStandingBanners.put(world.getBlockAt(x, y, z), tbd);
                                 } else {

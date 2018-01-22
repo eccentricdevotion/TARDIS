@@ -57,7 +57,7 @@ public class TARDISCompanionAddInventory {
                     if (puid != uuid && !comps.contains(puid.toString())) {
                         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                         SkullMeta skull = (SkullMeta) head.getItemMeta();
-                        skull.setOwner(p.getName());
+                        skull.setOwningPlayer(p);
                         skull.setDisplayName(p.getName());
                         ArrayList<String> lore = new ArrayList<>();
                         lore.add(p.getUniqueId().toString());
