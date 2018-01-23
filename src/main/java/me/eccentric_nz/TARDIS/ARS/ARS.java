@@ -32,5 +32,4 @@ public interface ARS {
 
     public int getOffset();
 
-    // TODO convert ARS data from Material ids to Material names
 }

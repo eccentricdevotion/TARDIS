@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
@@ -50,15 +51,12 @@ import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
-import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.TARDISLastKnownNameUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISRecordingTask;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
-import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISWorldRemover;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
@@ -249,40 +247,10 @@ public class TARDIS extends JavaPlugin {
             new TARDISRecipesUpdater(this).addRecipes();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
-            // update database add and populate uuid fields
-            if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
-                TARDISUUIDConverter uc = new TARDISUUIDConverter(this);
-                if (!uc.convert()) {
-                    // conversion failed
-                    console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
-                    hasVersion = false;
-                    pm.disablePlugin(this);
-                    return;
-                } else {
-                    getConfig().set("conversions.uuid_conversion_done", true);
-                    saveConfig();
-                    console.sendMessage(pluginName + "UUID conversion successful :)");
-                }
-            }
-            // update database clear companions to UUIDs
-            if (!getConfig().getBoolean("conversions.companion_clearing_done")) {
-                TARDISCompanionClearer cc = new TARDISCompanionClearer(this);
-                if (!cc.clear()) {
-                    // clearing failed
-                    console.sendMessage(pluginName + ChatColor.RED + "Companion clearing failed, disabling...");
-                    hasVersion = false;
-                    pm.disablePlugin(this);
-                    return;
-                } else {
-                    getConfig().set("conversions.companion_clearing_done", true);
-                    saveConfig();
-                    console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
-                }
-            }
             // update database update last known names
-            if (!getConfig().getBoolean("conversions.lastknownname_conversion_done")) {
-                new TARDISLastKnownNameUpdater(this).update();
-                getConfig().set("conversions.lastknownname_conversion_done", true);
+            if (!getConfig().getBoolean("conversions.ars_materials")) {
+                new ARSConverter(this).convertARS();
+                getConfig().set("conversions.ars_materials", true);
             }
             loadMultiverse();
             loadInventoryManager();
