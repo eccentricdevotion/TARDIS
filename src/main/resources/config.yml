@@ -24,13 +24,13 @@ creation:
     custom_schematic: false
     custom_schematic_seed: OBSIDIAN
     use_block_stack: false
-    use_clay: false
+    use_clay: WOOL
     count: 0
     sky_biome: true
     area: none
 # outer TARDIS
 police_box:
-    default_preset: NEW
+    default_preset: FACTORY
     name_tardis: false
     materialise: true
     confirm_timeout: 15
@@ -175,10 +175,4 @@ archive:
     limit: 3
 # don't touch
 conversions:
-    biome_update: true
-    conversion_done: true
-    location_conversion_done: true
-    uuid_conversion_done: true
-    companion_clearing_done: true
-    condenser_done: true
-    lastknownname_conversion_done: true
+    ars_materials: true
