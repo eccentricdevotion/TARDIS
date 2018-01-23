@@ -90,8 +90,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking a door!
-            // TODO add all wood trapdoors
-            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
+            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || TARDISMaterials.trapdoors.contains(blockType)) {
                 final Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
                     Action action = event.getAction();

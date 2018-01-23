@@ -483,7 +483,6 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                 }
             }
-            // TODO set farmland hydrated
             if (type.equals(Material.FARMLAND)) {
                 Block farmland = world.getBlockAt(startx, starty, startz);
                 farmlandblocks.add(farmland);

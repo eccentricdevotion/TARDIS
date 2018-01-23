@@ -228,7 +228,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     } else {
                                                         // torches
                                                         blue[first][second] = tid.createBlockData().getDataString();
-//                                                        blueData[first][second] = (byte) 5;
                                                         glass[first][second] = Material.GLASS.createBlockData().getDataString();
                                                         stain[first][second] = (tid.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getDataString() : Material.RED_STAINED_GLASS.createBlockData().getDataString();
                                                     }
@@ -360,6 +359,4 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
             new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
         }
     }
-
-    //TODO construct a list of valid chameleon Materials to default BlockData strings
 }

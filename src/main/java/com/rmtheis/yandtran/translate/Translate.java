@@ -52,7 +52,7 @@ public final class Translate extends YandexTranslatorAPI {
 
     private static void validateServiceState(final String text) throws Exception {
         final int byteLength = text.getBytes(ENCODING).length;
-        if (byteLength > 10240) { // TODO What is the maximum text length allowable for Yandex?
+        if (byteLength > 10240) {
             throw new RuntimeException("TEXT_TOO_LARGE");
         }
         validateServiceState();

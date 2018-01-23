@@ -61,7 +61,6 @@ public class TARDISAdminPageTwoInventory {
                 options.add(is);
             }
         });
-        // TODO add another page so we can fit siege options in
         ItemStack[] stack = new ItemStack[54];
         for (int s = 0; s < 52; s++) {
             if (s < options.size()) {

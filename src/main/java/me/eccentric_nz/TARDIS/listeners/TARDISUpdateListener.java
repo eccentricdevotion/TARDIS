@@ -328,7 +328,6 @@ public class TARDISUpdateListener implements Listener {
                 blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                 set.put("creeper", blockLocStr);
             }
-            // TODO add other fence types
             if (blockName.equalsIgnoreCase("rail") && blockType.equals(Material.OAK_FENCE)) {
                 blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
                 set.put("rail", blockLocStr);

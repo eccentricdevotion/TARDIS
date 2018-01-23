@@ -78,7 +78,6 @@ public class TARDISUpdateCommand {
             if (tardis_block.equals("hinge")) {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
-                    // TODO use BlockData
                     Door door = (Door) block.getBlockData();
                     if (args.length == 3) {
                         Hinge setHinge = Hinge.valueOf(args[2].toUpperCase(Locale.ENGLISH));

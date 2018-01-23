@@ -169,7 +169,6 @@ public abstract class YandexTranslatorAPI {
             if (inputStream != null) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, ENCODING));
                 while (null != (string = reader.readLine())) {
-                    // TODO Can we remove this?
                     // Need to strip the Unicode Zero-width Non-breaking Space. For some reason, the Microsoft AJAX
                     // services prepend this to every response
                     outputBuilder.append(string.replaceAll("\uFEFF", ""));

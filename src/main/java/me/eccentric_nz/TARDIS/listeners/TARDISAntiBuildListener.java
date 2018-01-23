@@ -22,6 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -140,20 +141,16 @@ public class TARDISAntiBuildListener implements Listener {
         this.allow_interact.add(Material.SPRUCE_PRESSURE_PLATE);
         this.allow_interact.add(Material.STONE_BUTTON);
         this.allow_interact.add(Material.STONE_PRESSURE_PLATE);
-        // TODO add all plants
         this.no_flower_pot.add(Material.ACACIA_SAPLING);
         this.no_flower_pot.add(Material.BIRCH_SAPLING);
         this.no_flower_pot.add(Material.BROWN_MUSHROOM);
         this.no_flower_pot.add(Material.CACTUS);
-        this.no_flower_pot.add(Material.DANDELION);
         this.no_flower_pot.add(Material.DARK_OAK_SAPLING);
-        this.no_flower_pot.add(Material.DEAD_BUSH);
-        this.no_flower_pot.add(Material.GRASS);
         this.no_flower_pot.add(Material.JUNGLE_SAPLING);
         this.no_flower_pot.add(Material.OAK_SAPLING);
-        this.no_flower_pot.add(Material.POPPY);
         this.no_flower_pot.add(Material.RED_MUSHROOM);
         this.no_flower_pot.add(Material.SPRUCE_SAPLING);
+        this.no_flower_pot.addAll(TARDISMaterials.plants);
     }
 
     @EventHandler(ignoreCancelled = true)
