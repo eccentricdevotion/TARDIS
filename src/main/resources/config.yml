@@ -176,3 +176,4 @@ archive:
 # don't touch
 conversions:
     ars_materials: true
+    condenser_materials: true

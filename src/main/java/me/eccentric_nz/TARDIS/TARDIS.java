@@ -50,9 +50,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISRecordingTask;
@@ -303,10 +301,7 @@ public class TARDIS extends JavaPlugin {
             }
             loadPerms();
             loadBooks();
-            if (!getConfig().getBoolean("conversions.location_conversion_done")) {
-                new TARDISLocationsConverter(this).convert();
-            }
-            if (!getConfig().getBoolean("conversions.condenser_done")) {
+            if (!getConfig().getBoolean("conversions.condenser_materials")) {
                 new TARDISMaterialIDConverter(this).convert();
             }
             resourcePack = getServerTP();
@@ -345,7 +340,6 @@ public class TARDIS extends JavaPlugin {
             TARDISCondensables cond = new TARDISCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
-            checkBiomes();
             checkDropChests();
             if (artronConfig.getBoolean("artron_furnace.particles")) {
                 new TARDISArtronFurnaceParticle(this).addParticles();
@@ -949,16 +943,6 @@ public class TARDIS extends JavaPlugin {
         if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") && getServer().getWorld("Gallifrey") == null) {
             new TARDISGallifrey(this).createTimeLordWorld();
         }
-    }
-
-    /**
-     * Makes sure that the biome field in the current table is not empty.
-     */
-    private void checkBiomes() {
-        if (!getConfig().getBoolean("police_box.set_biome") || getConfig().getBoolean("conversions.biome_update")) {
-            return;
-        }
-        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISBiomeUpdater(this), 1200L);
     }
 
     /**
