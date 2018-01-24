@@ -58,7 +58,6 @@ public class TARDISEmergencyRelocation {
                 bd.setDirection(COMPASS.EAST);
                 bd.setMalfunction(false);
                 bd.setSubmarine(false);
-                // TODO get player preferences
                 Tardis tardis = rs.getTardis();
                 new TARDISInstaPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);

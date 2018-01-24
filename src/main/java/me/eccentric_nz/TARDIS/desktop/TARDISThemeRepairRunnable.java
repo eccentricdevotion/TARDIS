@@ -251,7 +251,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 //                pdb.setType(Material.IRON_DOOR);
                 pdb.setData(entry.getValue());
             });
-            // TODO fix redstone blocks falling off
             postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
                 Block prtb = entry.getKey();
                 prtb.setData(entry.getValue());

@@ -538,7 +538,6 @@ public class TARDII implements TardisAPI {
             if (!rsc.resultSet()) {
                 return false;
             }
-            // TODO get TARDIS owner
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, wheret, "", false, 2);

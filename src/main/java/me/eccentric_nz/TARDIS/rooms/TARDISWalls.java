@@ -180,23 +180,4 @@ public class TARDISWalls {
             BLOCKS.add(Material.SEA_LANTERN);
         }
     }
-
-    public static class Pair {
-
-        private final Material type;
-        private final Byte data;
-
-        public Pair(Material type, Byte data) {
-            this.type = type;
-            this.data = data;
-        }
-
-        public Material getType() {
-            return type;
-        }
-
-        public Byte getData() {
-            return data;
-        }
-    }
 }

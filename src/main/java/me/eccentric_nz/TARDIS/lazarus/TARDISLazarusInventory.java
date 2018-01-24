@@ -53,9 +53,8 @@ public class TARDISLazarusInventory {
         disguises.add(Material.ENDERMAN_SPAWN_EGG);
         disguises.add(Material.ENDERMITE_SPAWN_EGG);
         disguises.add(Material.EVOCATION_ILLAGER_SPAWN_EGG);
-        disguises.add(Material.GHAST_SPAWN_EGG);
+//        disguises.add(Material.GHAST_SPAWN_EGG);
         disguises.add(Material.GUARDIAN_SPAWN_EGG);
-        disguises.add(Material.HOPPER_MINECART);
         disguises.add(Material.HORSE_SPAWN_EGG);
         disguises.add(Material.HUSK_SPAWN_EGG);
         disguises.add(Material.LLAMA_SPAWN_EGG);
