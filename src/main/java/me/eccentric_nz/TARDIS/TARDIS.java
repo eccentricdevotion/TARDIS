@@ -301,8 +301,10 @@ public class TARDIS extends JavaPlugin {
             }
             loadPerms();
             loadBooks();
-            if (!getConfig().getBoolean("conversions.condenser_materials")) {
-                new TARDISMaterialIDConverter(this).convert();
+            if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials")) {
+                TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
+                tmic.checkCondenserData();
+                tmic.checkPlayerPrefsData();
             }
             resourcePack = getServerTP();
             // copy maps

@@ -737,7 +737,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_TYPE_LOOKUP.put("YELLOW_CLAY", "YELLOW_TERRACOTTA");
     }
 
-    public void convert() {
+    public void checkCondenserData() {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -797,6 +797,102 @@ public class TARDISMaterialIDConverter {
         if (i > 0) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
             plugin.getConfig().set("conversions.condenser_done", true);
+            plugin.saveConfig();
+        }
+    }
+
+    public void checkPlayerPrefsData() {
+        PreparedStatement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT pp_id, wall, floor, siege_wall, siege_floor FROM " + prefix + "player_prefs";
+        String update = "UPDATE " + prefix + "player_prefs SET wall = ?, SET floor = ?, SET siege_wall = ?, SET siege_floor = ? WHERE c_id = ?";
+        int i = 0;
+        try {
+            service.testConnection(connection);
+            connection.setAutoCommit(false);
+            // do condenser data
+            statement = connection.prepareStatement(query);
+            ps = connection.prepareStatement(update);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    String wall = rs.getString("block_data");
+                    String floor = rs.getString("block_data");
+                    String siegeWall = rs.getString("block_data");
+                    String siegeFloor = rs.getString("block_data");
+                    Material material;
+                    try {
+                        material = Material.valueOf(wall);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(wall);
+                        if (mat != null) {
+                            wall = mat;
+                        }
+                    }
+                    try {
+                        material = Material.valueOf(floor);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(floor);
+                        if (mat != null) {
+                            floor = mat;
+                        }
+                    }
+                    try {
+                        material = Material.valueOf(siegeWall);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(siegeWall);
+                        if (mat != null) {
+                            siegeWall = mat;
+                        }
+                    }
+                    try {
+                        material = Material.valueOf(siegeFloor);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(siegeFloor);
+                        if (mat != null) {
+                            siegeFloor = mat;
+                        }
+                    }
+                    int pp_id = rs.getInt("pp_id");
+                    // update the record
+                    ps.setString(1, wall);
+                    ps.setString(2, floor);
+                    ps.setString(3, siegeWall);
+                    ps.setString(4, siegeFloor);
+                    ps.setInt(5, pp_id);
+                    ps.addBatch();
+                    i++;
+                }
+                ps.executeBatch();
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            plugin.debug("Conversion error for condenser materials! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                // reset auto commit
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                plugin.debug("Error closing condenser table (converting IDs)! " + e.getMessage());
+            }
+        }
+        if (i > 0) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
+            plugin.getConfig().set("conversions.player_prefs_materials", true);
             plugin.saveConfig();
         }
     }

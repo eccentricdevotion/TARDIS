@@ -177,3 +177,4 @@ archive:
 conversions:
     ars_materials: true
     condenser_materials: true
+    player_prefs_materials: true
