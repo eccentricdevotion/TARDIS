@@ -90,8 +90,8 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
         prefsupdates.add("policebox_textures_on INTEGER DEFAULT 1");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
-        prefsupdates.add("siege_floor TEXT DEFAULT 'BLACK_CLAY'");
-        prefsupdates.add("siege_wall TEXT DEFAULT 'GREY_CLAY'");
+        prefsupdates.add("siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA'");
+        prefsupdates.add("siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA'");
         prefsupdates.add("sign_on INTEGER DEFAULT 1");
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
         prefsupdates.add("telepathy_on INTEGER DEFAULT 0");

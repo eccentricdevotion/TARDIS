@@ -84,8 +84,8 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("policebox_textures_on int(1) DEFAULT '1'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
-        prefsupdates.add("siege_floor varchar(64) DEFAULT 'BLACK_CLAY'");
-        prefsupdates.add("siege_wall varchar(64) DEFAULT 'GREY_CLAY'");
+        prefsupdates.add("siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA'");
+        prefsupdates.add("siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA'");
         prefsupdates.add("sign_on int(1) DEFAULT '1'");
         prefsupdates.add("telepathy_on int(1) DEFAULT '0'");
         prefsupdates.add("travelbar_on int(1) DEFAULT '0'");

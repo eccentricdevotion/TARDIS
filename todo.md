@@ -8,26 +8,27 @@
    * Update ARS records at first run - _started_
    * Update configs - _started_
    * Update / test schematic creation / pasting - _started_
-   * Tidy up database creation (remove unused fields where necessary)
    * Update Lazarus GUI with new spawn eggs (waiting on LibsDisguises update) - _started_
    * Check sonic replanter / chest sorter features still work
-   * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code... - _md_5 knows, waiting on API preview 3_
-2. Add glazed terracotta chameleon presets?
-3. Fix Biome adaptive presets dropping flowers & seeds (properly)
+   * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code... - _md5 knows, waiting on API preview 3_
+2. Fix Biome adaptive presets dropping flowers & seeds (properly)
+
+## TARDIS data pack
+* Move custom advancements to here
+* Add TARDIS recipes (where possible)
+* Add TARDIS tags
 
 ## Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 * TARDISSonicBlaster addon? - _unlikely_
-* SpongeAPI - _unlikely_
-* Forge mod for custom items and blocks (to tie in with Sponge version) - _maybe_
-* Slimmer TARDIS option? - _unlikely_
-* Add more API Events that other plugins can listen for?
+* Slimmer TARDIS option via Optifine's CEM mod? - _maybe_
+* Add more API Events that other plugins can listen for? - _unlikely_
    * Sonic Screwdriver events
    * Artron Energy event
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
-0. Custom Entity & Item models using Optifine
+0. Custom Entity & Item models using Optifine (when they can be applied to named entities)
 1. Rare armour drops
 2. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
 3. Re-skin mobs for Resource pack, and add new mob sounds
@@ -37,13 +38,13 @@
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
-   * Wolves -> K-9? (Make new model using OptiFine Custom Entity Model mod) _done_
+   * Wolves -> K-9 (Make Custom Entity Model apply to named wolves only) _waiting on Optifine_
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
    * Judoon
    * Clockwork Droid
-4. Custom GUI textures for TARDIS GUIs
+4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine_
  
 ## TIPS visulisation tool
 * Use WorldGuard region data
@@ -59,5 +60,5 @@
 4. A Sonic Screwdriver and a crafting recipe for it
 5. GUIs
 6. Make the TARDIS Police Box an entity
-7. Custom advancements
+7. Custom advancements - _done_
 8. Custom monsters
