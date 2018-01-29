@@ -149,12 +149,10 @@ public class Smelter {
             case BIRCH_TRAPDOOR:
             case BLACK_BANNER:
             case BLACK_CARPET:
-            case BLACK_WALL_BANNER:
             case BLACK_WOOL:
             case BLAZE_ROD:
             case BLUE_BANNER:
             case BLUE_CARPET:
-            case BLUE_WALL_BANNER:
             case BLUE_WOOL:
             case BOOKSHELF:
             case BOW:
@@ -162,7 +160,6 @@ public class Smelter {
             case BROWN_BANNER:
             case BROWN_CARPET:
             case BROWN_MUSHROOM_BLOCK:
-            case BROWN_WALL_BANNER:
             case BROWN_WOOL:
             case CHARCOAL:
             case CHEST:
@@ -171,7 +168,6 @@ public class Smelter {
             case CRAFTING_TABLE:
             case CYAN_BANNER:
             case CYAN_CARPET:
-            case CYAN_WALL_BANNER:
             case CYAN_WOOL:
             case DARK_OAK_BARK:
             case DARK_OAK_BOAT:
@@ -189,11 +185,9 @@ public class Smelter {
             case FISHING_ROD:
             case GRAY_BANNER:
             case GRAY_CARPET:
-            case GRAY_WALL_BANNER:
             case GRAY_WOOL:
             case GREEN_BANNER:
             case GREEN_CARPET:
-            case GREEN_WALL_BANNER:
             case GREEN_WOOL:
             case JUKEBOX:
             case JUNGLE_BARK:
@@ -212,19 +206,15 @@ public class Smelter {
             case LAVA_BUCKET:
             case LIGHT_BLUE_BANNER:
             case LIGHT_BLUE_CARPET:
-            case LIGHT_BLUE_WALL_BANNER:
             case LIGHT_BLUE_WOOL:
             case LIGHT_GRAY_BANNER:
             case LIGHT_GRAY_CARPET:
-            case LIGHT_GRAY_WALL_BANNER:
             case LIGHT_GRAY_WOOL:
             case LIME_BANNER:
             case LIME_CARPET:
-            case LIME_WALL_BANNER:
             case LIME_WOOL:
             case MAGENTA_BANNER:
             case MAGENTA_CARPET:
-            case MAGENTA_WALL_BANNER:
             case MAGENTA_WOOL:
             case MUSHROOM_STEM:
             case NOTE_BLOCK:
@@ -242,20 +232,16 @@ public class Smelter {
             case OAK_TRAPDOOR:
             case ORANGE_BANNER:
             case ORANGE_CARPET:
-            case ORANGE_WALL_BANNER:
             case ORANGE_WOOL:
             case PINK_BANNER:
             case PINK_CARPET:
-            case PINK_WALL_BANNER:
             case PINK_WOOL:
             case PURPLE_BANNER:
             case PURPLE_CARPET:
-            case PURPLE_WALL_BANNER:
             case PURPLE_WOOL:
             case RED_BANNER:
             case RED_CARPET:
             case RED_MUSHROOM_BLOCK:
-            case RED_WALL_BANNER:
             case RED_WOOL:
             case SIGN:
             case SPRUCE_BARK:
@@ -272,10 +258,8 @@ public class Smelter {
             case SPRUCE_TRAPDOOR:
             case STICK:
             case TRAPPED_CHEST:
-            case WALL_SIGN:
             case WHITE_BANNER:
             case WHITE_CARPET:
-            case WHITE_WALL_BANNER:
             case WHITE_WOOL:
             case WOODEN_AXE:
             case WOODEN_HOE:
@@ -284,7 +268,6 @@ public class Smelter {
             case WOODEN_SWORD:
             case YELLOW_BANNER:
             case YELLOW_CARPET:
-            case YELLOW_WALL_BANNER:
             case YELLOW_WOOL:
                 return true;
             default:
