@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -44,6 +45,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -146,9 +148,9 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             TARDISMessage.send(player, "LOST_IN_VORTEX");
                             return;
                         }
+                        int doortype = rsd.getDoor_type();
                         if (material.equals(m)) {
                             COMPASS dd = rsd.getDoor_direction();
-                            int doortype = rsd.getDoor_type();
                             int end_doortype;
                             switch (doortype) {
                                 case 0: // outside preset door
@@ -523,6 +525,31 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             Material sonic = Material.valueOf(split[0]);
                             if (!material.equals(sonic) || !player.hasPermission("tardis.sonic.admin")) {
                                 TARDISMessage.send(player, "NOT_KEY", key);
+                            }
+                            // knock with hand
+                            if (material.equals(Material.AIR)) {
+                                // only outside the TARDIS
+                                if (doortype == 0) {
+                                    // only if companion
+                                    ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
+                                    if (rsc.getCompanions().contains(playerUUID)) {
+                                        // get Time Lord
+                                        HashMap<String, Object> wherett = new HashMap<>();
+                                        ResultSetTardis rs = new ResultSetTardis(plugin, wherett, "", false, 2);
+                                        if (rs.resultSet()) {
+                                            UUID tluuid = rs.getTardis().getUuid();
+                                            // only if Time Lord is inside
+                                            HashMap<String, Object> wherev = new HashMap<>();
+                                            wherev.put("uuid", tluuid.toString());
+                                            ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherev, false);
+                                            if (rsv.resultSet()) {
+                                                Player tl = plugin.getServer().getPlayer(tluuid);
+                                                Sound knock = (blockType.equals(Material.IRON_DOOR)) ? Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR : Sound.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
+                                                tl.getWorld().playSound(tl.getLocation(), knock, 3.0F, 3.0F);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
