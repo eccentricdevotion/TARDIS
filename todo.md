@@ -8,10 +8,12 @@
    * Update ARS records at first run - _started_
    * Update configs - _started_
    * Update / test schematic creation / pasting - _started_
-   * Update Lazarus GUI with new spawn eggs (waiting on LibsDisguises update) - _started_
+   * Update Lazarus GUI with new spawn eggs (turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
    * Check sonic replanter / chest sorter features still work
+   * Add new biomes (end and ocean)
    * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code... - _md5 knows, waiting on API preview 3_
 2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536)
+3. Aquarium room, maybe a Turtle Beach room?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
@@ -47,7 +49,7 @@
    * Clockwork Droid
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine_
 5. Move all files in assets/minecraft/mcpatcher to assets/minecraft/optifine
-6. Rename resourec pack to TARDIS-Optifine
+6. Rename resource pack to 'TARDIS-Optifine'
  
 ## TIPS visulisation tool
 * Use WorldGuard region data
