@@ -418,12 +418,16 @@ public class TARDISGeneralInstanceKeeper {
         list.add(Material.BIRCH_PRESSURE_PLATE);
         list.add(Material.BIRCH_TRAPDOOR);
         list.add(Material.BLACK_BED);
+        list.add(Material.BLACK_SHULKER_BOX);
         list.add(Material.BLUE_BED);
+        list.add(Material.BLUE_SHULKER_BOX);
         list.add(Material.BROWN_BED);
+        list.add(Material.BROWN_SHULKER_BOX);
         list.add(Material.CHEST);
         list.add(Material.COMPARATOR);
         list.add(Material.CRAFTING_TABLE);
         list.add(Material.CYAN_BED);
+        list.add(Material.CYAN_SHULKER_BOX);
         list.add(Material.DARK_OAK_BUTTON);
         list.add(Material.DARK_OAK_DOOR);
         list.add(Material.DARK_OAK_FENCE_GATE);
@@ -434,7 +438,9 @@ public class TARDISGeneralInstanceKeeper {
         list.add(Material.ENDER_CHEST);
         list.add(Material.FURNACE);
         list.add(Material.GRAY_BED);
+        list.add(Material.GRAY_SHULKER_BOX);
         list.add(Material.GREEN_BED);
+        list.add(Material.GREEN_SHULKER_BOX);
         list.add(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
         list.add(Material.HOPPER);
         list.add(Material.IRON_DOOR);
@@ -447,10 +453,14 @@ public class TARDISGeneralInstanceKeeper {
         list.add(Material.JUNGLE_TRAPDOOR);
         list.add(Material.LEVER);
         list.add(Material.LIGHT_BLUE_BED);
+        list.add(Material.LIGHT_BLUE_SHULKER_BOX);
         list.add(Material.LIGHT_GRAY_BED);
+        list.add(Material.LIGHT_GRAY_SHULKER_BOX);
         list.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
         list.add(Material.LIME_BED);
+        list.add(Material.LIME_SHULKER_BOX);
         list.add(Material.MAGENTA_BED);
+        list.add(Material.MAGENTA_SHULKER_BOX);
         list.add(Material.NOTE_BLOCK);
         list.add(Material.OAK_BUTTON);
         list.add(Material.OAK_DOOR);
@@ -458,10 +468,15 @@ public class TARDISGeneralInstanceKeeper {
         list.add(Material.OAK_PRESSURE_PLATE);
         list.add(Material.OAK_TRAPDOOR);
         list.add(Material.ORANGE_BED);
+        list.add(Material.ORANGE_SHULKER_BOX);
         list.add(Material.PINK_BED);
+        list.add(Material.PINK_SHULKER_BOX);
         list.add(Material.PURPLE_BED);
+        list.add(Material.PURPLE_SHULKER_BOX);
         list.add(Material.RED_BED);
+        list.add(Material.RED_SHULKER_BOX);
         list.add(Material.REPEATER);
+        list.add(Material.SHULKER_BOX);
         list.add(Material.SIGN);
         list.add(Material.SPRUCE_BUTTON);
         list.add(Material.SPRUCE_DOOR);
@@ -473,7 +488,9 @@ public class TARDISGeneralInstanceKeeper {
         list.add(Material.TRAPPED_CHEST);
         list.add(Material.WALL_SIGN);
         list.add(Material.WHITE_BED);
+        list.add(Material.WHITE_SHULKER_BOX);
         list.add(Material.YELLOW_BED);
+        list.add(Material.YELLOW_SHULKER_BOX);
         return list;
     }
 
