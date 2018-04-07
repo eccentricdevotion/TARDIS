@@ -8,13 +8,13 @@
    * Update ARS records at first run - _started_
    * Update configs - _started_
    * Update / test schematic creation / pasting - _started_
-   * Update Lazarus GUI with new spawn eggs (turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
+   * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
    * Check sonic replanter / chest sorter features still work
    * Add new biomes (end and ocean)
    * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code... - _md5 knows, waiting on API preview 3_
 2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536)
 3. Aquarium room, maybe a Turtle Beach room?
-3. Fix Biome adaptive presets dropping flowers & seeds (properly)
+4. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
 * Move custom advancements to here
@@ -37,6 +37,7 @@
 3. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
+   * Illagers -> Red-eyed Ood - _started_
    * Endermen -> The Silence - _implemented, but texture needs to be finished_
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
