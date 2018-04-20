@@ -17,12 +17,8 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetSounds;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -38,39 +34,6 @@ import org.bukkit.entity.Player;
 public class TARDISSounds {
 
     private static final float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
-
-    /**
-     * Plays an interior hum sound to players who are inside the TARDIS and
-     * don't have SFX set to false.
-     */
-    public static void playTARDISHum() {
-        if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
-            ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
-            if (rs.resultSet()) {
-                List<UUID> data = rs.getData();
-                data.forEach((u) -> {
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", u.toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
-                    boolean userSFX;
-                    String hum;
-                    if (rsp.resultSet()) {
-                        userSFX = rsp.isSfxOn();
-                        hum = (rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum();
-                    } else {
-                        userSFX = true;
-                        hum = "tardis_hum";
-                    }
-                    final Player player = Bukkit.getServer().getPlayer(u);
-                    if (player != null) {
-                        if (userSFX) {
-                            playTARDISSound(player.getLocation(), hum);
-                        }
-                    }
-                });
-            }
-        }
-    }
 
     /**
      * Plays the interior hum sound upon TARDIS entry.

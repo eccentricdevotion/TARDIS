@@ -86,12 +86,12 @@ import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISHumSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
 import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVaultChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
@@ -637,7 +637,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void startSound() {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            TARDISSounds.playTARDISHum();
+            new TARDISHumSounds().playTARDISHum();
         }, 60L, 1500L);
     }
 
