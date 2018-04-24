@@ -59,7 +59,7 @@ public class TARDISDeleteCommand {
     public boolean deleteTARDIS(final CommandSender sender, final String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
-        int abandoned = (args[2].equals("abandoned")) ? 1 : 0;
+        int abandoned = (args.length > 2 && args[2].equals("abandoned")) ? 1 : 0;
         try {
             tmp = Integer.parseInt(args[1]);
         } catch (NumberFormatException nfe) {
