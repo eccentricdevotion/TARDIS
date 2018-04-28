@@ -57,10 +57,10 @@ public class TARDISDelavafier {
                         int z = startz + col;
                         Block b = world.getBlockAt(x, y, z);
                         Material type = b.getType();
-                        if (type.equals(Material.FLOWING_LAVA) || type.equals(Material.LAVA)) {
+                        if (type.equals(Material.LAVA)) {
                             b.setType(Material.ORANGE_TERRACOTTA);
                         }
-                        if (type.equals(Material.FLOWING_WATER) || type.equals(Material.WATER)) {
+                        if (type.equals(Material.WATER)) {
                             b.setType(Material.LIGHT_BLUE_STAINED_GLASS);
                         }
                     }

@@ -48,9 +48,9 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(5, Material.OAK_PLANKS);
         LEGACY_ID_LOOKUP.put(6, Material.OAK_SAPLING);
         LEGACY_ID_LOOKUP.put(7, Material.BEDROCK);
-        LEGACY_ID_LOOKUP.put(8, Material.FLOWING_WATER);
+        LEGACY_ID_LOOKUP.put(8, Material.WATER);
         LEGACY_ID_LOOKUP.put(9, Material.WATER);
-        LEGACY_ID_LOOKUP.put(10, Material.FLOWING_LAVA);
+        LEGACY_ID_LOOKUP.put(10, Material.LAVA);
         LEGACY_ID_LOOKUP.put(11, Material.LAVA);
         LEGACY_ID_LOOKUP.put(12, Material.SAND);
         LEGACY_ID_LOOKUP.put(13, Material.GRAVEL);

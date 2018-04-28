@@ -167,7 +167,7 @@ public class TARDISRoomRunnable implements Runnable {
                 TARDISMessage.send(p, "ICE");
                 // set all the ice to water
                 iceblocks.forEach((ice) -> {
-                    ice.setType(Material.FLOWING_WATER);
+                    ice.setType(Material.WATER);
                 });
                 iceblocks.clear();
             }
@@ -526,7 +526,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (level == 4 && room.equals("GREENHOUSE")) {
                     // set all the ice to water
                     iceblocks.forEach((ice) -> {
-                        ice.setType(Material.FLOWING_WATER);
+                        ice.setType(Material.WATER);
                     });
                     iceblocks.clear();
                 }
@@ -608,14 +608,14 @@ public class TARDISRoomRunnable implements Runnable {
                 world.setBiome(startx, startz, Biome.VOID);
             }
             if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
-                if (type.equals(Material.FLOWING_WATER)) {
+                if (type.equals(Material.WATER)) {
                     TARDISBlockSetters.setBlock(world, startx, starty, startz, Material.ICE);
                 } else {
                     TARDISBlockSetters.setBlock(world, startx, starty, startz, data);
                 }
             }
             // remember ice blocks
-            if ((type.equals(Material.FLOWING_WATER) || type.equals(Material.ICE)) && !room.equals("IGLOO")) {
+            if ((type.equals(Material.WATER) || type.equals(Material.ICE)) && !room.equals("IGLOO")) {
                 Block icy = world.getBlockAt(startx, starty, startz);
                 iceblocks.add(icy);
             }

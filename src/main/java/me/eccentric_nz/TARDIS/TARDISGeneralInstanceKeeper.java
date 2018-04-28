@@ -367,7 +367,6 @@ public class TARDISGeneralInstanceKeeper {
         trans.add(Material.DEAD_BUSH);
         trans.add(Material.END_ROD);
         trans.add(Material.FERN);
-        trans.add(Material.FLOWING_WATER);
         trans.add(Material.GRASS);
         trans.add(Material.IRON_BARS);
         trans.add(Material.JUNGLE_SAPLING);

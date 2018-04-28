@@ -77,7 +77,7 @@ public class TARDISAbandoned {
         bd.setMalfunction(false);
         bd.setOutside(true);
         bd.setRebuild(false);
-        bd.setSubmarine(l.getBlock().getType().equals(Material.FLOWING_WATER));
+        bd.setSubmarine(l.getBlock().getType().equals(Material.WATER));
         bd.setTardisID(lastInsertId);
         plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
         TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin);

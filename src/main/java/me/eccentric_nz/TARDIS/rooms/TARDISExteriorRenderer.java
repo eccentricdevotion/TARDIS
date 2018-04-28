@@ -92,11 +92,9 @@ public class TARDISExteriorRenderer {
                             Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
                             switch (eb.getType()) {
                                 case WATER:
-                                case FLOWING_WATER:
                                     ib.setType(Material.LIGHT_BLUE_STAINED_GLASS, true);
                                     break;
                                 case LAVA:
-                                case FLOWING_LAVA:
                                     ib.setType(Material.ORANGE_WOOL, true);
                                     break;
                                 default:

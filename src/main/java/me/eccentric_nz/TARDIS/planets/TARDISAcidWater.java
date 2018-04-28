@@ -106,7 +106,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Check if they are in water
-        if (block.getType().equals(Material.FLOWING_WATER) || block.getType().equals(Material.WATER) || head.getType().equals(Material.FLOWING_WATER) || head.getType().equals(Material.WATER)) {
+        if (block.getType().equals(Material.WATER) || head.getType().equals(Material.WATER)) {
             // Check if player is in a boat
             Entity playersVehicle = player.getVehicle();
             if (playersVehicle != null) {
@@ -279,10 +279,10 @@ public class TARDISAcidWater implements Listener {
         Material type = event.getBlockClicked().getType();
         ItemStack bucket = event.getItemStack();
         ItemMeta im = bucket.getItemMeta();
-        if (type.equals(Material.WATER) || type.equals(Material.FLOWING_WATER)) {
+        if (type.equals(Material.WATER)) {
             im.setDisplayName("Acid Bucket");
         }
-        if (type.equals(Material.LAVA) || type.equals(Material.FLOWING_LAVA)) {
+        if (type.equals(Material.LAVA)) {
             im.setDisplayName("Rust Bucket");
         }
         bucket.setItemMeta(im);

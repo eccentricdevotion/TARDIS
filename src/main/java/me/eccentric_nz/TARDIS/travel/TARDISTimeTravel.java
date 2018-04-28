@@ -205,7 +205,7 @@ public class TARDISTimeTravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.FLOWING_WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("uuid", p.getUniqueId().toString());
@@ -564,7 +564,7 @@ public class TARDISTimeTravel {
         Block block = b;
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.FLOWING_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
+            if (!block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE) && !block.getType().equals(Material.PACKED_ICE) && !block.getType().equals(Material.BLUE_ICE)) {
                 break;
             }
         }

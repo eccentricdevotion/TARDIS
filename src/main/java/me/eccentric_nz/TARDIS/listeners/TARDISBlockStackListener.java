@@ -304,12 +304,6 @@ public class TARDISBlockStackListener implements Listener {
     }
 
     private boolean isSub(Block b) {
-        switch (b.getRelative(BlockFace.EAST).getType()) {
-            case FLOWING_WATER:
-            case WATER:
-                return true;
-            default:
-                return false;
-        }
+        return b.getRelative(BlockFace.EAST).getType().equals(Material.WATER);
     }
 }

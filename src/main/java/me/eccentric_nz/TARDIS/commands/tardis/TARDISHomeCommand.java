@@ -45,7 +45,6 @@ public class TARDISHomeCommand {
         this.plugin = plugin;
     }
 
-    
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -116,12 +115,6 @@ public class TARDISHomeCommand {
     }
 
     private boolean isSub(Location l) {
-        switch (l.getBlock().getType()) {
-            case FLOWING_WATER:
-            case WATER:
-                return true;
-            default:
-                return false;
-        }
+        return l.getBlock().getType().equals(Material.WATER);
     }
 }

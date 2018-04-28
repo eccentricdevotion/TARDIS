@@ -244,12 +244,6 @@ public class TARDISSeedBlockProcessor {
     }
 
     private boolean isSub(Location l) {
-        switch (l.getBlock().getRelative(BlockFace.UP).getType()) {
-            case FLOWING_WATER:
-            case WATER:
-                return true;
-            default:
-                return false;
-        }
+        return l.getBlock().getRelative(BlockFace.UP).getType().equals(Material.WATER);
     }
 }
