@@ -86,7 +86,7 @@ public class TARDISListTardisesCommand {
                 end = tmp * 18;
             }
             String limit = start + ", " + end;
-            ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), limit, true, 1);
+            ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), limit, true, 0);
             if (rsl.resultSet()) {
                 TARDISMessage.send(sender, "TARDIS_LOCS");
                 for (Tardis t : rsl.getData()) {
