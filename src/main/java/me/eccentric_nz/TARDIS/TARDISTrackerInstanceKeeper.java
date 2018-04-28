@@ -114,6 +114,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<String> reset = new ArrayList<>();
     private final List<UUID> arrangers = new ArrayList<>();
     private final List<UUID> beaconColouring = new ArrayList<>();
+    private final List<UUID> constructors = new ArrayList<>();
     private final List<UUID> eggs = new ArrayList<>();
     private final List<UUID> excitation = new ArrayList<>();
     private final List<UUID> farming = new ArrayList<>();
@@ -360,6 +361,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<UUID> getBeaconColouring() {
         return beaconColouring;
+    }
+
+    public List<UUID> getConstructors() {
+        return constructors;
     }
 
     public List<UUID> getEggs() {

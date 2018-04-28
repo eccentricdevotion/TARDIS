@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonConstructorListener;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonConstructorOpenCloseListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonHelpListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonTemplateListener;
@@ -215,6 +216,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISBlockPhysicsListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonConstructorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISChameleonConstructorOpenCloseListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonHelpListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonTemplateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChatListener(plugin), plugin);
