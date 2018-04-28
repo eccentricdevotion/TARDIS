@@ -177,7 +177,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     buildConstruct(tardis.getPreset().toString(), id, new QueryFactory(plugin), tardis.getChameleon(), player);
                                     break;
                                 case 8:
-                                    String air = Material.AIR.createBlockData().getDataString();
+                                    String air = Material.AIR.createBlockData().getAsString();
                                     // process
                                     String[][] blue = new String[10][4];
                                     String[][] stain = new String[10][4];
@@ -199,7 +199,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     return;
                                                 }
                                                 Material tid = d.getType();
-                                                blue[first][second] = tid.createBlockData().getDataString();
+                                                blue[first][second] = tid.createBlockData().getAsString();
                                                 if (doors.contains(d.getType())) {
                                                     // doors
                                                     BlockData did = d.getType().createBlockData();
@@ -209,7 +209,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     } else {
                                                         bisected.setHalf(Bisected.Half.TOP);
                                                     }
-                                                    String dataStr = bisected.getDataString();
+                                                    String dataStr = bisected.getAsString();
                                                     blue[first][second] = dataStr;
                                                     stain[first][second] = dataStr;
                                                     glass[first][second] = dataStr;
@@ -221,14 +221,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                         stain[first][second] = air;
                                                     } else {
                                                         // torches
-                                                        blue[first][second] = tid.createBlockData().getDataString();
-                                                        glass[first][second] = Material.GLASS.createBlockData().getDataString();
-                                                        stain[first][second] = (tid.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getDataString() : Material.RED_STAINED_GLASS.createBlockData().getDataString();
+                                                        blue[first][second] = tid.createBlockData().getAsString();
+                                                        glass[first][second] = Material.GLASS.createBlockData().getAsString();
+                                                        stain[first][second] = (tid.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getAsString() : Material.RED_STAINED_GLASS.createBlockData().getAsString();
                                                     }
                                                 } else {
-                                                    blue[first][second] = tid.createBlockData().getDataString();
-                                                    glass[first][second] = Material.GLASS.createBlockData().getDataString();
-                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(tid).createBlockData().getDataString();
+                                                    blue[first][second] = tid.createBlockData().getAsString();
+                                                    glass[first][second] = Material.GLASS.createBlockData().getAsString();
+                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(tid).createBlockData().getAsString();
                                                 }
                                             } else {
                                                 blue[first][second] = air;
@@ -248,7 +248,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     BlockData sign = Material.WALL_SIGN.createBlockData();
                                     Directional directional = (Directional) sign;
                                     directional.setFacing(BlockFace.WEST);
-                                    String[] signData = new String[]{air, air, directional.getDataString(), air};
+                                    String[] signData = new String[]{air, air, directional.getAsString(), air};
                                     blue[9] = signData;
                                     stain[9] = signData;
                                     glass[9] = signData;

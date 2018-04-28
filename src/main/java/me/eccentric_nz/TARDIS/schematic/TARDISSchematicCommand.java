@@ -122,7 +122,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             Block b = w.getBlockAt(r, l, c);
                             obj.put("type", b.getType().toString());
                             // does the block have blockdata
-                            String blockData = b.getBlockData().getDataString();
+                            String blockData = b.getBlockData().getAsString();
                             plugin.debug("blockData: " + blockData);
                             obj.put("data", blockData);
                             // banners

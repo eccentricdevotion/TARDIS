@@ -221,7 +221,7 @@ public class TARDISBlockSetters {
      * @param x the x co-ordinate of the block.
      * @param y the y co-ordinate of the block.
      * @param z the z co-ordinate of the block.
-     * @param data the block data to apply to the block.
+     * @param material the Material to apply to the block.
      */
     public static void setBlock(World w, int x, int y, int z, Material material) {
         final Block b = w.getBlockAt(x, y, z);
@@ -269,7 +269,7 @@ public class TARDISBlockSetters {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
-        set.put("data", b.getBlockData().getDataString());
+        set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
@@ -296,7 +296,7 @@ public class TARDISBlockSetters {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
-        set.put("data", b.getBlockData().getDataString());
+        set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
@@ -324,7 +324,7 @@ public class TARDISBlockSetters {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
-        set.put("data", b.getBlockData().getDataString());
+        set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
@@ -351,7 +351,7 @@ public class TARDISBlockSetters {
         set.put("tardis_id", id);
         set.put("location", l);
         BlockData data = b.getBlockData();
-        set.put("data", data.getDataString());
+        set.put("data", data.getAsString());
         set.put("police_box", type);
         new QueryFactory(TARDIS.plugin).doInsert("blocks", set);
         // set the block
@@ -376,7 +376,7 @@ public class TARDISBlockSetters {
             ids.remove("CHEST");
         }
         Block b = w.getBlockAt(x, y, z);
-        String blockData = b.getBlockData().getDataString();
+        String blockData = b.getBlockData().getAsString();
         if (ids.contains(b.getBlockData().getMaterial().toString())) {
             // remember replaced block location and BlockData so we can restore it later
             String l = b.getLocation().toString();

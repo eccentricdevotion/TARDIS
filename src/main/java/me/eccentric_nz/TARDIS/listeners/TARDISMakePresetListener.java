@@ -125,7 +125,7 @@ public class TARDISMakePresetListener implements Listener {
                         BlockData data = b.getBlockData();
                         if (y == (fy + 3)) {
                             sb_id.append(matStr);
-                            sb_data.append(data.getDataString());
+                            sb_data.append(data.getAsString());
                             if (not_glass.contains(material)) {
                                 sb_stain_mat.append(matStr);
                                 sb_glass_id.append(matStr);
@@ -136,7 +136,7 @@ public class TARDISMakePresetListener implements Listener {
                             }
                         } else {
                             sb_id.append(matStr).append(",");
-                            sb_data.append(data.getDataString()).append(",");
+                            sb_data.append(data.getAsString()).append(",");
                             if (not_glass.contains(material)) {
                                 sb_stain_mat.append(matStr).append(",");
                                 sb_glass_id.append(matStr).append(",");

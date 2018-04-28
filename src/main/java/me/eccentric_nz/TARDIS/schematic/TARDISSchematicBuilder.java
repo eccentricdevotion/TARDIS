@@ -175,7 +175,7 @@ public class TARDISSchematicBuilder {
                         beacon = (m.equals(Material.BEACON)) ? 1 : 0;
                     }
                     obj.put("type", mat);
-                    obj.put("data", b.getBlockData().getDataString());
+                    obj.put("data", b.getBlockData().getAsString());
                     // banners
                     if (TARDISStaticUtils.isBanner(m)) {
                         JSONObject state = new JSONObject();
