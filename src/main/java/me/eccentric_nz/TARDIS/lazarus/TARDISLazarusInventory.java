@@ -48,7 +48,9 @@ public class TARDISLazarusInventory {
         disguises.add(Material.CHICKEN_SPAWN_EGG);
         disguises.add(Material.COW_SPAWN_EGG);
         disguises.add(Material.CREEPER_SPAWN_EGG);
+        disguises.add(Material.DOLPHIN_SPAWN_EGG);
         disguises.add(Material.DONKEY_SPAWN_EGG);
+        disguises.add(Material.DROWNED_SPAWN_EGG);
         disguises.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
         disguises.add(Material.ENDERMAN_SPAWN_EGG);
         disguises.add(Material.ENDERMITE_SPAWN_EGG);
@@ -63,6 +65,7 @@ public class TARDISLazarusInventory {
         disguises.add(Material.MULE_SPAWN_EGG);
         disguises.add(Material.OCELOT_SPAWN_EGG);
         disguises.add(Material.PARROT_SPAWN_EGG);
+        disguises.add(Material.PHANTOM_SPAWN_EGG);
         disguises.add(Material.PIG_SPAWN_EGG);
         disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
         disguises.add(Material.RABBIT_SPAWN_EGG);
@@ -75,6 +78,7 @@ public class TARDISLazarusInventory {
         disguises.add(Material.SPIDER_SPAWN_EGG);
         disguises.add(Material.SQUID_SPAWN_EGG);
         disguises.add(Material.STRAY_SPAWN_EGG);
+        disguises.add(Material.TURTLE_SPAWN_EGG);
         disguises.add(Material.VEX_SPAWN_EGG);
         disguises.add(Material.VILLAGER_SPAWN_EGG);
         disguises.add(Material.VINDICATION_ILLAGER_SPAWN_EGG);
@@ -104,26 +108,6 @@ public class TARDISLazarusInventory {
             eggs[i] = egg;
             i++;
         }
-        // put iron golem
-        ItemStack iron = new ItemStack(Material.IRON_BLOCK, 1);
-        ItemMeta golem = iron.getItemMeta();
-        golem.setDisplayName("IRON_GOLEM");
-        iron.setItemMeta(golem);
-        eggs[i] = iron;
-        i++;
-        // put snowman
-        ItemStack snow = new ItemStack(Material.SNOWBALL, 1);
-        ItemMeta man = snow.getItemMeta();
-        man.setDisplayName("SNOWMAN");
-        snow.setItemMeta(man);
-        eggs[i] = snow;
-        i++;
-        // put wither
-        ItemStack wit = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
-        ItemMeta her = wit.getItemMeta();
-        her.setDisplayName("WITHER");
-        wit.setItemMeta(her);
-        eggs[i] = wit;
         // add options
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();

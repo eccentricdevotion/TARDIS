@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,11 +37,15 @@ public class TARDISLazarusTWAInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<>();
+    List<Material> disguises = new ArrayList<>();
 
     public TARDISLazarusTWAInventory(TARDIS plugin) {
         this.plugin = plugin;
         this.terminal = getItemStack();
+        disguises.add(Material.COD_MOB_SPAWN_EGG);
+        disguises.add(Material.PUFFER_FISH_SPAWN_EGG);
+        disguises.add(Material.SALMON_MOB_SPAWN_EGG);
+        disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
     }
 
     /**
@@ -52,6 +56,37 @@ public class TARDISLazarusTWAInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] eggs = new ItemStack[54];
         int i = 0;
+        // golems
+        // put iron golem
+        ItemStack iron = new ItemStack(Material.IRON_BLOCK, 1);
+        ItemMeta golem = iron.getItemMeta();
+        golem.setDisplayName("IRON_GOLEM");
+        iron.setItemMeta(golem);
+        eggs[i] = iron;
+        i++;
+        // put snowman
+        ItemStack snow = new ItemStack(Material.SNOWBALL, 1);
+        ItemMeta man = snow.getItemMeta();
+        man.setDisplayName("SNOWMAN");
+        snow.setItemMeta(man);
+        eggs[i] = snow;
+        i++;
+        // put wither
+        ItemStack wit = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
+        ItemMeta her = wit.getItemMeta();
+        her.setDisplayName("WITHER");
+        wit.setItemMeta(her);
+        eggs[i] = wit;
+        i++;
+        // fish
+        for (Material m : disguises) {
+            ItemStack egg = new ItemStack(m, 1);
+            ItemMeta me = egg.getItemMeta();
+            me.setDisplayName(m.toString().replace("_SPAWN_EGG", "").replace("_MOB", ""));
+            egg.setItemMeta(me);
+            eggs[i] = egg;
+            i++;
+        }
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.checkTWA()) {
             ItemStack weep = new ItemStack(Material.BRICK, 1);
