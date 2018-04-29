@@ -391,6 +391,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
             i++;
         }
+        if (!recipes_config.contains("furnace.Nuclear Wool.experience")) {
+            recipes_config.set("furnace.Nuclear Wool.experience", 0);
+            recipes_config.set("furnace.Nuclear Wool.cooktime", 200);
+            i++;
+        }
         damage.entrySet().forEach((uses) -> {
             if (recipes_config.getString(uses.getKey()).isEmpty()) {
                 recipes_config.set(uses.getKey(), "Uses left~" + uses.getValue());

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.FurnaceRecipe;
@@ -37,6 +38,8 @@ public class TARDISFurnaceRecipe {
         /*
          recipe: '35:0'
          result: '35:15'
+         experience: 0.0
+         cooktime: 200
          displayname: true
          lore: "Done to a crisp"
          */
@@ -63,7 +66,11 @@ public class TARDISFurnaceRecipe {
         }
         String ingredient = plugin.getRecipesConfig().getString("furnace." + s + ".recipe");
         Material recipe_m = Material.valueOf(ingredient);
-        f = new FurnaceRecipe(is, recipe_m);
+        float experience = (float) plugin.getRecipesConfig().getDouble("furnace." + s + ".experience");
+        int cooktime = plugin.getRecipesConfig().getInt("furnace." + s + ".cooktime");
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_"));
+        f = new FurnaceRecipe(key, is, recipe_m, experience, cooktime);
+
         return f;
     }
 }

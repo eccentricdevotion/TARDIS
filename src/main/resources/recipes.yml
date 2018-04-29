@@ -958,4 +958,6 @@ furnace:
     Nuclear Wool:
         recipe: WHITE_WOOL
         result: BLACK_WOOL
+        experience: 0
+        cooktime: 200
         lore: "Done to a crisp"
