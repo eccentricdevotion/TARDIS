@@ -200,7 +200,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("PerWorldInventory", "1.9.0");
         this.versions.put("ProtocolLib", "4.4.0");
         this.versions.put("TARDISChunkGenerator", "4.0");
-        this.versions.put("TerrainControl", "2.8.2");
+        this.versions.put("OpenTerrainGenerator", "1.12.2");
         this.versions.put("Towny", "0.91");
         this.versions.put("WorldBorder", "1.8.1");
         this.versions.put("WorldGuard", "6.2.1");
@@ -399,6 +399,10 @@ public class TARDIS extends JavaPlugin {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
                     ver = new Version(semi[0]);
+                } else if (plg.equals("OpenTerrainGenerator") && preSplit.contains(" ")) {
+                    // eg 1.12.2 v6
+                    String[] space = split[0].split(" ");
+                    ver = new Version(space[0]);
                 } else {
                     ver = new Version(split[0]);
                 }
