@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.CONTROL;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -67,35 +68,9 @@ public class TARDISUpdateListener implements Listener {
     List<Material> validBlocks = new ArrayList<>();
     List<Material> validSigns = new ArrayList<>();
     List<Material> plates = new ArrayList<>();
-    HashMap<String, Integer> controls = new HashMap<>();
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
-        controls.put("handbrake", 0);
-        controls.put("button", 1);
-        controls.put("world-repeater", 2);
-        controls.put("x-repeater", 3);
-        controls.put("z-repeater", 4);
-        controls.put("y-repeater", 5);
-        controls.put("artron", 6);
-        controls.put("keyboard", 7);
-        controls.put("back", 8);
-        controls.put("terminal", 9);
-        controls.put("ars", 10);
-        controls.put("temporal", 11);
-        controls.put("light", 12);
-        controls.put("info", 13);
-        controls.put("storage", 14);
-        controls.put("advanced", 15);
-        controls.put("zero", 16); // entry control
-        // zero room exit control = 17
-        // direction item frame = 18
-        // lazarus plate = 19
-        controls.put("toggle_wool", 20);
-        controls.put("siege", 21);
-        controls.put("control", 22);
-        controls.put("telepathic", 23);
-        controls.put("generator", 24);
         validBlocks.add(Material.ACACIA_BUTTON);
         validBlocks.add(Material.BIRCH_BUTTON);
         validBlocks.add(Material.COMPARATOR);
@@ -176,12 +151,12 @@ public class TARDISUpdateListener implements Listener {
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
-            if (controls.containsKey(blockName)) {
+            if (CONTROL.getUPDATE_CONTROLS().containsKey(blockName)) {
                 if (!blockName.contains("repeater")) {
                     blockLocStr = block_loc.toString();
                 }
                 table = "controls";
-                tid.put("type", controls.get(blockName));
+                tid.put("type", CONTROL.getUPDATE_CONTROLS().get(blockName));
                 tid.put("secondary", 0);
             }
             if (secondary) {
@@ -252,7 +227,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if ((blockName.equalsIgnoreCase("button") || blockName.equalsIgnoreCase("artron")) && validBlocks.contains(blockType)) {
                 if (secondary) {
-                    qf.insertControl(id, controls.get(blockName), blockLocStr, 1);
+                    qf.insertControl(id, CONTROL.getUPDATE_CONTROLS().get(blockName), blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -641,11 +616,11 @@ public class TARDISUpdateListener implements Listener {
             if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("siege") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherel = new HashMap<>();
                 wherel.put("tardis_id", id);
-                wherel.put("type", controls.get(blockName));
+                wherel.put("type", CONTROL.getUPDATE_CONTROLS().get(blockName));
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, controls.get(blockName), blockLocStr, 0);
+                    qf.insertControl(id, CONTROL.getUPDATE_CONTROLS().get(blockName), blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);

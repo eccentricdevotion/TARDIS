@@ -6,6 +6,12 @@ rooms:
     offset: -4
     seed: CLAY
     user: false
+  AQUARIUM:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: TUBE_CORAL_BLOCK
+    user: false
   ARBORETUM:
     enabled: true
     cost: 325
@@ -125,6 +131,12 @@ rooms:
     cost: 350
     offset: -4
     seed: GRAVEL
+    user: false
+  SHELL:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: DEAD_BRAIN_CORAL_BLOCK
     user: false
   SMELTER:
     enabled: true

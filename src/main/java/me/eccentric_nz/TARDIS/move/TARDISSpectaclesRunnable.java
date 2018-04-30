@@ -23,6 +23,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 
 /**
@@ -32,14 +34,27 @@ import org.bukkit.entity.Player;
 public class TARDISSpectaclesRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final HashMap<COMPASS, Byte> bottom = new HashMap<>();
+    private final HashMap<COMPASS, Door> bottom = new HashMap<>();
+    private final Door upper;
+    private final Door lower;
 
     public TARDISSpectaclesRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        this.bottom.put(COMPASS.EAST, (byte) 0);
-        this.bottom.put(COMPASS.SOUTH, (byte) 1);
-        this.bottom.put(COMPASS.WEST, (byte) 2);
-        this.bottom.put(COMPASS.NORTH, (byte) 3);
+        // TODO set door facing, hinge, half in BlockData for each compass direction - use Material.createBlockData(String data) method?
+        this.bottom.put(COMPASS.EAST, (Door) Material.IRON_DOOR.createBlockData());
+        this.bottom.put(COMPASS.SOUTH, (Door) Material.IRON_DOOR.createBlockData());
+        this.bottom.put(COMPASS.WEST, (Door) Material.IRON_DOOR.createBlockData());
+        this.bottom.put(COMPASS.NORTH, (Door) Material.IRON_DOOR.createBlockData());
+//        this.bottom.put(COMPASS.EAST, (byte) 0);
+//        this.bottom.put(COMPASS.SOUTH, (byte) 1);
+//        this.bottom.put(COMPASS.WEST, (byte) 2);
+//        this.bottom.put(COMPASS.NORTH, (byte) 3);
+        this.upper = (Door) Material.IRON_DOOR.createBlockData();
+        this.upper.setHalf(Bisected.Half.TOP);
+        this.lower = (Door) Material.IRON_DOOR.createBlockData();
+        this.lower.setHalf(Bisected.Half.BOTTOM);
+        this.lower.setHinge(Door.Hinge.RIGHT);
+        this.lower.setFacing(BlockFace.EAST);
     }
 
     @Override
@@ -56,9 +71,8 @@ public class TARDISSpectaclesRunnable implements Runnable {
                         wherec.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                         if (rsc.resultSet()) {
-                            // TODO use upcoming? BlockData replacement method
-                            p.sendBlockChange(map.getValue().getLocation(), Material.IRON_DOOR, bottom.get(rsc.getDirection()));
-                            p.sendBlockChange(map.getValue().getRelative(BlockFace.UP).getLocation(), Material.IRON_DOOR, (byte) 9);
+                            p.sendBlockChange(map.getValue().getLocation(), bottom.get(rsc.getDirection()));
+                            p.sendBlockChange(map.getValue().getRelative(BlockFace.UP).getLocation(), upper);
                         }
                     }
                 }

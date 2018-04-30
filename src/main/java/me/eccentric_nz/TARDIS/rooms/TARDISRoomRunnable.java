@@ -450,6 +450,11 @@ public class TARDISRoomRunnable implements Runnable {
                 type = Material.CHEST;
                 data = type.createBlockData();
             }
+            // remember shell room button
+            if (type.equals(Material.STONE_BUTTON) && room.equals("SHELL")) {
+                String loc_str = new Location(world, startx, starty, startz).toString();
+                qf.insertControl(tardis_id, 25, loc_str, 0);
+            }
             // remember village doors
             if (type.equals(Material.OAK_DOOR) && room.equals("VILLAGE")) {
                 Block door = world.getBlockAt(startx, starty, startz);
@@ -541,7 +546,7 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.doUpdate("tardis", set, where);
             }
             // always replace bedrock (the door space in ARS rooms)
-            if (type.equals(Material.BEDROCK)) {
+            if ((type.equals(Material.BEDROCK) && !room.equals("shell")) || (type.equals(Material.SOUL_SAND) && room.equals("shell"))) {
                 if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                     type = Material.AIR;
                     data = type.createBlockData();

@@ -27,6 +27,7 @@ public enum TARDISARS implements ARS {
 
     // add offsets
     ANTIGRAVITY("SANDSTONE", "ANTIGRAVITY", "Anti-gravity Well", 1),
+    AQUARIUM("TUBE_CORAL_BLOCK", "AQUARIUM", "Aquarium", 1),
     ARBORETUM("OAK_LEAVES", "ARBORETUM", "Arboretum", 1),
     BAKER("END_STON", "BAKER", "4th Doctor's Secondary Console", 1),
     BEDROOM("GLOWSTONE", "BEDROOM", "Bedroom", 1),
@@ -46,6 +47,7 @@ public enum TARDISARS implements ARS {
     POOL("SNOW_BLOCK", "POOL", "Pool", 1),
     RAIL("HOPPER", "RAIL", "Rail Transfer Station", 1),
     RENDERER("TERRACOTTA", "RENDERER", "Exterior Renderer", 1),
+    SHELL("DEAD_BRAIN_CORAL_BLOCK", "SHELL", "Shell", 1),
     SMELTER("CHEST", "SMELTER", "Smelter", 1),
     STABLE("HAY_BLOCK", "STABLE", "Horse Stable", 1),
     STALL("NETHER_WART_BLOCK", "STALL", "Llama Stall", 1),

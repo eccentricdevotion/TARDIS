@@ -151,6 +151,8 @@ public class TARDISConfiguration {
         // boolean
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);
+        roomBoolOptions.put("rooms.AQUARUIM.enabled", true);
+        roomBoolOptions.put("rooms.AQUARUIM.user", false);
         roomBoolOptions.put("rooms.ARBORETUM.enabled", true);
         roomBoolOptions.put("rooms.ARBORETUM.user", false);
         roomBoolOptions.put("rooms.BAKER.enabled", true);
@@ -189,6 +191,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.RAIL.user", false);
         roomBoolOptions.put("rooms.RENDERER.enabled", true);
         roomBoolOptions.put("rooms.RENDERER.user", false);
+        roomBoolOptions.put("rooms.SHELL.enabled", true);
+        roomBoolOptions.put("rooms.SHELL.user", false);
         roomBoolOptions.put("rooms.SMELTER.enabled", true);
         roomBoolOptions.put("rooms.SMELTER.user", false);
         roomBoolOptions.put("rooms.STABLE.enabled", true);
@@ -322,6 +326,8 @@ public class TARDISConfiguration {
         // integer
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", -4);
+        roomIntOptions.put("rooms.AQUARUIM.cost", 450);
+        roomIntOptions.put("rooms.AQUARUIM.offset", -4);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
         roomIntOptions.put("rooms.ARBORETUM.offset", -4);
         roomIntOptions.put("rooms.BAKER.cost", 350);
@@ -360,6 +366,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.RAIL.offset", -4);
         roomIntOptions.put("rooms.RENDERER.cost", 650);
         roomIntOptions.put("rooms.RENDERER.offset", -4);
+        roomIntOptions.put("rooms.SHELL.cost", 550);
+        roomIntOptions.put("rooms.SHELL.offset", -4);
         roomIntOptions.put("rooms.SMELTER.cost", 750);
         roomIntOptions.put("rooms.SMELTER.offset", -4);
         roomIntOptions.put("rooms.STABLE.cost", 350);
@@ -406,6 +414,7 @@ public class TARDISConfiguration {
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         // string
+        roomStrOptions.put("rooms.AQUARUIM.seed", "TUBE_CORAL_BLOCK");
         roomStrOptions.put("rooms.ARBORETUM.seed", "OAK_LEAVES");
         roomStrOptions.put("rooms.BAKER.seed", "END_STONE");
         roomStrOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
@@ -425,6 +434,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
         roomStrOptions.put("rooms.RENDERER.seed", "TERRACOTTA");
+        roomStrOptions.put("rooms.SHELL.seed", "TUBE_CORAL_BLOCK");
         roomStrOptions.put("rooms.SMELTER.seed", "CHEST");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");

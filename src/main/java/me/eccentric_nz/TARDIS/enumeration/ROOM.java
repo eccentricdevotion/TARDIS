@@ -23,6 +23,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 public enum ROOM {
 
     ANTIGRAVITY,
+    AQUARIUM,
     ARBORETUM,
     BAKER,
     BEDROOM,
@@ -42,6 +43,7 @@ public enum ROOM {
     POOL,
     RAIL,
     RENDERER,
+    SHELL,
     SMELTER,
     STABLE,
     STALL,

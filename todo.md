@@ -11,7 +11,7 @@
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
    * Check sonic replanter / chest sorter features still work
    * Add new biomes (end and ocean)
-   * `sendBlockChange(Location loc, Material material, byte data)` is deprecated in 3-D spectacles code... - _md5 knows, waiting on API preview 3_
+   * Correctly set BlockData in `sendBlockChange(Location loc, BlockData data)` in TARDISSpectaclesRunnable
 2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536)
 3. Aquarium room, maybe a Turtle Beach room?
 4. Fix Biome adaptive presets dropping flowers & seeds (properly)
