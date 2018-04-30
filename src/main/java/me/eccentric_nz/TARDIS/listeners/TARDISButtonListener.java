@@ -53,6 +53,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -88,7 +89,7 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.WALL_SIGN);
-        validBlocks.addAll(TARDISMaterials.buttons);
+        validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.addAll(TARDISMaterials.pressure_plates);
     }
 

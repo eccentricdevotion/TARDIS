@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -564,7 +565,7 @@ public class TARDISTimeTravel {
         Block block = b;
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE) && !block.getType().equals(Material.PACKED_ICE) && !block.getType().equals(Material.BLUE_ICE)) {
+            if (!block.getType().equals(Material.WATER) && !Tag.ICE.isTagged(block.getType())) {
                 break;
             }
         }

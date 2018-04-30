@@ -26,9 +26,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,7 +54,7 @@ public class TARDISBindListener implements Listener {
         this.plugin = plugin;
         validBlocks.add(Material.WALL_SIGN);
         validBlocks.add(Material.SIGN);
-        validBlocks.addAll(TARDISMaterials.buttons);
+        validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.add(Material.LEVER);
     }
 
