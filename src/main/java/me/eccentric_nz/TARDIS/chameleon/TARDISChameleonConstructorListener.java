@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -59,7 +60,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 
     private final TARDIS plugin;
     private final List<Material> doors = new ArrayList<>();
-    private final List<Material> precious = new ArrayList<>();
     private final List<Material> lamps = new ArrayList<>();
     private final HashMap<UUID, Integer> currentDoor = new HashMap<>();
     private final HashMap<UUID, Integer> currentLamp = new HashMap<>();
@@ -69,34 +69,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
     public TARDISChameleonConstructorListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.doors.add(Material.IRON_DOOR);
-        this.doors.add(Material.OAK_DOOR);
-        this.doors.add(Material.SPRUCE_DOOR);
-        this.doors.add(Material.BIRCH_DOOR);
-        this.doors.add(Material.JUNGLE_DOOR);
-        this.doors.add(Material.ACACIA_DOOR);
-        this.doors.add(Material.DARK_OAK_DOOR);
+        this.doors.addAll(Tag.DOORS.getValues());
         this.dn = this.doors.size();
-        this.precious.add(Material.BEDROCK);
-        this.precious.add(Material.COAL_ORE);
-        this.precious.add(Material.DIAMOND_BLOCK);
-        this.precious.add(Material.DIAMOND_ORE);
-        this.precious.add(Material.EMERALD_BLOCK);
-        this.precious.add(Material.EMERALD_ORE);
-        this.precious.add(Material.NETHER_QUARTZ_ORE);
-        this.precious.add(Material.GOLD_BLOCK);
-        this.precious.add(Material.GOLD_ORE);
-        this.precious.add(Material.IRON_BLOCK);
-        this.precious.add(Material.IRON_ORE);
-        this.precious.add(Material.JACK_O_LANTERN);
-        this.precious.add(Material.LAPIS_BLOCK);
-        this.precious.add(Material.LAPIS_BLOCK);
-        this.precious.add(Material.MELON);
-        this.precious.add(Material.OBSIDIAN);
-        this.precious.add(Material.PUMPKIN);
-        this.precious.add(Material.REDSTONE_BLOCK);
-        this.precious.add(Material.REDSTONE_ORE);
-        this.precious.add(Material.SEA_LANTERN);
         plugin.getBlocksConfig().getStringList("lamp_blocks").forEach((s) -> {
             try {
                 this.lamps.add(Material.valueOf(s));
@@ -191,7 +165,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                             ItemStack d = inv.getItem(s + c);
                                             if (d != null) {
                                                 Material type = d.getType();
-                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
+                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TARDISMaterials.precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
                                                     TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
                                                     // return items
                                                     player.getWorld().dropItemNaturally(player.getLocation(), d);

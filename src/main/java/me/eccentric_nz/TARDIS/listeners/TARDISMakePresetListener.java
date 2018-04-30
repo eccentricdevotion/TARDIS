@@ -20,10 +20,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,34 +49,11 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final List<Material> not_glass = new ArrayList<>();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;
         this.orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
         this.orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
-        this.not_glass.add(Material.AIR); // air
-        this.not_glass.add(Material.GLASS); // glass
-        this.not_glass.add(Material.TORCH); // torch
-        this.not_glass.add(Material.SIGN); // sign post
-        this.not_glass.add(Material.OAK_DOOR); // wood door
-        this.not_glass.add(Material.BIRCH_DOOR); // wood door
-        this.not_glass.add(Material.SPRUCE_DOOR); // wood door
-        this.not_glass.add(Material.JUNGLE_DOOR); // wood door
-        this.not_glass.add(Material.ACACIA_DOOR); // wood door
-        this.not_glass.add(Material.DARK_OAK_DOOR); // wood door
-        this.not_glass.add(Material.WALL_SIGN); // wall sign
-        this.not_glass.add(Material.IRON_DOOR); // iron door
-        this.not_glass.add(Material.REDSTONE_TORCH); // redstone torch
-        this.not_glass.add(Material.REDSTONE_WALL_TORCH); // redstone torch
-        this.not_glass.add(Material.OAK_TRAPDOOR); // trap door
-        this.not_glass.add(Material.BIRCH_TRAPDOOR); // trap door
-        this.not_glass.add(Material.SPRUCE_TRAPDOOR); // trap door
-        this.not_glass.add(Material.JUNGLE_TRAPDOOR); // trap door
-        this.not_glass.add(Material.ACACIA_TRAPDOOR); // trap door
-        this.not_glass.add(Material.DARK_OAK_TRAPDOOR); // trap door
-        this.not_glass.add(Material.VINE); // vine
-        this.not_glass.add(Material.REDSTONE_LAMP); // redstone lamp
     }
 
     /**
@@ -126,7 +102,7 @@ public class TARDISMakePresetListener implements Listener {
                         if (y == (fy + 3)) {
                             sb_id.append(matStr);
                             sb_data.append(data.getAsString());
-                            if (not_glass.contains(material)) {
+                            if (TARDISMaterials.not_glass.contains(material)) {
                                 sb_stain_mat.append(matStr);
                                 sb_glass_id.append(matStr);
                             } else {
@@ -137,7 +113,7 @@ public class TARDISMakePresetListener implements Listener {
                         } else {
                             sb_id.append(matStr).append(",");
                             sb_data.append(data.getAsString()).append(",");
-                            if (not_glass.contains(material)) {
+                            if (TARDISMaterials.not_glass.contains(material)) {
                                 sb_stain_mat.append(matStr).append(",");
                                 sb_glass_id.append(matStr).append(",");
                             } else {
