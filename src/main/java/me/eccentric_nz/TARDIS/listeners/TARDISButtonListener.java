@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
+import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.control.TARDISControlInventory;
 import me.eccentric_nz.TARDIS.control.TARDISFastReturnButton;
 import me.eccentric_nz.TARDIS.control.TARDISInfoMenuButton;
@@ -352,6 +353,10 @@ public class TARDISButtonListener implements Listener {
                                         cgui.setContents(controls);
                                         player.openInventory(cgui);
                                     }
+                                    break;
+                                case 25:
+                                    // shell room button
+                                    new TARDISShellRoomConstructor(plugin).createShell(player, id, block);
                                     break;
                                 default:
                                     break;
