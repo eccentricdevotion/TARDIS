@@ -73,3 +73,4 @@ sonic_generator:
     redstone: 10
     painter: 10
     ignite: 10
+shell: 500

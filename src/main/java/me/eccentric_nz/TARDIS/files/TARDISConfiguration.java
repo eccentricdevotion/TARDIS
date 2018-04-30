@@ -245,6 +245,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("sonic_generator.redstone", 10);
         artronIntOptions.put("sonic_generator.painter", 10);
         artronIntOptions.put("sonic_generator.ignite", 10);
+        artronIntOptions.put("shell", 500);
         artronIntOptions.put("standby", 5);
         artronIntOptions.put("standby_time", 6000);
         artronIntOptions.put("the_end_min", 5500);
