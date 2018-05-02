@@ -341,6 +341,8 @@ public class TARDISInstaPreset {
                         if (door) {
                             // remember the door location
                             String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                            String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                            plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
                             processDoor(doorloc, qf);
                             // place block under door if block is in list of blocks an iron door cannot go on
                             if (yy == 0) {
@@ -353,6 +355,9 @@ public class TARDISInstaPreset {
                                     plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                 }
                             }
+                        } else {
+                            String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                            plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
                         }
                         if (mat.equals(Material.RAIL)) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
@@ -369,6 +374,7 @@ public class TARDISInstaPreset {
                         if (bd.shouldAddSign()) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                             Block sign = world.getBlockAt(xx, (y + yy), zz);
+                            plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
                             if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN)) {
                                 Sign s = (Sign) sign.getState();
                                 if (plugin.getConfig().getBoolean("police_box.name_tardis")) {

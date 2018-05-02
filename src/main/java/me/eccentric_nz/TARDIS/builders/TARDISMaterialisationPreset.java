@@ -336,6 +336,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (door) {
                                         // remember the door location
                                         String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                                        String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                                        plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
                                         // should insert the door when tardis is first made, and then update location there after!
                                         HashMap<String, Object> whered = new HashMap<>();
                                         whered.put("door_type", 0);
@@ -353,6 +355,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             setd.put("door_type", 0);
                                             qf.doInsert("doors", setd);
                                         }
+                                    } else {
+                                        String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                                        plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
                                     }
                                     if (yy == 0) {
                                         if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
@@ -377,6 +382,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                         // remember its location
                                         String location = new Location(world, xx, (y + yy), zz).toString();
+                                        plugin.getGeneralKeeper().getProtectBlockMap().put(location, bd.getTardisID());
                                         saveJunkControl(location, "save_sign");
                                         // make it a save_sign
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
@@ -393,6 +399,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN)) {
                                             Sign s = (Sign) sign.getState();
+                                            plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
                                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                                 HashMap<String, Object> wheret = new HashMap<>();
                                                 wheret.put("tardis_id", bd.getTardisID());
@@ -485,6 +492,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (preset.equals(PRESET.JUNK_MODE)) {
                                         // remember its location
                                         handbrake = world.getBlockAt(xx, (y + yy), zz);
+                                        plugin.getGeneralKeeper().getProtectBlockMap().put(handbrake.getLocation().toString(), bd.getTardisID());
                                         h_data = colData[yy];
                                     }
                                     break;

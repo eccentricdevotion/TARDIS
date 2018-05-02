@@ -16,19 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCreeper;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -80,66 +72,13 @@ public class TARDISExplosionListener implements Listener {
             if ((env.equals(Environment.THE_END) && !plugin.getConfig().getBoolean("travel.the_end")) || (env.equals(Environment.NETHER) && !plugin.getConfig().getBoolean("travel.nether"))) {
                 return;
             }
-            int idchk = 0;
-            // get list of police box blocks from DB
-            HashMap<String, Object> whereb = new HashMap<>();
-            whereb.put("police_box", 1);
-            ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, true);
-            if (rs.resultSet()) {
-                for (ReplacedBlock rb : rs.getData()) {
-                    int id = rb.getTardis_id();
-                    Location loc = rb.getLocation();
-                    if (loc != null) {
-                        Block block = loc.getBlock();
-                        // if the block is a TARDIS block then remove it
-                        if (e.blockList().contains(block)) {
-                            e.blockList().remove(block);
-                        }
-                        if (id != idchk) {
-                            HashMap<String, Object> where = new HashMap<>();
-                            where.put("tardis_id", id);
-                            ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
-                            if (rsd.resultSet()) {
-                                String doorLoc[] = rsd.getDoor_location().split(":");
-                                COMPASS d = rsd.getDoor_direction();
-                                World w = plugin.getServer().getWorld(doorLoc[0]);
-                                int dx = TARDISNumberParsers.parseInt(doorLoc[1]);
-                                int dy = TARDISNumberParsers.parseInt(doorLoc[2]);
-                                int dz = TARDISNumberParsers.parseInt(doorLoc[3]);
-                                Block door_bottom = w.getBlockAt(dx, dy, dz);
-                                Block door_under = door_bottom.getRelative(BlockFace.DOWN);
-                                Block door_top = door_bottom.getRelative(BlockFace.UP);
-                                BlockFace bf;
-                                switch (d) {
-                                    case NORTH:
-                                        bf = BlockFace.WEST;
-                                        break;
-                                    case WEST:
-                                        bf = BlockFace.SOUTH;
-                                        break;
-                                    case SOUTH:
-                                        bf = BlockFace.EAST;
-                                        break;
-                                    default:
-                                        bf = BlockFace.NORTH;
-                                        break;
-                                }
-                                Block sign = door_top.getRelative(BlockFace.UP).getRelative(bf);
-                                if (e.blockList().contains(sign)) {
-                                    e.blockList().remove(sign);
-                                }
-                                if (e.blockList().contains(door_under)) {
-                                    e.blockList().remove(door_under);
-                                }
-                                if (e.blockList().contains(door_bottom)) {
-                                    e.blockList().remove(door_bottom);
-                                }
-                                if (e.blockList().contains(door_top)) {
-                                    e.blockList().remove(door_top);
-                                }
-                            }
-                            idchk = id;
-                        }
+            for (String str : plugin.getGeneralKeeper().getProtectBlockMap().keySet()) {
+                Location loc = plugin.getLocationUtils().getLocationFromBukkitString(str);
+                if (loc != null) {
+                    Block block = loc.getBlock();
+                    // if the block is a TARDIS block then remove it
+                    if (e.blockList().contains(block)) {
+                        e.blockList().remove(block);
                     }
                 }
             }
