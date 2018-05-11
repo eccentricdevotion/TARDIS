@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 /**
@@ -68,7 +69,7 @@ public class ResultSetConsole {
         ResultSet rs = null;
         String query = "SELECT " + prefix + "tardis.chameleon_preset, " + prefix + "current.*, " + prefix + "controls.location "
                 + "FROM " + prefix + "tardis, " + prefix + "current, " + prefix + "controls "
-                + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? "
+                + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 "
                 + "AND " + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id "
                 + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
         try {
@@ -78,7 +79,11 @@ public class ResultSetConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                this.sign = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location")).getBlock();
+                Location l = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location"));
+                if (l == null) {
+                    return false;
+                }
+                this.sign = l.getBlock();
                 this.preset = rs.getString("chameleon_preset");
                 this.world = rs.getString("world");
                 this.location = rs.getString("x") + ", " + rs.getString("y") + ", " + rs.getString("z");
@@ -116,7 +121,7 @@ public class ResultSetConsole {
         ResultSet rs = null;
         String query = "SELECT " + prefix + "tardis.artron_level, " + prefix + "controls.location "
                 + "FROM " + prefix + "tardis, " + prefix + "controls "
-                + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? "
+                + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 "
                 + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
         try {
             service.testConnection(connection);
@@ -125,7 +130,11 @@ public class ResultSetConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                this.sign = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location")).getBlock();
+                Location l = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location"));
+                if (l == null) {
+                    return false;
+                }
+                this.sign = l.getBlock();
                 this.artronLevel = rs.getInt("artron_level");
             } else {
                 return false;
