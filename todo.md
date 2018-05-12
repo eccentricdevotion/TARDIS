@@ -14,7 +14,8 @@
    * Correctly set BlockData in `sendBlockChange(Location loc, BlockData data)` in TARDISSpectaclesRunnable
 2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536)
 3. Aquarium room, maybe a Turtle Beach room?
-4. Fix Biome adaptive presets dropping flowers & seeds (properly)
+4. Check database updater (Material) changes
+5. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
 * Move custom advancements to here

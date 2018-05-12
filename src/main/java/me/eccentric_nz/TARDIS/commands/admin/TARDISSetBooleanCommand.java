@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -64,6 +65,10 @@ public class TARDISSetBooleanCommand {
             }
         } else {
             if (first.equals("abandon")) {
+                if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+                    TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+                    return true;
+                }
                 plugin.getConfig().set(section, Boolean.valueOf(tf));
             } else {
                 plugin.getConfig().set(first, Boolean.valueOf(tf));
