@@ -82,11 +82,20 @@
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>password</code></td>
 				<td class="noborder">string</td>
-				<td class="noborder"><code>minecraft</code></td>
+				<td class="noborder"><code>mysecurepassword</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the password to connect to the mysql database</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>prefix</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>''</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the prefix added to the table names used in the mysql database. Spigot servers will generally only use one database, so to distinguish the TARDIS tables from other plugins this should probably be set to something like <code>tardis_</code></td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>

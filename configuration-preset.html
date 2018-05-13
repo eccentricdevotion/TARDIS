@@ -76,31 +76,22 @@
 				<td colspan="2">Sets the default damage value of the Police Box walls. Only applicable if <code>use_block_stack: true</code></td>
 			</tr>
 			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>lamp</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>50</code></td>
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>tardis_lamp</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>REDSTONE_LAMP_OFF</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the default material of the Police Box lamp. Only applicable if <code>use_block_stack: true</code></td>
 			</tr>
 			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>platform_id</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>35</code></td>
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>materialise</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the default material of the Police Box safety platform.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>platform_data</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>8</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the default damage value of the Police Box safety platform.</td>
+				<td colspan="2">Sets whether the TARDIS runs the materialising animation when it takes off and lands.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>confirm_timeout</code></td>
@@ -121,9 +112,18 @@
 				<td colspan="2">Sets the colour of the text on a TARDIS sign. Must be a valid ChatColor value, see <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/ChatColor.html" target="_blank">https://hub.spigotmc.org/javadocs/spigot/org/bukkit/ChatColor.html</a></td>
 			</tr>
 			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>set_biome</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Whether to set the blocks the TARDIS lands on to DEEP_OCEAN biome. This setting allows the custom TARDIS block textures to work.</td>
+			</tr>
+			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_preset</code></td>
 				<td class="noborder">string</td>
-				<td class="noborder"><code>NEW</code></td>
+				<td class="noborder"><code>FACTORY</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

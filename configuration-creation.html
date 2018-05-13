@@ -55,7 +55,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets whether TARDISes are created in their own separate worlds. Requires the TARDISChunkGenerator plugin and a multi-world plugin.</td>
+				<td colspan="2">It is <strong>NOT recommended</strong> setting this to true! Sets whether TARDISes are created in their own separate worlds. Requires the TARDISChunkGenerator plugin and a multi-world plugin.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>create_worlds_with_perms</code></td>
@@ -73,7 +73,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets whether TARDISes are created in a shared world. Also required to be true to enable the Junk TARDIS.</td>
+				<td colspan="2">Sets whether TARDISes are created in a shared world. Also required to be true to enable the Junk TARDIS and the abilty to abandon TARDISes.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_world_name</code></td>
@@ -149,12 +149,12 @@
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>custom_creeper_id</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>138</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>BEACON</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the block id that the plugin should look for in the custom schematic to spawn the Artron Capacitor charged creeper on.</td>
+				<td colspan="2">Sets the block material that the plugin should look for in the custom schematic to spawn the Artron Capacitor charged creeper on.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_block_stack</code></td>
@@ -208,7 +208,16 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">If set to an pre-defined TARDIS area, it will set that area as the only place on the server that TARDISes can be created in.</td>
+				<td colspan="2">If set to a pre-defined TARDIS area, it will set that area as the only place on the server that TARDISes can be created in.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>enable_legacy</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the legacy console schematics are available to build TARDIS interiors with.</td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>

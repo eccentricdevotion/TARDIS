@@ -34,7 +34,7 @@
 		<h1>Artron Energy configuration option</h1>
 		<p>These are the Artron Energy configuration options. These config options are found in the file: <code>artron.yml</code></p>
 		<p>For Artron Energy room growing costs see the <a href="configuration-rooms.html">Room configuration</a> page.</p>
-		<h2>Full charge</h2>
+		<h2 id="full_charge">Full charge</h2>
 		<p>Set the amount of energy a fully charged TARDIS Artron Energy Capacitor holds.</p>
 		<pre><code>full_charge: [amount]</code></pre>
 		<p>The default is <code>5000</code>.</p>
@@ -107,8 +107,43 @@ siege_ticks: [ticks]</code></pre>
     tom: [amount] - default: 5000
     twelfth: [amount] - default: 7500
     war: [amount] - default: 5000
+    master: [amount] - default: 10000
+    pyramid: [amount] - default: 5000
+    ender: [amount] - default: 5000
+    coral: [amount] - default: 8000
     custom: [amount] - default: 10000
+    archive:
+      tall: [amount] - default: 10000
+      small: [amount] - default: 5000
+      medium: [amount] - default: 7500
+    template:
+      medium: [amount] - default: 2500
+      small: [amount] - default: 1666
+      tall: [amount] - default: 3333
+    legacy_deluxe: [amount] - default: 10000
+    legacy_budget: [amount] - default: 5000
+    legacy_redstone: [amount] - default: 8000
+    legacy_bigger: [amount] - default: 7500
+    legacy_eleventh: [amount] - default: 10000
 just_wall_floor: [percentage] - default: 50</code></pre>
+		<h2>Artron Furnaces</h2>
+		<p>Set the options for Artron Furnaces. See further explanation on the <a href="artron-furnace.html">Artron Furnace</a> page.</p>
+		<pre><code>artron_furnace:
+  set_biome: true
+  cook_time: 0.5
+  burn_time: 0.5
+  burn_limit: 100000
+  particles: true</code></pre>
+		<h2>Sonic Generator</h2>
+		<p>Set the energy costs for the <a href="sonic-generator.html">sonic generator</a> as a percentage of the <code><a href="#full_charge">full_charge</a></code> option.</p>
+		<pre><code>sonic_generator:
+  painter: 10
+  emerald: 10
+  standard: 10
+  ignite: 10
+  redstone: 10
+  bio: 10
+  diamond: 10</code></pre>
 		<h1>Rechargers configuration section</h1>
 		<p><strong>NB:</strong> The rechargers configuration section is found in the file: <code>config.yml</code></p>
 		<p>The rechargers section holds the locations of the TARDIS recharge beacons.</p>

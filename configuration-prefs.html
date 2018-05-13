@@ -49,13 +49,22 @@
 				<th colspan="3">preferences:</th>
 			</tr>
 			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>language</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>en</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the language used for TARDIS message localisation. The plugin will look for a file named with this setting and the file extension <em>.yml</em>. Should be set to an <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">international language code</a>.</td>
+			</tr>
+			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>key</code></td>
 				<td class="noborder">string</td>
 				<td class="noborder"><code>GOLD_NUGGET</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html">https://hub.spigotmc.org/javadocs/spigot/org/bukkit/<br>
+				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html" target="_blank">https://hub.spigotmc.org/javadocs/spigot/org/bukkit/<br>
 Material.html</a></td>
 			</tr>
 			<tr class="coption">
@@ -310,6 +319,15 @@ Material.html</a></td>
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets whether players who fall into the void in the TARDIS_TimeVortex world are killed or teleported back into the TARDIS. Options: <code>[kill|teleport]</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>no_coords</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players will see the coordinates message when choosing a random destination.</td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>
