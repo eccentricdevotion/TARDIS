@@ -20,53 +20,54 @@
 </head>
 <body>
 <div class="wrapper">
-	<header>
-		<h1>TARDIS</h1>
-		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-		<ul>
-			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-			<li><a href="site-map.html"><strong>Index</strong> File</a></li>
-		</ul>
-	</header>
-	<section>
-		<h1>TARDIS_TimeVortex world</h1>
-		<p>You can set up a special world that will allow you to store all the TARDISes in it and still be able to grow rooms. The world must be called <strong>TARDIS_TimeVortex</strong> and must use TARDISChunkGenerator or be a FLAT world type.</p>
-		<p>To set this up:</p>
-		<ol>
-			<li>Create a new world with your multi-world plugin
-				<ul>
-					<li>For <a href="https://github.com/Multiverse/Multiverse-Core/wiki/Command-Reference#wiki-create">Multiverse-Core</a> use the command:<br>
-						<code>/mv create TARDIS_TimeVortex normal -g TARDISChunkGenerator</code></li>
-					<li>For Multiword use the command:<br>
-						<code>/mw create TARDIS_TimeVortex plugin:TARDISChunkGenerator</code> </li>
-				</ul>
-			</li>
-			<li>Set up any world flags as you see fit
-				<ul>
-					<li>For <a href="https://github.com/Multiverse/Multiverse-Core/wiki/Command-Reference#wiki-modify_set">Multiverse-Core</a> use the command(s):<br>
-						<code>/mv modify set monstersrate 0 TARDIS_TimeVortex<br>
-						/mv modify set hidden true TARDIS_TimeVortex</code><br>
-						etc</li>
-					<li>For <a href="http://dev.bukkit.org/bukkit-plugins/multiworld-v-2-0/pages/flags/">Multiword</a> use the command(s):<br>
-						<code>/mw setflag TARDIS_TimeVortex SpawnMonster false<br>
-						/mw setflag TARDIS_TimeVortex PvP false</code><br>
-						etc</li>
-				</ul>
-			</li>
-			<li>Set TARDIS config options as shown below:</li>
-		</ol>
-		<pre><code>/tardisadmin default_world true
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>TARDIS_TimeVortex world</h1>
+        <p>By default the plugin will set up a special world that will allow you to store all the TARDISes in it and still be able to grow rooms, abandon TARDISes, be easier on server resources and make management of TARDISes easier. The world is called <strong>TARDIS_TimeVortex</strong> and uses TARDISChunkGenerator to create a void type environment.</p>
+        <p>The plugin will automatically try to create the world when it first starts up (as long as a multi-world plugin is found).</p>
+        <h3>If you need to set up the world manually:</h3>
+        <ol>
+            <li>Create a new world with your multi-world plugin
+                <ul>
+                    <li>For <a href="https://github.com/Multiverse/Multiverse-Core/wiki/Command-Reference#wiki-create">Multiverse-Core</a> use the command:<br>
+                        <code>/mv create TARDIS_TimeVortex normal -g TARDISChunkGenerator</code></li>
+                    <li>For Multiword use the command:<br>
+                        <code>/mw create TARDIS_TimeVortex plugin:TARDISChunkGenerator</code> </li>
+                </ul>
+            </li>
+            <li>Set up any world flags as you see fit
+                <ul>
+                    <li>For <a href="https://github.com/Multiverse/Multiverse-Core/wiki/Command-Reference#wiki-modify_set">Multiverse-Core</a> use the command(s):<br>
+                        <code>/mv modify set monstersrate 0 TARDIS_TimeVortex<br>
+                        /mv modify set hidden true TARDIS_TimeVortex</code><br>
+                        etc</li>
+                    <li>For <a href="http://dev.bukkit.org/bukkit-plugins/multiworld-v-2-0/pages/flags/">Multiword</a> use the command(s):<br>
+                        <code>/mw setflag TARDIS_TimeVortex SpawnMonster false<br>
+                        /mw setflag TARDIS_TimeVortex PvP false</code><br>
+                        etc</li>
+                </ul>
+            </li>
+            <li>Set TARDIS config options as shown below:</li>
+        </ol>
+        <pre><code>/tardisadmin default_world true
 /tardisadmin default_world_name TARDIS_TimeVortex
 /tardisadmin include_default_world false
 /tardisadmin create_worlds false</code></pre>
-		<p>As of TARDIS v2.7-beta-1 the plugin now uses a system called <a href="tips.html">T.I.P.S</a> (TARDIS Interior Positioning System). This system places new TARDISes in a specific &lsquo;plot&rsquo; in the TARDIS_TimeVortex World. This means that TARDISes will no longer overlap other TARDISes if they are created close together in the overworld.</p>
-		<p>If you are using a pre-TARDIS 2.7 version, you will have to educate your players to create their TARDIS home locations far apart as their position in the TimeVortex relates to the position they were created in the server world.</p>
-	</section>
+        <p>As of TARDIS v2.7-beta-1 the plugin now uses a system called <a href="tips.html">T.I.P.S</a> (TARDIS Interior Positioning System). This system places new TARDISes in a specific &lsquo;plot&rsquo; in the TARDIS_TimeVortex World. This means that TARDISes will no longer overlap other TARDISes if they are created close together in the overworld.</p>
+        <p>If you are using a pre-TARDIS 2.7 version, you will have to educate your players to create their TARDIS home locations far apart as their position in the TimeVortex relates to the position they were created in the server world.</p>
+    </section>
 </div>
 <footer>
-	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>
