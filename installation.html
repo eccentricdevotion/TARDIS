@@ -35,7 +35,7 @@
 		<p>Get the TARDIS plugin files from: <a href="http://dev.bukkit.org/bukkit-plugins/tardis">http://dev.bukkit.org/bukkit-plugins/tardis</a></p>
 		<hr />
 		<p>You install TARDIS just like you would any other Bukkit plugin, by dropping it into the Bukkit plugins folder and starting the server. TARDIS depends on a small library of code that is found in another plugin: TARDISChunkGenerator.jar &mdash; you can find this under <em>Additional Files</em> on the TARDIS download page. The TARDIS database, configuration, schematic and map files will be created automatically.</p>
-		<p>Some versions of the TARDIS plugin are backwards compatible with previous versions of CraftBukkit (version 2.5.8 is <a href="tekkit.html">compatible with Tekkit Classic Server</a>), for the plugin to have full functionality and work correctly you should have CraftBukkit / Spigot version <code>1.9.2-R0.1</code> or higher.</p>
+		<p>Some versions of the TARDIS plugin are backwards compatible with previous versions of CraftBukkit (version 2.5.8 is <a href="tekkit.html">compatible with Tekkit Classic Server</a>), for the plugin to have full functionality and work correctly you should have CraftBukkit / Spigot version <code>1.12.2-R0.1</code> or higher.</p>
 		<p>The TARDIS plugin has evolved into a complex beast, with configurable recipes, and other things that unexperienced server administrators may have trouble with. If you have difficulties, create a ticket on the <a href="http://dev.bukkit.org/bukkit-plugins/tardis/tickets">plugin page</a>.</p>
 		<h3>See also:</h3>
 		<p>TARDIS <a href="time-vortex.html">Time Vortex</a> shared world setup.</p>
@@ -43,15 +43,6 @@
 		<p>Place the following jar files in your plugins folder:</p>
 		<pre><code>TARDIS.jar
 TARDISChunkGenerator.jar</code></pre>
-		<h4 style="color:#600;">Important!</h4>
-		<p>In order for some of the TARDIS item recipes to function properly, they require a series of Minecraft <code>map.dat</code> files to be placed into the data folder of the main word on the server. To do this, follow these steps:</p>
-		<ol>
-			<li>Start the server so that the map files are generated in the <em>plugins/TARDIS</em> folder.</li>
-			<li>Stop the server.</li>
-			<li>Open the server&rsquo;s <em>server.properties</em> file, and make a note of the world name specified under <code>level-name</code>. If you have never changed this property, it will be called <code>world</code>.</li>
-			<li>Move the map files in the <code>[level-name]/data</code> folder, where <code>[level-name]</code> is the world name you noted in step 3 &mdash; e.g. <code>world/data</code>. If you&rsquo;re totally unsure which folder, the TARDIS plugin will actually tell you with a message in the server log.</li>
-			<li>Start the server, and you&rsquo;re good to go.</li>
-		</ol>
 		<p>You will most probably need to run a permissions plugin for players to actually use the TARDIS (it&rsquo;s possible without one, but players will need to be opped!). As a minimum players will generally need the <code>tardis.use</code> permission to build a TARDIS, and <code>tardis.enter</code> to be a companion.</p>
 		<p>If this is your first time using the plugin, you may want to set the TARDIS difficulty mode to <em>easy</em>. To do this use the in-game command: <code>/tardisadmin difficulty easy</code>.</p>
 		<h3>Upgrade Installation:</h3>
@@ -77,7 +68,7 @@ TARDISChunkGenerator.jar</code></pre>
 		<iframe src="https://player.vimeo.com/video/58356201" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 		<p>&nbsp;</p>
 		<h2>Install notes:</h2>
-		<p>If you desire your TARDIS to have its own world, please have Multiverse or another multi-world plugin (the only other supported plugins are: <a href="http://dev.bukkit.org/bukkit-plugins/multiworld-v-2-0/" target="_blank">MultiWorld</a> and <a href="http://dev.bukkit.org/bukkit-plugins/my-worlds/">My Worlds</a> at this time) installed and set <code>create_worlds: true</code> in your TARDIS configuration file. </p>
+		<p>Full TARDIS functionality requires Multiverse or another multi-world plugin (the only other supported plugins are: <a href="http://dev.bukkit.org/bukkit-plugins/multiworld-v-2-0/" target="_blank">MultiWorld</a> and <a href="http://dev.bukkit.org/bukkit-plugins/my-worlds/">My Worlds</a> at this time) installed.</p>
 		<p>If upgrading from a previous version of TARDIS that did not have generated worlds, or enabling them for the first time, please delete your previously created TARDISes and recreate them.</p>
 		<p>If upgrading from a version without an Artron Energy button or handbrake, please place these items, and use the <code>/tardis update</code> command to add them to your TARDIS. See <a href="tardis-commands.html#update">Commands</a> for more information.</p>
 	</section>
