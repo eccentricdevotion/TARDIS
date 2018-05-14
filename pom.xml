@@ -11,7 +11,6 @@
         <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
         <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.number>romley_massive</project.build.number>
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
@@ -40,6 +39,38 @@
     and adjust the build number accordingly -->
     <profiles>
         <profile>
+            <id>local</id>
+            <activation>
+                <property>
+                    <name>!env.BUILD_NUMBER</name>
+                </property>
+            </activation>
+            <properties>
+                <project.build.number>${buildNumber}</project.build.number>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Create a build number based on the Git revision (shortened to 5 characters) -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>buildnumber-maven-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>create</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <shortRevisionLength>5</shortRevisionLength>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>jenkins</id>
             <activation>
                 <property>
@@ -47,6 +78,7 @@
                 </property>
             </activation>
             <properties>
+                <!-- Get the build number from Jenkins -->
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
                 <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
             </properties>
@@ -100,6 +132,7 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <!-- Insert the build number into plugin.yml -->
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>maven-replacer-plugin</artifactId>
