@@ -31,7 +31,7 @@
     </header>
     <section>
         <h1>Abandon a TARDIS</h1>
-        <p>You can abandon a TARDIS if you have permission. When you do this, the TARDIS powers down automatically, you will no longer be the owner of the TARDIS, and it won&rsquo;t respond to your commands. You will be able to grow a new one, and any person will be able to enter the abandoned TARDIS &mdash; the first player that turns on the Artron Capacitor, will have 'claimed' the TARDIS and will become the new owner.</p>
+        <p>You can abandon a TARDIS if you have permission and the TARDIS is stored in a <a href="tips.html">T.I.P.S</a> world (e.g. TARIS _TimeVortex). When you do this, the TARDIS powers down automatically, you will no longer be the owner of the TARDIS, and it won&rsquo;t respond to your commands. You will be able to grow a new one, and any person will be able to enter the abandoned TARDIS &mdash; the first player that turns on the Artron Capacitor, will have 'claimed' the TARDIS and will become the new owner.</p>
         <p>Abandoning a TARDIS is one way of transferring TARDIS ownership to another player.</p>
         <h3>Config options</h3>
         <pre><code>abandon:
@@ -41,6 +41,13 @@
         <h3>Commands</h3>
         <p><code>/tardis abandon</code> &mdash; abandons your TARDIS &mdash; the TARDIS must be initialised, not travelling or in the time vortex, and not set to Junk mode. Players must have <code>tardis.abandon</code> permission.</p>
         <p><code>/tardis abandon list</code> or <code>/tardisadmin list abandoned</code> &mdash; lists all abandoned TARDISes. If ProtocolLib is installed you can click &lt; Enter &gt; in the list to teleport into that TARDIS (otherwise you&rsquo;ll need to walk there like everyone else :P ). You can also delete an abandoned TARDIS by clicking &lt; Delete &gt;.</p>
+        <h2>Spawning abandoned TARDISes</h2>
+        <p>You can spawn abandoned TARDISes automatically with a command:</p>
+        <pre><code>/tardisadmin spawn_abandoned [SCHEMATIC] [PRESET] [DIRECTION] world x y z</code></pre>
+        <p>Where <code>[SCHEMATIC]</code> is the interior console type of the TARDIS &mdash; see <a href="list_of_interiors.html">list_of_interiors.html</a></p>
+        <p>And <code>[PRESET]</code> is the exterior preset type of the TARDIS &mdash; see <a href="list_of_presets.html">list_of_presets.html</a></p>
+        <p>And <code>[DIRECTION]</code> is the direction the player would be facing if theyy are looking at the exterior preset door &mdash; one of: NORTH, SOUTH, EAST, WEST</p>
+		<p>And <code>world x y z</code> are the coordinates of the TARDIS exterior&rsquo;s bottom centre.</p>
     </section>
 </div>
 <footer>
