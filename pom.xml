@@ -35,8 +35,7 @@
         <system>jenkins</system>
         <url>http://tardisjenkins.duckdns.org:8080</url>
     </ciManagement>
-    <!-- Profiles are used to detect whether this is a local or Jenkins build
-    and adjust the build number accordingly -->
+    <!-- Profiles are used to detect whether this is a local or Jenkins build and adjust the build number accordingly -->
     <profiles>
         <profile>
             <id>local</id>
@@ -46,26 +45,32 @@
                 </property>
             </activation>
             <properties>
-                <project.build.number>${buildNumber}</project.build.number>
+                <!-- Set the build number to the date and time of the build -->
+                <project.build.number>${myBuildNumber}</project.build.number>
             </properties>
             <build>
                 <plugins>
-                    <!-- Create a build number based on the Git revision (shortened to 5 characters) -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>buildnumber-maven-plugin</artifactId>
                         <version>1.4</version>
+                        <configuration>
+                            <revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
+                        </configuration>
                         <executions>
                             <execution>
+                                <id>create-timestamp-id</id>
                                 <phase>validate</phase>
                                 <goals>
-                                    <goal>create</goal>
+                                    <goal>create-timestamp</goal>
                                 </goals>
+                                <configuration>
+                                    <timestampFormat>dd.MM.yy-HH:mm</timestampFormat>
+                                    <timestampPropertyName>myBuildNumber</timestampPropertyName>
+                                    <!-- formats the timestamp all together like 04.12.16-14:17 and puts it in the ${myBuildNumber} buildProperty -->
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <shortRevisionLength>5</shortRevisionLength>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
