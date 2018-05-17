@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import com.khorn.terraincontrol.bukkit.TXPlugin;
 import com.pg85.otg.bukkit.BukkitMaterialData;
 import com.pg85.otg.bukkit.BukkitWorld;
 import com.pg85.otg.bukkit.OTGPlugin;
@@ -151,7 +152,7 @@ public class TARDISBuildGallifreyanStructure {
         HashMap<Block, BlockData> postLadderBlocks = new HashMap<>();
         HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
         HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
-        Block chest = null;
+        Block chest;
         Material type;
         BlockData data;
 
@@ -175,17 +176,25 @@ public class TARDISBuildGallifreyanStructure {
                     switch (type) {
                         case CHEST:
                             chest = world.getBlockAt(x, y, z);
-//                            TARDISBlockSetters.setBlock(world, x, y, z, data);
                             // set chest contents
                             if (chest != null) {
                                 // get nbt
-                                Plugin tc = plugin.getPM().getPlugin("OpenTerrainGenerator");
+                                boolean isTC = plugin.getPM().isPluginEnabled("TerrainControl");
+                                String which = (isTC) ? "TerrainControl" : "OpenTerrainGenerator";
+                                Plugin tc = plugin.getPM().getPlugin(which);
                                 if (tc != null) {
                                     File f = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro" + File.separator + "WorldObjects" + File.separator + "NBT");
-                                    NamedBinaryTag tag = BO3Loader.loadMetadata(nbtFiles.next(), f);
-                                    BukkitWorld bw = ((OTGPlugin) tc).worlds.get("Gallifrey");
-                                    BukkitMaterialData material = BukkitMaterialData.ofDefaultMaterial(DefaultMaterial.CHEST, 0);
-                                    bw.setBlock(x, y, z, material, tag, true);
+                                    if (isTC) {
+                                        com.khorn.terraincontrol.util.NamedBinaryTag tag = com.khorn.terraincontrol.customobjects.bo3.BO3Loader.loadMetadata(nbtFiles.next(), f);
+                                        com.khorn.terraincontrol.bukkit.BukkitWorld bw = ((TXPlugin) tc).worlds.get("Gallifrey");
+                                        com.khorn.terraincontrol.bukkit.BukkitMaterialData material = com.khorn.terraincontrol.bukkit.BukkitMaterialData.ofDefaultMaterial(com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial.CHEST, 0);
+                                        bw.setBlock(x, y, z, material, tag);
+                                    } else {
+                                        NamedBinaryTag tag = BO3Loader.loadMetadata(nbtFiles.next(), f);
+                                        BukkitWorld bw = ((OTGPlugin) tc).worlds.get("Gallifrey");
+                                        BukkitMaterialData material = BukkitMaterialData.ofDefaultMaterial(DefaultMaterial.CHEST, 0);
+                                        bw.setBlock(x, y, z, material, tag, true);
+                                    }
                                 }
                             }
                             break;
@@ -326,16 +335,5 @@ public class TARDISBuildGallifreyanStructure {
         });
         setBanners(postStandingBanners);
         setBanners(postWallBanners);
-//        // finished processing - set chest contents
-//        if (chest != null) {
-//            // get nbt
-//            Plugin tc = plugin.getPM().getPlugin("OpenTerrainGenerator");
-//            if (tc != null) {
-//                File f = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro" + File.separator + "WorldObjects" + File.separator + "NBT");
-//                NamedBinaryTag tag = BO3Loader.loadMetadata(nbtFiles.next(), f);
-//                BukkitWorld bw = ((OTGPlugin) tc).worlds.get("Gallifrey");
-//                bw.attachMetadata(chest.getX(), chest.getY(), chest.getZ(), tag);
-//            }
-//        }
     }
 }

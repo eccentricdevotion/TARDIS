@@ -42,13 +42,14 @@ public class TARDISSkaro {
     }
 
     public void createDalekWorld() {
-        // check to see if TerrainControl is enabled
-        if (!plugin.getPM().isPluginEnabled("TerrainControl")) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "TerrainControl plugin is not enabled! Please install TerrainControl and restart the server.");
+        // check to see if TerrainControl or OpenTerrainGenerator is enabled
+        if (!plugin.getPM().isPluginEnabled("TerrainControl") && !plugin.getPM().isPluginEnabled("OpenTerrainGenerator")) {
+            plugin.getServer().getLogger().log(Level.SEVERE, "A custom terrain plugin is not enabled! Please install TerrainControl or OpenTerrainGenerator and restart the server.");
             return;
         }
-        // copy world config file to TerrainControl data folder
-        Plugin tc = plugin.getPM().getPlugin("TerrainControl");
+        String which = (plugin.getPM().isPluginEnabled("TerrainControl")) ? "TerrainControl" : "OpenTerrainGenerator";
+        Plugin tc = plugin.getPM().getPlugin(which);
+        // copy world config files to TerrainControl / OpenTerrainGenerator data folder
         try {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro");
             worlds_dir.mkdirs();
@@ -84,16 +85,16 @@ public class TARDISSkaro {
                 TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
             }
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:TerrainControl");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load Skaro");
             } else if (plugin.isMVOnServer()) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Skaro NORMAL -g TerrainControl -t NORMAL");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Skaro NORMAL -g " + which + " -t NORMAL");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none Skaro");
             } else {
                 WorldCreator.name("Skaro").type(WorldType.NORMAL).environment(World.Environment.NORMAL).createWorld();
             }
             if (plugin.getPM().isPluginEnabled("My Worlds")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Skaro:TerrainControl");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Skaro:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }
             // add world to config
@@ -106,7 +107,7 @@ public class TARDISSkaro {
                 twa.saveConfig();
             }
         } catch (CommandException e) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Skaro files to TerrainControl plugin data folder: {0}", e.getMessage());
+            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Skaro files to " + which + " plugin data folder: {0}", e.getMessage());
         }
     }
 }

@@ -201,6 +201,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("ProtocolLib", "4.4.0");
         this.versions.put("TARDISChunkGenerator", "4.0");
         this.versions.put("OpenTerrainGenerator", "1.12.2");
+        this.versions.put("TerrainControl", "2.9.0");
         this.versions.put("Towny", "0.91");
         this.versions.put("WorldBorder", "1.8.1");
         this.versions.put("WorldGuard", "6.2.1");

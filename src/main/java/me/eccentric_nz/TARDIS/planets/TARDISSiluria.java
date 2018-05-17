@@ -39,13 +39,14 @@ public class TARDISSiluria {
     }
 
     public void createSilurianUnderworld() {
-        // check to see if TerrainControl is enabled
-        if (!plugin.getPM().isPluginEnabled("TerrainControl")) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "TerrainControl plugin is not enabled! Please install TerrainControl and restart the server.");
+        // check to see if TerrainControl or OpenTerrainGenerator is enabled
+        if (!plugin.getPM().isPluginEnabled("TerrainControl") && !plugin.getPM().isPluginEnabled("OpenTerrainGenerator")) {
+            plugin.getServer().getLogger().log(Level.SEVERE, "A custom terrain plugin is not enabled! Please install TerrainControl or OpenTerrainGenerator and restart the server.");
             return;
         }
-        // copy world config file to TerrainControl data folder
-        Plugin tc = plugin.getPM().getPlugin("TerrainControl");
+        String which = (plugin.getPM().isPluginEnabled("TerrainControl")) ? "TerrainControl" : "OpenTerrainGenerator";
+        Plugin tc = plugin.getPM().getPlugin(which);
+        // copy world config files to TerrainControl / OpenTerrainGenerator data folder
         try {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Siluria");
             worlds_dir.mkdirs();
@@ -76,16 +77,16 @@ public class TARDISSiluria {
                 TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
             }
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Siluria plugin:TerrainControl");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Siluria plugin:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load Siluria");
             } else if (plugin.isMVOnServer()) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Siluria NETHER -g TerrainControl -t NORMAL");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Siluria NETHER -g " + which + " -t NORMAL");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none Siluria");
             } else {
                 WorldCreator.name("Siluria").type(WorldType.NORMAL).environment(World.Environment.NETHER).createWorld();
             }
             if (plugin.getPM().isPluginEnabled("My Worlds")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Siluria:TerrainControl");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Siluria:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }
             // add world to config
@@ -98,7 +99,7 @@ public class TARDISSiluria {
                 twa.saveConfig();
             }
         } catch (CommandException e) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Siluria files to TerrainControl plugin data folder: {0}", e.getMessage());
+            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Siluria files to " + which + " plugin data folder: {0}", e.getMessage());
         }
     }
 }
