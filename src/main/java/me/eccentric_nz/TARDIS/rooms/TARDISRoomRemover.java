@@ -122,13 +122,13 @@ public class TARDISRoomRemover {
                 }
             }
         }
-        if (r.equals("FARM") || r.equals("STABLE") || r.equals("STALL") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO")) {
+        if (r.equals("FARM") || r.equals("STABLE") || r.equals("STALL") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("AQUARIUM")) {
             // remove stored location from the database
             HashMap<String, Object> set = new HashMap<>();
             set.put(r.toLowerCase(Locale.ENGLISH), "");
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            qf.doUpdate("tardis", set, where);
+            qf.doUpdate("farming", set, where);
         }
         return true;
     }

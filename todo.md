@@ -12,8 +12,8 @@
    * Check sonic replanter / chest sorter features still work
    * Add new biomes (end and ocean)
    * Correctly set BlockData in `sendBlockChange(Location loc, BlockData data)` in TARDISSpectaclesRunnable
-2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536)
-3. Aquarium room - _started_, maybe a Turtle Beach room?
+2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
+3. Aquarium room - _started_ (add fish to mob farming), maybe a Turtle Beach room?
 4. Check database updater (Material) changes
 5. Fix Biome adaptive presets dropping flowers & seeds (properly)
 

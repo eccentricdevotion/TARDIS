@@ -49,20 +49,13 @@ public class Tardis {
     private final boolean tardis_init;
     private final boolean recharging;
     private final String scanner;
-    private final String farm;
-    private final String stable;
     private final boolean hidden;
     private final long lastuse;
     private final boolean iso_on;
     private final String eps;
     private final String rail;
-    private final String village;
     private final String renderer;
     private final String zero;
-    private final String hutch;
-    private final String igloo;
-    private final String stall;
-    private final String birdcage;
     private final boolean powered_on;
     private final boolean lights_on;
     private final boolean siege_on;
@@ -91,26 +84,24 @@ public class Tardis {
         this.tardis_init = tardis_init;
         this.recharging = recharging;
         this.scanner = scanner;
-        this.farm = farm;
-        this.stable = stable;
         this.hidden = hidden;
         this.lastuse = lastuse;
         this.iso_on = iso_on;
         this.eps = eps;
         this.rail = rail;
-        this.village = village;
         this.renderer = renderer;
         this.zero = zero;
-        this.hutch = hutch;
-        this.igloo = igloo;
-        this.stall = stall;
-        this.birdcage = birdcage;
         this.powered_on = powered_on;
         this.lights_on = lights_on;
         this.siege_on = siege_on;
         this.monsters = monsters;
     }
 
+    /**
+     * Returns the numerical id of this TARDIS.
+     *
+     * @return the TARDIS id
+     */
     public int getTardis_id() {
         return tardis_id;
     }
@@ -321,28 +312,6 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Farm room mob spawn location in
-     * this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Farm room mob spawn location string, or an empty string if
-     * the room does not exist
-     */
-    public String getFarm() {
-        return farm;
-    }
-
-    /**
-     * Returns a String representation of the Stable room horse spawn location
-     * in this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Stable room horse spawn location string, or an empty string
-     * if the room does not exist
-     */
-    public String getStable() {
-        return stable;
-    }
-
-    /**
      * Returns whether the TARDIS is hidden.
      *
      * @return true if hidden, false if not
@@ -394,17 +363,6 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Village room villager spawn
-     * location in this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Village room villager spawn location string, or an empty
-     * string if the room does not exist
-     */
-    public String getVillage() {
-        return village;
-    }
-
-    /**
      * Returns a String representation of the Renderer room spawn location in
      * this TARDIS. It is in the form of {@code World name:x:y:z}
      *
@@ -424,50 +382,6 @@ public class Tardis {
      */
     public String getZero() {
         return zero;
-    }
-
-    /**
-     * Returns a String representation of the Hutch room rabbit spawn location
-     * in this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Hutch room rabbit spawn location string, or an empty string
-     * if the room does not exist
-     */
-    public String getHutch() {
-        return hutch;
-    }
-
-    /**
-     * Returns a String representation of the Igloo room polar bear spawn
-     * location in this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Igloo room polar bear spawn location string, or an empty
-     * string if the room does not exist
-     */
-    public String getIgloo() {
-        return igloo;
-    }
-
-    /**
-     * Returns a String representation of the Stall room llama spawn location in
-     * this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Stall room llama spawn location string, or an empty string if
-     * the room does not exist
-     */
-    public String getStall() {
-        return stall;
-    }
-
-    /**
-     * Returns a String representation of the Birdcage room parrot spawn
-     * location in this TARDIS. It is in the form of {@code World name:x:y:z}
-     *
-     * @return the Birdcage room parrot spawn location string, or an empty
-     * string if the room does not exist
-     */
-    public String getBirdcage() {
-        return birdcage;
     }
 
     /**

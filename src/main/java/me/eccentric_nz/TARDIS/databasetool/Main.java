@@ -190,6 +190,10 @@ public class Main {
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("door_id"), rs.getInt("tardis_id"), rs.getInt("door_type"), rs.getString("door_location"), rs.getString("door_direction"), rs.getInt("locked")) + end;
                                     bw.write(str);
                                     break;
+                                case farming:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("aquarium"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
+                                    bw.write(str);
+                                    break;
                                 case gravity_well:
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("g_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("direction"), rs.getInt("distance"), rs.getFloat("velocity")) + end;
                                     bw.write(str);
@@ -255,7 +259,7 @@ public class Main {
                                     if (rs.wasNull()) {
                                         companions = "";
                                     }
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), rs.getString("size"), rs.getInt("abandoned"), rs.getInt("artron_level"), replaced, companions, rs.getString("chameleon"), rs.getInt("handbrake_on"), rs.getInt("iso_on"), rs.getInt("hidden"), rs.getInt("recharging"), rs.getInt("tardis_init"), rs.getInt("adapti_on"), rs.getString("chameleon_preset"), rs.getString("chameleon_demat"), rs.getString("save_sign"), rs.getString("creeper"), rs.getString("condenser"), rs.getString("scanner"), rs.getString("farm"), rs.getString("stable"), rs.getString("beacon"), rs.getString("eps"), rs.getString("rail"), rs.getString("village"), rs.getString("renderer"), rs.getString("zero"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stall"), rs.getString("birdcage"), rs.getInt("powered_on"), rs.getInt("lights_on"), rs.getLong("lastuse"), rs.getInt("monsters")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), rs.getString("size"), rs.getInt("abandoned"), rs.getInt("artron_level"), replaced, companions, rs.getString("chameleon"), rs.getInt("handbrake_on"), rs.getInt("iso_on"), rs.getInt("hidden"), rs.getInt("recharging"), rs.getInt("tardis_init"), rs.getInt("adapti_on"), rs.getString("chameleon_preset"), rs.getString("chameleon_demat"), rs.getString("save_sign"), rs.getString("creeper"), rs.getString("condenser"), rs.getString("scanner"), rs.getString("beacon"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), rs.getString("zero"), rs.getInt("powered_on"), rs.getInt("lights_on"), rs.getLong("lastuse"), rs.getInt("monsters")) + end;
                                     bw.write(str);
                                     break;
                                 case travellers:

@@ -22,8 +22,10 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Farm;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -118,23 +120,29 @@ public class TARDISUpdateCommand {
                 return true;
             }
             // must grow a room first
-            if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail") || tardis_block.equals("stall")) {
-                if (tardis_block.equals("farm") && tardis.getFarm().isEmpty()) {
-                    TARDISMessage.send(player, "UPDATE_FARM");
-                    return true;
+            if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("stall") || tardis_block.equals("village")) {
+                ResultSetFarming rsf = new ResultSetFarming(plugin, ownerid);
+                if (rsf.resultSet()) {
+                    Farm farming = rsf.getFarming();
+                    if (tardis_block.equals("farm") && farming.getFarm().isEmpty()) {
+                        TARDISMessage.send(player, "UPDATE_FARM");
+                        return true;
+                    }
+                    if (tardis_block.equals("stable") && farming.getStable().isEmpty()) {
+                        TARDISMessage.send(player, "UPDATE_STABLE");
+                        return true;
+                    }
+                    if (tardis_block.equals("stall") && farming.getStall().isEmpty()) {
+                        TARDISMessage.send(player, "UPDATE_STALL");
+                        return true;
+                    }
+                    if (tardis_block.equals("village") && farming.getVillage().isEmpty()) {
+                        TARDISMessage.send(player, "UPDATE_VILLAGE");
+                        return true;
+                    }
                 }
-                if (tardis_block.equals("stable") && tardis.getStable().isEmpty()) {
-                    TARDISMessage.send(player, "UPDATE_STABLE");
-                    return true;
-                }
-                if (tardis_block.equals("stall") && tardis.getStall().isEmpty()) {
-                    TARDISMessage.send(player, "UPDATE_STALL");
-                    return true;
-                }
-                if (tardis_block.equals("village") && tardis.getVillage().isEmpty()) {
-                    TARDISMessage.send(player, "UPDATE_VILLAGE");
-                    return true;
-                }
+            }
+            if (tardis_block.equals("rail") || tardis_block.equals("zero")) {
                 if (tardis_block.equals("rail") && tardis.getRail().isEmpty()) {
                     TARDISMessage.send(player, "UPDATE_RAIL");
                     return true;
@@ -143,6 +151,7 @@ public class TARDISUpdateCommand {
                     TARDISMessage.send(player, "UPDATE_ZERO");
                     return true;
                 }
+
             }
             if (tardis_block.equals("ars")) {
                 if (!player.hasPermission("tardis.architectural")) {

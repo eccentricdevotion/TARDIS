@@ -113,6 +113,10 @@ public class TARDISSQLiteDatabase {
             String queryDoors = "CREATE TABLE IF NOT EXISTS " + prefix + "doors (door_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT, door_direction TEXT DEFAULT 'SOUTH', locked INTEGER DEFAULT 0)";
             statement.executeUpdate(queryDoors);
 
+            // Table structure for table 'farming'
+            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, aquarium TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
+            statement.executeUpdate(queryFarming);
+
             // Table structure for table 'gravity_well'
             String queryGravity = "CREATE TABLE IF NOT EXISTS " + prefix + "gravity_well (g_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', direction INTEGER, distance INTEGER DEFAULT 11, velocity REAL DEFAULT 0.5)";
             statement.executeUpdate(queryGravity);
@@ -178,7 +182,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryTag);
 
             // Table structure for table 'tardis'
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS " + prefix + "tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', owner TEXT COLLATE NOCASE DEFAULT '', last_known_name TEXT COLLATE NOCASE DEFAULT '', chunk TEXT, tips INTEGER DEFAULT '-1', replaced TEXT DEFAULT '', companions TEXT, chameleon TEXT DEFAULT '', chameleon_preset TEXT DEFAULT 'FACTORY', chameleon_demat TEXT DEFAULT 'FACTORY', adapti_on INTEGER DEFAULT 0, size TEXT DEFAULT '', abandoned INTEGER DEFAULT 0, save_sign TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, condenser TEXT DEFAULT '', scanner TEXT DEFAULT '', farm TEXT DEFAULT '', stable TEXT DEFAULT '', recharging INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0, powered_on INTEGER DEFAULT 0, lights_on INTEGER DEFAULT 1, siege_on INTEGER DEFAULT 0, lastuse INTEGER DEFAULT (strftime('%s', 'now')), iso_on INTEGER DEFAULT 0, beacon TEXT DEFAULT '', eps TEXT DEFAULT '', rail TEXT DEFAULT '', village TEXT DEFAULT '', renderer TEXT DEFAULT '', zero TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stall TEXT DEFAULT '', birdcage TEXT DEFAULT '', monsters INTEGER DEFAULT 0)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS " + prefix + "tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', owner TEXT COLLATE NOCASE DEFAULT '', last_known_name TEXT COLLATE NOCASE DEFAULT '', chunk TEXT, tips INTEGER DEFAULT '-1', replaced TEXT DEFAULT '', companions TEXT, chameleon TEXT DEFAULT '', chameleon_preset TEXT DEFAULT 'FACTORY', chameleon_demat TEXT DEFAULT 'FACTORY', adapti_on INTEGER DEFAULT 0, size TEXT DEFAULT '', abandoned INTEGER DEFAULT 0, save_sign TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, condenser TEXT DEFAULT '', scanner TEXT DEFAULT '', recharging INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0, powered_on INTEGER DEFAULT 0, lights_on INTEGER DEFAULT 1, siege_on INTEGER DEFAULT 0, lastuse INTEGER DEFAULT (strftime('%s', 'now')), iso_on INTEGER DEFAULT 0, beacon TEXT DEFAULT '', eps TEXT DEFAULT '', rail TEXT DEFAULT '', renderer TEXT DEFAULT '', zero TEXT DEFAULT '', monsters INTEGER DEFAULT 0)";
             statement.executeUpdate(queryTARDIS);
 
             // Table structure for table 'travellers'

@@ -106,17 +106,13 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
-        tardisupdates.add("birdcage TEXT DEFAULT ''");
         tardisupdates.add("chameleon_demat TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("chameleon_preset TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");
-        tardisupdates.add("farm TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
-        tardisupdates.add("hutch TEXT DEFAULT ''");
-        tardisupdates.add("igloo TEXT DEFAULT ''");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
         tardisupdates.add("last_known_name TEXT COLLATE NOCASE DEFAULT ''");
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
@@ -128,11 +124,8 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("renderer TEXT DEFAULT ''");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("siege_on INTEGER DEFAULT 0");
-        tardisupdates.add("stable TEXT DEFAULT ''");
-        tardisupdates.add("stall TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
-        tardisupdates.add("village TEXT DEFAULT ''");
         tardisupdates.add("zero TEXT DEFAULT ''");
         inventoryupdates.add("attributes TEXT DEFAULT ''");
         inventoryupdates.add("armour_attributes TEXT DEFAULT ''");
@@ -325,6 +318,20 @@ public class TARDISSQLiteDatabaseUpdater {
                 }
                 String delVoid = "DROP TABLE '" + prefix + "void'";
                 statement.executeUpdate(delVoid);
+            }
+            // transfer farming locations from `tardis` table to `farming` table
+            String farmQuery = "SELECT farm_id FROM " + prefix + "farming";
+            ResultSet rsf = statement.executeQuery(farmQuery);
+            if (!rsf.isBeforeFirst()) {
+                String tardisFarms = "SELECT tardis_id, birdcage, farm, hutch, igloo, stable, stall, village FROM " + prefix + "tardis";
+                ResultSet rstf = statement.executeQuery(tardisFarms);
+                if (rstf.isBeforeFirst()) {
+                    while (rstf.next()) {
+                        String updateFarms = String.format("INSERT INTO " + prefix + "farming (tardis_id, birdcage, farm, hutch, igloo, stable, stall, village) VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", rstf.getInt("tardis_id"), rstf.getString("birdcage"), rstf.getString("farm"), rstf.getString("hutch"), rstf.getString("igloo"), rstf.getString("stable"), rstf.getString("stall"), rstf.getString("village"));
+                        statement.executeQuery(updateFarms);
+                    }
+                    i++;
+                }
             }
         } catch (SQLException e) {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
