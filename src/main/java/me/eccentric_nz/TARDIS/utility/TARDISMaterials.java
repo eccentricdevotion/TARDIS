@@ -17,8 +17,10 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 
 /**
  *
@@ -53,4 +55,17 @@ public class TARDISMaterials {
     public static List<Material> not_glass = Arrays.asList(Material.AIR, Material.GLASS, Material.TORCH, Material.SIGN, Material.OAK_DOOR, Material.BIRCH_DOOR, Material.SPRUCE_DOOR, Material.JUNGLE_DOOR, Material.ACACIA_DOOR, Material.DARK_OAK_DOOR, Material.WALL_SIGN, Material.IRON_DOOR, Material.REDSTONE_TORCH, Material.REDSTONE_WALL_TORCH, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.VINE, Material.REDSTONE_LAMP);
 
     public static List<Material> precious = Arrays.asList(Material.BEDROCK, Material.COAL_ORE, Material.DIAMOND_BLOCK, Material.DIAMOND_ORE, Material.EMERALD_BLOCK, Material.EMERALD_ORE, Material.NETHER_QUARTZ_ORE, Material.GOLD_BLOCK, Material.GOLD_ORE, Material.IRON_BLOCK, Material.IRON_ORE, Material.JACK_O_LANTERN, Material.LAPIS_BLOCK, Material.LAPIS_BLOCK, Material.MELON, Material.OBSIDIAN, Material.PUMPKIN, Material.REDSTONE_BLOCK, Material.REDSTONE_ORE, Material.SEA_LANTERN);
+
+    public static List<Material> fish_buckets = Arrays.asList(Material.CLOWNFISH_BUCKET, Material.COD_BUCKET, Material.PUFFERFISH_BUCKET, Material.SALMON_BUCKET);
+
+    public static HashMap<Material, EntityType> fishMap = new HashMap<Material, EntityType>() {
+        private static final long serialVersionUID = 3109256773218160485L;
+
+        {
+            put(Material.CLOWNFISH_BUCKET, EntityType.TROPICAL_FISH);
+            put(Material.COD_BUCKET, EntityType.COD);
+            put(Material.PUFFERFISH_BUCKET, EntityType.PUFFER_FISH);
+            put(Material.SALMON_BUCKET, EntityType.SALMON);
+        }
+    };
 }

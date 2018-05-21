@@ -401,14 +401,18 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.insertControl(tardis_id, 19, plate, 0);
             }
             // set stable
-            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE"))) {
+            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE") || room.equals("AQUARIUM"))) {
                 HashMap<String, Object> sets = new HashMap<>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("tardis_id", tardis_id);
-                qf.doUpdate("tardis", sets, wheres);
+                qf.doUpdate("farming", sets, wheres);
                 // replace with correct block
                 switch (ROOM.valueOf(room)) {
+                    case AQUARIUM:
+                        type = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw : floor_type;
+                        data = type.createBlockData();
+                        break;
                     case VILLAGE:
                         type = Material.COBBLESTONE;
                         break;
@@ -436,7 +440,7 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                         break;
                 }
-                if (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE")) {
+                if (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE") || room.equals("AQUARIUM")) {
                     // update player prefs - turn on mob farming
                     turnOnFarming(p, qf);
                 }

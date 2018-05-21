@@ -17,14 +17,14 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.ResultSetFarming;
+import me.eccentric_nz.TARDIS.database.data.Farm;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
@@ -126,6 +126,7 @@ public class TARDISFarmer {
             List<TARDISLlama> old_macd_had_a_llama = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<>();
+            TARDISMob old_macd_had_a_fish = null;
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<>();
             List<TARDISParrot> old_macd_had_a_parrot = new ArrayList<>();
@@ -155,18 +156,17 @@ public class TARDISFarmer {
             // count total parrots
             int parrottotal = 0;
             // is there a farm room?
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
-                String farm = tardis.getFarm();
-                String stable = tardis.getStable();
-                String birdcage = tardis.getBirdcage();
-                String stall = tardis.getStall();
-                String hutch = tardis.getHutch();
-                String igloo = tardis.getIgloo();
-                String village = tardis.getVillage();
+                Farm farming = rs.getFarming();
+                String aquarium = farming.getAquarium();
+                String birdcage = farming.getBirdcage();
+                String farm = farming.getFarm();
+                String hutch = farming.getHutch();
+                String igloo = farming.getIgloo();
+                String stable = farming.getStable();
+                String stall = farming.getStall();
+                String village = farming.getVillage();
                 // collate the mobs
                 for (Entity e : mobs) {
                     switch (e.getType()) {
@@ -484,7 +484,13 @@ public class TARDISFarmer {
                             break;
                     }
                 }
-                if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0) {
+                ItemStack fishBucket = p.getInventory().getItemInMainHand();
+                if (fishBucket != null && TARDISMaterials.fish_buckets.contains(fishBucket.getType())) {
+                    old_macd_had_a_fish = new TARDISMob();
+                    old_macd_had_a_fish.setType(TARDISMaterials.fishMap.get(fishBucket.getType()));
+                    // TODO if tropical fish, set variant (will need to create TARDISFish class that extends TARDISMob)
+                }
+                if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0 || old_macd_had_a_fish != null) {
                     boolean canfarm;
                     switch (plugin.getInvManager()) {
                         case MULTIVERSE:
@@ -504,6 +510,42 @@ public class TARDISFarmer {
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                         return null;
                     }
+                }
+                if (!aquarium.isEmpty() && old_macd_had_a_fish != null) {
+                    // get location of farm room
+                    String[] data = aquarium.split(":");
+                    World world = plugin.getServer().getWorld(data[0]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
+                    Location fish_tank = new Location(world, x, y, z);
+                    switch (old_macd_had_a_fish.getType()) {
+                        case COD:
+                            fish_tank.add(3.0d, 1.5d, 3.0d);
+                            break;
+                        case PUFFER_FISH:
+                            fish_tank.add(-3.0d, 1.5d, 3.0d);
+                            break;
+                        case SALMON:
+                            fish_tank.add(3.0d, 1.5d, -3.0d);
+                            break;
+                        default: // TROPICAL_FISH
+                            fish_tank.add(-3.0d, 1.5d, -3.0d);
+                            break;
+                    }
+                    while (!world.getChunkAt(fish_tank).isLoaded()) {
+                        world.getChunkAt(fish_tank).load();
+                    }
+                    plugin.setTardisSpawn(true);
+                    Entity fish = world.spawnEntity(fish_tank, old_macd_had_a_fish.getType());
+                    // TODO set tropical variant
+//                    if (old_macd_had_a_fish.getType().equals(EntityType.TROPICAL_FISH)) {
+//                        TropicalFish tf = (TropicalFish)fish;
+//                        tf.setVariant(old_macd_had_a_fish.getVariant());
+//                    }
+                    // change fish bucket to empty bucket
+                    p.getInventory().getItemInMainHand().setType(Material.BUCKET);
+                    p.updateInventory();
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
