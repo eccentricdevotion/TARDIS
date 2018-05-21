@@ -52,9 +52,8 @@ public class TARDISShellRoomConstructor {
 
     public TARDISShellRoomConstructor(TARDIS plugin) {
         this.plugin = plugin;
-        // TODO may need to change room direction so button is facing east
-        this.orderx = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
-        this.orderz = new int[]{0, -1, -2, -2, -2, -1, 0, 0, -1, 1};
+        this.orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
+        this.orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
     }
 
     public void createShell(Player player, int id, Block block) {
