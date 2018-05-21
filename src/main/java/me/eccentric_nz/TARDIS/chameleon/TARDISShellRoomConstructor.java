@@ -64,9 +64,9 @@ public class TARDISShellRoomConstructor {
             Tardis tardis = rs.getTardis();
             Location block_loc = block.getLocation();
             World w = block_loc.getWorld();
-            int fx = block_loc.getBlockX() - 1;
+            int fx = block_loc.getBlockX() + 2;
             int fy = block_loc.getBlockY() + 1;
-            int fz = block_loc.getBlockZ() - 2;
+            int fz = block_loc.getBlockZ() - 1;
             TARDISMessage.send(player, "PRESET_SCAN");
             StringBuilder sb_id = new StringBuilder("[");
             StringBuilder sb_data = new StringBuilder("[");
