@@ -290,7 +290,7 @@
         <dependency>
             <groupId>me.gnat008.perworldinventory</groupId>
             <artifactId>PerWorldInventory</artifactId>
-            <version>1.11.1</version>
+            <version>1.11.5</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/PerWorldInventory.jar</systemPath>
@@ -338,7 +338,7 @@
         <dependency>
             <groupId>org.yi.acru.bukkit</groupId>
             <artifactId>lockette</artifactId>
-            <version>1.8.21</version>
+            <version>1.8.36</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Lockette.jar</systemPath>
@@ -354,7 +354,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>15.2.2</version>
+            <version>16.8</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
