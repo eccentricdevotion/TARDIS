@@ -126,9 +126,7 @@ public class TARDISDoorListener {
                     setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
                     plugin.getTrackerKeeper().getSetTime().remove(uuid);
                 }
-                if (plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
-                    plugin.getTrackerKeeper().getEjecting().remove(uuid);
-                }
+                plugin.getTrackerKeeper().getEjecting().remove(uuid);
             } else {
                 plugin.getPM().callEvent(new TARDISEnterEvent(p, from));
                 if (p.isPlayerTimeRelative()) {
@@ -241,7 +239,7 @@ public class TARDISDoorListener {
                     }
                     parrot.setVariant(pet.getVariant());
                     if (pet.isOnLeftShoulder() || pet.isOnRightShoulder()) {
-                        HumanEntity he = (HumanEntity) player;
+                        HumanEntity he = player;
                         if (pet.isOnLeftShoulder()) {
                             he.setShoulderEntityLeft(parrot);
                         }

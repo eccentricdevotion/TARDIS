@@ -104,7 +104,7 @@ public class TARDISHorseListener implements Listener {
                             tmhor.setHorseStyle(hh.getStyle());
                         }
                         tmhor.setHorseVariant(e.getType());
-                        tmhor.setName(((LivingEntity) h).getCustomName());
+                        tmhor.setName(h.getCustomName());
                         tmhor.setTamed(true);
                         if (h instanceof ChestedHorse) {
                             ChestedHorse ch = (ChestedHorse) h;
@@ -157,7 +157,7 @@ public class TARDISHorseListener implements Listener {
                             if (plugin.isHelperOnServer()) {
                                 plugin.getTardisHelper().setHorseSpeed(equine, tmhor.getSpeed());
                             }
-                            Tameable tamed = (Tameable) equine;
+                            Tameable tamed = equine;
                             tamed.setTamed(true);
                             tamed.setOwner(p);
 

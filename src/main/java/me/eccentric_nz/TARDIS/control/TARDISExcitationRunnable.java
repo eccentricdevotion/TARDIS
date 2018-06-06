@@ -76,9 +76,7 @@ public class TARDISExcitationRunnable implements Runnable {
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-                plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
-            }
+            plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 snow.forEach((block) -> {
                     block.setType(Material.AIR);

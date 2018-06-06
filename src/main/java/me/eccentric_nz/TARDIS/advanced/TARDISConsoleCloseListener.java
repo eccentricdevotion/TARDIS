@@ -283,9 +283,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                         where_tardis.put("tardis_id", id);
                                         qf.doUpdate("tardis", set_tardis, where_tardis);
                                     }
-                                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                                        plugin.getTrackerKeeper().getRescue().remove(id);
-                                    }
+                                    plugin.getTrackerKeeper().getRescue().remove(id);
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TARDISLand(plugin, id, p).exitVortex();
                                     }

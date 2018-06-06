@@ -48,7 +48,7 @@ public enum NotePitch {
     public int note;
     public float pitch;
 
-    private NotePitch(int note, float pitch) {
+    NotePitch(int note, float pitch) {
         this.note = note;
         this.pitch = pitch;
     }

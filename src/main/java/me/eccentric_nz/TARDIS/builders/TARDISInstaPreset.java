@@ -531,9 +531,7 @@ public class TARDISInstaPreset {
         plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(bd.getTardisID()));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
-            plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
-        }
+        plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
         if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
             plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
         }

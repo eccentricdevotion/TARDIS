@@ -76,7 +76,6 @@ public class TARDISSonicSorterListener implements Listener {
                         boolean allow = true;
                         // is Lockette or LWC on the server?
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
-                            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                             if (Lockette.isProtected(block)) {
                                 allow = false;
                             }

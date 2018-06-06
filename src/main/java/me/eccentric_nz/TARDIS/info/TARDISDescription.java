@@ -253,7 +253,7 @@ public enum TARDISDescription {
             + "BLOCK: REPEATER"),;
     private final String desc;
 
-    private TARDISDescription(String desc) {
+    TARDISDescription(String desc) {
         this.desc = desc;
     }
 

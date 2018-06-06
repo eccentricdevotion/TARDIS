@@ -781,15 +781,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 // tardis has moved so remove HADS damage count
-                if (plugin.getTrackerKeeper().getDamage().containsKey(bd.getTardisID())) {
-                    plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
-                }
-                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
-                    plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
-                }
-                if (plugin.getTrackerKeeper().getMalfunction().containsKey(bd.getTardisID())) {
-                    plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
-                }
+                plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
+                plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
+                plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
                 if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
                     plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
                 }

@@ -144,12 +144,11 @@ public class TARDISComehereCommand {
                         sub = true;
                     }
                 } else {
-                    int[] start_loc = tt.getStartLocation(eyeLocation, player_d);
+                    int[] start_loc = TARDISTimeTravel.getStartLocation(eyeLocation, player_d);
                     // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
-                    count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
+                    count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
                 }
                 if (plugin.getPM().isPluginEnabled("Lockette")) {
-                    Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                     if (Lockette.isProtected(eyeLocation.getBlock().getRelative(BlockFace.DOWN))) {
                         count = 1;
                     }
@@ -252,9 +251,7 @@ public class TARDISComehereCommand {
                 wheret.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -ch, wheret, player);
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
-                if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                    plugin.getTrackerKeeper().getRescue().remove(id);
-                }
+                plugin.getTrackerKeeper().getRescue().remove(id);
                 return true;
             } else {
                 TARDISMessage.send(player, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);

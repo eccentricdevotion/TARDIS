@@ -152,7 +152,7 @@ public class TARDISCondenserListener implements Listener {
                             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
                             HashMap<String, Object> setc = new HashMap<>();
                             if (rsc.resultSet()) {
-                                int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
+                                int new_stack_size = map.getValue() + rsc.getBlock_count();
                                 qf.updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), map.getKey());
                             } else {
                                 setc.put("tardis_id", tardis.getTardis_id());

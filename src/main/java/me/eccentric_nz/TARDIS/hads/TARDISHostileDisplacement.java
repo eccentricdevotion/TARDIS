@@ -97,8 +97,8 @@ public class TARDISHostileDisplacement {
                     sub = tt.submarine(l.getBlock(), d);
                     safe = (sub != null);
                 } else {
-                    int[] start = tt.getStartLocation(l, d);
-                    safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
+                    int[] start = TARDISTimeTravel.getStartLocation(l, d);
+                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
                 }
                 if (safe) {
                     Location fl = (rsc.isSubmarine()) ? sub : l;

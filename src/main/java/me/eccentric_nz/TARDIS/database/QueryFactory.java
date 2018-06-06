@@ -388,13 +388,13 @@ public class QueryFactory {
                 ps.setString(2, player.getName());
                 ps.setString(3, player.getName());
                 ps.setLong(4, now);
-                ps.setInt(5, (Integer) id);
+                ps.setInt(5, id);
                 boolean bool = (ps.executeUpdate() == 1);
                 if (bool) {
                     query = "UPDATE " + prefix + "ars SET uuid = ? WHERE tardis_id = ?";
                     ps = connection.prepareStatement(query);
                     ps.setString(1, uuid);
-                    ps.setInt(2, (Integer) id);
+                    ps.setInt(2, id);
                     ps.executeUpdate();
                 }
                 return bool;

@@ -209,7 +209,7 @@ public class TARDISCraftListener implements Listener {
         SCHEMATIC schm = CONSOLES.getBY_MATERIALS().get(m.toString());
         if (schm != null) {
             String perm = schm.getPermission();
-            return (perm.equals("budget")) ? true : p.hasPermission("tardis." + perm);
+            return (perm.equals("budget")) || p.hasPermission("tardis." + perm);
         } else {
             return false;
         }

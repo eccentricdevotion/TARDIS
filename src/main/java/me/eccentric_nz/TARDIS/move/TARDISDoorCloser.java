@@ -102,9 +102,7 @@ public class TARDISDoorCloser {
             if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 // players
                 uuids.forEach((u) -> {
-                    if (plugin.getTrackerKeeper().getMover().contains(u)) {
-                        plugin.getTrackerKeeper().getMover().remove(u);
-                    }
+                    plugin.getTrackerKeeper().getMover().remove(u);
                 });
             }
             // locations

@@ -356,7 +356,7 @@ public enum TARDISInfoMenu {
     private final String parent;
     private final String key;
 
-    private TARDISInfoMenu(String name, String parent, String key) {
+    TARDISInfoMenu(String name, String parent, String key) {
         this.name = name;
         this.parent = parent;
         this.key = key;

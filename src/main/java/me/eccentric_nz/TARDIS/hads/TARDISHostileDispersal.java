@@ -75,9 +75,7 @@ public class TARDISHostileDispersal {
         Biome biome = rsc.getBiome();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
-            if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
-                plugin.getTrackerKeeper().getPortals().remove(l);
-            }
+            plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if neccessary
             new TARDISDoorCloser(plugin, uuid, id).closeDoors();
         }

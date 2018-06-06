@@ -69,9 +69,7 @@ public class TARDISFastReturnButton {
                     wherel.put("tardis_id", id);
                     new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);
-                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                        plugin.getTrackerKeeper().getRescue().remove(id);
-                    }
+                    plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TARDISLand(plugin, id, player).exitVortex();
                     }

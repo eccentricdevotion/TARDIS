@@ -118,9 +118,7 @@ public class TARDISRemoteTravelCommand {
                 plugin.getPresetBuilder().buildPreset(bd);
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
             }, delay);
-            if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
-                plugin.getTrackerKeeper().getDamage().remove(id);
-            }
+            plugin.getTrackerKeeper().getDamage().remove(id);
             // current
             HashMap<String, Object> setcurrent = new HashMap<>();
             setcurrent.put("world", exit.getWorld().getName());

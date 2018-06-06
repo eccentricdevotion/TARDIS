@@ -113,7 +113,7 @@ public class TARDISTimeTravel {
                         }
                     }
                     // remove the world the Police Box is in
-                    if (allowedWorlds.size() > 1 && allowedWorlds.contains(this_world)) {
+                    if (allowedWorlds.size() > 1) {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission

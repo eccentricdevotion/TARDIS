@@ -291,15 +291,9 @@ public class TARDISARSMethods {
     public void close(Player p) {
         UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            if (scroll_start.containsKey(uuid)) {
-                scroll_start.remove(uuid);
-            }
-            if (selected_slot.containsKey(uuid)) {
-                selected_slot.remove(uuid);
-            }
-            if (hasLoadedMap.contains(uuid)) {
-                hasLoadedMap.remove(uuid);
-            }
+            scroll_start.remove(uuid);
+            selected_slot.remove(uuid);
+            hasLoadedMap.remove(uuid);
             if (map_data.containsKey(uuid)) {
                 if (playerIsOwner(p.getUniqueId().toString(), ids.get(uuid))) {
                     saveAll(uuid);

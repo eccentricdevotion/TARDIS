@@ -64,9 +64,7 @@ public class TARDISQuitListener implements Listener {
                 World w = rsc.getWorld();
                 if (w != null) {
                     Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-                    if (plugin.getGeneralKeeper().getTardisChunkList().contains(chunk)) {
-                        plugin.getGeneralKeeper().getTardisChunkList().remove(chunk);
-                    }
+                    plugin.getGeneralKeeper().getTardisChunkList().remove(chunk);
                 }
             }
             // remove player from the TARDIS UUID cache
@@ -116,9 +114,7 @@ public class TARDISQuitListener implements Listener {
                 if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                     new TARDISArchPersister(plugin).save(uuid);
                 }
-                if (plugin.getTrackerKeeper().getGeneticallyModified().contains(uuid)) {
-                    plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
-                }
+                plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
             }
         }
     }

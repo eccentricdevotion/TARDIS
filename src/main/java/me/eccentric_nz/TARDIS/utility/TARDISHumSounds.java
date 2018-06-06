@@ -43,7 +43,7 @@ public class TARDISHumSounds {
      */
     public interface Callback<T> {
 
-        public void execute(T response);
+        void execute(T response);
     }
 
     private final Callback<List<UUID>> callback = (List<UUID> data) -> {

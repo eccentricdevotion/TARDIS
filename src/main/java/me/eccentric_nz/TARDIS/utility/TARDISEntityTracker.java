@@ -46,7 +46,7 @@ public class TARDISEntityTracker {
             if (e instanceof LivingEntity) {
                 // create NPC
                 NPCRegistry registry = CitizensAPI.getNPCRegistry();
-                String name = (e instanceof Player) ? ((Player) e).getName() : "";
+                String name = (e instanceof Player) ? e.getName() : "";
                 NPC npc = registry.createNPC(e.getType(), name);
                 // determine relative location
                 double relx = e.getLocation().getX() - exterior.getX();

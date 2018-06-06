@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.noteblock;
 
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +28,7 @@ public class NoteBlockPlayer {
     public static final HashMap<UUID, List<SongPlayer>> PLAYING_SONGS = new HashMap<>();
 
     public boolean isReceivingSong(Player p) {
-        return (PLAYING_SONGS.get(p.getUniqueId()) != null) && (!((ArrayList<SongPlayer>) PLAYING_SONGS.get(p.getUniqueId())).isEmpty());
+        return (PLAYING_SONGS.get(p.getUniqueId()) != null) && (!PLAYING_SONGS.get(p.getUniqueId()).isEmpty());
     }
 
     public void stopPlaying(Player p) {

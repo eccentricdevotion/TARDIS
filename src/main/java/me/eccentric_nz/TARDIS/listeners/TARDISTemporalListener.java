@@ -54,9 +54,7 @@ public class TARDISTemporalListener implements Listener {
                 return;
             }
             p.resetPlayerTime();
-            if (plugin.getTrackerKeeper().getSetTime().containsKey(p.getUniqueId())) {
-                plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
-            }
+            plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
             TARDISMessage.send(p, "TEMPORAL_RESET");
         }
     }

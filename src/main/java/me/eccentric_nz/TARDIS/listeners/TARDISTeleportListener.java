@@ -63,9 +63,7 @@ public class TARDISTeleportListener implements Listener {
                     TARDISMessage.send(p, "OCCUPY_AUTO");
                 }
                 // stop tracking telepaths
-                if (plugin.getTrackerKeeper().getTelepaths().containsKey(p.getUniqueId())) {
-                    plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
-                }
+                plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
             }
         }
     }

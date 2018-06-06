@@ -101,7 +101,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 HashMap<String, Object> wherek = new HashMap<>();
                 wherek.put("uuid", uuid.toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
-                boolean minecart = (rsp.resultSet()) ? rsp.isMinecartOn() : false;
+                boolean minecart = (rsp.resultSet()) && rsp.isMinecartOn();
                 // play demat sfx
                 if (!minecart) {
                     if (!preset.equals(PRESET.JUNK_MODE)) {

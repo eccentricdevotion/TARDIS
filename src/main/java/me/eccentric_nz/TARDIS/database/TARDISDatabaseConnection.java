@@ -53,7 +53,7 @@ public class TARDISDatabaseConnection {
         this.isMySQL = isMySQL;
     }
 
-    public void setConnection() throws Exception {
+    public void setConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -87,9 +87,8 @@ public class TARDISDatabaseConnection {
      * Test the database connection
      *
      * @param connection
-     * @throws java.sql.SQLException
      */
-    public void testConnection(Connection connection) throws SQLException {
+    public void testConnection(Connection connection) {
         if (isMySQL) {
             try {
                 statement = connection.createStatement();

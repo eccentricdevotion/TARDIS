@@ -180,7 +180,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     tm.setType(type);
                                     tm.setAge(e.getTicksLived());
                                     tm.setHealth(((LivingEntity) e).getHealth());
-                                    tm.setName(((LivingEntity) e).getCustomName());
+                                    tm.setName(e.getCustomName());
                                     if (e.getPassengers().size() > 0) {
                                         tm.setPassenger(e.getPassengers().get(0).getType());
                                     }
@@ -394,13 +394,13 @@ public class TARDISMonsterRunnable implements Runnable {
                     break;
             }
             if (m.getAge() > 0) {
-                ((LivingEntity) ent).setTicksLived(m.getAge());
+                ent.setTicksLived(m.getAge());
             }
             if (m.getHealth() > 0 && m.getHealth() <= 20.0d) {
                 ((LivingEntity) ent).setHealth(m.getHealth());
             }
             if (m.getName() != null && !m.getName().isEmpty()) {
-                ((LivingEntity) ent).setCustomName(m.getName());
+                ent.setCustomName(m.getName());
             }
             if (m.getPassenger() != null) {
                 if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
@@ -415,6 +415,6 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private boolean isTimelord(TARDISTeleportLocation tpl, Entity e) {
         ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
-        return (rsc.getCompanions().contains(((Player) e).getUniqueId()));
+        return (rsc.getCompanions().contains(e.getUniqueId()));
     }
 }

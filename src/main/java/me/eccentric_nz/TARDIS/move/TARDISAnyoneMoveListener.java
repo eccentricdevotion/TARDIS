@@ -91,9 +91,9 @@ public class TARDISAnyoneMoveListener implements Listener {
             wherepp.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             boolean hasPrefs = rsp.resultSet();
-            boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
-            boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
-            boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
+            boolean minecart = (hasPrefs) && rsp.isMinecartOn();
+            boolean userQuotes = (hasPrefs) && rsp.isQuotesOn();
+            boolean willFarm = (hasPrefs) && rsp.isFarmOn();
             // check for entities near the police box
             List<TARDISParrot> pets = null;
             if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {

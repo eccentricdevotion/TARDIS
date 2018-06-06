@@ -106,7 +106,7 @@ public class TARDISAchievementFactory {
                 qf.doUpdate("achievements", seta, wherem);
             } else {
                 if (obj.getClass().equals(String.class)) {
-                    if (data != null && !data.contains((String) obj)) {
+                    if (data != null && !data.contains(obj)) {
                         seta.put("amount", amount + ":" + obj);
                         qf.doUpdate("achievements", seta, wherem);
                     }

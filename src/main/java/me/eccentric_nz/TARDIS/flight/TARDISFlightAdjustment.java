@@ -75,8 +75,8 @@ public class TARDISFlightAdjustment {
                     sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection());
                     safe = (sub != null);
                 } else {
-                    int[] start = tt.getStartLocation(adjusted_location, bd.getDirection());
-                    safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
+                    int[] start = TARDISTimeTravel.getStartLocation(adjusted_location, bd.getDirection());
+                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
                 }
                 if (safe) {
                     final_location = (bd.isSubmarine()) ? sub : adjusted_location;

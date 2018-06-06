@@ -24,6 +24,6 @@ public class TARDISMultiInvChecker {
 
     public static boolean checkWorldsCanShare(String from, String to) {
         HashMap<String, String> migroups = MIYamlFiles.getGroups();
-        return (migroups.containsKey(from) && migroups.containsKey(to)) ? migroups.get(from).equals(migroups.get(to)) : false;
+        return (migroups.containsKey(from) && migroups.containsKey(to)) && migroups.get(from).equals(migroups.get(to));
     }
 }

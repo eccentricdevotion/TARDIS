@@ -387,30 +387,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
     private void untrack(UUID uuid) {
         // stop tracking player
-        if (plugin.getTrackerKeeper().getLazarus().containsKey(uuid)) {
-            plugin.getTrackerKeeper().getLazarus().remove(uuid);
-        }
-        if (disguises.containsKey(uuid)) {
-            disguises.remove(uuid);
-        }
-        if (sheep.containsKey(uuid)) {
-            sheep.remove(uuid);
-        }
-        if (horses.containsKey(uuid)) {
-            horses.remove(uuid);
-        }
-        if (cats.containsKey(uuid)) {
-            cats.remove(uuid);
-        }
-        if (professions.containsKey(uuid)) {
-            professions.remove(uuid);
-        }
-        if (slimes.containsKey(uuid)) {
-            slimes.remove(uuid);
-        }
-        if (plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
-            plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
-        }
+        plugin.getTrackerKeeper().getLazarus().remove(uuid);
+        disguises.remove(uuid);
+        sheep.remove(uuid);
+        horses.remove(uuid);
+        cats.remove(uuid);
+        professions.remove(uuid);
+        slimes.remove(uuid);
+        plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
     }
 
     private void openDoor(Block b) {

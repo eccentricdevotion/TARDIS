@@ -104,9 +104,7 @@ public class TARDISGlassesListener implements Listener {
     private boolean is3DGlasses(ItemStack is) {
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().equals("3-D Glasses")) {
-                return true;
-            }
+            return im.hasDisplayName() && im.getDisplayName().equals("3-D Glasses");
         }
         return false;
     }

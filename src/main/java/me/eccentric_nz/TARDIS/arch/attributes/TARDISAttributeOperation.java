@@ -26,7 +26,7 @@ public enum TARDISAttributeOperation {
     ADD_PERCENTAGE(2);
     private final int id;
 
-    private TARDISAttributeOperation(int id) {
+    TARDISAttributeOperation(int id) {
         this.id = id;
     }
 

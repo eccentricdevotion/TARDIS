@@ -184,9 +184,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     wheret.put("tardis_id", id);
                                     new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
-                                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                                        plugin.getTrackerKeeper().getRescue().remove(id);
-                                    }
+                                    plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
                                     TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -240,7 +238,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
         Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
         if (inv_name.equals("§4TARDIS saves")) {
-            UUID uuid = ((Player) event.getPlayer()).getUniqueId();
+            UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("uuid", uuid.toString());

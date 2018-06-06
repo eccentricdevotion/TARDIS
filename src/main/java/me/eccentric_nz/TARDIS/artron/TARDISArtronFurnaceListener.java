@@ -91,9 +91,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                         }, 2L);
                     }
                 }
-            } else if (plugin.getTrackerKeeper().getArtronFurnaces().contains(l)) {
-                plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
-            }
+            } else plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
         }
     }
 

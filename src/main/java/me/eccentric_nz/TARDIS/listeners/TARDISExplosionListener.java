@@ -75,9 +75,7 @@ public class TARDISExplosionListener implements Listener {
                 if (loc != null) {
                     Block block = loc.getBlock();
                     // if the block is a TARDIS block then remove it
-                    if (e.blockList().contains(block)) {
-                        e.blockList().remove(block);
-                    }
+                    e.blockList().remove(block);
                 }
             }
         }

@@ -92,9 +92,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     TARDISMalfunction m = new TARDISMalfunction(plugin);
                     exit = m.getMalfunction(id, player, rscl.getDirection(), handbrake, tardis.getEps(), tardis.getCreeper());
                     if (exit != null) {
-                        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                            plugin.getTrackerKeeper().getRescue().remove(id);
-                        }
+                        plugin.getTrackerKeeper().getRescue().remove(id);
                         HashMap<String, Object> wheress = new HashMap<>();
                         wheress.put("tardis_id", id);
                         HashMap<String, Object> setsave = new HashMap<>();
@@ -262,9 +260,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             plugin.getTrackerKeeper().getFlightData().remove(uuid);
                         }
                     }, materialisation_delay);
-                    if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
-                        plugin.getTrackerKeeper().getDamage().remove(id);
-                    }
+                    plugin.getTrackerKeeper().getDamage().remove(id);
                     // set last use
                     long now;
                     if (player.hasPermission("tardis.prune.bypass")) {

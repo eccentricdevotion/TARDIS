@@ -63,7 +63,7 @@ public class TARDISNbtFactory {
         // Unique NBT id
         public final int id;
 
-        private NbtType(int id, Class<?> type) {
+        NbtType(int id, Class<?> type) {
             this.id = id;
             NBT_CLASS.put(id, type);
             NBT_ENUM.put(id, this);
@@ -291,14 +291,14 @@ public class TARDISNbtFactory {
      *
      * @author Kristian
      */
-    public static interface Wrapper {
+    public interface Wrapper {
 
         /**
          * Retrieve the underlying native NBT tag.
          *
          * @return The underlying NBT.
          */
-        public Object getHandle();
+        Object getHandle();
     }
 
     /**

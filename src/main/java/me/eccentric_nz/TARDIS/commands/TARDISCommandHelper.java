@@ -98,7 +98,7 @@ public class TARDISCommandHelper {
         }
     }
 
-    public static enum ROOT_COMMAND {
+    public enum ROOT_COMMAND {
 
         tardis("http://goo.gl/55uTqL"),
         tardistravel("http://goo.gl/5rZR1T"),
@@ -120,7 +120,7 @@ public class TARDISCommandHelper {
 
         final String URL;
 
-        private ROOT_COMMAND(String URL) {
+        ROOT_COMMAND(String URL) {
             this.URL = URL;
         }
     }

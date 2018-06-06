@@ -155,9 +155,7 @@ public class TARDISTerminalListener implements Listener {
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
                                 new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
                                 plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
-                                if (plugin.getTrackerKeeper().getRescue().containsKey(terminalIDs.get(uuid))) {
-                                    plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
-                                }
+                                plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 close(player);
                                 TARDISMessage.send(player, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
@@ -411,7 +409,7 @@ public class TARDISTerminalListener implements Listener {
                     }
                 }
                 // remove the world the Police Box is in
-                if (this_world != null && allowedWorlds.size() > 1 && allowedWorlds.contains(this_world)) {
+                if (this_world != null && allowedWorlds.size() > 1) {
                     allowedWorlds.remove(this_world);
                 }
                 // remove the world if the player doesn't have permission
@@ -558,18 +556,10 @@ public class TARDISTerminalListener implements Listener {
     private void close(Player p) {
         UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            if (terminalUsers.containsKey(uuid)) {
-                terminalUsers.remove(uuid);
-            }
-            if (terminalStep.containsKey(uuid)) {
-                terminalStep.remove(uuid);
-            }
-            if (terminalDestination.containsKey(uuid)) {
-                terminalDestination.remove(uuid);
-            }
-            if (terminalSub.containsKey(uuid)) {
-                terminalSub.remove(uuid);
-            }
+            terminalUsers.remove(uuid);
+            terminalStep.remove(uuid);
+            terminalDestination.remove(uuid);
+            terminalSub.remove(uuid);
             p.closeInventory();
         }, 1L);
     }

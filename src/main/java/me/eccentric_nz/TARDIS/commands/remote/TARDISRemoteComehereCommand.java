@@ -122,12 +122,11 @@ public class TARDISRemoteComehereCommand {
                 sub = true;
             }
         } else {
-            int[] start_loc = tt.getStartLocation(eyeLocation, player_d);
+            int[] start_loc = TARDISTimeTravel.getStartLocation(eyeLocation, player_d);
             // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
-            count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
+            count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
         }
         if (plugin.getPM().isPluginEnabled("Lockette")) {
-            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
             if (Lockette.isProtected(eyeLocation.getBlock())) {
                 count = 1;
             }
@@ -220,9 +219,7 @@ public class TARDISRemoteComehereCommand {
             plugin.getPresetBuilder().buildPreset(bd);
         }, delay * 2);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
-        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-            plugin.getTrackerKeeper().getRescue().remove(id);
-        }
+        plugin.getTrackerKeeper().getRescue().remove(id);
         return true;
     }
 }

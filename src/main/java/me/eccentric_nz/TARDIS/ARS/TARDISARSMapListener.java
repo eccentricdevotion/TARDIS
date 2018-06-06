@@ -186,9 +186,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     public void close(Player p) {
         UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            if (hasLoadedMap.contains(uuid)) {
-                hasLoadedMap.remove(uuid);
-            }
+            hasLoadedMap.remove(uuid);
             map_data.remove(uuid);
             ids.remove(uuid);
             p.closeInventory();

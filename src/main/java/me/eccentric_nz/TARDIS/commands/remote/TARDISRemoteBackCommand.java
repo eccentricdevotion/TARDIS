@@ -109,9 +109,7 @@ public class TARDISRemoteBackCommand {
             plugin.getPresetBuilder().buildPreset(bd);
         }, 20L);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
-        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-            plugin.getTrackerKeeper().getRescue().remove(id);
-        }
+        plugin.getTrackerKeeper().getRescue().remove(id);
         return true;
     }
 }

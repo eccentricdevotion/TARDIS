@@ -193,12 +193,11 @@ public class TARDISStattenheimListener implements Listener {
                                 sub = true;
                             }
                         } else {
-                            int[] start_loc = tt.getStartLocation(remoteLocation, player_d);
+                            int[] start_loc = TARDISTimeTravel.getStartLocation(remoteLocation, player_d);
                             // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
-                            count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
+                            count = TARDISTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                         }
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
-                            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                             if (Lockette.isProtected(remoteLocation.getBlock().getRelative(BlockFace.DOWN))) {
                                 count = 1;
                             }
@@ -301,9 +300,7 @@ public class TARDISStattenheimListener implements Listener {
                         wheret.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", -ch, wheret, player);
                         plugin.getTrackerKeeper().getHasDestination().remove(id);
-                        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                            plugin.getTrackerKeeper().getRescue().remove(id);
-                        }
+                        plugin.getTrackerKeeper().getRescue().remove(id);
                     } else {
                         TARDISMessage.send(player, "NO_PERMS");
                     }
