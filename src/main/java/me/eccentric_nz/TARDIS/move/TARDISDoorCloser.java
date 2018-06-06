@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
@@ -29,8 +25,12 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDoorCloser {
@@ -47,7 +47,7 @@ public class TARDISDoorCloser {
 
     public void closeDoors() {
         // get door locations
-        final ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
+        ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
             close(rs.getOuterBlock(), rs.getInnerBlock().getLocation());
             // inner
@@ -63,7 +63,7 @@ public class TARDISDoorCloser {
     /**
      * Close the door.
      *
-     * @param block the bottom door block
+     * @param block  the bottom door block
      * @param remove whether to clear the
      */
     private void close(Block block, Location inportal) {

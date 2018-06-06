@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.entity.EntityType;
@@ -26,8 +25,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
+import java.util.Random;
+
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISSiluriaSpawnListener implements Listener {
@@ -38,7 +38,7 @@ public final class TARDISSiluriaSpawnListener implements Listener {
 
     public TARDISSiluriaSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
+        twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -52,7 +52,7 @@ public final class TARDISSiluriaSpawnListener implements Listener {
         if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
             return;
         }
-        final LivingEntity le = event.getEntity();
+        LivingEntity le = event.getEntity();
         // it's a Dalek - disguise it!
         twaAPI.setSilurianEquipment(le, false);
     }

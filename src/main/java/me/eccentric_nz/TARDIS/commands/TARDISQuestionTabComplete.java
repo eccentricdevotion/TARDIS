@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,16 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper.ROOT_COMMAND;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardis?
@@ -42,7 +43,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
         for (ROOT_COMMAND rc : TARDISCommandHelper.ROOT_COMMAND.values()) {
             roots.add(rc.toString());
         }
-        this.ROOT_SUBS = ImmutableList.copyOf(roots);
+        ROOT_SUBS = ImmutableList.copyOf(roots);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSQLCondenserUpdate implements Runnable {
@@ -36,20 +36,18 @@ public class TARDISSQLCondenserUpdate implements Runnable {
     private final String prefix;
 
     /**
-     * Removes condenser block counts from an SQLite database table. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query.
+     * Removes condenser block counts from an SQLite database table. This method builds an SQL query string from the
+     * parameters supplied and then executes the query.
      *
      * @param plugin an instance of the main plugin class
      * @param amount the amount of blocks to remove
-     * @param where a HashMap<String, Object> of table fields and values to
-     * select the records to alter.
+     * @param where  a HashMap<String, Object> of table fields and values to select the records to alter.
      */
     public TARDISSQLCondenserUpdate(TARDIS plugin, int amount, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.amount = amount;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     @Override

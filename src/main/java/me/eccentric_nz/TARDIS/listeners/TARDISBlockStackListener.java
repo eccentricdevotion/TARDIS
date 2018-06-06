@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCount;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -47,12 +39,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 /**
- * TARDISes are bioships that are grown from a species of coral presumably
- * indigenous to Gallifrey.
- *
- * The TARDIS had a drawing room, which the Doctor claimed to be his "private
- * study". Inside it were momentos of his many incarnations' travels.
+ * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
+ * <p>
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * many incarnations' travels.
  *
  * @author eccentric_nz
  */
@@ -87,9 +83,8 @@ public class TARDISBlockStackListener implements Listener {
     }
 
     /**
-     * Listens for player block placing. If the player places a stack of blocks
-     * in a certain pattern for example (but not limited to): IRON_BLOCK,
-     * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
+     * Listens for player block placing. If the player places a stack of blocks in a certain pattern for example (but
+     * not limited to): IRON_BLOCK, LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
      *
      * @param event a player placing a block
      */
@@ -187,9 +182,9 @@ public class TARDISBlockStackListener implements Listener {
                         String d = TARDISStaticUtils.getPlayersDirection(player, false);
                         // save data to database (tardis table)
                         Location block_loc = blockBottom.getLocation();
-                        final String biome = block_loc.getBlock().getBiome().toString();
+                        String biome = block_loc.getBlock().getBiome().toString();
                         String chun = cw + ":" + cx + ":" + cz;
-                        final QueryFactory qf = new QueryFactory(plugin);
+                        QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
@@ -220,7 +215,7 @@ public class TARDISBlockStackListener implements Listener {
                             setpp.put("wall", wall_type.toString());
                         }
                         setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
-                        final int lastInsertId = qf.doSyncInsert("tardis", set);
+                        int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("uuid", player.getUniqueId().toString());
@@ -247,7 +242,7 @@ public class TARDISBlockStackListener implements Listener {
                         blockBelow.setType(Material.AIR);
                         blockBottom.setType(Material.AIR);
                         // turn the block stack into a TARDIS
-                        final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+                        BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
                         bd.setDirection(COMPASS.valueOf(d));
                         bd.setLocation(block_loc);
                         bd.setMalfunction(false);

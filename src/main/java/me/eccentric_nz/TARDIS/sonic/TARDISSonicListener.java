@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,20 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.lwc.LWCPlugin;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
-import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
-import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
-import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.Tag;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Sign;
+import org.bukkit.block.*;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.Directional;
@@ -74,17 +53,19 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.yi.acru.bukkit.Lockette.Lockette;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
+import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSonicListener implements Listener {
@@ -104,7 +85,7 @@ public class TARDISSonicListener implements Listener {
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-        this.sonic = Material.valueOf(split[0]);
+        sonic = Material.valueOf(split[0]);
         diamond.add(Material.COBWEB);
         diamond.add(Material.IRON_BARS);
         diamond.add(Material.SNOW);
@@ -153,86 +134,86 @@ public class TARDISSonicListener implements Listener {
         faces.add(BlockFace.WEST);
         faces.add(BlockFace.UP);
         faces.add(BlockFace.DOWN);
-        this.paintable.add(Material.BLACK_CARPET);
-        this.paintable.add(Material.BLACK_STAINED_GLASS);
-        this.paintable.add(Material.BLACK_STAINED_GLASS_PANE);
-        this.paintable.add(Material.BLACK_TERRACOTTA);
-        this.paintable.add(Material.BLACK_WOOL);
-        this.paintable.add(Material.BLUE_CARPET);
-        this.paintable.add(Material.BLUE_STAINED_GLASS);
-        this.paintable.add(Material.BLUE_STAINED_GLASS_PANE);
-        this.paintable.add(Material.BLUE_TERRACOTTA);
-        this.paintable.add(Material.BLUE_WOOL);
-        this.paintable.add(Material.BROWN_CARPET);
-        this.paintable.add(Material.BROWN_STAINED_GLASS);
-        this.paintable.add(Material.BROWN_STAINED_GLASS_PANE);
-        this.paintable.add(Material.BROWN_TERRACOTTA);
-        this.paintable.add(Material.BROWN_WOOL);
-        this.paintable.add(Material.CYAN_CARPET);
-        this.paintable.add(Material.CYAN_STAINED_GLASS);
-        this.paintable.add(Material.CYAN_STAINED_GLASS_PANE);
-        this.paintable.add(Material.CYAN_TERRACOTTA);
-        this.paintable.add(Material.CYAN_WOOL);
-        this.paintable.add(Material.GRAY_CARPET);
-        this.paintable.add(Material.GRAY_STAINED_GLASS);
-        this.paintable.add(Material.GRAY_STAINED_GLASS_PANE);
-        this.paintable.add(Material.GRAY_TERRACOTTA);
-        this.paintable.add(Material.GRAY_WOOL);
-        this.paintable.add(Material.GREEN_CARPET);
-        this.paintable.add(Material.GREEN_STAINED_GLASS);
-        this.paintable.add(Material.GREEN_STAINED_GLASS_PANE);
-        this.paintable.add(Material.GREEN_TERRACOTTA);
-        this.paintable.add(Material.GREEN_WOOL);
-        this.paintable.add(Material.LIGHT_BLUE_CARPET);
-        this.paintable.add(Material.LIGHT_BLUE_STAINED_GLASS);
-        this.paintable.add(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-        this.paintable.add(Material.LIGHT_BLUE_TERRACOTTA);
-        this.paintable.add(Material.LIGHT_BLUE_WOOL);
-        this.paintable.add(Material.LIGHT_GRAY_CARPET);
-        this.paintable.add(Material.LIGHT_GRAY_STAINED_GLASS);
-        this.paintable.add(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
-        this.paintable.add(Material.LIGHT_GRAY_TERRACOTTA);
-        this.paintable.add(Material.LIGHT_GRAY_WOOL);
-        this.paintable.add(Material.LIME_CARPET);
-        this.paintable.add(Material.LIME_STAINED_GLASS);
-        this.paintable.add(Material.LIME_STAINED_GLASS_PANE);
-        this.paintable.add(Material.LIME_TERRACOTTA);
-        this.paintable.add(Material.LIME_WOOL);
-        this.paintable.add(Material.MAGENTA_CARPET);
-        this.paintable.add(Material.MAGENTA_STAINED_GLASS);
-        this.paintable.add(Material.MAGENTA_STAINED_GLASS_PANE);
-        this.paintable.add(Material.MAGENTA_TERRACOTTA);
-        this.paintable.add(Material.MAGENTA_WOOL);
-        this.paintable.add(Material.ORANGE_CARPET);
-        this.paintable.add(Material.ORANGE_STAINED_GLASS);
-        this.paintable.add(Material.ORANGE_STAINED_GLASS_PANE);
-        this.paintable.add(Material.ORANGE_TERRACOTTA);
-        this.paintable.add(Material.ORANGE_WOOL);
-        this.paintable.add(Material.PINK_CARPET);
-        this.paintable.add(Material.PINK_STAINED_GLASS);
-        this.paintable.add(Material.PINK_STAINED_GLASS_PANE);
-        this.paintable.add(Material.PINK_TERRACOTTA);
-        this.paintable.add(Material.PINK_WOOL);
-        this.paintable.add(Material.PURPLE_CARPET);
-        this.paintable.add(Material.PURPLE_STAINED_GLASS);
-        this.paintable.add(Material.PURPLE_STAINED_GLASS_PANE);
-        this.paintable.add(Material.PURPLE_TERRACOTTA);
-        this.paintable.add(Material.PURPLE_WOOL);
-        this.paintable.add(Material.RED_CARPET);
-        this.paintable.add(Material.RED_STAINED_GLASS);
-        this.paintable.add(Material.RED_STAINED_GLASS_PANE);
-        this.paintable.add(Material.RED_TERRACOTTA);
-        this.paintable.add(Material.RED_WOOL);
-        this.paintable.add(Material.WHITE_CARPET);
-        this.paintable.add(Material.WHITE_STAINED_GLASS);
-        this.paintable.add(Material.WHITE_STAINED_GLASS_PANE);
-        this.paintable.add(Material.WHITE_TERRACOTTA);
-        this.paintable.add(Material.WHITE_WOOL);
-        this.paintable.add(Material.YELLOW_CARPET);
-        this.paintable.add(Material.YELLOW_STAINED_GLASS);
-        this.paintable.add(Material.YELLOW_STAINED_GLASS_PANE);
-        this.paintable.add(Material.YELLOW_TERRACOTTA);
-        this.paintable.add(Material.YELLOW_WOOL);
+        paintable.add(Material.BLACK_CARPET);
+        paintable.add(Material.BLACK_STAINED_GLASS);
+        paintable.add(Material.BLACK_STAINED_GLASS_PANE);
+        paintable.add(Material.BLACK_TERRACOTTA);
+        paintable.add(Material.BLACK_WOOL);
+        paintable.add(Material.BLUE_CARPET);
+        paintable.add(Material.BLUE_STAINED_GLASS);
+        paintable.add(Material.BLUE_STAINED_GLASS_PANE);
+        paintable.add(Material.BLUE_TERRACOTTA);
+        paintable.add(Material.BLUE_WOOL);
+        paintable.add(Material.BROWN_CARPET);
+        paintable.add(Material.BROWN_STAINED_GLASS);
+        paintable.add(Material.BROWN_STAINED_GLASS_PANE);
+        paintable.add(Material.BROWN_TERRACOTTA);
+        paintable.add(Material.BROWN_WOOL);
+        paintable.add(Material.CYAN_CARPET);
+        paintable.add(Material.CYAN_STAINED_GLASS);
+        paintable.add(Material.CYAN_STAINED_GLASS_PANE);
+        paintable.add(Material.CYAN_TERRACOTTA);
+        paintable.add(Material.CYAN_WOOL);
+        paintable.add(Material.GRAY_CARPET);
+        paintable.add(Material.GRAY_STAINED_GLASS);
+        paintable.add(Material.GRAY_STAINED_GLASS_PANE);
+        paintable.add(Material.GRAY_TERRACOTTA);
+        paintable.add(Material.GRAY_WOOL);
+        paintable.add(Material.GREEN_CARPET);
+        paintable.add(Material.GREEN_STAINED_GLASS);
+        paintable.add(Material.GREEN_STAINED_GLASS_PANE);
+        paintable.add(Material.GREEN_TERRACOTTA);
+        paintable.add(Material.GREEN_WOOL);
+        paintable.add(Material.LIGHT_BLUE_CARPET);
+        paintable.add(Material.LIGHT_BLUE_STAINED_GLASS);
+        paintable.add(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        paintable.add(Material.LIGHT_BLUE_TERRACOTTA);
+        paintable.add(Material.LIGHT_BLUE_WOOL);
+        paintable.add(Material.LIGHT_GRAY_CARPET);
+        paintable.add(Material.LIGHT_GRAY_STAINED_GLASS);
+        paintable.add(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+        paintable.add(Material.LIGHT_GRAY_TERRACOTTA);
+        paintable.add(Material.LIGHT_GRAY_WOOL);
+        paintable.add(Material.LIME_CARPET);
+        paintable.add(Material.LIME_STAINED_GLASS);
+        paintable.add(Material.LIME_STAINED_GLASS_PANE);
+        paintable.add(Material.LIME_TERRACOTTA);
+        paintable.add(Material.LIME_WOOL);
+        paintable.add(Material.MAGENTA_CARPET);
+        paintable.add(Material.MAGENTA_STAINED_GLASS);
+        paintable.add(Material.MAGENTA_STAINED_GLASS_PANE);
+        paintable.add(Material.MAGENTA_TERRACOTTA);
+        paintable.add(Material.MAGENTA_WOOL);
+        paintable.add(Material.ORANGE_CARPET);
+        paintable.add(Material.ORANGE_STAINED_GLASS);
+        paintable.add(Material.ORANGE_STAINED_GLASS_PANE);
+        paintable.add(Material.ORANGE_TERRACOTTA);
+        paintable.add(Material.ORANGE_WOOL);
+        paintable.add(Material.PINK_CARPET);
+        paintable.add(Material.PINK_STAINED_GLASS);
+        paintable.add(Material.PINK_STAINED_GLASS_PANE);
+        paintable.add(Material.PINK_TERRACOTTA);
+        paintable.add(Material.PINK_WOOL);
+        paintable.add(Material.PURPLE_CARPET);
+        paintable.add(Material.PURPLE_STAINED_GLASS);
+        paintable.add(Material.PURPLE_STAINED_GLASS_PANE);
+        paintable.add(Material.PURPLE_TERRACOTTA);
+        paintable.add(Material.PURPLE_WOOL);
+        paintable.add(Material.RED_CARPET);
+        paintable.add(Material.RED_STAINED_GLASS);
+        paintable.add(Material.RED_STAINED_GLASS_PANE);
+        paintable.add(Material.RED_TERRACOTTA);
+        paintable.add(Material.RED_WOOL);
+        paintable.add(Material.WHITE_CARPET);
+        paintable.add(Material.WHITE_STAINED_GLASS);
+        paintable.add(Material.WHITE_STAINED_GLASS_PANE);
+        paintable.add(Material.WHITE_TERRACOTTA);
+        paintable.add(Material.WHITE_WOOL);
+        paintable.add(Material.YELLOW_CARPET);
+        paintable.add(Material.YELLOW_STAINED_GLASS);
+        paintable.add(Material.YELLOW_STAINED_GLASS_PANE);
+        paintable.add(Material.YELLOW_TERRACOTTA);
+        paintable.add(Material.YELLOW_WOOL);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -240,9 +221,9 @@ public class TARDISSonicListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         long now = System.currentTimeMillis();
-        final ItemStack is = player.getInventory().getItemInMainHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
@@ -294,7 +275,7 @@ public class TARDISSonicListener implements Listener {
                                 // freeze the closest player
                                 if (hit != null) {
                                     TARDISMessage.send(hit, "FREEZE", player.getName());
-                                    final UUID uuid = hit.getUniqueId();
+                                    UUID uuid = hit.getUniqueId();
                                     frozenPlayers.add(uuid);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         frozenPlayers.remove(uuid);
@@ -320,7 +301,7 @@ public class TARDISSonicListener implements Listener {
                     return;
                 }
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
-                    final Block b = event.getClickedBlock();
+                    Block b = event.getClickedBlock();
                     if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         playSonicSound(player, now, 600L, "sonic_short");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -426,7 +407,7 @@ public class TARDISSonicListener implements Listener {
                     if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !plugin.getGeneralKeeper().getInteractables().contains(b.getType())) {
                         playSonicSound(player, now, 3050L, "sonic_screwdriver");
                         // scan environment
-                        this.scan(b.getLocation(), player);
+                        scan(b.getLocation(), player);
                     }
                     if (redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
                         // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
@@ -467,7 +448,7 @@ public class TARDISSonicListener implements Listener {
                                 }
                                 if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
                                     plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
-                                    final Block door_bottom = tmp;
+                                    Block door_bottom = tmp;
                                     Openable openable = (Openable) door_bottom.getBlockData();
                                     openable.setOpen(true);
                                     door_bottom.setData(openable, true);
@@ -550,7 +531,7 @@ public class TARDISSonicListener implements Listener {
                         if ((b.getType().isBurnable() || b.getType().equals(Material.NETHERRACK)) && player.hasPermission("tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
                             playSonicSound(player, now, 3050L, "sonic_short");
                             // ignite block
-                            this.ignite(b, player);
+                            ignite(b, player);
                         }
                         if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
                             // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
@@ -775,7 +756,6 @@ public class TARDISSonicListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void changeColour(Block block, ItemStack dye, Inventory inv, Player player) {
         // remove one dye
         int a = dye.getAmount();
@@ -845,7 +825,7 @@ public class TARDISSonicListener implements Listener {
         block.setType(material, true);
     }
 
-    public void playSonicSound(final Player player, long now, long cooldown, String sound) {
+    public void playSonicSound(Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -889,7 +869,7 @@ public class TARDISSonicListener implements Listener {
     }
 
     private boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
-        final double epsilon = 0.0001f;
+        double epsilon = 0.0001f;
         TARDISVector3D d = p2.subtract(p1).multiply(0.5);
         TARDISVector3D e = max.subtract(min).multiply(0.5);
         TARDISVector3D c = p1.add(d).subtract(min.add(max).multiply(0.5));
@@ -919,10 +899,10 @@ public class TARDISSonicListener implements Listener {
         }
     }
 
-    public void scan(final Location scan_loc, final Player player) {
+    public void scan(Location scan_loc, Player player) {
         // record nearby entities
-        final HashMap<EntityType, Integer> scannedentities = new HashMap<>();
-        final List<String> playernames = new ArrayList<>();
+        HashMap<EntityType, Integer> scannedentities = new HashMap<>();
+        List<String> playernames = new ArrayList<>();
         getNearbyEntities(scan_loc, 16).forEach((k) -> {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
@@ -941,15 +921,15 @@ public class TARDISSonicListener implements Listener {
                 }
             }
         });
-        final long time = scan_loc.getWorld().getTime();
-        final String daynight = TARDISStaticUtils.getTime(time);
+        long time = scan_loc.getWorld().getTime();
+        String daynight = TARDISStaticUtils.getTime(time);
         String worldname;
         if (plugin.isMVOnServer()) {
             worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = scan_loc.getWorld().getName();
         }
-        final String wn = worldname;
+        String wn = worldname;
         // message the player
         TARDISMessage.send(player, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
@@ -958,7 +938,7 @@ public class TARDISSonicListener implements Listener {
             TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         }, 20L);
         // get biome
-        final Biome biome = scan_loc.getBlock().getBiome();
+        Biome biome = scan_loc.getBlock().getBiome();
         bsched.scheduleSyncDelayedTask(plugin, () -> {
             TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
         }, 40L);
@@ -966,7 +946,7 @@ public class TARDISSonicListener implements Listener {
             TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
         }, 60L);
         // get weather
-        final String weather;
+        String weather;
         switch (biome) {
             case DESERT:
             case DESERT_HILLS:
@@ -1027,11 +1007,11 @@ public class TARDISSonicListener implements Listener {
         }, 140L);
     }
 
-    private void standardSonic(final Player player) {
+    private void standardSonic(Player player) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
-            final BlockState bs = targetBlock.getState();
+            BlockState bs = targetBlock.getState();
             switch (blockType) {
                 case ACACIA_DOOR:
                 case BIRCH_DOOR:
@@ -1040,7 +1020,7 @@ public class TARDISSonicListener implements Listener {
                 case JUNGLE_DOOR:
                 case OAK_DOOR:
                 case SPRUCE_DOOR:
-                    final Block lowerdoor;
+                    Block lowerdoor;
                     Bisected bisected = (Bisected) targetBlock.getBlockData();
                     if (bisected.getHalf().equals(Half.TOP)) {
                         lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
@@ -1059,8 +1039,8 @@ public class TARDISSonicListener implements Listener {
                     }
                     if (allow) {
                         if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
-                            final Openable openable = (Openable) lowerdoor.getBlockData();
-                            final boolean open = !openable.isOpen();
+                            Openable openable = (Openable) lowerdoor.getBlockData();
+                            boolean open = !openable.isOpen();
                             openable.setOpen(open);
                             lowerdoor.setData(openable, true);
                             if (blockType.equals(Material.IRON_DOOR)) {
@@ -1087,7 +1067,7 @@ public class TARDISSonicListener implements Listener {
                 case OAK_BUTTON:
                 case SPRUCE_BUTTON:
                 case STONE_BUTTON:
-                    final Powerable button = (Powerable) targetBlock.getBlockData();
+                    Powerable button = (Powerable) targetBlock.getBlockData();
                     button.setPowered(true);
                     targetBlock.setData(button, true);
                     long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
@@ -1124,14 +1104,14 @@ public class TARDISSonicListener implements Listener {
         return false;
     }
 
-    private void extend(final Block b, final Block l) {
+    private void extend(Block b, Block l) {
         l.setType(Material.PISTON_HEAD);
         Piston piston = (Piston) b.getBlockData();
         piston.setExtended(true);
         b.setData(piston, true);
     }
 
-    private void ignite(final Block b, Player p) {
+    private void ignite(Block b, Player p) {
         if (!checkBlockRespect(p, b)) {
             Block above = b.getRelative(BlockFace.UP);
             if (b.getType().equals(Material.TNT)) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS vaults.
- *
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * <p>
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -46,22 +46,20 @@ public class ResultSetVault {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the vaults table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
-     * @param where the location of the drop chest.
+     * @param where  the location of the drop chest.
      */
     public ResultSetVault(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the vaults table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -76,12 +74,12 @@ public class ResultSetVault {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.vault_id = rs.getInt("v_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.location = rs.getString("location");
-                    this.x = rs.getInt("x");
-                    this.y = rs.getInt("y");
-                    this.z = rs.getInt("z");
+                    vault_id = rs.getInt("v_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    location = rs.getString("location");
+                    x = rs.getInt("x");
+                    y = rs.getInt("y");
+                    z = rs.getInt("z");
                 }
             } else {
                 return false;

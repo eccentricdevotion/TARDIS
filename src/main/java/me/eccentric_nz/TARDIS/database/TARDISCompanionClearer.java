@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.util.FileUtil;
 
+import java.io.File;
+import java.sql.*;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCompanionClearer {
@@ -38,7 +34,7 @@ public class TARDISCompanionClearer {
 
     public TARDISCompanionClearer(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public boolean clear() {

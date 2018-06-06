@@ -1,12 +1,29 @@
+/*
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 
 public class TARDISSonicReplant implements Runnable {
 
@@ -26,12 +43,12 @@ public class TARDISSonicReplant implements Runnable {
     public TARDISSonicReplant(TARDIS plugin, Block block, Material type) {
         this.plugin = plugin;
         this.block = block;
-        this.under = block.getRelative(BlockFace.DOWN);
+        under = block.getRelative(BlockFace.DOWN);
         this.type = type;
-        this.c_data.put(BlockFace.NORTH, BlockFace.SOUTH);
-        this.c_data.put(BlockFace.WEST, BlockFace.EAST);
-        this.c_data.put(BlockFace.SOUTH, BlockFace.NORTH);
-        this.c_data.put(BlockFace.EAST, BlockFace.WEST);
+        c_data.put(BlockFace.NORTH, BlockFace.SOUTH);
+        c_data.put(BlockFace.WEST, BlockFace.EAST);
+        c_data.put(BlockFace.SOUTH, BlockFace.NORTH);
+        c_data.put(BlockFace.EAST, BlockFace.WEST);
     }
 
     // TODO check if we need to set the Ageable BlockData for all plant types

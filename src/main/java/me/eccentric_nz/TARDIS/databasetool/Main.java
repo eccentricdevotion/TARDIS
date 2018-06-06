@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.databasetool;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.*;
+import java.sql.*;
 
 /**
- *
  * @author eccentric_nz
  */
 public class Main {
@@ -38,13 +29,12 @@ public class Main {
     }
 
     /**
-     * Reads an SQLite database and dumps the records as SQL statements to a
-     * file.
+     * Reads an SQLite database and dumps the records as SQL statements to a file.
      *
      * @param console the output window of the tool
-     * @param sqlite the SQLite file to migrate
-     * @param mysql the SQL file to write to
-     * @param prefix the desired table prefix
+     * @param sqlite  the SQLite file to migrate
+     * @param mysql   the SQL file to write to
+     * @param prefix  the desired table prefix
      * @throws IOException
      */
     public static void process(PrintWriter console, File sqlite, File mysql, String prefix) throws IOException {

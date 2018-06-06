@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -32,9 +29,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 /**
- * The Zygons are a race of metamorphic humanoids. They originated from the
- * planet Zygor, but often tried to migrate away from it.
+ * The Zygons are a race of metamorphic humanoids. They originated from the planet Zygor, but often tried to migrate
+ * away from it.
  *
  * @author eccentric_nz
  */
@@ -50,8 +51,8 @@ public class TARDISLister {
      * Retrieves various lists from the database.
      *
      * @param p an instance of a player.
-     * @param l is the String name of the list type to retrieve. Possible values
-     * are areas, saves, rechargers and companions.
+     * @param l is the String name of the list type to retrieve. Possible values are areas, saves, rechargers and
+     *          companions.
      */
     public void list(Player p, String l) {
         if (l.equals("rechargers")) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 /**
- * The Chameleon Circuit controls the exterior shell's Cloaking Device. The
- * Cloaking Device allows the shape, color, mass and texture of the shell to be
- * altered to blend in with its surroundings. This feature is designed to help
+ * The Chameleon Circuit controls the exterior shell's Cloaking Device. The Cloaking Device allows the shape, color,
+ * mass and texture of the shell to be altered to blend in with its surroundings. This feature is designed to help
  * prevent changes to history.
  *
  * @author eccentric_nz

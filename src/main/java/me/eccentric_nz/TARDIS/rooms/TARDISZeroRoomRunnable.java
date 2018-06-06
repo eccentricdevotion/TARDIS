@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISZeroRoomRunnable implements Runnable {
@@ -30,7 +30,7 @@ public class TARDISZeroRoomRunnable implements Runnable {
     private final World zero_world;
 
     public TARDISZeroRoomRunnable(TARDIS plugin) {
-        this.zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
+        zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
     }
 
     @Override

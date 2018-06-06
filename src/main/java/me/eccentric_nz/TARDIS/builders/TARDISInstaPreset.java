@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetConstructSign;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -39,12 +28,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -56,12 +40,12 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
- * A police box is a telephone kiosk that can be used by members of the public
- * wishing to get help from the police. Early in the First Doctor's travels, the
- * TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
- * TARDIS became locked into that shape.
+ * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
+ * Early in the First Doctor's travels, the TARDIS assumed the exterior shape of a police box during a five-month
+ * stopover in 1963 London. Due a malfunction in its chameleon circuit, the TARDIS became locked into that shape.
  *
  * @author eccentric_nz
  */
@@ -90,7 +74,7 @@ public class TARDISInstaPreset {
         colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
-        this.sign_colour = plugin.getUtils().getSignColour();
+        sign_colour = plugin.getUtils().getSignColour();
     }
 
     /**
@@ -118,7 +102,7 @@ public class TARDISInstaPreset {
         z = (bd.getLocation().getBlockZ());
         plusz = (bd.getLocation().getBlockZ() + 1);
         minusz = (bd.getLocation().getBlockZ() - 1);
-        final World world = bd.getLocation().getWorld();
+        World world = bd.getLocation().getWorld();
         int signx = 0, signz = 0;
         QueryFactory qf = new QueryFactory(plugin);
         // if configured and it's a Whovian preset set biome
@@ -127,8 +111,8 @@ public class TARDISInstaPreset {
             Chunk chunk = bd.getLocation().getChunk();
             chunks.add(chunk);
             // load the chunk
-            final int cx = bd.getLocation().getBlockX() >> 4;
-            final int cz = bd.getLocation().getBlockZ() >> 4;
+            int cx = bd.getLocation().getBlockX() >> 4;
+            int cz = bd.getLocation().getBlockZ() >> 4;
             if (!world.loadChunk(cx, cz, false)) {
                 world.loadChunk(cx, cz, true);
             }
@@ -528,7 +512,7 @@ public class TARDISInstaPreset {
             where.put("tardis_id", bd.getTardisID());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
             if (rst.resultSet()) {
-                final List<UUID> travellers = rst.getData();
+                List<UUID> travellers = rst.getData();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     travellers.forEach((s) -> {
                         Player trav = plugin.getServer().getPlayer(s);

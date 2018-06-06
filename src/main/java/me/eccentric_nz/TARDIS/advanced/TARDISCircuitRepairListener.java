@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -31,8 +28,11 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCircuitRepairListener implements Listener {
@@ -42,15 +42,15 @@ public class TARDISCircuitRepairListener implements Listener {
 
     public TARDISCircuitRepairListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.circuits.put((byte) 1973, "ars");
-        this.circuits.put((byte) 1966, "chameleon");
-        this.circuits.put((byte) 1976, "input");
-        this.circuits.put((byte) 1981, "invisibility");
-        this.circuits.put((byte) 1964, "materialisation");
-        this.circuits.put((byte) 1975, "memory");
-        this.circuits.put((byte) 1980, "randomiser");
-        this.circuits.put((byte) 1977, "scanner");
-        this.circuits.put((byte) 1974, "temporal");
+        circuits.put((byte) 1973, "ars");
+        circuits.put((byte) 1966, "chameleon");
+        circuits.put((byte) 1976, "input");
+        circuits.put((byte) 1981, "invisibility");
+        circuits.put((byte) 1964, "materialisation");
+        circuits.put((byte) 1975, "memory");
+        circuits.put((byte) 1980, "randomiser");
+        circuits.put((byte) 1977, "scanner");
+        circuits.put((byte) 1974, "temporal");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -81,7 +81,6 @@ public class TARDISCircuitRepairListener implements Listener {
                                 // get the uses left
                                 int left = TARDISNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
-                                @SuppressWarnings("deprecation")
                                 int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(first.getData().getData()));
                                 // is it used?
                                 if (left < uses) {

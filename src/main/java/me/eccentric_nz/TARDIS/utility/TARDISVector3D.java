@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
+
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -56,8 +57,7 @@ public class TARDISVector3D {
     }
 
     /**
-     * Construct an immutable floating point 3D vector from a mutable Bukkit
-     * vector.
+     * Construct an immutable floating point 3D vector from a mutable Bukkit vector.
      *
      * @param vector - the mutable real Bukkit vector to copy.
      */
@@ -65,9 +65,9 @@ public class TARDISVector3D {
         if (vector == null) {
             throw new IllegalArgumentException("Vector cannot be NULL.");
         }
-        this.x = vector.getX();
-        this.y = vector.getY();
-        this.z = vector.getZ();
+        x = vector.getX();
+        y = vector.getY();
+        z = vector.getZ();
     }
 
     /**
@@ -80,8 +80,7 @@ public class TARDISVector3D {
     }
 
     /**
-     * Adds the current vector and a given position vector, producing a result
-     * vector.
+     * Adds the current vector and a given position vector, producing a result vector.
      *
      * @param other - the other vector.
      * @return The new result vector.
@@ -94,8 +93,7 @@ public class TARDISVector3D {
     }
 
     /**
-     * Adds the current vector and a given vector together, producing a result
-     * vector.
+     * Adds the current vector and a given vector together, producing a result vector.
      *
      * @param x
      * @param y
@@ -107,8 +105,7 @@ public class TARDISVector3D {
     }
 
     /**
-     * Substracts the current vector and a given vector, producing a result
-     * position.
+     * Substracts the current vector and a given vector, producing a result position.
      *
      * @param other - the other position.
      * @return The new result position.
@@ -121,8 +118,7 @@ public class TARDISVector3D {
     }
 
     /**
-     * Substracts the current vector and a given vector together, producing a
-     * result vector.
+     * Substracts the current vector and a given vector together, producing a result vector.
      *
      * @param x
      * @param y

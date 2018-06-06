@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRescueCommand {
@@ -35,8 +35,7 @@ public class TARDISRescueCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
-    public boolean startRescue(final Player player, String[] args) {
+    public boolean startRescue(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return true;
@@ -51,14 +50,14 @@ public class TARDISRescueCommand {
                 TARDISMessage.send(player, "POWER_DOWN");
                 return true;
             }
-            final String saved = args[1];
+            String saved = args[1];
             if (!saved.equalsIgnoreCase("accept")) {
                 Player destPlayer = plugin.getServer().getPlayer(saved);
                 if (destPlayer == null) {
                     TARDISMessage.send(player, "NOT_ONLINE");
                     return true;
                 }
-                final UUID savedUUID = destPlayer.getUniqueId();
+                UUID savedUUID = destPlayer.getUniqueId();
                 String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
                 TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
                 plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());

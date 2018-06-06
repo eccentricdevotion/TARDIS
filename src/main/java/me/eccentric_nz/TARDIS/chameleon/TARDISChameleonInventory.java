@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -25,17 +24,15 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 /**
- * A TARDIS with a functioning chameleon circuit can appear as almost anything
- * desired. The owner can program the circuit to make it assume a specific
- * shape. If no appearance is specified, the TARDIS automatically choses its own
- * shape. When a TARDIS materialises in a new location, within the first
- * nanosecond of landing, its chameleon circuit analyses the surrounding area,
- * calculates a twelve-dimensional data map of all objects within a
- * thousand-mile radius and then determines which outer shell will best blend in
- * with the environment. According to the Eleventh Doctor, the TARDIS would
- * perform these functions, but then disguise itself as a 1960s era police box
- * anyway.
+ * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
+ * circuit to make it assume a specific shape. If no appearance is specified, the TARDIS automatically choses its own
+ * shape. When a TARDIS materialises in a new location, within the first nanosecond of landing, its chameleon circuit
+ * analyses the surrounding area, calculates a twelve-dimensional data map of all objects within a thousand-mile radius
+ * and then determines which outer shell will best blend in with the environment. According to the Eleventh Doctor, the
+ * TARDIS would perform these functions, but then disguise itself as a 1960s era police box anyway.
  *
  * @author eccentric_nz
  */
@@ -52,9 +49,9 @@ public class TARDISChameleonInventory {
         this.plugin = plugin;
         this.adapt = adapt;
         this.preset = preset;
-        this.on = new ItemStack(Material.LIME_WOOL, 1);
-        this.off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
-        this.terminal = getItemStack();
+        on = new ItemStack(Material.LIME_WOOL, 1);
+        off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
+        terminal = getItemStack();
     }
 
     /**
@@ -151,9 +148,9 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            apply, null, null, null, null, null, null, null, null,
-            null, null, dis, adap, invis, shor, cons, null, null,
-            null, null, fac, biome, not, pre, bui, null, close
+                apply, null, null, null, null, null, null, null, null,
+                null, null, dis, adap, invis, shor, cons, null, null,
+                null, null, fac, biome, not, pre, bui, null, close
         };
         return is;
     }

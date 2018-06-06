@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.achievement;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -29,10 +24,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 /**
- * Book Monsters are creatures were made up entirely of books. They were known
- * to ‘sleep’, and were capable of living for several hundred years. They were
- * hungry creatures which preferred to eat stories to people.
+ * Book Monsters are creatures were made up entirely of books. They were known to ‘sleep’, and were capable of living
+ * for several hundred years. They were hungry creatures which preferred to eat stories to people.
  *
  * @author eccentric_nz
  */
@@ -45,15 +45,13 @@ public class TARDISBook {
     }
 
     /**
-     * Read text from a file and write it to a book. The book is then placed in
-     * the player's inventory.
+     * Read text from a file and write it to a book. The book is then placed in the player's inventory.
      *
      * @param title_reward The name of the book
-     * @param author Who wrote the book
-     * @param name The name of the text file
-     * @param p The player who will receive the book
+     * @param author       Who wrote the book
+     * @param name         The name of the text file
+     * @param p            The player who will receive the book
      */
-    @SuppressWarnings("deprecation")
     public void writeBook(String title_reward, String author, String name, Player p) {
         // read the file
         File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");

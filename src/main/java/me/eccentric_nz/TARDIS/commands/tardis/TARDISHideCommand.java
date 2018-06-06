@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -33,8 +31,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISHideCommand {
@@ -114,7 +114,7 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_HIDE");
                 return false;
             }
-            final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
             dd.setDirection(rsc.getDirection());
             dd.setLocation(l);
             dd.setPlayer(player.getPlayer());

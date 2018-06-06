@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014  michidk && xxmicloxx
+ * Copyright (C) 2018  michidk && xxmicloxx
  * http://dev.bukkit.org/bukkit-plugins/noteblockapi/
  *
  * This program is free software: you can redistribute it and/or modify

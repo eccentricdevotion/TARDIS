@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,9 @@ public class TARDISMessage {
     private static final int LINE_LENGTH = TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
 
     /**
-     * Splits a message into multiple lines if it is longer than the guaranteed
-     * chat page width.
+     * Splits a message into multiple lines if it is longer than the guaranteed chat page width.
      *
-     * @param p the player to send the message
+     * @param p       the player to send the message
      * @param message the message to send
      */
     public static void message(Player p, String message) {

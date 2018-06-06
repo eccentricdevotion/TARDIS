@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISPlayerKickListener implements Listener {
@@ -38,7 +37,7 @@ public class TARDISPlayerKickListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onFallOutOfTARDIS(PlayerKickEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         Location location = player.getLocation();
         if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
             event.setReason(player.getName() + " fell out of their TARDIS!");

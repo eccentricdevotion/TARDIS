@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -26,6 +24,9 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TabCompleter for /tardisprefs
@@ -47,9 +48,9 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
         TARDISWalls.BLOCKS.forEach((key) -> {
             mats.add(key.toString());
         });
-        this.MAT_SUBS = ImmutableList.copyOf(mats);
+        MAT_SUBS = ImmutableList.copyOf(mats);
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks")) {
-            this.KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));
+            KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));
         } else {
             List<String> keys = new ArrayList<>();
             Material[] materialValues = Material.values();
@@ -58,7 +59,7 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
                     keys.add(key.toString());
                 }
             }
-            this.KEY_SUBS = ImmutableList.copyOf(keys);
+            KEY_SUBS = ImmutableList.copyOf(keys);
         }
     }
 

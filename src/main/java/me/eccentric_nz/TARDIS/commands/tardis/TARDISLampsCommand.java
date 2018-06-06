@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetChunks;
-import me.eccentric_nz.TARDIS.database.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -36,10 +29,13 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
- * The TARDIS scanner was the main method for the occupants of the vessel to
- * observe the outside environment. The appearance and specifications of the
- * scanner system varied significantly in the course of the Doctor's travels.
+ * The TARDIS scanner was the main method for the occupants of the vessel to observe the outside environment. The
+ * appearance and specifications of the scanner system varied significantly in the course of the Doctor's travels.
  *
  * @author eccentric_nz
  */
@@ -52,13 +48,12 @@ public class TARDISLampsCommand {
     }
 
     /**
-     * Updates TARDISes from pre-malfunction plugin versions so that the lamps
-     * can flash.
+     * Updates TARDISes from pre-malfunction plugin versions so that the lamps can flash.
      *
      * @param owner the Timelord of the TARDIS
      * @return true if the TARDIS has not been updated, otherwise false
      */
-    
+
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {

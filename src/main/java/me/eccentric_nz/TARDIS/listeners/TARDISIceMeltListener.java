@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFadeEvent;
 
 /**
- * In 1892 London, the Great Intelligence brought snowmen to life to take over
- * the world. The snowmen could be summoned if someone was thinking about them,
- * thanks to being made of telepathic snow, but if said person thought about
- * melting the snowmen, they would melt.
+ * In 1892 London, the Great Intelligence brought snowmen to life to take over the world. The snowmen could be summoned
+ * if someone was thinking about them, thanks to being made of telepathic snow, but if said person thought about melting
+ * the snowmen, they would melt.
  *
  * @author eccentric_nz
  */
@@ -40,8 +39,8 @@ public class TARDISIceMeltListener implements Listener {
     }
 
     /**
-     * Listens for ice melting when the TARDIS Police Box is materialising. If
-     * the block is contained in the blocks table then it cancels the event.
+     * Listens for ice melting when the TARDIS Police Box is materialising. If the block is contained in the blocks
+     * table then it cancels the event.
      *
      * @param event ice melting
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import org.bukkit.ChatColor;
@@ -27,8 +24,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSonicGeneratorInventory {
@@ -42,7 +42,7 @@ public class TARDISSonicGeneratorInventory {
         this.plugin = plugin;
         this.data = data;
         this.player = player;
-        this.generator = getItemStack();
+        generator = getItemStack();
     }
 
     /**
@@ -50,7 +50,7 @@ public class TARDISSonicGeneratorInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    
+
     private ItemStack[] getItemStack() {
         // \u00a7 = § (ChatColor code)
         // mark I
@@ -289,12 +289,12 @@ public class TARDISSonicGeneratorInventory {
         sonic.setItemMeta(screw);
 
         ItemStack[] stack = {
-            markone, marktwo, markthree, markfour, mcgann, eccelston, tennant, smith, hurt,
-            null, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
-            null, null, null, null, null, null, null, null, null,
-            sta, null, bio, dis, eme, red, pai, ign, null,
-            null, null, info, info1, info2, null, null, save, generate,
-            cost, null, null, null, sonic, null, null, null, close
+                markone, marktwo, markthree, markfour, mcgann, eccelston, tennant, smith, hurt,
+                null, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
+                null, null, null, null, null, null, null, null, null,
+                sta, null, bio, dis, eme, red, pai, ign, null,
+                null, null, info, info1, info2, null, null, save, generate,
+                cost, null, null, null, sonic, null, null, null, close
         };
 
         return stack;

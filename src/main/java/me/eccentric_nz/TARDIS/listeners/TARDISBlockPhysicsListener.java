@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISBlockPhysicsListener implements Listener {
@@ -46,7 +45,7 @@ public class TARDISBlockPhysicsListener implements Listener {
     public void onBlockPhysics(BlockPhysicsEvent event) {
         Block block = event.getBlock();
         if (block != null && block.getType().equals(Material.GRASS_PATH)) {
-            final String loc = block.getRelative(BlockFace.UP).getLocation().toString();
+            String loc = block.getRelative(BlockFace.UP).getLocation().toString();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 TARDISRecordingQueue.addToQueue(loc);
             }, 7L);

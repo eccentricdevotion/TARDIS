@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.ArrayList;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -25,8 +23,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCompanionInventory {
@@ -38,7 +38,7 @@ public class TARDISCompanionInventory {
     public TARDISCompanionInventory(TARDIS plugin, String[] companionData) {
         this.plugin = plugin;
         this.companionData = companionData;
-        this.skulls = getItemStack();
+        skulls = getItemStack();
     }
 
     private ItemStack[] getItemStack() {

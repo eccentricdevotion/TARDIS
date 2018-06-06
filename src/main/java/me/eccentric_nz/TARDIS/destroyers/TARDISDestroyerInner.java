@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -35,12 +32,15 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Furnace;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+
 /**
  * Destroys the inner TARDIS.
- *
- * If a TARDIS landed in the same space and time as another TARDIS, a time ram
- * could occur, destroying both TARDISes, their occupants and even cause a black
- * hole that would tear a hole in the universe
+ * <p>
+ * If a TARDIS landed in the same space and time as another TARDIS, a time ram could occur, destroying both TARDISes,
+ * their occupants and even cause a black hole that would tear a hole in the universe
  *
  * @author eccentric_nz
  */
@@ -55,16 +55,13 @@ public class TARDISDestroyerInner {
     /**
      * Destroys the inside of the TARDIS.
      *
-     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER
-     * or DELUXE.
-     * @param id the unique key of the record for this TARDIS in the database.
-     * @param w the world where the TARDIS is to be built.
-     * @param m the Material type of the replacement block, this will either be
-     * AIR or STONE.
-     * @param p the name of the player who owns the TARDIS.
+     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
+     * @param id   the unique key of the record for this TARDIS in the database.
+     * @param w    the world where the TARDIS is to be built.
+     * @param m    the Material type of the replacement block, this will either be AIR or STONE.
      * @param slot the TIPS slot number
      */
-    public void destroyInner(SCHEMATIC schm, int id, World w, Material m, String p, int slot) {
+    public void destroyInner(SCHEMATIC schm, int id, World w, Material m, int slot) {
         // destroy TARDIS
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         Location wgl;

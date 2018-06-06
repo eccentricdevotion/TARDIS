@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... everything about the construction of the TARDIS itself.
+ * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
+ * the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -39,20 +40,18 @@ public class ResultSetPoliceBox {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
      *
      * @param plugin an instance of the main class.
      */
     public ResultSetPoliceBox(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves records from the tardis table. This method builds a list of
-     * Chunks around Police Box locations to stop them unloading.
-     *
+     * Retrieves records from the tardis table. This method builds a list of Chunks around Police Box locations to stop
+     * them unloading.
      */
     public void loadChunks() {
         PreparedStatement statement = null;

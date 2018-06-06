@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -29,23 +28,16 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.ChestedHorse;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Llama;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Tameable;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISHorseListener implements Listener {
@@ -65,7 +57,7 @@ public class TARDISHorseListener implements Listener {
             Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
             if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
                 if (passenger instanceof Player) {
-                    final Player p = (Player) passenger;
+                    Player p = (Player) passenger;
                     String pworld = p.getLocation().getWorld().getName();
                     HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
@@ -140,7 +132,7 @@ public class TARDISHorseListener implements Listener {
                                 world.getChunkAt(l).load();
                             }
                             Entity ent = world.spawnEntity(l, tmhor.getHorseVariant());
-                            final AbstractHorse equine = (AbstractHorse) ent;
+                            AbstractHorse equine = (AbstractHorse) ent;
                             equine.setAge(tmhor.getAge());
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());

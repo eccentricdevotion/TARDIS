@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
@@ -27,13 +23,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
@@ -58,10 +48,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * Several events can trigger an Automatic Emergency Landing. Under these
- * circumstances a TARDIS will use the coordinate override to initiate an
- * Automatic Emergency Landing on the "nearest" available habitable planet.
+ * Several events can trigger an Automatic Emergency Landing. Under these circumstances a TARDIS will use the coordinate
+ * override to initiate an Automatic Emergency Landing on the "nearest" available habitable planet.
  *
  * @author eccentric_nz
  */
@@ -74,9 +68,8 @@ public class TARDISTimeLordDeathListener implements Listener {
     }
 
     /**
-     * Listens for player death. If the player is a time lord and the autonomous
-     * circuit is engaged, then the TARDIS will automatically return to its
-     * 'home' location, or the nearest Recharge area.
+     * Listens for player death. If the player is a time lord and the autonomous circuit is engaged, then the TARDIS
+     * will automatically return to its 'home' location, or the nearest Recharge area.
      *
      * @param event a player dying
      */
@@ -93,7 +86,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
                     if (tardis.isPowered_on()) {
-                        final int id = tardis.getTardis_id();
+                        int id = tardis.getTardis_id();
                         String eps = tardis.getEps();
                         String creeper = tardis.getCreeper();
                         HashMap<String, Object> whereu = new HashMap<>();
@@ -178,11 +171,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
-                                        final QueryFactory qf = new QueryFactory(plugin);
+                                        QueryFactory qf = new QueryFactory(plugin);
                                         COMPASS fd = (going_home) ? hd : cd;
                                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             // destroy police box
-                                            final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                                            DestroyData dd = new DestroyData(plugin, uuid.toString());
                                             dd.setDirection(cd);
                                             dd.setLocation(sl);
                                             dd.setPlayer(player);
@@ -210,7 +203,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             }
                                             qf.doUpdate("tardis", set, tid);
                                         }
-                                        final BuildData bd = new BuildData(plugin, uuid.toString());
+                                        BuildData bd = new BuildData(plugin, uuid.toString());
                                         bd.setDirection(fd);
                                         bd.setLocation(goto_loc);
                                         bd.setMalfunction(false);
@@ -294,7 +287,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     wheres.put("tardis_id", id);
                                     HashMap<String, Object> set = new HashMap<>();
                                     // destroy tardis
-                                    final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                                    DestroyData dd = new DestroyData(plugin, uuid.toString());
                                     dd.setDirection(rsc.getDirection());
                                     dd.setLocation(sl);
                                     dd.setPlayer(player);

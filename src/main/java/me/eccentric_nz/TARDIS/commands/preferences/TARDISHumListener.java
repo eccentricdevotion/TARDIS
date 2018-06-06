@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -33,8 +29,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISHumListener extends TARDISMenuListener implements Listener {
@@ -61,7 +61,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPrefsMenuClick(final InventoryClickEvent event) {
+    public void onPrefsMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4TARDIS Interior Sounds")) {
@@ -70,7 +70,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
             if (slot >= 0 && slot < 18) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
-                    final Player p = (Player) event.getWhoClicked();
+                    Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
                     switch (slot) {

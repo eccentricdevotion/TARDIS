@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.HashMap;
 import org.bukkit.Material;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public enum TARDISARS implements ARS {
@@ -66,7 +66,7 @@ public enum TARDISARS implements ARS {
     private final static HashMap<Material, ARS> EXTENDED_MATERIAL = new HashMap<>();
     private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<>();
 
-    private TARDISARS(String material, String name, String descriptiveName, int offset) {
+    TARDISARS(String material, String name, String descriptiveName, int offset) {
         this.material = material;
         this.name = name;
         this.descriptiveName = descriptiveName;

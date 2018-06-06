@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Robert Theis
+ * Copyright 2018 Robert Theis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,27 +31,26 @@ public final class Translate extends YandexTranslatorAPI {
     }
 
     /**
-     * Translates text from a given Language to another given Language using
-     * Yandex.
+     * Translates text from a given Language to another given Language using Yandex.
      *
      * @param text The String to translate.
      * @param from The language code to translate from.
-     * @param to The language code to translate to.
+     * @param to   The language code to translate to.
      * @return The translated String.
      * @throws Exception on error.
      */
-    public static String execute(final String text, final Language from, final Language to) throws Exception {
+    public static String execute(String text, Language from, Language to) throws Exception {
         validateServiceState(text);
-        final String params
+        String params
                 = PARAM_API_KEY + URLEncoder.encode(apiKey, ENCODING)
                 + PARAM_LANG_PAIR + URLEncoder.encode(from.toString(), ENCODING) + URLEncoder.encode("-", ENCODING) + URLEncoder.encode(to.toString(), ENCODING)
                 + PARAM_TEXT + URLEncoder.encode(text, ENCODING);
-        final URL url = new URL(SERVICE_URL + params);
+        URL url = new URL(SERVICE_URL + params);
         return retrievePropArrString(url, TRANSLATION_LABEL).trim();
     }
 
-    private static void validateServiceState(final String text) throws Exception {
-        final int byteLength = text.getBytes(ENCODING).length;
+    private static void validateServiceState(String text) throws Exception {
+        int byteLength = text.getBytes(ENCODING).length;
         if (byteLength > 10240) {
             throw new RuntimeException("TEXT_TOO_LARGE");
         }

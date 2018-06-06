@@ -1,7 +1,21 @@
+/*
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetSmelter;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
@@ -16,6 +30,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class TARDISSmelterListener implements Listener {
 
     private final TARDIS plugin;
@@ -26,7 +43,7 @@ public class TARDISSmelterListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSmelterDropChestClose(InventoryCloseEvent event) {
-        final Inventory inv = event.getInventory();
+        Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof Chest) {
             Chest chest = (Chest) holder;

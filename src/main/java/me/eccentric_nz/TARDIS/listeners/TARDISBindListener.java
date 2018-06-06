@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -37,11 +33,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * Isomorphic controls could only be operated by one user. Such controls
- * ostensibly worked only after identifying the allowed user through genetics or
- * other uniquely identifying properties, such as their biological morphic
- * field, of which the name "isomorphic" was derived from.
+ * Isomorphic controls could only be operated by one user. Such controls ostensibly worked only after identifying the
+ * allowed user through genetics or other uniquely identifying properties, such as their biological morphic field, of
+ * which the name "isomorphic" was derived from.
  *
  * @author eccentric_nz
  */
@@ -59,14 +59,12 @@ public class TARDISBindListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with blocks after running the /tardisbind
-     * [save|cmd|player|area] command. If the player's name is contained in the
-     * trackBinder HashMap then the block location is recorded in the bind field
-     * of the destinations table.
-     *
-     * If the player is travelling in the TARDIS then a check is made of the
-     * destinations table for the location of the clicked block. If found the
-     * destination for the next TARDIS time travel location is set.
+     * Listens for player interaction with blocks after running the /tardisbind [save|cmd|player|area] command. If the
+     * player's name is contained in the trackBinder HashMap then the block location is recorded in the bind field of
+     * the destinations table.
+     * <p>
+     * If the player is travelling in the TARDIS then a check is made of the destinations table for the location of the
+     * clicked block. If found the destination for the next TARDIS time travel location is set.
      *
      * @param event a player clicking a block
      */
@@ -79,7 +77,7 @@ public class TARDISBindListener implements Listener {
         if (b != null) {
             Material m = b.getType();
             if (validBlocks.contains(m)) {
-                final Player player = event.getPlayer();
+                Player player = event.getPlayer();
                 UUID uuid = player.getUniqueId();
                 String l = b.getLocation().toString();
                 HashMap<String, Object> where = new HashMap<>();

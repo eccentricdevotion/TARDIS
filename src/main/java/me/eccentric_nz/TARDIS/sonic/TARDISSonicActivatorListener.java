@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetSonic;
@@ -37,10 +33,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill,
- * doesn't wound, doesn't maim. But I'll tell you what it does do. It is very
- * good at opening doors!
+ * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
+ * you what it does do. It is very good at opening doors!
  *
  * @author eccentric_nz
  */
@@ -52,7 +52,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
     public TARDISSonicActivatorListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.stacks = getStacks();
+        stacks = getStacks();
     }
 
     private List<ItemStack> getStacks() {

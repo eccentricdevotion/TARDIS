@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.io.File;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.World;
@@ -26,15 +24,15 @@ import org.bukkit.WorldType;
 import org.bukkit.command.CommandException;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.util.logging.Level;
+
 /**
- *
  * @author eccentric_nz
- *
- * Gallifrey is the homeworld of the Time Lords. It is believed to have been
- * destroyed in the Last Great Time War but was later discovered to be frozen in
- * a pocket universe by the first thirteen incarnations of the Doctor, surviving
- * the Time War. The literal translation of Gallifrey is "They that walk in the
- * shadows"
+ * <p>
+ * Gallifrey is the homeworld of the Time Lords. It is believed to have been destroyed in the Last Great Time War but
+ * was later discovered to be frozen in a pocket universe by the first thirteen incarnations of the Doctor, surviving
+ * the Time War. The literal translation of Gallifrey is "They that walk in the shadows"
  */
 public class TARDISGallifrey {
 

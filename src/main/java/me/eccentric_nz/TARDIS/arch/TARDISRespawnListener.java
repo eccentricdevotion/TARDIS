@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -27,8 +25,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRespawnListener implements Listener {
@@ -41,8 +41,8 @@ public class TARDISRespawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onArchedRespawn(PlayerRespawnEvent event) {
-        final Player player = event.getPlayer();
-        final UUID uuid = player.getUniqueId();
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
         // check if we should re-arch this player
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             new TARDISArchPersister(plugin).reArch(uuid);

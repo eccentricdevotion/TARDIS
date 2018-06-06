@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
- * Data storage class for room building. We can just create a new instance and
- * pass this around to the various methods instead of a whole bunch of
- * parameters.
- *
+ * Data storage class for room building. We can just create a new instance and pass this around to the various methods
+ * instead of a whole bunch of parameters.
+ * <p>
  * The TARDIS had a full kitchen which included a refrigerator.
  *
  * @author eccentric_nz

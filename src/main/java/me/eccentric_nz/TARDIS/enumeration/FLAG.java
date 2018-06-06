@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum FLAG {
@@ -40,15 +39,13 @@ public enum FLAG {
     LIMIT;
 
     public static List<FLAG> getNoMessageFlags() {
-        List<FLAG> flags = new ArrayList<>();
-        flags.addAll(Arrays.asList(FLAG.values()));
+        List<FLAG> flags = new ArrayList<>(Arrays.asList(FLAG.values()));
         flags.remove(FLAG.MESSAGE_PLAYER);
         return flags;
     }
 
     public static List<FLAG> getAPIFlags() {
-        List<FLAG> flags = new ArrayList<>();
-        flags.addAll(Arrays.asList(FLAG.values()));
+        List<FLAG> flags = new ArrayList<>(Arrays.asList(FLAG.values()));
         flags.remove(FLAG.MESSAGE_PLAYER);
         flags.remove(FLAG.SPACE_TARDIS);
         flags.remove(FLAG.LIMIT);

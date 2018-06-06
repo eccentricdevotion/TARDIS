@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -40,8 +39,9 @@ import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArtronFurnaceListener implements Listener {
@@ -52,20 +52,20 @@ public class TARDISArtronFurnaceListener implements Listener {
 
     public TARDISArtronFurnaceListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
-        this.cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));
+        burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
+        cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onArtronFurnaceBurn(FurnaceBurnEvent event) {
-        final Furnace furnace = (Furnace) event.getBlock().getState();
+        Furnace furnace = (Furnace) event.getBlock().getState();
         String l = furnace.getLocation().toString();
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
-            final ItemStack is = event.getFuel().clone();
+            ItemStack is = event.getFuel().clone();
             if (is.hasItemMeta()) {
-                final ItemMeta im = is.getItemMeta();
+                ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Artron Storage Cell")) {
-                    final List<String> lore = im.getLore();
+                    List<String> lore = im.getLore();
                     if (!lore.get(1).equals("0")) {
                         // track furnace
                         plugin.getTrackerKeeper().getArtronFurnaces().add(l);

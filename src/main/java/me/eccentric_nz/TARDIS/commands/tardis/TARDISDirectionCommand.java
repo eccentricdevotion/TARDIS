@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -38,8 +35,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDirectionCommand {
@@ -50,7 +50,7 @@ public class TARDISDirectionCommand {
         this.plugin = plugin;
     }
 
-    public boolean changeDirection(final Player player, String[] args) {
+    public boolean changeDirection(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
                 TARDISMessage.send(player, "DIRECTION_NEED");
@@ -138,7 +138,7 @@ public class TARDISDirectionCommand {
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
-                final BuildData bd = new BuildData(plugin, uuid.toString());
+                BuildData bd = new BuildData(plugin, uuid.toString());
                 bd.setDirection(d);
                 bd.setLocation(l);
                 bd.setMalfunction(false);

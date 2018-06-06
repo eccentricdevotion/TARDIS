@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -33,8 +32,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRenderRoomListener implements Listener {
@@ -45,10 +45,9 @@ public class TARDISRenderRoomListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
@@ -59,7 +58,7 @@ public class TARDISRenderRoomListener implements Listener {
         }
     }
 
-    public void transmat(final Player p) {
+    public void transmat(Player p) {
         TARDISMessage.send(p, "TRANSMAT");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<>();
@@ -106,7 +105,7 @@ public class TARDISRenderRoomListener implements Listener {
                 }
                 tmp_loc.setPitch(p.getLocation().getPitch());
                 tmp_loc.setYaw(p.getLocation().getYaw());
-                final Location tp_loc = tmp_loc;
+                Location tp_loc = tmp_loc;
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     p.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
                     p.teleport(tp_loc);

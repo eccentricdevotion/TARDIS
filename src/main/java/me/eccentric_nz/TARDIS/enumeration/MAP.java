@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
+
 import java.util.Map;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum MAP {
@@ -49,7 +49,7 @@ public enum MAP {
     String displayName;
     private final static Map<Byte, MAP> BY_BYTE = Maps.newHashMap();
 
-    private MAP(byte data, String displayName) {
+    MAP(byte data, String displayName) {
         this.data = data;
         this.displayName = displayName;
     }
@@ -62,7 +62,7 @@ public enum MAP {
         return displayName;
     }
 
-    public static MAP getMap(final Byte data) {
+    public static MAP getMap(Byte data) {
         return BY_BYTE.get(data);
     }
 

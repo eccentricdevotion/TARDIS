@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -30,8 +28,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSiegeRunnable implements Runnable {
@@ -42,8 +42,8 @@ public class TARDISSiegeRunnable implements Runnable {
 
     public TARDISSiegeRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        this.deplete = 0 - this.plugin.getArtronConfig().getInt("siege_deplete");
-        this.qf = new QueryFactory(this.plugin);
+        deplete = 0 - this.plugin.getArtronConfig().getInt("siege_deplete");
+        qf = new QueryFactory(this.plugin);
     }
 
     @Override

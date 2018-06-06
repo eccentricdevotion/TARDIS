@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -31,8 +30,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISAreaSignListener extends TARDISMenuListener implements Listener {
@@ -45,8 +45,8 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -57,7 +57,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
         if (name.equals("§4TARDIS areas")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 45) {
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<>();

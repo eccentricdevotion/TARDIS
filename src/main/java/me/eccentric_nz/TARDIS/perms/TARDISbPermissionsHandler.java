@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.perms;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,12 +26,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * The Fourth Doctor was rather fond of bees. Romana compared K9's greeting to a
- * computer to the identification dance used by bees. When asked what bees were,
- * the Fourth Doctor replied "Insects! With stings in their tails".
+ * The Fourth Doctor was rather fond of bees. Romana compared K9's greeting to a computer to the identification dance
+ * used by bees. When asked what bees were, the Fourth Doctor replied "Insects! With stings in their tails".
  *
  * @author eccentric_nz
  */
@@ -42,7 +42,7 @@ public class TARDISbPermissionsHandler {
 
     public TARDISbPermissionsHandler(TARDIS plugin) {
         this.plugin = plugin;
-        this.permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
+        permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
     }
 
     public void addPerms(String player) {

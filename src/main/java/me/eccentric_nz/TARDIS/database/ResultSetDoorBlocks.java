@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -27,9 +23,14 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... a list of locations the TARDIS can travel to.
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
+ * travel to.
  *
  * @author eccentric_nz
  */
@@ -46,16 +47,15 @@ public class ResultSetDoorBlocks {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the current locations table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
      *
      * @param plugin an instance of the main class.
-     * @param id the TARDIS id to get the companions for.
+     * @param id     the TARDIS id to get the companions for.
      */
     public ResultSetDoorBlocks(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -81,11 +81,11 @@ public class ResultSetDoorBlocks {
                     int cy = TARDISNumberParsers.parseInt(split[2]);
                     int cz = TARDISNumberParsers.parseInt(split[3]);
                     if (rs.getInt("door_type") == 0) {
-                        this.outerBlock = new Location(cw, cx, cy, cz).getBlock();
-                        this.outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                        outerBlock = new Location(cw, cx, cy, cz).getBlock();
+                        outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
                     } else {
-                        this.innerBlock = new Location(cw, cx, cy, cz).getBlock();
-                        this.innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                        innerBlock = new Location(cw, cx, cy, cz).getBlock();
+                        innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
                     }
                 }
             } else {

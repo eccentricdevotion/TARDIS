@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -54,8 +52,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISControlMenuListener extends TARDISMenuListener implements Listener {
@@ -74,7 +74,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
         if (name.equals("§4TARDIS Control Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 54) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
@@ -83,12 +83,12 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
-                        final int id = rst.getTardis_id();
+                        int id = rst.getTardis_id();
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
-                            final Tardis tardis = rs.getTardis();
+                            Tardis tardis = rs.getTardis();
                             // check they initialised
                             if (!tardis.isTardis_init()) {
                                 TARDISMessage.send(player, "ENERGY_NO_INIT");
@@ -121,7 +121,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 }
                             }
                             boolean lights = tardis.isLights_on();
-                            final int level = tardis.getArtron_level();
+                            int level = tardis.getArtron_level();
                             TARDISCircuitChecker tcc = null;
                             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -201,7 +201,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
                                         return;
                                     }
-                                    final Location zero = TARDISLocationGetters.getLocationFromDB(tardis.getZero(), 0.0F, 0.0F);
+                                    Location zero = TARDISLocationGetters.getLocationFromDB(tardis.getZero(), 0.0F, 0.0F);
                                     if (zero != null) {
                                         close(player);
                                         TARDISMessage.send(player, "ZERO_READY");

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
@@ -34,14 +30,17 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Command /tardisadmin [arguments].
- *
- * The Lord President was the most powerful member of the Time Lord Council and
- * had near absolute authority, and used a link to the Matrix, a vast computer
- * network containing the knowledge and experiences of all past generations of
- * Time Lords, to set Time Lord policy and remain alert to potential threats
- * from lesser civilisations.
+ * <p>
+ * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
+ * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
+ * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
  *
  * @author eccentric_nz
  */

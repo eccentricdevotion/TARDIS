@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.entity.Player;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArchPersister {
@@ -44,7 +44,7 @@ public class TARDISArchPersister {
 
     public TARDISArchPersister(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public void saveAll() {
@@ -146,7 +146,7 @@ public class TARDISArchPersister {
                 Player player = plugin.getServer().getPlayer(uuid);
                 if (player != null && player.isOnline()) {
                     // disguise the player
-                    final String name = rs.getString("arch_name");
+                    String name = rs.getString("arch_name");
                     long time = System.currentTimeMillis() + rs.getLong("arch_time");
                     TARDISWatchData twd = new TARDISWatchData(name, time);
                     plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
@@ -187,7 +187,7 @@ public class TARDISArchPersister {
                         Player player = plugin.getServer().getPlayer(UUID.fromString(rs.getString("uuid")));
                         if (player != null && player.isOnline() && !DisguiseAPI.isDisguised(player)) {
                             // disguise the player
-                            final String name = rs.getString("arch_name");
+                            String name = rs.getString("arch_name");
                             long time = System.currentTimeMillis() + rs.getLong("arch_time");
                             TARDISWatchData twd = new TARDISWatchData(name, time);
                             plugin.getTrackerKeeper().getJohnSmith().put(player.getUniqueId(), twd);

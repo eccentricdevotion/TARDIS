@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -27,10 +25,12 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
+import java.util.HashMap;
+import java.util.Set;
+
 /**
- * The control or console room of the Doctor's TARDIS is the space in which the
- * operation of the craft is usually effected. It is dominated by a large,
- * hexagonal console, typically in or near the middle of the room.
+ * The control or console room of the Doctor's TARDIS is the space in which the operation of the craft is usually
+ * effected. It is dominated by a large, hexagonal console, typically in or near the middle of the room.
  *
  * @author eccentric_nz
  */
@@ -46,8 +46,7 @@ public class TARDISArea {
      * Checks if a location is contained within any TARDIS area.
      *
      * @param l a location object to check.
-     * @return true or false depending on whether the location is within an
-     * existing TARDIS area
+     * @return true or false depending on whether the location is within an existing TARDIS area
      */
     public boolean areaCheckInExisting(Location l) {
         boolean chk = true;
@@ -71,9 +70,8 @@ public class TARDISArea {
      * Checks if a location is contained within a specific TARDIS area.
      *
      * @param area the TARDIS area to check in.
-     * @param l a location object to check.
-     * @return true or false depending on whether the location is in the
-     * specified TARDIS area
+     * @param l    a location object to check.
+     * @return true or false depending on whether the location is in the specified TARDIS area
      */
     public boolean areaCheckInExile(String area, Location l) {
         boolean chk = true;

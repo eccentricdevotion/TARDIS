@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSQLAlterEnergy implements Runnable {
@@ -43,17 +43,14 @@ public class TARDISSQLAlterEnergy implements Runnable {
     private final String prefix;
 
     /**
-     * Adds or removes Artron Energy from an SQLite database table. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query.
+     * Adds or removes Artron Energy from an SQLite database table. This method builds an SQL query string from the
+     * parameters supplied and then executes the query.
      *
      * @param plugin an instance of the main plugin class
-     * @param table the database table name to insert the data into.
-     * @param amount the amount of energy to add or remove (use a negative
-     * value)
-     * @param where a HashMap<String, Object> of table fields and values to
-     * select the records to alter.
-     * @param p the player who receives the success message.
+     * @param table  the database table name to insert the data into.
+     * @param amount the amount of energy to add or remove (use a negative value)
+     * @param where  a HashMap<String, Object> of table fields and values to select the records to alter.
+     * @param p      the player who receives the success message.
      */
     public TARDISSQLAlterEnergy(TARDIS plugin, String table, int amount, HashMap<String, Object> where, Player p) {
         this.plugin = plugin;
@@ -61,7 +58,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         this.amount = amount;
         this.where = where;
         this.p = p;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -81,7 +78,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         if (where.containsKey("tardis_id")) {
             tmp = (Integer) where.get("tardis_id");
         }
-        final int id = tmp;
+        int id = tmp;
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + prefix + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;

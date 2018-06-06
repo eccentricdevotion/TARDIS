@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 //import java.util.HashMap;
 //import java.util.List;
-import java.util.UUID;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,11 +27,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+
+import java.util.UUID;
 //import org.bukkit.inventory.ItemStack;
 //import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRecipeListener implements Listener {
@@ -47,14 +48,13 @@ public class TARDISRecipeListener implements Listener {
         Inventory top = event.getView().getTopInventory();
         InventoryType type = top.getType();
         if (type == InventoryType.CHEST) {
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (plugin.getTrackerKeeper().getRecipeView().contains(player.getUniqueId())) {
                 event.setCancelled(true);
             }
         }
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onRecipeClose(InventoryCloseEvent event) {
         Inventory top = event.getView().getTopInventory();

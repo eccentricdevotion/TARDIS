@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -55,11 +51,15 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * The Scanner consists of a collection of thousands of instruments designed to
- * gather information about the environment outside a TARDIS. Chief among these
- * is the visual signal, which is displayed on the Scanner Screen found in any
- * of the Control Rooms.
+ * The Scanner consists of a collection of thousands of instruments designed to gather information about the environment
+ * outside a TARDIS. Chief among these is the visual signal, which is displayed on the Scanner Screen found in any of
+ * the Control Rooms.
  *
  * @author eccentric_nz
  */
@@ -85,9 +85,8 @@ public class TARDISScannerListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the environment scanner (button) in
-     * the TARDIS. If the button is clicked the details of the location outside
-     * the Police Box are shown.
+     * Listens for player interaction with the environment scanner (button) in the TARDIS. If the button is clicked the
+     * details of the location outside the Police Box are shown.
      *
      * @param event a player clicking a block
      */
@@ -96,7 +95,7 @@ public class TARDISScannerListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -114,7 +113,7 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
-                    final int id = tardis.getTardis_id();
+                    int id = tardis.getTardis_id();
                     int level = tardis.getArtron_level();
                     if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
@@ -133,9 +132,9 @@ public class TARDISScannerListener implements Listener {
                         TARDISMessage.send(player, "SCAN_NO_RANDOM");
                         return;
                     }
-                    final String renderer = tardis.getRenderer();
+                    String renderer = tardis.getRenderer();
                     BukkitScheduler bsched = plugin.getServer().getScheduler();
-                    final TARDISScannerData data = scan(player, id, bsched);
+                    TARDISScannerData data = scan(player, id, bsched);
                     if (data != null) {
                         boolean extrend = true;
                         HashMap<String, Object> wherer = new HashMap<>();
@@ -179,12 +178,12 @@ public class TARDISScannerListener implements Listener {
         return radiusEntities;
     }
 
-    public TARDISScannerData scan(final Player player, final int id, BukkitScheduler bsched) {
+    public TARDISScannerData scan(Player player, int id, BukkitScheduler bsched) {
         TARDISScannerData data = new TARDISScannerData();
         TARDISSounds.playTARDISSound(player.getLocation(), "tardis_scanner");
-        final Location scan_loc;
+        Location scan_loc;
         String whereisit;
-        final COMPASS tardisDirection;
+        COMPASS tardisDirection;
         HashMap<String, Object> wherenl = new HashMap<>();
         wherenl.put("tardis_id", id);
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
@@ -209,8 +208,8 @@ public class TARDISScannerListener implements Listener {
         data.setScanLocation(scan_loc);
         data.setTardisDirection(tardisDirection);
         // record nearby entities
-        final HashMap<EntityType, Integer> scannedentities = new HashMap<>();
-        final List<String> playernames = new ArrayList<>();
+        HashMap<EntityType, Integer> scannedentities = new HashMap<>();
+        List<String> playernames = new ArrayList<>();
         for (Entity k : getNearbyEntities(scan_loc, 16)) {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
@@ -260,9 +259,9 @@ public class TARDISScannerListener implements Listener {
                 }
             }
         }
-        final long time = scan_loc.getWorld().getTime();
+        long time = scan_loc.getWorld().getTime();
         data.setTime(time);
-        final String daynight = TARDISStaticUtils.getTime(time);
+        String daynight = TARDISStaticUtils.getTime(time);
         // message the player
         TARDISMessage.send(player, "SCAN_RESULT", whereisit);
         String worldname;
@@ -297,7 +296,7 @@ public class TARDISScannerListener implements Listener {
         } else {
             tmb = scan_loc.getBlock().getBiome();
         }
-        final Biome biome = tmb;
+        Biome biome = tmb;
         data.setBiome(biome);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
             TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
@@ -306,7 +305,7 @@ public class TARDISScannerListener implements Listener {
             TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
         }, 60L);
         // get weather
-        final String weather;
+        String weather;
         switch (biome) {
             case DESERT:
             case DESERT_HILLS:

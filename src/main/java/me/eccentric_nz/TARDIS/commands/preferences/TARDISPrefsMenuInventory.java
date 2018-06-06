@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -32,9 +27,10 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
- * The Administrator of Solos is the Earth Empire's civilian overseer for that
- * planet.
+ * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.
  *
  * @author eccentric_nz
  */
@@ -47,7 +43,7 @@ public class TARDISPrefsMenuInventory {
     public TARDISPrefsMenuInventory(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.menu = getItemStack();
+        menu = getItemStack();
     }
 
     /**
@@ -55,7 +51,7 @@ public class TARDISPrefsMenuInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    
+
     private ItemStack[] getItemStack() {
         // get player prefs
         HashMap<String, Object> where = new HashMap<>();

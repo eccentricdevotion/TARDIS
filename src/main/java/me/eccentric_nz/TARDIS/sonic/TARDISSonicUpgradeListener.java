@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -29,15 +26,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSonicUpgradeListener implements Listener {
@@ -49,21 +45,20 @@ public class TARDISSonicUpgradeListener implements Listener {
     public TARDISSonicUpgradeListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] split = this.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-        this.sonicMaterial = Material.valueOf(split[0]);
-        this.upgrades.put("Admin Upgrade", "admin");
-        this.upgrades.put("Bio-scanner Upgrade", "bio");
-        this.upgrades.put("Redstone Upgrade", "redstone");
-        this.upgrades.put("Diamond Upgrade", "diamond");
-        this.upgrades.put("Emerald Upgrade", "emerald");
-        this.upgrades.put("Painter Upgrade", "paint");
-        this.upgrades.put("Ignite Upgrade", "ignite");
+        sonicMaterial = Material.valueOf(split[0]);
+        upgrades.put("Admin Upgrade", "admin");
+        upgrades.put("Bio-scanner Upgrade", "bio");
+        upgrades.put("Redstone Upgrade", "redstone");
+        upgrades.put("Diamond Upgrade", "diamond");
+        upgrades.put("Emerald Upgrade", "emerald");
+        upgrades.put("Painter Upgrade", "paint");
+        upgrades.put("Ignite Upgrade", "ignite");
     }
 
     /**
-     * This event will check the crafting recipe to see if it is a sonic
-     * upgrade. If it is, then the current sonic screwdriver is queried to see
-     * if it has the desired upgrade. If it hasn't (and the player has
-     * permission) then the upgrade is added.
+     * This event will check the crafting recipe to see if it is a sonic upgrade. If it is, then the current sonic
+     * screwdriver is queried to see if it has the desired upgrade. If it hasn't (and the player has permission) then
+     * the upgrade is added.
      *
      * @param event A player preparing to craft a sonic upgrade
      */

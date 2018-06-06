@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural
- * Configuration software to relocate the console outside the ship (as it was
- * too big to go through the doors), allowing him to work on it in his lab.
+ * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
+ * console outside the ship (as it was too big to go through the doors), allowing him to work on it in his lab.
  *
  * @author eccentric_nz
  */
@@ -35,7 +34,7 @@ public class TARDISARSMap {
 
     public TARDISARSMap(TARDIS plugin) {
         this.plugin = plugin;
-        this.map = getItemStack();
+        map = getItemStack();
     }
 
     /**
@@ -102,12 +101,12 @@ public class TARDISARSMap {
         where.setItemMeta(ami);
 
         ItemStack[] is = {
-            null, pad_up, null, null, black, black, black, black, black,
-            pad_left, loa, pad_right, null, black, black, black, black, black,
-            null, pad_down, null, null, black, black, black, black, black,
-            level_bot, level_sel, level_top, null, black, black, black, black, black,
-            null, null, null, null, black, black, black, black, black,
-            close, null, where, null, null, null, null, null, null
+                null, pad_up, null, null, black, black, black, black, black,
+                pad_left, loa, pad_right, null, black, black, black, black, black,
+                null, pad_down, null, null, black, black, black, black, black,
+                level_bot, level_sel, level_top, null, black, black, black, black, black,
+                null, null, null, null, black, black, black, black, black,
+                close, null, where, null, null, null, null, null, null
         };
         return is;
     }

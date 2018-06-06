@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
@@ -42,8 +38,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSeedBlockListener implements Listener {
@@ -56,14 +56,14 @@ public class TARDISSeedBlockListener implements Listener {
     }
 
     /**
-     * Store the TARDIS Seed block's values for use when clicked with the TARDIS
-     * key to activate growing, or to return the block if broken.
+     * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
+     * the block if broken.
      *
      * @param event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockPlace(BlockPlaceEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.hasItemMeta()) {
             return;
@@ -174,8 +174,8 @@ public class TARDISSeedBlockListener implements Listener {
     }
 
     /**
-     * Determines the Material type of the block. Values are calculated by
-     * converting the string values stored in a TARDIS Seed block.
+     * Determines the Material type of the block. Values are calculated by converting the string values stored in a
+     * TARDIS Seed block.
      *
      * @param str the lore stored in the TARDIS Seed block's Item Meta
      * @return an String representing the Material

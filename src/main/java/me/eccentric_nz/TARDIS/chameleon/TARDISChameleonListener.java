@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -41,8 +40,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISChameleonListener extends TARDISMenuListener implements Listener {
@@ -55,8 +55,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -67,7 +67,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         if (name.equals("§4Chameleon Circuit")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
@@ -82,7 +82,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            final ADAPTION adapt = tardis.getAdaption();
+                            ADAPTION adapt = tardis.getAdaption();
 //                            String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();

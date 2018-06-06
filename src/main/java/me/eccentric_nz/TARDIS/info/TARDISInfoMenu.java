@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,8 @@ package me.eccentric_nz.TARDIS.info;
 import java.util.TreeMap;
 
 /**
- * Articles in the TARDIS Information System were accessed by typing in an
- * initialism for the subject. Entering IF, for example, brought up the
- * database's index file.
+ * Articles in the TARDIS Information System were accessed by typing in an initialism for the subject. Entering IF, for
+ * example, brought up the database's index file.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -369,7 +368,7 @@ public enum TARDISInfoMenu {
      * @return name of this TARDISInfoMenu
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
@@ -378,7 +377,7 @@ public enum TARDISInfoMenu {
      * @return parent of this TARDISInfoMenu
      */
     public String getParent() {
-        return this.parent;
+        return parent;
     }
 
     /**
@@ -387,7 +386,7 @@ public enum TARDISInfoMenu {
      * @return key of this TARDISInfoMenu
      */
     public String getKey() {
-        return this.key;
+        return key;
     }
 
     /**

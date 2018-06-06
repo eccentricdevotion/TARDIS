@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.io.File;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.World;
@@ -26,10 +24,12 @@ import org.bukkit.WorldType;
 import org.bukkit.command.CommandException;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.util.logging.Level;
+
 /**
- * The Time Vortex is the dimension through which all time travellers pass. The
- * Vortex was built by the Time Lords as a transdimensional spiral that
- * connected all points in space and time.
+ * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
+ * transdimensional spiral that connected all points in space and time.
  *
  * @author eccentric_nz
  */

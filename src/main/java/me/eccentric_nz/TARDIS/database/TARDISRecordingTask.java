@@ -1,10 +1,27 @@
+/*
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.database;
+
+import me.eccentric_nz.TARDIS.TARDIS;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 public class TARDISRecordingTask implements Runnable {
 
@@ -53,7 +70,7 @@ public class TARDISRecordingTask implements Runnable {
                         plugin.debug("TARDIS database error. We have to bail in the middle of building primary bulk insert query.");
                         break;
                     }
-                    final String a = TARDISRecordingQueue.getQUEUE().poll();
+                    String a = TARDISRecordingQueue.getQUEUE().poll();
                     // poll() returns null if queue is empty
                     if (a == null) {
                         break;
@@ -85,14 +102,14 @@ public class TARDISRecordingTask implements Runnable {
                     //plugin.debug("Batch insert was commited: " + System.currentTimeMillis());
                 }
             }
-        } catch (final SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
                 if (s != null) {
                     s.close();
                 }
-            } catch (final SQLException ignored) {
+            } catch (SQLException ignored) {
             }
         }
     }

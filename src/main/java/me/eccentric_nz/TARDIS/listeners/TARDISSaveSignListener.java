@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
@@ -45,8 +38,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSaveSignListener extends TARDISMenuListener implements Listener {
@@ -59,8 +55,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -69,7 +65,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4TARDIS saves")) {
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
             boolean allow = false;
@@ -241,7 +237,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 
     @EventHandler(ignoreCancelled = true)
     public void onSaveSignClose(InventoryCloseEvent event) {
-        final Inventory inv = event.getInventory();
+        Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
         if (inv_name.equals("§4TARDIS saves")) {
             UUID uuid = ((Player) event.getPlayer()).getUniqueId();

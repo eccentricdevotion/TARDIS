@@ -1,9 +1,5 @@
-package me.eccentric_nz.TARDIS.utility;
-
-import me.eccentric_nz.TARDIS.TARDIS;
-
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +14,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+package me.eccentric_nz.TARDIS.utility;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISNumberParsers {
@@ -124,7 +124,7 @@ public class TARDISNumberParsers {
     /**
      * Returns a rounded integer after division.
      *
-     * @param num the number being divided.
+     * @param num     the number being divided.
      * @param divisor the number to divide by.
      * @return a rounded number.
      */

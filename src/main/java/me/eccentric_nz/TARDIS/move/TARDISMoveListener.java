@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetVoid;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -40,8 +33,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISMoveListener implements Listener {
@@ -54,7 +50,7 @@ public class TARDISMoveListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
-        final Player p = event.getPlayer();
+        Player p = event.getPlayer();
         if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
             return;
         }
@@ -78,7 +74,7 @@ public class TARDISMoveListener implements Listener {
         if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
             TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
             UUID uuid = p.getUniqueId();
-            final int id = tpl.getTardisId();
+            int id = tpl.getTardisId();
             // are they a companion of this TARDIS?
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
             if (tpl.isAbandoned() || companions.contains(uuid)) {

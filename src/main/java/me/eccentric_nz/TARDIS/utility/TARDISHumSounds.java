@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetSounds;
@@ -26,12 +23,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was
- * originally created in the BBC Radiophonic Workshop by Brian Hodgson. He
- * produced the effect by dragging a set of house keys along the strings of an
- * old, gutted piano. The resulting sound was recorded and electronically
- * processed with echo and reverb.
+ * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
+ * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
+ * old, gutted piano. The resulting sound was recorded and electronically processed with echo and reverb.
  *
  * @author eccentric_nz
  */
@@ -50,7 +49,7 @@ public class TARDISHumSounds {
     private final Callback<List<UUID>> callback = (List<UUID> data) -> {
         // Do whatever with the data
         data.forEach((u) -> {
-            final Player player = Bukkit.getServer().getPlayer(u);
+            Player player = Bukkit.getServer().getPlayer(u);
             if (player != null) {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", u.toString());
@@ -65,7 +64,7 @@ public class TARDISHumSounds {
                             p.setHum((rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum());
                         }
                         if (p.getSfx()) {
-                            final Prefs pet = p;
+                            Prefs pet = p;
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -84,8 +83,7 @@ public class TARDISHumSounds {
     };
 
     /**
-     * Plays an interior hum sound to players who are inside the TARDIS and
-     * don't have SFX set to false.
+     * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
      */
     public void playTARDISHum() {
         if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
@@ -95,7 +93,7 @@ public class TARDISHumSounds {
                     // All the MySQL stuff and what not
                     ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
                     if (rs.resultSet()) {
-                        final List<UUID> data = rs.getData();
+                        List<UUID> data = rs.getData();
                         new BukkitRunnable() {
                             @Override
                             public void run() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -42,15 +35,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.command.BlockCommandSender;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRemoteCommands implements CommandExecutor {
@@ -62,8 +54,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player/console typed /tardisremote then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisremote") && sender.hasPermission("tardis.remote")) {
             if (args.length < 2) {
@@ -72,7 +63,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
             }
             UUID oluuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
             if (oluuid != null) {
-                final UUID uuid = oluuid;
+                UUID uuid = oluuid;
                 // check the player has a TARDIS
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
@@ -85,7 +76,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                         return true;
                     }
                     // we're good to go
-                    final int id = tardis.getTardis_id();
+                    int id = tardis.getTardis_id();
                     boolean chameleon = tardis.getAdaption().equals(ADAPTION.BLOCK);
                     boolean hidden = tardis.isHidden();
                     boolean handbrake = tardis.isHandbrake_on();
@@ -249,8 +240,8 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             }
                                         }
                                         int x,
-                                         y,
-                                         z;
+                                                y,
+                                                z;
                                         World w = plugin.getServer().getWorld(args[2]);
                                         if (w == null) {
                                             TARDISMessage.send(sender, "WORLD_NOT_FOUND");

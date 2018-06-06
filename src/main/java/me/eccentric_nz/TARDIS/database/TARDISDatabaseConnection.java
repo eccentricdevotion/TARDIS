@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * Singleton class to get the database connection.
- *
- * Many facts, figures, and formulas are contained within the Matrix - a
- * supercomputer and micro-universe used by the High Council of the Time Lords
- * as a storehouse of knowledge to predict future events.
+ * <p>
+ * Many facts, figures, and formulas are contained within the Matrix - a supercomputer and micro-universe used by the
+ * High Council of the Time Lords as a storehouse of knowledge to predict future events.
  *
  * @author eccentric_nz
  */
@@ -39,6 +39,7 @@ public class TARDISDatabaseConnection {
     public static synchronized TARDISDatabaseConnection getINSTANCE() {
         return INSTANCE;
     }
+
     public Connection connection = null;
     public Statement statement = null;
 
@@ -74,7 +75,6 @@ public class TARDISDatabaseConnection {
     }
 
     /**
-     *
      * @return an exception
      * @throws CloneNotSupportedException
      */
@@ -96,7 +96,7 @@ public class TARDISDatabaseConnection {
                 statement.executeQuery("SELECT 1");
             } catch (SQLException e) {
                 try {
-                    this.setConnection();
+                    setConnection();
                 } catch (Exception ex) {
                     TARDIS.plugin.debug("Could not re-connect to database!");
                 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
+import java.sql.*;
+import java.util.*;
+
 /**
- * Chronomium was a time-active element that displaced time around it. In its
- * unprocessed form, chronomium slowed down time around it. In its refined
- * state, it could be used to accelerate time, achieve time travel, and protect
- * against temporal fields.
+ * Chronomium was a time-active element that displaced time around it. In its unprocessed form, chronomium slowed down
+ * time around it. In its refined state, it could be used to accelerate time, achieve time travel, and protect against
+ * temporal fields.
  *
  * @author eccentric_nz
  */
@@ -54,24 +46,22 @@ public class ResultSetAchievements {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the achievements table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the achievements table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a String location to check.
-     * @param multiple a boolean setting whether to retrieve more than on
-     * record, it true returns an ArrayList that can be looped through later.
+     * @param plugin   an instance of the main class.
+     * @param where    a String location to check.
+     * @param multiple a boolean setting whether to retrieve more than on record, it true returns an ArrayList that can
+     *                 be looped through later.
      */
     public ResultSetAchievements(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the achievements table. This method
-     * returns true if a matching record was found.
+     * Retrieves an SQL ResultSet from the achievements table. This method returns true if a matching record was found.
      *
      * @return true or false
      */
@@ -113,15 +103,15 @@ public class ResultSetAchievements {
                     }
                     data.add(row);
                 }
-                this.a_id = rs.getInt("a_id");
-                this.uuid = UUID.fromString(rs.getString("uuid"));
-                this.player = rs.getString("player");
-                this.name = rs.getString("name");
-                this.amount = rs.getString("amount");
+                a_id = rs.getInt("a_id");
+                uuid = UUID.fromString(rs.getString("uuid"));
+                player = rs.getString("player");
+                name = rs.getString("name");
+                amount = rs.getString("amount");
                 if (rs.wasNull()) {
-                    this.amount = "";
+                    amount = "";
                 }
-                this.completed = rs.getBoolean("completed");
+                completed = rs.getBoolean("completed");
             } else {
                 return false;
             }
@@ -151,7 +141,7 @@ public class ResultSetAchievements {
         return uuid;
     }
 
-//    public String getPlayer() {
+    //    public String getPlayer() {
 //        return player;
 //    }
     public String getName() {

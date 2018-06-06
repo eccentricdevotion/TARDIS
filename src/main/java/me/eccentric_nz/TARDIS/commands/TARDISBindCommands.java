@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -35,12 +26,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
- * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
- * is stored in the Secondary Control Room. All TARDISes have one of these
- * devices, which can be used to remotely control a TARDIS by broadcasting
- * Stattenheim signals that travel along the time contours in the Space/Time
- * Vortex.
+ * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
+ * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
+ * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
  */
@@ -62,7 +53,6 @@ public class TARDISBindCommands implements CommandExecutor {
         type_1 = Arrays.asList("hide", "rebuild", "home", "cave", "make_her_blue");
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {

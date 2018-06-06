@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
@@ -42,10 +34,13 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- * Now, if the trachoid crystal contrafibulations are in synchronic resonance
- * with the referential difference index, then this should take us right to the
- * heart of the trouble. And they don't make sentences like that anymore.
+ * Now, if the trachoid crystal contrafibulations are in synchronic resonance with the referential difference index,
+ * then this should take us right to the heart of the trouble. And they don't make sentences like that anymore.
  *
  * @author eccentric_nz
  */
@@ -89,7 +84,6 @@ public class TARDISKeyboardListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();

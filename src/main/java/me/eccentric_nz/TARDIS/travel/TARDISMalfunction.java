@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
@@ -31,12 +26,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
- * The Dalek Asylum was a snowy and mountainous planet used by the Daleks as a
- * prison and "dumping ground" for those among them who had malfunctioned, gone
- * insane and/or become mentally scarred by battles. The sane Daleks left their
- * insane fellows in the Asylum rather than kill them because they epitomised
- * the Dalek concept of beauty: pure hatred.
+ * The Dalek Asylum was a snowy and mountainous planet used by the Daleks as a prison and "dumping ground" for those
+ * among them who had malfunctioned, gone insane and/or become mentally scarred by battles. The sane Daleks left their
+ * insane fellows in the Asylum rather than kill them because they epitomised the Dalek concept of beauty: pure hatred.
  *
  * @author eccentric_nz
  */
@@ -47,7 +42,7 @@ public class TARDISMalfunction {
 
     public TARDISMalfunction(TARDIS plugin) {
         this.plugin = plugin;
-        this.rand = new Random();
+        rand = new Random();
     }
 
     public boolean isMalfunction() {
@@ -123,7 +118,7 @@ public class TARDISMalfunction {
                 }
                 Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // flicker lights
-                final long start = System.currentTimeMillis() + 10000;
+                long start = System.currentTimeMillis() + 10000;
                 TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), start, light, rsp.isWoolLightsOn());
                 runnable.setHandbrake(handbrake);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);

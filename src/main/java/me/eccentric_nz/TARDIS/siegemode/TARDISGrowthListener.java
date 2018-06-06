@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,8 +26,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISGrowthListener implements Listener {
@@ -47,7 +47,7 @@ public class TARDISGrowthListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlantGrowth(BlockGrowEvent event) {
-        final Block plant = event.getBlock();
+        Block plant = event.getBlock();
         Material species = plant.getType();
         if (!plants.contains(species)) {
             return;

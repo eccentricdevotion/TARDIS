@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -24,6 +23,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
+
+import java.util.HashMap;
 
 /**
  * Data class for building the TARDIS exterior.
@@ -126,7 +127,7 @@ public class MaterialisationData {
     public void setPlayerDefaults(String uuid) {
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid);
-        final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
         if (rsp.resultSet()) {
             lamp = rsp.getLamp();
         }

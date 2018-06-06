@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.universaltranslator;
 
 import com.rmtheis.yandtran.translate.Language;
 import com.rmtheis.yandtran.translate.Translate;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -29,12 +27,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
- * is stored in the Secondary Control Room. All TARDISes have one of these
- * devices, which can be used to remotely control a TARDIS by broadcasting
- * Stattenheim signals that travel along the time contours in the Space/Time
- * Vortex.
+ * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
+ * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
+ * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
  */

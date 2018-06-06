@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -29,13 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
-import me.eccentric_nz.TARDIS.control.TARDISControlInventory;
-import me.eccentric_nz.TARDIS.control.TARDISFastReturnButton;
-import me.eccentric_nz.TARDIS.control.TARDISInfoMenuButton;
-import me.eccentric_nz.TARDIS.control.TARDISLightSwitch;
-import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
-import me.eccentric_nz.TARDIS.control.TARDISSiegeButton;
-import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
+import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
@@ -67,10 +55,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
+import java.util.*;
+
 /**
- * The various systems of the console room are fairly well-understood. According
- * to one account, each of the six panels controls a discrete function. The
- * navigation panel contains a time and space forward/back control, directional
+ * The various systems of the console room are fairly well-understood. According to one account, each of the six panels
+ * controls a discrete function. The navigation panel contains a time and space forward/back control, directional
  * pointer, atom accelerator and the spatial location input.
  *
  * @author eccentric_nz
@@ -95,9 +85,8 @@ public class TARDISButtonListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS console button. If the
-     * button is clicked it will return a random destination based on the
-     * settings of the four TARDIS console repeaters.
+     * Listens for player interaction with the TARDIS console button. If the button is clicked it will return a random
+     * destination based on the settings of the four TARDIS console repeaters.
      *
      * @param event the player clicking a block
      */
@@ -106,7 +95,7 @@ public class TARDISButtonListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -202,7 +191,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
-                                    ItemStack[] items = new TARDISTerminalInventory(this.plugin).getTerminal();
+                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
                                     Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
                                     aec.setContents(items);
                                     player.openInventory(aec);
@@ -239,7 +228,7 @@ public class TARDISButtonListener implements Listener {
                                             TARDISMessage.send(player, "ARS_MISSING");
                                             return;
                                         }
-                                        ItemStack[] tars = new TARDISARSInventory(this.plugin).getARS();
+                                        ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
                                         Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
                                         ars.setContents(tars);
                                         player.openInventory(ars);
@@ -254,7 +243,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "TEMP_MISSING");
                                         return;
                                     }
-                                    ItemStack[] clocks = new TARDISTemporalLocatorInventory(this.plugin).getTemporal();
+                                    ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
                                     Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
                                     tmpl.setContents(clocks);
                                     player.openInventory(tmpl);
@@ -370,13 +359,13 @@ public class TARDISButtonListener implements Listener {
         }
     }
 
-    private void doZero(int level, final Player player, String z, final int id, QueryFactory qf) {
+    private void doZero(int level, Player player, String z, int id, QueryFactory qf) {
         int zero_amount = plugin.getArtronConfig().getInt("zero");
         if (level < zero_amount) {
             TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
             return;
         }
-        final Location zero = TARDISLocationGetters.getLocationFromDB(z, 0.0F, 0.0F);
+        Location zero = TARDISLocationGetters.getLocationFromDB(z, 0.0F, 0.0F);
         if (zero != null) {
             TARDISMessage.send(player, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

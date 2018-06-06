@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
@@ -31,9 +27,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * The visual stabiliser circuit controlled the TARDIS' outward appearance. Its
- * removal rendered the ship invisible.
+ * The visual stabiliser circuit controlled the TARDIS' outward appearance. Its removal rendered the ship invisible.
  *
  * @author eccentric_nz
  */
@@ -46,8 +46,8 @@ public class TARDISAreaDisks {
     }
 
     /**
-     * Makes an array of item stacks containing the default Storage GUI top and
-     * any area storage disks the player has permission for.
+     * Makes an array of item stacks containing the default Storage GUI top and any area storage disks the player has
+     * permission for.
      *
      * @param p the player to create the array for
      * @return an array of item stacks
@@ -91,8 +91,7 @@ public class TARDISAreaDisks {
     }
 
     /**
-     * Checks the players current area disks and adds any new ones they have
-     * permission for.
+     * Checks the players current area disks and adds any new ones they have permission for.
      *
      * @param p the player to check for
      * @return a serialized String

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import org.bukkit.Location;
 
+import java.util.HashMap;
+
 /**
- * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth
- * Doctor had a habit of using Artron Energy to make toast.
+ * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy
+ * to make toast.
  *
  * @author eccentric_nz
  */
@@ -39,7 +40,7 @@ public class TARDISArtronRunnable implements Runnable {
     public TARDISArtronRunnable(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        this.qf = new QueryFactory(plugin);
+        qf = new QueryFactory(plugin);
     }
 
     /**

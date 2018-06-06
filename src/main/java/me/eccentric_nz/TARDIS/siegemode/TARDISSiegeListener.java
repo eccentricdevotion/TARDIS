@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -52,8 +44,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSiegeListener implements Listener {
@@ -153,15 +149,15 @@ public class TARDISSiegeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onDropSiegeCube(final PlayerDropItemEvent event) {
-        final Item item = event.getItemDrop();
-        final Player p = event.getPlayer();
-        final UUID uuid = p.getUniqueId();
+    public void onDropSiegeCube(PlayerDropItemEvent event) {
+        Item item = event.getItemDrop();
+        Player p = event.getPlayer();
+        UUID uuid = p.getUniqueId();
         // only if we're tracking this player
         if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
             return;
         }
-        final ItemStack is = item.getItemStack();
+        ItemStack is = item.getItemStack();
         if (!isSiegeCube(is)) {
             return;
         }
@@ -224,7 +220,7 @@ public class TARDISSiegeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onSiegeCubePlace(final BlockPlaceEvent event) {
+    public void onSiegeCubePlace(BlockPlaceEvent event) {
         Block b = event.getBlockPlaced();
         if (!isSiegeCube(b)) {
             return;
@@ -273,7 +269,7 @@ public class TARDISSiegeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onSiegeCubeInteract(final PlayerInteractEvent event) {
+    public void onSiegeCubeInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
@@ -359,7 +355,7 @@ public class TARDISSiegeListener implements Listener {
             }
             // rebuild the TARDIS
             Location current = b.getLocation();
-            final BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+            BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(current);
             bd.setMalfunction(false);

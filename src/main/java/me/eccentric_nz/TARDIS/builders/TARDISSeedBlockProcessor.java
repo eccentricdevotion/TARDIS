@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCount;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -38,12 +32,14 @@ import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- * TARDISes are bioships that are grown from a species of coral presumably
- * indigenous to Gallifrey.
- *
- * The TARDIS had a drawing room, which the Doctor claimed to be his "private
- * study". Inside it were momentos of his many incarnations' travels.
+ * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
+ * <p>
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * many incarnations' travels.
  *
  * @author eccentric_nz
  */
@@ -56,11 +52,10 @@ public class TARDISSeedBlockProcessor {
     }
 
     /**
-     * Turns a seed block, that has been right-clicked by a player into a
-     * TARDIS.
+     * Turns a seed block, that has been right-clicked by a player into a TARDIS.
      *
-     * @param seed the build data for this seed block
-     * @param l the location of the placed seed block
+     * @param seed   the build data for this seed block
+     * @param l      the location of the placed seed block
      * @param player the player who placed the seed block
      * @return true or false
      */
@@ -129,12 +124,12 @@ public class TARDISSeedBlockProcessor {
                         return false;
                     }
                 }
-                final String biome = l.getBlock().getBiome().toString();
+                String biome = l.getBlock().getBiome().toString();
                 // get player direction
                 String d = TARDISStaticUtils.getPlayersDirection(player, false);
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
-                final QueryFactory qf = new QueryFactory(plugin);
+                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
@@ -158,7 +153,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("wall", wall_type.toString());
                 setpp.put("floor", floor_type.toString());
                 setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
-                final int lastInsertId = qf.doSyncInsert("tardis", set);
+                int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", player.getUniqueId().toString());

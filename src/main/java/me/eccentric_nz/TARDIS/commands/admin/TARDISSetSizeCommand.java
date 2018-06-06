@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -25,8 +23,10 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSetSizeCommand {
@@ -37,7 +37,6 @@ public class TARDISSetSizeCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean overwrite(CommandSender sender, String[] args) {
         // /tadmin set_size [player] [size]
         // get the player

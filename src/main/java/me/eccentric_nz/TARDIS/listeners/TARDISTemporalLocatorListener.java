@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -32,8 +31,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTemporalLocatorListener extends TARDISMenuListener implements Listener {
@@ -46,8 +46,8 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -57,7 +57,7 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
         String name = inv.getTitle();
         if (name.equals("§4Temporal Locator")) {
             event.setCancelled(true);
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
@@ -83,8 +83,7 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
     }
 
     /**
-     * Converts an Item Stacks lore to a destination string in the correct
-     * format for entry into the database.
+     * Converts an Item Stacks lore to a destination string in the correct format for entry into the database.
      *
      * @param lore the lore to read
      * @return the destination string

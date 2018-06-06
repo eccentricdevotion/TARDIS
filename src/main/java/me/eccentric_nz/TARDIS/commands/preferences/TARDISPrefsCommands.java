@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -33,13 +29,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Command /tardisprefs [arguments].
- *
- * Children begin instruction at the Time Lord Academy, at the age of 8, in a
- * special ceremony. The Gallifreyans are forced to look into the Untempered
- * Schism, which shows the entirety of the Time Vortex and the power that the
- * Time Lords have.
+ * <p>
+ * Children begin instruction at the Time Lord Academy, at the age of 8, in a special ceremony. The Gallifreyans are
+ * forced to look into the Untempered Schism, which shows the entirety of the Time Vortex and the power that the Time
+ * Lords have.
  *
  * @author eccentric_nz
  */

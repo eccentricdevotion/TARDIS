@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 /**
- * A Tele-door was a teleport system that allowed an individual to travel vast
- * spaces by merely walking through a door.
+ * A Tele-door was a teleport system that allowed an individual to travel vast spaces by merely walking through a door.
  *
  * @author eccentric_nz
  */

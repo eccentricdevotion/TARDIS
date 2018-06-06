@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 /**
- * Architectural Configuration is the ability a TARDIS has to move rooms around
- * and delete rooms as if it were a computer. If a TARDIS is sluggish, a room
- * could be jettisoned (or "deleted").
+ * Architectural Configuration is the ability a TARDIS has to move rooms around and delete rooms as if it were a
+ * computer. If a TARDIS is sluggish, a room could be jettisoned (or "deleted").
  *
  * @author eccentric_nz
  */

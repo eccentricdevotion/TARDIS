@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import org.bukkit.inventory.Inventory;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.bukkit.inventory.Inventory;
 
 /**
- * The helmic regulator also appeared in the Tenth Doctor's TARDIS in the form
- * of a bicycle pump. It is one of the last things he needed to do before taking
- * off, along with closing down the gravitic anomaliser, and turning off the
+ * The helmic regulator also appeared in the Tenth Doctor's TARDIS in the form of a bicycle pump. It is one of the last
+ * things he needed to do before taking off, along with closing down the gravitic anomaliser, and turning off the
  * handbrake.
  *
  * @author eccentric_nz
@@ -34,11 +34,11 @@ public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runn
     private final Inventory inv;
     private int slot;
     private int taskId;
-    private final List<Integer> directions = Arrays.asList(new Integer[]{0, 1, 2, 3});
+    private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
 
     public TARDISRegulatorRunnable(Inventory inv) {
         this.inv = inv;
-        this.slot = 20;
+        slot = 20;
     }
 
     @Override

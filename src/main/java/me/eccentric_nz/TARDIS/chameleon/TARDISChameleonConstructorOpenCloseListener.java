@@ -27,7 +27,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISChameleonConstructorOpenCloseListener implements Listener {
@@ -40,7 +39,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorOpen(InventoryOpenEvent event) {
-        final Inventory inv = event.getInventory();
+        Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
         if (inv_name.equals("§4Chameleon Construction")) {
             Player player = ((Player) event.getPlayer());
@@ -50,7 +49,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorClose(InventoryCloseEvent event) {
-        final Inventory inv = event.getInventory();
+        Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
         if (inv_name.equals("§4Chameleon Construction")) {
             Player player = ((Player) event.getPlayer());

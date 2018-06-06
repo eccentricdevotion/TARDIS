@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
@@ -30,10 +28,12 @@ import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
+import java.util.List;
+import java.util.Locale;
+
 /**
- * The Time Vortex is the dimension through which all time travellers pass. The
- * Vortex was built by the Time Lords as a transdimensional spiral that
- * connected all points in space and time.
+ * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
+ * transdimensional spiral that connected all points in space and time.
  *
  * @author eccentric_nz
  */
@@ -47,8 +47,7 @@ public class TARDISSpace {
     }
 
     /**
-     * Gets custom world for the specified TARDIS. If the world does not exist,
-     * it is created.
+     * Gets custom world for the specified TARDIS. If the world does not exist, it is created.
      *
      * @param name the name of this world
      * @return a new TARDID World

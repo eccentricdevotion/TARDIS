@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
@@ -39,9 +33,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * The Judoon are a race of rhinocerid humanoids frequently employed as a
- * mercenary police force.
+ * The Judoon are a race of rhinocerid humanoids frequently employed as a mercenary police force.
  *
  * @author eccentric_nz
  */
@@ -54,8 +50,8 @@ public class TARDISBlockDamageListener implements Listener {
     }
 
     /**
-     * Listens for block damage to the TARDIS Police Box. If the block is a
-     * Police Box block then the event is cancelled, and the player warned.
+     * Listens for block damage to the TARDIS Police Box. If the block is a Police Box block then the event is
+     * cancelled, and the player warned.
      *
      * @param event a block being damaged
      */
@@ -136,7 +132,7 @@ public class TARDISBlockDamageListener implements Listener {
         }
     }
 
-    private void unhide(final int id, Player player) {
+    private void unhide(int id, Player player) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
@@ -152,7 +148,7 @@ public class TARDISBlockDamageListener implements Listener {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
-            final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+            BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(l);
             bd.setMalfunction(false);

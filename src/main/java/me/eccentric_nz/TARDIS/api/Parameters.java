@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,53 +16,53 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class Parameters {
 
     public Parameters(Player p, List<FLAG> flags) {
-        this.player = p;
+        player = p;
         for (FLAG f : flags) {
             switch (f) {
                 case MESSAGE_PLAYER:
-                    this.messagePlayer = true;
+                    messagePlayer = true;
                     break;
                 case PERMS_AREA:
-                    this.permsArea = true;
+                    permsArea = true;
                     break;
                 case PERMS_NETHER:
-                    this.permsNether = true;
+                    permsNether = true;
                     break;
                 case PERMS_THEEND:
-                    this.permsTheEnd = true;
+                    permsTheEnd = true;
                     break;
                 case RESPECT_FACTIONS:
-                    this.respectFactions = true;
+                    respectFactions = true;
                     break;
                 case RESPECT_GRIEFPREVENTION:
-                    this.respectGreifPrevention = true;
+                    respectGreifPrevention = true;
                     break;
                 case RESPECT_TOWNY:
-                    this.respectTowny = true;
+                    respectTowny = true;
                     break;
                 case RESPECT_WORLDBORDER:
-                    this.repectWorldBorder = true;
+                    repectWorldBorder = true;
                     break;
                 case RESPECT_WORLDGUARD:
-                    this.respectWorldguard = true;
+                    respectWorldguard = true;
                     break;
                 case SPACE_TARDIS:
-                    this.spaceTardis = true;
+                    spaceTardis = true;
                     break;
                 case LIMIT:
-                    this.limit = true;
+                    limit = true;
                     break;
                 default:
                     break;
@@ -74,7 +74,7 @@ public class Parameters {
     private boolean permsArea = false;
     private boolean permsNether = false;
     private boolean permsTheEnd = false;
-    private boolean permsWorld = false;
+    private final boolean permsWorld = false;
     private boolean repectWorldBorder = false;
     private boolean respectFactions = false;
     private boolean respectGreifPrevention = false;
@@ -83,7 +83,7 @@ public class Parameters {
     private boolean spaceTardis = false;
     private boolean limit = false;
     private COMPASS compass;
-    private Player player;
+    private final Player player;
     private int range;
     private int[] centre = null;
 
@@ -160,7 +160,7 @@ public class Parameters {
     }
 
     public void setCentre(int x, int z) {
-        this.centre = new int[2];
+        centre = new int[2];
         centre[0] = x;
         centre[1] = z;
     }

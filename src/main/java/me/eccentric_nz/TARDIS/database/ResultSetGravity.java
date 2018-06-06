@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- * Anti-gravity was the process of creating objects free from or releasing
- * objects from the force of gravity. The Time Lords' Matrix held many advanced
- * scientific techniques, including the secret of anti-gravity power.
+ * Anti-gravity was the process of creating objects free from or releasing objects from the force of gravity. The Time
+ * Lords' Matrix held many advanced scientific techniques, including the secret of anti-gravity power.
  *
  * @author eccentric_nz
  */
@@ -52,25 +48,22 @@ public class ResultSetGravity {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the gravity_well table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the gravity_well table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param plugin   an instance of the main class.
+     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
      * @param multiple boolean determining whether to return multiple records
      */
     public ResultSetGravity(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the doors table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the doors table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -117,12 +110,12 @@ public class ResultSetGravity {
                         }
                         data.add(row);
                     }
-                    this.gravity_id = rs.getInt("g_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.location = rs.getString("location");
-                    this.direction = rs.getInt("direction");
-                    this.distance = rs.getDouble("distance");
-                    this.velocity = rs.getDouble("velocity");
+                    gravity_id = rs.getInt("g_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    location = rs.getString("location");
+                    direction = rs.getInt("direction");
+                    distance = rs.getDouble("distance");
+                    velocity = rs.getDouble("velocity");
                 }
             } else {
                 return false;

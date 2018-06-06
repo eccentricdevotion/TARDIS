@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -30,13 +28,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * The architectural reconfiguration system is a component of the Doctor's
- * TARDIS in the shape of a tree that, according to the Eleventh Doctor,
- * "reconstructs the particles according to your needs." It is basically "a
- * machine that makes machines," perhaps somewhat like a 3D printer. It is,
- * according to Gregor Van Baalen's scanner, "more valuable than the total sum
- * of any currency.
+ * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
+ * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
+ * the total sum of any currency.
  *
  * @author eccentric_nz
  */
@@ -58,7 +57,7 @@ public class TARDISAdminMenuListener implements Listener {
             if (slot < 54) {
                 String option = getDisplay(inv, slot);
                 if (slot == 52) {
-                    final Player p = (Player) event.getWhoClicked();
+                    Player p = (Player) event.getWhoClicked();
                     // close this gui and load the previous / next page
                     if (option.equals("Previous page")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -76,7 +75,7 @@ public class TARDISAdminMenuListener implements Listener {
                     return;
                 }
                 if (slot == 53 && option.equals("Player Preferences")) {
-                    final Player p = (Player) event.getWhoClicked();
+                    Player p = (Player) event.getWhoClicked();
                     // close this gui and load the Player Prefs Menu
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         Inventory ppm = plugin.getServer().createInventory(p, 27, "§4Player Prefs Menu");

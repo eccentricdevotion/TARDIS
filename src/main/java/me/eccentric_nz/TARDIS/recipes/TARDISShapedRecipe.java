@@ -1,12 +1,21 @@
 /*
- *  Copyright 2013 eccentric_nz.
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -17,8 +26,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISShapedRecipe {
@@ -32,36 +45,36 @@ public class TARDISShapedRecipe {
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        this.shapedRecipes = new HashMap<>();
-        this.sonic_colour_lookup.put("mark_1", ChatColor.DARK_GRAY);
-        this.sonic_colour_lookup.put("mark_2", ChatColor.YELLOW);
-        this.sonic_colour_lookup.put("mark_3", ChatColor.DARK_PURPLE);
-        this.sonic_colour_lookup.put("mark_4", ChatColor.GRAY);
-        this.sonic_colour_lookup.put("eighth", ChatColor.BLUE);
-        this.sonic_colour_lookup.put("ninth", ChatColor.GREEN);
-        this.sonic_colour_lookup.put("ninth_open", ChatColor.DARK_GREEN);
-        this.sonic_colour_lookup.put("tenth", ChatColor.AQUA);
-        this.sonic_colour_lookup.put("tenth_open", ChatColor.DARK_AQUA);
-        this.sonic_colour_lookup.put("eleventh", null);
-        this.sonic_colour_lookup.put("eleventh_open", ChatColor.LIGHT_PURPLE);
-        this.sonic_colour_lookup.put("master", ChatColor.DARK_BLUE);
-        this.sonic_colour_lookup.put("sarah_jane", ChatColor.RED);
-        this.sonic_colour_lookup.put("river_song", ChatColor.GOLD);
-        this.sonic_colour_lookup.put("twelfth", ChatColor.UNDERLINE);
-        this.sonic_colour_lookup.put("war", ChatColor.DARK_RED);
-        this.key_colour_lookup.put("first", ChatColor.AQUA);
-        this.key_colour_lookup.put("second", ChatColor.DARK_BLUE);
-        this.key_colour_lookup.put("third", ChatColor.LIGHT_PURPLE);
-        this.key_colour_lookup.put("fifth", ChatColor.DARK_RED);
-        this.key_colour_lookup.put("seventh", ChatColor.GRAY);
-        this.key_colour_lookup.put("ninth", ChatColor.DARK_PURPLE);
-        this.key_colour_lookup.put("tenth", ChatColor.GREEN);
-        this.key_colour_lookup.put("eleventh", null);
-        this.key_colour_lookup.put("susan", ChatColor.YELLOW);
-        this.key_colour_lookup.put("rose", ChatColor.RED);
-        this.key_colour_lookup.put("sally", ChatColor.DARK_AQUA);
-        this.key_colour_lookup.put("perception", ChatColor.BLUE);
-        this.key_colour_lookup.put("gold", ChatColor.GOLD);
+        shapedRecipes = new HashMap<>();
+        sonic_colour_lookup.put("mark_1", ChatColor.DARK_GRAY);
+        sonic_colour_lookup.put("mark_2", ChatColor.YELLOW);
+        sonic_colour_lookup.put("mark_3", ChatColor.DARK_PURPLE);
+        sonic_colour_lookup.put("mark_4", ChatColor.GRAY);
+        sonic_colour_lookup.put("eighth", ChatColor.BLUE);
+        sonic_colour_lookup.put("ninth", ChatColor.GREEN);
+        sonic_colour_lookup.put("ninth_open", ChatColor.DARK_GREEN);
+        sonic_colour_lookup.put("tenth", ChatColor.AQUA);
+        sonic_colour_lookup.put("tenth_open", ChatColor.DARK_AQUA);
+        sonic_colour_lookup.put("eleventh", null);
+        sonic_colour_lookup.put("eleventh_open", ChatColor.LIGHT_PURPLE);
+        sonic_colour_lookup.put("master", ChatColor.DARK_BLUE);
+        sonic_colour_lookup.put("sarah_jane", ChatColor.RED);
+        sonic_colour_lookup.put("river_song", ChatColor.GOLD);
+        sonic_colour_lookup.put("twelfth", ChatColor.UNDERLINE);
+        sonic_colour_lookup.put("war", ChatColor.DARK_RED);
+        key_colour_lookup.put("first", ChatColor.AQUA);
+        key_colour_lookup.put("second", ChatColor.DARK_BLUE);
+        key_colour_lookup.put("third", ChatColor.LIGHT_PURPLE);
+        key_colour_lookup.put("fifth", ChatColor.DARK_RED);
+        key_colour_lookup.put("seventh", ChatColor.GRAY);
+        key_colour_lookup.put("ninth", ChatColor.DARK_PURPLE);
+        key_colour_lookup.put("tenth", ChatColor.GREEN);
+        key_colour_lookup.put("eleventh", null);
+        key_colour_lookup.put("susan", ChatColor.YELLOW);
+        key_colour_lookup.put("rose", ChatColor.RED);
+        key_colour_lookup.put("sally", ChatColor.DARK_AQUA);
+        key_colour_lookup.put("perception", ChatColor.BLUE);
+        key_colour_lookup.put("gold", ChatColor.GOLD);
     }
 
     public void addShapedRecipes() {
@@ -73,7 +86,7 @@ public class TARDISShapedRecipe {
         });
     }
 
-    
+
     private ShapedRecipe makeRecipe(String s) {
         /*
          * shape: A-A,BBB,CDC ingredients: A: 1 B: 2 C: '5:2' D: 57 result: 276

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.MAP;
@@ -32,19 +26,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
- * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
- * is stored in the Secondary Control Room. All TARDISes have one of these
- * devices, which can be used to remotely control a TARDIS by broadcasting
- * Stattenheim signals that travel along the time contours in the Space/Time
- * Vortex.
+ * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
+ * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
+ * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
  */
@@ -174,35 +164,35 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     TARDISMessage.send(player, "ARG_NOT_VALID");
                     return true;
                 }
-                this.showTARDISRecipe(player, args[1]);
+                showTARDISRecipe(player, args[1]);
                 return true;
             }
             if (args[0].equalsIgnoreCase("a-circuit")) {
-                this.showShapedRecipe(player, "Server Admin Circuit");
+                showShapedRecipe(player, "Server Admin Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("acid-battery")) {
-                this.showShapedRecipe(player, "Acid Battery");
+                showShapedRecipe(player, "Acid Battery");
                 return true;
             }
             if (args[0].equalsIgnoreCase("ars-circuit")) {
-                this.showShapedRecipe(player, "TARDIS ARS Circuit");
+                showShapedRecipe(player, "TARDIS ARS Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("bio-circuit")) {
-                this.showShapedRecipe(player, "Bio-scanner Circuit");
+                showShapedRecipe(player, "Bio-scanner Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("biome-disk")) {
-                this.showShapelessRecipe(player, "Biome Storage Disk");
+                showShapelessRecipe(player, "Biome Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("blank")) {
-                this.showShapedRecipe(player, "Blank Storage Disk");
+                showShapedRecipe(player, "Blank Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("bow-tie")) {
-                this.showShapedRecipe(player, "Red Bow Tie");
+                showShapedRecipe(player, "Red Bow Tie");
                 return true;
             }
             if (args[0].equalsIgnoreCase("c-circuit")) {
@@ -210,67 +200,67 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("cell")) {
-                this.showShapedRecipe(player, "Artron Storage Cell");
+                showShapedRecipe(player, "Artron Storage Cell");
                 return true;
             }
             if (args[0].equalsIgnoreCase("custard")) {
-                this.showShapelessRecipe(player, "Bowl of Custard");
+                showShapelessRecipe(player, "Bowl of Custard");
                 return true;
             }
             if (args[0].equalsIgnoreCase("d-circuit")) {
-                this.showShapedRecipe(player, "Diamond Disruptor Circuit");
+                showShapedRecipe(player, "Diamond Disruptor Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("e-circuit")) {
-                this.showShapedRecipe(player, "Emerald Environment Circuit");
+                showShapedRecipe(player, "Emerald Environment Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("filter")) {
-                this.showShapedRecipe(player, "Perception Filter");
+                showShapedRecipe(player, "Perception Filter");
                 return true;
             }
             if (args[0].equalsIgnoreCase("fish-finger")) {
-                this.showShapedRecipe(player, "Fish Finger");
+                showShapedRecipe(player, "Fish Finger");
                 return true;
             }
             if (args[0].equalsIgnoreCase("furnace")) {
-                this.showShapedRecipe(player, "TARDIS Artron Furnace");
+                showShapedRecipe(player, "TARDIS Artron Furnace");
                 return true;
             }
             if (args[0].equalsIgnoreCase("generator")) {
-                this.showShapedRecipe(player, "Sonic Generator");
+                showShapedRecipe(player, "Sonic Generator");
                 return true;
             }
             if (args[0].equalsIgnoreCase("glasses")) {
-                this.showShapedRecipe(player, "3-D Glasses");
+                showShapedRecipe(player, "3-D Glasses");
                 return true;
             }
             if (args[0].equalsIgnoreCase("i-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Input Circuit");
+                showShapedRecipe(player, "TARDIS Input Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("ignite-circuit")) {
-                this.showShapedRecipe(player, "Ignite Circuit");
+                showShapedRecipe(player, "Ignite Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("invisible")) {
-                this.showShapedRecipe(player, "TARDIS Invisibility Circuit");
+                showShapedRecipe(player, "TARDIS Invisibility Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("key")) {
-                this.showShapedRecipe(player, "TARDIS Key");
+                showShapedRecipe(player, "TARDIS Key");
                 return true;
             }
             if (args[0].equalsIgnoreCase("jammy-dodger")) {
-                this.showShapedRecipe(player, "Jammy Dodger");
+                showShapedRecipe(player, "Jammy Dodger");
                 return true;
             }
             if (args[0].equalsIgnoreCase("jelly-baby")) {
-                this.showShapelessRecipe(player, "Orange Jelly Baby");
+                showShapelessRecipe(player, "Orange Jelly Baby");
                 return true;
             }
             if (args[0].equalsIgnoreCase("l-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Locator Circuit");
+                showShapedRecipe(player, "TARDIS Locator Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("locator")) {
@@ -278,43 +268,43 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("m-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
+                showShapedRecipe(player, "TARDIS Materialisation Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("memory-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Memory Circuit");
+                showShapedRecipe(player, "TARDIS Memory Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("oscillator")) {
-                this.showShapedRecipe(player, "Sonic Oscillator");
+                showShapedRecipe(player, "Sonic Oscillator");
                 return true;
             }
             if (args[0].equalsIgnoreCase("p-circuit")) {
-                this.showShapedRecipe(player, "Perception Circuit");
+                showShapedRecipe(player, "Perception Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("painter")) {
-                this.showShapedRecipe(player, "Painter Circuit");
+                showShapedRecipe(player, "Painter Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("player-disk")) {
-                this.showShapelessRecipe(player, "Player Storage Disk");
+                showShapelessRecipe(player, "Player Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("preset-disk")) {
-                this.showShapelessRecipe(player, "Preset Storage Disk");
+                showShapelessRecipe(player, "Preset Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("r-circuit")) {
-                this.showShapedRecipe(player, "Redstone Activator Circuit");
+                showShapedRecipe(player, "Redstone Activator Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("r-key")) {
-                this.showShapedRecipe(player, "TARDIS Remote Key");
+                showShapedRecipe(player, "TARDIS Remote Key");
                 return true;
             }
             if (args[0].equalsIgnoreCase("randomiser-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Randomiser Circuit");
+                showShapedRecipe(player, "TARDIS Randomiser Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("reader")) {
@@ -342,27 +332,27 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("save-disk")) {
-                this.showShapelessRecipe(player, "Save Storage Disk");
+                showShapelessRecipe(player, "Save Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("scanner-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Scanner Circuit");
+                showShapedRecipe(player, "TARDIS Scanner Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("sonic")) {
-                this.showShapedRecipe(player, "Sonic Screwdriver");
+                showShapedRecipe(player, "Sonic Screwdriver");
                 return true;
             }
             if (args[0].equalsIgnoreCase("t-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Temporal Circuit");
+                showShapedRecipe(player, "TARDIS Temporal Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("telepathic")) {
-                this.showShapedRecipe(player, "TARDIS Telepathic Circuit");
+                showShapedRecipe(player, "TARDIS Telepathic Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("watch")) {
-                this.showShapedRecipe(player, "Fob Watch");
+                showShapedRecipe(player, "Fob Watch");
                 return true;
             }
             if (args[0].equalsIgnoreCase("vortex")) {
@@ -370,7 +360,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     TARDISMessage.send(sender, "RECIPE_VORTEX");
                     return true;
                 }
-                this.showShapedRecipe(player, "Vortex Manipulator");
+                showShapedRecipe(player, "Vortex Manipulator");
                 return true;
             }
             if ((args[0].equalsIgnoreCase("battery") || args[0].equalsIgnoreCase("blaster") || args[0].equalsIgnoreCase("pad")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
@@ -378,32 +368,32 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("battery")) {
-                this.showShapedRecipe(player, "Blaster Battery");
+                showShapedRecipe(player, "Blaster Battery");
                 return true;
             }
             if (args[0].equalsIgnoreCase("blaster")) {
-                this.showShapedRecipe(player, "Sonic Blaster");
+                showShapedRecipe(player, "Sonic Blaster");
                 return true;
             }
             if (args[0].equalsIgnoreCase("pad")) {
-                this.showShapedRecipe(player, "Landing Pad");
+                showShapedRecipe(player, "Landing Pad");
                 return true;
             }
         }
         return false;
     }
 
-    @SuppressWarnings("deprecation") // Maps still seem to use numeric values
+    // Maps still seem to use numeric values
     public void showShapedRecipe(Player p, String str) {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         p.closeInventory();
         plugin.getTrackerKeeper().getRecipeView().add(p.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(p, 27, "§4" + str + " recipe");
-        final String[] recipeShape = recipe.getShape();
-        final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
+        String[] recipeShape = recipe.getShape();
+        Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
         for (int j = 0; j < recipeShape.length; j++) {
             for (int k = 0; k < recipeShape[j].length(); k++) {
-                final ItemStack item = ingredientMap.get(recipeShape[j].toCharArray()[k]);
+                ItemStack item = ingredientMap.get(recipeShape[j].toCharArray()[k]);
                 if (item == null) {
                     continue;
                 }
@@ -459,10 +449,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         p.openInventory(inv);
     }
 
-    @SuppressWarnings("deprecation") // Maps still seem to use numeric values
+    // Maps still seem to use numeric values
     public void showShapelessRecipe(Player player, String str) {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
-        final List<ItemStack> ingredients = recipe.getIngredientList();
+        List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, "§4" + str + " recipe");
         for (int i = 0; i < ingredients.size(); i++) {

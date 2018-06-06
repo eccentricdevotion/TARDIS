@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
 /**
- * The Alpha Centauran Table Tennis Club is a club established by the Alpha
- * Centaurans for the play of table tennis. The species is naturally gifted at
- * the game, since they possess six arms. The Doctor is a member of the Club.
+ * The Alpha Centauran Table Tennis Club is a club established by the Alpha Centaurans for the play of table tennis. The
+ * species is naturally gifted at the game, since they possess six arms. The Doctor is a member of the Club.
  *
  * @author eccentric_nz
  */
@@ -63,14 +59,14 @@ public class TARDISConfiguration {
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
-        this.configFile = new File(plugin.getDataFolder(), "config.yml");
-        this.config = YamlConfiguration.loadConfiguration(configFile);
-        this.artron_config = plugin.getArtronConfig();
-        this.blocks_config = plugin.getBlocksConfig();
-        this.rooms_config = plugin.getRoomsConfig();
-        this.signs_config = plugin.getSigns();
-        this.chameleon_config = plugin.getChameleonGuis();
-        this.planets_config = plugin.getPlanetsConfig();
+        configFile = new File(plugin.getDataFolder(), "config.yml");
+        config = YamlConfiguration.loadConfiguration(configFile);
+        artron_config = plugin.getArtronConfig();
+        blocks_config = plugin.getBlocksConfig();
+        rooms_config = plugin.getRoomsConfig();
+        signs_config = plugin.getSigns();
+        chameleon_config = plugin.getChameleonGuis();
+        planets_config = plugin.getPlanetsConfig();
         // boolean
         boolOptions.put("abandon.enabled", true);
         boolOptions.put("abandon.reduce_count", true);
@@ -464,10 +460,9 @@ public class TARDISConfiguration {
     }
 
     /**
-     * Checks that the config file contains all the required entries. If entries
-     * are missing, then they are added with default values. Also checks that
-     * all current server worlds are added to the config, and any deleted worlds
-     * are removed.
+     * Checks that the config file contains all the required entries. If entries are missing, then they are added with
+     * default values. Also checks that all current server worlds are added to the config, and any deleted worlds are
+     * removed.
      */
     public void checkConfig() {
         int i = 0;

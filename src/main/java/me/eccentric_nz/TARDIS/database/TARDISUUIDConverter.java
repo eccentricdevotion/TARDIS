@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,27 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISUUIDFetcher;
 import org.bukkit.ChatColor;
 import org.bukkit.util.FileUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.*;
+import java.util.*;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISUUIDConverter {
@@ -49,7 +41,7 @@ public class TARDISUUIDConverter {
 
     public TARDISUUIDConverter(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public boolean convert() {
@@ -261,9 +253,8 @@ public class TARDISUUIDConverter {
     }
 
     /**
-     * Gets the server default resource pack. Will use the Minecraft default
-     * pack if none is specified. Until Minecraft/Bukkit lets us set the RP back
-     * to Default, we'll have to host it on DropBox
+     * Gets the server default resource pack. Will use the Minecraft default pack if none is specified. Until
+     * Minecraft/Bukkit lets us set the RP back to Default, we'll have to host it on DropBox
      *
      * @return The server specified texture pack.
      */

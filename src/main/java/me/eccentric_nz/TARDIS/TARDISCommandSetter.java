@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISAreaTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISNetherPortalCommand;
-import me.eccentric_nz.TARDIS.commands.TARDISQuestionMarkCommand;
-import me.eccentric_nz.TARDIS.commands.TARDISQuestionTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISRoomTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
+import me.eccentric_nz.TARDIS.commands.*;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveCommand;

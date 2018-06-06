@@ -1,4 +1,6 @@
 /*
+ * Copyright (C) 2018 eccentric_nz
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.Material;
@@ -28,8 +29,9 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Random;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSkaroSpawnListener implements Listener {
@@ -40,7 +42,7 @@ public class TARDISSkaroSpawnListener implements Listener {
 
     public TARDISSkaroSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
+        twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -54,7 +56,7 @@ public class TARDISSkaroSpawnListener implements Listener {
         if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
             return;
         }
-        final LivingEntity le = event.getEntity();
+        LivingEntity le = event.getEntity();
         // it's a Dalek - disguise it!
         twaAPI.setDalekEquipment(le);
         if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && r.nextInt(100) < 10) {

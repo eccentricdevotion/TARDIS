@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -35,10 +31,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * The time rotor is a component in the central column of the TARDIS console.
- * While the TARDIS is in flight, the rotor rises and falls, stopping when the
- * TARDIS has reached a destination. It is associated with the 'whooshing' noise
+ * The time rotor is a component in the central column of the TARDIS console. While the TARDIS is in flight, the rotor
+ * rises and falls, stopping when the TARDIS has reached a destination. It is associated with the 'whooshing' noise
  * heard when the TARDIS is in flight.
  *
  * @author eccentric_nz
@@ -51,13 +51,12 @@ public class TARDISBeaconColouringListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getBeaconColouring().contains(uuid)) {
             return;

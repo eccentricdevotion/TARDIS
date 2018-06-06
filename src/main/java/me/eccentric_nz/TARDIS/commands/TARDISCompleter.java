@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import org.bukkit.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.bukkit.util.StringUtil;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCompleter {

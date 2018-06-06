@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
+
 import java.util.Map;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum BIOME_LOOKUP {
@@ -48,7 +48,7 @@ public enum BIOME_LOOKUP {
     String upper;
     public final static Map<String, BIOME_LOOKUP> BY_REG = Maps.newHashMap();
 
-    private BIOME_LOOKUP(String regular, String upper) {
+    BIOME_LOOKUP(String regular, String upper) {
         this.regular = regular;
         this.upper = upper;
     }
@@ -61,7 +61,7 @@ public enum BIOME_LOOKUP {
         return upper;
     }
 
-    public static BIOME_LOOKUP getBiome(final String data) {
+    public static BIOME_LOOKUP getBiome(String data) {
         return BY_REG.get(data);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -44,8 +42,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.yi.acru.bukkit.Lockette.Lockette;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISComehereCommand {
@@ -69,7 +69,7 @@ public class TARDISComehereCommand {
             }
             if (plugin.getDifficulty().equals(DIFFICULTY.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
                 Tardis tardis = rs.getTardis();
-                final int id = tardis.getTardis_id();
+                int id = tardis.getTardis_id();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                     TARDISMessage.send(player, "POWER_DOWN");
                     return true;
@@ -170,7 +170,7 @@ public class TARDISComehereCommand {
                     return true;
                 }
                 World w = rsc.getWorld();
-                final QueryFactory qf = new QueryFactory(plugin);
+                QueryFactory qf = new QueryFactory(plugin);
                 Location oldSave = null;
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);
@@ -215,9 +215,9 @@ public class TARDISComehereCommand {
                 TARDISMessage.send(player, "TARDIS_COMING");
                 long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
-                final boolean hid = hidden;
+                boolean hid = hidden;
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                    final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                    DestroyData dd = new DestroyData(plugin, uuid.toString());
                     dd.setDirection(d);
                     dd.setLocation(oldSave);
                     dd.setPlayer(player);
@@ -235,7 +235,7 @@ public class TARDISComehereCommand {
                         }
                     }, delay);
                 }
-                final BuildData bd = new BuildData(plugin, uuid.toString());
+                BuildData bd = new BuildData(plugin, uuid.toString());
                 bd.setDirection(player_d);
                 bd.setLocation(eyeLocation);
                 bd.setMalfunction(false);

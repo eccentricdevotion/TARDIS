@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,14 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISVanillaBorderChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
 
 /**
- * The telepathic password to the TARDIS was "the colour crimson, the number
- * eleven, the feeling of delight, and the smell of dust after rain".
+ * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
+ * smell of dust after rain".
  *
  * @author eccentric_nz
  */
@@ -51,14 +46,12 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks whether a location is allowed by other plugins. This checks
-     * WorldGuard regions, Towny plots, WorldBorder borders and TARDIS areas.
+     * Checks whether a location is allowed by other plugins. This checks WorldGuard regions, Towny plots, WorldBorder
+     * borders and TARDIS areas.
      *
-     * @param l the location to check.
-     * @param flag a list of flags to check (including whether to message the
-     * player).
-     * @return true or false depending on whether the player is allowed to
-     * travel to the specified location
+     * @param l    the location to check.
+     * @param flag a list of flags to check (including whether to message the player).
+     * @return true or false depending on whether the player is allowed to travel to the specified location
      */
     public boolean getRespect(Location l, Parameters flag) {
         boolean bool = true;
@@ -163,8 +156,7 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks if the WorldBorder plugin is available, and loads support if it
-     * is.
+     * Checks if the WorldBorder plugin is available, and loads support if it is.
      */
     public void loadWorldBorder() {
         if (plugin.getPM().getPlugin("WorldBorder") != null) {
@@ -184,8 +176,7 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks if the GriefPrevention plugin is available, and loads support if
-     * it is.
+     * Checks if the GriefPrevention plugin is available, and loads support if it is.
      */
     public void loadGriefPrevention() {
         if (plugin.getPM().getPlugin("GriefPrevention") != null) {

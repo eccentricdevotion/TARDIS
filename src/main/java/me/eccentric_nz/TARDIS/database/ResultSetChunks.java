@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,21 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the chunk location of the TARDIS interior.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the chunk location of the TARDIS
+ * interior.
  *
  * @author eccentric_nz
  */
@@ -50,26 +47,22 @@ public class ResultSetChunks {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the chunks table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the chunks table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
+     * @param plugin   an instance of the main class.
+     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param multiple a boolean indicating whether multiple rows should be fetched
      */
     public ResultSetChunks(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the chunks table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the chunks table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -112,11 +105,11 @@ public class ResultSetChunks {
                         }
                         data.add(row);
                     }
-                    this.chunk_id = rs.getInt("chunk_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.world = rs.getString("world");
-                    this.x = rs.getInt("x");
-                    this.z = rs.getInt("z");
+                    chunk_id = rs.getInt("chunk_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    world = rs.getString("world");
+                    x = rs.getInt("x");
+                    z = rs.getInt("z");
                 }
             } else {
                 return false;

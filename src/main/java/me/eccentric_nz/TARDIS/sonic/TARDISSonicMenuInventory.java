@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill,
- * doesn't wound, doesn't maim. But I'll tell you what it does do. It is very
- * good at opening doors!
+ * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
+ * you what it does do. It is very good at opening doors!
  *
  * @author eccentric_nz
  */
@@ -35,7 +35,7 @@ public class TARDISSonicMenuInventory {
     private final ItemStack[] menu;
 
     public TARDISSonicMenuInventory() {
-        this.menu = getItemStack();
+        menu = getItemStack();
     }
 
     /**
@@ -43,7 +43,7 @@ public class TARDISSonicMenuInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    
+
     private ItemStack[] getItemStack() {
         // \u00a7 = § (ChatColor code)
         // mark I
@@ -146,7 +146,7 @@ public class TARDISSonicMenuInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Instructions");
-        List<String> lore = Arrays.asList(new String[]{"Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice."});
+        List<String> lore = Arrays.asList("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
         info_im.setLore(lore);
         info.setItemMeta(info_im);
         // close
@@ -156,9 +156,9 @@ public class TARDISSonicMenuInventory {
         close.setItemMeta(close_im);
 
         ItemStack[] stack = {
-            markone, marktwo, markthree, markfour, mcgann, eccelston, tennant, smith, hurt,
-            null, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
-            null, null, null, null, info, null, null, null, close
+                markone, marktwo, markthree, markfour, mcgann, eccelston, tennant, smith, hurt,
+                null, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
+                null, null, null, null, info, null, null, null, close
         };
         return stack;
     }

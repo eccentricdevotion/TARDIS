@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
@@ -27,8 +26,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISInventoryPluginHelper implements Listener {
@@ -46,7 +46,7 @@ public class TARDISInventoryPluginHelper implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerWorldChangeLOWEST(PlayerChangedWorldEvent event) {
 
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         boolean shouldSwitch;
         switch (plugin.getInvManager()) {
             case MULTI:
@@ -79,7 +79,7 @@ public class TARDISInventoryPluginHelper implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
 
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         boolean shouldSwitch;
         switch (plugin.getInvManager()) {
             case MULTI:

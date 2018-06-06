@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
 /**
- * The telepathic password to the TARDIS was "the colour crimson, the number
- * eleven, the feeling of delight, and the smell of dust after rain".
+ * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
+ * smell of dust after rain".
  *
  * @author eccentric_nz
  */
@@ -37,14 +37,13 @@ public class TARDISTravelRequest {
     }
 
     /**
-     * Checks whether a location is allowed by other plugins. This checks
-     * WorldGuard regions, Towny plots, WorldBorder borders and TARDIS areas.
+     * Checks whether a location is allowed by other plugins. This checks WorldGuard regions, Towny plots, WorldBorder
+     * borders and TARDIS areas.
      *
-     * @param p the player who is travelling.
+     * @param p  the player who is travelling.
      * @param to the player to request travel to.
-     * @param l the location to check.
-     * @return true or false depending on whether the player is allowed to
-     * travel to the specified location
+     * @param l  the location to check.
+     * @return true or false depending on whether the player is allowed to travel to the specified location
      */
     public boolean getRequest(Player p, Player to, Location l) {
         boolean bool = true;

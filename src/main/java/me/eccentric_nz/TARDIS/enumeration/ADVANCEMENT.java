@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,23 +19,13 @@ package me.eccentric_nz.TARDIS.enumeration;
 import java.util.Locale;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum ADVANCEMENT {
 
-    CRAFT,
-    DEFENDER,
-    ENERGY,
-    FARM,
-    FRIENDS,
-    KILL,
-    ROOMS,
-    ROOT,
-    TARDIS,
-    TRAVEL;
+    CRAFT, DEFENDER, ENERGY, FARM, FRIENDS, KILL, ROOMS, ROOT, TARDIS, TRAVEL;
 
     public String getConfigName() {
-        return this.toString().toLowerCase(Locale.ENGLISH);
+        return toString().toLowerCase(Locale.ENGLISH);
     }
 }

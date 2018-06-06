@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -39,11 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -51,8 +40,10 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.util.*;
+import java.util.logging.Level;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCraftListener implements Listener {
@@ -100,7 +91,7 @@ public class TARDISCraftListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        final Player p = (Player) event.getPlayer();
+        Player p = (Player) event.getPlayer();
         UUID uuid = p.getUniqueId();
         Inventory inv = event.getInventory();
         if (crafters.contains(uuid) && inv.getType().equals(InventoryType.WORKBENCH)) {
@@ -121,14 +112,13 @@ public class TARDISCraftListener implements Listener {
      *
      * @param event the player clicking the crafting result slot.
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onSeedBlockCraft(final InventoryClickEvent event) {
-        final Inventory inv = event.getInventory();
-        final int slot = event.getRawSlot();
+    public void onSeedBlockCraft(InventoryClickEvent event) {
+        Inventory inv = event.getInventory();
+        int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
-            final Player player = (Player) event.getWhoClicked();
-            final UUID uuid = player.getUniqueId();
+            Player player = (Player) event.getWhoClicked();
+            UUID uuid = player.getUniqueId();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (checkSlots(inv)) {
                     if (!crafters.contains(uuid)) {
@@ -139,7 +129,7 @@ public class TARDISCraftListener implements Listener {
                     }
                     // get the materials in crafting slots
                     Material m7 = inv.getItem(7).getType(); // tardis type
-                    final ItemStack is = new ItemStack(m7, 1);
+                    ItemStack is = new ItemStack(m7, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("§6TARDIS Seed Block");
                     List<String> lore = new ArrayList<>();
@@ -174,8 +164,7 @@ public class TARDISCraftListener implements Listener {
     }
 
     /**
-     * Checks the craft inventory slots contain the correct materials to craft a
-     * TARDIS Seed block.
+     * Checks the craft inventory slots contain the correct materials to craft a TARDIS Seed block.
      *
      * @param inv
      * @return whether it is a valid seed block

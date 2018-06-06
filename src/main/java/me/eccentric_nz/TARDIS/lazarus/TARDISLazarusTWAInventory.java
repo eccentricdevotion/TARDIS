@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * The Genetic Manipulation Device was invented by Professor Richard Lazarus.
- * The machine would turn anyone inside decades younger, but the process
- * contained one side effect: genes that evolution rejected and left dormant
- * would be unlocked, transforming the human into a giant skeletal scorpion-like
- * beast that fed off the lifeforce of living creatures.
+ * The Genetic Manipulation Device was invented by Professor Richard Lazarus. The machine would turn anyone inside
+ * decades younger, but the process contained one side effect: genes that evolution rejected and left dormant would be
+ * unlocked, transforming the human into a giant skeletal scorpion-like beast that fed off the lifeforce of living
+ * creatures.
  *
  * @author eccentric_nz
  */
@@ -41,7 +41,7 @@ public class TARDISLazarusTWAInventory {
 
     public TARDISLazarusTWAInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.terminal = getItemStack();
+        terminal = getItemStack();
         disguises.add(Material.COD_MOB_SPAWN_EGG);
         disguises.add(Material.PUFFER_FISH_SPAWN_EGG);
         disguises.add(Material.SALMON_MOB_SPAWN_EGG);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISDestructionEvent extends Event {
@@ -35,10 +34,9 @@ public final class TARDISDestructionEvent extends Event {
     /**
      * A TARDIS extermination event.
      *
-     * @param player the player who is destroying the TARDIS - may be null if it
-     * is initiated by the console.
+     * @param player   the player who is destroying the TARDIS - may be null if it is initiated by the console.
      * @param location the location of the TARDIS exterior preset
-     * @param owner the Time Lord of the TARDIS
+     * @param owner    the Time Lord of the TARDIS
      */
     public TARDISDestructionEvent(Player player, Location location, String owner) {
         this.player = player;
@@ -60,9 +58,8 @@ public final class TARDISDestructionEvent extends Event {
     }
 
     /**
-     * Returns the Time Lord of the TARDIS being destroyed. This may be
-     * different from the player who is doing the destroying, i.e. a server
-     * admin.
+     * Returns the Time Lord of the TARDIS being destroyed. This may be different from the player who is doing the
+     * destroying, i.e. a server admin.
      *
      * @return the TARDIS owner's name
      */

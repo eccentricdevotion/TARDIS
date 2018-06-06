@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISInteriorPostioning {
@@ -41,7 +41,7 @@ public class TARDISInteriorPostioning {
 
     public TARDISInteriorPostioning(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -65,8 +65,7 @@ public class TARDISInteriorPostioning {
     /**
      * Calculate the position data for a TIPS slot.
      *
-     * @param slot the slot position in the grid (a number between 0, 399
-     * inclusive)
+     * @param slot the slot position in the grid (a number between 0, 399 inclusive)
      * @return a TIPS Data container
      */
     public TARDISTIPSData getTIPSData(int slot) {

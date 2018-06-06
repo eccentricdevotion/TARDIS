@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.utility;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public class Prefs {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import org.bukkit.ChatColor;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import org.bukkit.ChatColor;
 
 /**
- * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it
- * down into an array of strings appropriate for displaying on the Minecraft
- * player console.
+ * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down into an array of strings
+ * appropriate for displaying on the Minecraft player console.
  */
 public class TARDISChatPaginator {
 
@@ -39,7 +39,7 @@ public class TARDISChatPaginator {
      * Breaks a raw string up into pages using the default width and height.
      *
      * @param unpaginatedString The raw string to break.
-     * @param pageNumber The page number to fetch.
+     * @param pageNumber        The page number to fetch.
      * @return A single chat page.
      */
     public static ChatPage paginate(String unpaginatedString, int pageNumber) {
@@ -50,9 +50,9 @@ public class TARDISChatPaginator {
      * Breaks a raw string up into pages using a provided width and height.
      *
      * @param unpaginatedString The raw string to break.
-     * @param pageNumber The page number to fetch.
-     * @param lineLength The desired width of a chat line.
-     * @param pageHeight The desired number of lines in a page.
+     * @param pageNumber        The page number to fetch.
+     * @param lineLength        The desired width of a chat line.
+     * @param pageHeight        The desired number of lines in a page.
      * @return A single chat page.
      */
     public static ChatPage paginate(String unpaginatedString, int pageNumber, int lineLength, int pageHeight) {
@@ -66,10 +66,10 @@ public class TARDISChatPaginator {
     }
 
     /**
-     * Breaks a raw string up into a series of lines. Words are wrapped using
-     * spaces as decimeters and the newline character is respected.
+     * Breaks a raw string up into a series of lines. Words are wrapped using spaces as decimeters and the newline
+     * character is respected.
      *
-     * @param rawString The raw string to break.
+     * @param rawString  The raw string to break.
      * @param lineLength The length of a line of text.
      * @return An array of word-wrapped lines.
      */
@@ -129,8 +129,8 @@ public class TARDISChatPaginator {
             lines.set(0, ChatColor.WHITE + lines.get(0));
         }
         for (int i = 1; i < lines.size(); i++) {
-            final String pLine = lines.get(i - 1);
-            final String subLine = lines.get(i);
+            String pLine = lines.get(i - 1);
+            String subLine = lines.get(i);
 
             char color = pLine.charAt(pLine.lastIndexOf(ChatColor.COLOR_CHAR) + 1);
             if (subLine.length() == 0 || subLine.charAt(0) != ChatColor.COLOR_CHAR) {

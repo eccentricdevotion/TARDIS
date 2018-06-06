@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
@@ -41,11 +36,16 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 /**
- * Banshee Circuits were components of TARDISes, emergency defence mechanisms
- * used as a last resort when all other systems had failed. They allowed a
- * TARDIS to use whatever resources were available to ensure the survival of the
- * ship and its crew.
+ * Banshee Circuits were components of TARDISes, emergency defence mechanisms used as a last resort when all other
+ * systems had failed. They allowed a TARDIS to use whatever resources were available to ensure the survival of the ship
+ * and its crew.
  *
  * @author eccentric_nz
  */
@@ -59,7 +59,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         super(plugin);
         this.plugin = plugin;
         for (STORAGE s : STORAGE.values()) {
-            this.inv_titles.add(s.getTitle());
+            inv_titles.add(s.getTitle());
         }
         for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
             if (!onlythese.contains(dc.getMaterial())) {
@@ -116,7 +116,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         if ((slot >= 0 && slot < 27) || event.isShiftClick()) {
             event.setCancelled(true);
         }
-        final Player player = (Player) event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         // get the storage record
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
@@ -271,7 +271,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         new QueryFactory(plugin).doUpdate("storage", set, where);
     }
 
-    private void loadInventory(final String serialized, final Player p, final STORAGE s) {
+    private void loadInventory(String serialized, Player p, STORAGE s) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] stack = null;
             try {

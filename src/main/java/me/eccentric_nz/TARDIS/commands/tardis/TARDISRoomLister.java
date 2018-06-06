@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRoomLister {
@@ -37,7 +37,7 @@ public class TARDISRoomLister {
     public TARDISRoomLister(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
-        this.options = createRoomOptions(this.player);
+        options = createRoomOptions(this.player);
     }
 
     public void list() {

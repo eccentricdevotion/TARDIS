@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the location of the TARDIS doors in their different dimensions.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS doors in
+ * their different dimensions.
  *
  * @author eccentric_nz
  */
@@ -52,26 +49,23 @@ public class ResultSetDoors {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the doors table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the doors table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
-     * @param multiple a boolean setting whether to retrieve more than on
-     * record, it true returns an ArrayList that can be looped through later.
+     * @param plugin   an instance of the main class.
+     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param multiple a boolean setting whether to retrieve more than on record, it true returns an ArrayList that can
+     *                 be looped through later.
      */
     public ResultSetDoors(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the doors table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the doors table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -114,12 +108,12 @@ public class ResultSetDoors {
                         }
                         data.add(row);
                     }
-                    this.door_id = rs.getInt("door_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.door_type = rs.getInt("door_type");
-                    this.door_location = rs.getString("door_location");
-                    this.door_direction = COMPASS.valueOf(rs.getString("door_direction"));
-                    this.locked = rs.getBoolean("locked");
+                    door_id = rs.getInt("door_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    door_type = rs.getInt("door_type");
+                    door_location = rs.getString("door_location");
+                    door_direction = COMPASS.valueOf(rs.getString("door_direction"));
+                    locked = rs.getBoolean("locked");
                 }
             } else {
                 return false;

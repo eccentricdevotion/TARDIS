@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetJunk;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
@@ -47,10 +39,14 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * A TARDIS with a functioning chameleon circuit can appear as almost anything
- * desired. The owner can program the circuit to make it assume a specific
- * shape.
+ * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
+ * circuit to make it assume a specific shape.
  *
  * @author eccentric_nz
  */
@@ -67,9 +63,8 @@ public class TARDISSignListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS chameleon or save-sign
-     * Signs. If the signs are clicked, they trigger the appropriate actions,
-     * for example turning the Chameleon Circuit on and off.
+     * Listens for player interaction with the TARDIS chameleon or save-sign Signs. If the signs are clicked, they
+     * trigger the appropriate actions, for example turning the Chameleon Circuit on and off.
      *
      * @param event the player clicking a sign
      */
@@ -78,7 +73,7 @@ public class TARDISSignListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();

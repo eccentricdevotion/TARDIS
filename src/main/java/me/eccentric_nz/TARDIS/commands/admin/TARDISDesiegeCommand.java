@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -29,8 +27,10 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDesiegeCommand {
@@ -41,7 +41,6 @@ public class TARDISDesiegeCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean restore(CommandSender sender, String[] args) {
         // get the player
         Player p = plugin.getServer().getPlayer(args[1]);
@@ -83,7 +82,7 @@ public class TARDISDesiegeCommand {
                 setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                 qf.doUpdate("current", setc, wherec);
                 // rebuild the TARDIS
-                final BuildData bd = new BuildData(plugin, uuid.toString());
+                BuildData bd = new BuildData(plugin, uuid.toString());
                 bd.setDirection(rsh.getDirection());
                 bd.setLocation(new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ()));
                 bd.setMalfunction(false);

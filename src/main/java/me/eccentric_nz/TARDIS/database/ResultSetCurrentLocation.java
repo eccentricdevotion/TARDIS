@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
@@ -29,9 +23,16 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... a list of locations the TARDIS can travel to.
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
+ * travel to.
  *
  * @author eccentric_nz
  */
@@ -53,23 +54,20 @@ public class ResultSetCurrentLocation {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the current locations table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param where  a HashMap<String, Object> of table fields and values to refine the search.
      */
     public ResultSetCurrentLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the destinations table. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the destinations table. This method builds an SQL query string from the
+     * parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -103,22 +101,22 @@ public class ResultSetCurrentLocation {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.current_id = rs.getInt("current_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.world = plugin.getServer().getWorld(rs.getString("world"));
-                    this.x = rs.getInt("x");
-                    this.y = rs.getInt("y");
-                    this.z = rs.getInt("z");
-                    this.direction = COMPASS.valueOf(rs.getString("direction"));
-                    this.submarine = rs.getBoolean("submarine");
+                    current_id = rs.getInt("current_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    world = plugin.getServer().getWorld(rs.getString("world"));
+                    x = rs.getInt("x");
+                    y = rs.getInt("y");
+                    z = rs.getInt("z");
+                    direction = COMPASS.valueOf(rs.getString("direction"));
+                    submarine = rs.getBoolean("submarine");
                     try {
-                        this.biome = Biome.valueOf(rs.getString("biome"));
+                        biome = Biome.valueOf(rs.getString("biome"));
                     } catch (IllegalArgumentException e) {
                         // may have a pre-1.9 biome stored so do old biome lookup...
                         if (TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(rs.getString("biome"))) {
                             biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.get(rs.getString("biome"));
                         } else {
-                            this.biome = null;
+                            biome = null;
                         }
                     }
                 }
@@ -140,7 +138,7 @@ public class ResultSetCurrentLocation {
                 plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }
-        return this.world != null;
+        return world != null;
     }
 
     public int getCurrent_id() {

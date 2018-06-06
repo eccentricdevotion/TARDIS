@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetSonic;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -47,8 +39,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSonicGeneratorListener implements Listener {
@@ -64,7 +60,7 @@ public class TARDISSonicGeneratorListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Block block = event.getClickedBlock();
+        Block block = event.getClickedBlock();
         if (!block.getType().equals(Material.FLOWER_POT)) {
             return;
         }
@@ -76,7 +72,7 @@ public class TARDISSonicGeneratorListener implements Listener {
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                final Player player = event.getPlayer();
+                Player player = event.getPlayer();
                 UUID uuid = player.getUniqueId();
                 // check if the generator is activated
                 HashMap<String, Object> wheres = new HashMap<>();

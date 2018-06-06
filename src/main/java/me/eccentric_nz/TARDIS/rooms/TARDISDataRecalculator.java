@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 /**
- * Lady Calcula was the wife of Colonel Nasgard and the mother of Yarvell and
- * Davros, the latter by her lover Councillor Quested. She was a senior figure
- * in Kaled politics who lived on Skaro towards the end of the Thousand Year War
+ * Lady Calcula was the wife of Colonel Nasgard and the mother of Yarvell and Davros, the latter by her lover Councillor
+ * Quested. She was a senior figure in Kaled politics who lived on Skaro towards the end of the Thousand Year War
  * between the Kaleds and the Thals.
  *
  * @author eccentric_nz
@@ -30,12 +29,10 @@ public class TARDISDataRecalculator {
     }
 
     /**
-     * A method to calculate the data bit for a block based on the direction a
-     * room is facing when grown.
+     * A method to calculate the data bit for a block based on the direction a room is facing when grown.
      *
-     * @param id the TypeId of the block we want to re-calculate the data for.
-     * @param bit the current Data of the block we want to re-calculate the data
-     * for.
+     * @param id  the TypeId of the block we want to re-calculate the data for.
+     * @param bit the current Data of the block we want to re-calculate the data for.
      * @return the new Data value based on the direction the room is facing
      */
     public static byte calculateData(int id, byte bit) {
@@ -172,20 +169,20 @@ public class TARDISDataRecalculator {
                 break;
             // beds
             case 26:
-            // repeaters
+                // repeaters
             case 93:
             case 94:
-            // trapdoor
+                // trapdoor
             case 96:
-            // cocoa
+                // cocoa
             case 127:
-            // tripwire hooks
+                // tripwire hooks
             case 131:
             case -125:
-            // anvils
+                // anvils
             case 145:
             case -111:
-            // comparators
+                // comparators
             case 149:
             case 150:
             case -106:
@@ -313,7 +310,7 @@ public class TARDISDataRecalculator {
             case 50:
             case 75:
             case 76:
-            // buttons
+                // buttons
             case 77:
             case 143:
             case -113:

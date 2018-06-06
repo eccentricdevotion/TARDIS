@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -29,8 +28,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRemoteBackCommand {
@@ -71,7 +71,7 @@ public class TARDISRemoteBackCommand {
             return true;
         }
         // set hidden false
-        final QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("hidden", 0);
         HashMap<String, Object> ttid = new HashMap<>();
@@ -83,7 +83,7 @@ public class TARDISRemoteBackCommand {
         plugin.getTrackerKeeper().getInVortex().add(id);
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             // destroy the police box
-            final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
             dd.setDirection(rsc.getDirection());
             dd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
             dd.setPlayer(player);
@@ -96,7 +96,7 @@ public class TARDISRemoteBackCommand {
             plugin.getPresetDestroyer().destroyPreset(dd);
         }
         // rebuild the police box
-        final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+        BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
         bd.setDirection(rsb.getDirection());
         bd.setLocation(new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ()));
         bd.setMalfunction(false);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.io.File;
-import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -25,8 +23,10 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCondenserCommand {
@@ -37,7 +37,7 @@ public class TARDISCondenserCommand {
         this.plugin = plugin;
     }
 
-    
+
     public boolean set(CommandSender sender) {
         if (!(sender instanceof Player)) {
             TARDISMessage.send(sender, "CMD_ONLY_PLAYER");

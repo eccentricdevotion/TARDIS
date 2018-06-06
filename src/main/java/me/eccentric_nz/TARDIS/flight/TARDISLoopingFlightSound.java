@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISLoopingFlightSound implements Runnable {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,10 +24,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Locale;
+import java.util.UUID;
+
 /**
- * The TARDIS information system is a searchable database which was discovered
- * by the Fifth Doctor's companions Nyssa and Tegan from a readout in the
- * control room. The Fifth Doctor called it the TARDIS databank.
+ * The TARDIS information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
+ * and Tegan from a readout in the control room. The Fifth Doctor called it the TARDIS databank.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -40,13 +40,12 @@ public class TARDISInformationSystemListener implements Listener {
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.pluginYml = this.plugin.getPM().getPlugin("TARDIS").getConfig();
+        pluginYml = this.plugin.getPM().getPlugin("TARDIS").getConfig();
     }
 
     /**
-     * Listens for player typing a TARDIS Information System key code. The
-     * player must be found in the trackInfoMenu HashMap, where their position
-     * in the TIS is stored. The key code is then processed.
+     * Listens for player typing a TARDIS Information System key code. The player must be found in the trackInfoMenu
+     * HashMap, where their position in the TIS is stored. The key code is then processed.
      *
      * @param event a player typing in chat
      */
@@ -1217,10 +1216,10 @@ public class TARDISInformationSystemListener implements Listener {
     }
 
     /**
-     * Displays the next menu level based on the parent menu item that was
-     * selected. Automatically pulls the key code and highlights it.
+     * Displays the next menu level based on the parent menu item that was selected. Automatically pulls the key code
+     * and highlights it.
      *
-     * @param p the player to show the menu to
+     * @param p    the player to show the menu to
      * @param item the parent menu item to get the children of
      */
     private void processKey(Player p, TARDISInfoMenu item) {
@@ -1235,11 +1234,10 @@ public class TARDISInformationSystemListener implements Listener {
     }
 
     /**
-     * Displays information about a TARDIS room. Descriptions are stored in the
-     * TARDISDescription enum. Other values are pulled directly from the
-     * rooms.yml configuration file.
+     * Displays information about a TARDIS room. Descriptions are stored in the TARDISDescription enum. Other values are
+     * pulled directly from the rooms.yml configuration file.
      *
-     * @param p the player to show the room information to
+     * @param p    the player to show the room information to
      * @param item the room to display
      */
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
@@ -1255,10 +1253,9 @@ public class TARDISInformationSystemListener implements Listener {
     }
 
     /**
-     * Displays information about an item or TARDIS type. Descriptions are
-     * stored in the TARDISDescription enum.
+     * Displays information about an item or TARDIS type. Descriptions are stored in the TARDISDescription enum.
      *
-     * @param p the player to show the information to
+     * @param p    the player to show the information to
      * @param item the item or TARDIS type to display
      */
     private void showInfo(Player p, TARDISInfoMenu item) {
@@ -1271,7 +1268,7 @@ public class TARDISInformationSystemListener implements Listener {
     /**
      * Displays the workbench recipe for an item or component.
      *
-     * @param p the player to show the recipe to
+     * @param p    the player to show the recipe to
      * @param item the recipe to display
      */
     private void showRecipe(Player p, TARDISInfoMenu item) {
@@ -1285,10 +1282,10 @@ public class TARDISInformationSystemListener implements Listener {
     }
 
     /**
-     * Displays the description and usage of a command. Values are pulled
-     * directly from the plugin.yml configuration file.
+     * Displays the description and usage of a command. Values are pulled directly from the plugin.yml configuration
+     * file.
      *
-     * @param p the player to show the command information to
+     * @param p    the player to show the command information to
      * @param item the command to display
      */
     private void showCommand(Player p, TARDISInfoMenu item) {

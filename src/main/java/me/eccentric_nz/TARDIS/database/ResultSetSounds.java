@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import me.eccentric_nz.TARDIS.TARDIS;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the companions who travel in the TARDIS.
- *
- * Companions are the Doctor's closest friends. Such people knew the Doctor's
- * "secret": that he was someone non-human who travelled in space and time in a
- * police box-shaped craft called the TARDIS.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the companions who travel in the
+ * TARDIS.
+ * <p>
+ * Companions are the Doctor's closest friends. Such people knew the Doctor's "secret": that he was someone non-human
+ * who travelled in space and time in a police box-shaped craft called the TARDIS.
  *
  * @author eccentric_nz
  */
@@ -46,20 +42,18 @@ public class ResultSetSounds {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the travellers table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
      *
      * @param plugin an instance of the main class.
      */
     public ResultSetSounds(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the travellers table. This method builds
-     * an SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the travellers table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISDematerialisationEvent extends TARDISEvent {
@@ -34,8 +33,7 @@ public final class TARDISDematerialisationEvent extends TARDISEvent {
     }
 
     /**
-     * Returns the Bukkit Location of the TARDIS exterior preset where it
-     * dematerialise from.
+     * Returns the Bukkit Location of the TARDIS exterior preset where it dematerialise from.
      *
      * @return the location of the dematerialisation event
      */

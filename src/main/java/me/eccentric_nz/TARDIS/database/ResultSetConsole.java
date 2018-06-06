@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the location of the TARDIS Police Box blocks.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
+ * blocks.
  *
  * @author eccentric_nz
  */
@@ -45,22 +46,20 @@ public class ResultSetConsole {
     private int artronLevel;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the blocks table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
      *
-     * @param plugin - an instance of the main class
+     * @param plugin    - an instance of the main class
      * @param tardis_id - the tardis_id to get the data for
      */
     public ResultSetConsole(TARDIS plugin, int tardis_id) {
         this.plugin = plugin;
         this.tardis_id = tardis_id;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis, current and controls tables.
-     * This method builds an SQL query string from the parameters supplied and
-     * then executes the query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the tardis, current and controls tables. This method builds an SQL query string
+     * from the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -83,11 +82,11 @@ public class ResultSetConsole {
                 if (l == null) {
                     return false;
                 }
-                this.sign = l.getBlock();
-                this.preset = rs.getString("chameleon_preset");
-                this.world = rs.getString("world");
-                this.location = rs.getString("x") + ", " + rs.getString("y") + ", " + rs.getString("z");
-                this.biome = rs.getString("biome");
+                sign = l.getBlock();
+                preset = rs.getString("chameleon_preset");
+                world = rs.getString("world");
+                location = rs.getString("x") + ", " + rs.getString("y") + ", " + rs.getString("z");
+                biome = rs.getString("biome");
             } else {
                 return false;
             }
@@ -110,9 +109,8 @@ public class ResultSetConsole {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis, current and controls tables.
-     * This method builds an SQL query string from the parameters supplied and
-     * then executes the query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the tardis, current and controls tables. This method builds an SQL query string
+     * from the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -134,8 +132,8 @@ public class ResultSetConsole {
                 if (l == null) {
                     return false;
                 }
-                this.sign = l.getBlock();
-                this.artronLevel = rs.getInt("artron_level");
+                sign = l.getBlock();
+                artronLevel = rs.getInt("artron_level");
             } else {
                 return false;
             }

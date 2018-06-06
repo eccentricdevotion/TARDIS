@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -32,10 +31,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+import java.util.HashMap;
+
 /**
- * The Sontarans are a race of belligerent and militaristic clones from the
- * planet Sontar. They wage eternal war throughout Mutter's Spiral against the
- * Rutan Host.
+ * The Sontarans are a race of belligerent and militaristic clones from the planet Sontar. They wage eternal war
+ * throughout Mutter's Spiral against the Rutan Host.
  *
  * @author eccentric_nz
  */
@@ -48,9 +48,8 @@ public class TARDISCreeperDeathListener implements Listener {
     }
 
     /**
-     * Listens for Creeper deaths. If the creeper is killed by a player and the
-     * creeper is a charged creeper, then the player receives the configured
-     * amount of Artron Energy.
+     * Listens for Creeper deaths. If the creeper is killed by a player and the creeper is a charged creeper, then the
+     * player receives the configured amount of Artron Energy.
      *
      * @param e the death of an entity
      */

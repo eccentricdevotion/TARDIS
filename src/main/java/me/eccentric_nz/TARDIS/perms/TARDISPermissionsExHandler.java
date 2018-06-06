@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.perms;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -23,15 +25,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * The Sex Gas was an intelligent cloud of gas. It inhabited the body of Carys
- * Fletcher to have sex with other humans, killing them in the process. In its
- * natural form, the sex gas was a thick pink-purple gas with high
- * concentrations of vorax and ceranium, which could move about at will. It
- * could not survive in the atmosphere of Earth for very long and would quickly
- * become a pink powder.
+ * The Sex Gas was an intelligent cloud of gas. It inhabited the body of Carys Fletcher to have sex with other humans,
+ * killing them in the process. In its natural form, the sex gas was a thick pink-purple gas with high concentrations of
+ * vorax and ceranium, which could move about at will. It could not survive in the atmosphere of Earth for very long and
+ * would quickly become a pink powder.
  *
  * @author eccentric_nz
  */
@@ -44,7 +43,7 @@ public class TARDISPermissionsExHandler {
 
     public TARDISPermissionsExHandler(TARDIS plugin) {
         this.plugin = plugin;
-        this.permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
+        permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
     }
 
     public void addPerms(String player) {

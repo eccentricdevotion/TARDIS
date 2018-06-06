@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,8 @@ import java.util.Random;
 import java.util.TreeMap;
 
 /**
- *
- * @author eccentric_nz
  * @param <String>
+ * @author eccentric_nz
  */
 public class TARDISRandomCollection<String> {
 

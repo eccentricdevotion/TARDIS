@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.mobfarming;
 import org.bukkit.entity.Parrot.Variant;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISParrot extends TARDISMob {

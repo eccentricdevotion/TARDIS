@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -46,8 +40,9 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
 
+import java.util.*;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISGiveCommand implements CommandExecutor {
@@ -58,7 +53,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.full = this.plugin.getArtronConfig().getInt("full_charge");
+        full = this.plugin.getArtronConfig().getInt("full_charge");
         items.put("a-circuit", "Server Admin Circuit");
         items.put("acid-battery", "Acid Battery");
         items.put("ars-circuit", "TARDIS ARS Circuit");
@@ -117,7 +112,6 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisgive then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
@@ -146,16 +140,16 @@ public class TARDISGiveCommand implements CommandExecutor {
                         return true;
                     }
                     plugin.getKitsConfig().getStringList("kits." + args[2]).forEach((k) -> {
-                        this.giveItem(k, p);
+                        giveItem(k, p);
                     });
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
                 }
                 if (item.equals("seed")) {
-                    return this.giveSeed(sender, args[0], args[2].toUpperCase(Locale.ENGLISH));
+                    return giveSeed(sender, args[0], args[2].toUpperCase(Locale.ENGLISH));
                 }
                 if (item.equals("tachyon")) {
-                    return this.giveTachyon(sender, args[0], args[2]);
+                    return giveTachyon(sender, args[0], args[2]);
                 }
                 int amount;
                 switch (args[2]) {
@@ -182,7 +176,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    return this.giveArtron(sender, args[0], amount);
+                    return giveArtron(sender, args[0], amount);
                 } else {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
@@ -205,7 +199,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
             TARDISMessage.send(sender, "ARG_MAX");
@@ -251,7 +244,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveItem(String item, Player player) {
         ItemStack result;
         if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
@@ -267,7 +259,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveArtron(CommandSender sender, String player, int amount) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
@@ -309,7 +300,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveSeed(CommandSender sender, String p, String type) {
         if (plugin.getServer().getPlayer(p) == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
@@ -337,7 +327,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveTachyon(CommandSender sender, String player, String amount) {
         if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
@@ -358,7 +347,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveFullCell(CommandSender sender, int amount, Player player) {
         if (amount > 64) {
             TARDISMessage.send(sender, "ARG_MAX");
@@ -384,7 +372,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     private boolean giveKnowledgeBook(CommandSender sender, String item, Player player) {
         String item_to_give = items.get(item);
         ItemStack book = new ItemStack(Material.KNOWLEDGE_BOOK, 1);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS vaults.
- *
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * <p>
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -40,22 +40,20 @@ public class ResultSetTardisCompanions {
     private String companions;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the vaults table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
      */
     public ResultSetTardisCompanions(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Gets to the companions of a TARDIS. This method builds an SQL query
-     * string from the parameters supplied and then executes the query.
+     * Gets to the companions of a TARDIS. This method builds an SQL query string from the parameters supplied and then
+     * executes the query.
      *
      * @param uuid the Time Lord uuid to check
-     *
      * @return true or false depending on whether the TARDIS is powered on
      */
     public boolean fromUUID(String uuid) {
@@ -91,11 +89,10 @@ public class ResultSetTardisCompanions {
     }
 
     /**
-     * Gets to the companions of a TARDIS. This method builds an SQL query
-     * string from the parameters supplied and then executes the query.
+     * Gets to the companions of a TARDIS. This method builds an SQL query string from the parameters supplied and then
+     * executes the query.
      *
      * @param id the Tardis ID to check
-     *
      * @return true or false depending on whether the TARDIS is powered on
      */
     public boolean fromID(int id) {

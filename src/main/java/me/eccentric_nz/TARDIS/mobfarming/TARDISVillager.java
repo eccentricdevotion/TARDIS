@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import java.util.List;
 import org.bukkit.entity.Villager.Career;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.MerchantRecipe;
 
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
-@SuppressWarnings("rawtypes")
 public class TARDISVillager extends TARDISMob {
 
     private Profession profession;

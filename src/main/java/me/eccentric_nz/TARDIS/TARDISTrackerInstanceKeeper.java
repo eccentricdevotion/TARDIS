@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -36,11 +32,15 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * A central repository used to store various data values required to track what
- * Time lords and TARDIS are doing in-game, and provide easy access to the data
- * in other classes. For example the spectacleWearers List tracks which Time
- * Lords are currently wearing 3d_glasses.
+ * A central repository used to store various data values required to track what Time lords and TARDIS are doing
+ * in-game, and provide easy access to the data in other classes. For example the spectacleWearers List tracks which
+ * Time Lords are currently wearing 3d_glasses.
  *
  * @author eccentric_nz
  */
@@ -279,11 +279,11 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     public TARDISMoveSession getTARDISMoveSession(Player p) {
-        if (this.moveSessions.containsKey(p.getUniqueId())) {
-            return this.moveSessions.get(p.getUniqueId());
+        if (moveSessions.containsKey(p.getUniqueId())) {
+            return moveSessions.get(p.getUniqueId());
         }
         TARDISMoveSession session = new TARDISMoveSession(p);
-        this.moveSessions.put(p.getUniqueId(), session);
+        moveSessions.put(p.getUniqueId(), session);
         return session;
     }
 

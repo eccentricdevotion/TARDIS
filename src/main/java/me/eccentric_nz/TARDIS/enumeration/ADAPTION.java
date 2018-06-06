@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.enumeration;
 import org.bukkit.ChatColor;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum ADAPTION {
@@ -30,7 +29,7 @@ public enum ADAPTION {
 
     public ChatColor colour;
 
-    private ADAPTION(ChatColor colour) {
+    ADAPTION(ChatColor colour) {
         this.colour = colour;
     }
 

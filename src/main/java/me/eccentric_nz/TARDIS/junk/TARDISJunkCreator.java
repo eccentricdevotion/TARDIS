@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -30,8 +29,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkCreator {
@@ -65,7 +65,7 @@ public class TARDISJunkCreator {
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
         // save a tardis record
         String cw = plugin.getConfig().getString("creation.default_world_name");
-        final QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");
@@ -76,7 +76,7 @@ public class TARDISJunkCreator {
         set.put("chameleon_preset", "JUNK");
         set.put("chameleon_demat", "JUNK");
         set.put("lastuse", System.currentTimeMillis());
-        final int lastInsertId = qf.doSyncInsert("tardis", set);
+        int lastInsertId = qf.doSyncInsert("tardis", set);
         // get wall floor prefs
         Material wall_type = Material.ORANGE_WOOL;
         Material floor_type = Material.GRAY_WOOL;
@@ -108,7 +108,7 @@ public class TARDISJunkCreator {
         setlocs.put("direction", "SOUTH");
         qf.insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
         // build the TARDIS at the location
-        final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+        BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
         bd.setDirection(COMPASS.SOUTH);
         bd.setLocation(l);
         bd.setMalfunction(false);

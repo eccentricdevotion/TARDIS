@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -54,10 +47,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
- * A control sphere is a device created by the Great Intelligence to control its
- * Robot Yetis. It is a glass sphere that is fitted into the chest of a Yeti and
- * serves as the brain. It emits a beeping noise.
+ * A control sphere is a device created by the Great Intelligence to control its Robot Yetis. It is a glass sphere that
+ * is fitted into the chest of a Yeti and serves as the brain. It emits a beeping noise.
  *
  * @author eccentric_nz
  */
@@ -75,8 +69,8 @@ public class TARDISTerminalListener implements Listener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -88,7 +82,7 @@ public class TARDISTerminalListener implements Listener {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
-                final Player player = (Player) event.getWhoClicked();
+                Player player = (Player) event.getWhoClicked();
                 UUID uuid = player.getUniqueId();
                 // get the TARDIS the player is in
                 HashMap<String, Object> where = new HashMap<>();
@@ -561,8 +555,8 @@ public class TARDISTerminalListener implements Listener {
         is.setItemMeta(im);
     }
 
-    private void close(final Player p) {
-        final UUID uuid = p.getUniqueId();
+    private void close(Player p) {
+        UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (terminalUsers.containsKey(uuid)) {
                 terminalUsers.remove(uuid);

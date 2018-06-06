@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS vaults.
- *
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * <p>
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -40,25 +40,22 @@ public class ResultSetVoid {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the thevoid table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the thevoid table.
      *
-     * @param plugin an instance of the main class.
+     * @param plugin    an instance of the main class.
      * @param tardis_id the TARDIS id to check
      */
     public ResultSetVoid(TARDIS plugin, int tardis_id) {
         this.plugin = plugin;
         this.tardis_id = tardis_id;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Attempts to see whether the supplied TARDIS id is in the thevoid table.
-     * This method builds an SQL query string from the parameters supplied and
-     * then executes the query.
+     * Attempts to see whether the supplied TARDIS id is in the thevoid table. This method builds an SQL query string
+     * from the parameters supplied and then executes the query.
      *
-     * @return true or false depending on whether the TARDIS id exists in the
-     * table
+     * @return true or false depending on whether the TARDIS id exists in the table
      */
     public boolean hasUpdatedToVOID() {
         PreparedStatement statement = null;

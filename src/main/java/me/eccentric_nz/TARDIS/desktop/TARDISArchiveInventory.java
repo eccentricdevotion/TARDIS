@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
@@ -27,12 +26,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+
 /**
- * By the time of his eleventh incarnation, the Doctor's console room had gone
- * through at least twelve redesigns, though the TARDIS revealed that she had
- * archived 30 versions. Once a control room was reconfigured, the TARDIS
- * archived the old design "for neatness". The TARDIS effectively "curated" a
- * museum of control rooms — both those in the Doctor's personal past and future
+ * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
+ * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
+ * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
+ * personal past and future
  *
  * @author eccentric_nz
  */
@@ -45,7 +45,7 @@ public class TARDISArchiveInventory {
     public TARDISArchiveInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
-        this.menu = getItemStack();
+        menu = getItemStack();
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -29,8 +27,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISAbandoned {
@@ -49,9 +49,9 @@ public class TARDISAbandoned {
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)
-        final String biome = l.getBlock().getBiome().toString();
+        String biome = l.getBlock().getBiome().toString();
         String chun = cw + ":" + cx + ":" + cz;
-        final QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("owner", "");
         set.put("chunk", chun);
@@ -60,7 +60,7 @@ public class TARDISAbandoned {
         set.put("lastuse", Long.MAX_VALUE);
         set.put("chameleon_preset", p.toString());
         set.put("chameleon_demat", p.toString());
-        final int lastInsertId = qf.doSyncInsert("tardis", set);
+        int lastInsertId = qf.doSyncInsert("tardis", set);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
@@ -71,7 +71,7 @@ public class TARDISAbandoned {
         setlocs.put("direction", d.toString());
         qf.insertLocations(setlocs, biome, lastInsertId);
         // turn the block stack into a TARDIS
-        final BuildData bd = new BuildData(plugin, null);
+        BuildData bd = new BuildData(plugin, null);
         bd.setDirection(d);
         bd.setLocation(l);
         bd.setMalfunction(false);

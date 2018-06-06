@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,8 @@
 package me.eccentric_nz.TARDIS.info;
 
 /**
- *
- * The Master had modified the Doctor's TARDIS using Block Transfer Computation
- * as part of his plan to ensnare the Doctor in Castrovalva. At least some of
- * the TIS's contents, such as the entry on Castrovalva, would not otherwise
+ * The Master had modified the Doctor's TARDIS using Block Transfer Computation as part of his plan to ensnare the
+ * Doctor in Castrovalva. At least some of the TIS's contents, such as the entry on Castrovalva, would not otherwise
  * have existed.
  *
  * @author bootthanoo, eccentric_nz
@@ -265,6 +263,6 @@ public enum TARDISDescription {
      * @return name of this TARDISDescription
      */
     public String getDesc() {
-        return this.desc;
+        return desc;
     }
 }

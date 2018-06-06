@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -33,8 +32,9 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Lever;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTakeoff {
@@ -45,7 +45,7 @@ public class TARDISTakeoff {
         this.plugin = plugin;
     }
 
-    public void run(int id, Block block, Location handbrake, final Player player, boolean beac_on, String beacon, boolean bar, int flight_mode) {
+    public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, int flight_mode) {
         BlockState state = block.getState();
         Lever lever = (Lever) state.getData();
         lever.setPowered(false);
@@ -83,7 +83,7 @@ public class TARDISTakeoff {
         }
     }
 
-    public void run(int id, final Player player, String beacon) {
+    public void run(int id, Player player, String beacon) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("type", 0);

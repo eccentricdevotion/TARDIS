@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSelectWatchListener implements Listener {
@@ -38,10 +37,9 @@ public class TARDISSelectWatchListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onTryToSelectWatch(PlayerItemHeldEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
             return;
         }

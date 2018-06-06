@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 /**
- * Perception filters had the effect of directing attention away from the object
- * or its bearer, rendering them unnoticeable. The Doctor was able to construct
- * a perception filter around three keys to the TARDIS, activated when they were
- * worn around the neck on a chain.
+ * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
+ * unnoticeable. The Doctor was able to construct a perception filter around three keys to the TARDIS, activated when
+ * they were worn around the neck on a chain.
  *
  * @author eccentric_nz
  */

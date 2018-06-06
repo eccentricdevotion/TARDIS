@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.enumeration;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum CONTROL {
@@ -55,7 +54,7 @@ public enum CONTROL {
     private final String update;
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
 
-    private CONTROL(int id, String update) {
+    CONTROL(int id, String update) {
         this.id = id;
         this.update = update;
     }

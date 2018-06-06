@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -32,8 +30,10 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISEnterCommand {
@@ -44,7 +44,6 @@ public class TARDISEnterCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean enterTARDIS(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
@@ -143,7 +142,7 @@ public class TARDISEnterCommand {
                     }
                 }
                 tmp_loc.setYaw(yaw);
-                final Location tardis_loc = tmp_loc;
+                Location tardis_loc = tmp_loc;
                 World playerWorld = player.getLocation().getWorld();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table

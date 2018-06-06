@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -38,10 +34,14 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
 /**
- * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at
- * least two functions: opening and closing doors and controlling implosions
- * used to revert paradoxes in which the TARDIS had materialised within itself.
+ * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
+ * doors and controlling implosions used to revert paradoxes in which the TARDIS had materialised within itself.
  *
  * @author eccentric_nz
  */
@@ -55,7 +55,7 @@ public class TARDISPresetBuilderFactory {
 
     public TARDISPresetBuilderFactory(TARDIS plugin) {
         this.plugin = plugin;
-        this.rand = new Random();
+        rand = new Random();
         face_map.put(COMPASS.NORTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
         face_map.put(COMPASS.WEST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
         face_map.put(COMPASS.SOUTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
@@ -80,7 +80,7 @@ public class TARDISPresetBuilderFactory {
      *
      * @param bd the TARDIS build data
      */
-    public void buildPreset(final BuildData bd) {
+    public void buildPreset(BuildData bd) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", bd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -161,7 +161,7 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 }
             } else {
-                final Material id = cham_id;
+                Material id = cham_id;
                 // delay by the usual time so handbrake message shows after materialisation sound
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());

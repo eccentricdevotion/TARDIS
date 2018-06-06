@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -24,8 +23,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISVoidFall {
@@ -83,7 +83,7 @@ public class TARDISVoidFall {
             float pitch = p.getLocation().getPitch();
             tmp_loc.setPitch(pitch);
             tmp_loc.setYaw(yaw);
-            final Location tardis_loc = tmp_loc;
+            Location tardis_loc = tmp_loc;
             World playerWorld = p.getLocation().getWorld();
             p.setFallDistance(0.0f);
             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -30,18 +27,21 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * The helmic regulator was a component of the control panel of a Type 40
- * TARDIS. This device's principle function was to control the accuracy of
- * travel through the Time Vortex. If incorrectly handled, the helmic regulator
- * could greatly change the landing position of the TARDIS.
+ * The helmic regulator was a component of the control panel of a Type 40 TARDIS. This device's principle function was
+ * to control the accuracy of travel through the Time Vortex. If incorrectly handled, the helmic regulator could greatly
+ * change the landing position of the TARDIS.
  *
  * @author eccentric_nz
  */
 public class TARDISRegulatorListener extends TARDISRegulatorSlot implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> directions = Arrays.asList(new Integer[]{16, 24, 26, 34});
+    private final List<Integer> directions = Arrays.asList(16, 24, 26, 34);
 
     public TARDISRegulatorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -49,7 +49,7 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
 
     @EventHandler(ignoreCancelled = true)
     public void onHelmicRegulatorClose(InventoryCloseEvent event) {
-        final Inventory inv = event.getInventory();
+        Inventory inv = event.getInventory();
         if (inv.getTitle().equals("Helmic Regulator")) {
             Player player = (Player) event.getPlayer();
             UUID uuid = player.getUniqueId();
@@ -66,13 +66,13 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
 
     @EventHandler(ignoreCancelled = true)
     public void onHelmicRegulatorOpen(InventoryOpenEvent event) {
-        final Inventory inv = event.getInventory();
+        Inventory inv = event.getInventory();
         if (inv.getTitle().equals("Helmic Regulator")) {
-            final Player player = (Player) event.getPlayer();
-            final UUID uuid = player.getUniqueId();
+            Player player = (Player) event.getPlayer();
+            UUID uuid = player.getUniqueId();
             // start the runnable
             TARDISRegulatorRunnable wr = new TARDISRegulatorRunnable(inv);
-            final int id = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, wr, 5L, 20L);
+            int id = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, wr, 5L, 20L);
             wr.setTaskId(id);
             plugin.getTrackerKeeper().getRegulating().put(uuid, wr);
             // schedule a delayed task to close the inventory

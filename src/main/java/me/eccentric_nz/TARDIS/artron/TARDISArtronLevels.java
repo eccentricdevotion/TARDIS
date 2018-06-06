@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- * Artron energy is used as a source of energy in the TARDIS. Visually, artron
- * energy resembles a sort of blue electricity. Within the TARDIS' generator
- * room is an Artron Energy Capacitor. Artron energy can be absorbed by
+ * Artron energy is used as a source of energy in the TARDIS. Visually, artron energy resembles a sort of blue
+ * electricity. Within the TARDIS' generator room is an Artron Energy Capacitor. Artron energy can be absorbed by
  * travelling through time, such as by travellers in a TARDIS.
  *
  * @author eccentric_nz
@@ -40,9 +40,8 @@ public class TARDISArtronLevels {
     }
 
     /**
-     * Starts a repeating task to recharge the TARDIS. The task is started each
-     * time the player exits the TARDIS after travelling. If the TARDIS moves
-     * away from the recharge location the task is cancelled.
+     * Starts a repeating task to recharge the TARDIS. The task is started each time the player exits the TARDIS after
+     * travelling. If the TARDIS moves away from the recharge location the task is cancelled.
      *
      * @param id the unique TARDIS database key
      */
@@ -59,12 +58,12 @@ public class TARDISArtronLevels {
     }
 
     /**
-     * Checks whether the TARDIS has sufficient Artron Energy levels. If the
-     * energy level will drop below 100, then the player is warned.
+     * Checks whether the TARDIS has sufficient Artron Energy levels. If the energy level will drop below 100, then the
+     * player is warned.
      *
-     * @param id the unique TARDIS database key
+     * @param id       the unique TARDIS database key
      * @param required
-     * @param p the player to message
+     * @param p        the player to message
      * @return a boolean - true if the TARDIS has sufficient energy
      */
     public boolean checkLevel(int id, int required, Player p) {

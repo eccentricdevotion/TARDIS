@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 
+import java.io.*;
+import java.util.Locale;
+
 /**
- * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly
- * in design, with different factions throughout time and space.
+ * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly in design, with different factions
+ * throughout time and space.
  *
  * @author eccentric_nz
  */
@@ -96,12 +92,11 @@ public class TARDISFileCopier {
     }
 
     /**
-     * Copies the schematic file to the TARDIS plugin directory if it is not
-     * present.
+     * Copies the schematic file to the TARDIS plugin directory if it is not present.
      *
-     * @param filepath the path to the file to write to
-     * @param in the input file to read from
-     * @param overwrite whether to overwrite the file
+     * @param filepath   the path to the file to write to
+     * @param in         the input file to read from
+     * @param overwrite  whether to overwrite the file
      * @param pluginName the name of the plugin doing the copy
      * @return a File
      */
@@ -139,8 +134,7 @@ public class TARDISFileCopier {
     }
 
     /**
-     * Copies the schematic file to the TARDIS plugin directory if it is not
-     * present.
+     * Copies the schematic file to the TARDIS plugin directory if it is not present.
      *
      * @param filename the name of the file to copy
      * @return a File

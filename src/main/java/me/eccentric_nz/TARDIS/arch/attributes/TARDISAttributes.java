@@ -1,16 +1,32 @@
+/*
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.arch.attributes;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
-import java.util.Iterator;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISNbtFactory.NbtCompound;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISNbtFactory.NbtList;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Iterator;
+import java.util.UUID;
+
 /**
- *
  * @author Kristian
  */
 public class TARDISAttributes {
@@ -25,7 +41,7 @@ public class TARDISAttributes {
 
         // Load NBT
         NbtCompound nbt = TARDISNbtFactory.fromItemTag(this.stack);
-        this.attributes = nbt.getList("AttributeModifiers", true);
+        attributes = nbt.getList("AttributeModifiers", true);
     }
 
     /**
@@ -67,7 +83,7 @@ public class TARDISAttributes {
     public boolean remove(TARDISAttribute attribute) {
         UUID uuid = attribute.getUUID();
 
-        for (Iterator<TARDISAttribute> it = values().iterator(); it.hasNext();) {
+        for (Iterator<TARDISAttribute> it = values().iterator(); it.hasNext(); ) {
             if (Objects.equal(it.next().getUUID(), uuid)) {
                 it.remove();
                 return true;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISChameleonArchEvent extends Event {
@@ -46,10 +45,8 @@ public final class TARDISChameleonArchEvent extends Event {
     }
 
     /**
-     * Returns the Chameleon Arch
-     * {@link me.eccentric_nz.TARDIS.arch.TARDISWatchData TARDISWatchData}
-     * object. This contains the 'arched' player's new display name, and the
-     * time (in milliseconds) that they became 'arched'.
+     * Returns the Chameleon Arch {@link me.eccentric_nz.TARDIS.arch.TARDISWatchData TARDISWatchData} object. This
+     * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
      *
      * @return the TARDISWatchData object
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISChameleonHelpGUI {
@@ -33,7 +33,7 @@ public class TARDISChameleonHelpGUI {
 
     public TARDISChameleonHelpGUI(TARDIS plugin) {
         this.plugin = plugin;
-        this.help = getItemStack();
+        help = getItemStack();
     }
 
     private ItemStack[] getItemStack() {
@@ -148,12 +148,12 @@ public class TARDISChameleonHelpGUI {
         f.setItemMeta(ou);
 
         ItemStack[] is = {
-            back, null, null, info, info2, null, null, null, null,
-            null, null, null, null, null, null, null, column, null,
-            null, grid, null, null, null, null, null, f, null,
-            three, four, five, null, null, null, null, t, null,
-            two, nine, six, null, example, null, null, w, null,
-            one, eight, seven, null, null, null, null, o, null
+                back, null, null, info, info2, null, null, null, null,
+                null, null, null, null, null, null, null, column, null,
+                null, grid, null, null, null, null, null, f, null,
+                three, four, five, null, null, null, null, t, null,
+                two, nine, six, null, example, null, null, w, null,
+                one, eight, seven, null, null, null, null, o, null
         };
         return is;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRoomDirection {
@@ -34,12 +33,11 @@ public class TARDISRoomDirection {
 
     public TARDISRoomDirection(Block b) {
         this.b = b;
-        this.found = false;
+        found = false;
     }
 
     /**
-     * Gets the compass the room should be grown by finding the pressure plate
-     * in front of the door.
+     * Gets the compass the room should be grown by finding the pressure plate in front of the door.
      */
     public void getDirection() {
         for (COMPASS c : COMPASS.values()) {

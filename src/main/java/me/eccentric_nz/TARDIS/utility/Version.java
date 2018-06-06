@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ package me.eccentric_nz.TARDIS.utility;
  */
 public class Version implements Comparable<Version> {
 
-    private String version;
+    private final String version;
 
     public Version(String version) {
         if (version == null) {
@@ -36,7 +36,7 @@ public class Version implements Comparable<Version> {
     }
 
     public String get() {
-        return this.version;
+        return version;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Version implements Comparable<Version> {
         if (that == null) {
             return 1;
         }
-        String[] thisParts = this.get().split("\\.");
+        String[] thisParts = get().split("\\.");
         String[] thatParts = that.get().split("\\.");
         int length = Math.max(thisParts.length, thatParts.length);
         for (int i = 0; i < length; i++) {
@@ -70,10 +70,10 @@ public class Version implements Comparable<Version> {
         if (that == null) {
             return false;
         }
-        if (this.getClass() != that.getClass()) {
+        if (getClass() != that.getClass()) {
             return false;
         }
-        return this.compareTo((Version) that) == 0;
+        return compareTo((Version) that) == 0;
     }
 
     @Override

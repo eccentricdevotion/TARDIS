@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -49,8 +46,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.material.Lever;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkControlListener implements Listener {
@@ -62,11 +62,11 @@ public class TARDISJunkControlListener implements Listener {
 
     public TARDISJunkControlListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.repeaterMap.put(1, 1);
-        this.repeaterMap.put(2, 10);
-        this.repeaterMap.put(3, 100);
-        this.repeaterMap.put(4, 1000);
-        this.worlds = this.plugin.getTardisAPI().getOverWorlds();
+        repeaterMap.put(1, 1);
+        repeaterMap.put(2, 10);
+        repeaterMap.put(3, 100);
+        repeaterMap.put(4, 1000);
+        worlds = this.plugin.getTardisAPI().getOverWorlds();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -80,7 +80,7 @@ public class TARDISJunkControlListener implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            final Location controlLoc = block.getLocation();
+            Location controlLoc = block.getLocation();
             String c_loc = controlLoc.toString();
             HashMap<String, Object> where = new HashMap<>();
             where.put("location", c_loc);
@@ -93,7 +93,7 @@ public class TARDISJunkControlListener implements Listener {
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
-                        final Player player = event.getPlayer();
+                        Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
@@ -121,7 +121,7 @@ public class TARDISJunkControlListener implements Listener {
                             state.setData(lever);
                             state.update();
                             // destroy junk TARDIS
-                            final DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+                            DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                             dd.setPlayer(player);
                             dd.setDirection(COMPASS.SOUTH);
                             dd.setLocation(junkloc);
@@ -149,7 +149,7 @@ public class TARDISJunkControlListener implements Listener {
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
-                        final Player player = event.getPlayer();
+                        Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
@@ -167,7 +167,7 @@ public class TARDISJunkControlListener implements Listener {
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
-                        final Player player = event.getPlayer();
+                        Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
@@ -185,7 +185,7 @@ public class TARDISJunkControlListener implements Listener {
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
-                        final Player player = event.getPlayer();
+                        Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;

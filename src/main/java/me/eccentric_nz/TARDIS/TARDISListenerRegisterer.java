@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,12 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitRepairListener;
-import me.eccentric_nz.TARDIS.advanced.TARDISConsoleCloseListener;
-import me.eccentric_nz.TARDIS.advanced.TARDISConsoleListener;
-import me.eccentric_nz.TARDIS.advanced.TARDISConsoleSwitchListener;
-import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
-import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
-import me.eccentric_nz.TARDIS.arch.TARDISFakeChatListener;
-import me.eccentric_nz.TARDIS.arch.TARDISFobWatchListener;
-import me.eccentric_nz.TARDIS.arch.TARDISInventoryPluginHelper;
-import me.eccentric_nz.TARDIS.arch.TARDISRespawnListener;
-import me.eccentric_nz.TARDIS.arch.TARDISSelectWatchListener;
+import me.eccentric_nz.TARDIS.advanced.*;
+import me.eccentric_nz.TARDIS.arch.*;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonConstructorListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonConstructorOpenCloseListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonHelpListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonTemplateListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
+import me.eccentric_nz.TARDIS.chameleon.*;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
@@ -61,98 +47,21 @@ import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBeaconColouringListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBlockPlaceListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISBlockStackListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISChatListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISCraftListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISEjectListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISGlassesListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISGravityWellListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISItemFrameListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardPacketListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISMinecartListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISPerceptionFilterListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISPistonHarvesterListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISPlayerKickListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISQuitListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISRemoteKeyListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISSeedBlockListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISSleepListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISSmelterListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISSpawnListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISStattenheimListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTelepathicListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTemporalListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
-import me.eccentric_nz.TARDIS.move.TARDISAnyoneDoorListener;
-import me.eccentric_nz.TARDIS.move.TARDISAnyoneMoveListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
-import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAcidWater;
-import me.eccentric_nz.TARDIS.planets.TARDISGallifreyChunkPopulateListener;
-import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
-import me.eccentric_nz.TARDIS.planets.TARDISSiluriaSpawnListener;
-import me.eccentric_nz.TARDIS.planets.TARDISSkaroSpawnListener;
+import me.eccentric_nz.TARDIS.listeners.*;
+import me.eccentric_nz.TARDIS.move.*;
+import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISFarmBlockListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicActivatorListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicGeneratorListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicGeneratorMenuListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicUpgradeListener;
+import me.eccentric_nz.TARDIS.sonic.*;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 
 /**
- * Registers all the listeners for the various events required to use the
- * TARDIS.
+ * Registers all the listeners for the various events required to use the TARDIS.
  *
  * @author eccentric_nz
  */
@@ -165,8 +74,7 @@ public class TARDISListenerRegisterer {
     }
 
     /**
-     * Registers all the listeners for the various events required to use the
-     * TARDIS.
+     * Registers all the listeners for the various events required to use the TARDIS.
      */
     public void registerListeners() {
         if (plugin.getConfig().getBoolean("creation.use_block_stack")) {

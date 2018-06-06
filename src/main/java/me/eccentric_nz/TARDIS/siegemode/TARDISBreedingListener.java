@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
@@ -27,8 +26,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
+import java.util.Random;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISBreedingListener implements Listener {
@@ -44,7 +44,7 @@ public class TARDISBreedingListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(CreatureSpawnEvent event) {
-        final Entity ent = event.getEntity();
+        Entity ent = event.getEntity();
         if (!(ent instanceof Ageable)) {
             return;
         }

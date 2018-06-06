@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * A numerical Type designates each model of TARDIS. Every TARDIS that is
- * constructed follows the specifications of its specific "Type." For example
- * the Doctor usually operates a Type 40 TARDIS. Higher Type numbers indicated
- * later model TARDISes.
+ * A numerical Type designates each model of TARDIS. Every TARDIS that is constructed follows the specifications of its
+ * specific "Type." For example the Doctor usually operates a Type 40 TARDIS. Higher Type numbers indicated later model
+ * TARDISes.
  *
  * @author eccentric_nz
  */
@@ -45,22 +45,20 @@ public class ResultSetCount {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the count table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the count table.
      *
      * @param plugin an instance of the main class.
-     * @param where a player's UUID.toString() to refine the search.
+     * @param where  a player's UUID.toString() to refine the search.
      */
     public ResultSetCount(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the lamps table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the lamps table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -75,11 +73,11 @@ public class ResultSetCount {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.id = rs.getInt("t_id");
-                    this.uuid = UUID.fromString(rs.getString("uuid"));
-                    this.count = rs.getInt("count");
-                    this.grace = rs.getInt("grace");
-                    this.repair = rs.getInt("repair");
+                    id = rs.getInt("t_id");
+                    uuid = UUID.fromString(rs.getString("uuid"));
+                    count = rs.getInt("count");
+                    grace = rs.getInt("grace");
+                    repair = rs.getInt("repair");
                 }
             } else {
                 return false;

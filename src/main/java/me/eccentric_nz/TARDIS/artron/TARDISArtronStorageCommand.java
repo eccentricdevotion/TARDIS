@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -36,8 +32,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArtronStorageCommand implements CommandExecutor {
@@ -47,8 +47,8 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
 
     public TARDISArtronStorageCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.firstArgs.add("tardis");
-        this.firstArgs.add("timelord");
+        firstArgs.add("tardis");
+        firstArgs.add("timelord");
     }
 
     @Override

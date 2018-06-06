@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,14 +29,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- *
  * @author eccentric_nz
  */
 public class ResultSetArchive {
@@ -45,7 +45,7 @@ public class ResultSetArchive {
     public ResultSetArchive(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public boolean resultSet() {

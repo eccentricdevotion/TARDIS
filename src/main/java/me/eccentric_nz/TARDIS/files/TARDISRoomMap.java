@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- * The Unified Intelligence Taskforce — formerly known as the United Nations
- * Intelligence Taskforce, and more usually called UNIT — was a military
- * organisation which operated under the auspices of the United Nations. Its
- * remit was to investigate and combat paranormal and extraterrestrial threats
- * to the Earth. UNIT was not the only alien defence organisation, but it was
- * the one with which the Doctor had the closest personal involvement.
+ * The Unified Intelligence Taskforce — formerly known as the United Nations Intelligence Taskforce, and more usually
+ * called UNIT — was a military organisation which operated under the auspices of the United Nations. Its remit was to
+ * investigate and combat paranormal and extraterrestrial threats to the Earth. UNIT was not the only alien defence
+ * organisation, but it was the one with which the Doctor had the closest personal involvement.
  *
  * @author eccentric_nz
  */
@@ -44,8 +43,7 @@ public class TARDISRoomMap {
     }
 
     /**
-     * Loads schematic data into a Map. This allows the rooms_require_blocks
-     * option to check the room block counts.
+     * Loads schematic data into a Map. This allows the rooms_require_blocks option to check the room block counts.
      */
     public void load() {
         String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
@@ -70,7 +68,7 @@ public class TARDISRoomMap {
      * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
      *
      * @param fileStr the schematic file to read
-     * @param s the schematic name
+     * @param s       the schematic name
      * @return true if the schematic was loaded successfully
      */
     public boolean makeRoomMap(String fileStr, String s) {

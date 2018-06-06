@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -38,9 +36,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * Artron energy is to normal energy what movements within the deeps of the sea
- * are to the waves on the surface.
+ * Artron energy is to normal energy what movements within the deeps of the sea are to the waves on the surface.
  *
  * @author eccentric_nz
  */
@@ -53,21 +53,18 @@ public class TARDISJettisonSeeder implements Listener {
     }
 
     /**
-     * Listens for player interaction with a TNT block. If the block is clicked
-     * with the TARDIS key after running the command /tardis jettison [room
-     * type], the TNT block's location and the room type are used to determine a
-     * cuboid region that is set to AIR. The room walls are left in place as
-     * they maybe attached to other rooms/passage ways.
+     * Listens for player interaction with a TNT block. If the block is clicked with the TARDIS key after running the
+     * command /tardis jettison [room type], the TNT block's location and the room type are used to determine a cuboid
+     * region that is set to AIR. The room walls are left in place as they maybe attached to other rooms/passage ways.
      *
      * @param event a player clicking a block
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         String playerNameStr = player.getName();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS

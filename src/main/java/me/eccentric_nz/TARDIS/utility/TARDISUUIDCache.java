@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.apache.commons.lang.Validate;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.apache.commons.lang.Validate;
 
 /**
  * A cache of username->UUID mappings that automatically cleans itself.
- *
- * This cache is meant to be used in plugins such that plugins can look up the
- * UUID of a player by using the name of the player.
- *
- * For the most part, when the plugin asks the cache for the UUID of an online
- * player, it should have it available immediately because the cache registers
- * itself for the player join/quit events and does background fetches.
+ * <p>
+ * This cache is meant to be used in plugins such that plugins can look up the UUID of a player by using the name of the
+ * player.
+ * <p>
+ * For the most part, when the plugin asks the cache for the UUID of an online player, it should have it available
+ * immediately because the cache registers itself for the player join/quit events and does background fetches.
  *
  * @author James Crasta
- *
  */
 public class TARDISUUIDCache {
 
@@ -49,10 +48,9 @@ public class TARDISUUIDCache {
 
     /**
      * Get the UUID from the cache for the player named 'name'.
-     *
-     * If the id does not exist in our database, then we will queue a fetch to
-     * get it, and return null. A fetch at a later point will then be able to
-     * return this id.
+     * <p>
+     * If the id does not exist in our database, then we will queue a fetch to get it, and return null. A fetch at a
+     * later point will then be able to return this id.
      *
      * @param name the player name to lookup
      * @return the player's UUID
@@ -68,12 +66,10 @@ public class TARDISUUIDCache {
     }
 
     /**
-     * Get the UUID from the cache for the player named 'name', with blocking
-     * get.
-     *
-     * If the player named is not in the cache, then we will fetch the UUID in a
-     * blocking fashion. Note that this will block the thread until the fetch is
-     * complete, so only use this in a thread or in special circumstances.
+     * Get the UUID from the cache for the player named 'name', with blocking get.
+     * <p>
+     * If the player named is not in the cache, then we will fetch the UUID in a blocking fashion. Note that this will
+     * block the thread until the fetch is complete, so only use this in a thread or in special circumstances.
      *
      * @param name The player name.
      * @return a UUID
@@ -103,14 +99,14 @@ public class TARDISUUIDCache {
         asyncFetch(nameList(name));
     }
 
-    private void asyncFetch(final ArrayList<String> names) {
+    private void asyncFetch(ArrayList<String> names) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             syncFetch(names);
         });
     }
 
     private void syncFetch(ArrayList<String> names) {
-        final TARDISUUIDFetcher fetcher = new TARDISUUIDFetcher(names);
+        TARDISUUIDFetcher fetcher = new TARDISUUIDFetcher(names);
         try {
             cache.putAll(fetcher.call());
         } catch (Exception e) {

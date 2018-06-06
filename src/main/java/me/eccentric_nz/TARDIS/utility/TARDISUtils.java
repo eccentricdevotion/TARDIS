@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -26,12 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -40,11 +32,15 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Various utility methods.
- *
- * The TARDIS can be programmed to execute automatic functions based on certain
- * conditions. It also automatically repairs after too much damage.
+ * <p>
+ * The TARDIS can be programmed to execute automatic functions based on certain conditions. It also automatically
+ * repairs after too much damage.
  *
  * @author eccentric_nz
  */
@@ -111,12 +107,11 @@ public class TARDISUtils {
     }
 
     /**
-     * Checks if player has storage record, and update the tardis_id field if
-     * they do.
+     * Checks if player has storage record, and update the tardis_id field if they do.
      *
      * @param uuid the player's UUID
-     * @param id the player's TARDIS ID
-     * @param qf an instance of the database QueyFactory
+     * @param id   the player's TARDIS ID
+     * @param qf   an instance of the database QueyFactory
      */
     public void updateStorageId(String uuid, int id, QueryFactory qf) {
         HashMap<String, Object> where = new HashMap<>();
@@ -147,7 +142,7 @@ public class TARDISUtils {
         return colour;
     }
 
-    
+
     public int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);
@@ -218,7 +213,7 @@ public class TARDISUtils {
     public boolean restoreBiome(Location l, Biome biome) {
         if (l != null) {
             int sbx = l.getBlockX() - 1;
-            final int sbz = l.getBlockZ() - 1;
+            int sbz = l.getBlockZ() - 1;
             World w = l.getWorld();
             boolean run = true;
             // reset biome and it's not The End

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.database.ResultSetCount;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
@@ -39,10 +32,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.HashMap;
+
 /**
- * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked
- * to join them, Tylos challenged him to prove his worth by stealing some
- * riverfruit.
+ * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked to join them, Tylos challenged him to
+ * prove his worth by stealing some riverfruit.
  *
  * @author eccentric_nz
  */
@@ -55,16 +49,15 @@ public class TARDISJoinListener implements Listener {
     }
 
     /**
-     * Listens for a player joining the server. If the player has TARDIS
-     * permissions (ie not a guest), then check whether they have achieved the
-     * building of a TARDIS. If not then insert an achievement record and give
-     * them the tardis book.
+     * Listens for a player joining the server. If the player has TARDIS permissions (ie not a guest), then check
+     * whether they have achieved the building of a TARDIS. If not then insert an achievement record and give them the
+     * tardis book.
      *
      * @param event a player joining the server
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         String uuid = player.getUniqueId().toString();
         QueryFactory qf = new QueryFactory(plugin);
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
@@ -124,7 +117,7 @@ public class TARDISJoinListener implements Listener {
                 // is texture switching on?
                 HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("uuid", player.getUniqueId().toString());
-                final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
                     if (rsp.isTextureOn()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

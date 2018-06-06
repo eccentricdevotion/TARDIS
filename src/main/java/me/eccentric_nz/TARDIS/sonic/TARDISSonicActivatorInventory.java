@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSonicActivatorInventory {
@@ -36,7 +36,7 @@ public class TARDISSonicActivatorInventory {
 
     public TARDISSonicActivatorInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.activator = getItemStack();
+        activator = getItemStack();
     }
 
     /**
@@ -44,7 +44,7 @@ public class TARDISSonicActivatorInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    
+
     private ItemStack[] getItemStack() {
         List<String> lore = new ArrayList<>();
         lore.add("To activate the generator");
@@ -70,7 +70,7 @@ public class TARDISSonicActivatorInventory {
         close.setItemMeta(close_im);
 
         ItemStack[] stack = {
-            null, null, null, null, null, null, null, info, close
+                null, null, null, null, null, null, null, info, close
         };
         return stack;
     }

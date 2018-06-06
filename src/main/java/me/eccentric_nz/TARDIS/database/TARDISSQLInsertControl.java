@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSQLInsertControl implements Runnable {
@@ -38,14 +38,14 @@ public class TARDISSQLInsertControl implements Runnable {
     private final String prefix;
 
     /**
-     * Updates data in an SQLite database table. This method builds an SQL query
-     * string from the parameters supplied and then executes the update.
+     * Updates data in an SQLite database table. This method builds an SQL query string from the parameters supplied and
+     * then executes the update.
      *
      * @param plugin an instance of the main plugin class
-     * @param id the unique TARDIS identifier
-     * @param type the type of control to insert
-     * @param l the location of the control
-     * @param s whether the control is a secondary control
+     * @param id     the unique TARDIS identifier
+     * @param type   the type of control to insert
+     * @param l      the location of the control
+     * @param s      whether the control is a secondary control
      */
     public TARDISSQLInsertControl(TARDIS plugin, int id, int type, String l, int s) {
         this.plugin = plugin;
@@ -53,7 +53,7 @@ public class TARDISSQLInsertControl implements Runnable {
         this.type = type;
         this.l = l;
         this.s = s;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     @Override

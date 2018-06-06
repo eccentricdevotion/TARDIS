@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 drtshock
+ * Copyright (C) 2018 drtshock
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONException;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -29,15 +23,15 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.*;
+
 /**
  * Fancy JSON serialization mostly by evilmidget38.
  *
  * @author eccentric_nz
- *
  */
 public class TARDISInventorySerialization {
 
-    @SuppressWarnings("unchecked")
     public static Map<String, Object> toMap(JSONObject object) throws JSONException {
         Map<String, Object> map = new HashMap<>();
         Iterator<String> keys = object.keys();
@@ -125,7 +119,6 @@ public class TARDISInventorySerialization {
         return map;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public static ConfigurationSerializable deserialize(Map<String, Object> map) {
         map.entrySet().forEach((entry) -> {
             if (entry.getValue() instanceof Map && ((Map) entry.getValue()).containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {

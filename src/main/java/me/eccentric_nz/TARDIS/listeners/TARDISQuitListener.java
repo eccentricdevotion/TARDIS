@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
@@ -36,8 +34,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISQuitListener implements Listener {
@@ -77,7 +77,7 @@ public class TARDISQuitListener implements Listener {
                 // check if powered on
                 if (tardis.isPowered_on()) {
                     // not if flying or uninitialised
-                    final int id = tardis.getTardis_id();
+                    int id = tardis.getTardis_id();
                     if (!tardis.isTardis_init() || isTravelling(id) || !tardis.isHandbrake_on()) {
                         return;
                     }

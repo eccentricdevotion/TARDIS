@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -32,11 +30,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * Within the first nanosecond of landing in a new location, the TARDIS
- * chameleon circuit analyses the surrounding area, calculates a
- * twelve-dimensional data map of all objects within a thousand-mile radius and
- * then determines which outer shell would best blend in with the environment.
+ * Within the first nanosecond of landing in a new location, the TARDIS chameleon circuit analyses the surrounding area,
+ * calculates a twelve-dimensional data map of all objects within a thousand-mile radius and then determines which outer
+ * shell would best blend in with the environment.
  *
  * @author eccentric_nz
  */
@@ -49,9 +49,8 @@ public class TARDISAreaListener implements Listener {
     }
 
     /**
-     * Listens for player clicking blocks. If the player's name is contained in
-     * various tracking HashMaps then we know that they are trying to create a
-     * TARDIS area.
+     * Listens for player clicking blocks. If the player's name is contained in various tracking HashMaps then we know
+     * that they are trying to create a TARDIS area.
      *
      * @param event a player clicking a block
      */
@@ -60,8 +59,8 @@ public class TARDISAreaListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
-        final UUID uuid = player.getUniqueId();
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
             if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getBlock().containsKey(uuid)) {

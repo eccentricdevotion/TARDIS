@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -30,10 +29,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
 
+import java.util.HashMap;
+
 /**
- * Artron energy is vital in the running of a TARDIS; it can run low and when
- * down to 10% it means even backup power is unavailable, as this requires
- * artron energy as well.
+ * Artron energy is vital in the running of a TARDIS; it can run low and when down to 10% it means even backup power is
+ * unavailable, as this requires artron energy as well.
  *
  * @author eccentric_nz
  */
@@ -46,10 +46,9 @@ public class TARDISLightningListener implements Listener {
     }
 
     /**
-     * Listens for lightning strikes around the TARDIS Police Box. If the strike
-     * is within (recharge_distance in artron.yml) blocks, then the TARDIS
-     * Artron Levels will be increased by the configured amount
-     * (lightning_recharge in artron.yml).
+     * Listens for lightning strikes around the TARDIS Police Box. If the strike is within (recharge_distance in
+     * artron.yml) blocks, then the TARDIS Artron Levels will be increased by the configured amount (lightning_recharge
+     * in artron.yml).
      *
      * @param e a lightning strike
      */

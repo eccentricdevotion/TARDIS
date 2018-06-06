@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -28,8 +27,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISStandbyMode implements Runnable {
@@ -39,7 +39,7 @@ public class TARDISStandbyMode implements Runnable {
 
     public TARDISStandbyMode(TARDIS plugin) {
         this.plugin = plugin;
-        this.amount = this.plugin.getArtronConfig().getInt("standby");
+        amount = this.plugin.getArtronConfig().getInt("standby");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class TARDISStandbyMode implements Runnable {
         HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
         QueryFactory qf = new QueryFactory(plugin);
         ids.entrySet().forEach((map) -> {
-            final int id = map.getKey();
+            int id = map.getKey();
             int level = map.getValue().getLevel();
             // not while travelling or recharging and only until they hit zero
             if (!isTravelling(id) && !isNearCharger(id) && level > amount) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.io.File;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
@@ -29,8 +27,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.io.File;
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISLocationGetters {
@@ -88,11 +88,11 @@ public class TARDISLocationGetters {
     }
 
     /**
-     * Gets a location object from data stored in the database. This is used
-     * when teleporting the player in and out of the TARDIS
+     * Gets a location object from data stored in the database. This is used when teleporting the player in and out of
+     * the TARDIS
      *
-     * @param s the saved location data from the database.
-     * @param yaw the player's yaw.
+     * @param s     the saved location data from the database.
+     * @param yaw   the player's yaw.
      * @param pitch the player's pitch.
      * @return a Location.
      */
@@ -114,8 +114,7 @@ public class TARDISLocationGetters {
     /**
      * Gets a location object from data stored in the database.
      *
-     * @param string the stored Bukkit location string e.g.
-     * Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @param string the stored Bukkit location string e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      * @return the location or null
      */
     public Location getLocationFromBukkitString(String string) {
@@ -140,9 +139,9 @@ public class TARDISLocationGetters {
     /**
      * Checks whether a chunk is available to build a TARDIS in.
      *
-     * @param w the world the chunk is in.
-     * @param x the x coordinate of the chunk.
-     * @param z the z coordinate of the chunk.
+     * @param w    the world the chunk is in.
+     * @param x    the x coordinate of the chunk.
+     * @param z    the z coordinate of the chunk.
      * @param schm the schematic of the TARDIS being created.
      * @return true or false.
      */
@@ -178,8 +177,7 @@ public class TARDISLocationGetters {
      * Convert a pre TARDIS v2.3 location string to a v2.3 one.
      *
      * @param data an old location string retrieved from the database
-     * @return a String in the style of org.bukkit.Location.toString() e.g.
-     * Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(String data) {
         String[] s = data.split(":");
@@ -193,8 +191,7 @@ public class TARDISLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g.
-     * Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(World w, int x, int y, int z) {
         return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";

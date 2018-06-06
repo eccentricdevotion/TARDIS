@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS
- * has no real constraints on the amount of space it can use, most TARDISes
- * contain extensive areas which can be used as living quarters or storage
- * space.
+ * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS has no real constraints on the amount of
+ * space it can use, most TARDISes contain extensive areas which can be used as living quarters or storage space.
  *
  * @author eccentric_nz
  */

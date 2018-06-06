@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import org.bukkit.entity.Player;
@@ -25,8 +23,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.HashMap;
+import java.util.Set;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISMenuListener {
@@ -36,7 +36,7 @@ public class TARDISMenuListener {
 
     public TARDISMenuListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.titles = getTitleMap();
+        titles = getTitleMap();
     }
 
     /**
@@ -44,7 +44,7 @@ public class TARDISMenuListener {
      *
      * @param p the player using the GUI
      */
-    public void close(final Player p) {
+    public void close(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
         }, 1L);

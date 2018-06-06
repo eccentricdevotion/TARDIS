@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -34,9 +31,13 @@ import org.bukkit.command.CommandException;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * Emergency Programme One was a feature of the Doctor's TARDIS designed to
- * return a companion to a designated place in case of extreme emergency.
+ * Emergency Programme One was a feature of the Doctor's TARDIS designed to return a companion to a designated place in
+ * case of extreme emergency.
  *
  * @author eccentric_nz
  */
@@ -62,7 +63,7 @@ public class TARDISEPSRunnable implements Runnable {
 
     @Override
     public void run() {
-        final Location l = getSpawnLocation(id);
+        Location l = getSpawnLocation(id);
         if (l != null) {
             try {
                 TARDISSounds.playTARDISSound(l, "tardis_takeoff");
@@ -105,7 +106,6 @@ public class TARDISEPSRunnable implements Runnable {
     }
 
     /**
-     *
      * @param id the TARDIS to look up
      * @return the EP1 spawn location
      */
@@ -154,10 +154,9 @@ public class TARDISEPSRunnable implements Runnable {
     }
 
     /**
-     * Determines the angle of a straight line drawn between point one and two.
-     * The number returned, which is a double in degrees, tells us how much we
-     * have to rotate a horizontal line clockwise for it to match the line
-     * between the two points.
+     * Determines the angle of a straight line drawn between point one and two. The number returned, which is a double
+     * in degrees, tells us how much we have to rotate a horizontal line clockwise for it to match the line between the
+     * two points.
      *
      * @param px1
      * @param pz1

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSeedData {
@@ -78,10 +77,10 @@ public class TARDISSeedData {
         String[] data = s.split(":");
         int x = TARDISNumberParsers.parseInt(data[1]);
         int z = TARDISNumberParsers.parseInt(data[2]);
-        this.minx = x - 4;
-        this.maxx = x + 4;
-        this.minz = z - 4;
-        this.maxz = z + 4;
+        minx = x - 4;
+        maxx = x + 4;
+        minz = z - 4;
+        maxz = z + 4;
     }
 
     public boolean hasARS() {

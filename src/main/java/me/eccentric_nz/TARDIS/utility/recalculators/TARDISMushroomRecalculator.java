@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
 import com.google.common.collect.Sets;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 
+import java.util.Set;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISMushroomRecalculator {
@@ -39,11 +39,10 @@ public class TARDISMushroomRecalculator {
     private final Set<BlockFace> nine = Sets.newHashSet(BlockFace.UP, BlockFace.EAST, BlockFace.SOUTH);
 
     /**
-     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS
-     * preset changes direction.
+     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
      *
-     * @param b the block data stored in the preset data
-     * @param d the new direction of the TARDIS
+     * @param b   the block data stored in the preset data
+     * @param d   the new direction of the TARDIS
      * @param col the preset column that is being calculated
      * @return the recalculated block data
      */

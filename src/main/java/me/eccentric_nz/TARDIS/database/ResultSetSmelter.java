@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.Smelter;
 import org.bukkit.Location;
@@ -30,12 +24,18 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.util.Vector;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS vaults.
- *
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * <p>
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -53,22 +53,20 @@ public class ResultSetSmelter {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the vaults table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
-     * @param where the location of the smelter chest.
+     * @param where  the location of the smelter chest.
      */
     public ResultSetSmelter(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the vaults table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -83,11 +81,11 @@ public class ResultSetSmelter {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.smelter_id = rs.getInt("v_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.location = rs.getString("location");
-                    this.fuelChests = getChests(this.location, true);
-                    this.oreChests = getChests(this.location, false);
+                    smelter_id = rs.getInt("v_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    location = rs.getString("location");
+                    fuelChests = getChests(location, true);
+                    oreChests = getChests(location, false);
                 }
             } else {
                 return false;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -31,8 +30,9 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkDelete {
@@ -43,14 +43,14 @@ public class TARDISJunkDelete {
         this.plugin = plugin;
     }
 
-    public boolean delete(final CommandSender sender) {
+    public boolean delete(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
-            final int id = rs.getTardis_id();
+            int id = rs.getTardis_id();
             // get the current location
             Location bb_loc = null;
             Biome biome = null;
@@ -66,7 +66,7 @@ public class TARDISJunkDelete {
                 return true;
             }
             // destroy junk TARDIS
-            final DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+            DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
             dd.setDirection(COMPASS.SOUTH);
             dd.setLocation(bb_loc);
             dd.setHide(false);
@@ -76,11 +76,11 @@ public class TARDISJunkDelete {
             dd.setBiome(biome);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex TARDIS
-            final World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
+            World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
             // give the TARDIS time to remove itself as it's not hidden
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    plugin.getInteriorDestroyer().destroyInner(CONSOLES.SCHEMATICFor("junk"), id, cw, Material.AIR, "junk", -999);
+                    plugin.getInteriorDestroyer().destroyInner(CONSOLES.SCHEMATICFor("junk"), id, cw, Material.AIR, -999);
                     TARDISDeleteCommand.cleanDatabase(id);
                     TARDISMessage.send(sender, "JUNK_DELETED");
                 }, 20L);

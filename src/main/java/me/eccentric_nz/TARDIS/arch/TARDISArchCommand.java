@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -26,8 +25,9 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArchCommand {
@@ -68,7 +68,6 @@ public class TARDISArchCommand {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean force(CommandSender sender, String[] args) {
         if (args[2].length() < 2) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
@@ -82,7 +81,7 @@ public class TARDISArchCommand {
         UUID uuid = player.getUniqueId();
         boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            final String name = TARDISRandomName.name();
+            String name = TARDISRandomName.name();
             long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
             TARDISWatchData twd = new TARDISWatchData(name, time);
             plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);

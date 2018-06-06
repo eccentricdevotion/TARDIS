@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.io.File;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -25,11 +23,7 @@ import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -41,8 +35,10 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkBuilder implements Runnable {
@@ -61,13 +57,13 @@ public class TARDISJunkBuilder implements Runnable {
     public TARDISJunkBuilder(TARDIS plugin, BuildData bd) {
         this.plugin = plugin;
         this.bd = bd;
-        this.loc = this.bd.getLocation();
-        this.effectsLoc = this.loc.clone().add(0.5d, 0, 0.5d);
-        this.sx = this.loc.getBlockX() - 3;
-        this.sy = this.loc.getBlockY();
-        this.sz = this.loc.getBlockZ() - 2;
-        this.world = this.loc.getWorld();
-        this.qf = new QueryFactory(this.plugin);
+        loc = this.bd.getLocation();
+        effectsLoc = loc.clone().add(0.5d, 0, 0.5d);
+        sx = loc.getBlockX() - 3;
+        sy = loc.getBlockY();
+        sz = loc.getBlockZ() - 2;
+        world = loc.getWorld();
+        qf = new QueryFactory(this.plugin);
     }
 
     @Override

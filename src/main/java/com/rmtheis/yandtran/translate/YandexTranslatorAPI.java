@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Robert Theis
+ * Copyright 2018 Robert Theis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,20 @@
  */
 package com.rmtheis.yandtran.translate;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import javax.net.ssl.HttpsURLConnection;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
- * Makes the generic Yandex API calls. Different service classes can then extend
- * this to make the specific service calls.
+ * Makes the generic Yandex API calls. Different service classes can then extend this to make the specific service
+ * calls.
  */
 public abstract class YandexTranslatorAPI {
     //Encoding type
@@ -46,7 +47,7 @@ public abstract class YandexTranslatorAPI {
      *
      * @param pKey The API key.
      */
-    public static void setKey(final String pKey) {
+    public static void setKey(String pKey) {
         apiKey = pKey;
     }
 
@@ -55,20 +56,19 @@ public abstract class YandexTranslatorAPI {
      *
      * @param pReferrer The referrer.
      */
-    public static void setReferrer(final String pReferrer) {
+    public static void setReferrer(String pReferrer) {
         referrer = pReferrer;
     }
 
     /**
-     * Forms an HTTPS request, sends it using GET method and returns the result
-     * of the request as a String.
+     * Forms an HTTPS request, sends it using GET method and returns the result of the request as a String.
      *
      * @param url The URL to query for a String response.
      * @return The translated String.
      * @throws Exception on error.
      */
-    private static String retrieveResponse(final URL url) throws Exception {
-        final HttpsURLConnection uc = (HttpsURLConnection) url.openConnection();
+    private static String retrieveResponse(URL url) throws Exception {
+        HttpsURLConnection uc = (HttpsURLConnection) url.openConnection();
         if (referrer != null) {
             uc.setRequestProperty("referer", referrer);
         }
@@ -77,8 +77,8 @@ public abstract class YandexTranslatorAPI {
         uc.setRequestMethod("GET");
 
         try {
-            final int responseCode = uc.getResponseCode();
-            final String result = inputStreamToString(uc.getInputStream());
+            int responseCode = uc.getResponseCode();
+            String result = inputStreamToString(uc.getInputStream());
             if (responseCode != 200) {
                 throw new Exception("Error from Yandex API: " + result);
             }
@@ -91,32 +91,31 @@ public abstract class YandexTranslatorAPI {
     }
 
     /**
-     * Forms a request, sends it using the GET method and returns the value with
-     * the given label from the resulting JSON response.
+     * Forms a request, sends it using the GET method and returns the value with the given label from the resulting JSON
+     * response.
      *
      * @param url
      * @param jsonValProperty
      * @return a string
      * @throws java.lang.Exception
      */
-    protected static String retrievePropString(final URL url, final String jsonValProperty) throws Exception {
-        final String response = retrieveResponse(url);
+    protected static String retrievePropString(URL url, String jsonValProperty) throws Exception {
+        String response = retrieveResponse(url);
         JSONObject jsonObj = (JSONObject) JSONValue.parse(response);
         return jsonObj.get(jsonValProperty).toString();
     }
 
     /**
-     * Forms a request, sends it using the GET method and returns the contents
-     * of the array of strings with the given label, with multiple strings
-     * concatenated.
+     * Forms a request, sends it using the GET method and returns the contents of the array of strings with the given
+     * label, with multiple strings concatenated.
      *
      * @param url
      * @param jsonValProperty
      * @return a string of concatenated values
      * @throws java.lang.Exception
      */
-    protected static String retrievePropArrString(final URL url, final String jsonValProperty) throws Exception {
-        final String response = retrieveResponse(url);
+    protected static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
+        String response = retrieveResponse(url);
         String[] translationArr = jsonObjValToStringArr(response, jsonValProperty);
         String combinedTranslations = "";
         for (String s : translationArr) {
@@ -126,7 +125,7 @@ public abstract class YandexTranslatorAPI {
     }
 
     // Helper method to parse a JSONObject containing an array of Strings with the given label.
-    private static String[] jsonObjValToStringArr(final String inputString, final String subObjPropertyName) throws Exception {
+    private static String[] jsonObjValToStringArr(String inputString, String subObjPropertyName) throws Exception {
         JSONObject jsonObj = (JSONObject) JSONValue.parse(inputString);
         JSONArray jsonArr = (JSONArray) jsonObj.get(subObjPropertyName);
         return jsonArrToStringArr(jsonArr.toJSONString(), null);
@@ -134,14 +133,14 @@ public abstract class YandexTranslatorAPI {
 
     // Helper method to parse a JSONArray. Reads an array of JSONObjects and returns a String Array
     // containing the toString() of the desired property. If propertyName is null, just return the String value.
-    private static String[] jsonArrToStringArr(final String inputString, final String propertyName) throws Exception {
-        final JSONArray jsonArr = (JSONArray) JSONValue.parse(inputString);
+    private static String[] jsonArrToStringArr(String inputString, String propertyName) throws Exception {
+        JSONArray jsonArr = (JSONArray) JSONValue.parse(inputString);
         String[] values = new String[jsonArr.size()];
 
         int i = 0;
         for (Object obj : jsonArr) {
             if (propertyName != null && propertyName.length() != 0) {
-                final JSONObject json = (JSONObject) obj;
+                JSONObject json = (JSONObject) obj;
                 if (json.containsKey(propertyName)) {
                     values[i] = json.get(propertyName).toString();
                 }
@@ -154,15 +153,14 @@ public abstract class YandexTranslatorAPI {
     }
 
     /**
-     * Reads an InputStream and returns its contents as a String. Also effects
-     * rate control.
+     * Reads an InputStream and returns its contents as a String. Also effects rate control.
      *
      * @param inputStream The InputStream to read from.
      * @return The contents of the InputStream as a String.
      * @throws Exception on error.
      */
-    private static String inputStreamToString(final InputStream inputStream) throws Exception {
-        final StringBuilder outputBuilder = new StringBuilder();
+    private static String inputStreamToString(InputStream inputStream) throws Exception {
+        StringBuilder outputBuilder = new StringBuilder();
 
         try {
             String string;

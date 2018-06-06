@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -27,8 +24,11 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISConsoleLoader {
@@ -45,7 +45,7 @@ public class TARDISConsoleLoader {
         this.plugin = plugin;
     }
 
-//    new SCHEMATIC(String seed, String permission, String description, ConsoleSize size, boolean beacon, boolean lanterns, boolean custom)
+    //    new SCHEMATIC(String seed, String permission, String description, ConsoleSize size, boolean beacon, boolean lanterns, boolean custom)
     public void addSchematics() {
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         CONSOLES.getBY_NAMES().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, false, false));
@@ -79,10 +79,10 @@ public class TARDISConsoleLoader {
             CONSOLES.getBY_NAMES().put("LEGACY_ELEVENTH", new SCHEMATIC("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "The original 11th Doctor's Console", ConsoleSize.TALL, true, true, false));
             CONSOLES.getBY_NAMES().put("LEGACY_REDSTONE", new SCHEMATIC("RED_GLAZED_TERRACOTTA", "legacy_redstone", "The original Redstone Console", ConsoleSize.TALL, true, false, false));
         }
-        for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+        for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists
-                final String filename = plugin.getCustomConsolesConfig().getString(console + ".schematic") + ".tschm";
+                String filename = plugin.getCustomConsolesConfig().getString(console + ".schematic") + ".tschm";
                 String path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + filename;
                 File file = new File(path);
                 if (!file.exists()) {
@@ -108,8 +108,8 @@ public class TARDISConsoleLoader {
                 JSONObject obj = TARDISSchematicGZip.unzip(path);
                 // get dimensions
                 JSONObject dimensions = (JSONObject) obj.get("dimensions");
-                final int h = dimensions.getInt("height");
-                final int w = dimensions.getInt("width");
+                int h = dimensions.getInt("height");
+                int w = dimensions.getInt("width");
                 description = plugin.getCustomConsolesConfig().getString(console + ".description");
                 ConsoleSize consoleSize = ConsoleSize.getByWidthAndHeight(w, h);
                 beacon = plugin.getCustomConsolesConfig().getBoolean(console + ".has_beacon");

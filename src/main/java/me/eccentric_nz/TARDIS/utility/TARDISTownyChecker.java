@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 /**
- * A country or nation is a governing entity that is generally smaller than a
- * planetary government. It is composed of smaller subnational entities, states
- * or provinces, as are found in many instances on Earth.
+ * A country or nation is a governing entity that is generally smaller than a planetary government. It is composed of
+ * smaller subnational entities, states or provinces, as are found in many instances on Earth.
  *
  * @author eccentric_nz
  */
@@ -53,14 +53,12 @@ public class TARDISTownyChecker {
     }
 
     /**
-     * Checks whether a player can land in a location that may be in a Towny
-     * town. If the player is a resident of the town or nation, then it will be
-     * allowed.
+     * Checks whether a player can land in a location that may be in a Towny town. If the player is a resident of the
+     * town or nation, then it will be allowed.
      *
      * @param p the player
      * @param l the location instance to check
-     * @return true or false depending on whether the player can build in this
-     * location
+     * @return true or false depending on whether the player can build in this location
      */
     public boolean checkTowny(Player p, Location l) {
         if (towny != null) {
@@ -84,8 +82,7 @@ public class TARDISTownyChecker {
      *
      * @param p the player
      * @param l the location instance to check
-     * @return An instance of the TownyData class that, if necessary, we can use
-     * to do further checks
+     * @return An instance of the TownyData class that, if necessary, we can use to do further checks
      */
     public TownyData playerIsResident(Player p, Location l) {
 
@@ -126,8 +123,7 @@ public class TARDISTownyChecker {
     }
 
     /**
-     * Checks whether a player can land in a town that is in the same nation as
-     * his own town.
+     * Checks whether a player can land in a town that is in the same nation as his own town.
      *
      * @param p the player
      * @param l the location instance to check

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
@@ -42,8 +39,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISAntiBuildListener implements Listener {
@@ -55,94 +55,94 @@ public class TARDISAntiBuildListener implements Listener {
 
     public TARDISAntiBuildListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.no_place.add(Material.ACACIA_BOAT);
-        this.no_place.add(Material.BAT_SPAWN_EGG);
-        this.no_place.add(Material.BIRCH_BOAT);
-        this.no_place.add(Material.BLAZE_SPAWN_EGG);
-        this.no_place.add(Material.BUCKET);
-        this.no_place.add(Material.CAVE_SPIDER_SPAWN_EGG);
-        this.no_place.add(Material.CHEST_MINECART);
-        this.no_place.add(Material.CHICKEN_SPAWN_EGG);
-        this.no_place.add(Material.COW_SPAWN_EGG);
-        this.no_place.add(Material.CREEPER_SPAWN_EGG);
-        this.no_place.add(Material.DARK_OAK_BOAT);
-        this.no_place.add(Material.DONKEY_SPAWN_EGG);
-        this.no_place.add(Material.EGG);
-        this.no_place.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
-        this.no_place.add(Material.ENDERMAN_SPAWN_EGG);
-        this.no_place.add(Material.ENDERMITE_SPAWN_EGG);
-        this.no_place.add(Material.EVOCATION_ILLAGER_SPAWN_EGG);
-        this.no_place.add(Material.FLINT_AND_STEEL);
-        this.no_place.add(Material.FURNACE_MINECART);
-        this.no_place.add(Material.GHAST_SPAWN_EGG);
-        this.no_place.add(Material.GUARDIAN_SPAWN_EGG);
-        this.no_place.add(Material.HOPPER_MINECART);
-        this.no_place.add(Material.HORSE_SPAWN_EGG);
-        this.no_place.add(Material.HUSK_SPAWN_EGG);
-        this.no_place.add(Material.ITEM_FRAME);
-        this.no_place.add(Material.JUNGLE_BOAT);
-        this.no_place.add(Material.LAVA_BUCKET);
-        this.no_place.add(Material.LLAMA_SPAWN_EGG);
-        this.no_place.add(Material.MAGMA_CUBE_SPAWN_EGG);
-        this.no_place.add(Material.MINECART);
-        this.no_place.add(Material.MOOSHROOM_SPAWN_EGG);
-        this.no_place.add(Material.MULE_SPAWN_EGG);
-        this.no_place.add(Material.OAK_BOAT);
-        this.no_place.add(Material.OCELOT_SPAWN_EGG);
-        this.no_place.add(Material.PAINTING);
-        this.no_place.add(Material.PARROT_SPAWN_EGG);
-        this.no_place.add(Material.PIG_SPAWN_EGG);
-        this.no_place.add(Material.POLAR_BEAR_SPAWN_EGG);
-        this.no_place.add(Material.RABBIT_SPAWN_EGG);
-        this.no_place.add(Material.SHEARS);
-        this.no_place.add(Material.SHEEP_SPAWN_EGG);
-        this.no_place.add(Material.SHULKER_SPAWN_EGG);
-        this.no_place.add(Material.SILVERFISH_SPAWN_EGG);
-        this.no_place.add(Material.SKELETON_HORSE_SPAWN_EGG);
-        this.no_place.add(Material.SKELETON_SPAWN_EGG);
-        this.no_place.add(Material.SLIME_SPAWN_EGG);
-        this.no_place.add(Material.SPIDER_SPAWN_EGG);
-        this.no_place.add(Material.SPRUCE_BOAT);
-        this.no_place.add(Material.SQUID_SPAWN_EGG);
-        this.no_place.add(Material.STRAY_SPAWN_EGG);
-        this.no_place.add(Material.TNT_MINECART);
-        this.no_place.add(Material.VEX_SPAWN_EGG);
-        this.no_place.add(Material.VILLAGER_SPAWN_EGG);
-        this.no_place.add(Material.VINDICATION_ILLAGER_SPAWN_EGG);
-        this.no_place.add(Material.WATER_BUCKET);
-        this.no_place.add(Material.WITCH_SPAWN_EGG);
-        this.no_place.add(Material.WITHER_SKELETON_SPAWN_EGG);
-        this.no_place.add(Material.WOLF_SPAWN_EGG);
-        this.no_place.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
-        this.no_place.add(Material.ZOMBIE_PIGMAN_SPAWN_EGG);
-        this.no_place.add(Material.ZOMBIE_SPAWN_EGG);
-        this.no_place.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
-        this.allow_interact.add(Material.ACACIA_BUTTON);
-        this.allow_interact.add(Material.ACACIA_DOOR);
-        this.allow_interact.add(Material.ACACIA_PRESSURE_PLATE);
-        this.allow_interact.add(Material.BIRCH_BUTTON);
-        this.allow_interact.add(Material.BIRCH_DOOR);
-        this.allow_interact.add(Material.BIRCH_PRESSURE_PLATE);
-        this.allow_interact.add(Material.COMPARATOR);
-        this.allow_interact.add(Material.DARK_OAK_BUTTON);
-        this.allow_interact.add(Material.DARK_OAK_DOOR);
-        this.allow_interact.add(Material.DARK_OAK_PRESSURE_PLATE);
-        this.allow_interact.add(Material.IRON_DOOR);
-        this.allow_interact.add(Material.JUNGLE_BUTTON);
-        this.allow_interact.add(Material.JUNGLE_DOOR);
-        this.allow_interact.add(Material.JUNGLE_PRESSURE_PLATE);
-        this.allow_interact.add(Material.LEVER);
-        this.allow_interact.add(Material.OAK_BUTTON);
-        this.allow_interact.add(Material.OAK_DOOR);
-        this.allow_interact.add(Material.OAK_PRESSURE_PLATE);
-        this.allow_interact.add(Material.REPEATER);
-        this.allow_interact.add(Material.SPRUCE_BUTTON);
-        this.allow_interact.add(Material.SPRUCE_DOOR);
-        this.allow_interact.add(Material.SPRUCE_PRESSURE_PLATE);
-        this.allow_interact.add(Material.STONE_BUTTON);
-        this.allow_interact.add(Material.STONE_PRESSURE_PLATE);
-        this.no_flower_pot.addAll(TARDISMaterials.plants);
-        this.no_flower_pot.addAll(TARDISMaterials.saplings);
+        no_place.add(Material.ACACIA_BOAT);
+        no_place.add(Material.BAT_SPAWN_EGG);
+        no_place.add(Material.BIRCH_BOAT);
+        no_place.add(Material.BLAZE_SPAWN_EGG);
+        no_place.add(Material.BUCKET);
+        no_place.add(Material.CAVE_SPIDER_SPAWN_EGG);
+        no_place.add(Material.CHEST_MINECART);
+        no_place.add(Material.CHICKEN_SPAWN_EGG);
+        no_place.add(Material.COW_SPAWN_EGG);
+        no_place.add(Material.CREEPER_SPAWN_EGG);
+        no_place.add(Material.DARK_OAK_BOAT);
+        no_place.add(Material.DONKEY_SPAWN_EGG);
+        no_place.add(Material.EGG);
+        no_place.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
+        no_place.add(Material.ENDERMAN_SPAWN_EGG);
+        no_place.add(Material.ENDERMITE_SPAWN_EGG);
+        no_place.add(Material.EVOCATION_ILLAGER_SPAWN_EGG);
+        no_place.add(Material.FLINT_AND_STEEL);
+        no_place.add(Material.FURNACE_MINECART);
+        no_place.add(Material.GHAST_SPAWN_EGG);
+        no_place.add(Material.GUARDIAN_SPAWN_EGG);
+        no_place.add(Material.HOPPER_MINECART);
+        no_place.add(Material.HORSE_SPAWN_EGG);
+        no_place.add(Material.HUSK_SPAWN_EGG);
+        no_place.add(Material.ITEM_FRAME);
+        no_place.add(Material.JUNGLE_BOAT);
+        no_place.add(Material.LAVA_BUCKET);
+        no_place.add(Material.LLAMA_SPAWN_EGG);
+        no_place.add(Material.MAGMA_CUBE_SPAWN_EGG);
+        no_place.add(Material.MINECART);
+        no_place.add(Material.MOOSHROOM_SPAWN_EGG);
+        no_place.add(Material.MULE_SPAWN_EGG);
+        no_place.add(Material.OAK_BOAT);
+        no_place.add(Material.OCELOT_SPAWN_EGG);
+        no_place.add(Material.PAINTING);
+        no_place.add(Material.PARROT_SPAWN_EGG);
+        no_place.add(Material.PIG_SPAWN_EGG);
+        no_place.add(Material.POLAR_BEAR_SPAWN_EGG);
+        no_place.add(Material.RABBIT_SPAWN_EGG);
+        no_place.add(Material.SHEARS);
+        no_place.add(Material.SHEEP_SPAWN_EGG);
+        no_place.add(Material.SHULKER_SPAWN_EGG);
+        no_place.add(Material.SILVERFISH_SPAWN_EGG);
+        no_place.add(Material.SKELETON_HORSE_SPAWN_EGG);
+        no_place.add(Material.SKELETON_SPAWN_EGG);
+        no_place.add(Material.SLIME_SPAWN_EGG);
+        no_place.add(Material.SPIDER_SPAWN_EGG);
+        no_place.add(Material.SPRUCE_BOAT);
+        no_place.add(Material.SQUID_SPAWN_EGG);
+        no_place.add(Material.STRAY_SPAWN_EGG);
+        no_place.add(Material.TNT_MINECART);
+        no_place.add(Material.VEX_SPAWN_EGG);
+        no_place.add(Material.VILLAGER_SPAWN_EGG);
+        no_place.add(Material.VINDICATION_ILLAGER_SPAWN_EGG);
+        no_place.add(Material.WATER_BUCKET);
+        no_place.add(Material.WITCH_SPAWN_EGG);
+        no_place.add(Material.WITHER_SKELETON_SPAWN_EGG);
+        no_place.add(Material.WOLF_SPAWN_EGG);
+        no_place.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
+        no_place.add(Material.ZOMBIE_PIGMAN_SPAWN_EGG);
+        no_place.add(Material.ZOMBIE_SPAWN_EGG);
+        no_place.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
+        allow_interact.add(Material.ACACIA_BUTTON);
+        allow_interact.add(Material.ACACIA_DOOR);
+        allow_interact.add(Material.ACACIA_PRESSURE_PLATE);
+        allow_interact.add(Material.BIRCH_BUTTON);
+        allow_interact.add(Material.BIRCH_DOOR);
+        allow_interact.add(Material.BIRCH_PRESSURE_PLATE);
+        allow_interact.add(Material.COMPARATOR);
+        allow_interact.add(Material.DARK_OAK_BUTTON);
+        allow_interact.add(Material.DARK_OAK_DOOR);
+        allow_interact.add(Material.DARK_OAK_PRESSURE_PLATE);
+        allow_interact.add(Material.IRON_DOOR);
+        allow_interact.add(Material.JUNGLE_BUTTON);
+        allow_interact.add(Material.JUNGLE_DOOR);
+        allow_interact.add(Material.JUNGLE_PRESSURE_PLATE);
+        allow_interact.add(Material.LEVER);
+        allow_interact.add(Material.OAK_BUTTON);
+        allow_interact.add(Material.OAK_DOOR);
+        allow_interact.add(Material.OAK_PRESSURE_PLATE);
+        allow_interact.add(Material.REPEATER);
+        allow_interact.add(Material.SPRUCE_BUTTON);
+        allow_interact.add(Material.SPRUCE_DOOR);
+        allow_interact.add(Material.SPRUCE_PRESSURE_PLATE);
+        allow_interact.add(Material.STONE_BUTTON);
+        allow_interact.add(Material.STONE_PRESSURE_PLATE);
+        no_flower_pot.addAll(TARDISMaterials.plants);
+        no_flower_pot.addAll(TARDISMaterials.saplings);
     }
 
     @EventHandler(ignoreCancelled = true)

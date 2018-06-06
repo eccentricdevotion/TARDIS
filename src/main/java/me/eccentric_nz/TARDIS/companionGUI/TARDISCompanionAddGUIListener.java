@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -34,8 +32,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements Listener {
@@ -54,7 +54,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
         if (name.equals("§4Add Companion")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 54) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
@@ -74,7 +74,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
                                 int id = tardis.getTardis_id();
-                                final String comps = tardis.getCompanions();
+                                String comps = tardis.getCompanions();
                                 ItemStack h = inv.getItem(slot);
                                 ItemMeta m = h.getItemMeta();
                                 List<String> l = m.getLore();
@@ -93,10 +93,10 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
         }
     }
 
-    private void list(final Player player) {
+    private void list(Player player) {
         ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
-            final String comps = rs.getCompanions();
+            String comps = rs.getCompanions();
             close(player);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();

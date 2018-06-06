@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import org.bukkit.Location;
@@ -27,17 +24,18 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
- *
  * @author eccentric_nz
- *
- * Atmospheric excitation is an unnatural disturbance in the atmosphere which
- * causes the weather to change. The Tenth Doctor's sonic screwdriver, the
- * TARDIS, and moving a planet can all cause atmospheric excitation.
- *
- * The Tenth Doctor used a device above the inside of the door of the TARDIS to
- * excite the atmosphere, causing snow, in an attempt to cheer up Donna Noble.
- *
+ * <p>
+ * Atmospheric excitation is an unnatural disturbance in the atmosphere which causes the weather to change. The Tenth
+ * Doctor's sonic screwdriver, the TARDIS, and moving a planet can all cause atmospheric excitation.
+ * <p>
+ * The Tenth Doctor used a device above the inside of the door of the TARDIS to excite the atmosphere, causing snow, in
+ * an attempt to cheer up Donna Noble.
  */
 public class TARDISExcitationRunnable implements Runnable {
 
@@ -51,7 +49,7 @@ public class TARDISExcitationRunnable implements Runnable {
 
     public TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
         this.plugin = plugin;
-        this.location = l;
+        location = l;
         this.player = player;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISResourcePackSwitcher implements Listener {
@@ -57,7 +56,7 @@ public class TARDISResourcePackSwitcher implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (plugin.getPlanetsConfig().getBoolean("set_pack_on_join")) {
-            final Player player = event.getPlayer();
+            Player player = event.getPlayer();
             String world = player.getWorld().getName();
             String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
             setResourcePack(player, path);

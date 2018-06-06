@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,9 @@ import java.util.EnumMap;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
- * A chameleon conversion is a repair procedure that technicians perform on
- * TARDIS chameleon circuits. The Fourth Doctor once said that the reason the
- * TARDIS' chameleon circuit was stuck was because he had "borrowed" it from
- * Gallifrey before the chameleon conversion was completed.
+ * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
+ * once said that the reason the TARDIS' chameleon circuit was stuck was because he had "borrowed" it from Gallifrey
+ * before the chameleon conversion was completed.
  *
  * @author eccentric_nz
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * @author eccentric_nz
  */
 public class SQL {
 
-    public static enum TABLE {
+    public enum TABLE {
 
         achievements,
         arched,
@@ -61,7 +60,7 @@ public class SQL {
         travellers,
         vaults,
         thevoid,
-        vortex;
+        vortex
     }
 
     public static final List<String> CREATES = Arrays.asList(

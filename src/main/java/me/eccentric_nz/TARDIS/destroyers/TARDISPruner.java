@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,26 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.*;
+import java.util.HashMap;
+
 /**
- * Reesha was a rosebush-like plant who needed to keep herself pruned to prevent
- * her consciousness from fading and dying. She was invited by the Eighth Doctor
- * to the founding of the Institute of Time.
+ * Reesha was a rosebush-like plant who needed to keep herself pruned to prevent her consciousness from fading and
+ * dying. She was invited by the Eighth Doctor to the founding of the Institute of Time.
  *
  * @author eccentric_nz
  */
@@ -48,7 +44,7 @@ public class TARDISPruner {
 
     public TARDISPruner(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public void list(CommandSender sender, int days) {
@@ -146,8 +142,7 @@ public class TARDISPruner {
     private long getTime(int day) {
         long period = day * 86400000L;
         long now = System.currentTimeMillis();
-        long prune = now - period;
-        return prune;
+        return now - period;
     }
 
     private Timestamp getTimestamp(long l) {

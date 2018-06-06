@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -33,10 +29,14 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * A control room's look could be changed over time. The process by which an
- * operator could transform a control room was fairly simple, once compared by
- * the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an operator could transform a control room was
+ * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -51,8 +51,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     public TARDISWallMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.rows = TARDISWalls.BLOCKS.size() / 8 + 1;
-        this.blocks = getWallBlocks();
+        rows = TARDISWalls.BLOCKS.size() / 8 + 1;
+        blocks = getWallBlocks();
     }
 
     @EventHandler
@@ -133,10 +133,10 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     /**
      * Closes the inventory.
      *
-     * @param p the player using the GUI
+     * @param p      the player using the GUI
      * @param remove whether to stop tracking the upgrade
      */
-    public void close(final Player p, boolean remove) {
+    public void close(Player p, boolean remove) {
         if (remove) {
             plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         }
@@ -150,7 +150,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
      *
      * @param p the player using the GUI
      */
-    private void floor(final Player p) {
+    private void floor(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();

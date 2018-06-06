@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISExitEvent extends Event {
@@ -33,7 +32,7 @@ public final class TARDISExitEvent extends Event {
 
     public TARDISExitEvent(Player player, World from) {
         this.player = player;
-        this.to = from;
+        to = from;
     }
 
     public Player getPlayer() {

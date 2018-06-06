@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISAbandonUpdate {
@@ -39,7 +39,7 @@ public class TARDISAbandonUpdate {
         this.plugin = plugin;
         this.id = id;
         this.uuid = uuid;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public void run() {

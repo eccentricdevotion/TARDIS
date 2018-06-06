@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * The TARDIS grants its passengers the ability to understand and speak other
- * languages. This is due to the TARDIS's telepathic field.
+ * The TARDIS grants its passengers the ability to understand and speak other languages. This is due to the TARDIS's
+ * telepathic field.
  *
  * @author eccentric_nz
  */
@@ -39,13 +39,11 @@ public class TARDISGriefPreventionChecker {
     }
 
     /**
-     * Checks to see whether the specified location is within a GriefPrevention
-     * claim.
+     * Checks to see whether the specified location is within a GriefPrevention claim.
      *
      * @param p the player to check access for.
      * @param l the location to check.
-     * @return true or false depending on whether the location is within the
-     * border
+     * @return true or false depending on whether the location is within the border
      */
     public boolean isInClaim(Player p, Location l) {
         boolean bool = true;

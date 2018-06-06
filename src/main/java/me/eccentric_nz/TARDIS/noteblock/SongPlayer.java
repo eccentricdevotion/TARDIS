@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014  michidk && xxmicloxx
+ * Copyright (C) 2018  michidk && xxmicloxx
  * http://dev.bukkit.org/bukkit-plugins/noteblockapi/
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,13 @@
  */
 package me.eccentric_nz.TARDIS.noteblock;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 public class SongPlayer {
 

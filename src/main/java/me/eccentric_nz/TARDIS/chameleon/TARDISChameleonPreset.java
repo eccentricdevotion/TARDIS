@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISButtonRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISLeverRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMushroomRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISStairRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTorchRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
+import me.eccentric_nz.TARDIS.utility.recalculators.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -36,11 +29,13 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rail;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * A chameleon conversion is a repair procedure that technicians perform on
- * TARDIS chameleon circuits. The Fourth Doctor once said that the reason the
- * TARDIS' chameleon circuit was stuck was because he had "borrowed" it from
- * Gallifrey before the chameleon conversion was completed.
+ * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
+ * once said that the reason the TARDIS' chameleon circuit was stuck was because he had "borrowed" it from Gallifrey
+ * before the chameleon conversion was completed.
  *
  * @author eccentric_nz
  */
@@ -116,71 +111,71 @@ public class TARDISChameleonPreset {
     int r;
 
     public TARDISChameleonPreset() {
-        this.andesite = new TARDISAndesitePreset();
-        this.angeld = new TARDISAngelDownPreset();
-        this.angelu = new TARDISAngelUpPreset();
-        this.apperture = new TARDISAppertureSciencePreset();
-        this.cake = new TARDISCakePreset();
-        this.candy = new TARDISCandyCanePreset();
-        this.chalice = new TARDISChalicePreset();
-        this.chorus = new TARDISChorusPreset();
-        this.column = new TARDISColumnPreset();
-        this.creepy = new TARDISCreepyPreset();
-        this.desert = new TARDISDesertPreset();
-        this.diorite = new TARDISDioritePreset();
-        this.duck = new TARDISRubberDuckPreset();
-        this.factory = new TARDISFactoryPreset();
-        this.fence = new TARDISFencePreset();
-        this.flower = new TARDISFlowerPreset();
-        this.gazebo = new TARDISGazeboPreset();
-        this.granite = new TARDISGranitePreset();
-        this.gravestone = new TARDISGravestonePreset();
-        this.helix = new TARDISDoubleHelixPreset();
-        this.invisible = new TARDISInvisiblePreset();
-        this.jail = new TARDISJailPreset();
-        this.jungle = new TARDISJunglePreset();
-        this.junk = new TARDISJunkPreset();
-        this.lamp = new TARDISLampPostPreset();
-        this.library = new TARDISLibraryPreset();
-        this.lighthouse = new TARDISLighthousePreset();
-        this.mine = new TARDISMineshaftPreset();
-        this.nether = new TARDISNetherPreset();
-        this.pandorica = new TARDISPandoricaPreset();
-        this.party = new TARDISPartyPreset();
-        this.peanut = new TARDISPeanutButterPreset();
-        this.pine = new TARDISPineTreePreset();
-        this.police = new TARDISPoliceBoxPreset();
-        this.portal = new TARDISPortalPreset();
-        this.prismarine = new TARDISPrismarinePreset();
-        this.punked = new TARDISPunkedPreset();
-        this.robot = new TARDISRobotPreset();
-        this.shroom = new TARDISMushroomPreset();
-        this.snowman = new TARDISSnowmanPreset();
-        this.submerged = new TARDISSubmergedPreset();
-        this.swamp = new TARDISSwampPreset();
-        this.taller = new TARDISTallerPreset();
-        this.telephone = new TARDISTelephoneBoxPreset();
-        this.theend = new TARDISTheEndPreset();
-        this.toilet = new TARDISToiletPreset();
-        this.topsyturvey = new TARDISTopsyTurveyPreset();
-        this.torch = new TARDISTorchPreset();
-        this.village = new TARDISVillagePreset();
-        this.well = new TARDISWellPreset();
-        this.windmill = new TARDISWindmillPreset();
-        this.yellow = new TARDISYellowSubmarinePreset();
-        this.custom = new TARDISCustomPreset();
-        this.render = new TARDISRenderPreset();
-        this.extreme = new TARDISExtremeHillsPreset();
-        this.forest = new TARDISForestPreset();
-        this.flats = new TARDISIcePlainsPreset();
-        this.spikes = new TARDISIcePlainsSpikesPreset();
-        this.mesa = new TARDISMesaPreset();
-        this.plains = new TARDISPlainsPreset();
-        this.roofed = new TARDISRoofedForestPreset();
-        this.savanna = new TARDISSavannaPreset();
-        this.taiga = new TARDISTaigaPreset();
-        this.cold = new TARDISColdTaigaPreset();
-        this.boat = new TARDISBoatPreset();
+        andesite = new TARDISAndesitePreset();
+        angeld = new TARDISAngelDownPreset();
+        angelu = new TARDISAngelUpPreset();
+        apperture = new TARDISAppertureSciencePreset();
+        cake = new TARDISCakePreset();
+        candy = new TARDISCandyCanePreset();
+        chalice = new TARDISChalicePreset();
+        chorus = new TARDISChorusPreset();
+        column = new TARDISColumnPreset();
+        creepy = new TARDISCreepyPreset();
+        desert = new TARDISDesertPreset();
+        diorite = new TARDISDioritePreset();
+        duck = new TARDISRubberDuckPreset();
+        factory = new TARDISFactoryPreset();
+        fence = new TARDISFencePreset();
+        flower = new TARDISFlowerPreset();
+        gazebo = new TARDISGazeboPreset();
+        granite = new TARDISGranitePreset();
+        gravestone = new TARDISGravestonePreset();
+        helix = new TARDISDoubleHelixPreset();
+        invisible = new TARDISInvisiblePreset();
+        jail = new TARDISJailPreset();
+        jungle = new TARDISJunglePreset();
+        junk = new TARDISJunkPreset();
+        lamp = new TARDISLampPostPreset();
+        library = new TARDISLibraryPreset();
+        lighthouse = new TARDISLighthousePreset();
+        mine = new TARDISMineshaftPreset();
+        nether = new TARDISNetherPreset();
+        pandorica = new TARDISPandoricaPreset();
+        party = new TARDISPartyPreset();
+        peanut = new TARDISPeanutButterPreset();
+        pine = new TARDISPineTreePreset();
+        police = new TARDISPoliceBoxPreset();
+        portal = new TARDISPortalPreset();
+        prismarine = new TARDISPrismarinePreset();
+        punked = new TARDISPunkedPreset();
+        robot = new TARDISRobotPreset();
+        shroom = new TARDISMushroomPreset();
+        snowman = new TARDISSnowmanPreset();
+        submerged = new TARDISSubmergedPreset();
+        swamp = new TARDISSwampPreset();
+        taller = new TARDISTallerPreset();
+        telephone = new TARDISTelephoneBoxPreset();
+        theend = new TARDISTheEndPreset();
+        toilet = new TARDISToiletPreset();
+        topsyturvey = new TARDISTopsyTurveyPreset();
+        torch = new TARDISTorchPreset();
+        village = new TARDISVillagePreset();
+        well = new TARDISWellPreset();
+        windmill = new TARDISWindmillPreset();
+        yellow = new TARDISYellowSubmarinePreset();
+        custom = new TARDISCustomPreset();
+        render = new TARDISRenderPreset();
+        extreme = new TARDISExtremeHillsPreset();
+        forest = new TARDISForestPreset();
+        flats = new TARDISIcePlainsPreset();
+        spikes = new TARDISIcePlainsSpikesPreset();
+        mesa = new TARDISMesaPreset();
+        plains = new TARDISPlainsPreset();
+        roofed = new TARDISRoofedForestPreset();
+        savanna = new TARDISSavannaPreset();
+        taiga = new TARDISTaigaPreset();
+        cold = new TARDISColdTaigaPreset();
+        boat = new TARDISBoatPreset();
     }
 
     public void makePresets() {

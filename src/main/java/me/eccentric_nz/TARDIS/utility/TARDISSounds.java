@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was
- * originally created in the BBC Radiophonic Workshop by Brian Hodgson. He
- * produced the effect by dragging a set of house keys along the strings of an
- * old, gutted piano. The resulting sound was recorded and electronically
- * processed with echo and reverb.
+ * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
+ * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
+ * old, gutted piano. The resulting sound was recorded and electronically processed with echo and reverb.
  *
  * @author eccentric_nz
  */
@@ -59,11 +58,10 @@ public class TARDISSounds {
     }
 
     /**
-     * Plays a TARDIS sound for the player and surrounding players at the
-     * current location.
+     * Plays a TARDIS sound for the player and surrounding players at the current location.
      *
-     * @param l The location
-     * @param s The sound to play
+     * @param l      The location
+     * @param s      The sound to play
      * @param volume The volume to play the sound at
      */
     public static void playTARDISSound(Location l, String s, float volume) {
@@ -71,8 +69,7 @@ public class TARDISSounds {
     }
 
     /**
-     * Plays a TARDIS sound for the player and surrounding players at the
-     * current location.
+     * Plays a TARDIS sound for the player and surrounding players at the current location.
      *
      * @param l The location
      * @param s The sound to play
@@ -87,7 +84,7 @@ public class TARDISSounds {
      * @param p The player
      * @param s The sound to play
      */
-    public static void playTARDISSound(final Player p, final String s) {
+    public static void playTARDISSound(Player p, String s) {
         TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             p.playSound(p.getLocation(), s, VOLUME, 1.0f);
         }, 5L);

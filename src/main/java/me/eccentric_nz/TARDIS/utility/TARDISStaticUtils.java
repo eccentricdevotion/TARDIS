@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISStaticUtils {
@@ -35,7 +34,7 @@ public class TARDISStaticUtils {
     /**
      * Get the direction a player is facing.
      *
-     * @param p the player
+     * @param p    the player
      * @param swap whether to swap the direction E &lt;-&gt; W, S &lt;-&gt; N
      * @return the direction the player is facing
      */
@@ -170,8 +169,7 @@ public class TARDISStaticUtils {
     }
 
     /**
-     * Gets the column to set the Police box sign in if CTM is on in the
-     * player's preferences.
+     * Gets the column to set the Police box sign in if CTM is on in the player's preferences.
      *
      * @param d the direction of the Police Box
      * @return the column
@@ -192,7 +190,7 @@ public class TARDISStaticUtils {
     /**
      * Get a shortened name for a sign.
      *
-     * @param name the name to shorten
+     * @param name    the name to shorten
      * @param useDots whether to add dots after the shortened name
      * @return the shortened name
      */
@@ -206,10 +204,10 @@ public class TARDISStaticUtils {
     /**
      * Sets the Chameleon Sign text or messages the player.
      *
-     * @param loc the location string retrieved from the database
+     * @param loc  the location string retrieved from the database
      * @param line the line number to set
      * @param text the text to write
-     * @param p the player to message (if the Chameleon control is not a sign)
+     * @param p    the player to message (if the Chameleon control is not a sign)
      */
     public static void setSign(String loc, int line, String text, Player p) {
         // get sign block so we can update it

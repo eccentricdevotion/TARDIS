@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * Perception filters had the effect of directing attention away from the object
- * or its bearer, rendering them unnoticeable. The Doctor was able to construct
- * a perception filter around three keys to the TARDIS, activated when they were
- * worn around the neck on a chain.
+ * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
+ * unnoticeable. The Doctor was able to construct a perception filter around three keys to the TARDIS, activated when
+ * they were worn around the neck on a chain.
  *
  * @author eccentric_nz
  */
@@ -46,16 +45,15 @@ public class TARDISPerceptionFilterListener implements Listener {
 
     public TARDISPerceptionFilterListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
+        filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPerceptionFilterClick(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         if (player.getInventory().getItemInMainHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {

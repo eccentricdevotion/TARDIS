@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
@@ -32,11 +29,14 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- * There were at least fourteen bathrooms in the TARDIS, one of which had had a
- * leaky tap for three centuries. Because he had misplaced his washers, the
- * Doctor kept it from flooding the TARDIS by sealing it in a time loop that
- * made the same drop of water leak out over and over again.
+ * There were at least fourteen bathrooms in the TARDIS, one of which had had a leaky tap for three centuries. Because
+ * he had misplaced his washers, the Doctor kept it from flooding the TARDIS by sealing it in a time loop that made the
+ * same drop of water leak out over and over again.
  *
  * @author eccentric_nz
  */
@@ -57,11 +57,10 @@ public class TARDISRoomBuilder {
     }
 
     /**
-     * Gets the required data to build a TARDIS room, then starts a repeating
-     * task to build it.
-     *
-     * This needs to be set up to use the actual dimensions from the schematic
-     * files, if user supplied room schematics are allowed to be used.
+     * Gets the required data to build a TARDIS room, then starts a repeating task to build it.
+     * <p>
+     * This needs to be set up to use the actual dimensions from the schematic files, if user supplied room schematics
+     * are allowed to be used.
      *
      * @return true or false
      */

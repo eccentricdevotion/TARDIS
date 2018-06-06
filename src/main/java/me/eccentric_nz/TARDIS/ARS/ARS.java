@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,18 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 /**
- * Used to dynamically add custom rooms to the TARDIS' Architectural
- * Reconfiguration System.
+ * Used to dynamically add custom rooms to the TARDIS' Architectural Reconfiguration System.
  *
  * @author eccentric_nz
  */
 public interface ARS {
 
-    public String getMaterial();
+    String getMaterial();
 
-    public String getActualName();
+    String getActualName();
 
-    public String getDescriptiveName();
+    String getDescriptiveName();
 
-    public int getOffset();
+    int getOffset();
 
 }

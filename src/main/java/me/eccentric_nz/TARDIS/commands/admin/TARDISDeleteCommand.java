@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -30,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -43,8 +36,12 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.*;
+
+import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDeleteCommand {
@@ -55,8 +52,7 @@ public class TARDISDeleteCommand {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
-    public boolean deleteTARDIS(final CommandSender sender, final String[] args) {
+    public boolean deleteTARDIS(CommandSender sender, String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
         int abandoned = (args.length > 2 && args[2].equals("abandoned")) ? 1 : 0;
@@ -95,9 +91,9 @@ public class TARDISDeleteCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, abandoned);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            final int id = tardis.getTardis_id();
-            final int tips = tardis.getTIPS();
-            final SCHEMATIC schm = tardis.getSchematic();
+            int id = tardis.getTardis_id();
+            int tips = tardis.getTIPS();
+            SCHEMATIC schm = tardis.getSchematic();
             String chunkLoc = tardis.getChunk();
             boolean hidden = tardis.isHidden();
             String[] cdata = chunkLoc.split(":");
@@ -107,13 +103,13 @@ public class TARDISDeleteCommand {
             } else {
                 wname = cdata[0];
             }
-            final String name = wname;
-            final World cw = plugin.getServer().getWorld(name);
+            String name = wname;
+            World cw = plugin.getServer().getWorld(name);
             if (cw == null) {
                 TARDISMessage.send(sender, "WORLD_DELETED");
                 return true;
             }
-            final Material restore = getRestore(cw);
+            Material restore = getRestore(cw);
             // get the current location
             Location bb_loc = null;
             COMPASS d = COMPASS.EAST;
@@ -134,7 +130,7 @@ public class TARDISDeleteCommand {
             // destroy outer TARDIS
             if (!hidden) {
                 UUID u = rs.getTardis().getUuid();
-                final DestroyData dd = new DestroyData(plugin, u.toString());
+                DestroyData dd = new DestroyData(plugin, u.toString());
                 dd.setDirection(d);
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(u));
@@ -173,7 +169,7 @@ public class TARDISDeleteCommand {
                         plugin.debug("Could not delete world <" + name + ">");
                     }
                 } else {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, args[1], tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanDatabase(id);
                 TARDISMessage.send(sender, "TARDIS_EXTERMINATED");

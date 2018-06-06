@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
+import org.bukkit.Material;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
-import org.bukkit.Material;
 
 /**
- * Keeps track of various building related lookups. these include: Room block
- * counts, Room seed blocks and Stained Glass block colour equivalents for
- * regular blocks.
+ * Keeps track of various building related lookups. these include: Room block counts, Room seed blocks and Stained Glass
+ * block colour equivalents for regular blocks.
  *
  * @author eccentric_nz
  */
@@ -36,7 +36,7 @@ public class TARDISBuilderInstanceKeeper {
     private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private HashMap<Material, String> seeds;
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
-    private static final List<String> IGNORE_BLOCKS = Arrays.asList(new String[]{"AIR", "BEDROCK", "CAKE", "COMMAND", "GOLD_ORE", "RED_MUSHROOM_BLOCK", "ICE", "LAVA", "MOB_SPAWNER", "MONSTER_EGGS", "PISTON_HEAD", "SPONGE", "WATER"});
+    private static final List<String> IGNORE_BLOCKS = Arrays.asList("AIR", "BEDROCK", "CAKE", "COMMAND", "GOLD_ORE", "RED_MUSHROOM_BLOCK", "ICE", "LAVA", "MOB_SPAWNER", "MONSTER_EGGS", "PISTON_HEAD", "SPONGE", "WATER");
     private static final List<Material> PRECIOUS = new ArrayList<>();
 
     static {

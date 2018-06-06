@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISFakeChatListener implements Listener {
@@ -37,7 +36,7 @@ public class TARDISFakeChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onJohnSmithChat(AsyncPlayerChatEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
             return;
         }

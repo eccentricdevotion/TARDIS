@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,16 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISStairRecalculator {
 
     /**
-     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS
-     * preset changes direction.
+     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
      *
-     * @param b the block data stored in the preset data
-     * @param d the new direction of the TARDIS
-     * @param col the preset column that is being calculated
+     * @param b    the block data stored in the preset data
+     * @param d    the new direction of the TARDIS
+     * @param col  the preset column that is being calculated
      * @param duck whether this is the Rubber Duck preset
      * @return the recalculated block data
      */

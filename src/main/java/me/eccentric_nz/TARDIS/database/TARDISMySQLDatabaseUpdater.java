@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,13 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
 
 /**
- * TARDISes prefer the environment of the Space-Time Vortex to the four
- * dimensional world. They have Curiosity Circuits to encourage them to leave
- * the Vortex.
+ * TARDISes prefer the environment of the Space-Time Vortex to the four dimensional world. They have Curiosity Circuits
+ * to encourage them to leave the Vortex.
  *
  * @author eccentric_nz
  */
@@ -49,7 +49,7 @@ public class TARDISMySQLDatabaseUpdater {
 
     public TARDISMySQLDatabaseUpdater(TARDIS plugin, Statement statement) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
         this.statement = statement;
         uuidUpdates.put("achievements", "a_id");
         uuidUpdates.put("ars", "tardis_id");

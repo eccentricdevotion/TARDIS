@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -30,8 +25,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISAddRegionsCommand {
@@ -44,7 +44,7 @@ public class TARDISAddRegionsCommand {
 
     public TARDISAddRegionsCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
         if (plugin.isWorldGuardOnServer()) {
             wg = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
         }

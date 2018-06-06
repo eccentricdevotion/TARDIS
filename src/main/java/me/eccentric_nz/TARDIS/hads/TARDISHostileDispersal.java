@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.hads;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -39,12 +35,16 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * The Hostile Action Displacement System, or HADS, was one of the defence
- * mechanisms of the Doctor's TARDIS. When the outer shell of the vessel came
- * under attack, the unit dematerialised the TARDIS and re-materialised it a
- * short distance away after the attacker had gone, in a safer locale. The HADS
- * had to be manually set, and the Doctor often forgot to do so.
+ * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
+ * outer shell of the vessel came under attack, the unit dematerialised the TARDIS and re-materialised it a short
+ * distance away after the attacker had gone, in a safer locale. The HADS had to be manually set, and the Doctor often
+ * forgot to do so.
  *
  * @author eccentric_nz
  */
@@ -55,10 +55,10 @@ public class TARDISHostileDispersal {
 
     public TARDISHostileDispersal(TARDIS plugin) {
         this.plugin = plugin;
-        this.replace_with_barrier = buildList();
+        replace_with_barrier = buildList();
     }
 
-    public void disperseTARDIS(final int id, UUID uuid, Player hostile, PRESET preset) {
+    public void disperseTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -81,20 +81,20 @@ public class TARDISHostileDispersal {
             // toggle the doors if neccessary
             new TARDISDoorCloser(plugin, uuid, id).closeDoors();
         }
-        final World w = l.getWorld();
+        World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
         while (!chunk.isLoaded()) {
             chunk.load();
         }
-        final int sbx = l.getBlockX() - 1;
-        final int sby;
+        int sbx = l.getBlockX() - 1;
+        int sby;
         if (preset.equals(PRESET.SUBMERGED)) {
             sby = l.getBlockY() - 1;
         } else {
             sby = l.getBlockY();
         }
-        final int sbz = l.getBlockZ() - 1;
+        int sbz = l.getBlockZ() - 1;
         // reset biome and it's not The End
         if (!plugin.getUtils().restoreBiome(l, biome)) {
             // remove TARDIS from tracker
@@ -151,7 +151,7 @@ public class TARDISHostileDispersal {
             plugin.getPresetDestroyer().destroyHandbrake(l, d);
         }
         // remove blue wool
-        final List<FallingBlock> falls = new ArrayList<>();
+        List<FallingBlock> falls = new ArrayList<>();
         Material tmp = Material.BLUE_CARPET;
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
@@ -178,7 +178,7 @@ public class TARDISHostileDispersal {
                 }
             }
         }
-        final Material mat = tmp;
+        Material mat = tmp;
         // schedule task to remove fallen blocks
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             falls.forEach((f) -> {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -27,9 +26,11 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import java.util.List;
+
 /**
- * The Doctor's favorite food - jelly babies have been considered a delicacy by
- * the Doctor ever since his second incarnation.
+ * The Doctor's favorite food - jelly babies have been considered a delicacy by the Doctor ever since his second
+ * incarnation.
  *
  * @author eccentric_nz
  */
@@ -42,8 +43,7 @@ public class TARDISCreeperChecker {
     }
 
     /**
-     * A repeating task that checks if the charged creeper in the TARDIS Artron
-     * Energy Capacitor is still there.
+     * A repeating task that checks if the charged creeper in the TARDIS Artron Energy Capacitor is still there.
      */
     public void startCreeperCheck() {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {

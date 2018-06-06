@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Shadow1013GL, Pyr0Byt3, pendo324
+ * Copyright (c) 2018 Shadow1013GL, Pyr0Byt3, pendo324
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,16 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 /**
- * Borrowed from the SimpleSort plugin.
- * http://dev.bukkit.org/bukkit-plugins/simplesort/
+ * Borrowed from the SimpleSort plugin. http://dev.bukkit.org/bukkit-plugins/simplesort/
  *
  * @author Shadow1013GL
  * @author Pyr0Byt3
  * @author pendo324
  */
-import java.util.Comparator;
+
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Comparator;
 
 public class TARDISItemComparator implements Comparator<ItemStack> {
 

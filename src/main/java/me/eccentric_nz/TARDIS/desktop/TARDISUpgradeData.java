@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISUpgradeData {

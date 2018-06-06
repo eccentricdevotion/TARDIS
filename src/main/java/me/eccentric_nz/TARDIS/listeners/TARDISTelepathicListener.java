@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -37,8 +34,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTelepathicListener implements Listener {
@@ -54,7 +54,7 @@ public class TARDISTelepathicListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Block block = event.getClickedBlock();
+        Block block = event.getClickedBlock();
         if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
             return;
         }
@@ -78,7 +78,7 @@ public class TARDISTelepathicListener implements Listener {
                 wherep.put("uuid", owner);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
-                    final Player player = event.getPlayer();
+                    Player player = event.getPlayer();
                     UUID uuid = player.getUniqueId();
                     if (rsp.isTelepathyOn()) {
                         // track player

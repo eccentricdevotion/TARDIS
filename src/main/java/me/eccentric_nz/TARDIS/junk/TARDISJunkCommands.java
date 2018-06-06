@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -26,8 +23,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkCommands implements CommandExecutor {
@@ -37,13 +37,13 @@ public class TARDISJunkCommands implements CommandExecutor {
 
     public TARDISJunkCommands(TARDIS plugin) {
         this.plugin = plugin;
-        this.firstArgs.add("create");
-        this.firstArgs.add("delete");
-        this.firstArgs.add("find");
-        this.firstArgs.add("floor");
-        this.firstArgs.add("return");
-        this.firstArgs.add("time");
-        this.firstArgs.add("wall");
+        firstArgs.add("create");
+        firstArgs.add("delete");
+        firstArgs.add("find");
+        firstArgs.add("floor");
+        firstArgs.add("return");
+        firstArgs.add("time");
+        firstArgs.add("wall");
     }
 
     @Override

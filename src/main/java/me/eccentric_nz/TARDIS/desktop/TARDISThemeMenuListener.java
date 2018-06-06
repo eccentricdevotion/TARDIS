@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -32,10 +31,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 /**
- * A control room's look could be changed over time. The process by which an
- * operator could transform a control room was fairly simple, once compared by
- * the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an operator could transform a control room was
+ * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -117,7 +117,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      * @param p the player using the GUI
      */
     @Override
-    public void close(final Player p) {
+    public void close(Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
@@ -129,7 +129,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      *
      * @param p the player using the GUI
      */
-    private void wall(final Player p) {
+    private void wall(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
@@ -144,7 +144,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
      *
      * @param p the player using the GUI
      */
-    private void archive(final Player p) {
+    private void archive(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
@@ -155,12 +155,11 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     }
 
     /**
-     * Initiates a TARDIS repair. Resets the console back to the original
-     * console schematic, Players must condense all missing blocks - unless the
-     * /tardisadmin repair [player] [amount] command has been run, assigning the
-     * player a 'free' repair(s).
+     * Initiates a TARDIS repair. Resets the console back to the original console schematic, Players must condense all
+     * missing blocks - unless the /tardisadmin repair [player] [amount] command has been run, assigning the player a
+     * 'free' repair(s).
      */
-    private void repair(final Player p) {
+    private void repair(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             String uuid = p.getUniqueId().toString();
@@ -187,10 +186,10 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     }
 
     /**
-     * Initiates a TARDIS clean. Removes any blocks that are not part of the
-     * original console schematic (missing blocks will not be restored).
+     * Initiates a TARDIS clean. Removes any blocks that are not part of the original console schematic (missing blocks
+     * will not be restored).
      */
-    private void clean(final Player p) {
+    private void clean(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             new TARDISRepair(plugin, p).restore(true);

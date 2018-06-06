@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISRoomGrowEvent extends TARDISEvent {
@@ -33,11 +32,11 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
     /**
      * A room growing event.
      *
-     * @param player the player growing the room
-     * @param tardis the Tardis data object, may be null - if room was manually
-     * grown, use {@link #getRoomData()}.getTardis_id()
-     * @param slot the TARDISARSSlot data object, may be null - if the room was
-     * manually grown, use {@link #getRoomData()}.getLocation()
+     * @param player   the player growing the room
+     * @param tardis   the Tardis data object, may be null - if room was manually grown, use {@link
+     *                 #getRoomData()}.getTardis_id()
+     * @param slot     the TARDISARSSlot data object, may be null - if the room was manually grown, use {@link
+     *                 #getRoomData()}.getLocation()
      * @param roomData the TARDISRoomData data object
      */
     public TARDISRoomGrowEvent(Player player, Tardis tardis, TARDISARSSlot slot, TARDISRoomData roomData) {
@@ -47,9 +46,8 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
     }
 
     /**
-     * Returns the Architectural Reconfiguration System position data object.
-     * Use the {@link me.eccentric_nz.TARDIS.ARS.TARDISARSSlot TARDISARSSlot}'s
-     * getter methods to retrieve the coordinates.
+     * Returns the Architectural Reconfiguration System position data object. Use the {@link
+     * me.eccentric_nz.TARDIS.ARS.TARDISARSSlot TARDISARSSlot}'s getter methods to retrieve the coordinates.
      *
      * @return the TARDISARSSlot object or null if the room was manually grown
      */
@@ -58,9 +56,8 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
     }
 
     /**
-     * Returns the room data object. Use the
-     * {@link me.eccentric_nz.TARDIS.rooms.TARDISRoomData TARDISRoomData}'s
-     * getter methods to retrieve the room type, wall and floor materials.
+     * Returns the room data object. Use the {@link me.eccentric_nz.TARDIS.rooms.TARDISRoomData TARDISRoomData}'s getter
+     * methods to retrieve the room type, wall and floor materials.
      *
      * @return the TARDISRoomData object
      */

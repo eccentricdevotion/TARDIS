@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -39,8 +38,9 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISShellRoomConstructor {
@@ -52,8 +52,8 @@ public class TARDISShellRoomConstructor {
 
     public TARDISShellRoomConstructor(TARDIS plugin) {
         this.plugin = plugin;
-        this.orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
-        this.orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
+        orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
+        orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
     }
 
     public void createShell(Player player, int id, Block block) {

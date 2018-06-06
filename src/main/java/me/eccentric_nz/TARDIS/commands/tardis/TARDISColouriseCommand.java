@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -25,10 +24,11 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- * As with the rest of the Doctor's TARDIS, the aesthetic design of the time
- * rotor occasionally changed throughout the Doctor's travels. As it varied
- * through designs, it alternated between being a single column and a series of
+ * As with the rest of the Doctor's TARDIS, the aesthetic design of the time rotor occasionally changed throughout the
+ * Doctor's travels. As it varied through designs, it alternated between being a single column and a series of
  * components that moved into each other from above and below.
  *
  * @author eccentric_nz

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
@@ -39,10 +37,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * Air corridors projected by TARDISes had the option to use anti-gravity,
- * allowing the occupant of the corridor to float through the corridor instead
- * of walk.
+ * Air corridors projected by TARDISes had the option to use anti-gravity, allowing the occupant of the corridor to
+ * float through the corridor instead of walk.
  *
  * @author eccentric_nz
  */
@@ -69,9 +69,8 @@ public class TARDISGravityWellListener implements Listener {
     }
 
     /**
-     * Listens for a player walking over a Gravity Well location. If the block
-     * the player is on is contained in the gravityUpList then the player is
-     * transported up.
+     * Listens for a player walking over a Gravity Well location. If the block the player is on is contained in the
+     * gravityUpList then the player is transported up.
      *
      * @param event a player moving
      */
@@ -149,9 +148,8 @@ public class TARDISGravityWellListener implements Listener {
     }
 
     /**
-     * Listens for a player falling onto a Gravity Well location. If the block
-     * the player lands on is contained in the gravityDownList then the player
-     * receives no fall damage.
+     * Listens for a player falling onto a Gravity Well location. If the block the player lands on is contained in the
+     * gravityDownList then the player receives no fall damage.
      *
      * @param e an entity taking damage
      */
@@ -189,9 +187,8 @@ public class TARDISGravityWellListener implements Listener {
     }
 
     /**
-     * Listens for a player clicking a wool block after running the
-     * /tardisgravity command. If the block is the right type, it is added or
-     * removed from the database.
+     * Listens for a player clicking a wool block after running the /tardisgravity command. If the block is the right
+     * type, it is added or removed from the database.
      *
      * @param event a player clicking a block
      */
@@ -200,7 +197,7 @@ public class TARDISGravityWellListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (plugin.getTrackerKeeper().getGravity().containsKey(uuid)) {
             Double[] values = plugin.getTrackerKeeper().getGravity().get(uuid);

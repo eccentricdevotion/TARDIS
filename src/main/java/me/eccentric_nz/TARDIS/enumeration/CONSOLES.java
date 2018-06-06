@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import org.bukkit.Material;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
-import org.bukkit.Material;
 
 /**
- *
  * @author eccentric_nz
  */
 public class CONSOLES {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,12 +29,6 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import org.bukkit.Location;
@@ -42,10 +36,11 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
- * Before a TARDIS becomes fully functional, it must be primed with the
- * biological imprint of a Time Lord, normally done by simply having a Time Lord
- * operate the TARDIS for the first time.
+ * Before a TARDIS becomes fully functional, it must be primed with the biological imprint of a Time Lord, normally done
+ * by simply having a Time Lord operate the TARDIS for the first time.
  *
  * @author eccentric_nz
  */
@@ -71,8 +66,7 @@ public class TARDISWorldGuardUtils {
      *
      * @param p the player to check
      * @param l the location to check
-     * @return true of false depending on whether the player has permission to
-     * build at this location
+     * @return true of false depending on whether the player has permission to build at this location
      */
     public boolean canBuild(Player p, Location l) {
         return wg.canBuild(p, l);
@@ -83,8 +77,7 @@ public class TARDISWorldGuardUtils {
      *
      * @param p the player to check
      * @param l the location to check
-     * @return true of false depending on whether the player has permission to
-     * land at this location
+     * @return true of false depending on whether the player has permission to land at this location
      */
     public boolean canLand(Player p, Location l) {
         // get the flag we should be checking
@@ -107,10 +100,10 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Adds a WorldGuard protected region to the inner TARDIS location. This
-     * stops other players and mobs from griefing the TARDIS :)
+     * Adds a WorldGuard protected region to the inner TARDIS location. This stops other players and mobs from griefing
+     * the TARDIS :)
      *
-     * @param p the player to assign as the owner of the region
+     * @param p   the player to assign as the owner of the region
      * @param one a start location of a cuboid region
      * @param two an end location of a cuboid region
      */
@@ -150,12 +143,12 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Adds a WorldGuard protected region for a TIPS slot. This stops other
-     * players and mobs from griefing the TARDIS :)
+     * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the TARDIS
+     * :)
      *
-     * @param p the player to assign as the owner of the region
+     * @param p    the player to assign as the owner of the region
      * @param data a TIPS Data container
-     * @param w the world we are creating the region in
+     * @param w    the world we are creating the region in
      */
     public void addWGProtection(String p, TARDISTIPSData data, World w) {
         RegionManager rm = wg.getRegionManager(w);
@@ -193,13 +186,12 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Adds a WorldGuard protected region to recharger location. A 3x3 block
-     * area is protected.
+     * Adds a WorldGuard protected region to recharger location. A 3x3 block area is protected.
      *
-     * @param p the player to assign as the owner of the region
+     * @param p    the player to assign as the owner of the region
      * @param name the name of the recharger
-     * @param one a start location of a cuboid region
-     * @param two an end location of a cuboid region
+     * @param one  a start location of a cuboid region
+     * @param two  an end location of a cuboid region
      */
     public void addRechargerProtection(Player p, String name, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
@@ -231,8 +223,8 @@ public class TARDISWorldGuardUtils {
      * Adds a WorldGuard protected region to exterior renderer room.
      *
      * @param name the name of the recharger
-     * @param one a start location of a cuboid region
-     * @param two an end location of a cuboid region
+     * @param one  a start location of a cuboid region
+     * @param two  an end location of a cuboid region
      */
     public void addRendererProtection(String name, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
@@ -325,8 +317,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Removes the exterior rendering room region when the room is jettisoned or
-     * the TARDIS is deleted.
+     * Removes the exterior rendering room region when the room is jettisoned or the TARDIS is deleted.
      *
      * @param w the world the region is located in
      * @param p the player's name
@@ -347,9 +338,9 @@ public class TARDISWorldGuardUtils {
     /**
      * Adds a player to a region's membership.
      *
-     * @param w the world the region is located in
+     * @param w     the world the region is located in
      * @param owner the player whose region it is
-     * @param a the player to add
+     * @param a     the player to add
      */
     public void addMemberToRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionManager(w);
@@ -361,9 +352,9 @@ public class TARDISWorldGuardUtils {
     /**
      * Removes a player from a region's membership.
      *
-     * @param w the world the region is located in
+     * @param w     the world the region is located in
      * @param owner the player whose region it is
-     * @param a the player to add
+     * @param a     the player to add
      */
     public void removeMemberFromRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionManager(w);
@@ -375,9 +366,9 @@ public class TARDISWorldGuardUtils {
     /**
      * Updates the TARDIS WorldGuard region when the player name has changed.
      *
-     * @param w the world the region is located in
-     * @param o the owner's name
-     * @param uuid the UUID of the player
+     * @param w     the world the region is located in
+     * @param o     the owner's name
+     * @param uuid  the UUID of the player
      * @param which the region type to update
      */
     public void updateRegionForNameChange(World w, String o, UUID uuid, String which) {
@@ -397,11 +388,10 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Updates the TARDIS WorldGuard region when the TARDIS has been claimed by
-     * a new player.
+     * Updates the TARDIS WorldGuard region when the TARDIS has been claimed by a new player.
      *
      * @param location the TARDIS interior location
-     * @param uuid the UUID of the player
+     * @param uuid     the UUID of the player
      */
     public void updateRegionForClaim(Location location, UUID uuid) {
         RegionManager rm = wg.getRegionManager(location.getWorld());
@@ -447,7 +437,7 @@ public class TARDISWorldGuardUtils {
     /**
      * Sets a block with the properties of a sponge
      *
-     * @param b the sponge block
+     * @param b     the sponge block
      * @param clear whether to set the sponge area or remove it
      */
     public void sponge(Block b, boolean clear) {
@@ -475,7 +465,7 @@ public class TARDISWorldGuardUtils {
      * Gets a TARDIS WorldGuard region.
      *
      * @param world the world the region is in
-     * @param p the Time Lord whose region it is
+     * @param p     the Time Lord whose region it is
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String p) {
@@ -522,8 +512,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Checks whether there is a protected region at a location and if so
-     * whether mobs can spawn.
+     * Checks whether there is a protected region at a location and if so whether mobs can spawn.
      *
      * @param l the location to check
      * @return true if mobs can spawn, otherwise false

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import org.bukkit.ChatColor;
 
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISChecker {
@@ -37,7 +32,7 @@ public class TARDISChecker {
     private final TARDIS plugin;
     private String root;
 
-    public TARDISChecker(final TARDIS plugin) {
+    public TARDISChecker(TARDIS plugin) {
         this.plugin = plugin;
     }
 

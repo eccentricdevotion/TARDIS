@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
@@ -42,11 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,17 +48,14 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+
+import java.io.File;
+import java.util.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted,
- * automatically relocating any living beings in the deleted room, depositing
- * them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
  */
@@ -112,7 +99,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
-        this.qf = new QueryFactory(this.plugin);
+        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -330,7 +317,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
-                    final Block psb = entry.getKey();
+                    Block psb = entry.getKey();
 //                    psb.setType(Material.WALL_SIGN);
                     psb.setData(entry.getValue());
                     if (psb.getType().equals(Material.WALL_SIGN)) {
@@ -595,7 +582,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
                     /*
-                        * get the ender crytal location
+                     * get the ender crytal location
                      */
                     ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                 }

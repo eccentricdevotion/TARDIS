@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
@@ -49,19 +37,25 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * Keeps instances of various classes, maps and lists for easy access in other
- * classes.
+ * Keeps instances of various classes, maps and lists for easy access in other classes.
  *
  * @author eccentric_nz
  */
 public class TARDISGeneralInstanceKeeper {
 
-    private HashSet<Material> transparent = new HashSet<>();
+    private final HashSet<Material> transparent;
     private List<Block> doorPistons = new ArrayList<>();
     private List<Integer> npcIDs = new ArrayList<>();
     private List<String> quotes = new ArrayList<>();
-    private HashMap<String, String> sign_lookup = new HashMap<>();
+    private final HashMap<String, String> sign_lookup;
     private TARDISAdminCommands tardisAdminCommand;
     private TARDISButtonListener buttonListener;
     private TARDISDoorListener doorListener;
@@ -103,18 +97,18 @@ public class TARDISGeneralInstanceKeeper {
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
-        this.roomArgs = buildRoomArgs();
-        this.transparent = buildTransparent();
-        this.UUIDCache = new TARDISUUIDCache(plugin);
-        this.doorListener = new TARDISDoorListener(plugin);
-        this.interactables = buildInteractables();
-        this.sign_lookup = buildSignLookup();
+        roomArgs = buildRoomArgs();
+        transparent = buildTransparent();
+        UUIDCache = new TARDISUUIDCache(plugin);
+        doorListener = new TARDISDoorListener(plugin);
+        interactables = buildInteractables();
+        sign_lookup = buildSignLookup();
         setRechargers();
         InputStream is = plugin.getResource("plugin.yml");
         InputStreamReader reader = new InputStreamReader(is);
-        this.pluginYAML = new YamlConfiguration();
+        pluginYAML = new YamlConfiguration();
         try {
-            this.pluginYAML.load(reader);
+            pluginYAML.load(reader);
         } catch (IOException | InvalidConfigurationException ex) {
             Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -349,7 +343,7 @@ public class TARDISGeneralInstanceKeeper {
                 int y = plugin.getConfig().getInt("rechargers." + s + ".y");
                 int z = plugin.getConfig().getInt("rechargers." + s + ".z");
                 Location rc_loc = new Location(w, x, y, z);
-                this.rechargers.add(rc_loc);
+                rechargers.add(rc_loc);
             });
         }
     }

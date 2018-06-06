@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.UUID;
+
 /**
- * Krakenites ware swamp-living aliens with a cylindrical body covered in a
- * thick, grey shell with the texture of barnacle. They have approximately ten
- * tentacles that protrude from the top of their shell.
+ * Krakenites ware swamp-living aliens with a cylindrical body covered in a thick, grey shell with the texture of
+ * barnacle. They have approximately ten tentacles that protrude from the top of their shell.
  *
  * @author eccentric_nz
  */
@@ -40,7 +40,7 @@ public class TARDISResourcePackChanger {
     /**
      * Sets a player's texture pack.
      *
-     * @param p The player
+     * @param p   The player
      * @param str The URL of the texture pack file
      */
     public void changeRP(Player p, String str) {

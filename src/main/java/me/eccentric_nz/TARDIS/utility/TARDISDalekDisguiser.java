@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import org.bukkit.entity.Skeleton;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDalekDisguiser {

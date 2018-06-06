@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014  michidk && xxmicloxx
+ * Copyright (C) 2018 michidk && xxmicloxx
  * http://dev.bukkit.org/bukkit-plugins/noteblockapi/
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,7 @@
  */
 package me.eccentric_nz.TARDIS.noteblock;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 
 public class NBSDecoder {

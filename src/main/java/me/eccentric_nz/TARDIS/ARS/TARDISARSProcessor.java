@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import org.bukkit.Chunk;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Preprocessor for checking changes in the Architectural Reconfiguration
- * System.
+ * Preprocessor for checking changes in the Architectural Reconfiguration System.
  *
  * @author eccentric_nz
  */
@@ -40,7 +40,7 @@ public class TARDISARSProcessor {
     public TARDISARSProcessor(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        this.limit = this.plugin.getConfig().getInt("growth.ars_limit");
+        limit = this.plugin.getConfig().getInt("growth.ars_limit");
     }
 
     public boolean compare3DArray(String[][][] start, String[][][] end) {
@@ -145,7 +145,7 @@ public class TARDISARSProcessor {
                 int energy = rs.getArtron_level();
                 // check available energy vs cost
                 if (totalcost - recoveredcost > energy) {
-                    this.error = "ENERGY_NOT_ENOUGH";
+                    error = "ENERGY_NOT_ENOUGH";
                     return false;
                 }
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,17 +26,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- * Tricky van Baalen was the youngest and the smartest of the van Baalen
- * brothers. Tricky worked for his brothers Gregor and Bram, finding and
- * processing salvaged spaceships. Although made captain by their father, he
- * suffered an accident in which he lost his eyes, his voice, and his memory. He
- * was fitted with synthetic eyes and a partially electronic-sounding voice box;
- * unable to replace his memory, his brothers instead convinced him that he was
- * in fact an android.
+ * Tricky van Baalen was the youngest and the smartest of the van Baalen brothers. Tricky worked for his brothers Gregor
+ * and Bram, finding and processing salvaged spaceships. Although made captain by their father, he suffered an accident
+ * in which he lost his eyes, his voice, and his memory. He was fitted with synthetic eyes and a partially
+ * electronic-sounding voice box; unable to replace his memory, his brothers instead convinced him that he was in fact
+ * an android.
  *
  * @author eccentric_nz
  */
@@ -53,23 +52,20 @@ public class ResultSetARS {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the ars table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the ars table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param where  a HashMap<String, Object> of table fields and values to refine the search.
      */
     public ResultSetARS(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the lamps table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the lamps table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -103,15 +99,15 @@ public class ResultSetARS {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.id = rs.getInt("ars_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.uuid = UUID.fromString(rs.getString("uuid"));
-                    this.east = rs.getInt("ars_x_east");
-                    this.south = rs.getInt("ars_z_south");
-                    this.layer = rs.getInt("ars_y_layer");
-                    this.json = rs.getString("json");
+                    id = rs.getInt("ars_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    uuid = UUID.fromString(rs.getString("uuid"));
+                    east = rs.getInt("ars_x_east");
+                    south = rs.getInt("ars_z_south");
+                    layer = rs.getInt("ars_y_layer");
+                    json = rs.getString("json");
                     if (rs.wasNull()) {
-                        this.json = "";
+                        json = "";
                     }
                 }
             } else {

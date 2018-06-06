@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -33,8 +27,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISItemFrameListener implements Listener {
@@ -47,7 +43,7 @@ public class TARDISItemFrameListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onItemFrameClick(PlayerInteractEntityEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         if (event.getRightClicked() instanceof ItemFrame) {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction` command?
@@ -81,7 +77,7 @@ public class TARDISItemFrameListener implements Listener {
                 TARDISMessage.send(player, "DIRECTION_UPDATE");
                 return;
             }
-            final ItemFrame frame = (ItemFrame) event.getRightClicked();
+            ItemFrame frame = (ItemFrame) event.getRightClicked();
             // if the item frame has a tripwire hook in it
             // check if it is a TARDIS direction item frame
             String l = frame.getLocation().toString();
@@ -151,34 +147,34 @@ public class TARDISItemFrameListener implements Listener {
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else // are they placing a tripwire hook?
-                if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
-                    // get current tardis direction
-                    HashMap<String, Object> wherec = new HashMap<>();
-                    wherec.put("tardis_id", id);
-                    final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                    if (rscl.resultSet()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            // update the TRIPWIRE_HOOK rotation
-                            Rotation r;
-                            switch (rscl.getDirection()) {
-                                case EAST:
-                                    r = Rotation.COUNTER_CLOCKWISE;
-                                    break;
-                                case SOUTH:
-                                    r = Rotation.NONE;
-                                    break;
-                                case WEST:
-                                    r = Rotation.CLOCKWISE;
-                                    break;
-                                default:
-                                    r = Rotation.FLIPPED;
-                                    break;
-                            }
-                            frame.setRotation(r);
-                            TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
-                        }, 4L);
+                    if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+                        // get current tardis direction
+                        HashMap<String, Object> wherec = new HashMap<>();
+                        wherec.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                        if (rscl.resultSet()) {
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                // update the TRIPWIRE_HOOK rotation
+                                Rotation r;
+                                switch (rscl.getDirection()) {
+                                    case EAST:
+                                        r = Rotation.COUNTER_CLOCKWISE;
+                                        break;
+                                    case SOUTH:
+                                        r = Rotation.NONE;
+                                        break;
+                                    case WEST:
+                                        r = Rotation.CLOCKWISE;
+                                        break;
+                                    default:
+                                        r = Rotation.FLIPPED;
+                                        break;
+                                }
+                                frame.setRotation(r);
+                                TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                            }, 4L);
+                        }
                     }
-                }
             }
         }
     }

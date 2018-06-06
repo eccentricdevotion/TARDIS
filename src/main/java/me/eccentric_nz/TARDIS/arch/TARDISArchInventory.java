@@ -1,4 +1,20 @@
 /*
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Some parts written by:
  * Kristian S. Stangeland aadnk
  * Norway
  * kristian@comphenix.net
@@ -6,35 +22,27 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.arch.attributes.TARDISAttribute;
-import me.eccentric_nz.TARDIS.arch.attributes.TARDISAttributeData;
-import me.eccentric_nz.TARDIS.arch.attributes.TARDISAttributeSerialization;
-import me.eccentric_nz.TARDIS.arch.attributes.TARDISAttributeType;
-import me.eccentric_nz.TARDIS.arch.attributes.TARDISAttributes;
+import me.eccentric_nz.TARDIS.arch.attributes.*;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 public class TARDISArchInventory {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final String prefix = TARDIS.plugin.getPrefix();
 
-    @SuppressWarnings("deprecation")
-    public void switchInventories(final Player p, int arch) {
+    public void switchInventories(Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
         String inv = TARDISArchSerialization.toDatabase(p.getInventory().getContents());

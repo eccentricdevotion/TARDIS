@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTravelBar {
@@ -38,16 +37,16 @@ public class TARDISTravelBar {
         this.plugin = plugin;
     }
 
-    public void showTravelRemaining(Player player, final long duration, boolean takeoff) {
+    public void showTravelRemaining(Player player, long duration, boolean takeoff) {
 
         String title = (takeoff) ? plugin.getLanguage().getString("TRAVEL_BAR_TAKEOFF") : plugin.getLanguage().getString("TRAVEL_BAR_LAND");
-        final BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
+        BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
         bb.setProgress(0);
         bb.addPlayer(player);
         bb.setVisible(true);
-        final double millis = duration * 50.0d;
-        final long start = System.currentTimeMillis();
-        final double end = start + millis;
+        double millis = duration * 50.0d;
+        long start = System.currentTimeMillis();
+        double end = start + millis;
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             long now = System.currentTimeMillis();
             if (now < end) {

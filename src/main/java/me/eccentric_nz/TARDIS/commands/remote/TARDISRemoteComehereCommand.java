@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -42,8 +40,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.yi.acru.bukkit.Lockette.Lockette;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRemoteComehereCommand {
@@ -87,7 +87,7 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        final int id = tardis.getTardis_id();
+        int id = tardis.getTardis_id();
         // check they are not in the tardis
         HashMap<String, Object> wherettrav = new HashMap<>();
         wherettrav.put("uuid", player.getUniqueId().toString());
@@ -142,7 +142,7 @@ public class TARDISRemoteComehereCommand {
             TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
             return true;
         }
-        final QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(plugin);
         Location oldSave = null;
         HashMap<String, Object> bid = new HashMap<>();
         bid.put("tardis_id", id);
@@ -187,9 +187,9 @@ public class TARDISRemoteComehereCommand {
         TARDISMessage.send(player, "TARDIS_COMING");
         long delay = 1L;
         plugin.getTrackerKeeper().getInVortex().add(id);
-        final boolean hid = hidden;
+        boolean hid = hidden;
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
             dd.setDirection(d);
             dd.setLocation(oldSave);
             dd.setPlayer(player);
@@ -207,7 +207,7 @@ public class TARDISRemoteComehereCommand {
                 }
             }, delay);
         }
-        final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+        BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
         bd.setDirection(player_d);
         bd.setLocation(eyeLocation);
         bd.setMalfunction(false);

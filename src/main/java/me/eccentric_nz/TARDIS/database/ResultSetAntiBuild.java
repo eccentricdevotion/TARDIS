@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the location of the TARDIS Police Box blocks.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
+ * blocks.
  *
  * @author eccentric_nz
  */
@@ -39,22 +40,20 @@ public class ResultSetAntiBuild {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the tardis & travellers table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis & travellers table.
      *
      * @param plugin an instance of the main class.
-     * @param uuid the uuid who is trying to build.
+     * @param uuid   the uuid who is trying to build.
      */
     public ResultSetAntiBuild(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid.toString();
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis & travellers table. This
-     * method builds an SQL query string from the parameters supplied and then
-     * executes the query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the tardis & travellers table. This method builds an SQL query string from the
+     * parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -70,7 +69,7 @@ public class ResultSetAntiBuild {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.tardis_id = rs.getInt("tardis_id");
+                    tardis_id = rs.getInt("tardis_id");
                 }
             } else {
                 return false;

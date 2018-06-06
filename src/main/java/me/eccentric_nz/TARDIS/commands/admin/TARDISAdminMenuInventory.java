@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
- * The Administrator of Solos is the Earth Empire's civilian overseer for that
- * planet.
+ * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.
  *
  * @author eccentric_nz
  */
@@ -39,7 +35,7 @@ public class TARDISAdminMenuInventory {
 
     public TARDISAdminMenuInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.menu = getItemStack();
+        menu = getItemStack();
     }
 
     /**
@@ -47,7 +43,7 @@ public class TARDISAdminMenuInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    
+
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<>();
         Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));

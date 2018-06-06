@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -33,8 +32,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISGlassesListener implements Listener {
@@ -50,7 +50,7 @@ public class TARDISGlassesListener implements Listener {
     public void on3dGlassesEquip(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         if (inv.getType().equals(InventoryType.CRAFTING)) {
-            final Player player = (Player) event.getPlayer();
+            Player player = (Player) event.getPlayer();
             PlayerInventory pi = player.getInventory();
             ItemStack is = pi.getHelmet();
             if (is != null) {
@@ -70,8 +70,7 @@ public class TARDISGlassesListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private void checkGlasses(final TARDIS plugin) {
+    private void checkGlasses(TARDIS plugin) {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             plugin.getTrackerKeeper().getSpectacleWearers().forEach((uuid) -> {
                 Player p = plugin.getServer().getPlayer(uuid);

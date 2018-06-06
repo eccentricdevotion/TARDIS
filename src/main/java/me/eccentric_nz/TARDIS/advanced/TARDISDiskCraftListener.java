@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BIOME_LOOKUP;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -34,8 +31,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDiskCraftListener implements Listener {
@@ -51,11 +51,10 @@ public class TARDISDiskCraftListener implements Listener {
         actions.add(InventoryAction.SWAP_WITH_CURSOR);
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onCraftBiomePresetDisk(InventoryClickEvent event) {
-        final Player player = (Player) event.getWhoClicked();
-        final Inventory inv = event.getInventory();
+        Player player = (Player) event.getWhoClicked();
+        Inventory inv = event.getInventory();
         int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10 && actions.contains(event.getAction())) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -36,8 +30,10 @@ import org.bukkit.Sound;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDematerialiseToVortex implements Runnable {
@@ -56,7 +52,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
 
     @Override
     public void run() {
-        final UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getInVortex().add(id);
         plugin.getTrackerKeeper().getDidDematToVortex().add(id);
         HashMap<String, Object> wherei = new HashMap<>();
@@ -88,7 +84,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setSubmarine(sub);
             dd.setTardisID(id);
             dd.setBiome(biome);
-            final PRESET preset = tardis.getPreset();
+            PRESET preset = tardis.getPreset();
             if (preset.equals(PRESET.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<>();
                 wherenl.put("tardis_id", id);

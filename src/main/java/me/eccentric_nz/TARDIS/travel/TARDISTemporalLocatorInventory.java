@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * Time travel is, as the name suggests, the (usually controlled) process of
- * travelling through time, even in a non-linear direction. In the 26th century
- * individuals who time travel are sometimes known as persons of meta-temporal
+ * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
+ * non-linear direction. In the 26th century individuals who time travel are sometimes known as persons of meta-temporal
  * displacement.
  *
  * @author eccentric_nz
@@ -67,7 +67,7 @@ public class TARDISTemporalLocatorInventory {
         time.add("3 AM");
         time.add("4 AM");
         time.add("5 AM");
-        this.temporal = getItemStack();
+        temporal = getItemStack();
     }
 
     /**

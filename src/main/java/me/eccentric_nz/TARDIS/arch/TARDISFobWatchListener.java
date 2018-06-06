@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchOffEvent;
@@ -35,8 +34,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISFobWatchListener implements Listener {
@@ -61,8 +61,8 @@ public class TARDISFobWatchListener implements Listener {
             if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
                 return;
             }
-            final Player player = event.getPlayer();
-            final UUID uuid = player.getUniqueId();
+            Player player = event.getPlayer();
+            UUID uuid = player.getUniqueId();
             boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
             if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 // only check the permission when trying to 'fob'
@@ -70,7 +70,7 @@ public class TARDISFobWatchListener implements Listener {
                     TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
                     return;
                 }
-                final String name = TARDISRandomName.name();
+                String name = TARDISRandomName.name();
                 long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
                 TARDISWatchData twd = new TARDISWatchData(name, time);
                 plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);

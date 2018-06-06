@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISMaterials {

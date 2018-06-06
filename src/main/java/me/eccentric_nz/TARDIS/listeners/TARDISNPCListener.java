@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,9 +26,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
- * Believing that he would die on the Game Station, the Ninth Doctor used
- * Emergency Programme One to play a message for the benefit of Rose Tyler
- * before the TARDIS returned Rose to her home of Powell Estate in 2006.
+ * Believing that he would die on the Game Station, the Ninth Doctor used Emergency Programme One to play a message for
+ * the benefit of Rose Tyler before the TARDIS returned Rose to her home of Powell Estate in 2006.
  *
  * @author eccentric_nz
  */
@@ -41,8 +40,7 @@ public class TARDISNPCListener implements Listener {
     }
 
     /**
-     * Listens for player clicking on an NPC. If the NPC is an Emergency Program
-     * One NPC then it is removed.
+     * Listens for player clicking on an NPC. If the NPC is an Emergency Program One NPC then it is removed.
      *
      * @param event a player clicking an inventory slot
      */

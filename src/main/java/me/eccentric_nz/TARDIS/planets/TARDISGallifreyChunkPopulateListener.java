@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -26,16 +24,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkPopulateEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
- *
- * From the planet's surface, Gallifrey boasts an orange sky at night,
- * snow-capped mountains, fields of red grass, and trees with bright silver
- * leaves. These reflect the morning sunlight, making it look like the forests
- * are on fire. There are also green forests, golden fields and red deserts, but
- * overall it is a much drier world than Earth. The Sixth Doctor once declared
- * the climate to be "like the Serengeti all year round".
+ * <p>
+ * From the planet's surface, Gallifrey boasts an orange sky at night, snow-capped mountains, fields of red grass, and
+ * trees with bright silver leaves. These reflect the morning sunlight, making it look like the forests are on fire.
+ * There are also green forests, golden fields and red deserts, but overall it is a much drier world than Earth. The
+ * Sixth Doctor once declared the climate to be "like the Serengeti all year round".
  */
 public class TARDISGallifreyChunkPopulateListener implements Listener {
 

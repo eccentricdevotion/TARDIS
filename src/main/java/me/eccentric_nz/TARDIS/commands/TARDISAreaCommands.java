@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -33,12 +31,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
  * Command /tardisarea [arguments].
- *
- * A dimension is a property of space, extending in a given direction, which,
- * when combined with other dimensions of width and height and time, make up the
- * Universe.
+ * <p>
+ * A dimension is a property of space, extending in a given direction, which, when combined with other dimensions of
+ * width and height and time, make up the Universe.
  *
  * @author eccentric_nz
  */
@@ -154,13 +154,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                 int max = a.getMaxX();
                 int maz = a.getMaxZ();
                 World w = plugin.getServer().getWorld(a.getWorld());
-                final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
+                Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                 b1.setType(Material.SNOW_BLOCK);
-                final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
+                Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
                 b2.setType(Material.SNOW_BLOCK);
-                final Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
+                Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
                 b3.setType(Material.SNOW_BLOCK);
-                final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
+                Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
                 b4.setType(Material.SNOW_BLOCK);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
                 return true;

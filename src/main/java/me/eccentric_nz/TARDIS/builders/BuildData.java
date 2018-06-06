@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+
+import java.util.HashMap;
 
 /**
  * Data class for building the TARDIS exterior.
@@ -99,7 +100,7 @@ public final class BuildData extends MaterialisationData {
         } else {
             HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("uuid", uuid);
-            final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, wherep);
             if (rsp.resultSet()) {
                 super.setLamp(rsp.getLamp());
                 texture = rsp.isPoliceboxTexturesOn();

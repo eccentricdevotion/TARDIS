@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -37,8 +36,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISExteriorRenderer {
@@ -49,7 +49,7 @@ public class TARDISExteriorRenderer {
         this.plugin = plugin;
     }
 
-    public void render(String interior, Location exterior, int id, final Player p, final COMPASS d, long time, Biome biome) {
+    public void render(String interior, Location exterior, int id, Player p, COMPASS d, long time, Biome biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
         int epbx = exterior.getBlockX();
@@ -61,7 +61,7 @@ public class TARDISExteriorRenderer {
         int ipbx = TARDISNumberParsers.parseInt(idata[1]);
         int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
         int ipbz = TARDISNumberParsers.parseInt(idata[3]);
-        final Location location = new Location(iw, ipbx, ipby, ipbz);
+        Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
             TARDISMessage.send(p, "DEST_NO_CHANGE");
         } else {

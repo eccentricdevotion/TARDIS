@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -29,11 +24,11 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
- * After materialization, the Astrosextant Rectifier will attempt to confirm
- * that a TARDIS has arrived at the correct coordinates. A damaged Sterometer
- * will reduce the accuracy of the Rectifier to within a few thousand light
- * years.
+ * After materialization, the Astrosextant Rectifier will attempt to confirm that a TARDIS has arrived at the correct
+ * coordinates. A damaged Sterometer will reduce the accuracy of the Rectifier to within a few thousand light years.
  *
  * @author eccentric_nz
  */
@@ -55,7 +50,7 @@ public class TARDISManualFlightRunnable implements Runnable {
         this.player = player;
         this.id = id;
         target = getRepeaterList(this.id);
-        this.uuid = player.getUniqueId();
+        uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getRepeaters().put(uuid, target);
     }
 

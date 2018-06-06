@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISMultiverseHelper {
@@ -33,7 +32,7 @@ public class TARDISMultiverseHelper {
     private final MultiverseCore mvc;
 
     public TARDISMultiverseHelper(Plugin mvplugin) {
-        this.mvc = (MultiverseCore) mvplugin;
+        mvc = (MultiverseCore) mvplugin;
     }
 
     public String getAlias(World world) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import org.bukkit.block.data.type.Repeater;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import org.bukkit.block.data.type.Repeater;
 
 /**
- * The sonic screwdriver is a highly versatile tool used by many, but not all,
- * incarnations of the Doctor. The Doctor modified and ostensibly upgraded it
- * over the years, giving it an increasing number of applications.
- *
- * Control types: 2 = environment-repeater 3 = x-repeater 4 = z-repeater 5 =
- * y-repeater
+ * The sonic screwdriver is a highly versatile tool used by many, but not all, incarnations of the Doctor. The Doctor
+ * modified and ostensibly upgraded it over the years, giving it an increasing number of applications.
+ * <p>
+ * Control types: 2 = environment-repeater 3 = x-repeater 4 = z-repeater 5 = y-repeater
  *
  * @author eccentric_nz
  */
@@ -48,24 +47,22 @@ public class ResultSetRepeaters {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the controls table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the controls table.
      *
-     * @param plugin an instance of the main class.
-     * @param id the TARDIS id to search for.
+     * @param plugin    an instance of the main class.
+     * @param id        the TARDIS id to search for.
      * @param secondary the level of control to look for.
      */
     public ResultSetRepeaters(TARDIS plugin, int id, int secondary) {
         this.plugin = plugin;
         this.id = id;
         this.secondary = secondary;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the controls table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the controls table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */

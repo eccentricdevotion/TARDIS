@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.ArrayList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+
 /**
- * Soon after taking Amy Pond on board for the first time, the TARDIS console
- * provided the Doctor with a new sonic screwdriver, as the previous one had
- * been destroyed.
+ * Soon after taking Amy Pond on board for the first time, the TARDIS console provided the Doctor with a new sonic
+ * screwdriver, as the previous one had been destroyed.
  *
  * @author eccentric_nz
  */
@@ -37,14 +37,13 @@ public class TARDISItemRenamer {
     }
 
     /**
-     * Sets the name of the held item to the specified string. Also adds some
-     * lore.
+     * Sets the name of the held item to the specified string. Also adds some lore.
      *
-     * @param name the name to give the item
+     * @param name    the name to give the item
      * @param setlore whether to set lore on the item
      */
     public void setName(String name, boolean setlore) {
-        ItemMeta im = this.itemStack.getItemMeta();
+        ItemMeta im = itemStack.getItemMeta();
         if (im == null) {
             TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack.toString());
         } else {
@@ -54,7 +53,7 @@ public class TARDISItemRenamer {
                 lore.add("Enter and exit your TARDIS");
                 im.setLore(lore);
             }
-            this.itemStack.setItemMeta(im);
+            itemStack.setItemMeta(im);
         }
     }
 }

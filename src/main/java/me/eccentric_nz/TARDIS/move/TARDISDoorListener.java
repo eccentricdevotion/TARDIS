@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISExitEvent;
@@ -38,23 +34,17 @@ import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Ocelot;
-import org.bukkit.entity.Parrot;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Tameable;
-import org.bukkit.entity.Wolf;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDoorListener {
@@ -87,22 +77,21 @@ public class TARDISDoorListener {
     /**
      * A method to teleport the player into and out of the TARDIS.
      *
-     * @param p the player to teleport
-     * @param l the location to teleport to
-     * @param exit whether the player is entering or exiting the TARDIS, if true
-     * they are exiting
-     * @param from the world they are teleporting from
-     * @param q whether the player will receive a TARDIS quote message
+     * @param p     the player to teleport
+     * @param l     the location to teleport to
+     * @param exit  whether the player is entering or exiting the TARDIS, if true they are exiting
+     * @param from  the world they are teleporting from
+     * @param q     whether the player will receive a TARDIS quote message
      * @param sound an integer representing the sound to play
-     * @param m whether to play the resource pack sound
+     * @param m     whether to play the resource pack sound
      */
-    public void movePlayer(final Player p, final Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
-        final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
-        final World to = l.getWorld();
-        final boolean allowFlight = p.getAllowFlight();
-        final boolean crossWorlds = (from != to);
-        final boolean quotes = q;
-        final boolean isSurvival = checkSurvival(to);
+    public void movePlayer(Player p, Location l, boolean exit, World from, boolean q, int sound, boolean m) {
+        int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
+        World to = l.getWorld();
+        boolean allowFlight = p.getAllowFlight();
+        boolean crossWorlds = (from != to);
+        boolean quotes = q;
+        boolean isSurvival = checkSurvival(to);
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.teleport(l);
@@ -174,16 +163,14 @@ public class TARDISDoorListener {
     }
 
     /**
-     * A method to transport player pets (tamed mobs) into and out of the
-     * TARDIS.
+     * A method to transport player pets (tamed mobs) into and out of the TARDIS.
      *
-     * @param p a list of the player's pets found nearby
-     * @param l the location to teleport pets to
+     * @param p      a list of the player's pets found nearby
+     * @param l      the location to teleport pets to
      * @param player the player who owns the pets
-     * @param d the direction of the police box
-     * @param enter whether the pets are entering (true) or exiting (false)
+     * @param d      the direction of the police box
+     * @param enter  whether the pets are entering (true) or exiting (false)
      */
-    @SuppressWarnings("deprecation")
     public void movePets(List<TARDISParrot> p, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
@@ -271,12 +258,10 @@ public class TARDISDoorListener {
     }
 
     /**
-     * A method to give the TARDIS key to a player if the server is using a
-     * multi-inventory plugin.
+     * A method to give the TARDIS key to a player if the server is using a multi-inventory plugin.
      *
      * @param p the player to give the key to
      */
-    @SuppressWarnings("deprecation")
     private void giveKey(Player p) {
         String key;
         HashMap<String, Object> where = new HashMap<>();
@@ -326,7 +311,7 @@ public class TARDISDoorListener {
      * Get door location data for teleport entry and exit of the TARDIS.
      *
      * @param doortype a reference to the door_type field in the doors table
-     * @param id the unique TARDIS identifier i the database
+     * @param id       the unique TARDIS identifier i the database
      * @return an instance of the TARDISDoorLocation data class
      */
     public TARDISDoorLocation getDoor(int doortype, int id) {
@@ -379,10 +364,10 @@ public class TARDISDoorListener {
     /**
      * Plays a door sound when the iron door is clicked.
      *
-     * @param p a player to play the sound for
+     * @param p     a player to play the sound for
      * @param sound the sound to play
-     * @param l a location to play the sound at
-     * @param m whether to play the TARDIS sound or a Minecraft substitute
+     * @param l     a location to play the sound at
+     * @param m     whether to play the TARDIS sound or a Minecraft substitute
      */
     public void playDoorSound(Player p, int sound, Location l, boolean m) {
         switch (sound) {
@@ -416,20 +401,20 @@ public class TARDISDoorListener {
 //        Openable openable = (Openable) door.getBlockData();
 //        return openable.isOpen();
 //    }
+
     /**
-     * Set a player's time relative to the server time. Based on Essentials
-     * /ptime command.
+     * Set a player's time relative to the server time. Based on Essentials /ptime command.
      *
      * @param p the player to set the time for
      * @param t the ticks to set the time to
      */
-    private void setTemporalLocation(final Player p, long t) {
+    private void setTemporalLocation(Player p, long t) {
         if (p.isOnline()) {
             if (t != -1) {
                 long time = p.getPlayerTime();
                 time -= time % 24000L;
                 time += 24000L + t;
-                final long calculatedtime = time - p.getWorld().getTime();
+                long calculatedtime = time - p.getWorld().getTime();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     p.setPlayerTime(calculatedtime, true);
                     if (plugin.getConfig().getBoolean("allow.perception_filter")) {

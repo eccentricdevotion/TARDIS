@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSQLUpdate implements Runnable {
@@ -39,21 +39,20 @@ public class TARDISSQLUpdate implements Runnable {
     private final String prefix;
 
     /**
-     * Updates data in an SQLite database table. This method builds an SQL query
-     * string from the parameters supplied and then executes the update.
+     * Updates data in an SQLite database table. This method builds an SQL query string from the parameters supplied and
+     * then executes the update.
      *
      * @param plugin an instance of the main plugin class
-     * @param table the database table name to update.
-     * @param data a HashMap<String, Object> of table fields and values update.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * select the records to update.
+     * @param table  the database table name to update.
+     * @param data   a HashMap<String, Object> of table fields and values update.
+     * @param where  a HashMap<String, Object> of table fields and values to select the records to update.
      */
     public TARDISSQLUpdate(TARDIS plugin, String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.table = table;
         this.data = data;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     @Override

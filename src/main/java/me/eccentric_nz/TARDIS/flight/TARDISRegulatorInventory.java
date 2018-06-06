@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * The Directional Unit is part of the Main Time Mechanism. It takes the
- * Space-Time Coordinates for departure and arrival and converts them into
- * Epsilon Coordinates for travel through the Space-Time Vortex. For this reason
- * it is essential to accurately know your current location to ensure a
- * successful flight.
+ * The Directional Unit is part of the Main Time Mechanism. It takes the Space-Time Coordinates for departure and
+ * arrival and converts them into Epsilon Coordinates for travel through the Space-Time Vortex. For this reason it is
+ * essential to accurately know your current location to ensure a successful flight.
  *
  * @author eccentric_nz
  */
@@ -34,7 +32,7 @@ public class TARDISRegulatorInventory {
     private final ItemStack[] regulator;
 
     public TARDISRegulatorInventory() {
-        this.regulator = getItemStack();
+        regulator = getItemStack();
     }
 
     private ItemStack[] getItemStack() {

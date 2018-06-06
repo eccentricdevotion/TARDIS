@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
@@ -33,8 +30,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSpawnListener implements Listener {
@@ -66,20 +66,19 @@ public class TARDISSpawnListener implements Listener {
         biomes.add(Biome.MUSHROOM_ISLAND);
         biomes.add(Biome.MUSHROOM_ISLAND_SHORE);
         biomes.add(Biome.SKY);
-        this.rand = new Random();
+        rand = new Random();
     }
 
     /**
-     * Listens for entity spawn events. If WorldGuard is enabled it blocks
-     * mob-spawning inside the TARDIS, so this checks to see if we are doing the
-     * spawning and un-cancels WorldGuard's setCancelled(true).
-     *
+     * Listens for entity spawn events. If WorldGuard is enabled it blocks mob-spawning inside the TARDIS, so this
+     * checks to see if we are doing the spawning and un-cancels WorldGuard's setCancelled(true).
+     * <p>
      * It also prevents natural mob spawning in the TARDIS DEEP_OCEAN biome.
      *
      * @param event
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntitySpawn(final CreatureSpawnEvent event) {
+    public void onEntitySpawn(CreatureSpawnEvent event) {
         Location l = event.getLocation();
         if (l.getWorld().getName().contains("TARDIS")) {
             if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {

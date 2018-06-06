@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,8 +41,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISMinecartListener implements Listener {
@@ -180,7 +176,7 @@ public class TARDISMinecartListener implements Listener {
         // get minecart's speed
         double speed = minecart.getVelocity().length();
         // simulate teleport minecart...
-        final Chunk thisChunk = trackLocation.getChunk();
+        Chunk thisChunk = trackLocation.getChunk();
         while (!thisChunk.isLoaded()) {
             thisChunk.load();
         }

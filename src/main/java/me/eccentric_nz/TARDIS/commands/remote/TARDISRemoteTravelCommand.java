@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -34,8 +33,9 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRemoteTravelCommand {
@@ -84,7 +84,7 @@ public class TARDISRemoteTravelCommand {
             HashMap<String, Object> set = new HashMap<>();
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getTrackerKeeper().getInVortex().add(id);
-                final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+                DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
                 dd.setDirection(cd);
                 dd.setLocation(l);
                 dd.setPlayer(player);
@@ -105,7 +105,7 @@ public class TARDISRemoteTravelCommand {
                 }
             }
             long delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 1L : 500L;
-            final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+            BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
             bd.setDirection(sd);
             bd.setLocation(exit);
             bd.setMalfunction(false);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Bukkit;
@@ -29,8 +27,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Switch;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISBlockSetters {
@@ -48,7 +48,7 @@ public class TARDISBlockSetters {
      * @param d the block data to set the block to.
      */
     public static void setBlock(Location l, String d) {
-        final Block b = l.getBlock();
+        Block b = l.getBlock();
         if (b != null) {
             BlockData blockData = Bukkit.createBlockData(d);
             switch (blockData.getMaterial()) {
@@ -78,11 +78,11 @@ public class TARDISBlockSetters {
     /**
      * Sets a block to the specified block data.
      *
-     * @param l the location of the block.
+     * @param l  the location of the block.
      * @param bd the block data to set the block to.
      */
     public static void setBlock(Location l, BlockData bd) {
-        final Block b = l.getBlock();
+        Block b = l.getBlock();
         if (b != null) {
             switch (bd.getMaterial()) {
                 case CAKE:
@@ -111,11 +111,11 @@ public class TARDISBlockSetters {
     /**
      * Sets a block to the specified block data.
      *
-     * @param l the location of the block.
+     * @param l  the location of the block.
      * @param bd the block data to set the block to.
      */
     public static void setBlock(Location l, Material material) {
-        final Block b = l.getBlock();
+        Block b = l.getBlock();
         if (b != null) {
             switch (material) {
                 case CAKE:
@@ -144,14 +144,14 @@ public class TARDISBlockSetters {
     /**
      * Sets a block to the specified typeId and data.
      *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param w    the world the block is in.
+     * @param x    the x co-ordinate of the block.
+     * @param y    the y co-ordinate of the block.
+     * @param z    the z co-ordinate of the block.
      * @param data the block data to apply to the block.
      */
     public static void setBlock(World w, int x, int y, int z, BlockData data) {
-        final Block b = w.getBlockAt(x, y, z);
+        Block b = w.getBlockAt(x, y, z);
         if (b != null) {
             switch (data.getMaterial()) {
                 case CAKE:
@@ -180,14 +180,14 @@ public class TARDISBlockSetters {
     /**
      * Sets a block to the specified block data.
      *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param w    the world the block is in.
+     * @param x    the x co-ordinate of the block.
+     * @param y    the y co-ordinate of the block.
+     * @param z    the z co-ordinate of the block.
      * @param data the block data to apply to the block.
      */
     public static void setBlock(World w, int x, int y, int z, String data) {
-        final Block b = w.getBlockAt(x, y, z);
+        Block b = w.getBlockAt(x, y, z);
         if (b != null) {
             BlockData blockData = Bukkit.createBlockData(data);
             switch (blockData.getMaterial()) {
@@ -217,14 +217,14 @@ public class TARDISBlockSetters {
     /**
      * Sets a block to the specified typeId and data.
      *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param w        the world the block is in.
+     * @param x        the x co-ordinate of the block.
+     * @param y        the y co-ordinate of the block.
+     * @param z        the z co-ordinate of the block.
      * @param material the Material to apply to the block.
      */
     public static void setBlock(World w, int x, int y, int z, Material material) {
-        final Block b = w.getBlockAt(x, y, z);
+        Block b = w.getBlockAt(x, y, z);
         if (b != null) {
             switch (material) {
                 case CAKE:
@@ -251,15 +251,14 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location,
-     * typeId and data.
+     * Sets a block to the specified type and data and remembers its location, typeId and data.
      *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param w    the world the block is in.
+     * @param x    the x co-ordinate of the block.
+     * @param y    the y co-ordinate of the block.
+     * @param z    the z co-ordinate of the block.
      * @param data the block data to apply to the block.
-     * @param id the TARDIS this block belongs to.
+     * @param id   the TARDIS this block belongs to.
      */
     public void setBlockAndRemember(World w, int x, int y, int z, BlockData data, int id) {
         Block b = w.getBlockAt(x, y, z);
@@ -278,15 +277,14 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location,
-     * typeId and data.
+     * Sets a block to the specified type and data and remembers its location, typeId and data.
      *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param w    the world the block is in.
+     * @param x    the x co-ordinate of the block.
+     * @param y    the y co-ordinate of the block.
+     * @param z    the z co-ordinate of the block.
      * @param data the block data to apply to the block.
-     * @param id the TARDIS this block belongs to.
+     * @param id   the TARDIS this block belongs to.
      */
     public void setBlockAndRemember(World w, int x, int y, int z, String data, int id) {
         Block b = w.getBlockAt(x, y, z);
@@ -306,15 +304,14 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location,
-     * typeId and data.
+     * Sets a block to the specified type and data and remembers its location, typeId and data.
      *
-     * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param w        the world the block is in.
+     * @param x        the x co-ordinate of the block.
+     * @param y        the y co-ordinate of the block.
+     * @param z        the z co-ordinate of the block.
      * @param material the material to set the block.
-     * @param id the TARDIS this block belongs to.
+     * @param id       the TARDIS this block belongs to.
      */
     public void setBlockAndRemember(World w, int x, int y, int z, Material material, int id) {
         Block b = w.getBlockAt(x, y, z);
@@ -333,17 +330,14 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location,
-     * typeId and data.
+     * Sets a block to the specified type and data and remembers its location, typeId and data.
      *
-     * @param b the block to set and remember
-     * @param m the typeId to set the block to.
-     * @param d the data bit to set the block to.
-     * @param id the TARDIS this block belongs to.
-     * @param type the police_box type (0 = interior, 1 = police box, 2 = beacon
-     * up block)
+     * @param b    the block to set and remember
+     * @param m    the typeId to set the block to.
+     * @param d    the data bit to set the block to.
+     * @param id   the TARDIS this block belongs to.
+     * @param type the police_box type (0 = interior, 1 = police box, 2 = beacon up block)
      */
-    @SuppressWarnings("deprecation")
     public static void setBlockAndRemember(Block b, Material m, int id, int type) {
         // save the block location so that we can restore it (if it wasn't air)!
         String l = b.getLocation().toString();
@@ -359,14 +353,14 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets the block under the TARDIS Police Box door to the specified typeId
-     * and data and remembers the block for replacement later on.
+     * Sets the block under the TARDIS Police Box door to the specified typeId and data and remembers the block for
+     * replacement later on.
      *
-     * @param w the world the block is in.
-     * @param x the x coordinate of the block.
-     * @param y the y coordinate of the block.
-     * @param z the z coordinate of the block.
-     * @param id the TARDIS this block belongs to.
+     * @param w      the world the block is in.
+     * @param x      the x coordinate of the block.
+     * @param y      the y coordinate of the block.
+     * @param z      the z coordinate of the block.
+     * @param id     the TARDIS this block belongs to.
      * @param portal whether a chest can be in the portal block location
      */
     public void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,10 +25,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * The Cloister Bell is a signal to the crew that a galaxy-scale catastrophe is
- * occurring or a warning that they are in immediate danger. In short it is a
- * call to "battle-stations." Though it is located in the Cloister Room, the
- * Bell can be heard from anywhere in a TARDIS.
+ * The Cloister Bell is a signal to the crew that a galaxy-scale catastrophe is occurring or a warning that they are in
+ * immediate danger. In short it is a call to "battle-stations." Though it is located in the Cloister Room, the Bell can
+ * be heard from anywhere in a TARDIS.
  *
  * @author eccentric_nz
  */
@@ -38,13 +37,12 @@ public class TARDISFactionsChecker {
     }
 
     /**
-     * Checks whether a location is in the player's faction or 'wilderness'...
-     * ie NOT in a claimed faction that this player doesn't belong to.
+     * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
+     * player doesn't belong to.
      *
      * @param p a player
      * @param l the location instance to check.
-     * @return true or false depending on whether the player belongs to the
-     * faction who controls the location
+     * @return true or false depending on whether the player belongs to the faction who controls the location
      */
     public boolean isInFaction(Player p, Location l) {
         boolean bool = true;

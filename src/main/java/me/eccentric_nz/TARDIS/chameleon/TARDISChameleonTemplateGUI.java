@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISChameleonTemplateGUI {
@@ -34,7 +34,7 @@ public class TARDISChameleonTemplateGUI {
 
     public TARDISChameleonTemplateGUI(TARDIS plugin) {
         this.plugin = plugin;
-        this.template = getItemStack();
+        template = getItemStack();
     }
 
     private ItemStack[] getItemStack() {
@@ -140,12 +140,12 @@ public class TARDISChameleonTemplateGUI {
         door.setItemMeta(dr);
 
         ItemStack[] is = {
-            back, null, null, null, info, null, null, null, next,
-            one, two, three, four, five, six, seven, eight, nine,
-            slab, slab, slab, slab, slab, slab, slab, slab, lamp,
-            blue, blue, blue, blue, blue, blue, blue, blue, power,
-            blue, blue, blue, blue, blue, blue, blue, door, null,
-            blue, blue, blue, blue, blue, blue, blue, door, null
+                back, null, null, null, info, null, null, null, next,
+                one, two, three, four, five, six, seven, eight, nine,
+                slab, slab, slab, slab, slab, slab, slab, slab, lamp,
+                blue, blue, blue, blue, blue, blue, blue, blue, power,
+                blue, blue, blue, blue, blue, blue, blue, door, null,
+                blue, blue, blue, blue, blue, blue, blue, door, null
         };
         return is;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -37,8 +27,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
+import java.util.*;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDiskWriterCommand {
@@ -48,10 +40,10 @@ public class TARDISDiskWriterCommand {
 
     public TARDISDiskWriterCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.disks.add("Save Storage Disk");
-        this.disks.add("Player Storage Disk");
-        this.disks.add("Biome Storage Disk");
-        this.disks.add("Preset Storage Disk");
+        disks.add("Save Storage Disk");
+        disks.add("Player Storage Disk");
+        disks.add("Biome Storage Disk");
+        disks.add("Preset Storage Disk");
     }
 
     public boolean writeSave(Player player, String[] args) {

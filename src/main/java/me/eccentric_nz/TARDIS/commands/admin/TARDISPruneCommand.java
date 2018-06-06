@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -24,8 +23,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
 
+import java.io.File;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISPruneCommand {

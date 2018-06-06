@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -27,10 +25,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * The "Hollywood" sign was among the Earth cultural items the Threshold stole
- * and moved to the town of Wormwood on the Moon. The moon was later destroyed;
- * the sign likely was also.
+ * The "Hollywood" sign was among the Earth cultural items the Threshold stole and moved to the town of Wormwood on the
+ * Moon. The moon was later destroyed; the sign likely was also.
  *
  * @author eccentric_nz
  */
@@ -43,7 +43,7 @@ public class TARDISAreasInventory {
     public TARDISAreasInventory(TARDIS plugin, Player p) {
         this.plugin = plugin;
         this.p = p;
-        this.terminal = getItemStack();
+        terminal = getItemStack();
     }
 
     /**

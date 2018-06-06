@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -28,11 +25,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
 /**
- * In 21st century London, Rory has his father, Brian Williams, over to help fix
- * a light bulb. After saying the fixture may be the problem, the sound of the
- * TARDIS materialisation is heard. The TARDIS materialises around them,
- * shocking Brian in place.
+ * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
+ * may be the problem, the sound of the TARDIS materialisation is heard. The TARDIS materialises around them, shocking
+ * Brian in place.
  *
  * @author eccentric_nz
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -34,11 +32,13 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * Rescue Operational Security Module G723 (ROSM) was an artificial intelligence
- * built into a spacecraft working around the Cimmerian System. It was designed
- * by Professor Astrov to protect company interests and property, including
- * rescue of company employees from danger.
+ * Rescue Operational Security Module G723 (ROSM) was an artificial intelligence built into a spacecraft working around
+ * the Cimmerian System. It was designed by Professor Astrov to protect company interests and property, including rescue
+ * of company employees from danger.
  *
  * @author eccentric_nz
  */
@@ -51,14 +51,13 @@ public class TARDISRescue {
     }
 
     /**
-     * Move the Police Box to a player's location, and potentially rescue the
-     * player.
+     * Move the Police Box to a player's location, and potentially rescue the player.
      *
-     * @param player The Time Lord
-     * @param saved The player to be rescued
-     * @param id The TARDIS unique ID
-     * @param d the direction the Police Box is facing
-     * @param rescue whether to rescue the player
+     * @param player  The Time Lord
+     * @param saved   The player to be rescued
+     * @param id      The TARDIS unique ID
+     * @param d       the direction the Police Box is facing
+     * @param rescue  whether to rescue the player
      * @param request whether this is a travel to player request
      * @return true or false
      */
@@ -114,8 +113,8 @@ public class TARDISRescue {
     /**
      * Check whether a Time Lord can rescue a player, and then rescue them.
      *
-     * @param player The Time Lord
-     * @param saved The player to be rescued
+     * @param player  The Time Lord
+     * @param saved   The player to be rescued
      * @param request whether this is a travel to player request
      * @return true if rescue was successful
      */
@@ -175,7 +174,7 @@ public class TARDISRescue {
 
         public RescueData(boolean success, int id) {
             this.success = success;
-            this.tardis_id = id;
+            tardis_id = id;
         }
 
         public boolean success() {

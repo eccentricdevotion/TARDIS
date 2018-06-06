@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.EnumMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
- * A chameleon conversion is a repair procedure that technicians perform on
- * TARDIS chameleon circuits. The Fourth Doctor once said that the reason the
- * TARDIS' chameleon circuit was stuck was because he had "borrowed" it from
- * Gallifrey before the chameleon conversion was completed.
+ * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
+ * once said that the reason the TARDIS' chameleon circuit was stuck was because he had "borrowed" it from Gallifrey
+ * before the chameleon conversion was completed.
  *
  * @author eccentric_nz
  */
@@ -84,11 +84,11 @@ public class TARDISCustomPreset {
             glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric, false));
         }
         if (custom_data[3] != null && !custom_data[3].isEmpty()) {
-            this.firstLine = custom_data[3];
-            this.secondLine = custom_data[4];
+            firstLine = custom_data[3];
+            secondLine = custom_data[4];
         } else {
-            this.firstLine = "CUSTOM TEXT";
-            this.secondLine = "GOES HERE";
+            firstLine = "CUSTOM TEXT";
+            secondLine = "GOES HERE";
         }
     }
 

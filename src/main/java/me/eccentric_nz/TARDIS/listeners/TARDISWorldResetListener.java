@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
- * Track Multiverse Adventure world resetting. If the world is being reset,
- * prevent time travel in TARDIS that were in the world being reset.
+ * Track Multiverse Adventure world resetting. If the world is being reset, prevent time travel in TARDIS that were in
+ * the world being reset.
  *
  * @author eccentric_nz
  */

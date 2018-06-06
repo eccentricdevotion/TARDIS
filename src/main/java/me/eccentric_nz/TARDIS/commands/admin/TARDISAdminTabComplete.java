@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -27,6 +25,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TabCompleter for /tardisadmin
@@ -46,7 +47,6 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
     private final ImmutableList<String> ROOT_SUBS;
     private final ImmutableList<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
-    ;
     private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war", "twelfth");
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
@@ -60,22 +60,22 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
         if (plugin.isWorldGuardOnServer()) {
-            this.FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
+            FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
         } else {
-            this.FLAG_SUBS = ImmutableList.of("none", "build", "entry");
+            FLAG_SUBS = ImmutableList.of("none", "build", "entry");
         }
         List<String> tmpPresets = new ArrayList<>();
         for (PRESET p : PRESET.values()) {
             tmpPresets.add(p.toString());
         }
-        this.PRESETS = ImmutableList.copyOf(tmpPresets);
-        this.ROOT_SUBS = ImmutableList.copyOf(combineLists());
+        PRESETS = ImmutableList.copyOf(tmpPresets);
+        ROOT_SUBS = ImmutableList.copyOf(combineLists());
         List<String> worlds = new ArrayList<>();
         plugin.getServer().getWorlds().forEach((w) -> {
             worlds.add(w.getName());
         });
-        this.WORLD_SUBS = ImmutableList.copyOf(worlds);
-        this.SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
+        WORLD_SUBS = ImmutableList.copyOf(worlds);
+        SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.ChatColor;
@@ -34,8 +26,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTagListener implements Listener {
@@ -48,12 +44,10 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     * Informs the player that a game of tag in on. The date of the game can be
-     * set in tag.yml. It will also say happy birthday to Doctor Who on the
-     * 23/11 of each year.
-     *
-     * If no player is currently 'it' a random player is chosen (usually the
-     * first player to login).
+     * Informs the player that a game of tag in on. The date of the game can be set in tag.yml. It will also say happy
+     * birthday to Doctor Who on the 23/11 of each year.
+     * <p>
+     * If no player is currently 'it' a random player is chosen (usually the first player to login).
      *
      * @param event a player joining a server
      */
@@ -78,7 +72,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param event a player leaving a server
      */
     @EventHandler
@@ -101,7 +94,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param event a player right-clicking another player
      */
     @EventHandler(ignoreCancelled = true)
@@ -123,7 +115,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @return a random player
      */
     private Player getRandomPlayer() {
@@ -133,7 +124,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param age the number of years old the birthday person is
      * @return an ordinal string (1st, 2nd, 3rd, 4th)
      */
@@ -151,7 +141,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param s the string value to set
      */
     private void setConfig(String s) {
@@ -164,7 +153,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param l a long value to set
      */
     private void setConfig(long l) {
@@ -177,7 +165,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param millis the number of milliseconds to convert to a string
      * @return a string in the form of '00h:00m:00s'
      */
@@ -189,7 +176,6 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
-     *
      * @param p a player's name
      * @param t the player's score
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import org.bukkit.Color;
@@ -28,17 +27,16 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
- *
- * Atmospheric excitation is an unnatural disturbance in the atmosphere which
- * causes the weather to change. The Tenth Doctor's sonic screwdriver, the
- * TARDIS, and moving a planet can all cause atmospheric excitation.
- *
- * The Tenth Doctor used a device above the inside of the door of the TARDIS to
- * excite the atmosphere, causing snow, in an attempt to cheer up Donna Noble.
- *
+ * <p>
+ * Atmospheric excitation is an unnatural disturbance in the atmosphere which causes the weather to change. The Tenth
+ * Doctor's sonic screwdriver, the TARDIS, and moving a planet can all cause atmospheric excitation.
+ * <p>
+ * The Tenth Doctor used a device above the inside of the door of the TARDIS to excite the atmosphere, causing snow, in
+ * an attempt to cheer up Donna Noble.
  */
 public class TARDISAtmosphericExcitation {
 
@@ -77,7 +75,7 @@ public class TARDISAtmosphericExcitation {
                 firework.detonate();
                 // after x ticks, start snow particles and place snow on ground
                 TARDISExcitationRunnable runnable = new TARDISExcitationRunnable(plugin, l, p);
-                final int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
+                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
                 runnable.task = taskId;
             }, 2L);
         }

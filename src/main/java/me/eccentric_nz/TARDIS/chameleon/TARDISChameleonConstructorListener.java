@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -52,8 +48,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISChameleonConstructorListener extends TARDISMenuListener implements Listener {
@@ -69,21 +69,21 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
     public TARDISChameleonConstructorListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.doors.addAll(Tag.DOORS.getValues());
-        this.dn = this.doors.size();
+        doors.addAll(Tag.DOORS.getValues());
+        dn = doors.size();
         plugin.getBlocksConfig().getStringList("lamp_blocks").forEach((s) -> {
             try {
-                this.lamps.add(Material.valueOf(s));
+                lamps.add(Material.valueOf(s));
             } catch (IllegalArgumentException e) {
                 plugin.debug("Invalid Material in lamp_blocks section.");
             }
         });
-        this.ln = this.lamps.size();
+        ln = lamps.size();
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -94,7 +94,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         String name = inv.getTitle();
         if (name.equals("§4Chameleon Construction")) {
             int slot = event.getRawSlot();
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && (slot < 18 || slot == 26 || slot == 43 || slot == 52)) {
                 event.setCancelled(true);
                 ItemStack is = inv.getItem(slot);
@@ -111,8 +111,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             UUID uuid = player.getUniqueId();
-                            final PRESET preset = tardis.getPreset();
-                            final ADAPTION adapt = tardis.getAdaption();
+                            PRESET preset = tardis.getPreset();
+                            ADAPTION adapt = tardis.getAdaption();
                             switch (slot) {
                                 case 0:
                                     // back

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.databasetool.SQL;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  * MySQL database creator and updater.
- *
- * Many facts, figures, and formulas are contained within the Matrix - a
- * supercomputer and micro-universe used by the High Council of the Time Lords
- * as a storehouse of knowledge to predict future events.
+ * <p>
+ * Many facts, figures, and formulas are contained within the Matrix - a supercomputer and micro-universe used by the
+ * High Council of the Time Lords as a storehouse of knowledge to predict future events.
  *
  * @author eccentric_nz
  */

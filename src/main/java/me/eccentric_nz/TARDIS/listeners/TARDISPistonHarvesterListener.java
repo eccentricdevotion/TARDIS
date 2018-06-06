@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISPistonHarvesterListener implements Listener {
@@ -44,7 +43,7 @@ public class TARDISPistonHarvesterListener implements Listener {
         if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
             return;
         }
-        final String block = event.getBlock().getRelative(getOppositeDirection(event.getDirection()), 2).getLocation().toString();
+        String block = event.getBlock().getRelative(getOppositeDirection(event.getDirection()), 2).getLocation().toString();
         if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
             event.setCancelled(true);
         }
@@ -56,7 +55,7 @@ public class TARDISPistonHarvesterListener implements Listener {
             return;
         }
         for (Block b : event.getBlocks()) {
-            final String block = b.getLocation().toString();
+            String block = b.getLocation().toString();
             if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
                 event.setCancelled(true);
                 return;

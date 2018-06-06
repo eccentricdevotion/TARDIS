@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetGravity;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -47,10 +36,12 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.*;
+
 /**
- * The Daleks were a warlike race who waged war across whole civilisations and
- * races all over the universe. Advance and Attack! Attack and Destroy! Destroy
- * and Rejoice!
+ * The Daleks were a warlike race who waged war across whole civilisations and races all over the universe. Advance and
+ * Attack! Attack and Destroy! Destroy and Rejoice!
  *
  * @author eccentric_nz
  */
@@ -83,7 +74,7 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                DestroyData dd = new DestroyData(plugin, uuid.toString());
                 dd.setDirection(rsc.getDirection());
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
@@ -104,7 +95,7 @@ public class TARDISExterminator {
                 }
                 Material restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
@@ -122,10 +113,10 @@ public class TARDISExterminator {
      * Deletes a TARDIS.
      *
      * @param player running the command.
-     * @param block the block that represents the Police Box sign
+     * @param block  the block that represents the Police Box sign
      * @return true or false depending on whether the TARIS could be deleted
      */
-    public boolean exterminate(final Player player, Block block) {
+    public boolean exterminate(Player player, Block block) {
         int signx = 0, signz = 0;
         Location sign_loc = block.getLocation();
         HashMap<String, Object> where = new HashMap<>();
@@ -170,7 +161,7 @@ public class TARDISExterminator {
         }
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            final int id = tardis.getTardis_id();
+            int id = tardis.getTardis_id();
             String owner = tardis.getOwner();
             String chunkLoc = tardis.getChunk();
             int tips = tardis.getTIPS();
@@ -200,24 +191,20 @@ public class TARDISExterminator {
             switch (d) {
                 case EAST:
                     signx = -2;
-                    signz = 0;
                     break;
                 case SOUTH:
-                    signx = 0;
                     signz = -2;
                     break;
                 case WEST:
                     signx = 2;
-                    signz = 0;
                     break;
                 case NORTH:
-                    signx = 0;
                     signz = 2;
                     break;
             }
             int signy = -2;
             // if the sign was on the TARDIS destroy the TARDIS!
-            final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
             dd.setDirection(d);
             dd.setLocation(bb_loc);
             dd.setPlayer(player);
@@ -243,7 +230,7 @@ public class TARDISExterminator {
                 }
                 Material restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);

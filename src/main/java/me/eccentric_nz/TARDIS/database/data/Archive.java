@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class Archive {

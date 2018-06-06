@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Robert Theis
+ * Copyright 2018 Robert Theis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,11 +94,11 @@ public enum Language {
      *
      * @param pLanguage The language identifier.
      */
-    private Language(final String pLanguage) {
+    private Language(String pLanguage) {
         language = pLanguage;
     }
 
-    public static Language fromString(final String pLanguage) {
+    public static Language fromString(String pLanguage) {
         for (Language l : values()) {
             if (l.toString().equals(pLanguage)) {
                 return l;

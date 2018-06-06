@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,12 +27,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.UUID;
+
 /**
- * The Absolute Tesseractulator is responsible for keeping track of a TARDIS's
- * dimensional location. It uses the Interstitial Antenna to collect data from
- * the Vortex. A TARDIS knows where it's going by using digitally-modeled
- * time-cone isometry parallel-bussed into the image translator, with local
- * motion being mapped over every refresh-cycle.
+ * The Absolute Tesseractulator is responsible for keeping track of a TARDIS's dimensional location. It uses the
+ * Interstitial Antenna to collect data from the Vortex. A TARDIS knows where it's going by using digitally-modeled
+ * time-cone isometry parallel-bussed into the image translator, with local motion being mapped over every
+ * refresh-cycle.
  *
  * @author eccentric_nz
  */
@@ -50,7 +50,7 @@ public class TARDISManualFlightListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         Block b = event.getClickedBlock();
         // only repeaters

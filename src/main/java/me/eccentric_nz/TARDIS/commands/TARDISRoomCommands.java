@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -39,12 +28,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Pattern;
+
 /**
- * The Sub-Wave Network was a piece of sentient software programmed to find
- * anyone who could help to contact the Tenth Doctor. It used sub-wave
- * communication to transmit, which meant it was undetectable as it was below
- * normal waves. It was created by the Mr Copper Foundation and further
- * developed by Great Britain's former Prime Minister Harriet Jones.
+ * The Sub-Wave Network was a piece of sentient software programmed to find anyone who could help to contact the Tenth
+ * Doctor. It used sub-wave communication to transmit, which meant it was undetectable as it was below normal waves. It
+ * was created by the Mr Copper Foundation and further developed by Great Britain's former Prime Minister Harriet
+ * Jones.
  *
  * @author eccentric_nz
  */

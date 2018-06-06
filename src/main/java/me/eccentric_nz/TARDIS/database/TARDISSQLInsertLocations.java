@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSQLInsertLocations implements Runnable {
@@ -39,21 +39,20 @@ public class TARDISSQLInsertLocations implements Runnable {
     private final String prefix;
 
     /**
-     * Inserts data into an SQLite database table. This method builds a prepared
-     * SQL statement from the parameters supplied and then executes the insert.
+     * Inserts data into an SQLite database table. This method builds a prepared SQL statement from the parameters
+     * supplied and then executes the insert.
      *
      * @param plugin an instance of the main plugin class
-     * @param data a HashMap<String, Object> of table fields and values to
-     * insert.
-     * @param biome the Police Box biome type
-     * @param id the tardis_id
+     * @param data   a HashMap<String, Object> of table fields and values to insert.
+     * @param biome  the Police Box biome type
+     * @param id     the tardis_id
      */
     public TARDISSQLInsertLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
         this.plugin = plugin;
         this.data = data;
         this.biome = biome;
         this.id = id;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     @Override

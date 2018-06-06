@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
@@ -34,11 +33,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 /**
  * Command /tardis [arguments].
- *
- * A TARDIS console room or control room is the area which houses the TARDIS'
- * control console, by which the TARDIS was operated.
+ * <p>
+ * A TARDIS console room or control room is the area which houses the TARDIS' control console, by which the TARDIS was
+ * operated.
  *
  * @author eccentric_nz
  */
@@ -51,8 +52,8 @@ public class TARDISCommands implements CommandExecutor {
     }
 
     @Override
-    
-    public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardis")) {

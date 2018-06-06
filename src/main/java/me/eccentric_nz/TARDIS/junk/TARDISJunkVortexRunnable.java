@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -28,8 +27,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkVortexRunnable implements Runnable {
@@ -48,8 +48,8 @@ public class TARDISJunkVortexRunnable implements Runnable {
     public TARDISJunkVortexRunnable(TARDIS plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
         this.plugin = plugin;
         this.vortexJunkLoc = vortexJunkLoc;
-        this.effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);
-        this.destJunkLoc = this.plugin.getGeneralKeeper().getJunkDestination();
+        effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);
+        destJunkLoc = this.plugin.getGeneralKeeper().getJunkDestination();
         this.player = player;
         this.id = id;
     }
@@ -75,7 +75,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
             }
             if (i == LOOPS - 1) {
                 // build the TARDIS at the location
-                final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+                BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                 bd.setDirection(COMPASS.SOUTH);
                 bd.setLocation(destJunkLoc);
                 bd.setMalfunction(false);
@@ -90,8 +90,8 @@ public class TARDISJunkVortexRunnable implements Runnable {
                 // teleport players
                 getJunkTravellers().forEach((e) -> {
                     if (e instanceof Player) {
-                        final Player p = (Player) e;
-                        final Location relativeLoc = getRelativeLocation(p);
+                        Player p = (Player) e;
+                        Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             p.teleport(relativeLoc);

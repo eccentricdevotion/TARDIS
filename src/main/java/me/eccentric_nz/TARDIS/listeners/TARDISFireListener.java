@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -28,9 +26,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * The Tenth Doctor once commented that fire was "so fun to look at! But bad for
- * the skin!"
+ * The Tenth Doctor once commented that fire was "so fun to look at! But bad for the skin!"
  *
  * @author eccentric_nz
  */
@@ -50,9 +50,8 @@ public class TARDISFireListener implements Listener {
     }
 
     /**
-     * Listens for block burn and ignite events around the TARDIS. If the
-     * affected block is part of the TARDIS, then the event is canceled there by
-     * providing protection for the TARDIS blocks
+     * Listens for block burn and ignite events around the TARDIS. If the affected block is part of the TARDIS, then the
+     * event is canceled there by providing protection for the TARDIS blocks
      *
      * @param event a block catching fire
      */

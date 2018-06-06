@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
@@ -38,10 +35,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * A trip stitch circuit-breaker was a circuit that if was enabled in the
- * psycho-kinetic threshold manipulator of the Daleks had the effect of
- * preventing them from controlling their movement.
+ * A trip stitch circuit-breaker was a circuit that if was enabled in the psycho-kinetic threshold manipulator of the
+ * Daleks had the effect of preventing them from controlling their movement.
  *
  * @author eccentric_nz
  */
@@ -54,12 +54,11 @@ public class TARDISConsoleSwitchListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
-    public void onConsoleInventoryClick(final InventoryClickEvent event) {
+    public void onConsoleInventoryClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         if (inv.getTitle().equals("§4TARDIS Console")) {
-            final Player p = (Player) event.getWhoClicked();
+            Player p = (Player) event.getWhoClicked();
             // check they're in the TARDIS
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", p.getUniqueId().toString());
@@ -72,15 +71,15 @@ public class TARDISConsoleSwitchListener implements Listener {
                 event.setCancelled(true);
                 int slot = event.getRawSlot();
                 if (slot >= 0 && slot < 9) {
-                    final ItemStack item = inv.getItem(slot);
+                    ItemStack item = inv.getItem(slot);
                     if (item != null && item.getType().equals(Material.MAP)) {
-                        final byte map = item.getData().getData();
+                        byte map = item.getData().getData();
                         if (gui_circuits.contains(map)) {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                             if (rs.resultSet()) {
-                                final Tardis tardis = rs.getTardis();
+                                Tardis tardis = rs.getTardis();
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     ItemStack[] stack = null;
                                     Inventory new_inv = null;

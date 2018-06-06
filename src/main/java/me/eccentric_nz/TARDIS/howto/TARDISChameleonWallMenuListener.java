@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.Material;
@@ -32,10 +28,14 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * A control room's look could be changed over time. The process by which an
- * operator could transform a control room was fairly simple, once compared by
- * the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an operator could transform a control room was
+ * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -50,8 +50,8 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
     public TARDISChameleonWallMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.rows = this.plugin.getBlocksConfig().getIntegerList("chameleon_blocks").size() / 8 + 1;
-        this.blocks = getChameleonBlocks();
+        rows = this.plugin.getBlocksConfig().getIntegerList("chameleon_blocks").size() / 8 + 1;
+        blocks = getChameleonBlocks();
     }
 
     @EventHandler
@@ -110,10 +110,10 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
     /**
      * Closes the inventory.
      *
-     * @param p the player using the GUI
+     * @param p      the player using the GUI
      * @param remove whether to stop tracking the upgrade
      */
-    public void close(final Player p, boolean remove) {
+    public void close(Player p, boolean remove) {
         if (remove) {
             plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         }
@@ -127,7 +127,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
      *
      * @param p the player using the GUI
      */
-    public void back(final Player p) {
+    public void back(Player p) {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();

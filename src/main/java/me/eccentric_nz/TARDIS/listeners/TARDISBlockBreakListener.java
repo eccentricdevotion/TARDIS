@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -38,10 +32,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and
- * Psionosauropodomorpha, are a species of Earth reptile. Technologically
- * advanced, they live alongside their aquatic cousins, the Sea Devils.
+ * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and Psionosauropodomorpha, are a species of Earth
+ * reptile. Technologically advanced, they live alongside their aquatic cousins, the Sea Devils.
  *
  * @author eccentric_nz
  */
@@ -54,9 +50,8 @@ public class TARDISBlockBreakListener implements Listener {
     }
 
     /**
-     * Listens for the TARDIS Police Box sign being broken. If the sign is
-     * broken, then the TARDIS is destroyed, the database records removed and
-     * the TARDIS world deleted.
+     * Listens for the TARDIS Police Box sign being broken. If the sign is broken, then the TARDIS is destroyed, the
+     * database records removed and the TARDIS world deleted.
      *
      * @param event a player breaking a block
      */
@@ -95,7 +90,7 @@ public class TARDISBlockBreakListener implements Listener {
                 event.setCancelled(true);
                 sign.update();
                 if (player.hasPermission("tardis.exterminate")) {
-                    final UUID uuid = player.getUniqueId();
+                    UUID uuid = player.getUniqueId();
                     // check it is their TARDIS
                     plugin.getTrackerKeeper().getExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");

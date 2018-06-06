@@ -21,7 +21,6 @@ import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISBannerData {

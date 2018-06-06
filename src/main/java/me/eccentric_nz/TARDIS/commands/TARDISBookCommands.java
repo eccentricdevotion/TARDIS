@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,6 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -34,14 +28,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
  * Command /tardisbook [book].
- *
- * On Alfava Metraxis in the 51st century, River had obtained a book about the
- * Weeping Angels. She gave it to the Doctor, who quickly skimmed through it.
- * The Doctor commented that it was slow in the middle and asked River if she
- * also hated the writer's girlfriend. He asked why there were no images, to
- * which River replied that the "image of an Angel is itself an Angel".
+ * <p>
+ * On Alfava Metraxis in the 51st century, River had obtained a book about the Weeping Angels. She gave it to the
+ * Doctor, who quickly skimmed through it. The Doctor commented that it was slow in the middle and asked River if she
+ * also hated the writer's girlfriend. He asked why there were no images, to which River replied that the "image of an
+ * Angel is itself an Angel".
  *
  * @author eccentric_nz
  */
@@ -54,8 +49,8 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 
     public TARDISBookCommands(TARDIS plugin) {
         this.plugin = plugin;
-        this.books = getAchievements();
-        this.ROOT_SUBS = ImmutableList.copyOf(this.books.keySet());
+        books = getAchievements();
+        ROOT_SUBS = ImmutableList.copyOf(books.keySet());
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import java.util.List;
+
 /**
- * Phosphor lamps are used for lighting. They use electron excitation; when
- * shaken, they grow brighter.
+ * Phosphor lamps are used for lighting. They use electron excitation; when shaken, they grow brighter.
  *
  * @author eccentric_nz
  */
@@ -46,7 +46,7 @@ public class TARDISLampsRunnable implements Runnable {
         this.start = start;
         this.light = light;
         this.use_wool = use_wool;
-        this.lights_on = (lamps.get(0).getType().equals(this.light));
+        lights_on = (lamps.get(0).getType().equals(this.light));
     }
 
     @Override

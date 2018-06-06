@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Semaphore was a way of communicating using flags. By his twelfth incarnation,
- * the Doctor had apparently erased British Sign Language to learn semaphore.
+ * Semaphore was a way of communicating using flags. By his twelfth incarnation, the Doctor had apparently erased
+ * British Sign Language to learn semaphore.
  *
  * @author eccentric_nz
  */
@@ -41,22 +42,20 @@ public class ResultSetConstructSign {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the gravity_well table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the gravity_well table.
      *
      * @param plugin an instance of the main class.
-     * @param id the tardis_id of this chameleon construct
+     * @param id     the tardis_id of this chameleon construct
      */
     public ResultSetConstructSign(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the chameleon table. This method builds
-     * an SQL query string from the supplied tardis_id and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the chameleon table. This method builds an SQL query string from the supplied
+     * tardis_id and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -70,10 +69,10 @@ public class ResultSetConstructSign {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.line1 = rs.getString("line1");
-                    this.line2 = rs.getString("line2");
-                    this.line3 = rs.getString("line3");
-                    this.line4 = rs.getString("line4");
+                    line1 = rs.getString("line1");
+                    line2 = rs.getString("line2");
+                    line3 = rs.getString("line3");
+                    line4 = rs.getString("line4");
                 }
             } else {
                 return false;

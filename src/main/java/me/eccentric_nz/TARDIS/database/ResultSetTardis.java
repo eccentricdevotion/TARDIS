@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... everything about the construction of the TARDIS itself.
+ * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
+ * the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -52,31 +48,26 @@ public class ResultSetTardis {
     private final int abandoned;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param plugin    an instance of the main class.
+     * @param where     a HashMap<String, Object> of table fields and values to refine the search.
      * @param limit
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
-     * @param abandoned whether to select TARDISes that are abandoned (1) or not
-     * (0)
+     * @param multiple  a boolean indicating whether multiple rows should be fetched
+     * @param abandoned whether to select TARDISes that are abandoned (1) or not (0)
      */
     public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
         this.plugin = plugin;
         this.where = where;
         this.limit = limit;
         this.multiple = multiple;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
         this.abandoned = abandoned;
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */

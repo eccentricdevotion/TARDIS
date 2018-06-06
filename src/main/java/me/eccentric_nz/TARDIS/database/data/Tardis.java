@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class Tardis {
@@ -75,7 +75,7 @@ public class Tardis {
         this.chameleon = chameleon;
         this.preset = preset;
         this.demat = demat;
-        this.adaption = ADAPTION.values()[adapt];
+        adaption = ADAPTION.values()[adapt];
         this.artron_level = artron_level;
         this.creeper = creeper;
         this.condenser = condenser;
@@ -134,8 +134,8 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Chunk coordinates that this TARDIS
-     * interior occupies. It is in the form of {@code World name:chunkX:chunkZ}
+     * Returns a String representation of the Chunk coordinates that this TARDIS interior occupies. It is in the form of
+     * {@code World name:chunkX:chunkZ}
      *
      * @return the Chunk string
      */
@@ -171,8 +171,7 @@ public class Tardis {
     }
 
     /**
-     * Returns a colon (:) separated list of companion UUID strings for this
-     * TARDIS.
+     * Returns a colon (:) separated list of companion UUID strings for this TARDIS.
      *
      * @return the companion UUIDs, or an empty string if there are none
      */
@@ -181,30 +180,27 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Save Sign location in this TARDIS.
-     * It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Save Sign location in this TARDIS. It is in the form of {@code World
+     * name:x:y:z}
      *
-     * @return the Save Sign location string, or an empty string if the sign
-     * does not exist
+     * @return the Save Sign location string, or an empty string if the sign does not exist
      */
     public String getSave_sign() {
         return save_sign;
     }
 
     /**
-     * Returns a String representation of the Chameleon Sign location in this
-     * TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Chameleon Sign location in this TARDIS. It is in the form of {@code World
+     * name:x:y:z}
      *
-     * @return the Chameleon Sign location string, or an empty string if the
-     * sign does not exist
+     * @return the Chameleon Sign location string, or an empty string if the sign does not exist
      */
     public String getChameleon() {
         return chameleon;
     }
 
     /**
-     * Returns the exterior PRESET the Chameleon Circuit will use when next
-     * materialising.
+     * Returns the exterior PRESET the Chameleon Circuit will use when next materialising.
      *
      * @return the exterior PRESET
      */
@@ -213,8 +209,7 @@ public class Tardis {
     }
 
     /**
-     * Returns the exterior PRESET the Chameleon Circuit will use when next
-     * dematerialising.
+     * Returns the exterior PRESET the Chameleon Circuit will use when next dematerialising.
      *
      * @return the exterior PRESET
      */
@@ -223,8 +218,7 @@ public class Tardis {
     }
 
     /**
-     * Returns the Chameleon Circuit adaptive setting for this TARDIS. It will
-     * be one of BIOME, BLOCK or OFF.
+     * Returns the Chameleon Circuit adaptive setting for this TARDIS. It will be one of BIOME, BLOCK or OFF.
      *
      * @return the Chameleon Circuit adaptive setting
      */
@@ -233,8 +227,7 @@ public class Tardis {
     }
 
     /**
-     * Returns the amount of Artron Energy this TARDIS has in its Artron
-     * Capacitor.
+     * Returns the amount of Artron Energy this TARDIS has in its Artron Capacitor.
      *
      * @return the Artron Energy level
      */
@@ -243,8 +236,8 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Creeper spawn location in this
-     * TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Creeper spawn location in this TARDIS. It is in the form of {@code World
+     * name:x:y:z}
      *
      * @return the Creeper spawn location string
      */
@@ -253,8 +246,8 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Artron Condenser chest location in
-     * this TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Artron Condenser chest location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
      *
      * @return the Artron Condenser chest location string
      */
@@ -263,9 +256,8 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Beacon block-off block location in
-     * this TARDIS (used to turn off the beacon). It is in the form of
-     * {@code World name:x:y:z}
+     * Returns a String representation of the Beacon block-off block location in this TARDIS (used to turn off the
+     * beacon). It is in the form of {@code World name:x:y:z}
      *
      * @return the Beacon block-off block location string
      */
@@ -301,11 +293,10 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Scanner button location in this
-     * TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Scanner button location in this TARDIS. It is in the form of {@code World
+     * name:x:y:z}
      *
-     * @return the Scanner button location string, or an empty string if the
-     * scanner does not exist
+     * @return the Scanner button location string, or an empty string if the scanner does not exist
      */
     public String getScanner() {
         return scanner;
@@ -323,8 +314,7 @@ public class Tardis {
     /**
      * Returns the time in milliseconds that the TARDIS was last used.
      *
-     * @return the time in milliseconds, or if the player has the
-     * 'tardis.prune.bypass' permission Long.MAX_VALUE
+     * @return the time in milliseconds, or if the player has the 'tardis.prune.bypass' permission Long.MAX_VALUE
      */
     public long getLastuse() {
         return lastuse;
@@ -340,45 +330,41 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Emergency Programme One hologram
-     * spawn location in this TARDIS. It is in the form of
-     * {@code World name:x:y:z}
+     * Returns a String representation of the Emergency Programme One hologram spawn location in this TARDIS. It is in
+     * the form of {@code World name:x:y:z}
      *
-     * @return the Emergency Programme One hologram spawn location string, or an
-     * empty string if the location does not exist
+     * @return the Emergency Programme One hologram spawn location string, or an empty string if the location does not
+     * exist
      */
     public String getEps() {
         return eps;
     }
 
     /**
-     * Returns a String representation of the Rail room minecart spawn location
-     * in this TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Rail room minecart spawn location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
      *
-     * @return the Rail room minecart spawn location string, or an empty string
-     * if the room does not exist
+     * @return the Rail room minecart spawn location string, or an empty string if the room does not exist
      */
     public String getRail() {
         return rail;
     }
 
     /**
-     * Returns a String representation of the Renderer room spawn location in
-     * this TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Renderer room spawn location in this TARDIS. It is in the form of {@code
+     * World name:x:y:z}
      *
-     * @return the Renderer room spawn location string, or an empty string if
-     * the room does not exist
+     * @return the Renderer room spawn location string, or an empty string if the room does not exist
      */
     public String getRenderer() {
         return renderer;
     }
 
     /**
-     * Returns a String representation of the Zero room transmat location in
-     * this TARDIS. It is in the form of {@code World name:x:y:z}
+     * Returns a String representation of the Zero room transmat location in this TARDIS. It is in the form of {@code
+     * World name:x:y:z}
      *
-     * @return the Zero room transmat spawn location string, or an empty string
-     * if the room does not exist
+     * @return the Zero room transmat spawn location string, or an empty string if the room does not exist
      */
     public String getZero() {
         return zero;

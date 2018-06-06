@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,8 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum INVENTORY_MANAGER {
-
-    MULTI,
-    PER_WORLD,
-    MULTIVERSE,
-    GAMEMODE,
-    NONE;
-
+    MULTI, PER_WORLD, MULTIVERSE, GAMEMODE, NONE
 }

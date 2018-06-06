@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -33,10 +29,14 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * A control room's look could be changed over time. The process by which an
- * operator could transform a control room was fairly simple, once compared by
- * the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an operator could transform a control room was
+ * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -51,8 +51,8 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
     public TARDISWallFloorMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.rows = TARDISWalls.BLOCKS.size() / 8 + 1;
-        this.blocks = getWallBlocks();
+        rows = TARDISWalls.BLOCKS.size() / 8 + 1;
+        blocks = getWallBlocks();
     }
 
     @EventHandler
@@ -114,7 +114,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
      * @param p the player using the GUI
      */
     @Override
-    public void close(final Player p) {
+    public void close(Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
@@ -126,7 +126,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
      *
      * @param p the player using the GUI
      */
-    public void back(final Player p) {
+    public void back(Player p) {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();

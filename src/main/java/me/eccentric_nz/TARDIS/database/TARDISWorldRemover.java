@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISWorldRemover {
@@ -35,7 +35,7 @@ public class TARDISWorldRemover {
 
     public TARDISWorldRemover(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     public void cleanWorld(String w) {

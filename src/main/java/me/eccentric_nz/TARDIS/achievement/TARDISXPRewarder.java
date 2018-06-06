@@ -1,29 +1,41 @@
+/*
+ * Copyright (C) 2018 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.achievement;
 
-import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
 
+import java.lang.ref.WeakReference;
+import java.util.Arrays;
+
 /**
- * The Doctor Who Experience was one of the largest and most ambitious Doctor
- * Who exhibitions ever staged. Featuring props and costumes from throughout the
- * franchise's forty-seven year history, it also featured one new and different
- * element; an interactive story in which people could take part and become part
- * of the adventure.
+ * The Doctor Who Experience was one of the largest and most ambitious Doctor Who exhibitions ever staged. Featuring
+ * props and costumes from throughout the franchise's forty-seven year history, it also featured one new and different
+ * element; an interactive story in which people could take part and become part of the adventure.
  *
  * @author desht
- *
+ * <p>
  * Adapted from ExperienceUtils code originally in ScrollingMenuSign.
- *
- * Credit to nisovin
- * (http://forums.bukkit.org/threads/experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/#post-1067480)
- * for an implementation that avoids the problems of getTotalExperience(), which
- * doesn't work properly after a player has enchanted something.
- *
- * Credit to comphenix for further contributions: See
- * http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622
- *
+ * <p>
+ * Credit to nisovin (http://forums.bukkit.org/threads/experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/#post-1067480)
+ * for an implementation that avoids the problems of getTotalExperience(), which doesn't work properly after a player
+ * has enchanted something.
+ * <p>
+ * Credit to comphenix for further contributions: See http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622
  */
 public class TARDISXPRewarder {
 
@@ -47,7 +59,7 @@ public class TARDISXPRewarder {
     public TARDISXPRewarder(Player player) {
         Validate.notNull(player, "Player cannot be null");
         this.player = new WeakReference<>(player);
-        this.playerName = player.getName();
+        playerName = player.getName();
     }
 
     /**
@@ -69,8 +81,7 @@ public class TARDISXPRewarder {
     }
 
     /**
-     * Initialize the XP lookup table. See
-     * http://minecraft.gamepedia.com/Experience
+     * Initialize the XP lookup table. See http://minecraft.gamepedia.com/Experience
      *
      * @param maxLevel The highest level handled by the lookup tables
      */
@@ -80,15 +91,14 @@ public class TARDISXPRewarder {
         for (int i = 0; i < xpTotalToReachLevel.length; i++) {
             xpTotalToReachLevel[i]
                     = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220)
-                            : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360)
-                                    : 17 * i;
+                    : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360)
+                    : 17 * i;
         }
     }
 
     /**
-     * Calculate the level that the given XP quantity corresponds to, without
-     * using the lookup tables. This is needed if getLevelForExp() is called
-     * with an XP quantity beyond the range of the existing lookup tables.
+     * Calculate the level that the given XP quantity corresponds to, without using the lookup tables. This is needed if
+     * getLevelForExp() is called with an XP quantity beyond the range of the existing lookup tables.
      *
      * @param exp
      * @return
@@ -121,9 +131,8 @@ public class TARDISXPRewarder {
     }
 
     /**
-     * Adjust the player's XP by the given amount in an intelligent fashion.
-     * Works around some of the non-intuitive behaviour of the basic Bukkit
-     * player.giveExp() method.
+     * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
+     * behaviour of the basic Bukkit player.giveExp() method.
      *
      * @param amt Amount of XP, may be negative
      */
@@ -132,9 +141,8 @@ public class TARDISXPRewarder {
     }
 
     /**
-     * Adjust the player's XP by the given amount in an intelligent fashion.
-     * Works around some of the non-intuitive behaviour of the basic Bukkit
-     * player.giveExp() method.
+     * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
+     * behaviour of the basic Bukkit player.giveExp() method.
      *
      * @param amt Amount of XP, may be negative
      */
@@ -248,8 +256,7 @@ public class TARDISXPRewarder {
     }
 
     /**
-     * Retrieves the amount of experience the experience bar can hold at the
-     * given level.
+     * Retrieves the amount of experience the experience bar can hold at the given level.
      *
      * @param level the level to check
      * @return the amount of experience at this level in the level bar
@@ -265,8 +272,7 @@ public class TARDISXPRewarder {
      *
      * @param level The level to check for.
      * @return The amount of XP needed for the level.
-     * @throws IllegalArgumentException if the level is less than 0 or greater
-     * than the current hard maximum
+     * @throws IllegalArgumentException if the level is less than 0 or greater than the current hard maximum
      */
     public int getXpForLevel(int level) {
         Validate.isTrue(level >= 0 && level <= hardMaxLevel, "Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");

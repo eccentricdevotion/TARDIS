@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
-import java.util.Map;
 import org.bukkit.Material;
 
+import java.util.Map;
+
 /**
- *
  * @author eccentric_nz
  */
 public enum PRESET {
@@ -101,7 +101,7 @@ public enum PRESET {
     boolean portal;
     private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
 
-    private PRESET(Material material, String firstLine, String secondLine, boolean door, boolean portal) {
+    PRESET(Material material, String firstLine, String secondLine, boolean door, boolean portal) {
         this.material = material;
         this.firstLine = firstLine;
         this.secondLine = secondLine;
@@ -121,7 +121,7 @@ public enum PRESET {
         return secondLine;
     }
 
-    public static PRESET getPreset(final Material mat) {
+    public static PRESET getPreset(Material mat) {
         return BY_MATERIAL.get(mat);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
@@ -25,14 +24,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.*;
+
+import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArtronIndicator {
@@ -44,12 +40,12 @@ public class TARDISArtronIndicator {
 
     public TARDISArtronIndicator(TARDIS plugin) {
         this.plugin = plugin;
-        this.manager = plugin.getServer().getScoreboardManager();
-        this.fc = plugin.getArtronConfig().getInt("full_charge");
-        this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
+        manager = plugin.getServer().getScoreboardManager();
+        fc = plugin.getArtronConfig().getInt("full_charge");
+        filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
-    public void showArtronLevel(final Player p, int id, int used) {
+    public void showArtronLevel(Player p, int id, int used) {
         // check if they have the perception filter on
         boolean isFiltered = false;
         ItemStack[] armour = p.getInventory().getArmorContents();
@@ -58,7 +54,7 @@ public class TARDISArtronIndicator {
                 isFiltered = true;
             }
         }
-        final Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
+        Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
         // get Artron level
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
         if (rs.fromID(id)) {

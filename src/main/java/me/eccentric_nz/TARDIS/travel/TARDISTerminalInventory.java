@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+
 /**
- * John Lumic was a business tycoon, owner of Cybus Industries and the creator
- * of the Cybermen. Though he publicly denied rumours of ill health, Lumic
- * suffered from a terminal illness and used a motorized wheelchair as
- * transport.
+ * John Lumic was a business tycoon, owner of Cybus Industries and the creator of the Cybermen. Though he publicly
+ * denied rumours of ill health, Lumic suffered from a terminal illness and used a motorized wheelchair as transport.
  *
  * @author eccentric_nz
  */
@@ -37,7 +36,7 @@ public class TARDISTerminalInventory {
 
     public TARDISTerminalInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.terminal = getItemStack();
+        terminal = getItemStack();
     }
 
     /**
@@ -155,12 +154,12 @@ public class TARDISTerminalInventory {
         c.setItemMeta(cim);
 
         ItemStack[] is = {
-            null, ten, null, twentyfive, null, fifty, null, onehundred, null,
-            neg, null, null, null, x, null, null, null, pos,
-            neg, null, null, null, z, null, null, null, pos,
-            neg, m, null, null, null, null, null, null, pos,
-            u, null, w, null, r, null, e, null, sub,
-            null, t, null, null, s, null, null, c, null
+                null, ten, null, twentyfive, null, fifty, null, onehundred, null,
+                neg, null, null, null, x, null, null, null, pos,
+                neg, null, null, null, z, null, null, null, pos,
+                neg, m, null, null, null, null, null, null, pos,
+                u, null, w, null, r, null, e, null, sub,
+                null, t, null, null, s, null, null, c, null
         };
         return is;
     }

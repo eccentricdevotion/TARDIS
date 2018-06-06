@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -33,13 +31,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * The architectural reconfiguration system is a component of the Doctor's
- * TARDIS in the shape of a tree that, according to the Eleventh Doctor,
- * "reconstructs the particles according to your needs." It is basically "a
- * machine that makes machines," perhaps somewhat like a 3D printer. It is,
- * according to Gregor Van Baalen's scanner, "more valuable than the total sum
- * of any currency.
+ * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
+ * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
+ * the total sum of any currency.
  *
  * @author eccentric_nz
  */
@@ -50,8 +49,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -61,7 +60,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         String name = inv.getTitle();
         if (name.equals("§4TARDIS Map")) {
             event.setCancelled(true);
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             ids.put(uuid, getTardisId(player.getUniqueId().toString()));
             int slot = event.getRawSlot();
@@ -184,8 +183,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     }
 
     @Override
-    public void close(final Player p) {
-        final UUID uuid = p.getUniqueId();
+    public void close(Player p) {
+        UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (hasLoadedMap.contains(uuid)) {
                 hasLoadedMap.remove(uuid);

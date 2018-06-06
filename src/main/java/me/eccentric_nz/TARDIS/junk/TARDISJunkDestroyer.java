@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
@@ -38,8 +35,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJunkDestroyer implements Runnable {
@@ -59,16 +59,16 @@ public class TARDISJunkDestroyer implements Runnable {
     public TARDISJunkDestroyer(TARDIS plugin, DestroyData pdd) {
         this.plugin = plugin;
         this.pdd = pdd;
-        this.junkLoc = this.pdd.getLocation();
-        this.effectsLoc = this.junkLoc.clone().add(0.5d, 0, 0.5d);
-        this.ex = this.junkLoc.getBlockX() + 2;
-        this.sx = this.junkLoc.getBlockX() - 3;
-        this.sy = this.junkLoc.getBlockY();
-        this.ey = this.junkLoc.getBlockY() + 5;
-        this.ez = this.junkLoc.getBlockZ() + 3;
-        this.sz = this.junkLoc.getBlockZ() - 2;
-        this.world = this.junkLoc.getWorld();
-        this.biome = this.pdd.getBiome();
+        junkLoc = this.pdd.getLocation();
+        effectsLoc = junkLoc.clone().add(0.5d, 0, 0.5d);
+        ex = junkLoc.getBlockX() + 2;
+        sx = junkLoc.getBlockX() - 3;
+        sy = junkLoc.getBlockY();
+        ey = junkLoc.getBlockY() + 5;
+        ez = junkLoc.getBlockZ() + 3;
+        sz = junkLoc.getBlockZ() - 2;
+        world = junkLoc.getWorld();
+        biome = this.pdd.getBiome();
     }
 
     @Override
@@ -96,8 +96,8 @@ public class TARDISJunkDestroyer implements Runnable {
                     vortexJunkLoc = plugin.getLocationUtils().getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
                     getJunkTravellers(4.0d).forEach((e) -> {
                         if (e instanceof Player) {
-                            final Player p = (Player) e;
-                            final Location relativeLoc = getRelativeLocation(p);
+                            Player p = (Player) e;
+                            Location relativeLoc = getRelativeLocation(p);
                             p.teleport(relativeLoc);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 p.teleport(relativeLoc);

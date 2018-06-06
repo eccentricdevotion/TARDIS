@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum STORAGE {
@@ -270,7 +269,7 @@ public enum STORAGE {
     String table;
     String empty;
 
-    private STORAGE(String title, String table, String empty) {
+    STORAGE(String title, String table, String empty) {
         this.title = title;
         this.table = table;
         this.empty = empty;

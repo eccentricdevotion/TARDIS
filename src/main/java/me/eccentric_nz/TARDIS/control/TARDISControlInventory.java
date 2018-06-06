@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -29,8 +26,11 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISControlInventory {
@@ -42,7 +42,7 @@ public class TARDISControlInventory {
     public TARDISControlInventory(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.controls = getItemStack();
+        controls = getItemStack();
     }
 
     /**
@@ -219,12 +219,12 @@ public class TARDISControlInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            ran, null, ars, null, cham, null, art, null, zero,
-            save, null, upg, null, siege, null, scan, null, player,
-            fast, null, pow, null, hide, null, info, null, companion,
-            area, null, lig, null, reb, null, null, null, null,
-            ter, null, tog, null, dir, null, null, null, null,
-            null, null, map, null, temp, null, null, null, close
+                ran, null, ars, null, cham, null, art, null, zero,
+                save, null, upg, null, siege, null, scan, null, player,
+                fast, null, pow, null, hide, null, info, null, companion,
+                area, null, lig, null, reb, null, null, null, null,
+                ter, null, tog, null, dir, null, null, null, null,
+                null, null, map, null, temp, null, null, null, close
         };
         return is;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -27,11 +24,13 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
- * The Randomiser is a device that ensures a TARDIS lands at unpredictable times
- * and places. When activated it scrambles the TARDIS' coordinate settings,
- * giving the Doctor even less control than usual over the destination of his
- * ship.
+ * The Randomiser is a device that ensures a TARDIS lands at unpredictable times and places. When activated it scrambles
+ * the TARDIS' coordinate settings, giving the Doctor even less control than usual over the destination of his ship.
  *
  * @author eccentric_nz
  */

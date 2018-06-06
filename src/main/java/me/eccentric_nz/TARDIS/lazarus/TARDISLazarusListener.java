@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
@@ -32,8 +31,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISLazarusListener implements Listener {
@@ -48,7 +48,7 @@ public class TARDISLazarusListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Action a = event.getAction();
         if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.OAK_PRESSURE_PLATE)) {
-            final Player player = event.getPlayer();
+            Player player = event.getPlayer();
             if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
                 return;
             }

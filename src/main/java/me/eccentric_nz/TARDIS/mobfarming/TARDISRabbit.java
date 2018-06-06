@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,10 @@ package me.eccentric_nz.TARDIS.mobfarming;
 import org.bukkit.entity.Rabbit;
 
 /**
- * Alien is a broad, subjective term. It can be applied as a noun or an
- * adjective for any entity, object, place or practice which is not familiar.
- * When referring to entities, it is used for sentient and non-sentient organic
+ * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
+ * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
- *
+ * <p>
  * Data storage class for TARDIS pig.
  *
  * @author eccentric_nz

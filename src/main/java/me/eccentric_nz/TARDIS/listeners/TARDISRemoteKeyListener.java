@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
@@ -45,10 +44,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 /**
- * At one point, the Tenth Doctor installed a system that allowed him to lock
- * the TARDIS remotely using a fob. As a joke, the TARDIS roof light flashed and
- * a alarm chirp sound was heard, similar to that used on vehicles on Earth.
+ * At one point, the Tenth Doctor installed a system that allowed him to lock the TARDIS remotely using a fob. As a
+ * joke, the TARDIS roof light flashed and a alarm chirp sound was heard, similar to that used on vehicles on Earth.
  *
  * @author eccentric_nz
  */
@@ -59,7 +59,7 @@ public class TARDISRemoteKeyListener implements Listener {
 
     public TARDISRemoteKeyListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
+        rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -71,7 +71,7 @@ public class TARDISRemoteKeyListener implements Listener {
         if (!action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_AIR)) {
             return;
         }
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         // check item in hand
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is == null || !is.getType().equals(rkey)) {
@@ -87,9 +87,9 @@ public class TARDISRemoteKeyListener implements Listener {
                 return;
             }
             Tardis tardis = rs.getTardis();
-            final int id = tardis.getTardis_id();
-            final boolean powered = tardis.isPowered_on();
-            final PRESET preset = tardis.getPreset();
+            int id = tardis.getTardis_id();
+            boolean powered = tardis.isPowered_on();
+            PRESET preset = tardis.getPreset();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                 return;
@@ -124,7 +124,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     qf.doUpdate("doors", setl, wherel);
                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                     TARDISMessage.send(player, "DOOR_LOCK", message);
-                    final TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
+                    TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
                     TARDISSounds.playTARDISSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

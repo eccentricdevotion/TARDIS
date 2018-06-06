@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014  michidk && xxmicloxx
+ * Copyright (C) 2018  michidk && xxmicloxx
  * http://dev.bukkit.org/bukkit-plugins/noteblockapi/
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,18 +33,18 @@ public class Song {
     private final float delay;
 
     public Song(Song other) {
-        this.speed = other.getSpeed();
+        speed = other.getSpeed();
         delay = 20 / speed;
-        this.layerHashMap = other.getLayerHashMap();
-        this.songHeight = other.getSongHeight();
-        this.length = other.getLength();
-        this.title = other.getTitle();
-        this.author = other.getAuthor();
-        this.description = other.getDescription();
-        this.path = other.getPath();
+        layerHashMap = other.getLayerHashMap();
+        songHeight = other.getSongHeight();
+        length = other.getLength();
+        title = other.getTitle();
+        author = other.getAuthor();
+        description = other.getDescription();
+        path = other.getPath();
     }
 
-    public Song(float speed, HashMap<Integer, Layer> layerHashMap, short songHeight, final short length, String title, String author, String description, File path) {
+    public Song(float speed, HashMap<Integer, Layer> layerHashMap, short songHeight, short length, String title, String author, String description, File path) {
         this.speed = speed;
         delay = 20 / speed;
         this.layerHashMap = layerHashMap;

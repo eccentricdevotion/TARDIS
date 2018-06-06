@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 
+import java.sql.*;
+
 /**
- * Cyber-conversion into Cybermen involves the replacement of body parts
- * (including limbs, organs, and vital systems) with artificial components.
- * Partial conversion, with the victim retaining autonomy and a human identity
- * and body parts, is possible.
+ * Cyber-conversion into Cybermen involves the replacement of body parts (including limbs, organs, and vital systems)
+ * with artificial components. Partial conversion, with the victim retaining autonomy and a human identity and body
+ * parts, is possible.
  *
  * @author eccentric_nz
  */
@@ -40,7 +36,7 @@ public class TARDISDispersalUpdater {
 
     public TARDISDispersalUpdater(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**

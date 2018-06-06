@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -37,11 +35,14 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import java.util.Collections;
+import java.util.HashMap;
+
 /**
  * Destroy the TARDIS Police Box.
- *
- * The chameleon circuit is the component of a TARDIS which changes its outer
- * plasmic shell to assume a shape which blends in with its surroundings.
+ * <p>
+ * The chameleon circuit is the component of a TARDIS which changes its outer plasmic shell to assume a shape which
+ * blends in with its surroundings.
  *
  * @author eccentric_nz
  */

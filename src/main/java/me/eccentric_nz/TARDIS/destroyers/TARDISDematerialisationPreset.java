@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -41,10 +34,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
- * enabled it to dematerialise from normal space into the Time Vortex and
- * rematerialise back from it.
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
+ * space into the Time Vortex and rematerialise back from it.
  *
  * @author eccentric_nz
  */
@@ -63,22 +58,21 @@ public class TARDISDematerialisationPreset implements Runnable {
     private BlockData the_colour;
 
     /**
-     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic
-     * the transparency of dematerialisation by building the Police Box first
-     * with GLASS, then STAINED_GLASS, then the normal preset wall block.
+     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic the transparency of dematerialisation by
+     * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
-     * @param plugin instance of the TARDIS plugin
-     * @param dd the DestroyData
-     * @param preset the Chameleon preset currently in use by the TARDIS
+     * @param plugin  instance of the TARDIS plugin
+     * @param dd      the DestroyData
+     * @param preset  the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
-     * @param loops the number of loops to run
+     * @param loops   the number of loops to run
      */
     public TARDISDematerialisationPreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
         this.plugin = plugin;
         this.dd = dd;
         this.loops = loops;
         this.preset = preset;
-        this.i = 0;
+        i = 0;
         this.cham_id = cham_id;
         if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprint", dd.getDirection()).getColumn();
@@ -372,8 +366,8 @@ public class TARDISDematerialisationPreset implements Runnable {
                 // teleport player(s) to exit (tmd.getFromToLocation())
                 getJunkTravellers(1.0d).forEach((e) -> {
                     if (e instanceof Player) {
-                        final Player p = (Player) e;
-                        final Location relativeLoc = getRelativeLocation(p);
+                        Player p = (Player) e;
+                        Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             p.teleport(relativeLoc);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,13 +27,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
+import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
+
 /**
- * The architectural reconfiguration system is a component of the Doctor's
- * TARDIS in the shape of a tree that, according to the Eleventh Doctor,
- * "reconstructs the particles according to your needs." It is basically "a
- * machine that makes machines," perhaps somewhat like a 3D printer. It is,
- * according to Gregor Van Baalen's scanner, "more valuable than the total sum
- * of any currency.
+ * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
+ * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
+ * the total sum of any currency.
  *
  * @author eccentric_nz
  */
@@ -54,8 +50,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -65,7 +61,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         String name = inv.getTitle();
         if (name.equals("§4Architectural Reconfiguration")) {
             event.setCancelled(true);
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             ids.put(uuid, getTardisId(player.getUniqueId().toString()));
             int slot = event.getRawSlot();
@@ -253,8 +249,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     /**
      * Checks the saved map to see whether the selected slot can be reset.
      *
-     * @param uuid the UUID of the player using the GUI
-     * @param slot the slot that was clicked
+     * @param uuid   the UUID of the player using the GUI
+     * @param slot   the slot that was clicked
      * @param updown the type id of the block in the slot
      * @return true or false
      */
@@ -278,26 +274,25 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     }
 
     /**
-     * Populates arrays of room names and seed IDs for the scrollable room
-     * buttons.
+     * Populates arrays of room names and seed IDs for the scrollable room buttons.
      */
-    
+
     public final void getRoomIdAndNames() {
         List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();
         // less non-room types
-        this.room_materials = new ArrayList<>();
-        this.room_names = new ArrayList<>();
+        room_materials = new ArrayList<>();
+        room_names = new ArrayList<>();
         for (TARDISARS a : ars) {
             if (a.getOffset() != 0) {
-                this.room_materials.add(Material.valueOf(a.getMaterial()));
-                this.room_names.add(a.getDescriptiveName());
+                room_materials.add(Material.valueOf(a.getMaterial()));
+                room_names.add(a.getDescriptiveName());
             }
         }
         custom_names.forEach((c) -> {
-            this.room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
-            final String uc = ucfirst(c);
-            this.room_names.add(uc);
+            room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
+            String uc = ucfirst(c);
+            room_names.add(uc);
             TARDISARS.addNewARS(new ARS() {
                 @Override
                 public String getMaterial() {

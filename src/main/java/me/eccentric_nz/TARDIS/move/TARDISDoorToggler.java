@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -24,8 +23,9 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDoorToggler {
@@ -49,7 +49,7 @@ public class TARDISDoorToggler {
     /**
      * Toggle the door open and closed.
      */
-    
+
     public void toggleDoors() {
         UUID uuid = player.getUniqueId();
         if (open) {
@@ -63,11 +63,10 @@ public class TARDISDoorToggler {
     /**
      * Plays a door sound when the iron door is clicked.
      *
-     * @param p a player to play the sound for
+     * @param p    a player to play the sound for
      * @param open which sound to play, open (true), close (false)
-     * @param l a location to play the sound at
-     * @param m whether to play the custom sound (false) or the Minecraft one
-     * (true)
+     * @param l    a location to play the sound at
+     * @param m    whether to play the custom sound (false) or the Minecraft one (true)
      */
     private void playDoorSound(Player p, boolean open, Location l, boolean m) {
         if (open) {

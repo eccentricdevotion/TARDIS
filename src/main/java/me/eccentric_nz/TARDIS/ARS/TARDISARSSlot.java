@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import org.bukkit.Chunk;
 
 /**
- * Data container for performing Architectural Reconfiguration System room
- * growing.
+ * Data container for performing Architectural Reconfiguration System room growing.
  *
  * @author eccentric_nz
  */
@@ -55,7 +54,7 @@ public class TARDISARSSlot {
 
     public void setX(int x) {
         // convert to the actual x coordinate of the start of the chunk
-        int sx = getChunkX(x, this.chunk);
+        int sx = getChunkX(x, chunk);
         this.x = sx;
     }
 
@@ -65,7 +64,7 @@ public class TARDISARSSlot {
 
     public void setZ(int z) {
         // convert to the actual z coordinate of the start of the chunk
-        int sz = getChunkZ(z, this.chunk);
+        int sz = getChunkZ(z, chunk);
         this.z = sz;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -31,18 +26,9 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-import org.bukkit.World;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -55,11 +41,16 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted
- * resources to malfunctioning controls to a simple inability to arrive at the
- * proper time or location. While the Doctor did not build the TARDIS from
- * scratch, he has substantially modified/rebuilt it.
+ * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
+ * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
  */
@@ -76,20 +67,17 @@ public class TARDISBuilderInner {
     /**
      * Builds the inside of the TARDIS.
      *
-     * @param schm the name of the schematic file to use can be BUDGET, BIGGER,
-     * ELEVENTH, TWELFTH, REDSTONE, STEAMPUNK, DELUXE, PLANK, TOM, ARS, WAR,
-     * PYRAMID, MASTER or a CUSTOM name.
-     * @param world the world where the TARDIS is to be built.
-     * @param dbID the unique key of the record for this TARDIS in the database.
-     * @param p an instance of the player who owns the TARDIS.
-     * @param wall_type a material type determined from the TARDIS seed block,
-     * or the middle block in the TARDIS creation stack, this material
-     * determines the makeup of the TARDIS walls.
-     * @param floor_type a material type determined from the TARDIS seed block,
-     * or 35 (if TARDIS was made via the creation stack), this material
-     * determines the makeup of the TARDIS floors.
-     * @param tips a boolean determining where this TARDIS will be built
-     * -------- false:own world, underground - true:default world--------
+     * @param schm       the name of the schematic file to use can be BUDGET, BIGGER, ELEVENTH, TWELFTH, REDSTONE,
+     *                   STEAMPUNK, DELUXE, PLANK, TOM, ARS, WAR, PYRAMID, MASTER or a CUSTOM name.
+     * @param world      the world where the TARDIS is to be built.
+     * @param dbID       the unique key of the record for this TARDIS in the database.
+     * @param p          an instance of the player who owns the TARDIS.
+     * @param wall_type  a material type determined from the TARDIS seed block, or the middle block in the TARDIS
+     *                   creation stack, this material determines the makeup of the TARDIS walls.
+     * @param floor_type a material type determined from the TARDIS seed block, or 35 (if TARDIS was made via the
+     *                   creation stack), this material determines the makeup of the TARDIS floors.
+     * @param tips       a boolean determining where this TARDIS will be built -------- false:own world, underground -
+     *                   true:default world--------
      */
     public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, Material wall_type, Material floor_type, boolean tips) {
         Material type;
@@ -409,7 +397,7 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
                         /*
-                        * get the ender crystal location
+                         * get the ender crystal location
                          */
                         ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                     }
@@ -555,7 +543,7 @@ public class TARDISBuilderInner {
         for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
             if (s == 0) {
                 // always make the control centre the first sign
-                final Block psb = entry.getKey();
+                Block psb = entry.getKey();
 //                psb.setType(Material.WALL_SIGN);
                 psb.setData(entry.getValue());
                 if (entry.getValue().getMaterial().equals(Material.WALL_SIGN)) {
@@ -622,9 +610,9 @@ public class TARDISBuilderInner {
     /**
      * Checks whether a chunk is available to build a TARDIS in.
      *
-     * @param w the world the chunk is in.
-     * @param x the x coordinate of the chunk.
-     * @param z the z coordinate of the chunk.
+     * @param w   the world the chunk is in.
+     * @param x   the x coordinate of the chunk.
+     * @param z   the z coordinate of the chunk.
      * @param wid the width of the schematic.
      * @param len the length of the schematic.
      * @return a list of Chunks.

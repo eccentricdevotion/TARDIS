@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,59 +16,29 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.data.Farm;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.AnimalTamer;
-import org.bukkit.entity.ChestedHorse;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import static org.bukkit.entity.EntityType.OCELOT;
-import static org.bukkit.entity.EntityType.WOLF;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LeashHitch;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Llama;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Ocelot;
-import org.bukkit.entity.Parrot;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.PolarBear;
-import org.bukkit.entity.Rabbit;
-import org.bukkit.entity.Sheep;
-import org.bukkit.entity.Sittable;
-import org.bukkit.entity.Tameable;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold
- * has an identifying number.
+ * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold has an identifying number.
  *
  * @author eccentric_nz
  */
@@ -81,26 +51,21 @@ public class TARDISFarmer {
     }
 
     /**
-     * Checks whether there are any animals around the TARDIS Police Box. If
-     * mobs are found they are teleported to the 'farm' room (if present),
-     * otherwise a spawn egg for the mob type is placed in the player's
-     * inventory. Only cows, sheep, pigs, chickens and mooshrooms will be
-     * processed.
+     * Checks whether there are any animals around the TARDIS Police Box. If mobs are found they are teleported to the
+     * 'farm' room (if present), otherwise a spawn egg for the mob type is placed in the player's inventory. Only cows,
+     * sheep, pigs, chickens and mooshrooms will be processed.
+     * <p>
+     * Also allows players to teleport their pets (tamed wolves and ocelots) with them.
      *
-     * Also allows players to teleport their pets (tamed wolves and ocelots)
-     * with them.
-     *
-     * @param l The location to check for animals. This will be the current
-     * location of the TARDIS Police Box.
-     * @param d the direction the Police Box is facing
-     * @param id The database key of the TARDIS.
-     * @param p the player to award achievements or give spawn eggs to
-     * @param to the world to
+     * @param l    The location to check for animals. This will be the current location of the TARDIS Police Box.
+     * @param d    the direction the Police Box is facing
+     * @param id   The database key of the TARDIS.
+     * @param p    the player to award achievements or give spawn eggs to
+     * @param to   the world to
      * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
-    @SuppressWarnings("deprecation")
-    public List<TARDISParrot> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
+    public List<TARDISParrot> farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
         List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
         switch (d) {
             case NORTH:
@@ -959,7 +924,6 @@ public class TARDISFarmer {
         return old_macd_had_a_pet;
     }
 
-    @SuppressWarnings("deprecation")
     public List<TARDISParrot> exitPets(Player p) {
         List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
         Entity ent = (Entity) p;

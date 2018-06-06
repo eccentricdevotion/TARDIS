@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,10 @@
 package me.eccentric_nz.TARDIS.builders;
 
 /**
- * Data storage container for the TARDIS Interior Positioning System. It stores
- * the coordinates of the TIPS slot.
- *
- * minx, maxx, minz and maxz are the diagonal corners of a cuboid region.
- * centrex, centrez are the coordinates where the TARDIS will tart to be grown
- * from.
+ * Data storage container for the TARDIS Interior Positioning System. It stores the coordinates of the TIPS slot.
+ * <p>
+ * minx, maxx, minz and maxz are the diagonal corners of a cuboid region. centrex, centrez are the coordinates where the
+ * TARDIS will tart to be grown from.
  *
  * @author eccentric_nz
  */

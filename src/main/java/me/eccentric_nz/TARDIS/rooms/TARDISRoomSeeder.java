@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -36,10 +34,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * The Doctor kept some of the clothes from his previous regenerations, as well
- * as clothing for other people in the TARDIS wardrobe. At least some of the
- * clothes had pockets that were bigger on the inside.
+ * The Doctor kept some of the clothes from his previous regenerations, as well as clothing for other people in the
+ * TARDIS wardrobe. At least some of the clothes had pockets that were bigger on the inside.
  *
  * @author eccentric_nz
  */
@@ -52,18 +52,17 @@ public class TARDISRoomSeeder implements Listener {
     }
 
     /**
-     * Listens for player interaction with one of the blocks required to seed a
-     * room. If the block is clicked with the TARDIS key after running the
-     * command /tardis room [room type], the seed block will start growing into
-     * a passageway or the room type specified.
-     *
+     * Listens for player interaction with one of the blocks required to seed a room. If the block is clicked with the
+     * TARDIS key after running the command /tardis room [room type], the seed block will start growing into a
+     * passageway or the room type specified.
+     * <p>
      * Requires the TARDIS to have sufficient Artron Energy to grow the room.
      *
      * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
         if (!plugin.getTrackerKeeper().getRoomSeed().containsKey(uuid)) {

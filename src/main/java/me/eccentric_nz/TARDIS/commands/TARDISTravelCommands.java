@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,39 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
-import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
-import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
-import me.eccentric_nz.TARDIS.travel.TARDISVillageTravel;
+import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
@@ -64,11 +41,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Command /tardistravel [arguments].
- *
- * Time travel is the process of travelling through time, even in a non-linear
- * direction.
+ * <p>
+ * Time travel is the process of travelling through time, even in a non-linear direction.
  *
  * @author eccentric_nz
  */
@@ -89,7 +70,6 @@ public class TARDISTravelCommands implements CommandExecutor {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
@@ -357,11 +337,11 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         // ask if we can travel to this player
-                        final UUID requestedUUID = requested.getUniqueId();
+                        UUID requestedUUID = requested.getUniqueId();
                         TARDISMessage.send(requested, "REQUEST_TRAVEL", player.getName(), ChatColor.AQUA + "tardis request accept" + ChatColor.RESET);
                         plugin.getTrackerKeeper().getChat().put(requestedUUID, player.getUniqueId());
-                        final Player p = player;
-                        final String to = args[0];
+                        Player p = player;
+                        String to = args[0];
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             if (plugin.getTrackerKeeper().getChat().containsKey(requestedUUID)) {
                                 plugin.getTrackerKeeper().getChat().remove(requestedUUID);
@@ -629,7 +609,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     // make location
                                     Location location = new Location(rsc.getWorld(), x, y, z);
                                     // check location
-                                    int count = this.checkLocation(location, player, id, tt);
+                                    int count = checkLocation(location, player, id, tt);
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                         return true;
@@ -654,7 +634,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     // automatically get highest block Y coord
                                     Location determiney = getCoordinateLocation(args, player, id);
                                     if (determiney != null) {
-                                        int count = this.checkLocation(determiney, player, id, tt);
+                                        int count = checkLocation(determiney, player, id, tt);
                                         if (count > 0) {
                                             TARDISMessage.send(player, "NOT_SAFE");
                                             return true;
@@ -683,7 +663,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 Location giveny = getCoordinateLocation(args, player, id);
                                 if (giveny != null) {
                                     // check location
-                                    int count = this.checkLocation(giveny, player, id, tt);
+                                    int count = checkLocation(giveny, player, id, tt);
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                         return true;

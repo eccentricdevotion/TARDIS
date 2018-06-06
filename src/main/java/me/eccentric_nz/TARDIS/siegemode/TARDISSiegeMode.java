@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
@@ -43,10 +40,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * Siege mode is a feature of the TARDIS that can be activated using a lever
- * under the console to prevent entry or exit. Additionally, it makes the TARDIS
- * impervious to all external damage. Siege mode requires power to activate or
+ * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
+ * Additionally, it makes the TARDIS impervious to all external damage. Siege mode requires power to activate or
  * deactivate.
  *
  * @author eccentric_nz
@@ -76,7 +76,7 @@ public class TARDISSiegeMode {
             return;
         }
         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        final Block siege = current.getBlock();
+        Block siege = current.getBlock();
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
@@ -91,7 +91,7 @@ public class TARDISSiegeMode {
             // remove siege block
             siege.setType(Material.AIR);
             // rebuild preset
-            final BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+            BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(current);
             bd.setMalfunction(false);
@@ -150,7 +150,7 @@ public class TARDISSiegeMode {
                 return;
             }
             // destroy tardis
-            final DestroyData dd = new DestroyData(plugin, p.getUniqueId().toString());
+            DestroyData dd = new DestroyData(plugin, p.getUniqueId().toString());
             dd.setDirection(rsc.getDirection());
             dd.setLocation(current);
             dd.setPlayer(p.getPlayer());

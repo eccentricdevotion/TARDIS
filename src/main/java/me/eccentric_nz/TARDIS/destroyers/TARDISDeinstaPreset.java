@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -34,12 +32,13 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.MultipleFacing;
 
+import java.util.Collections;
+import java.util.HashMap;
+
 /**
- * A police box is a telephone kiosk that can be used by members of the public
- * wishing to get help from the police. Early in the First Doctor's travels, the
- * TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
- * TARDIS became locked into that shape.
+ * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
+ * Early in the First Doctor's travels, the TARDIS assumed the exterior shape of a police box during a five-month
+ * stopover in 1963 London. Due a malfunction in its chameleon circuit, the TARDIS became locked into that shape.
  *
  * @author eccentric_nz
  */
@@ -54,15 +53,14 @@ public class TARDISDeinstaPreset {
     /**
      * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
      *
-     * @param dd the MaterialisationData
-     * @param hide boolean determining whether to forget the protected Police
-     * Box blocks.
+     * @param dd     the MaterialisationData
+     * @param hide   boolean determining whether to forget the protected Police Box blocks.
      * @param preset the preset to destroy
      */
     public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
         Location l = dd.getLocation();
         COMPASS d = dd.getDirection();
-        final int id = dd.getTardisID();
+        int id = dd.getTardisID();
         boolean sub = dd.isSubmarine();
         Biome biome = dd.getBiome();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
@@ -73,20 +71,20 @@ public class TARDISDeinstaPreset {
             // toggle the doors if neccessary
             new TARDISDoorCloser(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
         }
-        final World w = l.getWorld();
+        World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
         while (!chunk.isLoaded()) {
             chunk.load();
         }
-        final int sbx = l.getBlockX() - 1;
-        final int sby;
+        int sbx = l.getBlockX() - 1;
+        int sby;
         if (preset.equals(PRESET.SUBMERGED)) {
             sby = l.getBlockY() - 1;
         } else {
             sby = l.getBlockY();
         }
-        final int sbz = l.getBlockZ() - 1;
+        int sbz = l.getBlockZ() - 1;
         // reset biome and it's not The End
         if (!plugin.getUtils().restoreBiome(l, biome)) {
             // remove TARDIS from tracker

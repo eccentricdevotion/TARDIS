@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -26,9 +23,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * The synchronic feedback circuit, along with the multi-loop stabiliser, was an
- * essential component for a smooth rematerialisation of a TARDIS.
+ * The synchronic feedback circuit, along with the multi-loop stabiliser, was an essential component for a smooth
+ * rematerialisation of a TARDIS.
  *
  * @author eccentric_nz
  */
@@ -58,29 +59,28 @@ public class TARDISCircuitChecker {
     public TARDISCircuitChecker(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        this.ars = false;
-        this.chameleon = false;
-        this.input = false;
-        this.invisibility = false;
-        this.materialisation = false;
-        this.memory = false;
-        this.randomiser = false;
-        this.scanner = false;
-        this.temporal = false;
-        this.arsUses = 0;
-        this.chameleonUses = 0;
-        this.inputUses = 0;
-        this.invisibilityUses = 0;
-        this.materialisationUses = 0;
-        this.memoryUses = 0;
-        this.randomiserUses = 0;
-        this.scannerUses = 0;
-        this.temporalUses = 0;
+        ars = false;
+        chameleon = false;
+        input = false;
+        invisibility = false;
+        materialisation = false;
+        memory = false;
+        randomiser = false;
+        scanner = false;
+        temporal = false;
+        arsUses = 0;
+        chameleonUses = 0;
+        inputUses = 0;
+        invisibilityUses = 0;
+        materialisationUses = 0;
+        memoryUses = 0;
+        randomiserUses = 0;
+        scannerUses = 0;
+        temporalUses = 0;
     }
 
     /**
-     * Checks the TARDIS's Advanced Console inventory to see which circuits are
-     * installed.
+     * Checks the TARDIS's Advanced Console inventory to see which circuits are installed.
      */
     public void getCircuits() {
         HashMap<String, Object> where = new HashMap<>();
@@ -96,40 +96,40 @@ public class TARDISCircuitChecker {
                         if (im.hasDisplayName()) {
                             String dn = im.getDisplayName();
                             if (dn.equals("TARDIS ARS Circuit")) {
-                                this.ars = true;
-                                this.arsUses = getUses(im);
+                                ars = true;
+                                arsUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Chameleon Circuit")) {
-                                this.chameleon = true;
-                                this.chameleonUses = getUses(im);
+                                chameleon = true;
+                                chameleonUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Input Circuit")) {
-                                this.input = true;
-                                this.inputUses = getUses(im);
+                                input = true;
+                                inputUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Invisibility Circuit")) {
-                                this.invisibility = true;
-                                this.invisibilityUses = getUses(im);
+                                invisibility = true;
+                                invisibilityUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Materialisation Circuit")) {
-                                this.materialisation = true;
-                                this.materialisationUses = getUses(im);
+                                materialisation = true;
+                                materialisationUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Memory Circuit")) {
-                                this.memory = true;
-                                this.memoryUses = getUses(im);
+                                memory = true;
+                                memoryUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Randomiser Circuit")) {
-                                this.randomiser = true;
-                                this.randomiserUses = getUses(im);
+                                randomiser = true;
+                                randomiserUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Scanner Circuit")) {
-                                this.scanner = true;
-                                this.scannerUses = getUses(im);
+                                scanner = true;
+                                scannerUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Temporal Circuit")) {
-                                this.temporal = true;
-                                this.temporalUses = getUses(im);
+                                temporal = true;
+                                temporalUses = getUses(im);
                             }
                         }
                     }

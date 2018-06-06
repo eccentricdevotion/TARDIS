@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRedstoneListener implements Listener {
@@ -36,7 +35,7 @@ public class TARDISRedstoneListener implements Listener {
 
     @EventHandler
     public void onRedstoneChange(BlockRedstoneEvent event) {
-        final String block = event.getBlock().getLocation().toString();
+        String block = event.getBlock().getLocation().toString();
         if (plugin.getGeneralKeeper().getSonicWires().contains(block) || plugin.getGeneralKeeper().getSonicLamps().contains(block) || plugin.getGeneralKeeper().getSonicRails().contains(block)) {
             event.setNewCurrent(event.getOldCurrent());
         }
@@ -44,7 +43,7 @@ public class TARDISRedstoneListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPistonRetract(BlockPistonRetractEvent event) {
-        final String block = event.getBlock().getLocation().toString();
+        String block = event.getBlock().getLocation().toString();
         if (plugin.getGeneralKeeper().getSonicPistons().contains(block)) {
             event.setCancelled(true);
             plugin.getGeneralKeeper().getSonicListener().setExtension(event.getBlock());

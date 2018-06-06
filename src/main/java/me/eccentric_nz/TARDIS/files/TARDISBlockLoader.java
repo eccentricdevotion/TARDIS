@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
@@ -32,10 +25,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
- * An anti-gravity spiral is a projectable beam used for removing gravity from
- * an object. The Seventh Doctor used his TARDIS to project a beam around a bus
- * in space after it crashed. He manoeuvered it down to Earth and dropped it
+ * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
+ * TARDIS to project a beam around a bus in space after it crashed. He manoeuvered it down to Earth and dropped it
  * outside Shangri-La camp in southern Wales.
  *
  * @author eccentric_nz
@@ -49,9 +45,8 @@ public class TARDISBlockLoader {
     }
 
     /**
-     * Loads Police Box and precious TARDIS blocks for protection from griefing
-     * and harvesting. This speeds the looking up of block locations, as no
-     * database interaction is required.
+     * Loads Police Box and precious TARDIS blocks for protection from griefing and harvesting. This speeds the looking
+     * up of block locations, as no database interaction is required.
      */
     public void loadProtectBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
@@ -81,8 +76,7 @@ public class TARDISBlockLoader {
     }
 
     /**
-     * Loads Gravity Well blocks to speed up block lookups (no database
-     * interaction is required).
+     * Loads Gravity Well blocks to speed up block lookups (no database interaction is required).
      */
     public void loadGravityWells() {
         ResultSetGravity rsg = new ResultSetGravity(plugin, null, true);
@@ -125,8 +119,7 @@ public class TARDISBlockLoader {
     }
 
     /**
-     * Loads players antibuild preferences. Needed so that the preference is
-     * persisted between restarts.
+     * Loads players antibuild preferences. Needed so that the preference is persisted between restarts.
      */
     public void loadAntiBuild() {
         TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

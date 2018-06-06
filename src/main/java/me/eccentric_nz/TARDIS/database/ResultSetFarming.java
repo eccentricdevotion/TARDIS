@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Farm;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Farm;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... everything about the construction of the TARDIS itself.
+ * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
+ * the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -39,22 +40,20 @@ public class ResultSetFarming {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the farming table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the farming table.
      *
-     * @param plugin an instance of the main class.
+     * @param plugin    an instance of the main class.
      * @param tardis_id the id of the TARDIS to get the farm locations for.
      */
     public ResultSetFarming(TARDIS plugin, int tardis_id) {
         this.plugin = plugin;
         this.tardis_id = tardis_id;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the farming table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the farming table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */

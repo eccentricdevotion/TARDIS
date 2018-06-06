@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -28,13 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,11 +36,14 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
+
 /**
- * The TARDIS had a swimming pool. After the TARDIS' crash following the
- * Doctor's tenth regeneration, the pool's water - or perhaps the pool itself -
- * fell into the library. After the TARDIS had fixed itself, the swimming pool
- * was restored but the Doctor did not know where it was.
+ * The TARDIS had a swimming pool. After the TARDIS' crash following the Doctor's tenth regeneration, the pool's water -
+ * or perhaps the pool itself - fell into the library. After the TARDIS had fixed itself, the swimming pool was restored
+ * but the Doctor did not know where it was.
  *
  * @author eccentric_nz
  */
@@ -95,41 +87,41 @@ public class TARDISRoomRunnable implements Runnable {
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
-        this.l = roomData.getLocation();
-        this.s = roomData.getSchematic();
-        this.wall_type = roomData.getMiddleType();
-        this.floor_type = roomData.getFloorType();
-        this.room = roomData.getRoom();
-        this.tardis_id = roomData.getTardis_id();
-        this.running = false;
+        l = roomData.getLocation();
+        s = roomData.getSchematic();
+        wall_type = roomData.getMiddleType();
+        floor_type = roomData.getFloorType();
+        room = roomData.getRoom();
+        tardis_id = roomData.getTardis_id();
+        running = false;
         this.p = p;
-        this.repeaterData[0] = BlockFace.NORTH;
-        this.repeaterData[1] = BlockFace.NORTH;
-        this.repeaterData[2] = BlockFace.EAST;
-        this.repeaterData[3] = BlockFace.SOUTH;
-        this.repeaterData[4] = BlockFace.NORTH;
-        this.repeaterData[5] = BlockFace.EAST;
-        this.repeaterOrder.put(2, 3);
-        this.repeaterOrder.put(3, 2);
-        this.repeaterOrder.put(4, 5);
-        this.repeaterOrder.put(5, 4);
-        this.notThese.add(Material.ACACIA_DOOR);
-        this.notThese.add(Material.BIRCH_DOOR);
-        this.notThese.add(Material.CARROT);
-        this.notThese.add(Material.COCOA);
-        this.notThese.add(Material.DARK_OAK_DOOR);
-        this.notThese.add(Material.JUNGLE_DOOR);
-        this.notThese.add(Material.LEVER);
-        this.notThese.add(Material.MELON_STEM);
-        this.notThese.add(Material.OAK_DOOR);
-        this.notThese.add(Material.PISTON_HEAD);
-        this.notThese.add(Material.POTATO);
-        this.notThese.add(Material.PUMPKIN_STEM);
-        this.notThese.add(Material.REDSTONE_TORCH);
-        this.notThese.add(Material.SPRUCE_DOOR);
-        this.notThese.add(Material.SUGAR_CANE);
-        this.notThese.add(Material.TORCH);
-        this.notThese.add(Material.WHEAT);
+        repeaterData[0] = BlockFace.NORTH;
+        repeaterData[1] = BlockFace.NORTH;
+        repeaterData[2] = BlockFace.EAST;
+        repeaterData[3] = BlockFace.SOUTH;
+        repeaterData[4] = BlockFace.NORTH;
+        repeaterData[5] = BlockFace.EAST;
+        repeaterOrder.put(2, 3);
+        repeaterOrder.put(3, 2);
+        repeaterOrder.put(4, 5);
+        repeaterOrder.put(5, 4);
+        notThese.add(Material.ACACIA_DOOR);
+        notThese.add(Material.BIRCH_DOOR);
+        notThese.add(Material.CARROT);
+        notThese.add(Material.COCOA);
+        notThese.add(Material.DARK_OAK_DOOR);
+        notThese.add(Material.JUNGLE_DOOR);
+        notThese.add(Material.LEVER);
+        notThese.add(Material.MELON_STEM);
+        notThese.add(Material.OAK_DOOR);
+        notThese.add(Material.PISTON_HEAD);
+        notThese.add(Material.POTATO);
+        notThese.add(Material.PUMPKIN_STEM);
+        notThese.add(Material.REDSTONE_TORCH);
+        notThese.add(Material.SPRUCE_DOOR);
+        notThese.add(Material.SUGAR_CANE);
+        notThese.add(Material.TORCH);
+        notThese.add(Material.WHEAT);
     }
 
     /**
@@ -592,7 +584,7 @@ public class TARDISRoomRunnable implements Runnable {
                             case GRAY_WOOL:
                             case LIGHT_GRAY_WOOL:
                             case ORANGE_WOOL:
-                            // TODO add other wools?
+                                // TODO add other wools?
                             case STONE_BRICKS:
                                 break;
                             default:
@@ -668,8 +660,8 @@ public class TARDISRoomRunnable implements Runnable {
                 int ctype;
                 String loc_str;
                 List<Material> controls = Arrays.asList(Material.CAKE, Material.STONE_BUTTON, Material.MUSHROOM_STEM, Material.OAK_BUTTON);
-                if (controls.contains(this.type)) {
-                    switch (this.type) {
+                if (controls.contains(type)) {
+                    switch (type) {
                         case STONE_BUTTON: // stone button - random
                             ctype = 1;
                             loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);

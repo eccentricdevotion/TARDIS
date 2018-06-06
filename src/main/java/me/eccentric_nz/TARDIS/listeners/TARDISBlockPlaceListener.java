@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -30,12 +28,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.Random;
+
 /**
- * TARDISes are bioships that are grown from a species of coral presumably
- * indigenous to Gallifrey.
- *
- * The TARDIS had a drawing room, which the Doctor claimed to be his "private
- * study". Inside it were momentos of his many incarnations' travels.
+ * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
+ * <p>
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * many incarnations' travels.
  *
  * @author eccentric_nz
  */
@@ -48,13 +48,12 @@ public class TARDISBlockPlaceListener implements Listener {
     }
 
     /**
-     * Listens for player block placing. If the player places a stack of blocks
-     * in a certain pattern for example (but not limited to): IRON_BLOCK,
-     * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
+     * Listens for player block placing. If the player places a stack of blocks in a certain pattern for example (but
+     * not limited to): IRON_BLOCK, LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
      *
      * @param event a player placing a block
      */
-    
+
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();

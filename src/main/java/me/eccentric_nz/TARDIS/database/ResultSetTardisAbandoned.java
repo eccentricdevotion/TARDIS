@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Locale;
+
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... non-abandoned TARDISes.
+ * Many facts, figures, and formulas are contained within the Matrix, including... non-abandoned TARDISes.
  *
  * @author eccentric_nz
  */
@@ -49,23 +49,20 @@ public class ResultSetTardisAbandoned {
     private boolean lights_on;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the vaults table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
      */
     public ResultSetTardisAbandoned(TARDIS plugin) {
         this.plugin = plugin;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Gets to the TARDIS data required to claim abandon a TARDIS. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query.
+     * Gets to the TARDIS data required to claim abandon a TARDIS. This method builds an SQL query string from the
+     * parameters supplied and then executes the query.
      *
      * @param uuid the Time Lord uuid to check
-     *
      * @return true if the TARDIS is not yet abandoned
      */
     public boolean fromUUID(String uuid) {

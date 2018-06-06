@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 /**
- * TARDIS corridors normally used anti-gravity, as the corridors went vertically
- * as well as horizontally. House disabled the anti-gravity in the corridors in
- * an attempt to kill Amy Pond and Rory Williams.
+ * TARDIS corridors normally used anti-gravity, as the corridors went vertically as well as horizontally. House disabled
+ * the anti-gravity in the corridors in an attempt to kill Amy Pond and Rory Williams.
  *
  * @author eccentric_nz
  */

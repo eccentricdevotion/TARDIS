@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * One of the key features of a TARDIS is that the interior exists in a
- * dimension different from the exterior. The main application of this concept
- * is that they are bigger on the inside than the outside.
+ * One of the key features of a TARDIS is that the interior exists in a dimension different from the exterior. The main
+ * application of this concept is that they are bigger on the inside than the outside.
  *
  * @author eccentric_nz
  */
@@ -52,11 +52,10 @@ public class TARDISConstants {
     public static final List<String> CIRCUITS = Arrays.asList("Bio-scanner Circuit", "Diamond Disruptor Circuit", "Emerald Environment Circuit", "Ignite Circuit", "Painter Circuit", "Perception Circuit", "Redstone Activator Circuit", "Rift Circuit", "Server Admin Circuit", "Sonic Oscillator", "TARDIS ARS Circuit", "TARDIS Chameleon Circuit", "TARDIS Input Circuit", "TARDIS Invisibility Circuit", "TARDIS Locator Circuit", "TARDIS Materialisation Circuit", "TARDIS Memory Circuit", "TARDIS Randomiser Circuit", "TARDIS Scanner Circuit", "TARDIS Stattenheim Circuit", "TARDIS Telepathic Circuit", "TARDIS Temporal Circuit");
 
     /**
-     * Creates a HashMap from two arrays. The resulting map is used by the
-     * chameleon circuit to change unsuitable blocks into more aesthetically
-     * pleasing or robust ones i.e. GRASS_BLOCK -> DIRT, SAND -> SANDSTONE
+     * Creates a HashMap from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks
+     * into more aesthetically pleasing or robust ones i.e. GRASS_BLOCK -> DIRT, SAND -> SANDSTONE
      *
-     * @param keys an array of block types to change
+     * @param keys   an array of block types to change
      * @param values an array of block types to change to
      * @return the combined arrays as a HashMap
      */

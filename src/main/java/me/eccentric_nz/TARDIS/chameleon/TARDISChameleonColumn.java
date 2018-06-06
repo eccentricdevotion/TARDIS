@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.chameleon;
 import org.bukkit.block.data.BlockData;
 
 /**
- * Data storage class for Chameleon Circuit presets. Each sub-array corresponds
- * to a column of blocks of a 3x3x4 area + the sign column.
+ * Data storage class for Chameleon Circuit presets. Each sub-array corresponds to a column of blocks of a 3x3x4 area +
+ * the sign column.
  *
  * @author eccentric_nz
  */

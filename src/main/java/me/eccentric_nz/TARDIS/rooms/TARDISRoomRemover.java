@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -30,10 +27,13 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
- * When the Eleventh Doctor was trying to get out of his universe, he said he
- * was deleting the scullery room and squash court seven to give the TARDIS an
- * extra boost.
+ * When the Eleventh Doctor was trying to get out of his universe, he said he was deleting the scullery room and squash
+ * court seven to give the TARDIS an extra boost.
  *
  * @author eccentric_nz
  */
@@ -54,9 +54,8 @@ public class TARDISRoomRemover {
     }
 
     /**
-     * Jettison a TARDIS room, leaving just the walls behind. We will probably
-     * need to get the dimensions of the room from the schematic, if user
-     * supplied room schematics will be allowed.
+     * Jettison a TARDIS room, leaving just the walls behind. We will probably need to get the dimensions of the room
+     * from the schematic, if user supplied room schematics will be allowed.
      *
      * @return false if the room has already been jettisoned
      */

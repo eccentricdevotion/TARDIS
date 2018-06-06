@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * While phoning Amy and Rory about his adventures without them, the Eleventh
- * Doctor mentioned how he should be returning to them "any day", but the
- * TARDIS' helmic regulator was playing up.
+ * While phoning Amy and Rory about his adventures without them, the Eleventh Doctor mentioned how he should be
+ * returning to them "any day", but the TARDIS' helmic regulator was playing up.
  *
  * @author eccentric_nz
  */

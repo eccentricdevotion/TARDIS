@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,41 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.ResultSetConstructSign;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.Tag;
-import org.bukkit.World;
+import me.eccentric_nz.TARDIS.utility.*;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -61,10 +38,11 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
- * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
- * enabled it to dematerialise from normal space into the Time Vortex and
- * rematerialise back from it.
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
+ * space into the Time Vortex and rematerialise back from it.
  *
  * @author eccentric_nz
  */
@@ -90,21 +68,20 @@ public class TARDISMaterialisationPreset implements Runnable {
     private BlockData h_data;
 
     /**
-     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
-     * transparency of materialisation by building the Police Box first with
-     * GLASS, then STAINED_GLASS, then the normal preset wall block.
+     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the transparency of materialisation by
+     * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
-     * @param plugin instance of the TARDIS plugin
-     * @param bd the Materialisation data
-     * @param preset the preset to construct
+     * @param plugin  instance of the TARDIS plugin
+     * @param bd      the Materialisation data
+     * @param preset  the preset to construct
      * @param cham_id the chameleon block data for the police box
-     * @param loops the number of loops to run
+     * @param loops   the number of loops to run
      */
     public TARDISMaterialisationPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData cham_id, int loops) {
         this.plugin = plugin;
         this.bd = bd;
         this.loops = loops;
-        this.i = 0;
+        i = 0;
         this.preset = preset;
         this.cham_id = cham_id;
         rand = new Random();
@@ -122,7 +99,7 @@ public class TARDISMaterialisationPreset implements Runnable {
         }
         colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         random_colour = colours[rand.nextInt(13)];
-        this.sign_colour = plugin.getUtils().getSignColour();
+        sign_colour = plugin.getUtils().getSignColour();
     }
 
     @Override
@@ -865,8 +842,8 @@ public class TARDISMaterialisationPreset implements Runnable {
             Chunk chunk = bd.getLocation().getChunk();
             chunks.add(chunk);
             // load the chunk
-            final int cx = bd.getLocation().getBlockX() >> 4;
-            final int cz = bd.getLocation().getBlockZ() >> 4;
+            int cx = bd.getLocation().getBlockX() >> 4;
+            int cz = bd.getLocation().getBlockZ() >> 4;
             if (!world.loadChunk(cx, cz, false)) {
                 world.loadChunk(cx, cz, true);
             }

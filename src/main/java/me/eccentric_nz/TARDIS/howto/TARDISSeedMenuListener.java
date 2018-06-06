@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,9 +27,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * A control room's look could be changed over time. The process by which an
- * operator could transform a control room was fairly simple, once compared by
- * the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an operator could transform a control room was
+ * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -47,10 +46,10 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4TARDIS Seeds Menu")) {
-            final Player p = (Player) event.getWhoClicked();
+            Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 18) {
-                final ItemStack is = inv.getItem(slot);
+                ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // close
                     event.setCancelled(true);
@@ -79,7 +78,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
      * @param p the player using the GUI
      */
     @Override
-    public void close(final Player p) {
+    public void close(Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();

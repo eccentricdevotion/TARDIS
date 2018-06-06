@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
@@ -27,8 +26,9 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSpectaclesRunnable implements Runnable {
@@ -41,20 +41,20 @@ public class TARDISSpectaclesRunnable implements Runnable {
     public TARDISSpectaclesRunnable(TARDIS plugin) {
         this.plugin = plugin;
         // TODO set door facing, hinge, half in BlockData for each compass direction - use Material.createBlockData(String data) method?
-        this.bottom.put(COMPASS.EAST, (Door) Material.IRON_DOOR.createBlockData());
-        this.bottom.put(COMPASS.SOUTH, (Door) Material.IRON_DOOR.createBlockData());
-        this.bottom.put(COMPASS.WEST, (Door) Material.IRON_DOOR.createBlockData());
-        this.bottom.put(COMPASS.NORTH, (Door) Material.IRON_DOOR.createBlockData());
+        bottom.put(COMPASS.EAST, (Door) Material.IRON_DOOR.createBlockData());
+        bottom.put(COMPASS.SOUTH, (Door) Material.IRON_DOOR.createBlockData());
+        bottom.put(COMPASS.WEST, (Door) Material.IRON_DOOR.createBlockData());
+        bottom.put(COMPASS.NORTH, (Door) Material.IRON_DOOR.createBlockData());
 //        this.bottom.put(COMPASS.EAST, (byte) 0);
 //        this.bottom.put(COMPASS.SOUTH, (byte) 1);
 //        this.bottom.put(COMPASS.WEST, (byte) 2);
 //        this.bottom.put(COMPASS.NORTH, (byte) 3);
-        this.upper = (Door) Material.IRON_DOOR.createBlockData();
-        this.upper.setHalf(Bisected.Half.TOP);
-        this.lower = (Door) Material.IRON_DOOR.createBlockData();
-        this.lower.setHalf(Bisected.Half.BOTTOM);
-        this.lower.setHinge(Door.Hinge.RIGHT);
-        this.lower.setFacing(BlockFace.EAST);
+        upper = (Door) Material.IRON_DOOR.createBlockData();
+        upper.setHalf(Bisected.Half.TOP);
+        lower = (Door) Material.IRON_DOOR.createBlockData();
+        lower.setHalf(Bisected.Half.BOTTOM);
+        lower.setHinge(Door.Hinge.RIGHT);
+        lower.setFacing(BlockFace.EAST);
     }
 
     @Override

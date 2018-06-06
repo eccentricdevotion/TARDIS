@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -36,10 +33,13 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted,
- * automatically relocating any living beings in the deleted room, depositing
- * them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
  */
@@ -60,7 +60,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
-        this.qf = new QueryFactory(this.plugin);
+        qf = new QueryFactory(this.plugin);
     }
 
     @Override

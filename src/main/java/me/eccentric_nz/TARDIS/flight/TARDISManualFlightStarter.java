@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
- * Manual materialization can be enacted by first toggling Materialization
- * Switch #1, which extends the Dimensional Stabilizers into the Multiverse.
- * Then Materialization Switch #2, which uses a materialization field to
- * displace the atmosphere from the area and causes the dematerialization
- * circuit to extend the Exo-Plasmic Shell into real space.
+ * Manual materialization can be enacted by first toggling Materialization Switch #1, which extends the Dimensional
+ * Stabilizers into the Multiverse. Then Materialization Switch #2, which uses a materialization field to displace the
+ * atmosphere from the area and causes the dematerialization circuit to extend the Exo-Plasmic Shell into real space.
  *
  * @author eccentric_nz
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,21 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetARS;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONTROL;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -53,12 +41,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.*;
+
 /**
- * The TARDIS interior goes through occasional metamorphoses, sometimes by
- * choice, sometimes for other reasons, such as the Doctor's own regeneration.
- * Some of these changes were physical in nature (involving secondary control
- * rooms, etc.), but it was also possible to re-arrange the interior design of
- * the TARDIS with ease, using the Architectural Configuration system.
+ * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
+ * the Doctor's own regeneration. Some of these changes were physical in nature (involving secondary control rooms,
+ * etc.), but it was also possible to re-arrange the interior design of the TARDIS with ease, using the Architectural
+ * Configuration system.
  *
  * @author eccentric_nz
  */
@@ -93,10 +82,8 @@ public class TARDISUpdateListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS console and other specific
-     * items. If the block is clicked and players name is contained in the
-     * appropriate HashMap, then the blocks position is recorded in the
-     * database.
+     * Listens for player interaction with the TARDIS console and other specific items. If the block is clicked and
+     * players name is contained in the appropriate HashMap, then the blocks position is recorded in the database.
      *
      * @param event a player clicking on a block
      */
@@ -105,9 +92,9 @@ public class TARDISUpdateListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        final Player player = event.getPlayer();
-        final UUID uuid = player.getUniqueId();
-        final String playerUUID = uuid.toString();
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        String playerUUID = uuid.toString();
         String blockName;
         boolean secondary = false;
         if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
@@ -265,7 +252,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                final Block detector = block;
+                Block detector = block;
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     detector.setType(Material.DAYLIGHT_DETECTOR);
                 }, 3L);

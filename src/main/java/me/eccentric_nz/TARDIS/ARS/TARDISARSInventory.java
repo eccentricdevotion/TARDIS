@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural
- * Configuration software to relocate the console outside the ship (as it was
- * too big to go through the doors), allowing him to work on it in his lab.
+ * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
+ * console outside the ship (as it was too big to go through the doors), allowing him to work on it in his lab.
  *
  * @author eccentric_nz
  */
@@ -37,7 +37,7 @@ public class TARDISARSInventory {
 
     public TARDISARSInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.ars = getItemStack();
+        ars = getItemStack();
     }
 
     /**

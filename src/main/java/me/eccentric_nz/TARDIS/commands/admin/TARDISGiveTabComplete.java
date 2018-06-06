@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,15 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardisgive
@@ -38,9 +39,9 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     private final ImmutableList<String> SEED_SUBS;
 
     public TARDISGiveTabComplete(TARDIS plugin) {
-        this.kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
-        this.KIT_SUBS = ImmutableList.copyOf(kits);
-        this.SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
+        kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
+        KIT_SUBS = ImmutableList.copyOf(kits);
+        SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
     }
 
     @Override

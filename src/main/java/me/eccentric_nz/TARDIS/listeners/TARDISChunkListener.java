@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 /**
- * A sonic blaster was type of weapon available in the 51st century. The blaster
- * used digital technology to create a sonic wave, projected into the form of
- * pulsing squares of blue light, which could cut through thick walls. It also
- * had a reverse function which could replace the removed chunk of material
- * afterwards.
+ * A sonic blaster was type of weapon available in the 51st century. The blaster used digital technology to create a
+ * sonic wave, projected into the form of pulsing squares of blue light, which could cut through thick walls. It also
+ * had a reverse function which could replace the removed chunk of material afterwards.
  *
  * @author eccentric_nz
  */
@@ -40,8 +38,8 @@ public class TARDISChunkListener implements Listener {
     }
 
     /**
-     * Listens for chunks unloading when a TARDIS room is growing. If the chunk
-     * is contained in the roomChunksList then it cancels the event.
+     * Listens for chunks unloading when a TARDIS room is growing. If the chunk is contained in the roomChunksList then
+     * it cancels the event.
      *
      * @param event a chunk unloading
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,17 +26,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- * Tricky van Baalen was the youngest and the smartest of the van Baalen
- * brothers. Tricky worked for his brothers Gregor and Bram, finding and
- * processing salvaged spaceships. Although made captain by their father, he
- * suffered an accident in which he lost his eyes, his voice, and his memory. He
- * was fitted with synthetic eyes and a partially electronic-sounding voice box;
- * unable to replace his memory, his brothers instead convinced him that he was
- * in fact an android.
+ * Tricky van Baalen was the youngest and the smartest of the van Baalen brothers. Tricky worked for his brothers Gregor
+ * and Bram, finding and processing salvaged spaceships. Although made captain by their father, he suffered an accident
+ * in which he lost his eyes, his voice, and his memory. He was fitted with synthetic eyes and a partially
+ * electronic-sounding voice box; unable to replace his memory, his brothers instead convinced him that he was in fact
+ * an android.
  *
  * @author eccentric_nz
  */
@@ -59,23 +58,20 @@ public class ResultSetDiskStorage {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the ars table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the ars table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param where  a HashMap<String, Object> of table fields and values to refine the search.
      */
     public ResultSetDiskStorage(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the lamps table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the lamps table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -109,52 +105,52 @@ public class ResultSetDiskStorage {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.id = rs.getInt("storage_id");
-                    this.tardis_id = rs.getInt("tardis_id");
+                    id = rs.getInt("storage_id");
+                    tardis_id = rs.getInt("tardis_id");
                     if (!rs.wasNull()) {
-                        this.uuid = UUID.fromString(rs.getString("uuid"));
+                        uuid = UUID.fromString(rs.getString("uuid"));
                     } else {
-                        this.uuid = plugin.getGeneralKeeper().getUUIDCache().getZERO_UUID();
+                        uuid = plugin.getGeneralKeeper().getUUIDCache().getZERO_UUID();
                     }
-                    this.savesOne = rs.getString("saves_one");
+                    savesOne = rs.getString("saves_one");
                     if (rs.wasNull()) {
-                        this.savesOne = "";
+                        savesOne = "";
                     }
-                    this.savesTwo = rs.getString("saves_two");
+                    savesTwo = rs.getString("saves_two");
                     if (rs.wasNull()) {
-                        this.savesTwo = "";
+                        savesTwo = "";
                     }
-                    this.areas = rs.getString("areas");
+                    areas = rs.getString("areas");
                     if (rs.wasNull()) {
-                        this.areas = "";
+                        areas = "";
                     }
-                    this.players = rs.getString("players");
+                    players = rs.getString("players");
                     if (rs.wasNull()) {
-                        this.players = "";
+                        players = "";
                     }
-                    this.biomesOne = rs.getString("biomes_one");
+                    biomesOne = rs.getString("biomes_one");
                     if (rs.wasNull()) {
-                        this.biomesOne = "";
+                        biomesOne = "";
                     }
-                    this.biomesTwo = rs.getString("biomes_two");
+                    biomesTwo = rs.getString("biomes_two");
                     if (rs.wasNull()) {
-                        this.biomesTwo = "";
+                        biomesTwo = "";
                     }
-                    this.presetsOne = rs.getString("presets_one");
+                    presetsOne = rs.getString("presets_one");
                     if (rs.wasNull()) {
-                        this.presetsOne = "";
+                        presetsOne = "";
                     }
-                    this.presetsTwo = rs.getString("presets_two");
+                    presetsTwo = rs.getString("presets_two");
                     if (rs.wasNull()) {
-                        this.presetsTwo = "";
+                        presetsTwo = "";
                     }
-                    this.circuits = rs.getString("circuits");
+                    circuits = rs.getString("circuits");
                     if (rs.wasNull()) {
-                        this.circuits = "";
+                        circuits = "";
                     }
-                    this.console = rs.getString("console");
+                    console = rs.getString("console");
                     if (rs.wasNull()) {
-                        this.console = "";
+                        console = "";
                     }
                 }
             } else {
@@ -190,7 +186,7 @@ public class ResultSetDiskStorage {
         return uuid;
     }
 
-//    public String getOwner() {
+    //    public String getOwner() {
 //        return owner;
 //    }
     public String getSavesOne() {

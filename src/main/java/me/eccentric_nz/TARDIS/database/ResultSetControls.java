@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS controls.
- *
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS
+ * controls.
+ * <p>
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -53,26 +50,22 @@ public class ResultSetControls {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the controls table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the controls table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
+     * @param plugin   an instance of the main class.
+     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param multiple a boolean indicating whether multiple rows should be fetched
      */
     public ResultSetControls(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
-        this.prefix = this.plugin.getPrefix();
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the controls table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the controls table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -115,11 +108,11 @@ public class ResultSetControls {
                         }
                         data.add(row);
                     }
-                    this.c_id = rs.getInt("c_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.type = rs.getInt("type");
-                    this.location = rs.getString("location");
-                    this.secondary = rs.getInt("secondary");
+                    c_id = rs.getInt("c_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    type = rs.getInt("type");
+                    location = rs.getString("location");
+                    secondary = rs.getInt("secondary");
                 }
             } else {
                 return false;

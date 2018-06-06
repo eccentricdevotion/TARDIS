@@ -1,6 +1,5 @@
 /*
- * Copyright (C) Error: on line 4, column 33 in Templates/Licenses/license-gpl30.txt
- The string doesn't match the expected date/time format. The string to parse was: "29/05/2014". The expected format was: "MMM d, yyyy". eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import org.bukkit.Location;
@@ -25,8 +23,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISPoliceBoxLampToggler {

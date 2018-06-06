@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@ package me.eccentric_nz.TARDIS.rooms;
 import java.util.HashMap;
 
 /**
- * Store required block data for growing rooms. Used to debit the condenser
- * table when the room is grown.
+ * Store required block data for growing rooms. Used to debit the condenser table when the room is grown.
  *
  * @author eccentric_nz
  */

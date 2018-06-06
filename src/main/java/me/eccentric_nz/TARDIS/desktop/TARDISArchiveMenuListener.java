@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -42,10 +37,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
- * A control room's look could be changed over time. The process by which an
- * operator could transform a control room was fairly simple, once compared by
- * the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an operator could transform a control room was
+ * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -63,7 +59,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4TARDIS Archive")) {
-            final Player p = (Player) event.getWhoClicked();
+            Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(true);
@@ -74,7 +70,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         where.put("uuid", p.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                         rs.resultSet();
-                        final Tardis tardis = rs.getTardis();
+                        Tardis tardis = rs.getTardis();
                         // return to Desktop Theme GUI
                         close(p);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -111,8 +107,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                     case 24:
                         ItemStack template = inv.getItem(slot);
                         if (template != null) {
-                            final UUID uuid = p.getUniqueId();
-                            final TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                            UUID uuid = p.getUniqueId();
+                            TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemMeta im = template.getItemMeta();
                             String size = im.getDisplayName().toLowerCase(Locale.ENGLISH);
                             int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
@@ -140,8 +136,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         if (choice != null) {
                             // remember the upgrade choice
                             SCHEMATIC schm = CONSOLES.SCHEMATICFor("archive");
-                            final UUID uuid = p.getUniqueId();
-                            final TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                            UUID uuid = p.getUniqueId();
+                            TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemMeta im = choice.getItemMeta();
                             List<String> lore = im.getLore();
                             if (lore.contains(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
@@ -184,7 +180,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      * @param p the player using the GUI
      */
     @Override
-    public void close(final Player p) {
+    public void close(Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
@@ -196,7 +192,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      *
      * @param p the player using the GUI
      */
-    private void scan(final Player p, final Inventory inv) {
+    private void scan(Player p, Inventory inv) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             List<String> lore = getSizeLore(inv);
             String size = lore.get(0);
@@ -206,12 +202,11 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
     }
 
     /**
-     * Closes the inventory and archives the current console. A random name will
-     * be generated.
+     * Closes the inventory and archives the current console. A random name will be generated.
      *
      * @param p the player using the GUI
      */
-    private void archive(final Player p, final Inventory inv) {
+    private void archive(Player p, Inventory inv) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             List<String> lore = getSizeLore(inv);
             String size = lore.get(0);

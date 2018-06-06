@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2018 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public final class TARDISDesktopThemeEvent extends TARDISEvent {
@@ -34,10 +33,9 @@ public final class TARDISDesktopThemeEvent extends TARDISEvent {
     }
 
     /**
-     * Returns a desktop theme data object. You can use the
-     * {@link me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData TARDISUpgradeData}
-     * to determine the previous theme, the theme that the TARDIS is changing
-     * to, the wall and floor block types using the object's getter methods.
+     * Returns a desktop theme data object. You can use the {@link me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData
+     * TARDISUpgradeData} to determine the previous theme, the theme that the TARDIS is changing to, the wall and floor
+     * block types using the object's getter methods.
      *
      * @return the desktop theme data object
      */
