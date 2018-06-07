@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -78,6 +80,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.guardians", false);
         boolOptions.put("allow.hads", true);
+        boolOptions.put("allow.handles", true);
         boolOptions.put("allow.invisibility", true);
         boolOptions.put("allow.mob_farming", true);
         boolOptions.put("allow.perception_filter", true);
@@ -112,6 +115,7 @@ public class TARDISConfiguration {
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("desktop.check_blocks_before_upgrade", false);
         boolOptions.put("growth.rooms_require_blocks", false);
+        boolOptions.put("handles.reminders.enabled", true);
         boolOptions.put("junk.enabled", true);
         boolOptions.put("junk.particles", true);
         boolOptions.put("police_box.name_tardis", false);
@@ -296,6 +300,7 @@ public class TARDISConfiguration {
         intOptions.put("growth.gravity_max_velocity", 5);
         intOptions.put("growth.room_speed", 4);
         intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("handles.reminders.schedule", 1200);
         intOptions.put("junk.return", -1);
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.rebuild_cooldown", 10000);
@@ -389,6 +394,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("creation.use_clay", "WOOL");
+        strOptions.put("handles.prefix", "Hey Handles");
         strOptions.put("police_box.default_preset", "FACTORY");
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.default_key", "eleventh");

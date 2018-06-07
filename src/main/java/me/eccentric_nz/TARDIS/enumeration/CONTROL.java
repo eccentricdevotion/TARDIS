@@ -48,7 +48,8 @@ public enum CONTROL {
     CONTROLS(22, "control"),
     TELEPATHIC_CIRCUIT(23, "telepathic"),
     SONIC_GENERATOR(24, "generator"),
-    SHELL(25, "");
+    SHELL(25, ""),
+    HANDLES(26, "handles");
 
     private final int id;
     private final String update;

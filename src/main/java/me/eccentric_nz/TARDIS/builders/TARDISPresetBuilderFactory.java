@@ -128,7 +128,7 @@ public class TARDISPresetBuilderFactory {
             }
             /*
              * We can always add the chunk, as List.remove() only removes the
-             * first occurence - and we want the chunk to remain loaded if there
+             * first occurrence - and we want the chunk to remain loaded if there
              * are other Police Boxes in it.
              */
             while (!thisChunk.isLoaded()) {

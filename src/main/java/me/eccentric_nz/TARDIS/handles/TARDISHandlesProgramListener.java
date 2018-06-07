@@ -130,7 +130,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     int pid = saveDisk(inv, uuid.toString(), player);
                     if (pid != -1) {
                         close(player);
-                        ItemStack is = new ItemStack(Material.RECORD_10, 1);
+                        ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName("Handles Program Disk");
                         im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));

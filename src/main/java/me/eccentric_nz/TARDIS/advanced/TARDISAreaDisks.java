@@ -56,7 +56,7 @@ public class TARDISAreaDisks {
 
         List<ItemStack> areas = new ArrayList<>();
         // get the areas this player has access to
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, false);
         if (rsa.resultSet()) {
             // cycle through areas
             rsa.getData().forEach((a) -> {

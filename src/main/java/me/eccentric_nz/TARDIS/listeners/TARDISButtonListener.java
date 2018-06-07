@@ -24,22 +24,20 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.control.*;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.*;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -54,6 +52,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.*;
@@ -69,7 +68,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 26);
     private final List<Integer> allow_unpowered = Arrays.asList(13, 17, 22);
     private final List<Integer> no_siege = Arrays.asList(0, 10, 12, 16, 19, 20);
 
@@ -346,6 +345,48 @@ public class TARDISButtonListener implements Listener {
                                 case 25:
                                     // shell room button
                                     new TARDISShellRoomConstructor(plugin).createShell(player, id, block);
+                                    break;
+                                case 26:
+                                    // Handles
+                                    if (!player.hasPermission("tardis.handles.use")) {
+                                        TARDISMessage.send(player, "NO_PERM");
+                                        return;
+                                    }
+                                    TARDISSounds.playTARDISSound(player, "Handles");
+                                    if (!player.hasPermission("tardis.handles.program")) {
+                                        TARDISMessage.send(player, "NO_PERM");
+                                        return;
+                                    }
+                                    if (player.isSneaking()) {
+                                        // open programming GUI
+                                        ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
+                                        Inventory hgui = plugin.getServer().createInventory(player, 54, "§4Handles Program");
+                                        hgui.setContents(handles);
+                                        player.openInventory(hgui);
+                                    } else {
+                                        // check if item in hand is a Handles program disk
+                                        ItemStack disk = player.getInventory().getItemInMainHand();
+                                        if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+                                            ItemMeta dim = disk.getItemMeta();
+                                            if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
+                                                // get the program_id from the disk
+                                                int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
+                                                // query the database
+                                                ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
+                                                if (rsp.resultSet()) {
+                                                    // send program to processor
+                                                    new TARDISHandlesProcessor(plugin, rsp.getProgram(), player).processDisk();
+                                                    // check in the disk
+                                                    HashMap<String, Object> set = new HashMap<>();
+                                                    set.put("checked", 0);
+                                                    HashMap<String, Object> wherep = new HashMap<>();
+                                                    wherep.put("program_id", pid);
+                                                    new QueryFactory(plugin).doUpdate("programs", set, wherep);
+                                                    player.getInventory().setItemInMainHand(null);
+                                                }
+                                            }
+                                        }
+                                    }
                                     break;
                                 default:
                                     break;

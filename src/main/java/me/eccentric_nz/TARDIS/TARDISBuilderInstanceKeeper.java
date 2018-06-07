@@ -38,6 +38,7 @@ public class TARDISBuilderInstanceKeeper {
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
     private static final List<String> IGNORE_BLOCKS = Arrays.asList("AIR", "BEDROCK", "CAKE", "COMMAND", "GOLD_ORE", "RED_MUSHROOM_BLOCK", "ICE", "LAVA", "MOB_SPAWNER", "MONSTER_EGGS", "PISTON_HEAD", "SPONGE", "WATER");
     private static final List<Material> PRECIOUS = new ArrayList<>();
+    private static final HashMap<String, EntityType> TWA_HEADS = new HashMap<>();
 
     static {
         BLOCK_CONVERSION.put("ACACIA_LEAVES", "ACACIA_SAPLING");
@@ -74,6 +75,14 @@ public class TARDISBuilderInstanceKeeper {
         PRECIOUS.add(Material.IRON_BLOCK);
         PRECIOUS.add(Material.REDSTONE_BLOCK);
         PRECIOUS.add(Material.BEDROCK);
+        TWA_HEADS.put("Cyberman Head", EntityType.AREA_EFFECT_CLOUD);
+        TWA_HEADS.put("Empty Child Head", EntityType.ARMOR_STAND);
+        TWA_HEADS.put("Ice Warrior Head", EntityType.ARROW);
+        TWA_HEADS.put("Silurian Head", EntityType.BOAT);
+        TWA_HEADS.put("Sontaran Head", EntityType.FIREWORK);
+        TWA_HEADS.put("Strax Head", EntityType.EGG);
+        TWA_HEADS.put("Vashta Nerada Head", EntityType.ENDER_CRYSTAL);
+        TWA_HEADS.put("Zygon Head", EntityType.FISHING_HOOK);
     }
 
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
@@ -102,5 +111,9 @@ public class TARDISBuilderInstanceKeeper {
 
     public static List<Material> getPrecious() {
         return PRECIOUS;
+    }
+
+    public HashMap<String, EntityType> getTWA_Heads() {
+        return TWA_HEADS;
     }
 }

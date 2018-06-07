@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -240,9 +241,9 @@ public class TARDISHandbrakeListener implements Listener {
         }
     }
 
-    private void toggleBeacon(String str, boolean on) {
+    public static void toggleBeacon(String str, boolean on) {
         String[] beaconData = str.split(":");
-        World w = plugin.getServer().getWorld(beaconData[0]);
+        World w = Bukkit.getServer().getWorld(beaconData[0]);
         int bx = TARDISNumberParsers.parseInt(beaconData[1]);
         int by = TARDISNumberParsers.parseInt(beaconData[2]);
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);

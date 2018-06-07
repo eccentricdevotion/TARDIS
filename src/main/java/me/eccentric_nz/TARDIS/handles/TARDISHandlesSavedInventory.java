@@ -55,7 +55,7 @@ public class TARDISHandlesSavedInventory {
         ResultSetPrograms rs = new ResultSetPrograms(plugin, uuid);
         if (rs.resultSet()) {
             for (Program p : rs.getPrograms()) {
-                ItemStack is = new ItemStack(Material.RECORD_10, 1);
+                ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Handles Program Disk");
                 String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
@@ -143,9 +142,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             lore.set(1, "" + new_amount);
             im.setLore(lore);
             im.addEnchant(Enchantment.DURABILITY, 1, true);
-            if (!plugin.getInvManager().equals(INVENTORY_MANAGER.MULTIVERSE)) {
-                im.addItemFlags(ItemFlag.values());
-            }
+            im.addItemFlags(ItemFlag.values());
             is.setItemMeta(im);
             // remove the energy from the tardis/timelord
             HashMap<String, Object> where = new HashMap<>();

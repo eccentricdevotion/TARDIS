@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue.RescueData;
@@ -30,6 +31,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -61,10 +63,10 @@ public class TARDISChatListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         UUID saved = event.getPlayer().getUniqueId();
-        String chat = event.getMessage();
+        String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
         if (chat != null) {
-            if (chat.equalsIgnoreCase("tardis rescue accept") || chat.equalsIgnoreCase("tardis request accept")) {
-                boolean request = (chat.equalsIgnoreCase("tardis request accept"));
+            if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
+                boolean request = (chat.equals("tardis request accept"));
                 if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
                     Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
                     TARDISRescue res = new TARDISRescue(plugin);
@@ -93,6 +95,9 @@ public class TARDISChatListener implements Listener {
                     String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
                     TARDISMessage.send(event.getPlayer(), message);
                 }
+            } else if (chat.startsWith(plugin.getConfig().getString("handles.prefix").toLowerCase(Locale.ENGLISH))) {
+                // process handles request
+                new TARDISHandlesRequest(plugin).process(saved, event.getMessage());
             } else {
                 handleChat(event.getPlayer(), event.getMessage());
             }

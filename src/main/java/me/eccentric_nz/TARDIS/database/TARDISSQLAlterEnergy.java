@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISArtronEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -88,6 +89,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
                 public void run() {
                     if (id > 0) {
                         new TARDISArtronIndicator(plugin).showArtronLevel(p, id, Math.abs(amount));
+                        plugin.getPM().callEvent(new TARDISArtronEvent(p, amount, id));
                     } else {
                         TARDISMessage.send(p, "ENERGY_USED", String.format("%d", Math.abs(amount)));
                     }

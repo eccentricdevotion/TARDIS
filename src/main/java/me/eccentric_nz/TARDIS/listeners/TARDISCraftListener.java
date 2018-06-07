@@ -285,7 +285,7 @@ public class TARDISCraftListener implements Listener {
                             break;
                         }
                     }
-                } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses")) {
+                } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
                     LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
                     lam.setColor(Color.WHITE);
                     is.setItemMeta(lam);

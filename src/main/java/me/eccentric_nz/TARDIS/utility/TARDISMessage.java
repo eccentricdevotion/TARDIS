@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -28,6 +30,7 @@ import org.bukkit.entity.Player;
 public class TARDISMessage {
 
     private static final int LINE_LENGTH = TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
+    private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
 
     /**
      * Splits a message into multiple lines if it is longer than the guaranteed chat page width.
@@ -60,9 +63,29 @@ public class TARDISMessage {
         message(p, TARDIS.plugin.getPluginName() + local);
     }
 
+    public static void handlesMessage(Player p, String message) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+            message(p, HANDLES + message);
+        }, 2L);
+    }
+
+    public static void handlesSend(Player p, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+            message(p, HANDLES + local);
+        }, 2L);
+    }
+
     public static void send(Player p, String key, String sub) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(p, TARDIS.plugin.getPluginName() + String.format(local, sub));
+    }
+
+    public static void handlesSend(Player p, String key, String sub) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+            message(p, HANDLES + String.format(local, sub));
+        }, 2L);
     }
 
     public static void send(CommandSender cs, String key) {
@@ -108,18 +131,13 @@ public class TARDISMessage {
         message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
     }
 
+    public static void handlesSend(Player p, String key, long one, String two, String three) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, HANDLES + String.format(local, one, two, three));
+    }
+
     public static void send(CommandSender cs, String key, String one, int two, int three) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
-    }
-
-    public static void send(Player p, boolean pn, String key) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, local);
-    }
-
-    public static void send(Player p, boolean pn, String key, String sub) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, String.format(local, sub));
     }
 }

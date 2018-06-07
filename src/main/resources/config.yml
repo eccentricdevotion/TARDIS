@@ -123,6 +123,7 @@ allow:
     autonomous: true
     guardians: false
     hads: true
+    handles: true
     invisibility: true
     tp_switch: true
     all_blocks: false
@@ -173,6 +174,12 @@ abandon:
 archive:
     enabled: true
     limit: 3
+# handles
+handles:
+    prefix: Hey Handles
+    reminders:
+        enabled: true
+        schedule: 1200
 # don't touch
 conversions:
     ars_materials: true

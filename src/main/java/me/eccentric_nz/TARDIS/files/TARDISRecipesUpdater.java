@@ -86,6 +86,34 @@ public class TARDISRecipesUpdater {
         // fix lore
         recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
         recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
+        if (!recipes_config.contains("shaped.Handles")) {
+            recipes_config.set("shaped.Handles.easy_shape", "III,ISI,IRI");
+            recipes_config.set("shaped.Handles.easy_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.Handles.easy_ingredients.S", "SKULL_ITEM");
+            recipes_config.set("shaped.Handles.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Handles.hard_shape", "IDI,ISI,IRI");
+            recipes_config.set("shaped.Handles.hard_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.Handles.hard_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.Handles.hard_ingredients.S", "SKULL_ITEM");
+            recipes_config.set("shaped.Handles.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Handles.result", "BIRCH_BUTTON");
+            recipes_config.set("shaped.Handles.amount", 1);
+            recipes_config.set("shaped.Handles.lore", "Cyberhead from the~Maldovar Market");
+        }
+        if (!recipes_config.contains("shaped.TARDIS Communicator")) {
+            recipes_config.set("shaped.TARDIS Communicator.easy_shape", "N--,IIH,--I");
+            recipes_config.set("shaped.TARDIS Communicator.easy_ingredients.N", "NOTE_BLOCK");
+            recipes_config.set("shaped.TARDIS Communicator.easy_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.TARDIS Communicator.easy_ingredients.H", "HOPPER");
+            recipes_config.set("shaped.TARDIS Communicator.hard_shape", "N--,IIH,--D");
+            recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.N", "NOTE_BLOCK");
+            recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.H", "HOPPER");
+            recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.TARDIS Communicator.result", "LEATHER_HELMET");
+            recipes_config.set("shaped.TARDIS Communicator.amount", 1);
+            recipes_config.set("shaped.TARDIS Communicator.lore", "");
+        }
         if (!recipes_config.contains("shaped.Rust Plague Sword")) {
             recipes_config.set("shaped.Rust Plague Sword.easy_shape", "RIR,RIR,-S-");
             recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.R", "LAVA_BUCKET");

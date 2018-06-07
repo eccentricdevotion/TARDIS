@@ -127,6 +127,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("give_key", "travel");
         firstsBool.put("guardians", "allow");
         firstsBool.put("hads", "allow");
+        firstsBool.put("handles", "allow");
         firstsBool.put("invisibility", "allow");
         firstsBool.put("include_default_world", "travel");
         firstsBool.put("keep_night", "creation");

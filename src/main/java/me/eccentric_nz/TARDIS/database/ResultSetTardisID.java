@@ -25,9 +25,6 @@ import java.sql.SQLException;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
- * <p>
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
- * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */

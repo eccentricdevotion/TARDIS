@@ -85,8 +85,7 @@ public class QueryFactory {
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
                         ps.setDouble(i, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
-                    }
-                    if (entry.getValue().getClass().getName().contains("Long")) {
+                    } else if (entry.getValue().getClass().getName().contains("Long")) {
                         ps.setLong(i, TARDISNumberParsers.parseLong(entry.getValue().toString()));
                     } else {
                         ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));

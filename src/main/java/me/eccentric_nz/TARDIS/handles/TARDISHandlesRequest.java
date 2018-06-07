@@ -216,10 +216,10 @@ public class TARDISHandlesRequest {
     }
 
     private ItemStack getHandles() {
-        ItemStack is = new ItemStack(Material.GRAY_GLAZED_TERRACOTTA);
+        ItemStack is = new ItemStack(Material.BIRCH_BUTTON);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Handles");
-        im.setLore(Arrays.asList("Cyberhead from the", "Maldovarium Market"));
+        im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
         is.setItemMeta(im);
         return is;
     }

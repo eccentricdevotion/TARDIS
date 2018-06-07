@@ -153,6 +153,14 @@ public class TARDISSQLiteDatabase {
             String queryPortals = "CREATE TABLE IF NOT EXISTS " + prefix + "portals (portal_id INTEGER PRIMARY KEY NOT NULL, portal TEXT DEFAULT '', teleport TEXT DEFAULT '', direction TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0, abandoned INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPortals);
 
+            // Table structure for table 'programs'
+            String queryHandles = "CREATE TABLE IF NOT EXISTS " + prefix + "programs (program_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', name TEXT DEFAULT '', inventory TEXT DEFAULT '', parsed TEXT DEFAULT '', checked INTEGER DEFAULT 1)";
+            statement.executeUpdate(queryHandles);
+
+            // Table structure for table 'reminders'
+            String queryReminders = "CREATE TABLE IF NOT EXISTS " + prefix + "reminders (reminder_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', reminder TEXT DEFAULT '', time INTEGER DEFAULT '0')";
+            statement.executeUpdate(queryReminders);
+
             // Table structure for table 'siege'
             String querySiege = "CREATE TABLE IF NOT EXISTS " + prefix + "siege (siege_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
             statement.executeUpdate(querySiege);

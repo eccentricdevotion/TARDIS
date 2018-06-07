@@ -807,6 +807,36 @@ shaped:
         result: IRON_SWORD
         amount: 1
         lore: Dalek Virus Dispenser
+    Handles:
+        easy_shape: III,ISI,IRI
+        easy_ingredients:
+            I: IRON_INGOT
+            S: SKELETON_SKULL
+            R: REDSTONE
+        hard_shape: IDI,ISI,IRI
+        hard_ingredients:
+            I: IRON_INGOT
+            D: DIAMOND
+            S: SKELETON_SKULL
+            R: REDSTONE
+        result: BIRCH_BUTTON
+        amount: 1
+        lore: "Cyberhead from the~Maldovar Market"
+    TARDIS Communicator:
+        easy_shape: N--,IIH,--I
+        easy_ingredients:
+            N: NOTE_BLOCK
+            I: IRON_INGOT
+            H: HOPPER
+        hard_shape: N--,IIH,--D
+        hard_ingredients:
+            N: NOTE_BLOCK
+            I: IRON_INGOT
+            H: HOPPER
+            D: DIAMOND
+        result: LEATHER_HELMET
+        amount: 1
+        lore: ""
 # -------------------
 # these are the shapeless recipes
 # -------------------

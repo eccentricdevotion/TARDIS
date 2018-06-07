@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
@@ -196,7 +197,7 @@ public class TARDIS extends JavaPlugin {
                 }
                 if (plg.getKey().equals("Multiverse-Inventories")) {
                     if (!checkMVI()) {
-                        console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Multiverse-Inventories to be v2.5-b344 or higher, disabling...");
+                        console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Multiverse-Inventories to be v2.5-b431 or higher, disabling...");
                         hasVersion = false;
                         pm.disablePlugin(this);
                         return;
@@ -249,9 +250,11 @@ public class TARDIS extends JavaPlugin {
             new TARDISListenerRegisterer(this).registerListeners();
             new TARDISCommandSetter(this).loadCommands();
             startSound();
+            startReminders();
             loadWorldGuard();
             loadPluginRespect();
             startZeroHealing();
+            startSiegeTicks();
 
             new TARDISCreeperChecker(this).startCreeperCheck();
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
@@ -608,6 +611,15 @@ public class TARDIS extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             new TARDISHumSounds().playTARDISHum();
         }, 60L, 1500L);
+    }
+
+    /**
+     * Starts a repeating task that schedules reminders added to a players Handles cyberhead companion.
+     */
+    private void startReminders() {
+        if (getConfig().getBoolean("handles.reminders.enabled")) {
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120L, getConfig().getLong("handles.reminders.schedule"));
+        }
     }
 
     /**

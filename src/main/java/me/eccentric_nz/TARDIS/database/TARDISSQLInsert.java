@@ -76,6 +76,8 @@ public class TARDISSQLInsert implements Runnable {
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
                         ps.setDouble(i, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
+                    } else if (entry.getValue().getClass().getName().contains("Long")) {
+                        ps.setLong(i, TARDISNumberParsers.parseLong(entry.getValue().toString()));
                     } else {
                         ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }

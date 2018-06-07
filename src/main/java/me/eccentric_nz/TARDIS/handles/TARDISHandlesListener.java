@@ -48,7 +48,7 @@ public class TARDISHandlesListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
-        if (!b.getType().equals(Material.GRAY_GLAZED_TERRACOTTA)) {
+        if (!b.getType().equals(Material.BIRCH_BUTTON)) {
             return;
         }
         // check location
@@ -62,11 +62,11 @@ public class TARDISHandlesListener implements Listener {
         event.setCancelled(true);
         // set block to AIR
         b.setType(Material.AIR);
-        // drop a custom GRAY_GLAZED_TERRACOTTA
-        ItemStack is = new ItemStack(Material.GRAY_GLAZED_TERRACOTTA, 1);
+        // drop a custom BIRCH_BUTTON
+        ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Handles");
-        im.setLore(Arrays.asList("Cyberhead from the", "Maldovarium Market"));
+        im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);
         // remove control record
@@ -78,7 +78,7 @@ public class TARDISHandlesListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (!is.getType().equals(Material.GRAY_GLAZED_TERRACOTTA) || !is.hasItemMeta()) {
+        if (!is.getType().equals(Material.BIRCH_BUTTON) || !is.hasItemMeta()) {
             return;
         }
         ItemMeta im = is.getItemMeta();

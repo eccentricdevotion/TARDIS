@@ -47,6 +47,7 @@ public class TARDISAnvilListener implements Listener {
             String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
             disallow.put(q, Material.valueOf(result[0]));
         });
+        disallow.put("Handles", Material.BIRCH_BUTTON);
     }
 
 

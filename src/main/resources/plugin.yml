@@ -330,6 +330,13 @@ permissions:
   tardis.atmospheric:
     description: Allows a player to initiate atmospheric exitation around their TARDIS.
     default: op
+  tardis.handles:
+    description: Allow players to use the Handles companion.
+    children:
+      tardis.handles.use: true
+      tardis.handles.communicator: true
+      tardis.handles.program: true
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
@@ -569,10 +576,43 @@ commands:
       permission: tardis.timetravel
   tardisadmin:
     aliases: tadmin
-    description: Set TARDIS configuration options.
-    usage: /<command> [config option] [value]
+    description: Set TARDIS configuration options and perform TARDIS administration tasks.
+    usage: /<command> [option] [value]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
+    list:
+      description: List all TARDISs and their locations.
+      usage: /<command> list
+    enter:
+      description: Enter a player's TARDIS.
+      usage: /<command> enter [player]
+    delete:
+      description: Delete a player's TARDIS.
+      usage: /<command> delete [player]
+    purge:
+      description: Remove all database entries for the named player.
+      usage: /<command> purge [player]
+    desiege:
+      description: Force a player's TARDIS out of Siege Mode.
+      usage: /<command> desiege [player]
+    include:
+      description: Set whether the specified world is included in time travel destinations.
+      usage: /<command> include [world]
+    exclude:
+      description: Set whether the specified world is excluded from time travel destinations.
+      usage: /<command> exclude [world]
+    arch:
+      description: View an 'arched' player's real name, or with the 'force' argument, toggle arch status.
+      usage: /<command> arch [player] (force)
+    prune:
+      description: Remove TARDISes that haven't been used for an extended period.
+      usage: /<command> prune [number of days]
+    prunelist:
+      description: List TARDISes that haven't been used for an extended period.
+      usage: /<command> prunelist [number of days]
+    playercount:
+      description: Check or set a player's TARDIS count.
+      usage: /<command> playercount [player] [count]
   tardisgive:
     aliases: tgive
     description: Give TARDIS items to a player.
@@ -875,3 +915,38 @@ commands:
     aliases: ['t?', tardishelp]
     description: Get help with TARDIS commands.
     usage: /<command> [command] [argument]
+  handles:
+    aliases: [tardishandles, th]
+    description: These commands are used by the console to enable the Handles companion.
+    usage: /<command> [takeoff|land|scan|lock|unlock|remind|say|name|time|disk]
+    takeoff:
+      description: Make the TARDIS enter the Time Vortex
+      permission: tardis.admin
+    land:
+      description: Make the TARDIS leave the Time Vortex
+      permission: tardis.admin
+    scan:
+      description: Make Handles scan the environment around the player
+      permission: tardis.admin
+    lock:
+      description: Make Handles lock the TARDIS door
+      permission: tardis.admin
+    unlock:
+      description: Make Handles unlock the TARDIS door
+      permission: tardis.admin
+    remind:
+      description: Add a Handles reminder
+      permission: tardis.admin
+    say:
+      description: Make Handles say a phrase
+      permission: tardis.admin
+    name:
+      description: Make Handles tell a player their in-game name
+      permission: tardis.admin
+    time:
+      description: Make Handles say the time
+      permission: tardis.admin
+    disk:
+      description: Name a Handles Program Disk
+      usage: /<command> disk [new name]
+      permission: tardis.handles.program

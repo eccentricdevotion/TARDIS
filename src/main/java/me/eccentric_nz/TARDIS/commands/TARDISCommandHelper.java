@@ -57,7 +57,9 @@ public class TARDISCommandHelper {
                         sender.sendMessage("------");
                         sender.sendMessage("Command: " + ChatColor.GOLD + "/" + c.toLowerCase(Locale.ENGLISH));
                         sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + "." + split[1].toLowerCase(Locale.ENGLISH) + ".description"));
-                        sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage").replace("<command>", root.toString()));
+                        if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root.toString() + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage")) {
+                            sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage").replace("<command>", root.toString()));
+                        }
                         if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root.toString() + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission")) {
                             sender.sendMessage(ChatColor.GRAY + "Permission: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission"));
                         } else if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root.toString() + ".permission")) {
@@ -77,6 +79,9 @@ public class TARDISCommandHelper {
                         sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);
                         sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".description"));
                         sender.sendMessage(ChatColor.GRAY + "Aliases: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".aliases"));
+                        if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root.toString() + ".usage")) {
+                            sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".usage").replace("<command>", root.toString()));
+                        }
                         args.forEach((m) -> {
                             if (!notThese.contains(m)) {
                                 sender.sendMessage("/" + c + " " + m);
@@ -100,23 +105,25 @@ public class TARDISCommandHelper {
 
     public enum ROOT_COMMAND {
 
-        tardis("http://goo.gl/55uTqL"),
-        tardistravel("http://goo.gl/5rZR1T"),
-        tardisadmin("http://goo.gl/jWFyLX"),
-        tardisgive("http://goo.gl/LGQgy5"),
-        tardisroom("http://goo.gl/zh9RKK"),
-        tardisprefs("http://goo.gl/6k3RqD"),
-        tardisarea("http://goo.gl/AJM2i3"),
-        tardisartron("http://goo.gl/00ueX0"),
-        tardisbind("http://goo.gl/sedpK4"),
-        tardisgravity("http://goo.gl/vczqjf"),
-        tardisbook("http://goo.gl/BGPh3t"),
-        tardistexture("http://goo.gl/FPuxoa"),
-        tardisrecipe("http://goo.gl/WSHA6N"),
-        tardissay("http://goo.gl/iphcoM"),
-        tardisremote("http://goo.gl/8GpxUV"),
-        tardisschematic("http://goo.gl/BG4TtW"),
-        tardisnetherportal("http://goo.gl/B2M36Y");
+        tardis("https://goo.gl/55uTqL"),
+        tardistravel("https://goo.gl/5rZR1T"),
+        tardisadmin("https://goo.gl/jWFyLX"),
+        tardisgive("https://goo.gl/LGQgy5"),
+        tardisroom("https://goo.gl/zh9RKK"),
+        tardisprefs("https://goo.gl/6k3RqD"),
+        tardisarea("https://goo.gl/AJM2i3"),
+        tardisartron("https://goo.gl/00ueX0"),
+        tardisbind("https://goo.gl/sedpK4"),
+        tardisgravity("https://goo.gl/vczqjf"),
+        tardisbook("https://goo.gl/BGPh3t"),
+        tardistexture("https://goo.gl/FPuxoa"),
+        tardisrecipe("https://goo.gl/WSHA6N"),
+        tardissay("https://goo.gl/iphcoM"),
+        tardisremote("https://goo.gl/8GpxUV"),
+        tardisschematic("https://goo.gl/BG4TtW"),
+        tardisnetherportal("https://goo.gl/B2M36Y"),
+        tardisjunk("https://goo.gl/xNcBd5"),
+        handles("Not yet available");
 
         final String URL;
 

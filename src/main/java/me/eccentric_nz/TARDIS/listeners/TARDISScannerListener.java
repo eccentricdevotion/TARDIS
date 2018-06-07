@@ -67,21 +67,12 @@ public class TARDISScannerListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<>();
-    HashMap<String, EntityType> twa = new HashMap<>();
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.COMPARATOR);
         validBlocks.addAll(Tag.BUTTONS.getValues());
-        twa.put("Cyberman Head", EntityType.AREA_EFFECT_CLOUD);
-        twa.put("Empty Child Head", EntityType.ARMOR_STAND);
-        twa.put("Ice Warrior Head", EntityType.ARROW);
-        twa.put("Silurian Head", EntityType.BOAT);
-        twa.put("Sontaran Head", EntityType.FIREWORK);
-        twa.put("Strax Head", EntityType.EGG);
-        twa.put("Vashta Nerada Head", EntityType.ENDER_CRYSTAL);
-        twa.put("Zygon Head", EntityType.FISHING_HOOK);
     }
 
     /**
@@ -235,8 +226,8 @@ public class TARDISScannerListener implements Listener {
                             case CHAINMAIL_HELMET:
                                 if (ee.getHelmet().hasItemMeta() && ee.getHelmet().getItemMeta().hasDisplayName()) {
                                     String dn = ee.getHelmet().getItemMeta().getDisplayName();
-                                    if (twa.containsKey(dn)) {
-                                        et = twa.get(dn);
+                                    if (plugin.getBuildKeeper().getTWA_Heads().containsKey(dn)) {
+                                        et = plugin.getBuildKeeper().getTWA_Heads().get(dn);
                                     }
                                 }
                                 break;
@@ -270,14 +261,14 @@ public class TARDISScannerListener implements Listener {
         } else {
             worldname = scan_loc.getWorld().getName();
         }
-        TARDISMessage.send(player, true, "SCAN_WORLD", worldname);
-        TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+        TARDISMessage.send(player, "SCAN_WORLD", worldname);
+        TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, true, "SCAN_DIRECTION", tardisDirection.toString());
+            TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString());
         }, 20L);
         // get biome
         Biome tmb;
-        if (whereisit.equals("current location")) {
+        if (whereisit.equals(plugin.getLanguage().getString("SCAN_CURRENT"))) {
             // adjsut for current location as it will always return SKY if set_biome is true
             switch (tardisDirection) {
                 case NORTH:
@@ -299,10 +290,10 @@ public class TARDISScannerListener implements Listener {
         Biome biome = tmb;
         data.setBiome(biome);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, true, "BIOME_TYPE", biome.toString());
+            TARDISMessage.send(player, "BIOME_TYPE", biome.toString());
         }, 40L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, true, "SCAN_TIME", daynight + " / " + time);
+            TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time);
         }, 60L);
         // get weather
         String weather;
@@ -337,17 +328,17 @@ public class TARDISScannerListener implements Listener {
                 break;
         }
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, true, "SCAN_WEATHER", weather);
+            TARDISMessage.send(player, "SCAN_WEATHER", weather);
         }, 80L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, true, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
+            TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
         }, 100L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, true, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
+            TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
         }, 120L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
             if (scannedentities.size() > 0) {
-                TARDISMessage.send(player, true, "SCAN_ENTS");
+                TARDISMessage.send(player, "SCAN_ENTS");
                 for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
@@ -398,7 +389,7 @@ public class TARDISScannerListener implements Listener {
                 }
                 scannedentities.clear();
             } else {
-                TARDISMessage.send(player, true, "SCAN_NONE");
+                TARDISMessage.send(player, "SCAN_NONE");
             }
             // damage the circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
