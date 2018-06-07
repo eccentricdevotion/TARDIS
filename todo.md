@@ -13,10 +13,11 @@
    * Add new biomes (end and ocean)
    * Correctly set BlockData in `sendBlockChange(Location loc, BlockData data)` in TARDISSpectaclesRunnable
 2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
-3. Aquarium room (add fish to mob farming) - _started_, maybe a Turtle Beach room?
+3. Aquarium room - _started_, maybe a Turtle Beach room?
 4. Transfer Handles implementation from v3.7 branch
 5. Check database updater (Material) changes
-6. Fix Biome adaptive presets dropping flowers & seeds (properly)
+6. Remove LWC support (it's basically dead now)
+7. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
 * Move custom advancements to here
@@ -29,7 +30,6 @@
 * Slimmer TARDIS option via Optifine's CEM mod? - _maybe_
 * Add more API Events that other plugins can listen for? - _unlikely_
    * Sonic Screwdriver events
-   * Artron Energy event
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
@@ -50,9 +50,8 @@
    * Stray -> Scarecrows
    * Judoon
    * Clockwork Droid
-4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine_
-5. Move all files in assets/minecraft/mcpatcher to assets/minecraft/optifine
-6. Rename resource pack to 'TARDIS-Optifine'
+4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+5. Rename resource pack to 'TARDIS-Optifine'
  
 ## TIPS visulisation tool
 * Use WorldGuard region data
