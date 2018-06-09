@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -39,7 +36,7 @@ public enum TARDISHandlesBlock {
     END(TARDISHandlesCategory.CONTROL, "END", Arrays.asList("Use to finish", "a conditional or", "loop statement")),
     IF(TARDISHandlesCategory.CONTROL, "IF", Arrays.asList("Check whether a", "condition is", "true or false")),
     ELSE(TARDISHandlesCategory.CONTROL, "ELSE", Arrays.asList("Use to run actions", "if an IF is false")),
-    ELSE_IF(TARDISHandlesCategory.CONTROL, "ELSE IF", Arrays.asList("Check another condition")),
+    ELSE_IF(TARDISHandlesCategory.CONTROL, "ELSE IF", Collections.singletonList("Check another condition")),
     BREAK(TARDISHandlesCategory.CONTROL, "BREAK", Arrays.asList("Use to break", "out of a loop")),
     MATERIALISE(TARDISHandlesCategory.EVENT, "TARDIS materialisation event", null),
     DEMATERIALISE(TARDISHandlesCategory.EVENT, "TARDIS dematerialisation event", null),
@@ -51,16 +48,16 @@ public enum TARDISHandlesBlock {
     SIEGE_ON(TARDISHandlesCategory.EVENT, "Siege Mode On event", null),
     SIEGE_OFF(TARDISHandlesCategory.EVENT, "Siege Mode Off event", null),
     LOG_OUT(TARDISHandlesCategory.EVENT, "Player log out event", null),
-    ZERO(TARDISHandlesCategory.NUMBER, "0", Arrays.asList("The number zero")),
-    ONE(TARDISHandlesCategory.NUMBER, "1", Arrays.asList("The number one")),
-    TWO(TARDISHandlesCategory.NUMBER, "2", Arrays.asList("The number two")),
-    THREE(TARDISHandlesCategory.NUMBER, "3", Arrays.asList("The number three")),
-    FOUR(TARDISHandlesCategory.NUMBER, "4", Arrays.asList("The number four")),
-    FIVE(TARDISHandlesCategory.NUMBER, "5", Arrays.asList("The number five")),
-    SIX(TARDISHandlesCategory.NUMBER, "6", Arrays.asList("The number six")),
-    SEVEN(TARDISHandlesCategory.NUMBER, "7", Arrays.asList("The number seven")),
-    EIGHT(TARDISHandlesCategory.NUMBER, "8", Arrays.asList("The number eight")),
-    NINE(TARDISHandlesCategory.NUMBER, "9", Arrays.asList("The number nine")),
+    ZERO(TARDISHandlesCategory.NUMBER, "0", Collections.singletonList("The number zero")),
+    ONE(TARDISHandlesCategory.NUMBER, "1", Collections.singletonList("The number one")),
+    TWO(TARDISHandlesCategory.NUMBER, "2", Collections.singletonList("The number two")),
+    THREE(TARDISHandlesCategory.NUMBER, "3", Collections.singletonList("The number three")),
+    FOUR(TARDISHandlesCategory.NUMBER, "4", Collections.singletonList("The number four")),
+    FIVE(TARDISHandlesCategory.NUMBER, "5", Collections.singletonList("The number five")),
+    SIX(TARDISHandlesCategory.NUMBER, "6", Collections.singletonList("The number six")),
+    SEVEN(TARDISHandlesCategory.NUMBER, "7", Collections.singletonList("The number seven")),
+    EIGHT(TARDISHandlesCategory.NUMBER, "8", Collections.singletonList("The number eight")),
+    NINE(TARDISHandlesCategory.NUMBER, "9", Collections.singletonList("The number nine")),
     COIN(TARDISHandlesCategory.NUMBER, "Flip a coin", Arrays.asList("Returns a true", "or false value")),
     RANDOM(TARDISHandlesCategory.NUMBER, "Random number", Arrays.asList("Generate a random number", "between 0 and the", "number that follows")),
     ASSIGNMENT(TARDISHandlesCategory.OPERATOR, "Assignment operator", Arrays.asList("Used to assign a", "value to a variable")),

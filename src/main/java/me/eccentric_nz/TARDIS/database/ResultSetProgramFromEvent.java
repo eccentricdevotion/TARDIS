@@ -32,12 +32,13 @@ import java.sql.SQLException;
  *
  * @author eccentric_nz
  */
-public class ResultSetProgram {
+public class ResultSetProgramFromEvent {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final int pid;
+    private final String uuid;
+    private final String event;
     private final String prefix;
     private Program program;
 
@@ -45,11 +46,13 @@ public class ResultSetProgram {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
-     * @param pid    a program_id to refine the search.
+     * @param uuid   a player UUID to refine the search.
+     * @param event  an event string to refine the search.
      */
-    public ResultSetProgram(TARDIS plugin, int pid) {
+    public ResultSetProgramFromEvent(TARDIS plugin, String uuid, String event) {
         this.plugin = plugin;
-        this.pid = pid;
+        this.uuid = uuid;
+        this.event = event;
         prefix = this.plugin.getPrefix();
     }
 
@@ -62,24 +65,21 @@ public class ResultSetProgram {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "programs WHERE program_id = ?";
+        String query = "SELECT * FROM " + prefix + "programs WHERE uuid = ? AND parsed = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            statement.setInt(1, pid);
+            statement.setString(1, uuid);
+            statement.setString(2, event);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                String parsed = rs.getString("parsed");
-                if (rs.wasNull()) {
-                    parsed = "";
-                }
                 program = new Program(
                         rs.getInt("program_id"),
                         rs.getString("uuid"),
                         rs.getString("name"),
                         rs.getString("inventory"),
-                        parsed,
+                        rs.getString("parsed"),
                         rs.getBoolean("checked")
                 );
             } else {

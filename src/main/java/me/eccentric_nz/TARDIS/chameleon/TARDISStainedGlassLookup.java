@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.HashMap;
 import org.bukkit.Material;
 
+import java.util.HashMap;
+
 /**
- * Lookup table for Police Box materialisation. This maps block IDs to Stained
- * glass colours. For example a BRICK block would map to RED stained glass.
+ * Lookup table for Police Box materialisation. This maps block IDs to Stained glass colours. For example a BRICK block
+ * would map to RED stained glass.
  *
  * @author eccentric_nz
  */

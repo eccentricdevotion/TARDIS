@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -33,8 +32,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISPresetListener extends TARDISMenuListener implements Listener {
@@ -47,8 +47,8 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -59,7 +59,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
         if (name.equals("§4Chameleon Presets")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 54) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
@@ -73,7 +73,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
-                            final Tardis tardis = rs.getTardis();
+                            Tardis tardis = rs.getTardis();
                             String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
                             String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<>();

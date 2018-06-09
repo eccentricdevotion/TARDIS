@@ -121,6 +121,27 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     TARDISMessage.send(player, "HANDLES_SELECT");
                 }
             }
+            if (slot == 48) {
+                // deactivate program
+                if (selectedSlot.containsKey(uuid)) {
+                    ItemStack is = inv.getItem(selectedSlot.get(uuid));
+                    int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("program_id", pid);
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("parsed", "");
+                    new QueryFactory(plugin).doUpdate("programs", set, where);
+                    // update lore
+                    ItemMeta im = is.getItemMeta();
+                    List<String> lore = im.getLore();
+                    lore.remove(3);
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    selectedSlot.put(uuid, null);
+                } else {
+                    TARDISMessage.send(player, "HANDLES_SELECT");
+                }
+            }
             if (slot == 49) {
                 // delete program
                 if (selectedSlot.containsKey(uuid)) {
@@ -185,10 +206,16 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
-                if (s == slot && lore.size() < 4) {
-                    lore.add(ChatColor.GREEN + "Selected");
-                } else if (lore.contains(ChatColor.GREEN + "Selected")) {
-                    lore.remove(3);
+                if (s == slot) {
+                    if (lore.contains(ChatColor.GREEN + "Selected")) {
+                        if (lore.contains(ChatColor.AQUA + "Running")) {
+                            lore.remove(4);
+                        } else {
+                            lore.remove(3);
+                        }
+                    } else {
+                        lore.add(ChatColor.GREEN + "Selected");
+                    }
                 }
                 im.setLore(lore);
                 is.setItemMeta(im);

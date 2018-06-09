@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,7 +29,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISHandlesValidator {
+class TARDISHandlesValidator {
 
     private final TARDIS plugin;
     private final ItemStack[] program;
@@ -36,13 +37,13 @@ public class TARDISHandlesValidator {
     private int endCount = 1;
     private int eventCount = 0;
 
-    public TARDISHandlesValidator(TARDIS plugin, ItemStack[] program, Player player) {
+    TARDISHandlesValidator(TARDIS plugin, ItemStack[] program, Player player) {
         this.plugin = plugin;
         this.program = program;
         this.player = player;
     }
 
-    public boolean validateDisk() {
+    boolean validateDisk() {
         int i = 0;
         for (ItemStack is : program) {
             if (is != null) {
@@ -69,12 +70,13 @@ public class TARDISHandlesValidator {
                     case X:
                     case Y:
                     case Z:
-                        if (!validateCoord(i + 1)) {
+                        if (!validateCoordOrMath(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Coordinate assignment does not compute!");
                             return false;
                         }
                         break;
                     case ARTRON:
+                        // can be followed by SHOW
                     case DEATH:
                     case DEMATERIALISE:
                     case ENTER:
@@ -89,6 +91,48 @@ public class TARDISHandlesValidator {
                             return false;
                         }
                         eventCount++;
+                        break;
+                    case ADDITION:
+                    case SUBTRACTION:
+                    case MULTIPLICATION:
+                    case DIVISION:
+                    case MODULO:
+                    case LESS_THAN:
+                    case LESS_THAN_EQUAL:
+                    case GREATER_THAN:
+                    case GREATER_THAN_EQUAL:
+                    case RANDOM:
+                        // must be followed by a number (and maybe a variable)
+                        if (!validateCoordOrMath(i + 1)) {
+                            TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
+                            return false;
+                        }
+                        break;
+                    case DOOR:
+                        // must be followed by =, ==, OPEN, CLOSED, LOCK, UNLOCK
+                        if (!validateDoor(i + 1)) {
+                            TARDISMessage.handlesMessage(player, "The Door action does not compute!");
+                            return false;
+                        }
+                        break;
+                    case LIGHTS:
+                    case POWER:
+                    case SIEGE:
+                        // must be followed by =, ==, ON, OFF
+                        if (!validateOnOff(i + 1)) {
+                            TARDISMessage.handlesMessage(player, "The ON / OFF action does not compute!");
+                            return false;
+                        }
+                        break;
+                    case TRAVEL:
+                        // must be followed by X, Y, Z, RECHARGER, HOME, RANDOM, Biome disk, Player disk, Save disk, Area disk
+                        if (!validateTravel(i + 1)) {
+                            TARDISMessage.handlesMessage(player, "The Travel destination does not compute!");
+                            return false;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
             i++;
@@ -116,13 +160,67 @@ public class TARDISHandlesValidator {
         return true;
     }
 
-    private boolean validateCoord(int start) {
+    private boolean validateCoordOrMath(int start) {
         ItemStack op = program[start];
         if (op == null) {
             return false;
         }
         TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
         if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDoor(int start) {
+        ItemStack op = program[start];
+        if (op == null) {
+            return false;
+        }
+        TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+        if (!thb.equals(TARDISHandlesBlock.ASSIGNMENT) &&
+                !thb.equals(TARDISHandlesBlock.EQUALS) &&
+                !thb.equals(TARDISHandlesBlock.OPEN) &&
+                !thb.equals(TARDISHandlesBlock.CLOSE) &&
+                !thb.equals(TARDISHandlesBlock.LOCK) &&
+                !thb.equals(TARDISHandlesBlock.UNLOCK)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateOnOff(int start) {
+        ItemStack op = program[start];
+        if (op == null) {
+            return false;
+        }
+        TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+        if (!thb.equals(TARDISHandlesBlock.ASSIGNMENT) &&
+                !thb.equals(TARDISHandlesBlock.EQUALS) &&
+                !thb.equals(TARDISHandlesBlock.ON) &&
+                !thb.equals(TARDISHandlesBlock.OFF)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateTravel(int start) {
+        ItemStack op = program[start];
+        if (op == null) {
+            return false;
+        }
+        TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+        Material record = op.getType();
+        if (!thb.equals(TARDISHandlesBlock.HOME) &&
+                !thb.equals(TARDISHandlesBlock.RECHARGER) &&
+                !thb.equals(TARDISHandlesBlock.X) &&
+                !thb.equals(TARDISHandlesBlock.Y) &&
+                !thb.equals(TARDISHandlesBlock.Z) &&
+                !thb.equals(TARDISHandlesBlock.RANDOM) &&
+                !record.equals(Material.GREEN_RECORD) &&
+                !record.equals(Material.RECORD_3) &&
+                !record.equals(Material.RECORD_4) &&
+                !record.equals(Material.RECORD_12)) {
             return false;
         }
         return true;
@@ -263,8 +361,7 @@ public class TARDISHandlesValidator {
                         }
                     }
                     break;
-                case 7:
-                    // must be a DO
+                case 7: // must be a DO
                     if (twoConditions && !thb.equals(TARDISHandlesBlock.DO)) {
                         return false;
                     } else {

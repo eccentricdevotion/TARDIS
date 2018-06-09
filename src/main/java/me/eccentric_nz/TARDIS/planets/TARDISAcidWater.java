@@ -1,26 +1,21 @@
 /**
- *
  * This file is borrowed from ASkyBlock. (https://github.com/tastybento/acidisland)
- *
- * ASkyBlock is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * ASkyBlock is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * ASkyBlock. If not, see <http://www.gnu.org/licenses/>.
- *
+ * <p>
+ * ASkyBlock is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * <p>
+ * ASkyBlock is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * <p>
+ * You should have received a copy of the GNU General Public License along with ASkyBlock. If not, see
+ * <http://www.gnu.org/licenses/>.
+ * <p>
  * Adapted by eccentric_nz for the TARDIS plugin
- *
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import org.bukkit.GameMode;
@@ -43,6 +38,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -69,8 +68,8 @@ public class TARDISAcidWater implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent e) {
 
-        final Player player = e.getPlayer();
-        final Location loc = player.getLocation();
+        Player player = e.getPlayer();
+        Location loc = player.getLocation();
 
         TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
 
@@ -94,8 +93,8 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Slow checks
-        final Block block = loc.getBlock();
-        final Block head = block.getRelative(BlockFace.UP);
+        Block block = loc.getBlock();
+        Block head = block.getRelative(BlockFace.UP);
 
         // If they are not in liquid, then return
         if (!block.isLiquid() && !head.isLiquid()) {
@@ -133,7 +132,7 @@ public class TARDISAcidWater implements Listener {
                 public void run() {
                     if (player.isDead()) {
                         burningPlayers.remove(player);
-                        this.cancel();
+                        cancel();
                     } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
                         // Apply additional potion effects
                         if (!plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions").isEmpty()) {
@@ -161,7 +160,7 @@ public class TARDISAcidWater implements Listener {
                         }
                     } else {
                         burningPlayers.remove(player);
-                        this.cancel();
+                        cancel();
                     }
                 }
             }.runTaskTimer(plugin, 0L, 20L);
@@ -269,7 +268,6 @@ public class TARDISAcidWater implements Listener {
         return red;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onFillAcidBucket(PlayerBucketFillEvent event) {
         Player p = event.getPlayer();

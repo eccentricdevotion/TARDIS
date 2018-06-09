@@ -17,9 +17,7 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

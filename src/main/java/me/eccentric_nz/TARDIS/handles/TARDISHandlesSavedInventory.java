@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPrograms;
 import me.eccentric_nz.TARDIS.database.data.Program;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -59,7 +60,11 @@ public class TARDISHandlesSavedInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Handles Program Disk");
                 String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";
-                im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
+                if (!p.getParsed().isEmpty()) {
+                    im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked, ChatColor.AQUA + "Running"));
+                } else {
+                    im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
+                }
                 im.addItemFlags(ItemFlag.values());
                 is.setItemMeta(im);
                 stack[i] = is;
@@ -81,6 +86,12 @@ public class TARDISHandlesSavedInventory {
         ld.setDisplayName("Load selected program in editor");
         load.setItemMeta(ld);
         stack[47] = load;
+        // deactivate
+        ItemStack deactivate = new ItemStack(Material.BUCKET, 1);
+        ItemMeta dem = deactivate.getItemMeta();
+        dem.setDisplayName("Deactivate selected program");
+        deactivate.setItemMeta(dem);
+        stack[48] = deactivate;
         // delete
         ItemStack delete = new ItemStack(Material.BUCKET, 1);
         ItemMeta dm = delete.getItemMeta();

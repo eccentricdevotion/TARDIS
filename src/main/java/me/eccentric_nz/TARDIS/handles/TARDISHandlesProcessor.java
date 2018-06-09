@@ -17,9 +17,13 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.data.Program;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 
 /**
  * Programming is a process used by Cybermen to control humans. To program a human, the person has to be dead. A control
@@ -33,18 +37,21 @@ public class TARDISHandlesProcessor {
     private final TARDIS plugin;
     private final Program program;
     private final Player player;
+    private final int pid;
 
-    public TARDISHandlesProcessor(TARDIS plugin, Program program, Player player) {
+    public TARDISHandlesProcessor(TARDIS plugin, Program program, Player player, int pid) {
         this.plugin = plugin;
         this.program = program;
         this.player = player;
+        this.pid = pid;
     }
 
     public void processDisk() {
-        int i = 0;
+        String event = "";
         for (ItemStack is : program.getInventory()) {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+//                TARDISHandlesCategory category = thb.getCategory();
                 switch (thb) {
                     case FOR:
                         break;
@@ -56,9 +63,45 @@ public class TARDISHandlesProcessor {
                     case Y:
                     case Z:
                         break;
+                    case ARTRON:
+                    case DEATH:
+                    case DEMATERIALISE:
+                    case ENTER:
+                    case EXIT:
+                    case HADS:
+                    case LOG_OUT:
+                    case MATERIALISE:
+                    case SIEGE_OFF:
+                    case SIEGE_ON:
+                        event = thb.toString();
+                        break;
+                    default:
+                        break;
                 }
             }
-            i++;
+        }
+        if (!event.isEmpty()) {
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("parsed", event);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("program_id", pid);
+            new QueryFactory(plugin).doUpdate("programs", set, where);
+            TARDISMessage.handlesSend(player, "HANDLES_RUNNING");
+        } else {
+            TARDISMessage.handlesSend(player, "HANDLES_EXECUTE");
+        }
+    }
+
+    public void processCommand(int pos) {
+        for (int i = pos; i < 36; i++) {
+            ItemStack is = program.getInventory()[i];
+            if (is != null) {
+                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                switch (thb) {
+                    case TARDIS:
+
+                }
+            }
         }
     }
 }

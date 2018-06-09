@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import java.io.IOException;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
+
 /**
- *
  * @author eccentric_nz
  */
 public class Program {
