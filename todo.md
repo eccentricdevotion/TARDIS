@@ -16,8 +16,7 @@
 3. Aquarium room - _started_, maybe a Turtle Beach room?
 4. Transfer Handles implementation from v3.7 branch
 5. Check database updater (Material) changes
-6. Remove LWC support (it's basically dead now)
-7. Fix Biome adaptive presets dropping flowers & seeds (properly)
+6. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
 * Move custom advancements to here

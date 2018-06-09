@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.lwc.LWCPlugin;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -408,7 +406,7 @@ public class TARDISSonicListener implements Listener {
                         scan(b.getLocation(), player);
                     }
                     if (redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
-                        // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
+                        // not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
                         if (checkBlockRespect(player, b)) {
                             return;
                         }
@@ -532,7 +530,7 @@ public class TARDISSonicListener implements Listener {
                             ignite(b, player);
                         }
                         if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
-                            // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
+                            // not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
                             if (checkBlockRespect(player, b)) {
                                 TARDISMessage.send(player, "SONIC_PROTECT");
                                 return;
@@ -573,7 +571,7 @@ public class TARDISSonicListener implements Listener {
                             TARDISMessage.send(player, "UPDATE_IN_WORLD");
                             return;
                         }
-                        // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
+                        // not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
                         if (checkBlockRespect(player, b)) {
                             TARDISMessage.send(player, "SONIC_PROTECT");
                             return;
@@ -1023,7 +1021,7 @@ public class TARDISSonicListener implements Listener {
                     } else {
                         lowerdoor = targetBlock;
                     }
-                    // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
+                    // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
                     boolean allow = !checkBlockRespect(player, lowerdoor);
                     // is it a TARDIS door?
                     HashMap<String, Object> where = new HashMap<>();
@@ -1129,7 +1127,6 @@ public class TARDISSonicListener implements Listener {
         boolean wgu = false;
         boolean lke = false;
         boolean pro = false;
-        boolean lch = false;
         boolean tny = false;
         // GriefPrevention
         if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
@@ -1146,17 +1143,11 @@ public class TARDISSonicListener implements Listener {
         if (plugin.getPM().isPluginEnabled("LockettePro")) {
             pro = LocketteProAPI.isProtected(b);
         }
-        // LWC
-        if (plugin.getPM().isPluginEnabled("LWC")) {
-            LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
-            LWC lwc = lwcplug.getLWC();
-            lch = !lwc.canAccessProtection(p, b);
-        }
         // Towny
         if (plugin.getPM().isPluginEnabled("Towny")) {
             tny = new TARDISTownyChecker(plugin, true).checkTowny(p, b.getLocation());
         }
-        return (gpr || wgu || lke || pro || lch || tny);
+        return (gpr || wgu || lke || pro || tny);
     }
 
     private boolean isPresetSign(String l0, String l1, String l2) {

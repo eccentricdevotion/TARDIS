@@ -21,8 +21,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.lwc.LWCPlugin;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -74,7 +72,7 @@ public class TARDISSonicSorterListener implements Listener {
                     if (block != null && (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST)) {
                         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
                         boolean allow = true;
-                        // is Lockette or LWC on the server?
+                        // is Lockette on the server?
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
                             if (Lockette.isProtected(block)) {
                                 allow = false;
@@ -82,13 +80,6 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (plugin.getPM().isPluginEnabled("LockettePro")) {
                             if (LocketteProAPI.isProtected(block)) {
-                                allow = false;
-                            }
-                        }
-                        if (plugin.getPM().isPluginEnabled("LWC")) {
-                            LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
-                            LWC lwc = lwcplug.getLWC();
-                            if (!lwc.canAccessProtection(player, block)) {
                                 allow = false;
                             }
                         }

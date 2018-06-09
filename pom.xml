@@ -329,14 +329,6 @@
             <systemPath>${basedir}/lib/CitizensAPI.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.griefcraft</groupId>
-            <artifactId>lwc</artifactId>
-            <version>4.5.0-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/LWC.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>org.yi.acru.bukkit</groupId>
             <artifactId>lockette</artifactId>
             <version>1.8.36</version>
