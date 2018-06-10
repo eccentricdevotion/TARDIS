@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.Arrays;

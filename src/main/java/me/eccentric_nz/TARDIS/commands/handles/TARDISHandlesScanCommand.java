@@ -118,7 +118,7 @@ public class TARDISHandlesScanCommand {
                                 et = EntityType.COMPLEX_PART;
                                 break;
                             case IRON_HELMET:
-                            case GOLD_HELMET:
+                            case GOLDEN_HELMET:
                             case CHAINMAIL_HELMET:
                                 if (ee.getHelmet().hasItemMeta() && ee.getHelmet().getItemMeta().hasDisplayName()) {
                                     String dn = ee.getHelmet().getItemMeta().getDisplayName();

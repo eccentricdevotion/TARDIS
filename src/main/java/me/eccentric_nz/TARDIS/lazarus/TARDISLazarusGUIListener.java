@@ -35,6 +35,7 @@ import org.bukkit.entity.Llama;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -479,7 +480,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 } else {
                     o = 1;
                 }
-                t = VillagerProfession.values()[o].toString();
+//                t = VillagerProfession.values()[o].toString();
+                t = Profession.values()[o].toString();
                 professions.put(uuid, o);
                 break;
             case "SLIME":
@@ -569,23 +571,43 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private VillagerProfession getProfession(Inventory i) {
+//    private VillagerProfession getProfession(Inventory i) {
+//        ItemStack is = i.getItem(48);
+//        ItemMeta im = is.getItemMeta();
+//        try {
+//            return VillagerProfession.valueOf(im.getLore().get(0));
+//        } catch (IllegalArgumentException e) {
+//            return VillagerProfession.FARMER;
+//        }
+//    }
+//
+//    private ZombieProfession getZombieProfession(Inventory i) {
+//        ItemStack is = i.getItem(48);
+//        ItemMeta im = is.getItemMeta();
+//        try {
+//            return ZombieProfession.valueOf(im.getLore().get(0));
+//        } catch (IllegalArgumentException e) {
+//            return ZombieProfession.NORMAL;
+//        }
+//    }
+
+    private Profession getProfession(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return VillagerProfession.valueOf(im.getLore().get(0));
+            return Profession.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return VillagerProfession.FARMER;
+            return Profession.FARMER;
         }
     }
 
-    private ZombieProfession getZombieProfession(Inventory i) {
+    private Profession getZombieProfession(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return ZombieProfession.valueOf(im.getLore().get(0));
+            return Profession.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return ZombieProfession.NORMAL;
+            return Profession.NORMAL;
         }
     }
 

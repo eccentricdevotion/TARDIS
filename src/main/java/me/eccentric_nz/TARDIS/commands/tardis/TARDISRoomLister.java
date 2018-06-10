@@ -49,7 +49,7 @@ public class TARDISRoomLister {
                     player.sendMessage("    " + s);
                 });
             } else {
-                TARDISMessage.send(player, true, "ROOM_NONE");
+                TARDISMessage.send(player, "ROOM_NONE");
             }
         });
         TARDISMessage.send(player, "ROOM_GALLERY");

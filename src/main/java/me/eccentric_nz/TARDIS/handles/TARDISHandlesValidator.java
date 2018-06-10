@@ -217,10 +217,10 @@ class TARDISHandlesValidator {
                 !thb.equals(TARDISHandlesBlock.Y) &&
                 !thb.equals(TARDISHandlesBlock.Z) &&
                 !thb.equals(TARDISHandlesBlock.RANDOM) &&
-                !record.equals(Material.GREEN_RECORD) &&
-                !record.equals(Material.RECORD_3) &&
-                !record.equals(Material.RECORD_4) &&
-                !record.equals(Material.RECORD_12)) {
+                !record.equals(Material.MUSIC_DISC_CHIRP) &&
+                !record.equals(Material.MUSIC_DISC_WAIT) &&
+                !record.equals(Material.MUSIC_DISC_CAT) &&
+                !record.equals(Material.MUSIC_DISC_BLOCKS)) {
             return false;
         }
         return true;
