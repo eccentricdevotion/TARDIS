@@ -86,7 +86,7 @@ public class TARDISGallifrey {
             } else {
                 WorldCreator.name("Gallifrey").type(WorldType.NORMAL).environment(World.Environment.NORMAL).createWorld();
             }
-            if (plugin.getPM().isPluginEnabled("My Worlds")) {
+            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Gallifrey:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }

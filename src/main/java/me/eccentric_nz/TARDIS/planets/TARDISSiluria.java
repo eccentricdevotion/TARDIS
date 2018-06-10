@@ -85,7 +85,7 @@ public class TARDISSiluria {
             } else {
                 WorldCreator.name("Siluria").type(WorldType.NORMAL).environment(World.Environment.NETHER).createWorld();
             }
-            if (plugin.getPM().isPluginEnabled("My Worlds")) {
+            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Siluria:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }

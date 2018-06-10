@@ -163,7 +163,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Core", "2.5");
         versions.put("Multiverse-Inventories", "2.5");
         versions.put("MultiInv", "3.3.6");
-        versions.put("My Worlds", "1.67");
+        versions.put("My_Worlds", "1.67");
         versions.put("PerWorldInventory", "1.9.0");
         versions.put("ProtocolLib", "4.4.0");
         versions.put("TARDISChunkGenerator", "4.0");
@@ -814,7 +814,7 @@ public class TARDIS extends JavaPlugin {
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
             }
-            if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null && pm.getPlugin("My Worlds") == null)) {
+            if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null && pm.getPlugin("My_Worlds") == null)) {
                 getConfig().set("creation.create_worlds", false);
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");

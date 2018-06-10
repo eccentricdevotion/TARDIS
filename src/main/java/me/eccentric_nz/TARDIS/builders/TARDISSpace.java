@@ -81,7 +81,7 @@ public class TARDISSpace {
             plugin.getConfig().set("worlds." + name, false);
             plugin.saveConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-            if (plugin.getPM().isPluginEnabled("My Worlds")) {
+            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds gamemode " + gm + " " + name);
@@ -181,7 +181,7 @@ public class TARDISSpace {
         // add world to config, but disabled by default
         plugin.getConfig().set("worlds." + name, false);
         plugin.saveConfig();
-        if (plugin.getPM().isPluginEnabled("My Worlds")) {
+        if (plugin.getPM().isPluginEnabled("My_Worlds")) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
             plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
             if (plugin.getConfig().getBoolean("creation.keep_night")) {

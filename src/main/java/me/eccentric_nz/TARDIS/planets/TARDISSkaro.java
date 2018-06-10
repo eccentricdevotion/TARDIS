@@ -93,7 +93,7 @@ public class TARDISSkaro {
             } else {
                 WorldCreator.name("Skaro").type(WorldType.NORMAL).environment(World.Environment.NORMAL).createWorld();
             }
-            if (plugin.getPM().isPluginEnabled("My Worlds")) {
+            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Skaro:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }

@@ -339,7 +339,7 @@ public class TARDISExterminator {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw delete " + name);
             }
-            if (plugin.getPM().isPluginEnabled("My Worlds")) {
+            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + name);
             }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
