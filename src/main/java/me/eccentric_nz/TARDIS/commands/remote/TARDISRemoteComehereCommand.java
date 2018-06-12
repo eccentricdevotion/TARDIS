@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -126,14 +127,19 @@ public class TARDISRemoteComehereCommand {
             // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
             count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
         }
+        Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
         if (plugin.getPM().isPluginEnabled("Lockette")) {
-            if (Lockette.isProtected(eyeLocation.getBlock())) {
+            if (Lockette.isProtected(eyeLocation.getBlock()) || Lockette.isProtected(under)) {
                 count = 1;
             }
         }
         if (plugin.getPM().isPluginEnabled("LockettePro")) {
-            Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
             if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
+                count = 1;
+            }
+        }
+        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+            if (BlockLockerAPI.isProtected(eyeLocation.getBlock()) || BlockLockerAPI.isProtected(under)) {
                 count = 1;
             }
         }

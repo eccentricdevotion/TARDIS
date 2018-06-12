@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.*;
+import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.block.data.Bisected;
@@ -1124,6 +1125,7 @@ public class TARDISSonicListener implements Listener {
         boolean wgu = false;
         boolean lke = false;
         boolean pro = false;
+        boolean bll = false;
         boolean tny = false;
         // GriefPrevention
         if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
@@ -1139,6 +1141,9 @@ public class TARDISSonicListener implements Listener {
         }
         if (plugin.getPM().isPluginEnabled("LockettePro")) {
             pro = LocketteProAPI.isProtected(b);
+        }
+        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+            pro = BlockLockerAPI.isProtected(b);
         }
         // Towny
         if (plugin.getPM().isPluginEnabled("Towny")) {

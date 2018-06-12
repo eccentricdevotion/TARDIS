@@ -25,6 +25,7 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -80,6 +81,11 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (plugin.getPM().isPluginEnabled("LockettePro")) {
                             if (LocketteProAPI.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                            if (BlockLockerAPI.isProtected(block)) {
                                 allow = false;
                             }
                         }

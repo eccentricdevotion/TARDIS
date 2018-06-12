@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -197,14 +198,19 @@ public class TARDISStattenheimListener implements Listener {
                             // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
                             count = TARDISTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                         }
+                        Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
-                            if (Lockette.isProtected(remoteLocation.getBlock().getRelative(BlockFace.DOWN))) {
+                            if (Lockette.isProtected(remoteLocation.getBlock()) || Lockette.isProtected(under)) {
                                 count = 1;
                             }
                         }
                         if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                            Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
                             if (LocketteProAPI.isProtected(remoteLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
+                                count = 1;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                            if (BlockLockerAPI.isProtected(remoteLocation.getBlock()) || BlockLockerAPI.isProtected(under)) {
                                 count = 1;
                             }
                         }

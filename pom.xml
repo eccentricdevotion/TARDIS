@@ -346,6 +346,14 @@
             <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>nl.rutgerkok</groupId>
+            <artifactId>blocklocker</artifactId>
+            <version>1.3.4</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib-API</artifactId>
             <version>4.4.0-SNAPSHOT</version>
