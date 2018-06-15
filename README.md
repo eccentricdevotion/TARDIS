@@ -9,4 +9,9 @@ TARDIS is a CraftBukkit plugin that allows you to create a TARDIS that lets you 
 * Time travel to saved destinations.
 * Grow rooms in your TARDIS.
 * Take companions with you when you time travel.
-* Collect Artron Energy to power your TARDIS.       
+* Collect Artron Energy to power your TARDIS.
+
+Plugin documentation can be found here:
+[http://eccentricdevotion.github.io/TARDIS/site-map.html](http://eccentricdevotion.github.io/TARDIS/site-map.html)
+
+Jenkins CI builds can be found here: [http://tardisjenkins.duckdns.org:8080/job/TARDIS/](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)
