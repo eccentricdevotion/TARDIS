@@ -56,7 +56,6 @@ public class TARDISRebuildCommand {
                     return true;
                 }
             }
-            plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -117,6 +116,7 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");
                 return false;
             }
+            plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
             BuildData bd = new BuildData(plugin, uuid.toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(l);

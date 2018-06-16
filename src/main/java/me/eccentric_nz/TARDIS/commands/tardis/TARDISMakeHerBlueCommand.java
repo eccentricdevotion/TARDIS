@@ -59,7 +59,6 @@ public class TARDISMakeHerBlueCommand {
                 return true;
             }
         }
-        plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -114,8 +113,9 @@ public class TARDISMakeHerBlueCommand {
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
             TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");
-            return false;
+            return true;
         }
+        plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         // set the preset to NEW
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("tardis_id", id);

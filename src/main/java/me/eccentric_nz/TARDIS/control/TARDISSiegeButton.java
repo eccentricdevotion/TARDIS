@@ -57,7 +57,6 @@ public class TARDISSiegeButton {
                 return;
             }
         }
-        plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         if (plugin.getConfig().getBoolean("allow.power_down") && !powered) {
             TARDISMessage.send(player, "POWER_DOWN");
             return;
@@ -82,6 +81,7 @@ public class TARDISSiegeButton {
             TARDISMessage.send(player, "SIEGE_CUBED");
             return;
         }
+        plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         // toggle siege mode
         new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
     }
