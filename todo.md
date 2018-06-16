@@ -16,7 +16,9 @@
 3. Aquarium room - _started_, maybe a Turtle Beach room?
 4. Transfer Handles implementation from v3.7 branch
 5. Check database updater (Material) changes
-6. Fix Biome adaptive presets dropping flowers & seeds (properly)
+6. Add `/tardisbind chameleon [off|adapt|invisible|PRESET]` command
+7. Add ability to save PRESET when performing `/tardis save [name]` command
+8. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
 * Move custom advancements to here
