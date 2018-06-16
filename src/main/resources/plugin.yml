@@ -353,7 +353,7 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     save:
       description: Save the current location of the TARDIS Police Box.
-      usage: /<command> save [name]
+      usage: /<command> save [name] <true>
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
     setdest:

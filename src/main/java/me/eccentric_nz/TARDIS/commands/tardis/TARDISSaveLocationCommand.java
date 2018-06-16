@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -39,8 +39,10 @@ public class TARDISSaveLocationCommand {
 
     public boolean doSave(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             }
@@ -52,7 +54,7 @@ public class TARDISSaveLocationCommand {
                 TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                 return false;
             } else {
-                int id = rs.getTardis_id();
+                int id = rs.getTardis().getTardis_id();
                 // check has unique name
                 HashMap<String, Object> wherename = new HashMap<>();
                 wherename.put("tardis_id", id);
@@ -86,6 +88,9 @@ public class TARDISSaveLocationCommand {
                 set.put("z", rsc.getZ());
                 set.put("direction", rsc.getDirection().toString());
                 set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+                if (args.length > 2 && args[2].equalsIgnoreCase("true")) {
+                    set.put("preset", rs.getTardis().getPreset().toString());
+                }
                 if (qf.doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {

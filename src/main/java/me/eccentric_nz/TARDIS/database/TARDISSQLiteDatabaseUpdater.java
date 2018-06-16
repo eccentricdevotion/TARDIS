@@ -59,6 +59,7 @@ public class TARDISSQLiteDatabaseUpdater {
         areaupdates.add("parking_distance INTEGER DEFAULT 2");
         blockupdates.add("police_box INTEGER DEFAULT 0");
         countupdates.add("grace INTEGER DEFAULT 0");
+        destupdates.add("preset TEXT DEFAULT ''");
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
         destupdates.add("direction TEXT DEFAULT ''");

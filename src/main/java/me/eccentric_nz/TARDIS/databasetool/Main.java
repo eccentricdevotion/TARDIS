@@ -173,7 +173,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case destinations:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("dest_id"), rs.getInt("tardis_id"), rs.getString("dest_name"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getString("bind"), rs.getInt("type"), rs.getInt("submarine"), rs.getInt("slot")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("dest_id"), rs.getInt("tardis_id"), rs.getString("dest_name"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getString("preset"), rs.getString("bind"), rs.getInt("type"), rs.getInt("submarine"), rs.getInt("slot")) + end;
                                     bw.write(str);
                                     break;
                                 case doors:

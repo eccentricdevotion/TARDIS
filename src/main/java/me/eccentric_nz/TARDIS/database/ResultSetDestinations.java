@@ -46,6 +46,7 @@ public class ResultSetDestinations {
     private int y;
     private int z;
     private String direction;
+    private String preset;
     private String bind;
     private int type;
     private boolean submarine;
@@ -120,6 +121,7 @@ public class ResultSetDestinations {
                     y = rs.getInt("y");
                     z = rs.getInt("z");
                     direction = rs.getString("direction");
+                    preset = rs.getString("preset");
                     submarine = rs.getBoolean("submarine");
                     bind = rs.getString("bind");
                     type = rs.getInt("type");
@@ -176,6 +178,10 @@ public class ResultSetDestinations {
 
     public String getDirection() {
         return direction;
+    }
+
+    public String getPreset() {
+        return preset;
     }
 
     public boolean isSubmarine() {

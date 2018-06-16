@@ -180,6 +180,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                             set.put("submarine", 0);
                                         }
                                     }
+                                    if (l_size >= 6) {
+                                        set.put("chameleon_preset", lore.get(5));
+                                    }
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
                                     new QueryFactory(plugin).doSyncUpdate("next", set, wheret);

@@ -98,6 +98,9 @@ public class TARDISSaveSignInventory {
                         lore.add(map.get("z"));
                         lore.add(map.get("direction"));
                         lore.add((map.get("submarine").equals("1")) ? "true" : "false");
+                        if (!map.get("preset").isEmpty()) {
+                            lore.add(map.get("preset"));
+                        }
                         im.setLore(lore);
                         is.setItemMeta(im);
                         int slot;
@@ -115,7 +118,6 @@ public class TARDISSaveSignInventory {
                 }
             }
         }
-
         for (Integer s = 0; s < 45; s++) {
             if (dests.containsKey(s)) {
                 stack[s] = dests.get(s);
