@@ -83,7 +83,6 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             ADAPTION adapt = tardis.getAdaption();
-//                            String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);

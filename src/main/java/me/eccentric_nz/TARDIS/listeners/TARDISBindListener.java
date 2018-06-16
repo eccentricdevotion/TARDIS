@@ -156,6 +156,32 @@ public class TARDISBindListener implements Listener {
                                         player.performCommand("tardistravel biome " + dest_name);
                                         plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel biome " + dest_name);
                                         break;
+                                    case 5: // chameleon
+                                        HashMap<String, Object> wherec = new HashMap<>();
+                                        HashMap<String, Object> set = new HashMap<>();
+                                        switch (dest_name) {
+                                            case "off":
+                                                set.put("adapti_on", 0);
+                                                set.put("chameleon_preset", "NEW");
+                                                break;
+                                            case "adapt":
+                                                set.put("adapti_on", 1);
+                                                set.put("chameleon_preset", "FACTORY");
+                                                break;
+                                            case "invisible":
+                                                set.put("adapti_on", 0);
+                                                set.put("chameleon_preset", "INVISIBLE");
+                                                break;
+                                            default: // preset
+                                                set.put("adapti_on", 0);
+                                                set.put("chameleon_preset", rsd.getPreset().toString());
+                                                break;
+                                        }
+                                        wherec.put("tardis_id", id);
+                                        new QueryFactory(plugin).doUpdate("tardis", set, wherec);
+                                        player.performCommand("tardis rebuild");
+                                        plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis rebuild" + dest_name);
+                                        break;
                                     default: // (0) save
                                         player.performCommand("tardistravel dest " + dest_name);
                                         plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel dest " + dest_name);

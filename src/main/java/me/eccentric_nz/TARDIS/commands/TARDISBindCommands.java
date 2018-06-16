@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -40,6 +41,7 @@ public class TARDISBindCommands implements CommandExecutor {
     private final TARDIS plugin;
     private final List<String> firstArgs = new ArrayList<>();
     private final List<String> type_1;
+    private final List<String> chameleon;
 
     public TARDISBindCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -48,9 +50,11 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("player"); // type 2
         firstArgs.add("area"); // type 3
         firstArgs.add("biome"); // type 4
+        firstArgs.add("chameleon"); // type 5
         firstArgs.add("remove");
         firstArgs.add("update");
         type_1 = Arrays.asList("hide", "rebuild", "home", "cave", "make_her_blue");
+        chameleon = Arrays.asList("off", "adapt", "invisible");
     }
 
     @Override
@@ -205,6 +209,22 @@ public class TARDISBindCommands implements CommandExecutor {
                         TARDISMessage.send(player, "BIOME_NOT_VALID");
                         return true;
                     }
+                }
+                if (args[0].equalsIgnoreCase("chameleon")) { // type 5
+                    String which = args[1].toLowerCase(Locale.ENGLISH);
+                    if (!chameleon.contains(which)) {
+                        try {
+                            which = args[1].toUpperCase(Locale.ENGLISH);
+                            PRESET.valueOf(which);
+                        } catch (IllegalArgumentException e) {
+                            // abort
+                            TARDISMessage.send(player, "ARG_PRESET");
+                            return true;
+                        }
+                    }
+                    set.put("dest_name", which);
+                    set.put("type", 5);
+                    did = qf.doSyncInsert("destinations", set);
                 }
                 if (did != 0) {
                     plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
