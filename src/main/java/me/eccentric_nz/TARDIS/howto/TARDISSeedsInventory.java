@@ -50,11 +50,11 @@ public class TARDISSeedsInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[18];
+        ItemStack[] stack = new ItemStack[27];
         int i = 0;
         // get consoles
         for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
-            if (player.hasPermission("tardis." + a.getPermission())) {
+            if (player.hasPermission("tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = new ItemStack(m, 1);
                 ItemMeta im = is.getItemMeta();
@@ -72,8 +72,7 @@ public class TARDISSeedsInventory {
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
-        stack[17] = close;
-
+        stack[26] = close;
         return stack;
     }
 

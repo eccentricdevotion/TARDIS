@@ -117,7 +117,7 @@ public class TARDISChatListener implements Listener {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());
             // open how to GUI
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-            Inventory wall = plugin.getServer().createInventory(p, 18, "§4TARDIS Seeds Menu");
+            Inventory wall = plugin.getServer().createInventory(p, 27, "§4TARDIS Seeds Menu");
             wall.setContents(seeds);
             p.openInventory(wall);
         }

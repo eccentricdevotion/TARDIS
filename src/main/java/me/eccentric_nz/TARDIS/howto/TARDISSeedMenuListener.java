@@ -48,13 +48,13 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
         if (name.equals("§4TARDIS Seeds Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 18) {
+            if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // close
                     event.setCancelled(true);
                     close(p);
-                    if (slot != 17) {
+                    if (slot != 26) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             ItemStack[] recipe = new TARDISSeedRecipeInventory(is.getType()).getMenu();
                             Inventory gui = plugin.getServer().createInventory(p, 27, "§4TARDIS Seed Recipe");
