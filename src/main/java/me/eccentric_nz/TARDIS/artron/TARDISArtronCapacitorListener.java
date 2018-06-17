@@ -243,8 +243,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     set.put("powered_on", 1);
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
-                                } else // toggle power
-                                {
+                                } else { // toggle power
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         boolean pu = true;
                                         if (abandoned) {

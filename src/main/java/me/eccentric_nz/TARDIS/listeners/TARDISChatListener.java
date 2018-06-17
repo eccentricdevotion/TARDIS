@@ -66,6 +66,7 @@ public class TARDISChatListener implements Listener {
         String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
         if (chat != null) {
             if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
+                event.setCancelled(true);
                 boolean request = (chat.equals("tardis request accept"));
                 if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
                     Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
@@ -96,6 +97,7 @@ public class TARDISChatListener implements Listener {
                     TARDISMessage.send(event.getPlayer(), message);
                 }
             } else if (chat.startsWith(plugin.getConfig().getString("handles.prefix").toLowerCase(Locale.ENGLISH))) {
+                event.setCancelled(true);
                 // process handles request
                 new TARDISHandlesRequest(plugin).process(saved, event.getMessage());
             } else {
