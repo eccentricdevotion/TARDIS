@@ -32,6 +32,64 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.8.2</h3>
+        <h4>Changes</h4>
+        <ul>
+            <li>The plugin now requires TARDISChunkGenerator v2.5.5 (see Additional Files below)</li>
+            <li>The required build of Multiverse-Inventories is now v2.5.0-SNAPSHOT-b431 or higher</li>
+            <li>Spawned abandoned TARDISes are now listed as bieing owned by TARDIS Admin</li>
+            <li>You can no longer use the TARDIS back door in junk and siege mode</li>
+            <li>Removed the Villager Career getting/setting methods from TARDISChunkGenerator (they're now included in Bukkit API)</li>
+        </ul>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a config option for preferences.no_coords
+                <ul>
+                    <li>Defaults to false - when set to true, will not display the random destination coordinates in chat when the random button is pressed</li>
+                </ul>
+            </li>
+            <li>Added a <code>false_nether</code> key to <em>planets.ym</em>l</li>
+            <li>Added support for LockettePro</li>
+            <li>Added the vault chest to the <code>/tardis update</code> lister</li>
+            <li>Added Stained Clay (Terracotta) to the blocks that can be smelted in the Smelter room</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed the Lazarus Device pressure plate location not being updated when the room was grown a second or more times</li>
+            <li>Fixed &ldquo;false&rdquo; NETHER world random location finding</li>
+            <li>Fixed a bug in the Multiverse-Inventories version check</li>
+            <li>Fixed a NullPointerException using the Admin sonic when TARDIS travellers are offline</li>
+            <li>Fixed spawned abandoned TARDISes throwing a NullPointerException because they have no associated UUID</li>
+            <li>Fixed setting the TARDIS exterior direction when spawning abandoned TARDISes</li>
+            <li>Fixed deleting abandoned TARDISes</li>
+            <li>Fixed an error with ProtocolLib sending JSON chat (we now use our own TARDISChunkGenerator method instead)</li>
+            <li>Resolved a class cast exception in Chameleon Arch inventory restoration</li>
+        </ul>
+        <h3>TARDIS v3.8.1</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added the legacy consoles to <code>/trecipe tardis [console]</code> command</li>
+            <li>Added ARS methods messages to language localisations (<em>en.yml</em>)</li>
+            <li>Added the Illusioner to the Genetic Manipulator</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Multiverse world aliases are now shown in all instances in the Destination terminal</li>
+            <li>Update to SpigotAPI 1.12.1-R0.1-SNAPSHOT</li>
+            <li>All players are now teleported to safe location when upgrading the TARDIS console</li>
+            <li>Optimised the SQL that populates control centre sign updates so servers with hundreds of TARDISes perform better</li>
+            <li>Converted TARDIS achievements to custom Advancements (complete with toasts)</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed ARS records sometimes not being created</li>
+            <li>Fixed an SQL error at startup when using MySQL</li>
+            <li>Fixed the <code>give_key</code> config option giving a key when key already had a key in their off hand slot</li>
+            <li>Fixed a bug on PaperSpigot where commands were being run from an async thread</li>
+            <li>Fixed the WorldGuard version check when it had an odd version number string e.g. <code>6.2.1;84bc322</code></li>
+            <li>Fixed checking the creeper location throwing an error in custom consoles</li>
+            <li>Fixed the looping time rotor sfx when in the time vortex not stopping when the TARDIS materialises and the player left the TARDIS by non-standard means e.g. not by the door</li>
+        </ul>
         <h3>TARDIS v3.8</h3>
         <h4>Additions</h4>
         <ul>
