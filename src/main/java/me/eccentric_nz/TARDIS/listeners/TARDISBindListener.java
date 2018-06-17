@@ -59,9 +59,9 @@ public class TARDISBindListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with blocks after running the /tardisbind [save|cmd|player|area] command. If the
-     * player's name is contained in the trackBinder HashMap then the block location is recorded in the bind field of
-     * the destinations table.
+     * Listens for player interaction with blocks after running the /tardisbind [save|cmd|player|area|biome|chameleon]
+     * command. If the player's name is contained in the trackBinder HashMap then the block location is recorded in the
+     * bind field of the destinations table.
      * <p>
      * If the player is travelling in the TARDIS then a check is made of the destinations table for the location of the
      * clicked block. If found the destination for the next TARDIS time travel location is set.
@@ -116,6 +116,11 @@ public class TARDISBindListener implements Listener {
                                 }
                                 if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                    return;
+                                }
+                                // make sure TARDIS is not dispersed
+                                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                    TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
                                     return;
                                 }
                                 // what bind type is it?

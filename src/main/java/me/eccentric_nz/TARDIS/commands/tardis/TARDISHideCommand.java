@@ -100,6 +100,11 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
             }
+            // make sure TARDIS is not dispersed
+            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
+                return true;
+            }
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", tardis.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

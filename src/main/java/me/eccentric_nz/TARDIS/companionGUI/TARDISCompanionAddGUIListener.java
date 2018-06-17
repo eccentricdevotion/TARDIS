@@ -48,7 +48,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPageThreeTerminalClick(InventoryClickEvent event) {
+    public void onCompanionAddGUIClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Add Companion")) {
