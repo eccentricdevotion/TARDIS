@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -85,13 +84,17 @@ public class ResultSetGravity {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue() instanceof String) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        if (entry.getValue().getClass().getName().contains("Double")) {
-                            statement.setDouble(s, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
-                        } else {
-                            statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        if (entry.getValue() instanceof Integer) {
+                            statement.setInt(s, (Integer) entry.getValue());
+                        } else if (entry.getValue() instanceof Double) {
+                            statement.setDouble(s, (Double) entry.getValue());
+                        } else if (entry.getValue() instanceof Float) {
+                            statement.setFloat(s, (Float) entry.getValue());
+                        } else if (entry.getValue() instanceof Long) {
+                            statement.setLong(s, (Long) entry.getValue());
                         }
                     }
                     s++;

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,15 +70,17 @@ public class TARDISSQLInsert implements Runnable {
             ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
+                if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
-                    if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
-                    } else if (entry.getValue().getClass().getName().contains("Long")) {
-                        ps.setLong(i, TARDISNumberParsers.parseLong(entry.getValue().toString()));
-                    } else {
-                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                    if (entry.getValue() instanceof Integer) {
+                        ps.setInt(i, (Integer) entry.getValue());
+                    } else if (entry.getValue() instanceof Double) {
+                        ps.setDouble(i, (Double) entry.getValue());
+                    } else if (entry.getValue() instanceof Float) {
+                        ps.setFloat(i, (Float) entry.getValue());
+                    } else if (entry.getValue() instanceof Long) {
+                        ps.setLong(i, (Long) entry.getValue());
                     }
                 }
                 i++;

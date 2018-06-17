@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.database;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
@@ -89,10 +88,10 @@ public class ResultSetCurrentLocation {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue() instanceof String) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, (Integer) entry.getValue());
                     }
                     s++;
                 }

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,10 +96,10 @@ public class ResultSetTardis {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
+                    if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, (Integer) entry.getValue());
                     }
                     s++;
                 }
@@ -122,46 +121,46 @@ public class ResultSetTardis {
                         zero = "";
                     }
                     tardis = new Tardis(
-                            rs.getInt("tardis_id"),
-                            UUID.fromString(uuid),
-                            rs.getString("owner"),
-                            rs.getString("last_known_name"),
-                            rs.getString("chunk"),
-                            rs.getInt("tips"),
-                            CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH)),
-                            rs.getBoolean("abandoned"),
-                            companions,
-                            rs.getString("save_sign"),
-                            rs.getString("chameleon"),
-                            PRESET.valueOf(rs.getString("chameleon_preset")),
-                            PRESET.valueOf(rs.getString("chameleon_demat")),
-                            rs.getInt("adapti_on"),
-                            rs.getInt("artron_level"),
-                            rs.getString("creeper"),
-                            rs.getString("condenser"),
-                            rs.getString("beacon"),
-                            rs.getBoolean("handbrake_on"),
-                            rs.getBoolean("tardis_init"),
-                            rs.getBoolean("recharging"),
-                            rs.getString("scanner"),
-                            rs.getString("farm"),
-                            rs.getString("stable"),
-                            rs.getBoolean("hidden"),
-                            rs.getLong("lastuse"),
-                            rs.getBoolean("iso_on"),
-                            rs.getString("eps"),
-                            rs.getString("rail"),
-                            rs.getString("village"),
-                            rs.getString("renderer"),
-                            zero,
-                            rs.getString("hutch"),
-                            rs.getString("igloo"),
-                            rs.getString("stall"),
-                            rs.getString("birdcage"),
-                            rs.getBoolean("powered_on"),
-                            rs.getBoolean("lights_on"),
-                            rs.getBoolean("siege_on"),
-                            rs.getInt("monsters")
+                        rs.getInt("tardis_id"),
+                        UUID.fromString(uuid),
+                        rs.getString("owner"),
+                        rs.getString("last_known_name"),
+                        rs.getString("chunk"),
+                        rs.getInt("tips"),
+                        CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH)),
+                        rs.getBoolean("abandoned"),
+                        companions,
+                        rs.getString("save_sign"),
+                        rs.getString("chameleon"),
+                        PRESET.valueOf(rs.getString("chameleon_preset")),
+                        PRESET.valueOf(rs.getString("chameleon_demat")),
+                        rs.getInt("adapti_on"),
+                        rs.getInt("artron_level"),
+                        rs.getString("creeper"),
+                        rs.getString("condenser"),
+                        rs.getString("beacon"),
+                        rs.getBoolean("handbrake_on"),
+                        rs.getBoolean("tardis_init"),
+                        rs.getBoolean("recharging"),
+                        rs.getString("scanner"),
+                        rs.getString("farm"),
+                        rs.getString("stable"),
+                        rs.getBoolean("hidden"),
+                        rs.getLong("lastuse"),
+                        rs.getBoolean("iso_on"),
+                        rs.getString("eps"),
+                        rs.getString("rail"),
+                        rs.getString("village"),
+                        rs.getString("renderer"),
+                        zero,
+                        rs.getString("hutch"),
+                        rs.getString("igloo"),
+                        rs.getString("stall"),
+                        rs.getString("birdcage"),
+                        rs.getBoolean("powered_on"),
+                        rs.getBoolean("lights_on"),
+                        rs.getBoolean("siege_on"),
+                        rs.getInt("monsters")
                     );
                     if (multiple) {
                         data.add(tardis);

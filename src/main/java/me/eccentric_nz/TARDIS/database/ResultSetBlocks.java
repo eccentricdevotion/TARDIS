@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -84,10 +83,10 @@ public class ResultSetBlocks {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue() instanceof String) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, (Integer) entry.getValue());
                     }
                     s++;
                 }
@@ -98,12 +97,12 @@ public class ResultSetBlocks {
                 while (rs.next()) {
                     String str = rs.getString("location");
                     replacedBlock = new ReplacedBlock(
-                            rs.getInt("b_id"),
-                            rs.getInt("tardis_id"),
-                            plugin.getLocationUtils().getLocationFromBukkitString(str),
-                            str,
-                            plugin.getServer().createBlockData(rs.getString("data")),
-                            rs.getInt("police_box")
+                        rs.getInt("b_id"),
+                        rs.getInt("tardis_id"),
+                        plugin.getLocationUtils().getLocationFromBukkitString(str),
+                        str,
+                        plugin.getServer().createBlockData(rs.getString("data")),
+                        rs.getInt("police_box")
                     );
                     if (multiple) {
                         data.add(replacedBlock);

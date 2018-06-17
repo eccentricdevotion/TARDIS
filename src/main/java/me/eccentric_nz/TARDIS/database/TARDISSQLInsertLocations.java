@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,10 +74,10 @@ public class TARDISSQLInsertLocations implements Runnable {
                 ps = connection.prepareStatement("INSERT INTO " + prefix + s + " (" + fields + ") VALUES (" + questions + ")");
                 int i = 1;
                 for (Map.Entry<String, Object> entry : data.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue() instanceof String) {
                         ps.setString(i, entry.getValue().toString());
                     } else {
-                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        ps.setInt(i, (Integer) entry.getValue());
                     }
                     i++;
                 }

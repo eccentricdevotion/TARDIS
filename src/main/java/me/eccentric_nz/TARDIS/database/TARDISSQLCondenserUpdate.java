@@ -57,7 +57,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
         StringBuilder sbw = new StringBuilder();
         where.entrySet().forEach((entry) -> {
             sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
+            if (entry.getValue() instanceof String) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.*;
 import java.util.*;
@@ -83,10 +82,10 @@ public class ResultSetAchievements {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
+                    if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, (Integer) entry.getValue());
                     }
                     s++;
                 }

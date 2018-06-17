@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 
 import java.sql.Connection;
@@ -82,10 +81,10 @@ public class ResultSetSonic {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue() instanceof String) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, (Integer) entry.getValue());
                     }
                     s++;
                 }
@@ -97,16 +96,16 @@ public class ResultSetSonic {
                 String colour = rs.getString("sonic_type");
                 ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
-                        rs.getInt("sonic_id"),
-                        UUID.fromString(rs.getString("uuid")),
-                        rs.getBoolean("activated"),
-                        cc,
-                        rs.getBoolean("bio"),
-                        rs.getBoolean("diamond"),
-                        rs.getBoolean("emerald"),
-                        rs.getBoolean("redstone"),
-                        rs.getBoolean("painter"),
-                        rs.getBoolean("ignite")
+                    rs.getInt("sonic_id"),
+                    UUID.fromString(rs.getString("uuid")),
+                    rs.getBoolean("activated"),
+                    cc,
+                    rs.getBoolean("bio"),
+                    rs.getBoolean("diamond"),
+                    rs.getBoolean("emerald"),
+                    rs.getBoolean("redstone"),
+                    rs.getBoolean("painter"),
+                    rs.getBoolean("ignite")
                 );
             } else {
                 return false;

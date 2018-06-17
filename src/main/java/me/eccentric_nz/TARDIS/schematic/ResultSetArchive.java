@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,10 +65,10 @@ public class ResultSetArchive {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue() instanceof String) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, (Integer) entry.getValue());
                     }
                     s++;
                 }
@@ -78,17 +77,7 @@ public class ResultSetArchive {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    archive = new Archive(
-                            rs.getInt("archive_id"),
-                            UUID.fromString(rs.getString("uuid")),
-                            rs.getString("name"),
-                            rs.getString("console_size"),
-                            rs.getBoolean("beacon"),
-                            rs.getBoolean("lanterns"),
-                            rs.getInt("use"),
-                            new JSONObject(rs.getString("data")),
-                            rs.getString("description")
-                    );
+                    archive = new Archive(rs.getInt("archive_id"), UUID.fromString(rs.getString("uuid")), rs.getString("name"), rs.getString("console_size"), rs.getBoolean("beacon"), rs.getBoolean("lanterns"), rs.getInt("use"), new JSONObject(rs.getString("data")), rs.getString("description"));
                 }
             } else {
                 return false;
