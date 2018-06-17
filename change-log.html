@@ -35,17 +35,17 @@
         <h3>TARDIS v3.8.2</h3>
         <h4>Changes</h4>
         <ul>
-            <li>The plugin now requires TARDISChunkGenerator v2.5.5 (see Additional Files below)</li>
+            <li>The plugin now requires TARDISChunkGenerator v2.5.5 (see Additional Files)</li>
             <li>The required build of Multiverse-Inventories is now v2.5.0-SNAPSHOT-b431 or higher</li>
-            <li>Spawned abandoned TARDISes are now listed as bieing owned by TARDIS Admin</li>
+            <li>Spawned abandoned TARDISes are now listed as being owned by TARDIS Admin</li>
             <li>You can no longer use the TARDIS back door in junk and siege mode</li>
             <li>Removed the Villager Career getting/setting methods from TARDISChunkGenerator (they're now included in Bukkit API)</li>
         </ul>
         <h4>Additions</h4>
         <ul>
-            <li>Added a config option for preferences.no_coords
+            <li>Added a config option for <code>preferences.no_coords</code>
                 <ul>
-                    <li>Defaults to false - when set to true, will not display the random destination coordinates in chat when the random button is pressed</li>
+                    <li>Defaults to <code>false</code> &mdash; when set to <code>true</code>, will not display the random destination coordinates in chat when the random button is pressed</li>
                 </ul>
             </li>
             <li>Added a <code>false_nether</code> key to <em>planets.ym</em>l</li>
@@ -77,14 +77,14 @@
             <li>Multiverse world aliases are now shown in all instances in the Destination terminal</li>
             <li>Update to SpigotAPI 1.12.1-R0.1-SNAPSHOT</li>
             <li>All players are now teleported to safe location when upgrading the TARDIS console</li>
-            <li>Optimised the SQL that populates control centre sign updates so servers with hundreds of TARDISes perform better</li>
+            <li>Optimised the SQL that populates the control centre sign updates so servers with hundreds of TARDISes perform better</li>
             <li>Converted TARDIS achievements to custom Advancements (complete with toasts)</li>
         </ul>
         <h4>Bug fixes</h4>
         <ul>
             <li>Fixed ARS records sometimes not being created</li>
             <li>Fixed an SQL error at startup when using MySQL</li>
-            <li>Fixed the <code>give_key</code> config option giving a key when key already had a key in their off hand slot</li>
+            <li>Fixed the <code>give_key</code> config option giving a key when the player already had a key in their off hand slot</li>
             <li>Fixed a bug on PaperSpigot where commands were being run from an async thread</li>
             <li>Fixed the WorldGuard version check when it had an odd version number string e.g. <code>6.2.1;84bc322</code></li>
             <li>Fixed checking the creeper location throwing an error in custom consoles</li>
