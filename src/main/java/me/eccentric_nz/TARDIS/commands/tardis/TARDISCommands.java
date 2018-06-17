@@ -52,7 +52,6 @@ public class TARDISCommands implements CommandExecutor {
     }
 
     @Override
-
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
@@ -82,151 +81,115 @@ public class TARDISCommands implements CommandExecutor {
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
-            } else {
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
-                    return true;
-                }
-                if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && tc.noSiege()) {
-                    TARDISMessage.send(player, "SIEGE_NO_CMD");
-                    return true;
-                }
-                if (args[0].equalsIgnoreCase("abandon")) {
+            }
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && tc.noSiege()) {
+                TARDISMessage.send(player, "SIEGE_NO_CMD");
+                return true;
+            }
+            switch (tc) {
+                case abandon:
                     return new TARDISAbandonCommand(plugin).doAbandon(sender, args.length > 1);
-                }
-                if (args[0].equalsIgnoreCase("add")) {
+                case add:
                     if (args.length == 1) {
                         return new TARDISAddCompanionCommand(plugin).doAddGUI(player);
                     } else {
                         return new TARDISAddCompanionCommand(plugin).doAdd(player, args);
                     }
-                }
-                if (args[0].equalsIgnoreCase("arch_time")) {
+                case arch_time:
                     return new TARDISArchCommand(plugin).getTime(player);
-                }
-                if (args[0].equalsIgnoreCase("archive")) {
+                case archive:
                     return new TARDISArchiveCommand(plugin).zip(player, args);
-                }
-                if (args[0].equalsIgnoreCase("arsremove")) {
+                case arsremove:
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
-                }
-                if (args[0].equalsIgnoreCase("check_loc")) {
+                case check_loc:
                     return new TARDISCheckLocCommand(plugin).doACheckLocation(player, args);
-                }
-                if (args[0].equalsIgnoreCase("colourise") || args[0].equalsIgnoreCase("colorize")) {
+                case colourise:
+                case colorize:
                     new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
-                }
-                if (args[0].equalsIgnoreCase("comehere")) {
+                case comehere:
                     return new TARDISComehereCommand(plugin).doComeHere(player);
-                }
-                if (args[0].equalsIgnoreCase("construct")) {
+                case construct:
                     return new TARDISConstructCommand(plugin).setLine(player, args);
-                }
-                if (args[0].equalsIgnoreCase("cube")) {
+                case cube:
                     return new TARDISCubeCommand(plugin).whoHasCube(player);
-                }
-                if (args[0].equalsIgnoreCase("desktop") || args[0].equalsIgnoreCase("upgrade") || args[0].equalsIgnoreCase("theme")) {
+                case desktop:
+                case upgrade:
+                case theme:
                     return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
-                }
-                if (args[0].equalsIgnoreCase("direction")) {
+                case direction:
                     return new TARDISDirectionCommand(plugin).changeDirection(player, args);
-                }
-                // play tardis theme on noteblocks
-                if (args[0].equalsIgnoreCase("egg")) {
+                case egg: // play tardis theme on noteblocks
                     return new TARDISPlayThemeCommand(plugin).playTheme(player);
-                }
-                if (args[0].equalsIgnoreCase("eject")) {
+                case eject:
                     return new TARDISEjectCommand(plugin).eject(player);
-                }
-                if (args[0].equalsIgnoreCase("excite")) {
+                case excite:
                     return new TARDISExciteCommand(plugin).excite(player);
-                }
-                if (args[0].equalsIgnoreCase("ep1")) {
+                case ep1:
                     return new TARDISEmergencyProgrammeCommand(plugin).showEP1(player);
-                }
-                if (args[0].equalsIgnoreCase("erase")) {
+                case erase:
                     return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
-                }
-                if (args[0].equalsIgnoreCase("find")) {
+                case find:
                     return new TARDISFindCommand(plugin).findTARDIS(player, args);
-                }
-                if (args[0].equalsIgnoreCase("hide")) {
+                case hide:
                     return new TARDISHideCommand(plugin).hide(player);
-                }
-                if (args[0].equalsIgnoreCase("home")) {
+                case home:
                     return new TARDISHomeCommand(plugin).setHome(player, args);
-                }
-                if (args[0].equalsIgnoreCase("inside")) {
+                case inside:
                     return new TARDISInsideCommand(plugin).whosInside(player, args);
-                }
-                if (args[0].equalsIgnoreCase("jettison")) {
+                case jettison:
                     return new TARDISJettisonCommand(plugin).startJettison(player, args);
-                }
-                if (args[0].equalsIgnoreCase("lamps")) {
+                case lamps:
                     return new TARDISLampsCommand(plugin).addLampBlocks(player);
-                }
-                if (args[0].equalsIgnoreCase("list")) {
+                case list:
                     return new TARDISListCommand(plugin).doList(player, args);
-                }
-                if (args[0].equalsIgnoreCase("make_her_blue")) {
+                case make_her_blue:
                     return new TARDISMakeHerBlueCommand(plugin).show(player);
-                }
-                if (args[0].equalsIgnoreCase("namekey")) {
+                case namekey:
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);
-                }
-                if (args[0].equalsIgnoreCase("occupy")) {
+                case occupy:
                     return new TARDISOccupyCommand(plugin).toggleOccupancy(player);
-                }
-                if (args[0].equalsIgnoreCase("rebuild")) {
+                case rebuild:
                     return new TARDISRebuildCommand(plugin).rebuildPreset(player);
-                }
-                if (args[0].equalsIgnoreCase("remove")) {
+                case remove:
                     return new TARDISRemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
-                }
-                if (args[0].equalsIgnoreCase("removesave")) {
+                case removesave:
                     return new TARDISRemoveSavedLocationCommand(plugin).doRemoveSave(player, args);
-                }
-                if (args[0].equalsIgnoreCase("rescue")) {
+                case rescue:
                     return new TARDISRescueCommand(plugin).startRescue(player, args);
-                }
-                if (args[0].equalsIgnoreCase("room")) {
+                case room:
                     return new TARDISRoomCommand(plugin).startRoom(player, args);
-                }
-                if (args[0].equalsIgnoreCase("save_player")) {
+                case save_player:
                     ItemStack is = player.getInventory().getItemInMainHand();
                     if (heldDiskIsWrong(is, "Player Storage Disk")) {
                         TARDISMessage.send(player, "DISK_HAND_PLAYER");
                         return true;
                     }
                     return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
-                }
-                if (args[0].equalsIgnoreCase("secondary")) {
+                case secondary:
                     return new TARDISSecondaryCommand(plugin).startSecondary(player, args);
-                }
-                if (args[0].equalsIgnoreCase("section")) {
+                case section:
                     return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
-                }
-                if (args[0].equalsIgnoreCase("setdest")) {
+                case setdest:
                     return new TARDISSetDestinationCommand(plugin).doSetDestination(player, args);
-                }
-                if (args[0].equalsIgnoreCase("tagtheood")) {
+                case tagtheood:
                     return new TARDISTagCommand(plugin).getStats(player);
-                }
-                if (args[0].equalsIgnoreCase("update")) {
+                case transmat:
+                    return new TARDISTransmatCommand(plugin).setLocation(player, args);
+                case update:
                     return new TARDISUpdateCommand(plugin).startUpdate(player, args);
-                }
-                if (args[0].equalsIgnoreCase("abort")) {
+                case abort:
                     return new TARDISAbortCommand(plugin).doAbort(player, args);
-                }
-                // delete the TARDIS
-                if (args[0].equalsIgnoreCase("exterminate")) {
+                case exterminate: // delete the TARDIS
                     return new TARDISExterminateCommand(plugin).doExterminate(player);
-                }
-                if (args[0].equalsIgnoreCase("save")) {
-                    ItemStack is = player.getInventory().getItemInMainHand();
+                case save:
+                    ItemStack itemStack = player.getInventory().getItemInMainHand();
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                        if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(is, "Save Storage Disk")) {
+                        if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
                             TARDISMessage.send(player, "DISK_HAND_SAVE");
                             return true;
                         }
@@ -234,7 +197,6 @@ public class TARDISCommands implements CommandExecutor {
                     } else {
                         return new TARDISSaveLocationCommand(plugin).doSave(player, args);
                     }
-                }
             }
         }
         // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.

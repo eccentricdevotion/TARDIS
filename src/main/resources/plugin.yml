@@ -161,7 +161,6 @@ permissions:
   tardis.legacy_redstone:
     description: Allow players to build the legacy 'redstone' TARDIS.
     default: op
-
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
     default: op
@@ -329,6 +328,9 @@ permissions:
     default: op
   tardis.atmospheric:
     description: Allows a player to initiate atmospheric exitation around their TARDIS.
+    default: op
+  tardis.transmat:
+    description: Allows a player to add internal transmat locations to their TARDIS.
     default: op
   tardis.handles:
     description: Allow players to use the Handles companion.
@@ -525,6 +527,10 @@ commands:
     tagtheood:
       description: Display the 'Tag the Ood' game statistics.
       usage: /<command> tagtheood
+    transmat:
+      description: Sets an internal TARDIS transmat location.
+      usage: /<command> transmat [name]
+      permission: tardis.transmat
   tardistravel:
     aliases: ttravel
     description: Travel to destinations in various ways.

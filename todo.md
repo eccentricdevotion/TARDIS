@@ -18,8 +18,10 @@
 5. Check database updater (Material) changes
 6. Add player preference to bypass `tardis rescue accept`
 7. Add `invisibility` setting to TARDIS areas
-8. Add Transmat signs
-9. Fix Biome adaptive presets dropping flowers & seeds (properly)
+8. Add Transmat signs and command/database table to set interior transmat locations - _started_
+   * Add transmat to Handles requests
+9. Add new mobs to TARDISEntityTracker
+10. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
 * Move custom advancements to here

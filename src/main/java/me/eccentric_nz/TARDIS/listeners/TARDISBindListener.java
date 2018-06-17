@@ -17,13 +17,12 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -179,13 +178,33 @@ public class TARDISBindListener implements Listener {
                                                 break;
                                             default: // preset
                                                 set.put("adapti_on", 0);
-                                                set.put("chameleon_preset", rsd.getPreset().toString());
+                                                set.put("chameleon_preset", rsd.getPreset());
                                                 break;
                                         }
                                         wherec.put("tardis_id", id);
                                         new QueryFactory(plugin).doUpdate("tardis", set, wherec);
                                         player.performCommand("tardis rebuild");
                                         plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis rebuild" + dest_name);
+                                        break;
+                                    case 6:
+                                        // transmat player to internal destination
+                                        if (rsd.getPreset().equals("console")) {
+                                            // get internal door location
+                                            plugin.getGeneralKeeper().getRendererListener().transmat(player);
+                                        } else {
+                                            // look up the transmat location
+                                            ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, rsd.getPreset());
+                                            if (rsm.resultSet()) {
+                                                TARDISMessage.send(player, "TRANSMAT");
+                                                Location tp_loc = rsm.getLocation();
+                                                tp_loc.setYaw(rsm.getYaw());
+                                                tp_loc.setPitch(player.getLocation().getPitch());
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                                    player.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+                                                    player.teleport(tp_loc);
+                                                }, 10L);
+                                            }
+                                        }
                                         break;
                                     default: // (0) save
                                         player.performCommand("tardistravel dest " + dest_name);

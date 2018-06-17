@@ -20,13 +20,13 @@ package me.eccentric_nz.TARDIS.enumeration;
  * @author eccentric_nz
  */
 public enum TARDIS_COMMAND {
-
     abandon,
     abort,
     add,
     arch_time,
     archive,
     arsremove,
+    check_loc,
     colourise,
     colorize,
     comehere,
@@ -34,6 +34,7 @@ public enum TARDIS_COMMAND {
     cube,
     desktop,
     direction,
+    egg,
     eject,
     ep1,
     erase,
@@ -62,6 +63,7 @@ public enum TARDIS_COMMAND {
     setdest,
     tagtheood,
     theme,
+    transmat,
     update,
     upgrade,
     version;

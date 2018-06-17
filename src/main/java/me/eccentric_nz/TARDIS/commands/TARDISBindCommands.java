@@ -51,6 +51,7 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("area"); // type 3
         firstArgs.add("biome"); // type 4
         firstArgs.add("chameleon"); // type 5
+        firstArgs.add("transmat"); // type 6
         firstArgs.add("remove");
         firstArgs.add("update");
         type_1 = Arrays.asList("hide", "rebuild", "home", "cave", "make_her_blue");
@@ -107,11 +108,11 @@ public class TARDISBindCommands implements CommandExecutor {
                 TARDISMessage.send(player, "BIND_SET");
                 return true;
             }
-            if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
-                return false;
-            }
             if (args[0].equalsIgnoreCase("remove")) {
+                if (args.length < 2) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return false;
+                }
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
@@ -142,6 +143,24 @@ public class TARDISBindCommands implements CommandExecutor {
                 return true;
             } else {
                 int did = 0;
+                QueryFactory qf = new QueryFactory(plugin);
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("tardis_id", id);
+                if (args[0].equalsIgnoreCase("transmat")) { // type 6
+                    if (args.length > 1) {
+                        set.put("preset", args[2]);
+                    } else {
+                        set.put("preset", "console");
+                    }
+                    set.put("dest_name", "transmat");
+                    set.put("type", 6);
+                    did = qf.doSyncInsert("destinations", set);
+                }
+                // all the rest require at least 2 arguments
+                if (args.length < 2) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("save")) { // type 0
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
@@ -154,9 +173,6 @@ public class TARDISBindCommands implements CommandExecutor {
                         did = rsd.getDest_id();
                     }
                 }
-                QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("tardis_id", id);
                 if (args[0].equalsIgnoreCase("cmd")) { // type 1
                     if (!type_1.contains(args[1])) {
                         TARDISMessage.send(player, "BIND_CMD_NOT_VALID");

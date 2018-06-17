@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class TARDISBindTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("save", "cmd", "player", "area", "biome", "remove", "update", "chameleon");
+    private final List<String> ROOT_SUBS = ImmutableList.of("save", "cmd", "player", "area", "biome", "remove", "update", "chameleon", "transmat");
     private final ImmutableList<String> T1_SUBS = ImmutableList.of("hide", "rebuild", "home", "cave", "make_her_blue");
     private final ImmutableList<String> CHAM_SUBS = ImmutableList.of("off", "adapt", "invisible");
 
@@ -43,12 +43,13 @@ public class TARDISBindTabComplete extends TARDISCompleter implements TabComplet
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
-            if (sub.equals("player")) {
-                return null;
-            } else if (sub.equals("cmd")) {
-                return partial(lastArg, T1_SUBS);
-            } else if (sub.equals("chameleon")) {
-                return partial(lastArg, CHAM_SUBS);
+            switch (sub) {
+                case "player":
+                    return null;
+                case "cmd":
+                    return partial(lastArg, T1_SUBS);
+                case "chameleon":
+                    return partial(lastArg, CHAM_SUBS);
             }
         }
         return ImmutableList.of();
