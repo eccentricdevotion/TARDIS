@@ -326,6 +326,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             TARDISMessage.send(player, "LOST_IN_VORTEX");
                                             return;
                                         }
+                                        // Can't SHIFT-click if INVISIBLE preset
+                                        if (preset.equals(PRESET.INVISIBLE)) {
+                                            TARDISMessage.send(player, "INVISIBILITY_SNEAK");
+                                            return;
+                                        }
                                         Location exitLoc;
                                         // player is in the TARDIS - always exit to current location
                                         Block door_bottom;
