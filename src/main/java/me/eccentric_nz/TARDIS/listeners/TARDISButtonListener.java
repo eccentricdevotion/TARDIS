@@ -130,6 +130,11 @@ public class TARDISButtonListener implements Listener {
                             TARDISMessage.send(player, "ENERGY_NO_INIT");
                             return;
                         }
+                        // check isomorphic controls
+                        if (tardis.isIso_on() && !player.getUniqueId().equals(tardis.getUuid())) {
+                            TARDISMessage.send(player, "ISO_HANDS_OFF");
+                            return;
+                        }
                         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !allow_unpowered.contains(type)) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
