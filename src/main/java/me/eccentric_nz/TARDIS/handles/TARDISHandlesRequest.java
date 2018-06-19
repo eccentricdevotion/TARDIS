@@ -55,7 +55,7 @@ public class TARDISHandlesRequest {
             return;
         }
         if (!player.hasPermission("tardis.handles.use")) {
-            TARDISMessage.send(player, "NO_PERM");
+            TARDISMessage.send(player, "NO_PERMS");
             return;
         }
         // must have a TARDIS
