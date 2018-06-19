@@ -164,7 +164,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Inventories", "2.5");
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.67");
-        versions.put("PerWorldInventory", "1.9.0");
+        versions.put("PerWorldInventory", "2.0.0");
         versions.put("ProtocolLib", "4.4.0");
         versions.put("TARDISChunkGenerator", "4.0");
         versions.put("OpenTerrainGenerator", "1.12.2");
@@ -176,7 +176,6 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
@@ -246,7 +245,6 @@ public class TARDIS extends JavaPlugin {
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
             incomposita.addShapelessRecipes();
-
             new TARDISListenerRegisterer(this).registerListeners();
             new TARDISCommandSetter(this).loadCommands();
             startSound();
@@ -255,7 +253,6 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             startZeroHealing();
             startSiegeTicks();
-
             new TARDISCreeperChecker(this).startCreeperCheck();
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
                 TARDISSpace alwaysNight = new TARDISSpace(this);
@@ -279,7 +276,6 @@ public class TARDIS extends JavaPlugin {
             resourcePack = getServerTP();
             // copy maps
             new TARDISChecker(this).checkMapsAndAdvancements();
-
             presets = new TARDISChameleonPreset();
             presets.makePresets();
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.gnat008.perworldinventory.PerWorldInventory;
-import me.gnat008.perworldinventory.api.PerWorldInventoryAPI;
+import me.ebonjaeger.perworldinventory.PerWorldInventory;
+import me.ebonjaeger.perworldinventory.api.PerWorldInventoryAPI;
 import org.bukkit.Bukkit;
 
 public class TARDISPerWorldInventoryChecker {
@@ -30,6 +30,6 @@ public class TARDISPerWorldInventoryChecker {
 
     public static void setupPWI() {
         PerWorldInventory pwi = (PerWorldInventory) Bukkit.getServer().getPluginManager().getPlugin("PerWorldInventory");
-        api = pwi.getAPI();
+        api = pwi.getApi();
     }
 }
