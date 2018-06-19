@@ -62,6 +62,8 @@ public class TARDISEntityTracker {
                 npcids.add(npc.getId());
                 if (npc.isSpawned()) {
                     switch (e.getType()) {
+                        case DROWNED:
+                        case HUSK:
                         case ZOMBIE:
                             Zombie z = (Zombie) e;
                             if (z.isBaby()) {
