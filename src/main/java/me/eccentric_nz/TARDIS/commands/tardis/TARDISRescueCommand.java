@@ -17,11 +17,15 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
+import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -59,14 +63,35 @@ public class TARDISRescueCommand {
                 }
                 UUID savedUUID = destPlayer.getUniqueId();
                 String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
-                TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
-                plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
-                        plugin.getTrackerKeeper().getChat().remove(savedUUID);
-                        TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
-                    }
-                }, 1200L);
+                // get auto_rescue_on preference
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", destPlayer.getUniqueId().toString());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                if (rsp.resultSet() && rsp.isAutoRescueOn()) {
+                    // go straight to rescue
+                    TARDISRescue res = new TARDISRescue(plugin);
+                    plugin.getTrackerKeeper().getChat().remove(saved);
+                    // delay it so the chat appears before the message
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
+                        if (rd.success()) {
+                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                                new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
+                            } else {
+                                TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
+                            }
+                        }
+                    }, 2L);
+                } else {
+                    TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
+                    plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
+                            plugin.getTrackerKeeper().getChat().remove(savedUUID);
+                            TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
+                        }
+                    }, 1200L);
+                }
             }
         } else {
             TARDISMessage.send(player, "NO_PERM_PLAYER");

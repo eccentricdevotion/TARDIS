@@ -71,6 +71,7 @@ public class TARDISSQLiteDatabaseUpdater {
         portalsupdates.add("abandoned INTEGER DEFAULT 0");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
+        prefsupdates.add("auto_rescue_on INTEGER DEFAULT 0");
         prefsupdates.add("auto_siege_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
         prefsupdates.add("build_on INTEGER DEFAULT 1");

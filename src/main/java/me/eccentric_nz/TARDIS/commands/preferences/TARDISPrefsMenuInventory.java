@@ -86,6 +86,14 @@ public class TARDISPrefsMenuInventory {
         ge_im.setLore(Arrays.asList(ge_value));
         sie.setItemMeta(ge_im);
         options.add(sie);
+        // Autonomous siege
+        ItemStack res = new ItemStack(Material.REPEATER, 1);
+        ItemMeta cue_im = res.getItemMeta();
+        cue_im.setDisplayName("Auto-rescue");
+        String cue_value = (rsp.isAutoRescueOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        cue_im.setLore(Arrays.asList(cue_value));
+        res.setItemMeta(cue_im);
+        options.add(res);
         // Beacon
         ItemStack beacon = new ItemStack(Material.REPEATER, 1);
         ItemMeta b_im = beacon.getItemMeta();
@@ -126,14 +134,14 @@ public class TARDISPrefsMenuInventory {
         ht_im.setLore(Arrays.asList(ht_value));
         hads_type.setItemMeta(ht_im);
         options.add(hads_type);
-        // minecart
-        ItemStack mine = new ItemStack(Material.REPEATER, 1);
-        ItemMeta m_im = mine.getItemMeta();
-        m_im.setDisplayName("Minecart Sounds");
-        String m_value = (rsp.isMinecartOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        m_im.setLore(Arrays.asList(m_value));
-        mine.setItemMeta(m_im);
-        options.add(mine);
+//        // minecart
+//        ItemStack mine = new ItemStack(Material.REPEATER, 1);
+//        ItemMeta m_im = mine.getItemMeta();
+//        m_im.setDisplayName("Minecart Sounds");
+//        String m_value = (rsp.isMinecartOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+//        m_im.setLore(Arrays.asList(m_value));
+//        mine.setItemMeta(m_im);
+//        options.add(mine);
         // quotes
         ItemStack quotes = new ItemStack(Material.REPEATER, 1);
         ItemMeta q_im = quotes.getItemMeta();

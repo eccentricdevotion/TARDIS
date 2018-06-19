@@ -52,6 +52,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         this.plugin = plugin;
         firstArgs.add("auto");
         firstArgs.add("auto_powerup");
+        firstArgs.add("auto_rescue");
         firstArgs.add("auto_siege");
         firstArgs.add("beacon");
         firstArgs.add("build");
@@ -137,47 +138,42 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
                         qf.doInsert("player_prefs", set);
                     }
-                    if (pref.equals("hads_type")) {
-                        return new TARDISHadsTypeCommand().setHadsPref(player, args, qf);
-                    }
-                    if (pref.equals("hum")) {
-                        return new TARDISHumCommand().setHumPref(player, args, qf);
-                    }
-                    if (pref.equals("key")) {
-                        return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
-                    }
-                    if (pref.equals("lamp")) {
-                        return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);
-                    }
-                    if (pref.equals("language")) {
-                        return new TARDISSetLanguageCommand().setLanguagePref(player, args, qf);
-                    }
-                    if (pref.equals("isomorphic")) {
-                        return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, args, qf);
-                    }
-                    if (pref.equals("eps_message")) {
-                        return new TARDISEPSMessageCommand().setMessage(player, args, qf);
-                    }
-                    if (pref.equals("wall") || pref.equals("floor") || pref.equals("siege_wall") || pref.equals("siege_floor")) {
-                        return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
-                    }
-                    if (pref.equals("flight")) {
-                        return new TARDISSetFlightCommand().setMode(player, args, qf);
-                    }
-                    if (pref.equals("difficulty")) {
-                        return new TARDISSetDifficultyCommand(plugin).setDiff(player, args, qf);
-                    }
-                    if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        TARDISMessage.send(player, "PREF_ON_OFF", pref);
-                        return false;
-                    }
-                    if (pref.equals("junk")) {
-                        return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
-                    }
-                    if (pref.equals("build")) {
-                        return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                    } else {
-                        return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
+                    switch (pref) {
+                        case "difficulty":
+                            return new TARDISSetDifficultyCommand(plugin).setDiff(player, args, qf);
+                        case "eps_message":
+                            return new TARDISEPSMessageCommand().setMessage(player, args, qf);
+                        case "flight":
+                            return new TARDISSetFlightCommand().setMode(player, args, qf);
+                        case "hads_type":
+                            return new TARDISHadsTypeCommand().setHadsPref(player, args, qf);
+                        case "hum":
+                            return new TARDISHumCommand().setHumPref(player, args, qf);
+                        case "isomorphic":
+                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, args, qf);
+                        case "key":
+                            return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
+                        case "lamp":
+                            return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);
+                        case "language":
+                            return new TARDISSetLanguageCommand().setLanguagePref(player, args, qf);
+                        case "wall":
+                        case "floor":
+                        case "siege_wall":
+                        case "siege_floor":
+                            return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
+                        default:
+                            if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+                                TARDISMessage.send(player, "PREF_ON_OFF", pref);
+                                return false;
+                            }
+                            if (pref.equals("build")) {
+                                return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                            } else if (pref.equals("junk")) {
+                                return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
+                            } else {
+                                return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
+                            }
                     }
                 } else {
                     TARDISMessage.send(player, "NO_PERMS");

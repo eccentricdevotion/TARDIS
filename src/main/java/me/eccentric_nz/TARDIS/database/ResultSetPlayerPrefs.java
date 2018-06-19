@@ -42,43 +42,44 @@ public class ResultSetPlayerPrefs {
     private final HashMap<String, Object> where;
     private int pp_id;
     private UUID uuid;
-    private String key;
-    private boolean sfxOn;
-    private boolean quotesOn;
     private boolean autoOn;
+    private boolean autoPowerUp;
+    private boolean autoRescueOn;
     private boolean autoSiegeOn;
     private boolean beaconOn;
-    private boolean hadsOn;
-    private HADS hadsType;
-    private boolean submarineOn;
-    private int artronLevel;
-    private Material lamp;
-    private String language;
-    private String wall;
-    private String floor;
-    private String siegeWall;
-    private String siegeFloor;
     private boolean buildOn;
+    private boolean ctmOn;
+    private boolean DND;
+    private boolean easyDifficulty;
     private boolean epsOn;
-    private String epsMessage;
+    private boolean farmOn;
+    private boolean hadsOn;
+    private boolean lanternsOn;
+    private boolean minecartOn;
+    private boolean policeboxTexturesOn;
+    private boolean quotesOn;
+    private boolean rendererOn;
+    private boolean sfxOn;
+    private boolean signOn;
+    private boolean submarineOn;
+    private boolean telepathyOn;
     private boolean textureOn;
+    private boolean travelbarOn;
+    private boolean woolLightsOn;
+    private HADS hadsType;
+    private int artronLevel;
+    private int flightMode;
+    private Material lamp;
+    private String epsMessage;
+    private String floor;
+    private String hum;
+    private String key;
+    private String language;
+    private String siegeFloor;
+    private String siegeWall;
     private String textureIn;
     private String textureOut;
-    private boolean DND;
-    private boolean minecartOn;
-    private boolean rendererOn;
-    private boolean woolLightsOn;
-    private boolean ctmOn;
-    private boolean signOn;
-    private boolean telepathyOn;
-    private boolean travelbarOn;
-    private boolean farmOn;
-    private boolean lanternsOn;
-    private boolean policeboxTexturesOn;
-    private int flightMode;
-    private boolean easyDifficulty;
-    private boolean autoPowerUp;
-    private String hum;
+    private String wall;
     private final String prefix;
 
     /**
@@ -134,6 +135,7 @@ public class ResultSetPlayerPrefs {
                 sfxOn = rs.getBoolean("sfx_on");
                 quotesOn = rs.getBoolean("quotes_on");
                 autoOn = rs.getBoolean("auto_on");
+                autoRescueOn = rs.getBoolean("auto_rescue_on");
                 autoSiegeOn = rs.getBoolean("auto_siege_on");
                 beaconOn = rs.getBoolean("beacon_on");
                 hadsOn = rs.getBoolean("hads_on");
@@ -360,6 +362,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isAutoPowerUp() {
         return autoPowerUp;
+    }
+
+    public boolean isAutoRescueOn() {
+        return autoRescueOn;
     }
 
     public String getHum() {
