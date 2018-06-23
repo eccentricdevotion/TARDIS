@@ -20,7 +20,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
+import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -149,7 +151,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     close(player);
                                     return;
                                 }
-                                if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
+                                TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                                if (tac.isInArea()) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
                                     HashMap<String, Object> wheresave = new HashMap<>();
                                     wheresave.put("world", lore.get(0));
@@ -161,6 +164,25 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                         TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                         close(player);
                                         return;
+                                    }
+                                    String invisibility = tac.getArea().getInvisibility();
+                                    HashMap<String, Object> wheret = new HashMap<>();
+                                    wheret.put("tardis_id", id);
+                                    ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
+                                    if (resultSetTardis.resultSet()) {
+                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(PRESET.INVISIBLE)) {
+                                            // check preset
+                                            TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                                            return;
+                                        } else if (!invisibility.equals("ALLOW")) {
+                                            // force preset
+                                            TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                                            HashMap<String, Object> wherei = new HashMap<>();
+                                            wherei.put("tardis_id", id);
+                                            HashMap<String, Object> seti = new HashMap<>();
+                                            seti.put("chameleon_preset", invisibility);
+                                            new QueryFactory(plugin).doSyncUpdate("tardis", seti, wherei);
+                                        }
                                     }
                                 }
                                 if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

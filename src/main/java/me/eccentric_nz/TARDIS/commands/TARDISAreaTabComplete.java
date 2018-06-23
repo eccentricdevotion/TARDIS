@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,12 +30,27 @@ import java.util.List;
  */
 public class TARDISAreaTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility");
+    private final List<String> INVISIBILTY_SUBS = new ArrayList<>();
+
+    public TARDISAreaTabComplete() {
+        INVISIBILTY_SUBS.add("ALLOW");
+        INVISIBILTY_SUBS.add("DENY");
+        for (PRESET preset : PRESET.values()) {
+            INVISIBILTY_SUBS.add(preset.toString());
+        }
+    }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 3) {
+            String sub = args[0];
+            if (sub.equals("invisibility")) {
+                return partial(lastArg, INVISIBILTY_SUBS);
+            }
         }
         return ImmutableList.of();
     }

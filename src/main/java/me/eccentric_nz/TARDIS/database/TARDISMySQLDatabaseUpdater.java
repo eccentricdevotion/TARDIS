@@ -35,6 +35,7 @@ import java.util.Map;
  */
 public class TARDISMySQLDatabaseUpdater {
 
+    private final List<String> areaupdates = new ArrayList<>();
     private final List<String> tardisupdates = new ArrayList<>();
     private final List<String> prefsupdates = new ArrayList<>();
     private final List<String> destsupdates = new ArrayList<>();
@@ -58,6 +59,8 @@ public class TARDISMySQLDatabaseUpdater {
         uuidUpdates.put("t_count", "t_id");
         uuidUpdates.put("tardis", "tardis_id");
         uuidUpdates.put("travellers", "tardis_id");
+        areaupdates.add("parking_distance int(2) DEFAULT '2'");
+        areaupdates.add("invisibility varchar(32) DEFAULT 'ALLOW'");
         tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("monsters int(2) DEFAULT '0'");
@@ -107,12 +110,22 @@ public class TARDISMySQLDatabaseUpdater {
         int i = 0;
         try {
             for (Map.Entry<String, String> u : uuidUpdates.entrySet()) {
-                String a_query = "SHOW COLUMNS FROM " + prefix + u.getKey() + " LIKE 'uuid'";
-                ResultSet rsu = statement.executeQuery(a_query);
+                String u_query = "SHOW COLUMNS FROM " + prefix + u.getKey() + " LIKE 'uuid'";
+                ResultSet rsu = statement.executeQuery(u_query);
                 if (!rsu.next()) {
                     i++;
                     String u_alter = "ALTER TABLE " + prefix + u.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " + u.getValue();
                     statement.executeUpdate(u_alter);
+                }
+            }
+            for (String a : areaupdates) {
+                String[] asplit = a.split(" ");
+                String a_query = "SHOW COLUMNS FROM " + prefix + "areas LIKE '" + asplit[0] + "'";
+                ResultSet rsa = statement.executeQuery(a_query);
+                if (!rsa.next()) {
+                    i++;
+                    String a_alter = "ALTER TABLE " + prefix + "areas ADD " + a;
+                    statement.executeUpdate(a_alter);
                 }
             }
             for (String t : tardisupdates) {
@@ -199,14 +212,6 @@ public class TARDISMySQLDatabaseUpdater {
                 i++;
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
                 statement.executeUpdate(bio_alter);
-            }
-            // add parking_distance to areas
-            String park_query = "SHOW COLUMNS FROM " + prefix + "areas LIKE 'parking_distance'";
-            ResultSet rspark = statement.executeQuery(park_query);
-            if (!rspark.next()) {
-                i++;
-                String park_alter = "ALTER TABLE " + prefix + "areas ADD parking_distance int(2) DEFAULT '2'";
-                statement.executeUpdate(park_alter);
             }
             // add tardis_id to dispersed
             String dispersed_query = "SHOW COLUMNS FROM " + prefix + "dispersed LIKE 'tardis_id'";

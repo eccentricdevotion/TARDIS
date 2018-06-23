@@ -67,6 +67,29 @@ public class TARDISArea {
     }
 
     /**
+     * Checks if a location is contained within any TARDIS area.
+     *
+     * @param l a location object to check.
+     * @return a TARDISAreaCheck <Area, Boolean> with values dependent on whether the location is within an existing
+     * TARDIS area
+     */
+    public TARDISAreaCheck areaCheckInExistingArea(Location l) {
+        String w = l.getWorld().getName();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("world", w);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
+        if (rsa.resultSet()) {
+            for (Area a : rsa.getData()) {
+                // is clicked block within a defined TARDIS area?
+                if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+                    return new TARDISAreaCheck(a, true);
+                }
+            }
+        }
+        return new TARDISAreaCheck(null, false);
+    }
+
+    /**
      * Checks if a location is contained within a specific TARDIS area.
      *
      * @param area the TARDIS area to check in.

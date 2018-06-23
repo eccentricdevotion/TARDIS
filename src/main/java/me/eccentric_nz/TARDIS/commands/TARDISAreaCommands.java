@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.data.Area;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -71,147 +72,178 @@ public class TARDISAreaCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
-            if (args[0].equals("start")) {
-                // check name is unique and acceptable
-                if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
-                    return false;
-                }
-                ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
-                if (rsa.resultSet()) {
-                    for (String s : rsa.getNames()) {
-                        if (s.equals(args[1])) {
-                            TARDISMessage.send(player, "AREA_IN_USE");
+            switch (args[0].toLowerCase()) {
+                case "start":
+                    // check name is unique and acceptable
+                    if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
+                        TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
+                        return false;
+                    }
+                    ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
+                    if (rsa.resultSet()) {
+                        for (String s : rsa.getNames()) {
+                            if (s.equals(args[1])) {
+                                TARDISMessage.send(player, "AREA_IN_USE");
+                                return false;
+                            }
+                        }
+                    }
+                    plugin.getTrackerKeeper().getArea().put(player.getUniqueId(), args[1]);
+                    TARDISMessage.send(player, "AREA_CLICK_START");
+                    return true;
+                case "end":
+                    if (!plugin.getTrackerKeeper().getBlock().containsKey(player.getUniqueId())) {
+                        TARDISMessage.send(player, "AREA_NO_START");
+                        return false;
+                    }
+                    plugin.getTrackerKeeper().getEnd().put(player.getUniqueId(), "end");
+                    TARDISMessage.send(player, "AREA_CLICK_END");
+                    return true;
+                case "parking":
+                    if (args.length < 2) {
+                        TARDISMessage.send(player, "AREA_NEED");
+                        return false;
+                    }
+                    if (args.length < 3) {
+                        TARDISMessage.send(player, "AREA_PARK");
+                        return false;
+                    }
+                    int park;
+                    try {
+                        park = Integer.parseInt(args[2]);
+                    } catch (NumberFormatException nfe) {
+                        TARDISMessage.send(player, "AREA_PARK");
+                        return false;
+                    }
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("area_name", args[1]);
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("parking_distance", park);
+                    QueryFactory qf = new QueryFactory(plugin);
+                    qf.doUpdate("areas", set, where);
+                    TARDISMessage.send(player, "AREA_PARK_SET", args[1]);
+                    return true;
+                case "remove":
+                    if (args.length < 2) {
+                        TARDISMessage.send(player, "AREA_NEED");
+                        return false;
+                    }
+                    HashMap<String, Object> wherer = new HashMap<>();
+                    wherer.put("area_name", args[1]);
+                    QueryFactory factory = new QueryFactory(plugin);
+                    factory.doDelete("areas", wherer);
+                    TARDISMessage.send(player, "AREA_DELETE", args[1]);
+                    return true;
+                case "show":
+                    if (args.length < 2) {
+                        TARDISMessage.send(player, "AREA_NEED");
+                        return false;
+                    }
+                    HashMap<String, Object> wherea = new HashMap<>();
+                    wherea.put("area_name", args[1]);
+                    ResultSetAreas rsaShow = new ResultSetAreas(plugin, wherea, false, false);
+                    if (!rsaShow.resultSet()) {
+                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        return false;
+                    }
+                    Area a = rsaShow.getArea();
+                    int mix = a.getMinX();
+                    int miz = a.getMinZ();
+                    int max = a.getMaxX();
+                    int maz = a.getMaxZ();
+                    World w = plugin.getServer().getWorld(a.getWorld());
+                    Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
+                    b1.setType(Material.SNOW_BLOCK);
+                    Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
+                    b2.setType(Material.SNOW_BLOCK);
+                    Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
+                    b3.setType(Material.SNOW_BLOCK);
+                    Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
+                    b4.setType(Material.SNOW_BLOCK);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
+                    return true;
+                case "yard":
+                    if (args.length < 2) {
+                        TARDISMessage.send(player, "AREA_NEED");
+                        return false;
+                    }
+                    // set some basic defaults
+                    Material fill = Material.COBBLESTONE;
+                    Material dock = Material.BRICK;
+                    if (args.length > 2) {
+                        try {
+                            fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                            if (args.length > 3) {
+                                dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH));
+                            }
+                        } catch (IllegalArgumentException e) {
+                            TARDISMessage.send(player, "ARG_MATERIAL");
+                            return true;
+                        }
+                        if (!fill.isBlock() || !dock.isBlock() || !fill.isSolid() || !dock.isSolid()) {
+                            TARDISMessage.send(player, "ARG_NOT_BLOCK");
+                            return true;
+                        }
+                    }
+                    HashMap<String, Object> yardWhere = new HashMap<>();
+                    yardWhere.put("area_name", args[1]);
+                    ResultSetAreas rsaYard = new ResultSetAreas(plugin, yardWhere, false, false);
+                    if (!rsaYard.resultSet()) {
+                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        return false;
+                    }
+                    Area yardArea = rsaYard.getArea();
+                    int yardMinX = yardArea.getMinX();
+                    int yardMinZ = yardArea.getMinZ();
+                    int yardMaxX = yardArea.getMaxX();
+                    int yardMaxZ = yardArea.getMaxZ();
+                    World yardWorld = plugin.getServer().getWorld(yardArea.getWorld());
+                    for (int x = yardMinX; x <= yardMaxX; x++) {
+                        for (int z = yardMinZ; z <= yardMaxZ; z++) {
+                            int y = yardWorld.getHighestBlockYAt(x, z) - 1;
+                            if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
+                                yardWorld.getBlockAt(x, y, z).setType(dock);
+                            } else {
+                                yardWorld.getBlockAt(x, y, z).setType(fill);
+                            }
+                        }
+                    }
+                    return true;
+                case "invisibility":
+                    if (args.length < 2) {
+                        TARDISMessage.send(player, "AREA_NEED");
+                        return false;
+                    }
+                    if (args.length < 3) {
+                        TARDISMessage.send(player, "AREA_INVISIBILTY_ARG");
+                        return false;
+                    }
+                    HashMap<String, Object> invisWhere = new HashMap<>();
+                    invisWhere.put("area_name", args[1]);
+                    ResultSetAreas rsaInvis = new ResultSetAreas(plugin, invisWhere, false, false);
+                    if (!rsaInvis.resultSet()) {
+                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        return false;
+                    }
+                    String value = args[2].toUpperCase(Locale.ENGLISH);
+                    if (!value.equals("ALLOW") || !value.equals("DENY")) {
+                        try {
+                            PRESET preset = PRESET.valueOf(value);
+                        } catch (IllegalArgumentException e) {
+                            TARDISMessage.send(player, "ARG_PRESET");
                             return false;
                         }
                     }
-                }
-                plugin.getTrackerKeeper().getArea().put(player.getUniqueId(), args[1]);
-                TARDISMessage.send(player, "AREA_CLICK_START");
-                return true;
-            }
-            if (args[0].equals("end")) {
-                if (!plugin.getTrackerKeeper().getBlock().containsKey(player.getUniqueId())) {
-                    TARDISMessage.send(player, "AREA_NO_START");
+                    HashMap<String, Object> invisSet = new HashMap<>();
+                    invisSet.put("invisibility", value);
+                    HashMap<String, Object> whereInvis = new HashMap<>();
+                    whereInvis.put("area_name", args[1]);
+                    QueryFactory queryFactory = new QueryFactory(plugin);
+                    queryFactory.doUpdate("areas", invisSet, whereInvis);
+                    TARDISMessage.send(player, "AREA_INVISIBILTY_SET", args[1]);
+                    return true;
+                default:
                     return false;
-                }
-                plugin.getTrackerKeeper().getEnd().put(player.getUniqueId(), "end");
-                TARDISMessage.send(player, "AREA_CLICK_END");
-                return true;
-            }
-            if (args[0].equals("parking")) {
-                if (args.length < 2) {
-                    TARDISMessage.send(player, "AREA_NEED");
-                    return false;
-                }
-                if (args.length < 3) {
-                    TARDISMessage.send(player, "AREA_PARK");
-                    return false;
-                }
-                int park;
-                try {
-                    park = Integer.parseInt(args[2]);
-                } catch (NumberFormatException nfe) {
-                    TARDISMessage.send(player, "AREA_PARK");
-                    return false;
-                }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("area_name", args[1]);
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("parking_distance", park);
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.doUpdate("areas", set, where);
-                TARDISMessage.send(player, "AREA_PARK_SET", args[1]);
-                return true;
-            }
-            if (args[0].equals("remove")) {
-                if (args.length < 2) {
-                    TARDISMessage.send(player, "AREA_NEED");
-                    return false;
-                }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("area_name", args[1]);
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.doDelete("areas", where);
-                TARDISMessage.send(player, "AREA_DELETE", args[1]);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("show")) {
-                if (args.length < 2) {
-                    TARDISMessage.send(player, "AREA_NEED");
-                    return false;
-                }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("area_name", args[1]);
-                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
-                if (!rsa.resultSet()) {
-                    TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
-                    return false;
-                }
-                Area a = rsa.getArea();
-                int mix = a.getMinX();
-                int miz = a.getMinZ();
-                int max = a.getMaxX();
-                int maz = a.getMaxZ();
-                World w = plugin.getServer().getWorld(a.getWorld());
-                Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
-                b1.setType(Material.SNOW_BLOCK);
-                Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
-                b2.setType(Material.SNOW_BLOCK);
-                Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
-                b3.setType(Material.SNOW_BLOCK);
-                Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
-                b4.setType(Material.SNOW_BLOCK);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("yard")) {
-                if (args.length < 2) {
-                    TARDISMessage.send(player, "AREA_NEED");
-                    return false;
-                }
-                // set some basic defaults
-                Material fill = Material.COBBLESTONE;
-                Material dock = Material.BRICK;
-                if (args.length > 2) {
-                    try {
-                        fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
-                        if (args.length > 3) {
-                            dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH));
-                        }
-                    } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(player, "ARG_MATERIAL");
-                        return true;
-                    }
-                    if (!fill.isBlock() || !dock.isBlock() || !fill.isSolid() || !dock.isSolid()) {
-                        TARDISMessage.send(player, "ARG_NOT_BLOCK");
-                        return true;
-                    }
-                }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("area_name", args[1]);
-                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
-                if (!rsa.resultSet()) {
-                    TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
-                    return false;
-                }
-                Area a = rsa.getArea();
-                int mix = a.getMinX();
-                int miz = a.getMinZ();
-                int max = a.getMaxX();
-                int maz = a.getMaxZ();
-                World w = plugin.getServer().getWorld(a.getWorld());
-                for (int x = mix; x <= max; x++) {
-                    for (int z = miz; z <= maz; z++) {
-                        int y = w.getHighestBlockYAt(x, z) - 1;
-                        if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
-                            w.getBlockAt(x, y, z).setType(dock);
-                        } else {
-                            w.getBlockAt(x, y, z).setType(fill);
-                        }
-                    }
-                }
-                return true;
             }
         }
         return false;

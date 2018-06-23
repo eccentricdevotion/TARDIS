@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.travel.*;
@@ -398,7 +399,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "BIOME_SEARCH");
 
                                 HashMap<String, Object> wherecl = new HashMap<>();
-                                wherecl.put("tardis_id", tardis.getTardis_id());
+                                wherecl.put("tardis_id", id);
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
                                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
@@ -480,7 +481,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 }
-                                if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
+                                TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                                if (tac.isInArea()) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
                                     HashMap<String, Object> wheres = new HashMap<>();
                                     wheres.put("world", rsd.getWorld());
@@ -492,6 +494,20 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET);
                                         return true;
                                     }
+                                    String invisibility = tac.getArea().getInvisibility();
+                                    if (invisibility.equals("DENY") && tardis.getPreset().equals(PRESET.INVISIBLE)) {
+                                        // check preset
+                                        TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                                        return true;
+                                    } else if (!invisibility.equals("ALLOW")) {
+                                        // force preset
+                                        TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                                        HashMap<String, Object> wherei = new HashMap<>();
+                                        wherei.put("tardis_id", id);
+                                        HashMap<String, Object> seti = new HashMap<>();
+                                        seti.put("chameleon_preset", invisibility);
+                                        qf.doSyncUpdate("tardis", seti, wherei);
+                                    }
                                 }
                                 set.put("world", rsd.getWorld());
                                 set.put("x", rsd.getX());
@@ -502,7 +518,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 } else {
                                     // get current direction
                                     HashMap<String, Object> wherecl = new HashMap<>();
-                                    wherecl.put("tardis_id", tardis.getTardis_id());
+                                    wherecl.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
                                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");
@@ -544,6 +560,21 @@ public class TARDISTravelCommands implements CommandExecutor {
                         if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
+                        }
+                        // check whether this is a no invisibility area
+                        String invisibility = rsa.getArea().getInvisibility();
+                        if (invisibility.equals("DENY") && tardis.getPreset().equals(PRESET.INVISIBLE)) {
+                            // check preset
+                            TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                            return true;
+                        } else if (!invisibility.equals("ALLOW")) {
+                            // force preset
+                            TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                            HashMap<String, Object> wherei = new HashMap<>();
+                            wherei.put("tardis_id", id);
+                            HashMap<String, Object> seti = new HashMap<>();
+                            seti.put("chameleon_preset", invisibility);
+                            qf.doSyncUpdate("tardis", seti, wherei);
                         }
                         Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
                         if (l == null) {

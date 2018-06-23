@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
-import me.eccentric_nz.TARDIS.enumeration.REMOTE;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -213,6 +210,21 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                                 TARDISMessage.send(sender, "TRAVEL_NO_AREA_PERM", args[3]);
                                                 return true;
                                             }
+                                        }
+                                        // check whether this is a no invisibility area
+                                        String invisibility = rsa.getArea().getInvisibility();
+                                        if (invisibility.equals("DENY") && tardis.getPreset().equals(PRESET.INVISIBLE)) {
+                                            // check preset
+                                            TARDISMessage.send(sender, "AREA_NO_INVISIBLE");
+                                            return true;
+                                        } else if (!invisibility.equals("ALLOW")) {
+                                            // force preset
+                                            TARDISMessage.send(sender, "AREA_FORCE_PRESET", invisibility);
+                                            HashMap<String, Object> wherei = new HashMap<>();
+                                            wherei.put("tardis_id", id);
+                                            HashMap<String, Object> seti = new HashMap<>();
+                                            seti.put("chameleon_preset", invisibility);
+                                            new QueryFactory(plugin).doSyncUpdate("tardis", seti, wherei);
                                         }
                                         // get a landing spot
                                         Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
