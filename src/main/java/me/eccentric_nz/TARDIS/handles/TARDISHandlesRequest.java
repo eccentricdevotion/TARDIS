@@ -19,12 +19,11 @@ package me.eccentric_nz.TARDIS.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTransmatCommand;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -208,6 +207,23 @@ public class TARDISHandlesRequest {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id);
             } else if (split.contains("teleport")) {
                 new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
+            } else if (split.contains("transmat")) {
+                if (!player.hasPermission("tardis.transmat")) {
+                    TARDISMessage.handlesSend(player, "NO_PERMS");
+                    return;
+                }
+                Location location = player.getLocation();
+                // must be in their TARDIS
+                if (!plugin.getUtils().inTARDISWorld(location)) {
+                    TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
+                    return;
+                }
+                ResultSetHandlesTransmat rst = new ResultSetHandlesTransmat(plugin, id);
+                if (rst.findSite(split)) {
+                    new TARDISHandlesTransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
+                } else {
+                    TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT");
+                }
             } else {
                 // don't understand
                 TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");

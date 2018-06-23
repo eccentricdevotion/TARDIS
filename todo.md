@@ -17,9 +17,9 @@
 4. Transfer Handles implementation from v3.7 branch
 5. Check database updater (Material) changes
 6. Add player preference to bypass `tardis rescue accept` - _started_
-7. Add `invisibility` setting to TARDIS areas
+7. Add `invisibility` setting to TARDIS areas - _started_
 8. Add Transmat signs and command/database table to set interior transmat locations - _started_
-   * Add transmat to Handles requests
+   * Add transmat to Handles requests - _started_
 9. `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
 10. Save PRESET when performing `/tardis save [name] true` - _started_
 11. Fix Biome adaptive presets dropping flowers & seeds (properly)
