@@ -24,11 +24,12 @@ public enum TARDISHandlesCategory {
     BUTTON("Buttons", 11),
     COMMAND("TARDIS commands and actions", 7),
     CONTROL("Control and loop statements", 8),
+    DISK("TARDIS Storage Disks", 4),
     EVENT("TARDIS events", 10),
     NUMBER("Numbers", 12),
     OPERATOR("Operators", 14),
     SELECTOR("Selectors", 7),
-    VARIABLE("Variables", 13);
+    VARIABLE("Variables", 14);
 
     private final String lore;
     private final int size;

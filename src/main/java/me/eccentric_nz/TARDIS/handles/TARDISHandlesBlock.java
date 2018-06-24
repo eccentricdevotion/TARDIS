@@ -92,6 +92,7 @@ public enum TARDISHandlesBlock {
     ON(TARDISHandlesCategory.VARIABLE, "On action", null),
     OFF(TARDISHandlesCategory.VARIABLE, "Off action", null),
     SHOW(TARDISHandlesCategory.VARIABLE, "Show Artron Levels action", null),
+    REDSTONE(TARDISHandlesCategory.VARIABLE, "Send Redstone signal", Arrays.asList("Use to power the block", "Handles is placed on")),
     HOME(TARDISHandlesCategory.VARIABLE, "Home Location", null),
     RECHARGER(TARDISHandlesCategory.VARIABLE, "Travel to recharger", null),
     CONTROL(TARDISHandlesCategory.BUTTON, "Show control blocks", null),
@@ -104,7 +105,11 @@ public enum TARDISHandlesBlock {
     PROGRAMS(TARDISHandlesCategory.BUTTON, "Show saved programs", null),
     SAVE(TARDISHandlesCategory.BUTTON, "Save the program to disk", null),
     LEFT(TARDISHandlesCategory.BUTTON, "Scroll left", null),
-    RIGHT(TARDISHandlesCategory.BUTTON, "Scroll right", null);
+    RIGHT(TARDISHandlesCategory.BUTTON, "Scroll right", null),
+    AREA_DISK(TARDISHandlesCategory.DISK, "Area Storage Disk", null),
+    BIOME_DISK(TARDISHandlesCategory.DISK, "Biome Storage Disk", null),
+    PLAYER_DISK(TARDISHandlesCategory.DISK, "Player Storage Disk", null),
+    SAVE_DISK(TARDISHandlesCategory.DISK, "Save Storage Disk", null);
 
     private final TARDISHandlesCategory category;
     private final String displayName;

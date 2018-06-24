@@ -49,7 +49,6 @@ public class TARDISDoorToggler {
     /**
      * Toggle the door open and closed.
      */
-
     public void toggleDoors() {
         UUID uuid = player.getUniqueId();
         if (open) {

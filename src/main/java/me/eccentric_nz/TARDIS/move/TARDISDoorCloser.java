@@ -63,8 +63,8 @@ public class TARDISDoorCloser {
     /**
      * Close the door.
      *
-     * @param block  the bottom door block
-     * @param remove whether to clear the
+     * @param block    the bottom door block
+     * @param inportal the location of the interior door portal
      */
     private void close(Block block, Location inportal) {
         if (block != null && plugin.getGeneralKeeper().getDoors().contains(block.getType())) {

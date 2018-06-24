@@ -70,23 +70,26 @@ public class TARDISHandlesEventListener implements Listener {
      * Process the program
      */
     private final Callback<Program> programCallback = (Program program) -> {
-        ItemStack[] stack = program.getInventory();
-        int i = 0;
-        for (ItemStack is : stack) {
-            // find the DO
-            if (is != null) {
-                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
-                switch (thb) {
-                    case DO:
-                        Player player = Bukkit.getPlayer(UUID.fromString(program.getUuid()));
-                        if (player != null && player.isOnline()) {
-                            TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
+        Player player = Bukkit.getPlayer(UUID.fromString(program.getUuid()));
+        if (player != null && player.isOnline()) {
+            ItemStack[] stack = program.getInventory();
+            int i = 0;
+            for (ItemStack is : stack) {
+                // find the ARTRON / DO
+                if (is != null) {
+                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                    TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
+                    switch (thb) {
+                        case ARTRON:
+                            processor.processArtronCommand(i + 1);
+                            return;
+                        case DO:
                             processor.processCommand(i + 1);
-                        }
-                        return;
+                            return;
+                    }
                 }
+                i++;
             }
-            i++;
         }
     };
 

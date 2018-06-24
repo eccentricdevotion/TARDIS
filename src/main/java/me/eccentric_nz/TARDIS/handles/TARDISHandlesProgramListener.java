@@ -45,6 +45,7 @@ public class TARDISHandlesProgramListener implements Listener {
     public final HashMap<UUID, Integer> scroll_start = new HashMap<>();
     public final HashMap<UUID, List<TARDISHandlesBlock>> scroll_list = new HashMap<>();
     public final HashMap<UUID, TARDISHandlesCategory> scroll_category = new HashMap<>();
+    private final List<Material> allowed = Arrays.asList(Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_WAIT, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_BLOCKS);
 
     public TARDISHandlesProgramListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -68,6 +69,13 @@ public class TARDISHandlesProgramListener implements Listener {
                 scroll_category.put(uuid, TARDISHandlesCategory.CONTROL);
             }
             int slot = event.getRawSlot();
+            if (slot >= 0 && slot < 36) {
+                // only allow Storage Disks
+                ItemStack item = player.getItemOnCursor();
+                if (item != null && !allowed.contains(item.getType())) {
+                    event.setCancelled(true);
+                }
+            }
             if (slot < 0 || (slot > 35 && slot < 54)) {
                 event.setCancelled(true);
             }

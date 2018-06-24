@@ -76,7 +76,6 @@ class TARDISHandlesValidator {
                         }
                         break;
                     case ARTRON:
-                        // can be followed by SHOW
                     case DEATH:
                     case DEMATERIALISE:
                     case ENTER:
@@ -101,13 +100,20 @@ class TARDISHandlesValidator {
                     case LESS_THAN_EQUAL:
                     case GREATER_THAN:
                     case GREATER_THAN_EQUAL:
-                    case RANDOM:
                         // must be followed by a number (and maybe a variable)
                         if (!validateCoordOrMath(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
                             return false;
                         }
                         break;
+                    case RANDOM:
+                        // must be followed by a number or preceded by travel
+                        ItemStack pre = program[i - 1];
+                        TARDISHandlesBlock cede = TARDISHandlesBlock.BY_NAME.get(pre.getItemMeta().getDisplayName());
+                        if (!TARDISHandlesBlock.TRAVEL.equals(cede) && !validateCoordOrMath(i + 1)) {
+                            TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
+                            return false;
+                        }
                     case DOOR:
                         // must be followed by =, ==, OPEN, CLOSED, LOCK, UNLOCK
                         if (!validateDoor(i + 1)) {
@@ -116,11 +122,17 @@ class TARDISHandlesValidator {
                         }
                         break;
                     case LIGHTS:
-                    case POWER:
                     case SIEGE:
                         // must be followed by =, ==, ON, OFF
                         if (!validateOnOff(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The ON / OFF action does not compute!");
+                            return false;
+                        }
+                        break;
+                    case POWER:
+                        // must be followed by =, ==, ON, OFF, SHOW, REDSTONE
+                        if (!validatePower(i + 1)) {
+                            TARDISMessage.handlesMessage(player, "The Power action does not compute!");
                             return false;
                         }
                         break;
@@ -166,7 +178,7 @@ class TARDISHandlesValidator {
             return false;
         }
         TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
-        if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER)) {
+        if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) && !thb.equals(TARDISHandlesBlock.SUBTRACTION)) {
             return false;
         }
         return true;
@@ -199,6 +211,23 @@ class TARDISHandlesValidator {
                 !thb.equals(TARDISHandlesBlock.EQUALS) &&
                 !thb.equals(TARDISHandlesBlock.ON) &&
                 !thb.equals(TARDISHandlesBlock.OFF)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePower(int start) {
+        ItemStack op = program[start];
+        if (op == null) {
+            return false;
+        }
+        TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+        if (!thb.equals(TARDISHandlesBlock.ASSIGNMENT) &&
+                !thb.equals(TARDISHandlesBlock.EQUALS) &&
+                !thb.equals(TARDISHandlesBlock.ON) &&
+                !thb.equals(TARDISHandlesBlock.OFF) &&
+                !thb.equals(TARDISHandlesBlock.SHOW) &&
+                !thb.equals(TARDISHandlesBlock.REDSTONE)) {
             return false;
         }
         return true;
