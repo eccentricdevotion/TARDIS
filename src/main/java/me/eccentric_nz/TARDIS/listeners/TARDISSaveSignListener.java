@@ -144,7 +144,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     close(player);
                                     return;
                                 }
-                                int level = rs.getArtron_level();
+                                int level = rs.getArtronLevel();
                                 int travel = plugin.getArtronConfig().getInt("travel");
                                 if (level < travel) {
                                     TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");

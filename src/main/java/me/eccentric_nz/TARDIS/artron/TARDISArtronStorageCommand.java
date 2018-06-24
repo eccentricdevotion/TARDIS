@@ -99,7 +99,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 }
-                current_level = rs.getArtron_level();
+                current_level = rs.getArtronLevel();
             } else {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", playerUUID);

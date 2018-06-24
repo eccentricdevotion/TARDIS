@@ -108,7 +108,7 @@ public class TARDISSonicGeneratorListener implements Listener {
         if (rs.fromUUID(p.getUniqueId().toString())) {
             double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
             int cost = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
-            int level = rs.getArtron_level();
+            int level = rs.getArtronLevel();
             ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
             ItemMeta screw = sonic.getItemMeta();
             String dn = (s.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : s.getSonicType() + "Sonic Screwdriver";
@@ -242,7 +242,6 @@ public class TARDISSonicGeneratorListener implements Listener {
                 // only in TARDIS
                 TARDISMessage.send(p, "NOT_IN_TARDIS");
             }
-
         }
     }
 }

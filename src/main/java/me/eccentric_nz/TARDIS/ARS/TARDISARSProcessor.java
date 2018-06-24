@@ -142,7 +142,7 @@ public class TARDISARSProcessor {
             }
             ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
             if (rs.fromID(id)) {
-                int energy = rs.getArtron_level();
+                int energy = rs.getArtronLevel();
                 // check available energy vs cost
                 if (totalcost - recoveredcost > energy) {
                     error = "ENERGY_NOT_ENOUGH";

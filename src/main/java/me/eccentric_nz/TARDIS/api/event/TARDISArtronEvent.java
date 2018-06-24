@@ -20,7 +20,7 @@ public class TARDISArtronEvent extends Event {
         this.tardis_id = tardis_id;
         ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDIS.plugin);
         if (rs.fromID(this.tardis_id)) {
-            level = rs.getArtron_level();
+            level = rs.getArtronLevel();
         }
     }
 

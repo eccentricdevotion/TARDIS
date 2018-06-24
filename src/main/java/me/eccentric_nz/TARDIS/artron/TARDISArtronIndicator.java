@@ -58,7 +58,7 @@ public class TARDISArtronIndicator {
         // get Artron level
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
         if (rs.fromID(id)) {
-            int current_level = rs.getArtron_level();
+            int current_level = rs.getArtronLevel();
             int percent = Math.round((current_level * 100F) / fc);
             if (!isFiltered) {
                 Scoreboard board = manager.getNewScoreboard();

@@ -100,7 +100,7 @@ public class TARDISArtronRunnable implements Runnable {
      */
     private int isFull(int id) {
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-        return (rs.fromID(id)) ? rs.getArtron_level() : plugin.getArtronConfig().getInt("full_charge");
+        return (rs.fromID(id)) ? rs.getArtronLevel() : plugin.getArtronConfig().getInt("full_charge");
     }
 
     public void setTask(int task) {
