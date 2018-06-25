@@ -53,7 +53,7 @@ public class TARDISAdminMenuInventory {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
-                im.setLore(Arrays.asList(value));
+                im.setLore(Collections.singletonList(value));
                 is.setItemMeta(im);
                 options.add(is);
             }

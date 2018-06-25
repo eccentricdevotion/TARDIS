@@ -36,7 +36,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDematerialiseToVortex implements Runnable {
+class TARDISDematerialiseToVortex implements Runnable {
 
     private final TARDIS plugin;
     private final int id;

@@ -36,9 +36,9 @@ import java.util.Map;
 public class TARDISbPermissionsHandler {
 
     private final TARDIS plugin;
-    private File permissionsFile = null;
-    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
-    String group;
+    private final File permissionsFile;
+    private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
+    private String group;
 
     public TARDISbPermissionsHandler(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,9 +77,7 @@ public class TARDISbPermissionsHandler {
             String grpstr = entry.getKey();
             List<String> perms = entry.getValue();
             plugin.getServer().dispatchCommand(plugin.getConsole(), "group " + grpstr);
-            perms.forEach((p) -> {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "group addperm " + p);
-            });
+            perms.forEach((p) -> plugin.getServer().dispatchCommand(plugin.getConsole(), "group addperm " + p));
             if (i == 0) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "user " + player);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "user setgroup " + grpstr);

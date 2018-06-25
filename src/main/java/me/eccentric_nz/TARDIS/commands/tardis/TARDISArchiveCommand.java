@@ -42,7 +42,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISArchiveCommand {
+class TARDISArchiveCommand {
 
     private final TARDIS plugin;
     private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update");

@@ -30,9 +30,9 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISInventorySerialization {
+class TARDISInventorySerialization {
 
-    public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+    private static Map<String, Object> toMap(JSONObject object) throws JSONException {
         Map<String, Object> map = new HashMap<>();
         Iterator<String> keys = object.keys();
         while (keys.hasNext()) {
@@ -54,7 +54,7 @@ public class TARDISInventorySerialization {
         }
     }
 
-    public static List<Object> toList(JSONArray array) throws JSONException {
+    private static List<Object> toList(JSONArray array) throws JSONException {
         List<Object> list = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             list.add(fromJson(array.get(i)));
@@ -64,8 +64,7 @@ public class TARDISInventorySerialization {
 
     public static String toString(ItemStack[] inv) {
         List<String> result = new ArrayList<>();
-        List<ConfigurationSerializable> items = new ArrayList<>();
-        items.addAll(Arrays.asList(inv));
+        List<ConfigurationSerializable> items = new ArrayList<>(Arrays.asList(inv));
         items.forEach((cs) -> {
             if (cs == null) {
                 result.add("null");
@@ -100,7 +99,7 @@ public class TARDISInventorySerialization {
         return items;
     }
 
-    public static Map<String, Object> serialize(ConfigurationSerializable cs) {
+    private static Map<String, Object> serialize(ConfigurationSerializable cs) {
         Map<String, Object> serialized = recreateMap(cs.serialize());
         serialized.entrySet().forEach((entry) -> {
             if (entry.getValue() instanceof ConfigurationSerializable) {
@@ -111,15 +110,13 @@ public class TARDISInventorySerialization {
         return serialized;
     }
 
-    public static Map<String, Object> recreateMap(Map<String, Object> original) {
+    private static Map<String, Object> recreateMap(Map<String, Object> original) {
         Map<String, Object> map = new HashMap<>();
-        original.entrySet().forEach((entry) -> {
-            map.put(entry.getKey(), entry.getValue());
-        });
+        original.forEach((key, value) -> map.put(key, value));
         return map;
     }
 
-    public static ConfigurationSerializable deserialize(Map<String, Object> map) {
+    private static ConfigurationSerializable deserialize(Map<String, Object> map) {
         map.entrySet().forEach((entry) -> {
             if (entry.getValue() instanceof Map && ((Map) entry.getValue()).containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
                 entry.setValue(deserialize((Map) entry.getValue()));

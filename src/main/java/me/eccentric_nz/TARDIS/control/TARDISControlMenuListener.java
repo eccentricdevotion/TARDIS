@@ -52,7 +52,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -140,9 +140,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     }
                                     close(player);
                                     // give the GUI time to close first
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
-                                    }, 2L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 2L);
                                     break;
                                 case 2:
                                     // ars
@@ -205,9 +203,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     if (zero != null) {
                                         close(player);
                                         TARDISMessage.send(player, "ZERO_READY");
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
-                                        }, 20L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
                                         plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
                                         HashMap<String, Object> wherez = new HashMap<>();
                                         wherez.put("tardis_id", id);
@@ -395,7 +391,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     // update the lore
                                     ItemStack d = inv.getItem(40);
                                     ItemMeta im = d.getItemMeta();
-                                    im.setLore(Arrays.asList(direction));
+                                    im.setLore(Collections.singletonList(direction));
                                     d.setItemMeta(im);
                                     break;
                                 case 47:

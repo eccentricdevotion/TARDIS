@@ -23,7 +23,7 @@ package me.eccentric_nz.TARDIS.rooms;
  *
  * @author eccentric_nz
  */
-public class TARDISDataRecalculator {
+class TARDISDataRecalculator {
 
     private TARDISDataRecalculator() {
     }

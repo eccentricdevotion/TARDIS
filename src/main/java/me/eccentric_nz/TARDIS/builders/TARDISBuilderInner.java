@@ -57,7 +57,7 @@ import java.util.Map;
 public class TARDISBuilderInner {
 
     private final TARDIS plugin;
-    List<Block> lampblocks = new ArrayList<>();
+    private final List<Block> lampblocks = new ArrayList<>();
     private Block postBedrock = null;
 
     public TARDISBuilderInner(TARDIS plugin) {
@@ -500,44 +500,30 @@ public class TARDISBuilderInner {
             }
         }
         // put on the door, redstone torches, signs, and the repeaters
-        postDoorBlocks.entrySet().forEach((entry) -> {
-            Block pdb = entry.getKey();
-            pdb.setData(entry.getValue());
+        postDoorBlocks.forEach((pdb, value) -> pdb.setData(value));
+        postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
+        postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
+        postRepeaterBlocks.forEach((prb, value) -> {
+            //            prb.setType(Material.REPEATER);
+            prb.setData(value);
         });
-        postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
-            Block prtb = entry.getKey();
-            prtb.setData(entry.getValue());
-        });
-        postTorchBlocks.entrySet().forEach((entry) -> {
-            Block ptb = entry.getKey();
-            ptb.setData(entry.getValue());
-        });
-        postRepeaterBlocks.entrySet().forEach((entry) -> {
-            Block prb = entry.getKey();
-//            prb.setType(Material.REPEATER);
-            prb.setData(entry.getValue());
-        });
-        postStickyPistonBaseBlocks.entrySet().forEach((entry) -> {
-            Block pspb = entry.getKey();
+        postStickyPistonBaseBlocks.forEach((pspb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
 //            pspb.setType(Material.STICKY_PISTON);
-            pspb.setData(entry.getValue());
+            pspb.setData(value);
         });
-        postPistonBaseBlocks.entrySet().forEach((entry) -> {
-            Block ppb = entry.getKey();
+        postPistonBaseBlocks.forEach((ppb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
 //            ppb.setType(Material.PISTON);
-            ppb.setData(entry.getValue());
+            ppb.setData(value);
         });
-        postPistonExtensionBlocks.entrySet().forEach((entry) -> {
-            Block ppeb = entry.getKey();
-//            ppeb.setType(Material.PISTON_HEAD);
-            ppeb.setData(entry.getValue());
+        postPistonExtensionBlocks.forEach((ppeb, value) -> {
+            //            ppeb.setType(Material.PISTON_HEAD);
+            ppeb.setData(value);
         });
-        postLeverBlocks.entrySet().forEach((entry) -> {
-            Block plb = entry.getKey();
-//            plb.setType(Material.LEVER);
-            plb.setData(entry.getValue());
+        postLeverBlocks.forEach((plb, value) -> {
+            //            plb.setType(Material.LEVER);
+            plb.setData(value);
         });
         int s = 0;
         for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {

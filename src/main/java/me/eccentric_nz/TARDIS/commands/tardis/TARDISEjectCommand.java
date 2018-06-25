@@ -27,7 +27,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISEjectCommand {
+class TARDISEjectCommand {
 
     private final TARDIS plugin;
 

@@ -36,7 +36,6 @@ public class TARDISRandomNether extends TARDISRandomLocation {
     private final Parameters param;
     private final List<World> worlds;
     private final Random random = new Random();
-    private Location dest;
 
     public TARDISRandomNether(TARDIS plugin, List<String> list, Parameters param) {
         super(plugin, list, param);
@@ -73,7 +72,7 @@ public class TARDISRandomNether extends TARDISRandomLocation {
             }
             Material mat = startBlock.getType();
             if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4) {
-                dest = startBlock.getLocation();
+                Location dest = startBlock.getLocation();
                 int netherLocY = dest.getBlockY();
                 dest.setY(netherLocY + 1);
                 if (param.spaceTardis()) {

@@ -56,7 +56,7 @@ public class ResultSetPortals {
      *
      * @return true or false depending on whether any data matches the query
      */
-    public boolean resultSet() {
+    public void resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "doors WHERE tardis_id = " + id + " AND door_type IN (0,1)";
@@ -75,11 +75,9 @@ public class ResultSetPortals {
                     data.add(row);
                 }
             } else {
-                return false;
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for doors table! " + e.getMessage());
-            return false;
         } finally {
             try {
                 if (rs != null) {
@@ -92,7 +90,6 @@ public class ResultSetPortals {
                 plugin.debug("Error closing doors table! " + e.getMessage());
             }
         }
-        return true;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

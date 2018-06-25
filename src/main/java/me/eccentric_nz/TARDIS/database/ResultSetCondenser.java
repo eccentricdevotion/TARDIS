@@ -67,9 +67,7 @@ public class ResultSetCondenser {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            where.entrySet().forEach((entry) -> {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            });
+            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "condenser" + wheres;

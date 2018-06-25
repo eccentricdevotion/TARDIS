@@ -36,7 +36,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -114,7 +117,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                     set.put("handbrake_on", 1);
                                     QueryFactory qf = new QueryFactory(plugin);
                                     qf.doUpdate("tardis", set, wheret);
-                                    im.setLore(Arrays.asList(plugin.getLanguage().getString("SET_ON")));
+                                    im.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_ON")));
                                     is.setItemMeta(im);
                                     TARDISMessage.send(p, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {

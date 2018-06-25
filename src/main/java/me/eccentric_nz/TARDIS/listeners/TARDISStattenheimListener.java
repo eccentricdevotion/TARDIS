@@ -67,8 +67,8 @@ import java.util.UUID;
 public class TARDISStattenheimListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> useless = new ArrayList<>();
-    Material remote;
+    private final List<Material> useless = new ArrayList<>();
+    private final Material remote;
 
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -298,9 +298,7 @@ public class TARDISStattenheimListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(sub);
                         bd.setTardisID(id);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            plugin.getPresetBuilder().buildPreset(bd);
-                        }, delay * 2);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);

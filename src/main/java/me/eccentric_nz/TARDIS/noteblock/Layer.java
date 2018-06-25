@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.noteblock;
 
 import java.util.HashMap;
 
-public class Layer {
+class Layer {
 
     private HashMap<Integer, Note> hashMap = new HashMap<>();
     private byte volume = 100;

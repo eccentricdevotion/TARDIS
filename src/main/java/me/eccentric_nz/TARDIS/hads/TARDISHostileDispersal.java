@@ -48,7 +48,7 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISHostileDispersal {
+class TARDISHostileDispersal {
 
     private final TARDIS plugin;
     private final List<Material> replace_with_barrier;
@@ -178,12 +178,10 @@ public class TARDISHostileDispersal {
         }
         Material mat = tmp;
         // schedule task to remove fallen blocks
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            falls.forEach((f) -> {
-                f.getLocation().getBlock().setType(Material.AIR);
-                f.remove();
-            });
-        }, 10L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> falls.forEach((f) -> {
+            f.getLocation().getBlock().setType(Material.AIR);
+            f.remove();
+        }), 10L);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // set carpet base at location
             for (int xx = 0; xx < 3; xx++) {
@@ -200,9 +198,7 @@ public class TARDISHostileDispersal {
 
     private List<Material> buildList() {
         List<Material> list = new ArrayList<>();
-        plugin.getBlocksConfig().getStringList("under_door_blocks").forEach((str) -> {
-            list.add(Material.getMaterial(str));
-        });
+        plugin.getBlocksConfig().getStringList("under_door_blocks").forEach((str) -> list.add(Material.getMaterial(str)));
         return list;
     }
 }

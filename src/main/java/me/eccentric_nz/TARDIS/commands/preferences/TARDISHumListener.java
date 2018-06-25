@@ -29,7 +29,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
@@ -47,17 +47,17 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
     public TARDISHumListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        sounds.put(0, Long.valueOf(27402));
-        sounds.put(1, Long.valueOf(40594));
-        sounds.put(2, Long.valueOf(68519));
-        sounds.put(3, Long.valueOf(46026));
-        sounds.put(4, Long.valueOf(51632));
-        sounds.put(5, Long.valueOf(64313));
-        sounds.put(6, Long.valueOf(75000));
-        sounds.put(7, Long.valueOf(80379));
-        sounds.put(8, Long.valueOf(70656));
-        sounds.put(9, Long.valueOf(52950));
-        sounds.put(10, Long.valueOf(77296));
+        sounds.put(0, 27402L);
+        sounds.put(1, 40594L);
+        sounds.put(2, 68519L);
+        sounds.put(3, 46026L);
+        sounds.put(4, 51632L);
+        sounds.put(5, 64313L);
+        sounds.put(6, 75000L);
+        sounds.put(7, 80379L);
+        sounds.put(8, 70656L);
+        sounds.put(9, 52950L);
+        sounds.put(10, 77296L);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -125,7 +125,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
     private void setPlay(Inventory inv, String str) {
         ItemStack play = inv.getItem(15);
         ItemMeta save = play.getItemMeta();
-        save.setLore(Arrays.asList(str));
+        save.setLore(Collections.singletonList(str));
         play.setItemMeta(save);
     }
 

@@ -87,9 +87,6 @@ public class TARDISConsoleListener implements Listener {
                     ItemStack disk = event.getPlayer().getInventory().getItemInMainHand();
                     if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
                         // only the time lord of this tardis
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", id);
-                        wheret.put("uuid", p.getUniqueId().toString());
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
                         if (!rs.fromBoth(id, p.getUniqueId().toString())) {
                             TARDISMessage.send(p, "NOT_OWNER");

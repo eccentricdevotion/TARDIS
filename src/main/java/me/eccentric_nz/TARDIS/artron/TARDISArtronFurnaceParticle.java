@@ -34,23 +34,21 @@ public class TARDISArtronFurnaceParticle {
 
     public void addParticles() {
 
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            plugin.getServer().getOnlinePlayers().forEach((player) -> {
-                Location loc = player.getLocation();
-                loc.subtract(10.0d, 10.0d, 10.0d);
-                for (double y = 0.0d; y < 20.0d; y += 1.0d) {
-                    for (double x = 0.0d; x < 20.0d; x += 1.0d) {
-                        for (double z = 0.0d; z < 20.0d; z += 1.0d) {
-                            loc.add(x, y, z);
-                            if (isArtronFurnace(loc.getBlock())) {
-                                player.spawnParticle(Particle.WATER_SPLASH, loc.getBlock().getLocation().add(0.5d, 1.0d, 0.5d), 10);
-                            }
-                            loc.subtract(x, y, z);
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getServer().getOnlinePlayers().forEach((player) -> {
+            Location loc = player.getLocation();
+            loc.subtract(10.0d, 10.0d, 10.0d);
+            for (double y = 0.0d; y < 20.0d; y += 1.0d) {
+                for (double x = 0.0d; x < 20.0d; x += 1.0d) {
+                    for (double z = 0.0d; z < 20.0d; z += 1.0d) {
+                        loc.add(x, y, z);
+                        if (isArtronFurnace(loc.getBlock())) {
+                            player.spawnParticle(Particle.WATER_SPLASH, loc.getBlock().getLocation().add(0.5d, 1.0d, 0.5d), 10);
                         }
+                        loc.subtract(x, y, z);
                     }
                 }
-            });
-        }, 60L, 10L);
+            }
+        }), 60L, 10L);
     }
 
     private boolean isArtronFurnace(Block b) {

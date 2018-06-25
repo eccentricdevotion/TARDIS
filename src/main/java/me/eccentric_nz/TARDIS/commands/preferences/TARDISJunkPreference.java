@@ -32,7 +32,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkPreference {
+class TARDISJunkPreference {
 
     private final TARDIS plugin;
 

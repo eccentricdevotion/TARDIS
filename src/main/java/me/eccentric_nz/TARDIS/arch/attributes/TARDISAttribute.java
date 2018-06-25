@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 public class TARDISAttribute {
 
-    public TARDISNbtFactory.NbtCompound data;
+    public final TARDISNbtFactory.NbtCompound data;
 
     public TARDISAttribute(TARDISAttributeBuilder builder) {
         data = TARDISNbtFactory.createCompound();
@@ -44,7 +44,7 @@ public class TARDISAttribute {
         return data.getDouble("Amount", 0.0);
     }
 
-    public final void setAmount(double amount) {
+    private void setAmount(double amount) {
         data.put("Amount", amount);
     }
 
@@ -52,7 +52,7 @@ public class TARDISAttribute {
         return TARDISAttributeOperation.fromId(data.getInteger("Operation", 0));
     }
 
-    public final void setOperation(TARDISAttributeOperation operation) {
+    private void setOperation(TARDISAttributeOperation operation) {
         Preconditions.checkNotNull(operation, "operation cannot be NULL.");
         data.put("Operation", operation.getId());
     }
@@ -61,7 +61,7 @@ public class TARDISAttribute {
         return TARDISAttributeType.fromId(data.getString("AttributeName", null));
     }
 
-    public final void setAttributeType(TARDISAttributeType type) {
+    private void setAttributeType(TARDISAttributeType type) {
         Preconditions.checkNotNull(type, "type cannot be NULL.");
         data.put("AttributeName", type.getMinecraftId());
     }
@@ -70,7 +70,7 @@ public class TARDISAttribute {
         return data.getString("Name", null);
     }
 
-    public final void setName(String name) {
+    private void setName(String name) {
         Preconditions.checkNotNull(name, "name cannot be NULL.");
         data.put("Name", name);
     }
@@ -79,7 +79,7 @@ public class TARDISAttribute {
         return new UUID(data.getLong("UUIDMost", null), data.getLong("UUIDLeast", null));
     }
 
-    public final void setUUID(UUID id) {
+    private void setUUID(UUID id) {
         data.put("UUIDLeast", id.getLeastSignificantBits());
         data.put("UUIDMost", id.getMostSignificantBits());
     }
@@ -92,5 +92,4 @@ public class TARDISAttribute {
     public static TARDISAttributeBuilder newBuilder() {
         return new TARDISAttributeBuilder().uuid(UUID.randomUUID()).operation(TARDISAttributeOperation.ADD_NUMBER);
     }
-
 }

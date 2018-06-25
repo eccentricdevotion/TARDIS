@@ -54,9 +54,9 @@ import java.util.*;
 public class TARDISUpdateListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<>();
-    List<Material> validSigns = new ArrayList<>();
-    List<Material> plates = new ArrayList<>();
+    private final List<Material> validBlocks = new ArrayList<>();
+    private final List<Material> validSigns = new ArrayList<>();
+    private final List<Material> plates = new ArrayList<>();
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -253,9 +253,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 Block detector = block;
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    detector.setType(Material.DAYLIGHT_DETECTOR);
-                }, 3L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setType(Material.DAYLIGHT_DETECTOR), 3L);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType.equals(Material.LEVER)) {
                 // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block

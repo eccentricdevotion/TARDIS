@@ -111,8 +111,8 @@ public class TARDISBlockSetters {
     /**
      * Sets a block to the specified block data.
      *
-     * @param l  the location of the block.
-     * @param bd the block data to set the block to.
+     * @param l        the location of the block.
+     * @param material the block type to set the block to.
      */
     public static void setBlock(Location l, Material material) {
         Block b = l.getBlock();
@@ -333,9 +333,8 @@ public class TARDISBlockSetters {
      * Sets a block to the specified type and data and remembers its location, typeId and data.
      *
      * @param b    the block to set and remember
-     * @param m    the typeId to set the block to.
-     * @param d    the data bit to set the block to.
-     * @param id   the TARDIS this block belongs to.
+     * @param m    the typeId to set the block to
+     * @param id   the TARDIS this block belongs to
      * @param type the police_box type (0 = interior, 1 = police box, 2 = beacon up block)
      */
     public static void setBlockAndRemember(Block b, Material m, int id, int type) {

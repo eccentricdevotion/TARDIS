@@ -29,11 +29,11 @@ public enum CHAMELEON_OPTION {
     PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
     CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
 
-    public int slot;
-    public String on;
-    public ChatColor onColour;
-    public String off;
-    public ChatColor offColour;
+    private final int slot;
+    private final String on;
+    private final ChatColor onColour;
+    private final String off;
+    private final ChatColor offColour;
 
     CHAMELEON_OPTION(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
         this.slot = slot;

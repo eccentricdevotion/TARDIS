@@ -21,18 +21,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class SongPlayer {
 
-    protected Song song;
-    protected boolean playing = false;
-    protected short tick = -1;
-    protected ArrayList<UUID> playerList = new ArrayList<>();
-    protected boolean destroyed = false;
-    protected Thread playerThread;
+    private final Song song;
+    private boolean playing = false;
+    private short tick = -1;
+    private final ArrayList<UUID> playerList = new ArrayList<>();
+    private boolean destroyed = false;
+    private Thread playerThread;
 
     public SongPlayer(Song song) {
         this.song = song;
@@ -77,10 +76,6 @@ public class SongPlayer {
         playerThread.start();
     }
 
-    public List<UUID> getPlayerList() {
-        return Collections.unmodifiableList(playerList);
-    }
-
     public void addPlayer(Player p) {
         synchronized (this) {
             if (!playerList.contains(p.getUniqueId())) {
@@ -95,7 +90,7 @@ public class SongPlayer {
         }
     }
 
-    public void playTick(Player p, int tick) {
+    private void playTick(Player p, int tick) {
         song.getLayerHashMap().values().forEach((l) -> {
             Note note = l.getNote(tick);
             if (note != null) {
@@ -104,7 +99,7 @@ public class SongPlayer {
         });
     }
 
-    public void destroy() {
+    private void destroy() {
         synchronized (this) {
             SongDestroyingEvent event = new SongDestroyingEvent(this);
             Bukkit.getPluginManager().callEvent(event);
@@ -117,10 +112,6 @@ public class SongPlayer {
         }
     }
 
-    public boolean isPlaying() {
-        return playing;
-    }
-
     public void setPlaying(boolean playing) {
         this.playing = playing;
         if (!playing) {
@@ -129,11 +120,7 @@ public class SongPlayer {
         }
     }
 
-    public short getTick() {
-        return tick;
-    }
-
-    public void setTick(short tick) {
+    private void setTick(short tick) {
         this.tick = tick;
     }
 

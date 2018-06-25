@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoveSavedLocationCommand {
+class TARDISRemoveSavedLocationCommand {
 
     private final TARDIS plugin;
 

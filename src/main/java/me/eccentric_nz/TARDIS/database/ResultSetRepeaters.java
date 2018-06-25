@@ -43,7 +43,7 @@ public class ResultSetRepeaters {
     private final int id;
     private final int secondary;
     private final int[] diodes = new int[4];
-    List<String> locations = new ArrayList<>();
+    private final List<String> locations = new ArrayList<>();
     private final String prefix;
 
     /**

@@ -37,9 +37,9 @@ import java.util.List;
 public class TARDISPermissionsExHandler {
 
     private final TARDIS plugin;
-    private File permissionsFile = null;
-    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
-    String group;
+    private final File permissionsFile;
+    private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
+    private String group;
 
     public TARDISPermissionsExHandler(TARDIS plugin) {
         this.plugin = plugin;

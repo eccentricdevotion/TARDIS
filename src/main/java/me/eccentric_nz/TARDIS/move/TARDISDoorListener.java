@@ -49,9 +49,9 @@ import java.util.UUID;
  */
 public class TARDISDoorListener {
 
-    public final TARDIS plugin;
-    public float[][] adjustYaw = new float[4][4];
-    Random r = new Random();
+    final TARDIS plugin;
+    public final float[][] adjustYaw = new float[4][4];
+    private final Random r = new Random();
 
     public TARDISDoorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,20 +77,19 @@ public class TARDISDoorListener {
     /**
      * A method to teleport the player into and out of the TARDIS.
      *
-     * @param p     the player to teleport
-     * @param l     the location to teleport to
-     * @param exit  whether the player is entering or exiting the TARDIS, if true they are exiting
-     * @param from  the world they are teleporting from
-     * @param q     whether the player will receive a TARDIS quote message
-     * @param sound an integer representing the sound to play
-     * @param m     whether to play the resource pack sound
+     * @param p      the player to teleport
+     * @param l      the location to teleport to
+     * @param exit   whether the player is entering or exiting the TARDIS, if true they are exiting
+     * @param from   the world they are teleporting from
+     * @param quotes whether the player will receive a TARDIS quote message
+     * @param sound  an integer representing the sound to play
+     * @param m      whether to play the resource pack sound
      */
-    public void movePlayer(Player p, Location l, boolean exit, World from, boolean q, int sound, boolean m) {
+    public void movePlayer(Player p, Location l, boolean exit, World from, boolean quotes, int sound, boolean m) {
         int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         World to = l.getWorld();
         boolean allowFlight = p.getAllowFlight();
         boolean crossWorlds = (from != to);
-        boolean quotes = q;
         boolean isSurvival = checkSurvival(to);
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -238,13 +237,13 @@ public class TARDISDoorListener {
                         parrot.setBaby();
                     }
                     parrot.setVariant(pet.getVariant());
+                    // TODO use new API if it exists
                     if (pet.isOnLeftShoulder() || pet.isOnRightShoulder()) {
-                        HumanEntity he = player;
                         if (pet.isOnLeftShoulder()) {
-                            he.setShoulderEntityLeft(parrot);
+                            player.setShoulderEntityLeft(parrot);
                         }
                         if (pet.isOnRightShoulder()) {
-                            he.setShoulderEntityRight(parrot);
+                            player.setShoulderEntityRight(parrot);
                         }
                     }
                     break;
@@ -367,7 +366,7 @@ public class TARDISDoorListener {
      * @param l     a location to play the sound at
      * @param m     whether to play the TARDIS sound or a Minecraft substitute
      */
-    public void playDoorSound(Player p, int sound, Location l, boolean m) {
+    private void playDoorSound(Player p, int sound, Location l, boolean m) {
         switch (sound) {
             case 1:
                 if (!m) {

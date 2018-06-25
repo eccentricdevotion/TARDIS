@@ -20,7 +20,7 @@ package me.eccentric_nz.TARDIS.noteblock;
 import org.bukkit.Instrument;
 import org.bukkit.Sound;
 
-public class NoteBlockInstrument {
+class NoteBlockInstrument {
 
     public static Sound getInstrument(byte instrument) {
         switch (instrument) {

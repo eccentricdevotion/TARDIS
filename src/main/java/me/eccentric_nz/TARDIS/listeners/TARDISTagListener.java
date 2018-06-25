@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class TARDISTagListener implements Listener {
 
     private final TARDIS plugin;
-    Random rand = new Random();
+    private final Random rand = new Random();
 
     public TARDISTagListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -55,7 +55,7 @@ public class TARDISTagListener implements Listener {
     public void onPlayerTagJoin(PlayerJoinEvent event) {
         Calendar eggcal = Calendar.getInstance();
         if (eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
-            if (eggcal.get(Calendar.MONTH) == 10 && eggcal.get(Calendar.DATE) == 23) { // zero based month
+            if (eggcal.get(Calendar.MONTH) == Calendar.NOVEMBER && eggcal.get(Calendar.DATE) == 23) { // zero based month
                 int age = ((eggcal.get(Calendar.YEAR)) - 1963);
                 String ordinal = getOrdinal(age);
                 event.getPlayer().sendMessage(plugin.getPluginName() + "Happy " + age + ordinal + " Birthday Doctor Who!");
@@ -169,7 +169,8 @@ public class TARDISTagListener implements Listener {
      * @return a string in the form of '00h:00m:00s'
      */
     private String getHoursMinutesSeconds(long millis) {
-        return String.format("%02dh:%02dm:%02ds",
+        return String.format(
+                "%02dh:%02dm:%02ds",
                 TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                 TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));

@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkVortexRunnable implements Runnable {
+class TARDISJunkVortexRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Location vortexJunkLoc;
@@ -93,9 +93,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
                         Player p = (Player) e;
                         Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            p.teleport(relativeLoc);
-                        }, 2L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
                     }
                 });
                 plugin.getServer().getScheduler().cancelTask(fryTask);

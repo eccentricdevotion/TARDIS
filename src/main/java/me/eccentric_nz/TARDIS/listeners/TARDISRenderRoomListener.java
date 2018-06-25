@@ -78,34 +78,33 @@ public class TARDISRenderRoomListener implements Listener {
                 int cx = TARDISNumberParsers.parseInt(split[1]);
                 int cy = TARDISNumberParsers.parseInt(split[2]);
                 int cz = TARDISNumberParsers.parseInt(split[3]);
-                Location tmp_loc = new Location(cw, cx, cy, cz);
-                int getx = tmp_loc.getBlockX();
-                int getz = tmp_loc.getBlockZ();
+                Location tp_loc = new Location(cw, cx, cy, cz);
+                int getx = tp_loc.getBlockX();
+                int getz = tp_loc.getBlockZ();
                 switch (d) {
                     case NORTH:
                         // z -ve
-                        tmp_loc.setX(getx + 0.5);
-                        tmp_loc.setZ(getz - 0.5);
+                        tp_loc.setX(getx + 0.5);
+                        tp_loc.setZ(getz - 0.5);
                         break;
                     case EAST:
                         // x +ve
-                        tmp_loc.setX(getx + 1.5);
-                        tmp_loc.setZ(getz + 0.5);
+                        tp_loc.setX(getx + 1.5);
+                        tp_loc.setZ(getz + 0.5);
                         break;
                     case SOUTH:
                         // z +ve
-                        tmp_loc.setX(getx + 0.5);
-                        tmp_loc.setZ(getz + 1.5);
+                        tp_loc.setX(getx + 0.5);
+                        tp_loc.setZ(getz + 1.5);
                         break;
                     case WEST:
                         // x -ve
-                        tmp_loc.setX(getx - 0.5);
-                        tmp_loc.setZ(getz + 0.5);
+                        tp_loc.setX(getx - 0.5);
+                        tp_loc.setZ(getz + 0.5);
                         break;
                 }
-                tmp_loc.setPitch(p.getLocation().getPitch());
-                tmp_loc.setYaw(p.getLocation().getYaw());
-                Location tp_loc = tmp_loc;
+                tp_loc.setPitch(p.getLocation().getPitch());
+                tp_loc.setYaw(p.getLocation().getYaw());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     p.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
                     p.teleport(tp_loc);

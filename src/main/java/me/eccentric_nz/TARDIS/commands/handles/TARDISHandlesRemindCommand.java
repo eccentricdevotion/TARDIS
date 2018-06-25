@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesRemindCommand {
+class TARDISHandlesRemindCommand {
 
     private final TARDIS plugin;
 

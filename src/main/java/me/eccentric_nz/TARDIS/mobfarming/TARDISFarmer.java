@@ -292,9 +292,8 @@ public class TARDISFarmer {
                                 if (timeLordIsOwner) {
                                     // only move tamed parrots that the time lord owns!
                                     tmparrot.setTamed(true);
-                                    HumanEntity he = p;
-                                    tmparrot.setOnLeftShoulder(he.getShoulderEntityLeft() != null);
-                                    tmparrot.setOnRightShoulder(he.getShoulderEntityRight() != null);
+                                    tmparrot.setOnLeftShoulder(p.getShoulderEntityLeft() != null);
+                                    tmparrot.setOnRightShoulder(p.getShoulderEntityRight() != null);
                                 } else {
                                     break;
                                 }
@@ -674,10 +673,9 @@ public class TARDISFarmer {
                         if (name != null && !name.isEmpty()) {
                             equine.setCustomName(name);
                         }
-                        Tameable tamed = equine;
                         if (e.isTamed()) {
-                            tamed.setTamed(true);
-                            tamed.setOwner(p);
+                            equine.setTamed(true);
+                            equine.setOwner(p);
                         }
                         if (e.getHorseVariant().equals(EntityType.HORSE)) {
                             Horse pony = (Horse) equine;
@@ -739,10 +737,9 @@ public class TARDISFarmer {
                         if (name != null && !name.isEmpty()) {
                             cria.setCustomName(name);
                         }
-                        Tameable tamed = cria;
                         if (ll.isTamed()) {
-                            tamed.setTamed(true);
-                            tamed.setOwner(p);
+                            cria.setTamed(true);
+                            cria.setOwner(p);
                         }
                         cria.setDomestication(ll.getDomesticity());
                         cria.setJumpStrength(ll.getJumpStrength());
@@ -918,16 +915,13 @@ public class TARDISFarmer {
             }
         }
         ent.remove();
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
-        }, 20L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId()), 20L);
         return old_macd_had_a_pet;
     }
 
     public List<TARDISParrot> exitPets(Player p) {
         List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
-        Entity ent = p;
-        List<Entity> mobs = ent.getNearbyEntities(3.5D, 3.5D, 3.5D);
+        List<Entity> mobs = p.getNearbyEntities(3.5D, 3.5D, 3.5D);
         for (Entity e : mobs) {
             if (e.getType().equals(EntityType.OCELOT) || e.getType().equals(EntityType.WOLF) || e.getType().equals(EntityType.PARROT)) {
                 Tameable tamed = (Tameable) e;
@@ -963,9 +957,8 @@ public class TARDISFarmer {
                             health = (((Parrot) e).getHealth() > 8D) ? 8D : ((Parrot) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Parrot) e).isAdult());
-                            HumanEntity he = p;
-                            pet.setOnLeftShoulder(he.getShoulderEntityLeft() != null);
-                            pet.setOnRightShoulder(he.getShoulderEntityRight() != null);
+                            pet.setOnLeftShoulder(p.getShoulderEntityLeft() != null);
+                            pet.setOnRightShoulder(p.getShoulderEntityRight() != null);
                             break;
                         default:
                             break;

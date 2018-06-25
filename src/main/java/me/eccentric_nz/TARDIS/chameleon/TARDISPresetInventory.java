@@ -22,21 +22,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * Time travel is, as the name suggests, the (usually controlled) process of
- * travelling through time, even in a non-linear direction. In the 26th century
- * individuals who time travel are sometimes known as persons of meta-temporal
+ * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
+ * non-linear direction. In the 26th century individuals who time travel are sometimes known as persons of meta-temporal
  * displacement.
  *
  * @author eccentric_nz
  */
-public class TARDISPresetInventory {
+class TARDISPresetInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
 
     public TARDISPresetInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.terminal = getItemStack();
+        terminal = getItemStack();
     }
 
     /**
@@ -300,15 +299,14 @@ public class TARDISPresetInventory {
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
 
-        ItemStack[] is = {
-            box, jungle, nether, def, swamp, tent, village, yellow, tel,
-            ang, sub, flo, stone, chal, desert, well, win, rub,
-            mine, cre, pea, lamp, candy, toi, rob, tor, pine,
-            pun, por, cake, grave, topsy, mush, fen, gaz, app,
-            lig, lib, sno, jail, pan, dou, pris, cho, and,
-            dio, gra, null, custom, null, null, null, back, close
+        return new ItemStack[]{
+                box, jungle, nether, def, swamp, tent, village, yellow, tel,
+                ang, sub, flo, stone, chal, desert, well, win, rub,
+                mine, cre, pea, lamp, candy, toi, rob, tor, pine,
+                pun, por, cake, grave, topsy, mush, fen, gaz, app,
+                lig, lib, sno, jail, pan, dou, pris, cho, and,
+                dio, gra, null, custom, null, null, null, back, close
         };
-        return is;
     }
 
     public ItemStack[] getPresets() {

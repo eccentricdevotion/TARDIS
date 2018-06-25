@@ -59,7 +59,7 @@ public class TARDISSeedBlockListener implements Listener {
      * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
      * the block if broken.
      *
-     * @param event
+     * @param event The TARDIS Seed block placement event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockPlace(BlockPlaceEvent event) {

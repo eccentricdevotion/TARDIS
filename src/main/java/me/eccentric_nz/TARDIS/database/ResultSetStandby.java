@@ -98,14 +98,14 @@ public class ResultSetStandby {
 
     public static class StandbyData {
 
-        int level;
-        UUID uuid;
-        boolean hidden;
-        boolean lights;
-        PRESET preset;
-        boolean lanterns;
+        final int level;
+        final UUID uuid;
+        final boolean hidden;
+        final boolean lights;
+        final PRESET preset;
+        final boolean lanterns;
 
-        public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset, boolean lanterns) {
+        StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset, boolean lanterns) {
             this.level = level;
             this.uuid = uuid;
             this.hidden = hidden;

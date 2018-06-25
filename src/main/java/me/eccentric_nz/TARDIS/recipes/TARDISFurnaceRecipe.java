@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISFurnaceRecipe {
+class TARDISFurnaceRecipe {
 
     private final TARDIS plugin;
 
@@ -41,9 +41,7 @@ public class TARDISFurnaceRecipe {
 
     public void addFurnaceRecipes() {
         Set<String> furnace = plugin.getRecipesConfig().getConfigurationSection("furnace").getKeys(false);
-        furnace.forEach((s) -> {
-            plugin.getServer().addRecipe(makeRecipe(s));
-        });
+        furnace.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
     }
 
     private FurnaceRecipe makeRecipe(String s) {

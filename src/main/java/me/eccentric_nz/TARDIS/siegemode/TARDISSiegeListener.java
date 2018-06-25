@@ -199,9 +199,7 @@ public class TARDISSiegeListener implements Listener {
             siege.setType(Material.BROWN_MUSHROOM_BLOCK);
             // set the mushroom faces
             MultipleFacing mf = (MultipleFacing) siege.getBlockData();
-            mf.getAllowedFaces().forEach((face) -> {
-                mf.setFace(face, true);
-            });
+            mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
             siege.setData(mf);
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
@@ -365,9 +363,7 @@ public class TARDISSiegeListener implements Listener {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }, 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             HashMap<String, Object> set = new HashMap<>();
             set.put("siege_on", 0);
             HashMap<String, Object> wheres = new HashMap<>();

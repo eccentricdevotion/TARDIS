@@ -24,7 +24,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISDefaultWorldNameCommand {
+class TARDISDefaultWorldNameCommand {
 
     private final TARDIS plugin;
 

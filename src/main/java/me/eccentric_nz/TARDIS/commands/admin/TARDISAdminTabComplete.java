@@ -71,9 +71,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         PRESETS = ImmutableList.copyOf(tmpPresets);
         ROOT_SUBS = ImmutableList.copyOf(combineLists());
         List<String> worlds = new ArrayList<>();
-        plugin.getServer().getWorlds().forEach((w) -> {
-            worlds.add(w.getName());
-        });
+        plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
         WORLD_SUBS = ImmutableList.copyOf(worlds);
         SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
     }

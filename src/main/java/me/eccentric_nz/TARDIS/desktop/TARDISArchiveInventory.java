@@ -36,7 +36,7 @@ import java.util.Arrays;
  *
  * @author eccentric_nz
  */
-public class TARDISArchiveInventory {
+class TARDISArchiveInventory {
 
     private final ItemStack[] menu;
     private final TARDIS plugin;

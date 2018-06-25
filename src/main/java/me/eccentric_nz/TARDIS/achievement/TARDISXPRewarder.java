@@ -37,7 +37,7 @@ import java.util.Arrays;
  * <p>
  * Credit to comphenix for further contributions: See http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622
  */
-public class TARDISXPRewarder {
+class TARDISXPRewarder {
 
     private static int hardMaxLevel = 100000;
     private static int xpTotalToReachLevel[];
@@ -100,8 +100,8 @@ public class TARDISXPRewarder {
      * Calculate the level that the given XP quantity corresponds to, without using the lookup tables. This is needed if
      * getLevelForExp() is called with an XP quantity beyond the range of the existing lookup tables.
      *
-     * @param exp
-     * @return
+     * @param exp the amount of experience
+     * @return the experience level
      */
     private static int calculateLevelForExp(int exp) {
         int level = 0;
@@ -122,7 +122,7 @@ public class TARDISXPRewarder {
      * @return the Player object
      * @throws IllegalStateException if the player is no longer online
      */
-    public Player getPlayer() {
+    private Player getPlayer() {
         Player p = player.get();
         if (p == null) {
             throw new IllegalStateException("Player " + playerName + " is not online");
@@ -146,7 +146,7 @@ public class TARDISXPRewarder {
      *
      * @param amt Amount of XP, may be negative
      */
-    public void changeExp(double amt) {
+    private void changeExp(double amt) {
         setExp(getCurrentFractionalXP(), amt);
     }
 
@@ -193,12 +193,11 @@ public class TARDISXPRewarder {
      *
      * @return the player's total XP
      */
-    public int getCurrentExp() {
+    private int getCurrentExp() {
         Player p = getPlayer();
 
         int lvl = p.getLevel();
-        int cur = getXpForLevel(lvl) + Math.round(getXpNeededToLevelUp(lvl) * p.getExp());
-        return cur;
+        return getXpForLevel(lvl) + Math.round(getXpNeededToLevelUp(lvl) * p.getExp());
     }
 
     /**
@@ -210,8 +209,7 @@ public class TARDISXPRewarder {
         Player p = getPlayer();
 
         int lvl = p.getLevel();
-        double cur = getXpForLevel(lvl) + (double) (getXpNeededToLevelUp(lvl) * p.getExp());
-        return cur;
+        return getXpForLevel(lvl) + (double) (getXpNeededToLevelUp(lvl) * p.getExp());
     }
 
     /**
@@ -241,7 +239,7 @@ public class TARDISXPRewarder {
      * @return the level that a player with this amount total XP would be
      * @throws IllegalArgumentException if the given XP is less than 0
      */
-    public int getLevelForExp(int exp) {
+    private int getLevelForExp(int exp) {
         if (exp <= 0) {
             return 0;
         }
@@ -262,7 +260,7 @@ public class TARDISXPRewarder {
      * @return the amount of experience at this level in the level bar
      * @throws IllegalArgumentException if the level is less than 0
      */
-    public int getXpNeededToLevelUp(int level) {
+    private int getXpNeededToLevelUp(int level) {
         Validate.isTrue(level >= 0, "Level may not be negative.");
         return level > 30 ? 62 + (level - 30) * 7 : level >= 16 ? 17 + (level - 15) * 3 : 17;
     }
@@ -274,7 +272,7 @@ public class TARDISXPRewarder {
      * @return The amount of XP needed for the level.
      * @throws IllegalArgumentException if the level is less than 0 or greater than the current hard maximum
      */
-    public int getXpForLevel(int level) {
+    private int getXpForLevel(int level) {
         Validate.isTrue(level >= 0 && level <= hardMaxLevel, "Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");
         if (level >= xpTotalToReachLevel.length) {
             initLookupTables(level * 2);

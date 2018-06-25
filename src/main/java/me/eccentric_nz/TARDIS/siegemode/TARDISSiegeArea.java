@@ -25,7 +25,6 @@ import org.bukkit.Location;
 public class TARDISSiegeArea {
 
     private final int id;
-    private final Chunk chunk;
     private static final int MIN_Y = 48;
     private static final int MAX_Y = 80;
     private int minX;
@@ -35,8 +34,7 @@ public class TARDISSiegeArea {
 
     public TARDISSiegeArea(int id, Chunk chunk) {
         this.id = id;
-        this.chunk = chunk;
-        setMinMaxXZ(this.chunk);
+        setMinMaxXZ(chunk);
     }
 
     private void setMinMaxXZ(Chunk chunk) {

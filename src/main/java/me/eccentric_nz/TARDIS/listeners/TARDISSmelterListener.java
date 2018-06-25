@@ -79,32 +79,26 @@ public class TARDISSmelterListener implements Listener {
             }
             // process fuels
             int fsize = fuelChests.size();
-            fuels.entrySet().forEach((fmap) -> {
-                int remainder = fmap.getValue() % fsize;
+            fuels.forEach((key, value) -> {
+                int remainder = value % fsize;
                 if (remainder > 0) {
-                    remainders.put(fmap.getKey(), remainder);
+                    remainders.put(key, remainder);
                 }
-                int distrib = fmap.getValue() / fsize;
-                fuelChests.forEach((fc) -> {
-                    fc.getInventory().addItem(new ItemStack(fmap.getKey(), distrib));
-                });
+                int distrib = value / fsize;
+                fuelChests.forEach((fc) -> fc.getInventory().addItem(new ItemStack(key, distrib)));
             });
             // process ores
             int osize = oreChests.size();
-            ores.entrySet().forEach((omap) -> {
-                int remainder = omap.getValue() % osize;
+            ores.forEach((key, value) -> {
+                int remainder = value % osize;
                 if (remainder > 0) {
-                    remainders.put(omap.getKey(), remainder);
+                    remainders.put(key, remainder);
                 }
-                int distrib = omap.getValue() / osize;
-                oreChests.forEach((fc) -> {
-                    fc.getInventory().addItem(new ItemStack(omap.getKey(), distrib));
-                });
+                int distrib = value / osize;
+                oreChests.forEach((fc) -> fc.getInventory().addItem(new ItemStack(key, distrib)));
             });
             // return remainder to drop chest
-            remainders.entrySet().forEach((rmap) -> {
-                inv.addItem(new ItemStack(rmap.getKey(), rmap.getValue()));
-            });
+            remainders.forEach((key, value) -> inv.addItem(new ItemStack(key, value)));
         }
     }
 }

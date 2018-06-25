@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,11 +34,11 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISLazarusInventory {
+class TARDISLazarusInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    List<Material> disguises = new ArrayList<>();
+    private final List<Material> disguises = new ArrayList<>();
 
     public TARDISLazarusInventory(TARDIS plugin) {
         this.plugin = plugin;
@@ -112,19 +112,19 @@ public class TARDISLazarusInventory {
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(Arrays.asList(plugin.getLanguage().getString("SET_OFF")));
+        master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
         the.setItemMeta(master);
         eggs[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
-        baby.setLore(Arrays.asList("ADULT"));
+        baby.setLore(Collections.singletonList("ADULT"));
         adult.setItemMeta(baby);
         eggs[47] = adult;
         ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
-        col.setLore(Arrays.asList("WHITE"));
+        col.setLore(Collections.singletonList("WHITE"));
         typ.setItemMeta(col);
         eggs[48] = typ;
         ItemStack tamed = new ItemStack(Material.LEAD, 1);

@@ -34,6 +34,7 @@ import java.sql.SQLException;
  */
 public class ResultSetPoliceBox {
 
+    // TODO use this?
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;

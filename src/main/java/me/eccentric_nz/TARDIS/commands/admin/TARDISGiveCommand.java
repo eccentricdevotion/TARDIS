@@ -139,9 +139,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "ARG_KIT");
                         return true;
                     }
-                    plugin.getKitsConfig().getStringList("kits." + args[2]).forEach((k) -> {
-                        giveItem(k, p);
-                    });
+                    plugin.getKitsConfig().getStringList("kits." + args[2]).forEach((k) -> giveItem(k, p));
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
                 }

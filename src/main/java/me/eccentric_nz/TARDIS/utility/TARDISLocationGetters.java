@@ -48,8 +48,6 @@ public class TARDISLocationGetters {
      * @return the TARDIS interior chunk
      */
     public Chunk getTARDISChunk(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
         ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
         if (rs.fromID(id)) {
             String c = rs.getChunk();
@@ -107,8 +105,7 @@ public class TARDISLocationGetters {
         savedx = TARDISNumberParsers.parseDouble(data[1]);
         savedy = TARDISNumberParsers.parseDouble(data[2]);
         savedz = TARDISNumberParsers.parseDouble(data[3]);
-        Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
-        return dest;
+        return new Location(savedw, savedx, savedy, savedz, yaw, pitch);
     }
 
     /**

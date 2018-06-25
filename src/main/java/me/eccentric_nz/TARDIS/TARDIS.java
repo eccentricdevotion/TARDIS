@@ -65,7 +65,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -89,7 +88,7 @@ import java.util.regex.Pattern;
 public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
@@ -110,7 +109,6 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration planetsConfig;
     private HashMap<String, Integer> condensables;
     private int standbyTask;
-    private PluginDescriptionFile pdfFile;
     private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
@@ -177,8 +175,7 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
-        pdfFile = getDescription();
-        pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
+        pluginName = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
@@ -595,18 +592,14 @@ public class TARDIS extends JavaPlugin {
             }
         }
         Set<String> booknames = achievementConfig.getKeys(false);
-        booknames.forEach((b) -> {
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false, pluginName);
-        });
+        booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false, pluginName));
     }
 
     /**
      * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
      */
     private void startSound() {
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            new TARDISHumSounds().playTARDISHum();
-        }, 60L, 1500L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60L, 1500L);
     }
 
     /**
@@ -637,7 +630,7 @@ public class TARDIS extends JavaPlugin {
      * Starts a repeating task that removes Artron Energy from the TARDIS while it is in Siege Mode. Only runs if
      * `siege_ticks` in artron.yml is greater than 0 (the default is 1500 or every 1 minute 15 seconds).
      */
-    public void startSiegeTicks() {
+    private void startSiegeTicks() {
         if (getConfig().getBoolean("siege.enabled")) {
             long ticks = getArtronConfig().getLong("siege_ticks");
             if (ticks <= 0) {
@@ -749,7 +742,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return an ArrayList of quotes
      */
-    public ArrayList<String> quotes() {
+    private ArrayList<String> quotes() {
         ArrayList<String> quotes = new ArrayList<>();
         if (quotesfile != null) {
             BufferedReader bufRdr = null;
@@ -824,9 +817,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     private void cleanUpWorlds() {
-        getCleanUpWorlds().forEach((w) -> {
-            new TARDISWorldRemover(plugin).cleanWorld(w);
-        });
+        getCleanUpWorlds().forEach((w) -> new TARDISWorldRemover(plugin).cleanWorld(w));
     }
 
     /**
@@ -835,7 +826,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return The server specified texture pack.
      */
-    public String getServerTP() {
+    private String getServerTP() {
         String link = "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1";
         FileInputStream in = null;
         try {
@@ -955,7 +946,7 @@ public class TARDIS extends JavaPlugin {
      * @param o the Object to print to the console
      */
     public void debug(Object o) {
-        if (getConfig().getBoolean("debug") == true) {
+        if (getConfig().getBoolean("debug")) {
             console.sendMessage(pluginName + "Debug: " + o);
         }
     }
@@ -1164,7 +1155,7 @@ public class TARDIS extends JavaPlugin {
         this.difficulty = difficulty;
     }
 
-    public void startRecorderTask() {
+    private void startRecorderTask() {
         int recorder_tick_delay = 5;
         // we schedule it once, it will reschedule itself
         recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);

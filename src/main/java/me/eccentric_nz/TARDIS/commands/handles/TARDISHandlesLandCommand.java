@@ -44,7 +44,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesLandCommand {
+class TARDISHandlesLandCommand {
 
     private final TARDIS plugin;
 

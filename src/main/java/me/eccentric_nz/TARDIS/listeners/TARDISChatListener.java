@@ -45,7 +45,6 @@ import java.util.regex.Pattern;
 public class TARDISChatListener implements Listener {
 
     private final TARDIS plugin;
-    private final String HOW_TO_REG_EX = "(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)";
     private Pattern howToPattern = null;
 
     public TARDISChatListener(TARDIS plugin) {
@@ -111,7 +110,7 @@ public class TARDISChatListener implements Listener {
             return;
         }
         if (howToPattern == null) {
-            howToPattern = Pattern.compile(HOW_TO_REG_EX, Pattern.CASE_INSENSITIVE);
+            howToPattern = Pattern.compile("(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)", Pattern.CASE_INSENSITIVE);
         }
         if (howToPattern.matcher(message).matches()) {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());

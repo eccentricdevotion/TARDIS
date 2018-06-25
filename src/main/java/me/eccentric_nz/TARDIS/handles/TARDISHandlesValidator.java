@@ -166,10 +166,7 @@ class TARDISHandlesValidator {
             return false;
         }
         TARDISHandlesBlock thbv = TARDISHandlesBlock.BY_NAME.get(val.getItemMeta().getDisplayName());
-        if (!thbv.getCategory().equals(TARDISHandlesCategory.NUMBER)) {
-            return false;
-        }
-        return true;
+        return thbv.getCategory().equals(TARDISHandlesCategory.NUMBER);
     }
 
     private boolean validateCoordOrMath(int start) {

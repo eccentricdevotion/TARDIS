@@ -147,12 +147,11 @@ public class TARDISChameleonInventory {
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
 
-        ItemStack[] is = {
+        return new ItemStack[]{
                 apply, null, null, null, null, null, null, null, null,
                 null, null, dis, adap, invis, shor, cons, null, null,
                 null, null, fac, biome, not, pre, bui, null, close
         };
-        return is;
     }
 
     public ItemStack[] getMenu() {

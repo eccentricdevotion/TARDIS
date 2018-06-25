@@ -34,7 +34,7 @@ public class TARDISMenuListener {
     private final TARDIS plugin;
     private final HashMap<String, Integer> titles;
 
-    public TARDISMenuListener(TARDIS plugin) {
+    protected TARDISMenuListener(TARDIS plugin) {
         this.plugin = plugin;
         titles = getTitleMap();
     }
@@ -44,10 +44,8 @@ public class TARDISMenuListener {
      *
      * @param p the player using the GUI
      */
-    public void close(Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+    protected void close(Player p) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -65,7 +63,7 @@ public class TARDISMenuListener {
         });
     }
 
-    public final HashMap<String, Integer> getTitleMap() {
+    private HashMap<String, Integer> getTitleMap() {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("§4Add Companion", 54);
         map.put("§4Admin Menu", 54);

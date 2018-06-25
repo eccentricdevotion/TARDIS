@@ -37,7 +37,7 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomRemover {
+class TARDISRoomRemover {
 
     private final TARDIS plugin;
     private final String r;

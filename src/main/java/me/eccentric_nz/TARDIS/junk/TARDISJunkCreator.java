@@ -34,7 +34,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkCreator {
+class TARDISJunkCreator {
 
     private final TARDIS plugin;
     private final Player p;
@@ -121,9 +121,7 @@ public class TARDISJunkCreator {
         // build the TARDIS in the Vortex
         plugin.getInteriorBuilder().buildInner(CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);
         // build the TARDIS in the world
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getPresetBuilder().buildPreset(bd);
-        }, 5L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
         return true;
     }
 }

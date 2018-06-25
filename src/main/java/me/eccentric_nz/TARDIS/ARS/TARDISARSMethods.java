@@ -43,17 +43,17 @@ import java.util.*;
  */
 public class TARDISARSMethods {
 
-    public final TARDIS plugin;
-    public final HashMap<UUID, Integer> scroll_start = new HashMap<>();
-    public final HashMap<UUID, Integer> selected_slot = new HashMap<>();
-    public final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
-    public final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
-    public final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    public final Set<String> consoleBlocks = CONSOLES.getBY_MATERIALS().keySet();
-    public final HashMap<UUID, Integer> ids = new HashMap<>();
-    public final List<UUID> hasLoadedMap = new ArrayList<>();
+    final TARDIS plugin;
+    final HashMap<UUID, Integer> scroll_start = new HashMap<>();
+    final HashMap<UUID, Integer> selected_slot = new HashMap<>();
+    final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
+    final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
+    private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
+    final Set<String> consoleBlocks = CONSOLES.getBY_MATERIALS().keySet();
+    final HashMap<UUID, Integer> ids = new HashMap<>();
+    final List<UUID> hasLoadedMap = new ArrayList<>();
 
-    public TARDISARSMethods(TARDIS plugin) {
+    TARDISARSMethods(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -62,7 +62,7 @@ public class TARDISARSMethods {
      *
      * @param uuid the UUID of the player who is using the ARS GUI
      */
-    public void saveAll(UUID uuid) {
+    private void saveAll(UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
         JSONArray json = new JSONArray(md.getData());
         HashMap<String, Object> set = new HashMap<>();
@@ -80,16 +80,14 @@ public class TARDISARSMethods {
      *
      * @param uuid the UUID of the player who is using the ARS GUI
      */
-    public void revert(UUID uuid) {
+    private void revert(UUID uuid) {
         TARDISARSSaveData sd = save_map_data.get(uuid);
         JSONArray json = new JSONArray(sd.getData());
         HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("ars_id", sd.getId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            new QueryFactory(plugin).doUpdate("ars", set, wherea);
-        }, 6L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new QueryFactory(plugin).doUpdate("ars", set, wherea), 6L);
     }
 
     /**
@@ -125,7 +123,7 @@ public class TARDISARSMethods {
      * @param z     the z position of the slice
      * @return a slice of the larger array
      */
-    public String[][] sliceGrid(String[][] layer, int x, int z) {
+    private String[][] sliceGrid(String[][] layer, int x, int z) {
         String[][] slice = new String[5][5];
         int indexx = 0, indexz = 0;
         for (int xx = x; xx < (x + 5); xx++) {
@@ -149,13 +147,13 @@ public class TARDISARSMethods {
      * @param uuid     the player using the GUI
      * @param update   whether to update the grid display
      */
-    public void setSlot(Inventory inv, int slot, Material material, String room, UUID uuid, boolean update) {
+    void setSlot(Inventory inv, int slot, Material material, String room, UUID uuid, boolean update) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
             String config_path = TARDISARS.ARSFor(room).getActualName();
-            List<String> lore = Arrays.asList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
+            List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
             im.setLore(lore);
         } else {
             im.setLore(null);
@@ -176,7 +174,7 @@ public class TARDISARSMethods {
      * @param uuid   the player using the GUI
      * @param update whether to update the grid display
      */
-    public void setSlot(Inventory inv, int slot, ItemStack is, UUID uuid, boolean update) {
+    void setSlot(Inventory inv, int slot, ItemStack is, UUID uuid, boolean update) {
         inv.setItem(slot, is);
         String material = is.getType().toString();
         if (update) {
@@ -191,7 +189,7 @@ public class TARDISARSMethods {
      * @param md   an instance of the TARDISARSMapData class from which to retrieve the map offset
      * @return an array of ints
      */
-    public int[] getCoords(int slot, TARDISARSMapData md) {
+    int[] getCoords(int slot, TARDISARSMapData md) {
         int[] coords = new int[2];
         if (slot <= 8) {
             coords[0] = (slot - 4) + md.getE();
@@ -223,7 +221,7 @@ public class TARDISARSMethods {
      * @param slot     the slot that was clicked
      * @param material the type id of the block in the slot
      */
-    public void updateGrid(UUID uuid, int slot, String material) {
+    private void updateGrid(UUID uuid, int slot, String material) {
         TARDISARSMapData md = map_data.get(uuid);
         String[][][] grid = md.getData();
         int yy = md.getY();
@@ -251,8 +249,8 @@ public class TARDISARSMethods {
      * @param slot the slot to update
      * @param str  the lore to set
      */
-    public void setLore(Inventory inv, int slot, String str) {
-        List<String> lore = (str != null) ? Arrays.asList(str) : null;
+    void setLore(Inventory inv, int slot, String str) {
+        List<String> lore = (str != null) ? Collections.singletonList(str) : null;
         ItemStack is = inv.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
@@ -266,7 +264,7 @@ public class TARDISARSMethods {
      * @param slot the slot to update
      * @param uuid the UUID of the player using the GUI
      */
-    public void switchLevel(Inventory inv, int slot, UUID uuid) {
+    void switchLevel(Inventory inv, int slot, UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
         for (int i = 27; i < 30; i++) {
             Material material = Material.WHITE_WOOL;
@@ -288,7 +286,7 @@ public class TARDISARSMethods {
      *
      * @param p the player using the GUI
      */
-    public void close(Player p) {
+    void close(Player p) {
         UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             scroll_start.remove(uuid);
@@ -365,7 +363,7 @@ public class TARDISARSMethods {
      * @param inv  the inventory to load the map into
      * @param uuid the UUID of the player using the GUI
      */
-    public void loadMap(Inventory inv, UUID uuid) {
+    void loadMap(Inventory inv, UUID uuid) {
         if (inv.getItem(10).getItemMeta().hasLore()) {
             setLore(inv, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
             return;
@@ -396,7 +394,7 @@ public class TARDISARSMethods {
         }
     }
 
-    public void setMap(int ul, int ue, int us, UUID uuid, Inventory inv) {
+    void setMap(int ul, int ue, int us, UUID uuid, Inventory inv) {
         TARDISARSMapData data = map_data.get(uuid);
         String[][][] grid = data.getData();
         String[][] layer = grid[ul];
@@ -422,7 +420,7 @@ public class TARDISARSMethods {
      * @param inv  the inventory to update
      * @param slot the slot number to update
      */
-    public void moveMap(UUID uuid, Inventory inv, int slot) {
+    void moveMap(UUID uuid, Inventory inv, int slot) {
         if (map_data.containsKey(uuid)) {
             TARDISARSMapData md = map_data.get(uuid);
             int ue, us;
@@ -462,7 +460,7 @@ public class TARDISARSMethods {
      * @param id   the TARDIS id
      * @return true or false
      */
-    public boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
+    private boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
         boolean hasRequired = true;
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GRAY_WOOL";
@@ -511,7 +509,7 @@ public class TARDISARSMethods {
         return hasRequired;
     }
 
-    public int getTardisId(String uuid) {
+    int getTardisId(String uuid) {
         int id = 0;
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
@@ -522,7 +520,7 @@ public class TARDISARSMethods {
         return id;
     }
 
-    public boolean hasRenderer(UUID uuid) {
+    boolean hasRenderer(UUID uuid) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", ids.get(uuid));
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -532,7 +530,7 @@ public class TARDISARSMethods {
         return false;
     }
 
-    public boolean checkSlotForConsole(Inventory inv, int slot, String uuid) {
+    boolean checkSlotForConsole(Inventory inv, int slot, String uuid) {
         Material m = inv.getItem(slot).getType();
         if (m.equals(Material.NETHER_BRICKS)) {
             // allow only if console is not MASTER
@@ -555,7 +553,7 @@ public class TARDISARSMethods {
         return (consoleBlocks.contains(m.toString()));
     }
 
-    public boolean playerIsOwner(String uuid, int id) {
+    private boolean playerIsOwner(String uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);

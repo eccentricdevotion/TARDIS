@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class TARDISTransmatCommand {
+class TARDISTransmatCommand {
 
     private final TARDIS plugin;
 

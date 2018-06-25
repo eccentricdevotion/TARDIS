@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISLampsRunnable implements Runnable {
+class TARDISLampsRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<Block> lamps;

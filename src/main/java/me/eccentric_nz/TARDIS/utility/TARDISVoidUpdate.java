@@ -57,14 +57,14 @@ public class TARDISVoidUpdate {
         }
     }
 
-    public class Updater implements Runnable {
+    class Updater implements Runnable {
 
         private final World world;
         private final int cx;
         private final int cz;
         private int idx = 0;
 
-        public Updater(World world, int cx, int cz) {
+        Updater(World world, int cx, int cz) {
             this.world = world;
             this.cx = cx;
             this.cz = cz;

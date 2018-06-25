@@ -207,9 +207,7 @@ public class TARDISBeaconColouringListener implements Listener {
             player.getInventory().removeItem(new ItemStack(dye.getType(), needed));
         }
         player.updateInventory();
-        candidates.forEach((bb) -> {
-            changeColour(bb, dye);
-        });
+        candidates.forEach((bb) -> changeColour(bb, dye));
         // take the Artron Energy
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());

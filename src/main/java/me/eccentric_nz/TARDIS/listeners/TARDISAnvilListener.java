@@ -36,7 +36,7 @@ import java.util.HashMap;
  */
 public class TARDISAnvilListener implements Listener {
 
-    HashMap<String, Material> disallow = new HashMap<>();
+    private final HashMap<String, Material> disallow = new HashMap<>();
 
     public TARDISAnvilListener(TARDIS plugin) {
         plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
@@ -49,7 +49,6 @@ public class TARDISAnvilListener implements Listener {
         });
         disallow.put("Handles", Material.BIRCH_BUTTON);
     }
-
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(InventoryClickEvent event) {

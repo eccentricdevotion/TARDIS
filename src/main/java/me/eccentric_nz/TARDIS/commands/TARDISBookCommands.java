@@ -43,7 +43,7 @@ import java.util.*;
 public class TARDISBookCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    LinkedHashMap<String, String> books;
+    private final LinkedHashMap<String, String> books;
     private final List<String> ROOT_SUBS;
     private final List<String> DO_SUBS = ImmutableList.of("get", "start");
 

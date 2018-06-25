@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 public class TARDISRoomCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    public List<String> roomArgs = new ArrayList<>();
+    private final List<String> roomArgs = new ArrayList<>();
 
     public TARDISRoomCommands(TARDIS plugin) {
         this.plugin = plugin;

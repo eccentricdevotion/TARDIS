@@ -75,8 +75,7 @@ public class TARDISAtmosphericExcitation {
                 firework.detonate();
                 // after x ticks, start snow particles and place snow on ground
                 TARDISExcitationRunnable runnable = new TARDISExcitationRunnable(plugin, l, p);
-                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
-                runnable.task = taskId;
+                runnable.task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
             }, 2L);
         }
     }

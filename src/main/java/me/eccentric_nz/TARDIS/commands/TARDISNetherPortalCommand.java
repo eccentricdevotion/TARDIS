@@ -78,7 +78,7 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
         return false;
     }
 
-    public boolean o2n(Player player) {
+    private boolean o2n(Player player) {
         int x, y, z, dx, dz;
         // get player coords
         Location l = player.getLocation();
@@ -106,7 +106,7 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
         return true;
     }
 
-    public boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
+    private boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
         int dx, dz;
         if ((y > 123) || (y < 1)) {
             TARDISMessage.send(sender, "O2N_Y");

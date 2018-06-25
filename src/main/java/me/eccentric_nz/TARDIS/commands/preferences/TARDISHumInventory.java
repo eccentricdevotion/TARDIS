@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISHumInventory {
+class TARDISHumInventory {
 
     private final ItemStack[] sounds;
 
@@ -67,7 +67,7 @@ public class TARDISHumInventory {
         ItemStack play = new ItemStack(Material.BOWL, 1);
         ItemMeta save = play.getItemMeta();
         save.setDisplayName("Action");
-        save.setLore(Arrays.asList("PLAY"));
+        save.setLore(Collections.singletonList("PLAY"));
         play.setItemMeta(save);
         stack[15] = play;
         // close

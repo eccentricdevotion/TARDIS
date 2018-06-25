@@ -28,7 +28,7 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISAdminPageTwoInventory {
+class TARDISAdminPageTwoInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] menu;
@@ -52,7 +52,7 @@ public class TARDISAdminPageTwoInventory {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
-                im.setLore(Arrays.asList(value));
+                im.setLore(Collections.singletonList(value));
                 is.setItemMeta(im);
                 options.add(is);
             }

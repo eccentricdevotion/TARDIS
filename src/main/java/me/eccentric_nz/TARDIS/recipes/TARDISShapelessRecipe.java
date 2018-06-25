@@ -43,9 +43,7 @@ public class TARDISShapelessRecipe {
 
     public void addShapelessRecipes() {
         Set<String> shapeless = plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false);
-        shapeless.forEach((s) -> {
-            plugin.getServer().addRecipe(makeRecipe(s));
-        });
+        shapeless.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
     }
 
     private ShapelessRecipe makeRecipe(String s) {
@@ -78,6 +76,7 @@ public class TARDISShapelessRecipe {
         for (String i : ingredients) {
             String[] recipe_idata = i.split(":");
             Material m = Material.valueOf(recipe_idata[0]);
+            // TODO use new Map API if it exists
             if (recipe_idata.length == 2) {
                 int recipe_data = TARDISNumberParsers.parseInt(recipe_idata[1]);
                 r.addIngredient(m, recipe_data);

@@ -57,9 +57,7 @@ public class TARDISZeroRoomChatListener implements Listener {
             TARDISMessage.send(zero, "NOT_IN_ZERO");
         } else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
             List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
-            inZeroRoom.forEach((p) -> {
-                event.getRecipients().remove(p);
-            });
+            inZeroRoom.forEach((p) -> event.getRecipients().remove(p));
         }
     }
 

@@ -31,7 +31,7 @@ public class TARDISLocationEvent extends Event {
     private final int tardis_id;
     private final Location location;
 
-    public TARDISLocationEvent(Player player, int tardisid, Location location) {
+    TARDISLocationEvent(Player player, int tardisid, Location location) {
         this.player = player;
         tardis_id = tardisid;
         this.location = location;

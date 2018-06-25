@@ -24,7 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISChameleonConstructorGUI {
+class TARDISChameleonConstructorGUI {
 
     private final TARDIS plugin;
     private final ItemStack[] construct;

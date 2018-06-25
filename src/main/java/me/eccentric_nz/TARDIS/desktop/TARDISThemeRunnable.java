@@ -23,7 +23,7 @@ public class TARDISThemeRunnable implements Runnable {
 
     int taskID;
 
-    public TARDISThemeRunnable() {
+    TARDISThemeRunnable() {
     }
 
     public void setTaskID(int taskID) {

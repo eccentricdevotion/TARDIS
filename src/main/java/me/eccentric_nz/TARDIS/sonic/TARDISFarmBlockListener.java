@@ -31,7 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISFarmBlockListener implements Listener {
 
-    public final TARDIS plugin;
+    private final TARDIS plugin;
     // seeds
     private final Material air = Material.AIR;
     private final Material bs = Material.BEETROOT_SEEDS;

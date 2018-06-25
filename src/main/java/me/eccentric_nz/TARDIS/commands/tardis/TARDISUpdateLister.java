@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISUpdateLister {
+class TARDISUpdateLister {
 
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
@@ -40,11 +40,9 @@ public class TARDISUpdateLister {
     public void list() {
         TARDISMessage.send(player, "UPDATE_INFO");
         player.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
-        options.entrySet().forEach((map) -> {
-            player.sendMessage(map.getKey());
-            map.getValue().forEach((s) -> {
-                player.sendMessage("    " + s);
-            });
+        options.forEach((key, value) -> {
+            player.sendMessage(key);
+            value.forEach((s) -> player.sendMessage("    " + s));
         });
     }
 

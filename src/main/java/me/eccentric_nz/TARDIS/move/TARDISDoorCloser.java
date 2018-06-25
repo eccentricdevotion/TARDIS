@@ -54,9 +54,7 @@ public class TARDISDoorCloser {
             if (!rs.getInnerBlock().getChunk().isLoaded()) {
                 rs.getInnerBlock().getChunk().load();
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                close(rs.getInnerBlock(), null);
-            }, 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(rs.getInnerBlock(), null), 5L);
         }
     }
 
@@ -101,9 +99,7 @@ public class TARDISDoorCloser {
             // unset trackers
             if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 // players
-                uuids.forEach((u) -> {
-                    plugin.getTrackerKeeper().getMover().remove(u);
-                });
+                uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().remove(u));
             }
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);

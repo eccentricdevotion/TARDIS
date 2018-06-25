@@ -36,7 +36,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISEnterCommand {
+class TARDISEnterCommand {
 
     private final TARDIS plugin;
 
@@ -89,29 +89,29 @@ public class TARDISEnterCommand {
                 int cx = TARDISNumberParsers.parseInt(split[1]);
                 int cy = TARDISNumberParsers.parseInt(split[2]);
                 int cz = TARDISNumberParsers.parseInt(split[3]);
-                Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
-                int getx = tmp_loc.getBlockX();
-                int getz = tmp_loc.getBlockZ();
+                Location tardis_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                int getx = tardis_loc.getBlockX();
+                int getz = tardis_loc.getBlockZ();
                 switch (innerD) {
                     case NORTH:
                         // z -ve
-                        tmp_loc.setX(getx + 0.5);
-                        tmp_loc.setZ(getz - 0.5);
+                        tardis_loc.setX(getx + 0.5);
+                        tardis_loc.setZ(getz - 0.5);
                         break;
                     case EAST:
                         // x +ve
-                        tmp_loc.setX(getx + 1.5);
-                        tmp_loc.setZ(getz + 0.5);
+                        tardis_loc.setX(getx + 1.5);
+                        tardis_loc.setZ(getz + 0.5);
                         break;
                     case SOUTH:
                         // z +ve
-                        tmp_loc.setX(getx + 0.5);
-                        tmp_loc.setZ(getz + 1.5);
+                        tardis_loc.setX(getx + 0.5);
+                        tardis_loc.setZ(getz + 1.5);
                         break;
                     case WEST:
                         // x -ve
-                        tmp_loc.setX(getx - 0.5);
-                        tmp_loc.setZ(getz + 0.5);
+                        tardis_loc.setX(getx - 0.5);
+                        tardis_loc.setZ(getz + 0.5);
                         break;
                 }
                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
@@ -119,10 +119,10 @@ public class TARDISEnterCommand {
                     plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
                 }
                 // enter TARDIS!
-                cw.getChunkAt(tmp_loc).load();
+                cw.getChunkAt(tardis_loc).load();
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
-                tmp_loc.setPitch(pitch);
+                tardis_loc.setPitch(pitch);
                 // get players direction so we can adjust yaw if necessary
                 COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
@@ -141,8 +141,7 @@ public class TARDISEnterCommand {
                             break;
                     }
                 }
-                tmp_loc.setYaw(yaw);
-                Location tardis_loc = tmp_loc;
+                tardis_loc.setYaw(yaw);
                 World playerWorld = player.getLocation().getWorld();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table

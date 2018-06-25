@@ -32,13 +32,11 @@ import java.util.Random;
  */
 public final class TARDISSiluriaSpawnListener implements Listener {
 
-    private final TARDIS plugin;
     private final TARDISWeepingAngelsAPI twaAPI;
     private final Random r = new Random();
 
     public TARDISSiluriaSpawnListener(TARDIS plugin) {
-        this.plugin = plugin;
-        twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
+        twaAPI = TARDISAngelsAPI.getAPI(plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

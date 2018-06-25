@@ -43,7 +43,7 @@ public class ArchiveReset {
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean resetUse() {
+    public void resetUse() {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -62,11 +62,11 @@ public class ArchiveReset {
                     ps.executeUpdate();
                 }
             } else {
-                return false;
+                return;
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for archive reset! " + e.getMessage());
-            return false;
+            return;
         } finally {
             try {
                 if (rs != null) {
@@ -82,6 +82,5 @@ public class ArchiveReset {
                 plugin.debug("Error closing archive reset! " + e.getMessage());
             }
         }
-        return true;
     }
 }

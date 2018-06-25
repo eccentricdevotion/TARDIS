@@ -286,9 +286,7 @@ public class TARDISWorldGuardUtils {
                     parent = parent.getParent();
                 }
             }
-            parentNames.forEach((name) -> {
-                regions.remove(name);
-            });
+            parentNames.forEach((name) -> regions.remove(name));
             rm.removeRegion(regions.getFirst());
             try {
                 rm.save();
@@ -408,9 +406,7 @@ public class TARDISWorldGuardUtils {
                     parent = parent.getParent();
                 }
             }
-            parentNames.forEach((name) -> {
-                regions.remove(name);
-            });
+            parentNames.forEach((name) -> regions.remove(name));
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
             DefaultDomain dd = pr.getOwners();
@@ -430,7 +426,7 @@ public class TARDISWorldGuardUtils {
      * @param location the Location to convert to BlockVector
      * @return a BlockVector
      */
-    public BlockVector makeBlockVector(Location location) {
+    private BlockVector makeBlockVector(Location location) {
         return new BlockVector(location.getX(), location.getY(), location.getZ());
     }
 
@@ -486,9 +482,9 @@ public class TARDISWorldGuardUtils {
     public List<String> getRegions(World w) {
         List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionManager(w);
-        rm.getRegions().entrySet().forEach((pr) -> {
-            if (pr.getKey().contains("tardis") && pr.getValue().getFlags().containsKey(DefaultFlag.BUILD)) {
-                regions.add(pr.getKey());
+        rm.getRegions().forEach((key, value) -> {
+            if (key.contains("tardis") && value.getFlags().containsKey(DefaultFlag.BUILD)) {
+                regions.add(key);
             }
         });
         return regions;
@@ -503,9 +499,9 @@ public class TARDISWorldGuardUtils {
     public List<String> getTARDISRegions(World w) {
         List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionManager(w);
-        rm.getRegions().entrySet().forEach((pr) -> {
-            if (pr.getKey().contains("tardis")) {
-                regions.add(pr.getKey());
+        rm.getRegions().forEach((key, value) -> {
+            if (key.contains("tardis")) {
+                regions.add(key);
             }
         });
         return regions;

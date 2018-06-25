@@ -30,7 +30,7 @@ public class TARDISEvent extends Event {
     private final Player player;
     private final Tardis tardis;
 
-    public TARDISEvent(Player player, Tardis tardis) {
+    TARDISEvent(Player player, Tardis tardis) {
         this.player = player;
         this.tardis = tardis;
     }

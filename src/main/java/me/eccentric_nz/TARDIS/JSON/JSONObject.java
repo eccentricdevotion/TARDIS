@@ -132,8 +132,7 @@ public class JSONObject {
 
         @Override
         public int hashCode() {
-            int hash = 5;
-            return hash;
+            return 5;
         }
     }
 
@@ -167,9 +166,9 @@ public class JSONObject {
      */
     public JSONObject(JSONObject jo, String[] names) {
         this();
-        for (int i = 0; i < names.length; i += 1) {
+        for (String name : names) {
             try {
-                putOnce(names[i], jo.opt(names[i]));
+                putOnce(name, jo.opt(name));
             } catch (JSONException ignore) {
             }
         }
@@ -234,9 +233,8 @@ public class JSONObject {
     public JSONObject(Map map) {
         this.map = new HashMap();
         if (map != null) {
-            Iterator i = map.entrySet().iterator();
-            while (i.hasNext()) {
-                Map.Entry e = (Map.Entry) i.next();
+            for (Object o : map.entrySet()) {
+                Map.Entry e = (Map.Entry) o;
                 Object value = e.getValue();
                 if (value != null) {
                     this.map.put(e.getKey(), wrap(value));
@@ -1384,8 +1382,7 @@ public class JSONObject {
         return write(writer, 0, 0);
     }
 
-    static final Writer writeValue(Writer writer, Object value,
-                                   int indentFactor, int indent) throws JSONException, IOException {
+    static Writer writeValue(Writer writer, Object value, int indentFactor, int indent) throws JSONException, IOException {
         if (value == null || value.equals(null)) {
             writer.write("null");
         } else if (value instanceof JSONObject) {

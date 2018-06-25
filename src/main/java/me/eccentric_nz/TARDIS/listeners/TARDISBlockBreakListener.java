@@ -95,9 +95,7 @@ public class TARDISBlockBreakListener implements Listener {
                     plugin.getTrackerKeeper().getExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
                     TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        plugin.getTrackerKeeper().getExterminate().remove(uuid);
-                    }, timeout * 20);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getExterminate().remove(uuid), timeout * 20);
                 } else {
                     TARDISMessage.send(player, "NO_PERM_DELETE");
                 }

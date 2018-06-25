@@ -24,7 +24,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISVersionCommand {
+class TARDISVersionCommand {
 
     private final TARDIS plugin;
 

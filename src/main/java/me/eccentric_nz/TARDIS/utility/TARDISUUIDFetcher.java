@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-public class TARDISUUIDFetcher implements Callable<Map<String, UUID>> {
+class TARDISUUIDFetcher implements Callable<Map<String, UUID>> {
 
     private static final double PROFILES_PER_REQUEST = 100;
     private static final String PROFILE_URL = "https://api.mojang.com/profiles/minecraft";
@@ -21,7 +21,7 @@ public class TARDISUUIDFetcher implements Callable<Map<String, UUID>> {
     private final List<String> names;
     private final boolean rateLimiting;
 
-    public TARDISUUIDFetcher(List<String> names, boolean rateLimiting) {
+    private TARDISUUIDFetcher(List<String> names, boolean rateLimiting) {
         this.names = ImmutableList.copyOf(names);
         this.rateLimiting = rateLimiting;
     }
@@ -93,6 +93,6 @@ public class TARDISUUIDFetcher implements Callable<Map<String, UUID>> {
     }
 
     public static UUID getUUIDOf(String name) throws Exception {
-        return new TARDISUUIDFetcher(Arrays.asList(name)).call().get(name);
+        return new TARDISUUIDFetcher(Collections.singletonList(name)).call().get(name);
     }
 }

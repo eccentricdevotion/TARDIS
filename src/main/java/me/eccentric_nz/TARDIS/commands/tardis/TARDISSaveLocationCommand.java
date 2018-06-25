@@ -29,7 +29,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISSaveLocationCommand {
+class TARDISSaveLocationCommand {
 
     private final TARDIS plugin;
 

@@ -31,7 +31,7 @@ import java.util.Set;
 public class TARDISCommandHelper {
 
     private final TARDIS plugin;
-    List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
+    private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
 
     public TARDISCommandHelper(TARDIS plugin) {
         this.plugin = plugin;

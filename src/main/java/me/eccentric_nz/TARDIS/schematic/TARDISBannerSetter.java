@@ -35,10 +35,9 @@ import java.util.List;
 public class TARDISBannerSetter {
 
     public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
-        banners.entrySet().forEach((entry) -> {
-            TARDISBannerData tbd = entry.getValue();
+        banners.forEach((key, tbd) -> {
             JSONObject state = tbd.getState();
-            Block pbb = entry.getKey().getLocation().getBlock();
+            Block pbb = key.getLocation().getBlock();
             pbb.setData(tbd.getData(), true);
             pbb.setType(tbd.getMaterial());
             Banner banner = (Banner) pbb.getState();

@@ -28,7 +28,7 @@ import java.io.File;
 /**
  * @author eccentric_nz
  */
-public class TARDISPruneCommand {
+class TARDISPruneCommand {
 
     private final TARDIS plugin;
 

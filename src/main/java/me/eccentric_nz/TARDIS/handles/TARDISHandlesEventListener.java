@@ -61,7 +61,7 @@ public class TARDISHandlesEventListener implements Listener {
      *
      * @param <T> The Object type we want to return
      */
-    public interface Callback<T> {
+    interface Callback<T> {
 
         void execute(T response);
     }

@@ -27,7 +27,7 @@ import org.bukkit.block.BlockFace;
  *
  * @author eccentric_nz
  */
-public class TARDISLazarusRunnable implements Runnable {
+class TARDISLazarusRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Block b;

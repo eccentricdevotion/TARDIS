@@ -31,7 +31,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISBuildCommand {
+class TARDISBuildCommand {
 
     private final TARDIS plugin;
 

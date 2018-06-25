@@ -62,9 +62,7 @@ public class TARDISGrowthListener implements Listener {
                 // grow an extra step
                 if (species.equals(Material.AIR)) {
                     // with cactus and sugar cane the block returned is AIR
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType());
-                    }, 3L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType()), 3L);
                 } else {
                     // get current level
                     Ageable ageable = (Ageable) plant;
@@ -73,9 +71,7 @@ public class TARDISGrowthListener implements Listener {
                         case CACTUS:
                         case SUGAR_CANE:
                             // with cactus and sugar cane the block returned is AIR
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType());
-                            }, 3L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType()), 3L);
                             break;
                         case BEETROOTS:
                         case CARROTS:
@@ -85,25 +81,19 @@ public class TARDISGrowthListener implements Listener {
                         case PUMPKIN_STEM:
                             // fully grown is 7
                             if (data < 6) {
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    ageable.setAge(data + 2);
-                                }, 3L);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 2), 3L);
                             }
                             break;
                         case COCOA:
                             // fully grown is 3
                             if (data < 4 && random.nextInt(100) < 25) {
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    ageable.setAge(data + 8);
-                                }, 3L);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 8), 3L);
                             }
                             break;
                         default: // NETHER_WARTS
                             // fully grown is 3
                             if (data < 2 && random.nextInt(100) < 33) {
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    ageable.setAge(data + 2);
-                                }, 3L);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 2), 3L);
                             }
                             break;
                     }

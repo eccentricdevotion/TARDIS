@@ -127,9 +127,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
                     TARDISSounds.playTARDISSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        tpblt.toggleLamp(id, powered);
-                    }, 6L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered), 6L);
                 }
             } else if (preset.equals(PRESET.INVISIBLE)) {
                 HashMap<String, Object> whered = new HashMap<>();

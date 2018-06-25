@@ -28,7 +28,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,7 +86,7 @@ public class TARDISAdminMenuListener implements Listener {
                 }
                 if (!option.isEmpty()) {
                     boolean bool = plugin.getConfig().getBoolean(option);
-                    if (option.equals("abandon.enabled") && bool == false && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+                    if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
                         Player p = (Player) event.getWhoClicked();
                         TARDISMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
                         return;
@@ -111,7 +111,7 @@ public class TARDISAdminMenuListener implements Listener {
     }
 
     private void setLore(Inventory inv, int slot, String str) {
-        List<String> lore = (str != null) ? Arrays.asList(str) : null;
+        List<String> lore = (str != null) ? Collections.singletonList(str) : null;
         ItemStack is = inv.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);

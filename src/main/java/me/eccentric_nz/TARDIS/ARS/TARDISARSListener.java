@@ -254,7 +254,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      * @param updown the type id of the block in the slot
      * @return true or false
      */
-    public boolean checkSavedGrid(UUID uuid, int slot, int updown) {
+    private boolean checkSavedGrid(UUID uuid, int slot, int updown) {
         TARDISARSMapData md = map_data.get(uuid);
         TARDISARSSaveData sd = save_map_data.get(uuid);
         String[][][] grid = sd.getData();
@@ -277,7 +277,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      * Populates arrays of room names and seed IDs for the scrollable room buttons.
      */
 
-    public final void getRoomIdAndNames() {
+    private void getRoomIdAndNames() {
         List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();
         // less non-room types
@@ -322,7 +322,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      *
      * @return a list of enabled custom room names
      */
-    public List<String> getCustomRoomNames() {
+    private List<String> getCustomRoomNames() {
         List<String> crooms = new ArrayList<>();
         Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
         names.forEach((cr) -> {

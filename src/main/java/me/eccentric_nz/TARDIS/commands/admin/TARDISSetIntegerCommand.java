@@ -29,7 +29,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetIntegerCommand {
+class TARDISSetIntegerCommand {
 
     private final TARDIS plugin;
     private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");

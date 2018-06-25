@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -29,13 +28,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISFloorCommand {
-
-    private final TARDIS plugin;
-
-    public TARDISFloorCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+class TARDISFloorCommand {
 
     public boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
@@ -59,9 +52,7 @@ public class TARDISFloorCommand {
         if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             TARDISMessage.send(player, message, pref);
-            TARDISWalls.BLOCKS.forEach((w) -> {
-                player.sendMessage(w.toString());
-            });
+            TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
             return true;
         }
         HashMap<String, Object> setw = new HashMap<>();

@@ -37,7 +37,6 @@ public class ResultSetAchievements {
     private final boolean multiple;
     private int a_id;
     private UUID uuid;
-    private String player;
     private String name;
     private String amount;
     private boolean completed;
@@ -70,9 +69,7 @@ public class ResultSetAchievements {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            where.entrySet().forEach((entry) -> {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            });
+            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "achievements" + wheres;
@@ -104,7 +101,6 @@ public class ResultSetAchievements {
                 }
                 a_id = rs.getInt("a_id");
                 uuid = UUID.fromString(rs.getString("uuid"));
-                player = rs.getString("player");
                 name = rs.getString("name");
                 amount = rs.getString("amount");
                 if (rs.wasNull()) {
@@ -140,9 +136,6 @@ public class ResultSetAchievements {
         return uuid;
     }
 
-    //    public String getPlayer() {
-//        return player;
-//    }
     public String getName() {
         return name;
     }

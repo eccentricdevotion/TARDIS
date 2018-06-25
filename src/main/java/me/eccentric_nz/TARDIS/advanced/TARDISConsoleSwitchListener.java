@@ -73,6 +73,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                 if (slot >= 0 && slot < 9) {
                     ItemStack item = inv.getItem(slot);
                     if (item != null && item.getType().equals(Material.MAP)) {
+                        // TODO use new Map API if it exists
                         byte map = item.getData().getData();
                         if (gui_circuits.contains(map)) {
                             HashMap<String, Object> where = new HashMap<>();

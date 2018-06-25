@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISSQLDelete implements Runnable {
+class TARDISSQLDelete implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -56,12 +56,12 @@ public class TARDISSQLDelete implements Runnable {
         Statement statement = null;
         String values;
         StringBuilder sbw = new StringBuilder();
-        where.entrySet().forEach((entry) -> {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
+        where.forEach((key, value) -> {
+            sbw.append(key).append(" = ");
+            if (value instanceof String || value instanceof UUID) {
+                sbw.append("'").append(value).append("' AND ");
             } else {
-                sbw.append(entry.getValue()).append(" AND ");
+                sbw.append(value).append(" AND ");
             }
         });
         where.clear();

@@ -201,14 +201,14 @@ public class TARDISArchInventory {
     private void reapplyCustomAttributes(Player p, String data) {
         try {
             HashMap<Integer, List<TARDISAttributeData>> cus = TARDISAttributeSerialization.fromDatabase(data);
-            cus.entrySet().forEach((m) -> {
-                int slot = m.getKey();
+            cus.forEach((key, value) -> {
+                int slot = key;
                 if (slot != -1) {
                     ItemStack is = p.getInventory().getItem(slot);
                     TARDISAttributes attributes = new TARDISAttributes(is);
-                    m.getValue().forEach((ad) -> {
+                    value.forEach((ad) -> {
                         attributes.add(TARDISAttribute.newBuilder().name(ad.getAttribute()).type(TARDISAttributeType.fromId(ad.getAttributeID())).operation(ad.getOperation()).amount(ad.getValue()).build());
-                        p.getInventory().setItem(m.getKey(), attributes.getStack());
+                        p.getInventory().setItem(key, attributes.getStack());
                     });
                 }
             });
@@ -216,5 +216,4 @@ public class TARDISArchInventory {
             System.err.println("Could not reapply custom attributes, " + e);
         }
     }
-
 }

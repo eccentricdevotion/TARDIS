@@ -73,9 +73,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         Tardis tardis = rs.getTardis();
                         // return to Desktop Theme GUI
                         close(p);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton();
-                        }, 2L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton(), 2L);
                         break;
                     case 18:
                         // size
@@ -182,9 +180,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
     @Override
     public void close(Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.closeInventory(), 1L);
     }
 
     /**

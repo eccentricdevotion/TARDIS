@@ -24,7 +24,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISReloadCommand {
+class TARDISReloadCommand {
 
     private final TARDIS plugin;
 

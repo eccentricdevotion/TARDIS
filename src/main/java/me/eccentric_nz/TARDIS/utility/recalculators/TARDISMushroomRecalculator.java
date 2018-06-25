@@ -101,12 +101,8 @@ public class TARDISMushroomRecalculator {
                 break;
         }
         if (set != null) {
-            has.forEach((f) -> {
-                mushroom.setFace(f, false);
-            });
-            set.forEach((f) -> {
-                mushroom.setFace(f, true);
-            });
+            has.forEach((f) -> mushroom.setFace(f, false));
+            set.forEach((f) -> mushroom.setFace(f, true));
         }
         return mushroom;
     }

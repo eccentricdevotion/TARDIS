@@ -33,7 +33,7 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISColouriseCommand {
+class TARDISColouriseCommand {
 
     private final TARDIS plugin;
 

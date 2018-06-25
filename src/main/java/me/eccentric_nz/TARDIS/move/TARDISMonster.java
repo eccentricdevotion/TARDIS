@@ -25,7 +25,7 @@ import org.bukkit.inventory.EntityEquipment;
 /**
  * @author eccentric_nz
  */
-public class TARDISMonster extends TARDISMob {
+class TARDISMonster extends TARDISMob {
 
     private boolean aggressive;
     private int anger;

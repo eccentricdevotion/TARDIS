@@ -64,7 +64,7 @@ public class TARDISThemeButton {
         player.openInventory(upg);
     }
 
-    public int getTardisId(String uuid) {
+    private int getTardisId(String uuid) {
         int tid = 0;
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {

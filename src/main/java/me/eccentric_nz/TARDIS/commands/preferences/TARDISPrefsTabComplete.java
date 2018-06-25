@@ -45,9 +45,7 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
 
     public TARDISPrefsTabComplete(TARDIS plugin) {
         List<String> mats = new ArrayList<>();
-        TARDISWalls.BLOCKS.forEach((key) -> {
-            mats.add(key.toString());
-        });
+        TARDISWalls.BLOCKS.forEach((key) -> mats.add(key.toString()));
         MAT_SUBS = ImmutableList.copyOf(mats);
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));

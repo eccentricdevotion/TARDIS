@@ -59,7 +59,7 @@ public class TARDISConstants {
      * @param values an array of block types to change to
      * @return the combined arrays as a HashMap
      */
-    public static HashMap<Material, Material> toMap(Material[] keys, Material[] values) {
+    private static HashMap<Material, Material> toMap(Material[] keys, Material[] values) {
         int keysSize = (keys != null) ? keys.length : 0;
         int valuesSize = (values != null) ? values.length : 0;
         if (keysSize == 0 && valuesSize == 0) {

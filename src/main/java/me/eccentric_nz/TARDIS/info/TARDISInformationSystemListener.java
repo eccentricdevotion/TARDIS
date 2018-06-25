@@ -36,7 +36,7 @@ import java.util.UUID;
 public class TARDISInformationSystemListener implements Listener {
 
     private final TARDIS plugin;
-    FileConfiguration pluginYml;
+    private final FileConfiguration pluginYml;
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -1226,8 +1226,8 @@ public class TARDISInformationSystemListener implements Listener {
         plugin.getTrackerKeeper().getInfoMenu().put(p.getUniqueId(), item);
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        TARDISInfoMenu.getChildren(item.toString()).entrySet().forEach((m) -> {
-            String menu = m.getKey().replaceFirst(m.getValue(), "§f" + m.getValue() + "§6");
+        TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
+            String menu = key.replaceFirst(value, "§f" + value + "§6");
             p.sendMessage("§6> " + menu);
         });
         p.sendMessage("§6> §fE§6xit");
@@ -1275,9 +1275,7 @@ public class TARDISInformationSystemListener implements Listener {
         // do stuff
         String[] r = item.toString().split("_");
         String recipe = (r.length == 3) ? r[0] + "-" + r[1] : r[0];
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.performCommand("tardisrecipe " + recipe);
-        });
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.performCommand("tardisrecipe " + recipe));
         exit(p);
     }
 

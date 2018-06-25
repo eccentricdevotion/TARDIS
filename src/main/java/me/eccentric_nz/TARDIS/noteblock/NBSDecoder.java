@@ -20,7 +20,7 @@ package me.eccentric_nz.TARDIS.noteblock;
 import java.io.*;
 import java.util.HashMap;
 
-public class NBSDecoder {
+class NBSDecoder {
 
     public static Song parse(File decodeFile) {
         try {
@@ -80,8 +80,6 @@ public class NBSDecoder {
                 }
             }
             return new Song(speed, layerHashMap, songHeight, length, title, author, description, decodeFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

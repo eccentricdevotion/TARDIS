@@ -26,7 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -77,7 +77,7 @@ public class TARDISControlInventory {
                 direction = rsc.getDirection().toString();
             }
         }
-        /**
+        /*
          * ***** TRAVEL *****
          */
         // random location
@@ -105,7 +105,7 @@ public class TARDISControlInventory {
         ItemMeta min = ter.getItemMeta();
         min.setDisplayName(plugin.getLanguage().getString("BUTTON_TERM"));
         ter.setItemMeta(min);
-        /**
+        /*
          * ***** INTERIOR *****
          */
         // architectural reconfiguration system
@@ -122,26 +122,26 @@ public class TARDISControlInventory {
         ItemStack pow = new ItemStack(Material.REPEATER, 1);
         ItemMeta dwn = pow.getItemMeta();
         dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
-        dwn.setLore(Arrays.asList(power_onoff));
+        dwn.setLore(Collections.singletonList(power_onoff));
         pow.setItemMeta(dwn);
         // light
         ItemStack lig = new ItemStack(Material.REPEATER, 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
-        swi.setLore(Arrays.asList(lights_onoff));
+        swi.setLore(Collections.singletonList(lights_onoff));
         lig.setItemMeta(swi);
         // toggle wool
         ItemStack tog = new ItemStack(Material.REPEATER, 1);
         ItemMeta gle = tog.getItemMeta();
         gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
-        gle.setLore(Arrays.asList(toggle_openclosed));
+        gle.setLore(Collections.singletonList(toggle_openclosed));
         tog.setItemMeta(gle);
         // tardis map
         ItemStack map = new ItemStack(Material.BOWL, 1);
         ItemMeta me = map.getItemMeta();
         me.setDisplayName(plugin.getLanguage().getString("BUTTON_TARDIS_MAP"));
         map.setItemMeta(me);
-        /**
+        /*
          * ***** EXTERIOR *****
          */
         // chameleon circuit
@@ -153,7 +153,7 @@ public class TARDISControlInventory {
         ItemStack siege = new ItemStack(Material.REPEATER, 1);
         ItemMeta mode = siege.getItemMeta();
         mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
-        mode.setLore(Arrays.asList(siege_onoff));
+        mode.setLore(Collections.singletonList(siege_onoff));
         siege.setItemMeta(mode);
         // hide
         ItemStack hide = new ItemStack(Material.BOWL, 1);
@@ -169,14 +169,14 @@ public class TARDISControlInventory {
         ItemStack dir = new ItemStack(Material.BOWL, 1);
         ItemMeta ection = dir.getItemMeta();
         ection.setDisplayName(plugin.getLanguage().getString("BUTTON_DIRECTION"));
-        ection.setLore(Arrays.asList(direction));
+        ection.setLore(Collections.singletonList(direction));
         dir.setItemMeta(ection);
         // temporal
         ItemStack temp = new ItemStack(Material.BOWL, 1);
         ItemMeta oral = temp.getItemMeta();
         oral.setDisplayName(plugin.getLanguage().getString("BUTTON_TEMP"));
         temp.setItemMeta(oral);
-        /**
+        /*
          * ***** INFORMATION *****
          */
         // artron levels
@@ -194,7 +194,7 @@ public class TARDISControlInventory {
         ItemMeta sys = info.getItemMeta();
         sys.setDisplayName(plugin.getLanguage().getString("BUTTON_INFO"));
         info.setItemMeta(sys);
-        /**
+        /*
          * ***** OTHER *****
          */
         // zero room
@@ -218,7 +218,7 @@ public class TARDISControlInventory {
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
 
-        ItemStack[] is = {
+        return new ItemStack[]{
                 ran, null, ars, null, cham, null, art, null, zero,
                 save, null, upg, null, siege, null, scan, null, player,
                 fast, null, pow, null, hide, null, info, null, companion,
@@ -226,7 +226,6 @@ public class TARDISControlInventory {
                 ter, null, tog, null, dir, null, null, null, null,
                 null, null, map, null, temp, null, null, null, close
         };
-        return is;
     }
 
     public ItemStack[] getControls() {

@@ -38,7 +38,7 @@ import java.util.List;
 public class TARDISEntityGriefListener implements Listener {
 
     private final TARDIS plugin;
-    List<EntityType> ents = new ArrayList<>();
+    private final List<EntityType> ents = new ArrayList<>();
 
     public TARDISEntityGriefListener(TARDIS plugin) {
         this.plugin = plugin;

@@ -25,7 +25,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
  *
  * @author eccentric_nz
  */
-public class TARDISPig extends TARDISMob {
+class TARDISPig extends TARDISMob {
 
     private boolean saddled;
 

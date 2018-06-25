@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class Song {
 
-    private HashMap<Integer, Layer> layerHashMap = new HashMap<>();
+    private final HashMap<Integer, Layer> layerHashMap;
     private final short songHeight;
     private final short length;
     private final String title;
@@ -60,7 +60,7 @@ public class Song {
         return layerHashMap;
     }
 
-    public short getSongHeight() {
+    private short getSongHeight() {
         return songHeight;
     }
 
@@ -68,23 +68,23 @@ public class Song {
         return length;
     }
 
-    public String getTitle() {
+    private String getTitle() {
         return title;
     }
 
-    public String getAuthor() {
+    private String getAuthor() {
         return author;
     }
 
-    public File getPath() {
+    private File getPath() {
         return path;
     }
 
-    public String getDescription() {
+    private String getDescription() {
         return description;
     }
 
-    public float getSpeed() {
+    private float getSpeed() {
         return speed;
     }
 

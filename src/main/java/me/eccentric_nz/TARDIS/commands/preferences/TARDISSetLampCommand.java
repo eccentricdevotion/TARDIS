@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetLampCommand {
+class TARDISSetLampCommand {
 
     private final TARDIS plugin;
 

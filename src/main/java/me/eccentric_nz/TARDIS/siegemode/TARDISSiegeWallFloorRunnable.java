@@ -45,20 +45,32 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISSiegeWallFloorRunnable implements Runnable {
+class TARDISSiegeWallFloorRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
     private final boolean toSiege;
     private boolean running;
-    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz;
-    World world;
-    Material wall_type, floor_type, siege_wall_type, siege_floor_type;
+    private int id;
+    private int slot;
+    private int level = 0;
+    private int row = 0;
+    private int h;
+    private int w;
+    private int c;
+    private int startx;
+    private int starty;
+    private int startz;
+    private World world;
+    private Material wall_type;
+    private Material floor_type;
+    private Material siege_wall_type;
+    private Material siege_floor_type;
     byte wall_data, floor_data, siege_wall_data, siege_floor_data;
-    QueryFactory qf;
-    Player player;
-    int taskID;
+    private final QueryFactory qf;
+    private Player player;
+    private int taskID;
     private Archive archive;
 
     public TARDISSiegeWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean toSiege) {

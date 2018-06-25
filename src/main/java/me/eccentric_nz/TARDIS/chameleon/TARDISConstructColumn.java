@@ -46,8 +46,7 @@ public class TARDISConstructColumn {
         ResultSetChameleon rs = new ResultSetChameleon(plugin, where);
         if (rs.resultSet()) {
             String json = rs.getData().get(field + "ID");
-            TARDISChameleonColumn col = TARDISChameleonPreset.buildTARDISChameleonColumn(d, json, false, false);
-            return col;
+            return TARDISChameleonPreset.buildTARDISChameleonColumn(d, json, false, false);
         }
         return null;
     }

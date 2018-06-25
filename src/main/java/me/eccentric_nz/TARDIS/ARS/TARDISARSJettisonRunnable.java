@@ -33,7 +33,7 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISARSJettisonRunnable implements Runnable {
+class TARDISARSJettisonRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISARSJettison slot;

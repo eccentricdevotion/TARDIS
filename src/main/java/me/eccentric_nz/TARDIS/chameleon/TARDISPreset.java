@@ -27,7 +27,7 @@ import java.util.EnumMap;
  *
  * @author eccentric_nz
  */
-public class TARDISPreset {
+class TARDISPreset {
 
     private String blueprint_id;
     private String stained_id;
@@ -36,7 +36,7 @@ public class TARDISPreset {
     private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
 
-    public TARDISPreset() {
+    TARDISPreset() {
     }
 
     public void makePresets(boolean assymetric, boolean duck) {
@@ -63,7 +63,7 @@ public class TARDISPreset {
         return blueprint_id;
     }
 
-    public void setBlueprint_id(String blueprint_id) {
+    void setBlueprint_id(String blueprint_id) {
         this.blueprint_id = blueprint_id;
     }
 
@@ -71,7 +71,7 @@ public class TARDISPreset {
         return stained_id;
     }
 
-    public void setStained_id(String stained_id) {
+    void setStained_id(String stained_id) {
         this.stained_id = stained_id;
     }
 
@@ -79,7 +79,7 @@ public class TARDISPreset {
         return glass_id;
     }
 
-    public void setGlass_id(String glass_id) {
+    void setGlass_id(String glass_id) {
         this.glass_id = glass_id;
     }
 }

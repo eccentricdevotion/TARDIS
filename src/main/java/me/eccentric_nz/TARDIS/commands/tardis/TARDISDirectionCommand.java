@@ -148,9 +148,7 @@ public class TARDISDirectionCommand {
                 bd.setSubmarine(rsc.isSubmarine());
                 bd.setTardisID(id);
                 bd.setBiome(rsc.getBiome());
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                }, 10L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             }
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);

@@ -47,11 +47,11 @@ import java.util.Locale;
 public class TARDISAdminCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    public HashMap<String, String> firstsStr = new HashMap<>();
-    public List<String> firstsStrArtron = new ArrayList<>();
-    public HashMap<String, String> firstsBool = new HashMap<>();
-    public HashMap<String, String> firstsInt = new HashMap<>();
-    public List<String> firstsIntArtron = new ArrayList<>();
+    public final HashMap<String, String> firstsStr = new HashMap<>();
+    public final List<String> firstsStrArtron = new ArrayList<>();
+    public final HashMap<String, String> firstsBool = new HashMap<>();
+    public final HashMap<String, String> firstsInt = new HashMap<>();
+    public final List<String> firstsIntArtron = new ArrayList<>();
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;

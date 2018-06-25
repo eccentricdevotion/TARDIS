@@ -164,7 +164,6 @@ public class TARDISRescue {
         } else {
             return new RescueData(false, 0);
         }
-
     }
 
     public static class RescueData {
@@ -172,7 +171,7 @@ public class TARDISRescue {
         private final boolean success;
         private final int tardis_id;
 
-        public RescueData(boolean success, int id) {
+        RescueData(boolean success, int id) {
             this.success = success;
             tardis_id = id;
         }

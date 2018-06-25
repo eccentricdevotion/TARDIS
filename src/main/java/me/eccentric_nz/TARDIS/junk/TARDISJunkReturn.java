@@ -26,7 +26,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkReturn {
+class TARDISJunkReturn {
 
     private final TARDIS plugin;
 

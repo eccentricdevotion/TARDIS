@@ -30,12 +30,12 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISArtronRunnable implements Runnable {
+class TARDISArtronRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int id;
     private int task;
-    QueryFactory qf;
+    private final QueryFactory qf;
 
     public TARDISArtronRunnable(TARDIS plugin, int id) {
         this.plugin = plugin;

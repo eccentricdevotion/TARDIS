@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISIsomorphicCommand {
+class TARDISIsomorphicCommand {
 
     private final TARDIS plugin;
 

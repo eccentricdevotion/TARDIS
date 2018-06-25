@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISUpgradeCommand {
+class TARDISUpgradeCommand {
 
     private final TARDIS plugin;
 

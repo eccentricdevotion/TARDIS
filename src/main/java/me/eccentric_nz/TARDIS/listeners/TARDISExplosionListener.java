@@ -61,7 +61,7 @@ public class TARDISExplosionListener implements Listener {
             e.setCancelled(true);
             // check it is not the Artron creeper
             String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
-            if (new ResultSetCreeper(plugin, loc_chk).resultSet() == false) {
+            if (!new ResultSetCreeper(plugin, loc_chk).resultSet()) {
                 // create a new explosion that doesn't destroy blocks or set fire
                 explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
             }

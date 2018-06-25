@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISEPSMessageCommand {
+class TARDISEPSMessageCommand {
 
     public boolean setMessage(Player player, String[] args, QueryFactory qf) {
         String message;
@@ -39,9 +39,7 @@ public class TARDISEPSMessageCommand {
             BookMeta bm = (BookMeta) bq.getItemMeta();
             List<String> pages = bm.getPages();
             StringBuilder sb = new StringBuilder();
-            pages.forEach((s) -> {
-                sb.append(s).append(" ");
-            });
+            pages.forEach((s) -> sb.append(s).append(" "));
             message = sb.toString();
         } else {
             if (count < 2) {

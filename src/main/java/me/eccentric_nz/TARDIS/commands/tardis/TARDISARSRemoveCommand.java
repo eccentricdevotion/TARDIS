@@ -32,7 +32,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISARSRemoveCommand {
+class TARDISARSRemoveCommand {
 
     private final TARDIS plugin;
 

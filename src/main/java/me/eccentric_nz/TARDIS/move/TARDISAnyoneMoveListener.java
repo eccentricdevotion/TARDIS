@@ -52,7 +52,7 @@ public class TARDISAnyoneMoveListener implements Listener {
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
         Location loc = p.getLocation(); // Grab Location
 
-        /**
+        /*
          * Copyright (c) 2011, The Multiverse Team All rights reserved. Check
          * the Player has actually moved a block to prevent unneeded
          * calculations... This is to prevent huge performance drops on high

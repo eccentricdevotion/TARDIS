@@ -119,9 +119,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     @Override
     public void close(Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 
     /**

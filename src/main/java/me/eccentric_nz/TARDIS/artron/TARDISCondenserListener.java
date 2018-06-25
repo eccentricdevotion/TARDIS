@@ -43,7 +43,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,7 +55,7 @@ import java.util.List;
 public class TARDISCondenserListener implements Listener {
 
     private final TARDIS plugin;
-    private List<String> zero = new ArrayList<>();
+    private final List<String> zero;
 
     public TARDISCondenserListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -144,20 +143,20 @@ public class TARDISCondenserListener implements Listener {
                     Tardis tardis = rs.getTardis();
                     // process item_counts
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
-                        item_counts.entrySet().forEach((map) -> {
+                        item_counts.forEach((key, value) -> {
                             // check if the tardis has condensed this material before
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", tardis.getTardis_id());
-                            wherec.put("block_data", map.getKey());
+                            wherec.put("block_data", key);
                             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
                             HashMap<String, Object> setc = new HashMap<>();
                             if (rsc.resultSet()) {
-                                int new_stack_size = map.getValue() + rsc.getBlock_count();
-                                qf.updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), map.getKey());
+                                int new_stack_size = value + rsc.getBlock_count();
+                                qf.updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
                             } else {
                                 setc.put("tardis_id", tardis.getTardis_id());
-                                setc.put("block_data", map.getKey());
-                                setc.put("block_count", map.getValue());
+                                setc.put("block_data", key);
+                                setc.put("block_count", value);
                                 qf.doInsert("condenser", setc);
                             }
                         });

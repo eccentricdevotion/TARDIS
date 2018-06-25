@@ -45,13 +45,13 @@ public class TARDISJunkBuilder implements Runnable {
 
     private final TARDIS plugin;
     private final BuildData bd;
-    public int task;
-    public int fryTask;
+    private int task;
+    private int fryTask;
     private int i = 0;
     private final int sx, sy, sz;
     private final Location loc;
     private final Location effectsLoc;
-    World world;
+    private final World world;
     private final QueryFactory qf;
 
     public TARDISJunkBuilder(TARDIS plugin, BuildData bd) {

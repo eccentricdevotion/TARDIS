@@ -25,7 +25,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-public class TARDISLastKnownNameUpdater {
+class TARDISLastKnownNameUpdater {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

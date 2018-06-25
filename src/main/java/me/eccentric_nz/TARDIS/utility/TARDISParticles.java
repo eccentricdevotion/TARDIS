@@ -37,8 +37,8 @@ public class TARDISParticles {
             for (int i = 0; i < 10; i++) {
                 double angle = step * radials + 6.283185307179586D * i / 10;
                 Vector v = new Vector(Math.cos(angle) * 3, step * 0.2f, Math.sin(angle) * 3);
-                rotateAroundAxisX(v, l.getPitch() * 0.017453292F);
-                rotateAroundAxisY(v, -l.getYaw() * 0.017453292F);
+                v = rotateAroundAxisX(v, l.getPitch() * 0.017453292F);
+                v = rotateAroundAxisY(v, -l.getYaw() * 0.017453292F);
                 l.add(v);
                 p.spawnParticle(Particle.SPELL, l, 10);
                 l.subtract(v);

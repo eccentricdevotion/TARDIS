@@ -96,13 +96,11 @@ public class TARDISCraftListener implements Listener {
         Inventory inv = event.getInventory();
         if (crafters.contains(uuid) && inv.getType().equals(InventoryType.WORKBENCH)) {
             // remove dropped items around workbench
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                p.getNearbyEntities(6, 6, 6).forEach((e) -> {
-                    if (e instanceof Item) {
-                        e.remove();
-                    }
-                });
-            }, 1L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.getNearbyEntities(6, 6, 6).forEach((e) -> {
+                if (e instanceof Item) {
+                    e.remove();
+                }
+            }), 1L);
             crafters.remove(uuid);
         }
     }
@@ -166,7 +164,7 @@ public class TARDISCraftListener implements Listener {
     /**
      * Checks the craft inventory slots contain the correct materials to craft a TARDIS Seed block.
      *
-     * @param inv
+     * @param inv the inventory to check
      * @return whether it is a valid seed block
      */
     private boolean checkSlots(Inventory inv) {

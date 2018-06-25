@@ -99,8 +99,7 @@ public class TARDISChameleonCircuit {
         return wall_block;
     }
 
-    public Material swapMaterial(Material material) {
-        Material swappedId = TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
-        return swappedId;
+    private Material swapMaterial(Material material) {
+        return TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
     }
 }

@@ -43,7 +43,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRepair {
+class TARDISRepair {
 
     private final TARDIS plugin;
     private final Player player;
@@ -248,7 +248,7 @@ public class TARDISRepair {
                         TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
                     }
                 }
-                if (hasRequired == false) {
+                if (!hasRequired) {
                     player.sendMessage("-----------------------------");
                     return false;
                 }

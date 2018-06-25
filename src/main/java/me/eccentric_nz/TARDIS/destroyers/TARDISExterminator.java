@@ -270,9 +270,7 @@ public class TARDISExterminator {
         whereb.put("tardis_id", id);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, whereb, true);
         if (rsb.resultSet()) {
-            rsb.getData().forEach((rp) -> {
-                plugin.getGeneralKeeper().getProtectBlockMap().remove(rp.getStrLocation());
-            });
+            rsb.getData().forEach((rp) -> plugin.getGeneralKeeper().getProtectBlockMap().remove(rp.getStrLocation()));
         }
         // remove gravity well blocks from the HashMap
         HashMap<String, Object> whereg = new HashMap<>();

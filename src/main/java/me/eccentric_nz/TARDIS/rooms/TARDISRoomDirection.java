@@ -24,7 +24,7 @@ import org.bukkit.block.BlockFace;
 /**
  * @author eccentric_nz
  */
-public class TARDISRoomDirection {
+class TARDISRoomDirection {
 
     private final Block b;
     private boolean found;

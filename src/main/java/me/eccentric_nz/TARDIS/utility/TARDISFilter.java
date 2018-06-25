@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author eccentric_nz
  */
-public class TARDISFilter implements Filter {
+class TARDISFilter implements Filter {
 
     @Override
     public boolean isLoggable(LogRecord record) {

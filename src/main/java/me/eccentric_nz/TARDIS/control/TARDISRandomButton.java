@@ -173,7 +173,7 @@ public class TARDISRandomButton {
                         }
                     }
                     if (!plugin.getConfig().getBoolean("preferences.no_coords")) {
-                        if (isTL == true) {
+                        if (isTL) {
                             TARDISMessage.send(player, "DEST", dchat);
                         } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
                             TARDISMessage.send(plugin.getServer().getPlayer(ownerUUID), "DEST", dchat);

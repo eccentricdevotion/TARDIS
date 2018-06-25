@@ -106,9 +106,7 @@ public class ResultSetPlayerPrefs {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            where.entrySet().forEach((entry) -> {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            });
+            where.forEach((key1, value) -> sbw.append(key1).append(" = ? AND "));
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "player_prefs" + wheres;

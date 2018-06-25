@@ -33,7 +33,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISEmergencyProgrammeCommand {
+class TARDISEmergencyProgrammeCommand {
 
     private final TARDIS plugin;
 

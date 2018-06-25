@@ -31,7 +31,7 @@ import java.util.Map;
 public class TARDISRecipesUpdater {
 
     private final TARDIS plugin;
-    private FileConfiguration recipes_config = null;
+    private final FileConfiguration recipes_config;
     private final HashMap<String, Integer> flavours = new HashMap<>();
     private final HashMap<String, Integer> colours = new HashMap<>();
     private final HashMap<String, Integer> damage = new HashMap<>();
@@ -424,9 +424,9 @@ public class TARDISRecipesUpdater {
             recipes_config.set("furnace.Nuclear Wool.cooktime", 200);
             i++;
         }
-        damage.entrySet().forEach((uses) -> {
-            if (recipes_config.getString(uses.getKey()).isEmpty()) {
-                recipes_config.set(uses.getKey(), "Uses left~" + uses.getValue());
+        damage.forEach((key, value) -> {
+            if (recipes_config.getString(key).isEmpty()) {
+                recipes_config.set(key, "Uses left~" + value);
             }
         });
         try {

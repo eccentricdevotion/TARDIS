@@ -318,9 +318,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         // rebuild
         player.performCommand("tardis rebuild");
         plugin.getTrackerKeeper().getConstructors().remove(player.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            close(player);
-        }, 2L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(player), 2L);
         // damage the circuit if configured
         if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

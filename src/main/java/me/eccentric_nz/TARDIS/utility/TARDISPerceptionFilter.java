@@ -47,9 +47,7 @@ public class TARDISPerceptionFilter {
         if (perceptionFilter == null) {
             perceptionFilter = board.registerNewTeam("PerceptionFilter");
             perceptionFilter.setCanSeeFriendlyInvisibles(true);
-            plugin.getServer().getOnlinePlayers().forEach((olp) -> {
-                perceptionFilter.addEntry(olp.getName());
-            });
+            plugin.getServer().getOnlinePlayers().forEach((olp) -> perceptionFilter.addEntry(olp.getName()));
         }
     }
 
@@ -71,9 +69,7 @@ public class TARDISPerceptionFilter {
 
     public void addPerceptionFilter(Player player) {
         perceptionFilter.addEntry(player.getName());
-        plugin.getServer().getOnlinePlayers().forEach((olp) -> {
-            addPlayer(olp);
-        });
+        plugin.getServer().getOnlinePlayers().forEach((olp) -> addPlayer(olp));
         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
     }
 

@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISConfigCommand {
+class TARDISConfigCommand {
 
     private final TARDIS plugin;
     private final List<String> sections = new ArrayList<>();

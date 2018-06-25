@@ -23,7 +23,7 @@ import org.bukkit.Location;
 /**
  * @author eccentric_nz
  */
-public class TARDISLoopingFlightSound implements Runnable {
+class TARDISLoopingFlightSound implements Runnable {
 
     private final TARDIS plugin;
     private final Location location;
@@ -38,9 +38,7 @@ public class TARDISLoopingFlightSound implements Runnable {
     @Override
     public void run() {
         // start looping sfx
-        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            TARDISSounds.playTARDISSound(location, "time_rotor", 0.5f);
-        }, 1L, 280L);
+        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(location, "time_rotor", 0.5f), 1L, 280L);
         plugin.getTrackerKeeper().getDestinationVortex().put(id, taskID);
     }
 }

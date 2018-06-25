@@ -214,19 +214,19 @@ public class TARDISCaveFinder {
         private boolean safe;
         private int y;
 
-        public boolean isSafe() {
+        boolean isSafe() {
             return safe;
         }
 
-        public void setSafe(boolean safe) {
+        void setSafe(boolean safe) {
             this.safe = safe;
         }
 
-        public int getY() {
+        int getY() {
             return y;
         }
 
-        public void setY(int y) {
+        void setY(int y) {
             this.y = y;
         }
     }

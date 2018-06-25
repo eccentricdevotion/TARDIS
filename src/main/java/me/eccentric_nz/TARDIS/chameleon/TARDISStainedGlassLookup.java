@@ -297,7 +297,6 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.PINK_TERRACOTTA, Material.PINK_STAINED_GLASS);
         stain.put(Material.PINK_WOOL, Material.PINK_STAINED_GLASS);
         stain.put(Material.PISTON, Material.LIGHT_GRAY_STAINED_GLASS);
-        stain.put(Material.PLAYER_HEAD, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.PLAYER_HEAD, Material.PINK_STAINED_GLASS);
         stain.put(Material.PLAYER_WALL_HEAD, Material.PINK_STAINED_GLASS);
         stain.put(Material.PORTAL, Material.PURPLE_STAINED_GLASS);
@@ -316,7 +315,6 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.PURPLE_WOOL, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.PURPUR_BLOCK, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.PURPUR_PILLAR, Material.PURPLE_STAINED_GLASS);
-        stain.put(Material.PURPUR_SLAB, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.PURPUR_SLAB, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.QUARTZ_BLOCK, Material.WHITE_STAINED_GLASS);
         stain.put(Material.QUARTZ_SLAB, Material.WHITE_STAINED_GLASS);

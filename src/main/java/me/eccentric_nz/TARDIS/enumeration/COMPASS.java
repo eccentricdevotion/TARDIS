@@ -26,13 +26,13 @@ public enum COMPASS {
     WEST((byte) 13),
     NORTH((byte) 11);
 
-    public byte upperData;
+    private final byte upperData;
 
     COMPASS(byte upperData) {
         this.upperData = upperData;
     }
 
-    // TODO add blocj=k data value instead of byte?
+    // TODO add block data value instead of byte?
     public byte getUpperData() {
         return upperData;
     }

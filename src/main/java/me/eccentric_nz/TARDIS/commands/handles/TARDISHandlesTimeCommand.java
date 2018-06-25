@@ -27,7 +27,7 @@ import java.util.Date;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesTimeCommand {
+class TARDISHandlesTimeCommand {
 
     private final TARDIS plugin;
 

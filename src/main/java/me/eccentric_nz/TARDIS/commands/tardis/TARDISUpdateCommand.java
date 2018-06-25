@@ -38,7 +38,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISUpdateCommand {
+class TARDISUpdateCommand {
 
     private final TARDIS plugin;
     private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "generator", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
@@ -151,7 +151,6 @@ public class TARDISUpdateCommand {
                     TARDISMessage.send(player, "UPDATE_ZERO");
                     return true;
                 }
-
             }
             if (tardis_block.equals("ars")) {
                 if (!player.hasPermission("tardis.architectural")) {

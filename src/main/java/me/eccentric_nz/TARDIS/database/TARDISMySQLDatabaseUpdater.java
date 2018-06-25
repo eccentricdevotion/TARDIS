@@ -33,7 +33,7 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-public class TARDISMySQLDatabaseUpdater {
+class TARDISMySQLDatabaseUpdater {
 
     private final List<String> areaupdates = new ArrayList<>();
     private final List<String> tardisupdates = new ArrayList<>();

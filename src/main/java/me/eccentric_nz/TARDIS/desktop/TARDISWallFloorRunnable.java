@@ -49,12 +49,21 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     private final UUID uuid;
     private final TARDISUpgradeData tud;
     private boolean running;
-    int slot, level = 0, row = 0, h, w, c, startx, starty, startz;
-    World world;
-    JSONArray arr;
-    Material wall_type, floor_type;
-    QueryFactory qf;
-    Player player;
+    private int slot;
+    private int level = 0;
+    private int row = 0;
+    private int h;
+    private int w;
+    private int c;
+    private int startx;
+    private int starty;
+    private int startz;
+    private World world;
+    private JSONArray arr;
+    private Material wall_type;
+    private Material floor_type;
+    private final QueryFactory qf;
+    private Player player;
 
     public TARDISWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;

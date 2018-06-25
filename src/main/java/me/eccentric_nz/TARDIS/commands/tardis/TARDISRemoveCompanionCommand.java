@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoveCompanionCommand {
+class TARDISRemoveCompanionCommand {
 
     private final TARDIS plugin;
 

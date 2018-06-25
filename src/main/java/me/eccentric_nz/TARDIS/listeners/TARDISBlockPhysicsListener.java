@@ -46,9 +46,7 @@ public class TARDISBlockPhysicsListener implements Listener {
         Block block = event.getBlock();
         if (block != null && block.getType().equals(Material.GRASS_PATH)) {
             String loc = block.getRelative(BlockFace.UP).getLocation().toString();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                TARDISRecordingQueue.addToQueue(loc);
-            }, 7L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISRecordingQueue.addToQueue(loc), 7L);
         }
         if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {
             if (block != null) {
@@ -83,7 +81,7 @@ public class TARDISBlockPhysicsListener implements Listener {
         }
     }
 
-    Block getBlockBehindAttachable(Block block, BlockFace face) {
+    private Block getBlockBehindAttachable(Block block, BlockFace face) {
         Block ret;
         switch (face) {
             case NORTH:
@@ -102,7 +100,7 @@ public class TARDISBlockPhysicsListener implements Listener {
         return ret;
     }
 
-    Block getBlockBelow(Block block) {
+    private Block getBlockBelow(Block block) {
         return block.getRelative(BlockFace.DOWN);
     }
 }

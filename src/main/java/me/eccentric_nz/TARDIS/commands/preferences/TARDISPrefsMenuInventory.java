@@ -75,7 +75,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta a_im = auto.getItemMeta();
         a_im.setDisplayName("Autonomous");
         String a_value = (rsp.isAutoOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        a_im.setLore(Arrays.asList(a_value));
+        a_im.setLore(Collections.singletonList(a_value));
         auto.setItemMeta(a_im);
         options.add(auto);
         // Autonomous siege
@@ -83,7 +83,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta ge_im = sie.getItemMeta();
         ge_im.setDisplayName("Autonomous Siege");
         String ge_value = (rsp.isAutoSiegeOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        ge_im.setLore(Arrays.asList(ge_value));
+        ge_im.setLore(Collections.singletonList(ge_value));
         sie.setItemMeta(ge_im);
         options.add(sie);
         // Autonomous siege
@@ -91,7 +91,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta cue_im = res.getItemMeta();
         cue_im.setDisplayName("Auto-rescue");
         String cue_value = (rsp.isAutoRescueOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        cue_im.setLore(Arrays.asList(cue_value));
+        cue_im.setLore(Collections.singletonList(cue_value));
         res.setItemMeta(cue_im);
         options.add(res);
         // Beacon
@@ -99,7 +99,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta b_im = beacon.getItemMeta();
         b_im.setDisplayName("Beacon");
         String b_value = (rsp.isBeaconOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        b_im.setLore(Arrays.asList(b_value));
+        b_im.setLore(Collections.singletonList(b_value));
         beacon.setItemMeta(b_im);
         options.add(beacon);
         // DND
@@ -107,7 +107,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta d_im = dnd.getItemMeta();
         d_im.setDisplayName("Do Not Disturb");
         String d_value = (rsp.isDND()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        d_im.setLore(Arrays.asList(d_value));
+        d_im.setLore(Collections.singletonList(d_value));
         dnd.setItemMeta(d_im);
         options.add(dnd);
         // eps
@@ -115,7 +115,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta e_im = eps.getItemMeta();
         e_im.setDisplayName("Emergency Programme One");
         String e_value = (rsp.isEpsOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        e_im.setLore(Arrays.asList(e_value));
+        e_im.setLore(Collections.singletonList(e_value));
         eps.setItemMeta(e_im);
         options.add(eps);
         // hads
@@ -123,7 +123,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta h_im = hads.getItemMeta();
         h_im.setDisplayName("Hostile Action Displacement System");
         String h_value = (rsp.isHadsOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        h_im.setLore(Arrays.asList(h_value));
+        h_im.setLore(Collections.singletonList(h_value));
         hads.setItemMeta(h_im);
         options.add(hads);
         // hads
@@ -131,7 +131,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta ht_im = hads_type.getItemMeta();
         ht_im.setDisplayName("HADS Type");
         String ht_value = (rsp.getHadsType().equals(HADS.DISPLACEMENT)) ? "DISPLACEMENT" : "DISPERSAL";
-        ht_im.setLore(Arrays.asList(ht_value));
+        ht_im.setLore(Collections.singletonList(ht_value));
         hads_type.setItemMeta(ht_im);
         options.add(hads_type);
 //        // minecart
@@ -147,7 +147,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta q_im = quotes.getItemMeta();
         q_im.setDisplayName("Who Quotes");
         String q_value = (rsp.isQuotesOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        q_im.setLore(Arrays.asList(q_value));
+        q_im.setLore(Collections.singletonList(q_value));
         quotes.setItemMeta(q_im);
         options.add(quotes);
         // Renderer
@@ -155,7 +155,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta r_im = renderer.getItemMeta();
         r_im.setDisplayName("Exterior Rendering Room");
         String i_value = (rsp.isRendererOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        r_im.setLore(Arrays.asList(i_value));
+        r_im.setLore(Collections.singletonList(i_value));
         renderer.setItemMeta(r_im);
         options.add(renderer);
         // sfx
@@ -163,7 +163,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta s_im = sfx.getItemMeta();
         s_im.setDisplayName("Interior SFX");
         String s_value = (rsp.isSfxOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        s_im.setLore(Arrays.asList(s_value));
+        s_im.setLore(Collections.singletonList(s_value));
         sfx.setItemMeta(s_im);
         options.add(sfx);
         // submarine
@@ -171,7 +171,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta u_im = sub.getItemMeta();
         u_im.setDisplayName("Submarine Mode");
         String u_value = (rsp.isSubmarineOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        u_im.setLore(Arrays.asList(u_value));
+        u_im.setLore(Collections.singletonList(u_value));
         sub.setItemMeta(u_im);
         options.add(sub);
         // texture
@@ -179,7 +179,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta t_im = tex.getItemMeta();
         t_im.setDisplayName("Resource Pack Switching");
         String t_value = (rsp.isTextureOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        t_im.setLore(Arrays.asList(t_value));
+        t_im.setLore(Collections.singletonList(t_value));
         tex.setItemMeta(t_im);
         options.add(tex);
         // build
@@ -187,7 +187,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta build = anti.getItemMeta();
         build.setDisplayName("Companion Build");
         String ab_value = (rsp.isBuildOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        build.setLore(Arrays.asList(ab_value));
+        build.setLore(Collections.singletonList(ab_value));
         anti.setItemMeta(build);
         options.add(anti);
         // wool_lights
@@ -195,7 +195,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta lights = wool.getItemMeta();
         lights.setDisplayName("Wool For Lights Off");
         String wl_value = (rsp.isWoolLightsOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        lights.setLore(Arrays.asList(wl_value));
+        lights.setLore(Collections.singletonList(wl_value));
         wool.setItemMeta(lights);
         options.add(wool);
         // connected textures
@@ -203,7 +203,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta ctm_im = ctm.getItemMeta();
         ctm_im.setDisplayName("Connected Textures");
         String ctm_value = (rsp.isCtmOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        ctm_im.setLore(Arrays.asList(ctm_value));
+        ctm_im.setLore(Collections.singletonList(ctm_value));
         ctm.setItemMeta(ctm_im);
         options.add(ctm);
         // preset sign
@@ -211,7 +211,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta sign = pre.getItemMeta();
         sign.setDisplayName("Preset Sign");
         String pre_value = (rsp.isSignOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        sign.setLore(Arrays.asList(pre_value));
+        sign.setLore(Collections.singletonList(pre_value));
         pre.setItemMeta(sign);
         options.add(pre);
         // travel bar
@@ -219,7 +219,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta api = bar.getItemMeta();
         api.setDisplayName("Travel Bar");
         String bar_value = (rsp.isTravelbarOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        api.setLore(Arrays.asList(bar_value));
+        api.setLore(Collections.singletonList(bar_value));
         bar.setItemMeta(api);
         options.add(bar);
         // police box textures (set biome)
@@ -227,7 +227,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta ure = pb.getItemMeta();
         ure.setDisplayName("Police Box Textures");
         String pbt_value = (rsp.isPoliceboxTexturesOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        ure.setLore(Arrays.asList(pbt_value));
+        ure.setLore(Collections.singletonList(pbt_value));
         pb.setItemMeta(ure);
         options.add(pb);
         // mob farming
@@ -236,7 +236,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta ming = far.getItemMeta();
             ming.setDisplayName("Mob Farming");
             String farm_value = (rsp.isFarmOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-            ming.setLore(Arrays.asList(farm_value));
+            ming.setLore(Collections.singletonList(farm_value));
             far.setItemMeta(ming);
             options.add(far);
         }
@@ -245,7 +245,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta path = tele.getItemMeta();
         path.setDisplayName("Telepathic Circuit");
         String tele_value = (rsp.isTelepathyOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        path.setLore(Arrays.asList(tele_value));
+        path.setLore(Collections.singletonList(tele_value));
         tele.setItemMeta(path);
         options.add(tele);
         // junk preset
@@ -263,7 +263,7 @@ public class TARDISPrefsMenuInventory {
             junk_value = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
             hb_value = (tardis.isHandbrake_on()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
         }
-        nk.setLore(Arrays.asList(junk_value));
+        nk.setLore(Collections.singletonList(junk_value));
         ju.setItemMeta(nk);
         options.add(ju);
         // auto powerup
@@ -271,7 +271,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta up = power.getItemMeta();
         up.setDisplayName("Auto Power Up");
         String pu_value = (rsp.isAutoPowerUp()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-        up.setLore(Arrays.asList(pu_value));
+        up.setLore(Collections.singletonList(pu_value));
         power.setItemMeta(up);
         options.add(power);
         // add to stack
@@ -288,14 +288,14 @@ public class TARDISPrefsMenuInventory {
         ItemMeta hum_im = hum.getItemMeta();
         hum_im.setDisplayName("Interior hum sound");
         String hum_value = (rsp.getHum().isEmpty()) ? "random" : rsp.getHum();
-        hum_im.setLore(Arrays.asList(hum_value));
+        hum_im.setLore(Collections.singletonList(hum_value));
         hum.setItemMeta(hum_im);
         stack[23] = hum;
         // handbrake
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
         brake.setDisplayName("Handbrake");
-        brake.setLore(Arrays.asList(hb_value));
+        brake.setLore(Collections.singletonList(hb_value));
         hand.setItemMeta(brake);
         stack[24] = hand;
         // map

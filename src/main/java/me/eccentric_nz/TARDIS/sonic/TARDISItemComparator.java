@@ -21,7 +21,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-/**
+/*
  * Borrowed from the SimpleSort plugin. http://dev.bukkit.org/bukkit-plugins/simplesort/
  *
  * @author Shadow1013GL
@@ -33,7 +33,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Comparator;
 
-public class TARDISItemComparator implements Comparator<ItemStack> {
+class TARDISItemComparator implements Comparator<ItemStack> {
 
     // TODO check this still works
     @Override

@@ -34,7 +34,6 @@ import java.util.List;
 public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = new ArrayList<>();
-    private final List<String> firsts = Arrays.asList("home", "biome", "dest", "area", "back", "cave", "village", "cancel", "costs");
     private final List<String> BIOME_SUBS = new ArrayList<>();
     private final List<String> AREA_SUBS = new ArrayList<>();
 
@@ -44,7 +43,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        ROOT_SUBS.addAll(firsts);
+        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "dest", "area", "back", "cave", "village", "cancel", "costs"));
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {

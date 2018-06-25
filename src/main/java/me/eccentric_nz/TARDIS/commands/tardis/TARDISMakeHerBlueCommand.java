@@ -35,7 +35,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISMakeHerBlueCommand {
+class TARDISMakeHerBlueCommand {
 
     private final TARDIS plugin;
 
@@ -132,9 +132,7 @@ public class TARDISMakeHerBlueCommand {
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisID(id);
         bd.setBiome(rsc.getBiome());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getPresetBuilder().buildPreset(bd);
-        }, 20L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
         String message = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";
         TARDISMessage.send(player.getPlayer(), message);
         HashMap<String, Object> wheret = new HashMap<>();

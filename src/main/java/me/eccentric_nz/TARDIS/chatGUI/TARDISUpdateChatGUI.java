@@ -32,45 +32,35 @@ public class TARDISUpdateChatGUI {
         if (args.length == 1) {
             TARDISMessage.send(player, "UPDATE_SECTION");
             player.sendMessage("------");
-            plugin.getJsonKeeper().getSections().forEach((s) -> {
-                sendJSON(s, player);
-            });
+            plugin.getJsonKeeper().getSections().forEach((s) -> sendJSON(s, player));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("controls")) {
             TARDISMessage.send(player, "UPDATE_SECTION");
             player.sendMessage("------");
-            plugin.getJsonKeeper().getControls().forEach((c) -> {
-                sendJSON(c, player);
-            });
+            plugin.getJsonKeeper().getControls().forEach((c) -> sendJSON(c, player));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("interfaces")) {
             TARDISMessage.send(player, "UPDATE_INTERFACE");
             player.sendMessage("------");
-            plugin.getJsonKeeper().getInterfaces().forEach((i) -> {
-                sendJSON(i, player);
-            });
+            plugin.getJsonKeeper().getInterfaces().forEach((i) -> sendJSON(i, player));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("locations")) {
             TARDISMessage.send(player, "UPDATE_LOCATION");
             player.sendMessage("------");
-            plugin.getJsonKeeper().getLocations().forEach((l) -> {
-                sendJSON(l, player);
-            });
+            plugin.getJsonKeeper().getLocations().forEach((l) -> sendJSON(l, player));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("others")) {
             TARDISMessage.send(player, "UPDATE_OTHER");
             player.sendMessage("------");
-            plugin.getJsonKeeper().getOthers().forEach((o) -> {
-                sendJSON(o, player);
-            });
+            plugin.getJsonKeeper().getOthers().forEach((o) -> sendJSON(o, player));
             player.sendMessage("------");
             return true;
         }

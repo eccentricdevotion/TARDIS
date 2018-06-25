@@ -30,7 +30,7 @@ import java.util.Arrays;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesSavedInventory {
+class TARDISHandlesSavedInventory {
 
     private final TARDIS plugin;
     private final String uuid;

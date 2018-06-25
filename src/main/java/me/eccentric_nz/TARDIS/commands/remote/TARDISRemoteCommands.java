@@ -58,9 +58,8 @@ public class TARDISRemoteCommands implements CommandExecutor {
                 new TARDISCommandHelper(plugin).getCommand("tardisremote", sender);
                 return true;
             }
-            UUID oluuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
-            if (oluuid != null) {
-                UUID uuid = oluuid;
+            UUID uuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
+            if (uuid != null) {
                 // check the player has a TARDIS
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());

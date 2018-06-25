@@ -289,49 +289,46 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             } else {
                                                 exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
                                             }
-                                            if (hb) {
+                                            if (hb && exitLoc != null) {
                                                 // change the yaw if the door directions are different
                                                 if (!dd.equals(d)) {
                                                     yaw += adjustYaw(dd, d);
                                                 }
                                                 exitLoc.setYaw(yaw);
                                                 // get location from database
-                                                Location exitTardis = exitLoc;
                                                 // make location safe ie. outside of the bluebox
-                                                double ex = exitTardis.getX();
-                                                double ez = exitTardis.getZ();
+                                                double ex = exitLoc.getX();
+                                                double ez = exitLoc.getZ();
                                                 if (opened) {
-                                                    exitTardis.setX(ex + 0.5);
-                                                    exitTardis.setZ(ez + 0.5);
+                                                    exitLoc.setX(ex + 0.5);
+                                                    exitLoc.setZ(ez + 0.5);
                                                 } else {
                                                     switch (d) {
                                                         case NORTH:
-                                                            exitTardis.setX(ex + 0.5);
-                                                            exitTardis.setZ(ez + 2.5);
+                                                            exitLoc.setX(ex + 0.5);
+                                                            exitLoc.setZ(ez + 2.5);
                                                             break;
                                                         case EAST:
-                                                            exitTardis.setX(ex - 1.5);
-                                                            exitTardis.setZ(ez + 0.5);
+                                                            exitLoc.setX(ex - 1.5);
+                                                            exitLoc.setZ(ez + 0.5);
                                                             break;
                                                         case SOUTH:
-                                                            exitTardis.setX(ex + 0.5);
-                                                            exitTardis.setZ(ez - 1.5);
+                                                            exitLoc.setX(ex + 0.5);
+                                                            exitLoc.setZ(ez - 1.5);
                                                             break;
                                                         case WEST:
-                                                            exitTardis.setX(ex + 2.5);
-                                                            exitTardis.setZ(ez + 0.5);
+                                                            exitLoc.setX(ex + 2.5);
+                                                            exitLoc.setZ(ez + 0.5);
                                                             break;
                                                     }
                                                 }
                                                 // exit TARDIS!
-                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2, minecart);
+                                                movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     List<TARDISParrot> pets = tf.exitPets(player);
                                                     if (pets != null && pets.size() > 0) {
-                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                                            movePets(pets, exitTardis, player, d, false);
-                                                        }, 10L);
+                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> movePets(pets, exitLoc, player, d, false), 10L);
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
@@ -352,7 +349,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             boolean chkCompanion = false;
                                             if (!playerUUID.equals(tlUUID)) {
                                                 if (companions != null && !companions.isEmpty()) {
-                                                    // is the player in the comapnion list
+                                                    // is the player in the companion list
                                                     String[] companionData = companions.split(":");
                                                     for (String c : companionData) {
                                                         if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
@@ -362,10 +359,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     }
                                                 }
                                             }
-                                            if (playerUUID.equals(tlUUID) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
+                                            if (playerUUID.equals(tlUUID) || chkCompanion || player.hasPermission("tardis.skeletonkey")) {
                                                 // get INNER TARDIS location
                                                 TARDISDoorLocation idl = getDoor(1, id);
-                                                Location tmp_loc = idl.getL();
+                                                Location tardis_loc = idl.getL();
                                                 World cw = idl.getW();
                                                 COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
@@ -373,21 +370,20 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
                                                     plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tmp_loc.getWorld().getName(), playerWorld.getName());
+                                                    pets = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
                                                 }
                                                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
                                                     plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
                                                 }
                                                 // enter TARDIS!
-                                                cw.getChunkAt(tmp_loc).load();
-                                                tmp_loc.setPitch(pitch);
+                                                cw.getChunkAt(tardis_loc).load();
+                                                tardis_loc.setPitch(pitch);
                                                 // get inner door direction so we can adjust yaw if necessary
                                                 if (!innerD.equals(pd)) {
                                                     yaw += adjustYaw(pd, innerD);
                                                 }
-                                                tmp_loc.setYaw(yaw);
-                                                Location tardis_loc = tmp_loc;
+                                                tardis_loc.setYaw(yaw);
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart);
                                                 if (pets != null && pets.size() > 0) {
                                                     movePets(pets, tardis_loc, player, d, true);
@@ -399,9 +395,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
                                                 if (canPowerUp && po) {
                                                     // power up the TARDIS
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().hasLanterns()).clickButton();
-                                                    }, 20L);
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().hasLanterns()).clickButton(), 20L);
                                                 }
 
                                                 // put player into travellers table
@@ -428,8 +422,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             }
                                             // always enter by the back door
                                             TARDISDoorLocation ibdl = getDoor(3, id);
-                                            Location ibd_loc = ibdl.getL();
-                                            if (ibd_loc == null) {
+                                            Location inner_loc = ibdl.getL();
+                                            if (inner_loc == null) {
                                                 TARDISMessage.send(player, "DOOR_BACK_IN");
                                                 return;
                                             }
@@ -438,9 +432,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             if (!ibdd.equals(ipd)) {
                                                 yaw += adjustYaw(ipd, ibdd) + 180F;
                                             }
-                                            ibd_loc.setYaw(yaw);
-                                            ibd_loc.setPitch(pitch);
-                                            Location inner_loc = ibd_loc;
+                                            inner_loc.setYaw(yaw);
+                                            inner_loc.setPitch(pitch);
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 if (!rsp.getTextureIn().isEmpty()) {
@@ -469,16 +462,16 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             }
                                             // always exit to outer back door
                                             TARDISDoorLocation obdl = getDoor(2, id);
-                                            Location obd_loc = obdl.getL();
-                                            if (obd_loc == null) {
+                                            Location outer_loc = obdl.getL();
+                                            if (outer_loc == null) {
                                                 TARDISMessage.send(player, "DOOR_BACK_OUT");
                                                 return;
                                             }
-                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("travel.the_end"))) {
+                                            if (outer_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("travel.the_end"))) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
                                                 return;
                                             }
-                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("travel.nether"))) {
+                                            if (outer_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("travel.nether"))) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                                 return;
                                             }
@@ -487,9 +480,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             if (!obdd.equals(opd)) {
                                                 yaw += adjustYaw(opd, obdd);
                                             }
-                                            obd_loc.setYaw(yaw);
-                                            obd_loc.setPitch(pitch);
-                                            Location outer_loc = obd_loc;
+                                            outer_loc.setYaw(yaw);
+                                            outer_loc.setPitch(pitch);
                                             movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());

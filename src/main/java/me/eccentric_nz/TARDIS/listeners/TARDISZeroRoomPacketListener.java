@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.event.Listener;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 /**
@@ -45,12 +45,12 @@ public final class TARDISZeroRoomPacketListener implements Listener {
     /**
      * Prevents the occupants of zero rooms from sending or receiving chat.
      *
-     * @param instance
+     * @param plugin An instance of the TARDIS plugin
      */
-    public TARDISZeroRoomPacketListener(TARDIS instance) {
+    public TARDISZeroRoomPacketListener(TARDIS plugin) {
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
         manager.addPacketListener(
-                new PacketAdapter(instance, ListenerPriority.NORMAL, Arrays.asList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
+                new PacketAdapter(plugin, ListenerPriority.NORMAL, Collections.singletonList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
                     @Override
                     public void onPacketSending(PacketEvent event) {
                         boolean send = false;
@@ -75,13 +75,13 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                                                 }
                                             }
                                         }
-                                        if (send == false && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
+                                        if (!send && plugin.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
                                             event.setCancelled(true);
                                         }
                                     }
                                 } catch (JSONException e) {
-                                    instance.debug("Invalid JSON in packet!");
-                                    instance.debug(json);
+                                    plugin.debug("Invalid JSON in packet!");
+                                    plugin.debug(json);
                                 }
                             }
                         }

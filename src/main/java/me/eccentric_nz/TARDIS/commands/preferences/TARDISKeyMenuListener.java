@@ -38,11 +38,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISKeyMenuListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
-
     public TARDISKeyMenuListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)

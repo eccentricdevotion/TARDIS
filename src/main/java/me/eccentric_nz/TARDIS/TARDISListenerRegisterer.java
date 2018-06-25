@@ -69,7 +69,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
  *
  * @author eccentric_nz
  */
-public class TARDISListenerRegisterer {
+class TARDISListenerRegisterer {
 
     private final TARDIS plugin;
 

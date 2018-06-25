@@ -56,7 +56,7 @@ public class TARDISTakeoff {
         }
         TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
         if (!beac_on && !beacon.isEmpty()) {
-            toggleBeacon(beacon, true);
+            toggleBeacon(beacon);
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("handbrake_on", 0);
@@ -110,7 +110,7 @@ public class TARDISTakeoff {
             }
             TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
             if (!beac_on && !beacon.isEmpty()) {
-                toggleBeacon(beacon, true);
+                toggleBeacon(beacon);
             }
             HashMap<String, Object> set = new HashMap<>();
             set.put("handbrake_on", 0);
@@ -136,7 +136,7 @@ public class TARDISTakeoff {
         }
     }
 
-    private void toggleBeacon(String str, boolean on) {
+    private void toggleBeacon(String str) {
         String[] beaconData = str.split(":");
         World w = plugin.getServer().getWorld(beaconData[0]);
         int bx = TARDISNumberParsers.parseInt(beaconData[1]);
@@ -144,6 +144,6 @@ public class TARDISTakeoff {
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
-        b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
+        b.setType(Material.GLASS);
     }
 }

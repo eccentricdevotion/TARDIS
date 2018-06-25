@@ -50,7 +50,7 @@ import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
  *
  * @author eccentric_nz
  */
-public class TARDISBuildGallifreyanStructure {
+class TARDISBuildGallifreyanStructure {
 
     private final TARDIS plugin;
     private final TARDISRandomCollection<String> nbtFiles = new TARDISRandomCollection<>();
@@ -122,9 +122,9 @@ public class TARDISBuildGallifreyanStructure {
     /**
      * Builds a Gallifreyan structure.
      *
-     * @param startx
-     * @param starty
-     * @param startz
+     * @param startx the start coordinate on the x-axis
+     * @param starty the start coordinate on the y-axis
+     * @param startz the start coordinate on the z-axis
      */
     public void buildCity(int startx, int starty, int startz) {
         World world = plugin.getServer().getWorld("Gallifrey");
@@ -141,11 +141,11 @@ public class TARDISBuildGallifreyanStructure {
         int h = dimensions.getInt("height");
         int w = dimensions.getInt("width");
         int l = dimensions.getInt("length");
+        // TODO remove blocks that are not in the schematic
         HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
         HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
         HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
         HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
         HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
         HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
         HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
@@ -289,50 +289,37 @@ public class TARDISBuildGallifreyanStructure {
             }
         }
         // put on the door, redstone torches, signs, and the repeaters
-        postDoorBlocks.entrySet().forEach((entry) -> {
-            Block pdb = entry.getKey();
-//            pdb.setType(Material.IRON_DOOR);
-            pdb.setData(entry.getValue());
+        postDoorBlocks.forEach((pdb, value) -> {
+            //            pdb.setType(Material.IRON_DOOR);
+            pdb.setData(value);
         });
-        postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
-            Block prtb = entry.getKey();
-            prtb.setData(entry.getValue());
+        postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
+        postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
+        postSignBlocks.forEach((psb, value) -> {
+            //            prb.setType(Material.WALL_SIGN);
+            psb.setData(value);
         });
-        postTorchBlocks.entrySet().forEach((entry) -> {
-            Block ptb = entry.getKey();
-            ptb.setData(entry.getValue());
-        });
-        postRepeaterBlocks.entrySet().forEach((entry) -> {
-            Block prb = entry.getKey();
-//            prb.setType(Material.REPEATER);
-            prb.setData(entry.getValue());
-        });
-        postStickyPistonBaseBlocks.entrySet().forEach((entry) -> {
-            Block pspb = entry.getKey();
+        postStickyPistonBaseBlocks.forEach((pspb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
 //            pspb.setType(Material.STICKY_PISTON);
-            pspb.setData(entry.getValue());
+            pspb.setData(value);
         });
-        postPistonBaseBlocks.entrySet().forEach((entry) -> {
-            Block ppb = entry.getKey();
+        postPistonBaseBlocks.forEach((ppb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
 //            ppb.setType(Material.PISTON);
-            ppb.setData(entry.getValue());
+            ppb.setData(value);
         });
-        postPistonExtensionBlocks.entrySet().forEach((entry) -> {
-            Block ppeb = entry.getKey();
-//            ppeb.setType(Material.PISTON_HEAD);
-            ppeb.setData(entry.getValue());
+        postPistonExtensionBlocks.forEach((ppeb, value) -> {
+            //            ppeb.setType(Material.PISTON_HEAD);
+            ppeb.setData(value);
         });
-        postLeverBlocks.entrySet().forEach((entry) -> {
-            Block plb = entry.getKey();
-//            plb.setType(Material.LEVER);
-            plb.setData(entry.getValue());
+        postLeverBlocks.forEach((plb, value) -> {
+            //            plb.setType(Material.LEVER);
+            plb.setData(value);
         });
-        postLadderBlocks.entrySet().forEach((entry) -> {
-            Block pldb = entry.getKey();
-//            pldb.setType(Material.LADDER);
-            pldb.setData(entry.getValue());
+        postLadderBlocks.forEach((pldb, value) -> {
+            //            pldb.setType(Material.LADDER);
+            pldb.setData(value);
         });
         setBanners(postStandingBanners);
         setBanners(postWallBanners);

@@ -28,8 +28,8 @@ import java.util.HashMap;
  */
 public class TARDISAbandonUpdate {
 
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    Connection connection = service.getConnection();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
     private final String uuid;
@@ -103,7 +103,7 @@ public class TARDISAbandonUpdate {
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
-            plugin.debug("Update error for adandon! " + e.getMessage());
+            plugin.debug("Update error for abandon! " + e.getMessage());
         } finally {
             try {
                 if (ps != null) {

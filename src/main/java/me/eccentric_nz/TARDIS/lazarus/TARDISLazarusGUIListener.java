@@ -102,7 +102,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     // remember selection
                     String display = im.getDisplayName();
                     if (twaMonsters.contains(display) && !plugin.checkTWA()) {
-                        im.setLore(Arrays.asList("Genetic modification not available!"));
+                        im.setLore(Collections.singletonList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
                         disguises.put(uuid, display);
@@ -118,7 +118,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 if (player.hasPermission("tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
                         String onoff = (im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-                        im.setLore(Arrays.asList(onoff));
+                        im.setLore(Collections.singletonList(onoff));
                     } else {
                         im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                     }
@@ -131,7 +131,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
-                im.setLore(Arrays.asList(onoff));
+                im.setLore(Collections.singletonList(onoff));
                 is.setItemMeta(im);
             }
             if (slot == 48) { // type / colour
@@ -500,7 +500,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (t != null) {
             ItemStack is = i.getItem(48);
             ItemMeta im = is.getItemMeta();
-            im.setLore(Arrays.asList(t));
+            im.setLore(Collections.singletonList(t));
             is.setItemMeta(im);
         }
     }
@@ -601,6 +601,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
+    // TODO use new API once LibsDsiguises supports it
     private Profession getZombieProfession(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();

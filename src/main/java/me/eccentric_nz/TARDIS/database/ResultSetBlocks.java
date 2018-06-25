@@ -71,9 +71,7 @@ public class ResultSetBlocks {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            where.entrySet().forEach((entry) -> {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            });
+            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "blocks" + wheres;
@@ -97,12 +95,12 @@ public class ResultSetBlocks {
                 while (rs.next()) {
                     String str = rs.getString("location");
                     replacedBlock = new ReplacedBlock(
-                        rs.getInt("b_id"),
-                        rs.getInt("tardis_id"),
-                        plugin.getLocationUtils().getLocationFromBukkitString(str),
-                        str,
-                        plugin.getServer().createBlockData(rs.getString("data")),
-                        rs.getInt("police_box")
+                            rs.getInt("b_id"),
+                            rs.getInt("tardis_id"),
+                            plugin.getLocationUtils().getLocationFromBukkitString(str),
+                            str,
+                            plugin.getServer().createBlockData(rs.getString("data")),
+                            rs.getInt("police_box")
                     );
                     if (multiple) {
                         data.add(replacedBlock);

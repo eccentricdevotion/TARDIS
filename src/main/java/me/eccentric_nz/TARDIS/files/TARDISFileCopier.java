@@ -117,6 +117,7 @@ public class TARDISFileCopier {
                     try {
                         out.close();
                     } catch (IOException e) {
+                        System.err.println(pluginName + "Could not close the output stream.");
                     }
                 }
             } catch (FileNotFoundException e) {
@@ -126,6 +127,7 @@ public class TARDISFileCopier {
                     try {
                         in.close();
                     } catch (IOException e) {
+                        System.err.println(pluginName + "Could not close the input stream.");
                     }
                 }
             }

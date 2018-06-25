@@ -32,7 +32,7 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISManualFlightRunnable implements Runnable {
+class TARDISManualFlightRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<Location> target;
@@ -42,14 +42,12 @@ public class TARDISManualFlightRunnable implements Runnable {
     private int i = 0;
     private final Random random = new Random();
     private final Player player;
-    private final int id;
     private final UUID uuid;
 
     public TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
-        this.id = id;
-        target = getRepeaterList(this.id);
+        target = getRepeaterList(id);
         uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getRepeaters().put(uuid, target);
     }
@@ -89,9 +87,7 @@ public class TARDISManualFlightRunnable implements Runnable {
         ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
         if (rsr.resultSet()) {
             List<String> locs = rsr.getLocations();
-            locs.forEach((l) -> {
-                repeaters.add(TARDISLocationGetters.getLocationFromDB(l, 0.0f, 0.0f));
-            });
+            locs.forEach((l) -> repeaters.add(TARDISLocationGetters.getLocationFromDB(l, 0.0f, 0.0f)));
         }
         return repeaters;
     }

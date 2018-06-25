@@ -20,7 +20,7 @@ package me.eccentric_nz.TARDIS.noteblock;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class SongEndEvent extends Event {
+class SongEndEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final SongPlayer song;

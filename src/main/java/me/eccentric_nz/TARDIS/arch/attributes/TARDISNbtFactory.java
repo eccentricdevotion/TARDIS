@@ -61,7 +61,7 @@ public class TARDISNbtFactory {
         TAG_COMPOUND(10, Map.class);
 
         // Unique NBT id
-        public final int id;
+        final int id;
 
         NbtType(int id, Class<?> type) {
             this.id = id;
@@ -194,7 +194,7 @@ public class TARDISNbtFactory {
          * @return An existing map, a new map or NULL.
          */
         public NbtCompound getMap(String key, boolean createNew) {
-            return getMap(Arrays.asList(key), createNew);
+            return getMap(Collections.singletonList(key), createNew);
         }
         // Done
 
@@ -222,7 +222,7 @@ public class TARDISNbtFactory {
          * Every element of the path (except the end) are assumed to be compounds. The retrieval operation will be
          * canceled if any of them are missing.
          *
-         * @param <T>
+         * @param <T>  the type of object
          * @param path - path to the entry.
          * @return The value, or NULL if not found.
          */
@@ -291,7 +291,7 @@ public class TARDISNbtFactory {
      *
      * @author Kristian
      */
-    public interface Wrapper {
+    interface Wrapper {
 
         /**
          * Retrieve the underlying native NBT tag.
@@ -345,7 +345,6 @@ public class TARDISNbtFactory {
                         ? new LoadMethodSkinUpdate(STREAM_TOOLS, READ_LIMITER_CLASS)
                         : new LoadMethodWorldUpdate(STREAM_TOOLS);
                 SAVE_COMPOUND = getMethod(Modifier.STATIC, 0, STREAM_TOOLS, null, BASE_CLASS, DataOutput.class);
-
             } catch (ClassNotFoundException e) {
                 throw new IllegalStateException("Unable to find offline player.", e);
             }
@@ -386,20 +385,20 @@ public class TARDISNbtFactory {
     /**
      * Construct a new NBT list of an unspecified type.
      *
-     * @param content
+     * @param content The content to put in the list
      * @return The NBT list.
      */
-    public static NbtList createList(Object... content) {
+    private static NbtList createList(Object... content) {
         return createList(Arrays.asList(content));
     }
 
     /**
      * Construct a new NBT list of an unspecified type.
      *
-     * @param iterable
+     * @param iterable An iterable object
      * @return The NBT list.
      */
-    public static NbtList createList(Iterable<? extends Object> iterable) {
+    private static NbtList createList(Iterable<?> iterable) {
         NbtList list = get().new NbtList(INSTANCE.createNbtTag(NbtType.TAG_LIST, null));
 
         // Add the content as well
@@ -447,7 +446,6 @@ public class TARDISNbtFactory {
             NbtCompound result = fromCompound(get().LOAD_COMPOUND.loadNbt(data));
             suppress = false;
             return result;
-
         } finally {
             if (data != null) {
                 Closeables.close(data, suppress);
@@ -463,7 +461,7 @@ public class TARDISNbtFactory {
      * @param nmsCompound - the NBT compound.
      * @return The wrapper.
      */
-    public static NbtCompound fromCompound(Object nmsCompound) {
+    private static NbtCompound fromCompound(Object nmsCompound) {
         return get().new NbtCompound(nmsCompound);
     }
 
@@ -476,7 +474,7 @@ public class TARDISNbtFactory {
      * @param compound - the new NBT compound, or NULL to remove it.
      * @throws IllegalArgumentException If the stack is not a CraftItemStack, or it represents air.
      */
-    public static void setItemTag(ItemStack stack, NbtCompound compound) {
+    private static void setItemTag(ItemStack stack, NbtCompound compound) {
         checkItemStack(stack);
         Object nms = getFieldValue(get().CRAFT_HANDLE, stack);
 
@@ -548,7 +546,6 @@ public class TARDISNbtFactory {
     /**
      * Convert wrapped List and Map objects into their respective NBT counterparts.
      *
-     * @param name  - the name of the NBT element to create.
      * @param value - the value of the element to create. Can be a List or a Map.
      * @return The NBT element.
      */
@@ -559,12 +556,10 @@ public class TARDISNbtFactory {
 
         if (value instanceof Wrapper) {
             return ((Wrapper) value).getHandle();
-
         } else if (value instanceof List) {
             throw new IllegalArgumentException("Can only insert a WrappedList.");
         } else if (value instanceof Map) {
             throw new IllegalArgumentException("Can only insert a WrappedCompound.");
-
         } else {
             return createNbtTag(getPrimitiveType(value), value);
         }
@@ -756,7 +751,7 @@ public class TARDISNbtFactory {
         // Don't recreate wrapper objects
         private final ConcurrentMap<Object, Object> cache = new MapMaker().weakKeys().makeMap();
 
-        public Object wrap(Object value) {
+        Object wrap(Object value) {
             Object current = cache.get(value);
 
             if (current == null) {
@@ -784,17 +779,17 @@ public class TARDISNbtFactory {
 
         private final CachedNativeWrapper cache = new CachedNativeWrapper();
 
-        public ConvertedMap(Object handle, Map<String, Object> original) {
+        ConvertedMap(Object handle, Map<String, Object> original) {
             this.handle = handle;
             this.original = original;
         }
 
         // For converting back and forth
-        protected Object wrapOutgoing(Object value) {
+        Object wrapOutgoing(Object value) {
             return cache.wrap(value);
         }
 
-        protected Object unwrapIncoming(Object wrapped) {
+        Object unwrapIncoming(Object wrapped) {
             return unwrapValue(wrapped);
         }
 
@@ -887,7 +882,7 @@ public class TARDISNbtFactory {
         private final List<Object> original;
         private final CachedNativeWrapper cache = new CachedNativeWrapper();
 
-        public ConvertedList(Object handle, List<Object> original) {
+        ConvertedList(Object handle, List<Object> original) {
             if (NBT_LIST_TYPE == null) {
                 NBT_LIST_TYPE = getField(handle, null, "type");
             }
@@ -895,11 +890,11 @@ public class TARDISNbtFactory {
             this.original = original;
         }
 
-        protected Object wrapOutgoing(Object value) {
+        Object wrapOutgoing(Object value) {
             return cache.wrap(value);
         }
 
-        protected Object unwrapIncoming(Object wrapped) {
+        Object unwrapIncoming(Object wrapped) {
             return unwrapValue(wrapped);
         }
 
@@ -954,9 +949,9 @@ public class TARDISNbtFactory {
      */
     private static abstract class LoadCompoundMethod {
 
-        protected Method staticMethod;
+        Method staticMethod;
 
-        protected void setMethod(Method method) {
+        void setMethod(Method method) {
             staticMethod = method;
             staticMethod.setAccessible(true);
         }
@@ -967,7 +962,7 @@ public class TARDISNbtFactory {
          * @param input - the input stream.
          * @return The loaded NBT compound.
          */
-        public abstract Object loadNbt(DataInput input);
+        protected abstract Object loadNbt(DataInput input);
     }
 
     /**
@@ -975,7 +970,7 @@ public class TARDISNbtFactory {
      */
     private static class LoadMethodWorldUpdate extends LoadCompoundMethod {
 
-        public LoadMethodWorldUpdate(Class<?> streamClass) {
+        LoadMethodWorldUpdate(Class<?> streamClass) {
             setMethod(getMethod(Modifier.STATIC, 0, streamClass, null, DataInput.class));
         }
 
@@ -992,7 +987,7 @@ public class TARDISNbtFactory {
 
         private Object readLimiter;
 
-        public LoadMethodSkinUpdate(Class<?> streamClass, Class<?> readLimiterClass) {
+        LoadMethodSkinUpdate(Class<?> streamClass, Class<?> readLimiterClass) {
             setMethod(getMethod(Modifier.STATIC, 0, streamClass, null, DataInput.class, readLimiterClass));
 
             // Find the unlimited read limiter

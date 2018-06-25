@@ -35,31 +35,30 @@ import java.util.*;
 public class TARDISConfiguration {
 
     private final TARDIS plugin;
-    private FileConfiguration config = null;
-    private FileConfiguration artron_config = null;
-    private FileConfiguration blocks_config = null;
-    private FileConfiguration rooms_config = null;
-    private FileConfiguration signs_config = null;
-    private FileConfiguration chameleon_config = null;
-    private FileConfiguration planets_config = null;
-    private File configFile = null;
-    HashMap<String, String> strOptions = new HashMap<>();
-    HashMap<String, Integer> intOptions = new HashMap<>();
-    HashMap<String, Boolean> boolOptions = new HashMap<>();
-    HashMap<String, String> roomStrOptions = new HashMap<>();
-    HashMap<String, Integer> roomIntOptions = new HashMap<>();
-    HashMap<String, Boolean> roomBoolOptions = new HashMap<>();
-    HashMap<String, Boolean> artronBoolOptions = new HashMap<>();
-    HashMap<String, String> artronStrOptions = new HashMap<>();
-    HashMap<String, Double> artronDoubleOptions = new HashMap<>();
-    HashMap<String, Integer> artronIntOptions = new HashMap<>();
-    HashMap<String, List<String>> signListOptions = new HashMap<>();
-    HashMap<String, String> chameleonOptions = new HashMap<>();
-    HashMap<String, List<String>> chameleonListOptions = new HashMap<>();
+    private final FileConfiguration config;
+    private final FileConfiguration artron_config;
+    private final FileConfiguration blocks_config;
+    private final FileConfiguration rooms_config;
+    private final FileConfiguration signs_config;
+    private final FileConfiguration chameleon_config;
+    private final FileConfiguration planets_config;
+    private final HashMap<String, String> strOptions = new HashMap<>();
+    private final HashMap<String, Integer> intOptions = new HashMap<>();
+    private final HashMap<String, Boolean> boolOptions = new HashMap<>();
+    private final HashMap<String, String> roomStrOptions = new HashMap<>();
+    private final HashMap<String, Integer> roomIntOptions = new HashMap<>();
+    private final HashMap<String, Boolean> roomBoolOptions = new HashMap<>();
+    private final HashMap<String, Boolean> artronBoolOptions = new HashMap<>();
+    private final HashMap<String, String> artronStrOptions = new HashMap<>();
+    private final HashMap<String, Double> artronDoubleOptions = new HashMap<>();
+    private final HashMap<String, Integer> artronIntOptions = new HashMap<>();
+    private final HashMap<String, List<String>> signListOptions = new HashMap<>();
+    private final HashMap<String, String> chameleonOptions = new HashMap<>();
+    private final HashMap<String, List<String>> chameleonListOptions = new HashMap<>();
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
-        configFile = new File(plugin.getDataFolder(), "config.yml");
+        File configFile = new File(plugin.getDataFolder(), "config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
         artron_config = plugin.getArtronConfig();
         blocks_config = plugin.getBlocksConfig();
@@ -446,7 +445,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
         roomStrOptions.put("rooms.WORKSHOP.seed", "WORKBENCH");
         roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
-        signListOptions.put("junk", Arrays.asList("Destination"));
+        signListOptions.put("junk", Collections.singletonList("Destination"));
         chameleonListOptions.put("ADAPT_LORE", Arrays.asList("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));
         chameleonListOptions.put("APPLY_LORE", Arrays.asList("Rebuild the TARDIS", "exterior with the", "current settings."));
         chameleonListOptions.put("CONSTRUCT_LORE", Arrays.asList("Build your own", "Chameleon preset."));
@@ -633,7 +632,7 @@ public class TARDISConfiguration {
         }
     }
 
-    public void checkSignsConfig() {
+    private void checkSignsConfig() {
         int i = 0;
         for (Map.Entry<String, List<String>> entry : signListOptions.entrySet()) {
             if (!signs_config.contains(entry.getKey())) {
@@ -652,7 +651,7 @@ public class TARDISConfiguration {
         }
     }
 
-    public void checkChameleonConfig() {
+    private void checkChameleonConfig() {
         if (chameleon_config.getString("SAVE").equals("Save construction")) {
             chameleon_config.set("SAVE", "Save construct");
         }
@@ -680,7 +679,7 @@ public class TARDISConfiguration {
         }
     }
 
-    public void checkPlanetsConfig() {
+    private void checkPlanetsConfig() {
         boolean save = false;
         if (!planets_config.contains("planets.Skaro.flying_daleks")) {
             planets_config.set("planets.Skaro.flying_daleks", true);

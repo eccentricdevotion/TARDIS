@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-public class TARDISRoomCommand {
+class TARDISRoomCommand {
 
     private final TARDIS plugin;
 
@@ -157,7 +157,7 @@ public class TARDISRoomCommand {
                     TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
                 }
             }
-            if (hasRequired == false) {
+            if (!hasRequired) {
                 player.sendMessage("-----------------------------");
                 return true;
             }

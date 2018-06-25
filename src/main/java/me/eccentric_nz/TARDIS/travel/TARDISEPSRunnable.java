@@ -67,9 +67,7 @@ public class TARDISEPSRunnable implements Runnable {
         if (l != null) {
             try {
                 TARDISSounds.playTARDISSound(l, "tardis_takeoff");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    TARDISSounds.playTARDISSound(l, "tardis_land");
-                }, 490L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(l, "tardis_land"), 490L);
                 plugin.setTardisSpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
@@ -158,13 +156,13 @@ public class TARDISEPSRunnable implements Runnable {
      * in degrees, tells us how much we have to rotate a horizontal line clockwise for it to match the line between the
      * two points.
      *
-     * @param px1
-     * @param pz1
-     * @param px2
-     * @param pz2
+     * @param px1 the x coordinate of the first point
+     * @param pz1 the z coordinate of the first point
+     * @param px2 the x coordinate of the second point
+     * @param pz2 the z coordinate of the second point
      * @return the head angle of EP1
      */
-    public static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
+    private static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
         double xDiff = px2 - px1;
         double zDiff = pz2 - pz1;
         return (float) Math.toDegrees(Math.atan2(zDiff, xDiff)) + 90F;

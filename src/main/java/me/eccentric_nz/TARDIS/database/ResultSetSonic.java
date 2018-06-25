@@ -69,9 +69,7 @@ public class ResultSetSonic {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            where.entrySet().forEach((entry) -> {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            });
+            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "sonic" + wheres;
@@ -96,16 +94,16 @@ public class ResultSetSonic {
                 String colour = rs.getString("sonic_type");
                 ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
-                    rs.getInt("sonic_id"),
-                    UUID.fromString(rs.getString("uuid")),
-                    rs.getBoolean("activated"),
-                    cc,
-                    rs.getBoolean("bio"),
-                    rs.getBoolean("diamond"),
-                    rs.getBoolean("emerald"),
-                    rs.getBoolean("redstone"),
-                    rs.getBoolean("painter"),
-                    rs.getBoolean("ignite")
+                        rs.getInt("sonic_id"),
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getBoolean("activated"),
+                        cc,
+                        rs.getBoolean("bio"),
+                        rs.getBoolean("diamond"),
+                        rs.getBoolean("emerald"),
+                        rs.getBoolean("redstone"),
+                        rs.getBoolean("painter"),
+                        rs.getBoolean("ignite")
                 );
             } else {
                 return false;

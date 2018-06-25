@@ -29,25 +29,23 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkItsDangerousRunnable implements Runnable {
+class TARDISJunkItsDangerousRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final Location l;
     private final Block t;
-    int minX;
-    int minZ;
-    int maxX;
-    int maxZ;
-    int c = 0;
+    private final int minX;
+    private final int minZ;
+    private final int maxX;
+    private final int maxZ;
+    private int c = 0;
 
     public TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
         this.plugin = plugin;
-        this.l = l;
         t = l.clone().add(0.0d, 2.0d, -1.0d).getBlock();
-        minX = this.l.getBlockX() - 3;
-        minZ = this.l.getBlockZ() - 2;
-        maxX = this.l.getBlockX() + 3;
-        maxZ = this.l.getBlockZ() + 4;
+        minX = l.getBlockX() - 3;
+        minZ = l.getBlockZ() - 2;
+        maxX = l.getBlockX() + 3;
+        maxZ = l.getBlockZ() + 4;
     }
 
     @Override
@@ -70,7 +68,7 @@ public class TARDISJunkItsDangerousRunnable implements Runnable {
         c++;
     }
 
-    public boolean isInside(Location loc) {
+    private boolean isInside(Location loc) {
         return loc.getX() >= minX && loc.getX() <= maxX && loc.getZ() >= minZ && loc.getZ() <= maxZ;
     }
 }

@@ -29,7 +29,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISPlayerCountCommand {
+class TARDISPlayerCountCommand {
 
     private final TARDIS plugin;
 

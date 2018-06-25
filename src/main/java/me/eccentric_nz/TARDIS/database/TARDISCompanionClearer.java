@@ -25,7 +25,7 @@ import java.sql.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISCompanionClearer {
+class TARDISCompanionClearer {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

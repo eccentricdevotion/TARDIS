@@ -41,7 +41,7 @@ public class TARDISHumSounds {
      *
      * @param <T> The Object type we want to return
      */
-    public interface Callback<T> {
+    interface Callback<T> {
 
         void execute(T response);
     }
@@ -64,11 +64,10 @@ public class TARDISHumSounds {
                             p.setHum((rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum());
                         }
                         if (p.getSfx()) {
-                            Prefs pet = p;
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    prefs.execute(pet);
+                                    prefs.execute(p);
                                 }
                             }.runTask(TARDIS.plugin);
                         }
@@ -78,15 +77,13 @@ public class TARDISHumSounds {
         });
     };
 
-    private final Callback<Prefs> prefs = (Prefs pref) -> {
-        TARDISSounds.playTARDISSound(pref.getPlayer().getLocation(), pref.getHum());
-    };
+    private final Callback<Prefs> prefs = (Prefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer().getLocation(), pref.getHum());
 
     /**
      * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
      */
     public void playTARDISHum() {
-        if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
+        if (TARDIS.plugin.getConfig().getBoolean("allow.sfx")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {

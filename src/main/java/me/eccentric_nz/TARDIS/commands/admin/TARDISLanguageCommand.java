@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISLanguageCommand {
+class TARDISLanguageCommand {
 
     private final TARDIS plugin;
     private final List<String> codes = Arrays.asList("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");

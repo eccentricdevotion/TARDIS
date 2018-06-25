@@ -24,8 +24,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-
 /**
  * @author eccentric_nz
  */
@@ -38,9 +36,6 @@ public class TARDISBlackWoolToggler {
     }
 
     public void toggleBlocks(int id, Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("door_type", 1);
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
@@ -64,9 +59,6 @@ public class TARDISBlackWoolToggler {
     }
 
     public boolean isOpen(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("door_type", 1);
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);

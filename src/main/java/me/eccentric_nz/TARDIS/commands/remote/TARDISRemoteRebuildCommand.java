@@ -32,7 +32,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoteRebuildCommand {
+class TARDISRemoteRebuildCommand {
 
     private final TARDIS plugin;
 
@@ -64,9 +64,7 @@ public class TARDISRemoteRebuildCommand {
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisID(id);
         bd.setBiome(rsc.getBiome());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getPresetBuilder().buildPreset(bd);
-        }, 10L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
         TARDISMessage.send(sender, "TARDIS_REBUILT");
         // set hidden to false
         if (hidden) {

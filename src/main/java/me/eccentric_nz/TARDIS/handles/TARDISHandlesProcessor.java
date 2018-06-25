@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Program;
@@ -41,6 +42,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -100,6 +103,8 @@ public class TARDISHandlesProcessor {
             new QueryFactory(plugin).doUpdate("programs", set, where);
             TARDISMessage.handlesSend(player, "HANDLES_RUNNING");
         } else {
+            // TODO check conditions
+            processCommand(0);
             TARDISMessage.handlesSend(player, "HANDLES_EXECUTE");
         }
     }
@@ -111,9 +116,10 @@ public class TARDISHandlesProcessor {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 TARDISHandlesBlock next = getNext(i + 1);
                 if (next != null) {
+                    UUID uuid = player.getUniqueId();
                     // get TARDIS
                     HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", player.getUniqueId().toString());
+                    where.put("uuid", uuid.toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
@@ -122,10 +128,10 @@ public class TARDISHandlesProcessor {
                             case DOOR:
                                 switch (next) {
                                     case CLOSE:
-                                        new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
+                                        new TARDISDoorCloser(plugin, uuid, id).closeDoors();
                                         break;
                                     case OPEN:
-                                        new TARDISDoorOpener(plugin, player.getUniqueId(), id).openDoors();
+                                        new TARDISDoorOpener(plugin, uuid, id).openDoors();
                                         break;
                                     case LOCK:
                                     case UNLOCK:
@@ -152,7 +158,7 @@ public class TARDISHandlesProcessor {
                             case LIGHTS:
                                 boolean onoff = next.equals(TARDISHandlesBlock.ON);
                                 if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-                                    new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), onoff, tardis.getSchematic().hasLanterns());
+                                    new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().hasLanterns());
                                 }
                                 break;
                             case POWER:
@@ -175,7 +181,20 @@ public class TARDISHandlesProcessor {
                                         new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                                         break;
                                     case REDSTONE:
-                                        // power the block Handles is on
+                                        // press the Handles button
+                                        HashMap<String, Object> whereh = new HashMap<>();
+                                        whereh.put("tardis_id", id);
+                                        whereh.put("type", 26);
+                                        ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
+                                        if (rsh.resultSet()) {
+                                            Location handles = plugin.getLocationUtils().getLocationFromBukkitString(rsh.getLocation());
+                                            Block block = handles.getBlock();
+                                            Powerable button = (Powerable) block.getBlockData();
+                                            if (!button.isPowered()) {
+                                                button.setPowered(true);
+                                            }
+                                            block.setData(button, true);
+                                        }
                                         break;
                                 }
                                 break;
@@ -442,7 +461,7 @@ public class TARDISHandlesProcessor {
                                             }
                                             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                                 // destroy police box
-                                                DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+                                                DestroyData dd = new DestroyData(plugin, uuid.toString());
                                                 dd.setDirection(direction);
                                                 dd.setLocation(current);
                                                 dd.setPlayer(player);
@@ -470,7 +489,7 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 qf.doUpdate("tardis", set, tid);
                                             }
-                                            BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+                                            BuildData bd = new BuildData(plugin, uuid.toString());
                                             bd.setDirection(nextDirection);
                                             bd.setLocation(goto_loc);
                                             bd.setMalfunction(false);
@@ -522,17 +541,25 @@ public class TARDISHandlesProcessor {
                                     }
                                 }
                             case HIDE:
+                                player.performCommand("tardis hide");
                                 break;
                             case REBUILD:
+                                player.performCommand("tardis rebuild");
                                 break;
                             case SCAN:
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id);
                                 break;
                             case COMEHERE:
+                                new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
                                 break;
                             case TAKE_OFF:
                                 // player must be in TARDIS
+                                if (plugin.getUtils().inTARDISWorld(player.getLocation())) {
+                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid.toString() + " " + id);
+                                }
                                 break;
                             case LAND:
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid.toString() + " " + id);
                                 break;
                         }
                     }

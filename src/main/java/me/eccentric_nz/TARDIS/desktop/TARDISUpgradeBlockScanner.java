@@ -44,10 +44,12 @@ public class TARDISUpgradeBlockScanner {
     private final TARDIS plugin;
     private final TARDISUpgradeData tud;
     private final UUID uuid;
-    int startx, starty, startz;
-    int count = 0;
-    Material type;
-    byte data;
+    private int startx;
+    private int starty;
+    private int startz;
+    private int count = 0;
+    private Material type;
+    private byte data;
 
     public TARDISUpgradeBlockScanner(TARDIS plugin, TARDISUpgradeData tud, UUID uuid) {
         this.plugin = plugin;

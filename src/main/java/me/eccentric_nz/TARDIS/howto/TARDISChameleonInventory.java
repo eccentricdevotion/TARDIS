@@ -29,7 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISChameleonInventory {
+class TARDISChameleonInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] menu;

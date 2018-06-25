@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISExciteCommand {
+class TARDISExciteCommand {
 
     private final TARDIS plugin;
 

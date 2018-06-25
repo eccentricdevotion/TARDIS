@@ -265,9 +265,9 @@ public enum STORAGE {
             + "dXEAfgAGAAAAA3EAfgAIcQB+AAlxAH4ACnVxAH4ABgAAAANxAH4ADHEAfgANc3EAfgAAc3EAfgAD\n"
             + "dXEAfgAGAAAABHEAfgAIcQB+ABFxAH4AEnEAfgATdXEAfgAGAAAABHEAfgAVcQB+ABZ0AAdTYXZl\n"
             + "cyAycQB+ABpwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBw\n");
-    String title;
-    String table;
-    String empty;
+    final String title;
+    final String table;
+    final String empty;
 
     STORAGE(String title, String table, String empty) {
         this.title = title;

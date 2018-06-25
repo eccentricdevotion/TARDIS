@@ -42,9 +42,9 @@ import java.util.UUID;
 public class TARDISHandlesProgramListener implements Listener {
 
     private final TARDIS plugin;
-    public final HashMap<UUID, Integer> scroll_start = new HashMap<>();
-    public final HashMap<UUID, List<TARDISHandlesBlock>> scroll_list = new HashMap<>();
-    public final HashMap<UUID, TARDISHandlesCategory> scroll_category = new HashMap<>();
+    private final HashMap<UUID, Integer> scroll_start = new HashMap<>();
+    private final HashMap<UUID, List<TARDISHandlesBlock>> scroll_list = new HashMap<>();
+    private final HashMap<UUID, TARDISHandlesCategory> scroll_category = new HashMap<>();
     private final List<Material> allowed = Arrays.asList(Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_WAIT, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_BLOCKS);
 
     public TARDISHandlesProgramListener(TARDIS plugin) {
@@ -240,7 +240,7 @@ public class TARDISHandlesProgramListener implements Listener {
      * @param slot  the slot number to update
      * @param block the program block
      */
-    public void setSlot(Inventory inv, int slot, TARDISHandlesBlock block) {
+    private void setSlot(Inventory inv, int slot, TARDISHandlesBlock block) {
         ItemStack is = new ItemStack(Material.BOWL, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(block.getDisplayName());
@@ -296,9 +296,7 @@ public class TARDISHandlesProgramListener implements Listener {
      *
      * @param p the player using the GUI
      */
-    public void close(Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+    private void close(Player p) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 }

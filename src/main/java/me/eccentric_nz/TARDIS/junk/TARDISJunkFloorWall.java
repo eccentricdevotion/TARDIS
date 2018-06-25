@@ -31,7 +31,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkFloorWall {
+class TARDISJunkFloorWall {
 
     private final TARDIS plugin;
 
@@ -62,9 +62,7 @@ public class TARDISJunkFloorWall {
         if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             TARDISMessage.send(sender, message, pref);
-            TARDISWalls.BLOCKS.forEach((w) -> {
-                sender.sendMessage(w.toString());
-            });
+            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
             return true;
         }
         QueryFactory qf = new QueryFactory(plugin);

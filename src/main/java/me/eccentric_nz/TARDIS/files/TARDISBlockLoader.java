@@ -51,9 +51,7 @@ public class TARDISBlockLoader {
     public void loadProtectBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
         if (rsb.resultSet()) {
-            rsb.getData().forEach((rp) -> {
-                plugin.getGeneralKeeper().getProtectBlockMap().put(rp.getStrLocation(), rp.getTardis_id());
-            });
+            rsb.getData().forEach((rp) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rp.getStrLocation(), rp.getTardis_id()));
             // fix AIR in block field
             TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
             Connection connection = service.getConnection();

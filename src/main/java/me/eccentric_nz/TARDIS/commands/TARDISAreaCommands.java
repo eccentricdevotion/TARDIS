@@ -215,7 +215,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         return false;
                     }
                     if (args.length < 3) {
-                        TARDISMessage.send(player, "AREA_INVISIBILTY_ARG");
+                        TARDISMessage.send(player, "AREA_INVISIBILITY_ARG");
                         return false;
                     }
                     HashMap<String, Object> invisWhere = new HashMap<>();
@@ -240,7 +240,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     whereInvis.put("area_name", args[1]);
                     QueryFactory queryFactory = new QueryFactory(plugin);
                     queryFactory.doUpdate("areas", invisSet, whereInvis);
-                    TARDISMessage.send(player, "AREA_INVISIBILTY_SET", args[1]);
+                    TARDISMessage.send(player, "AREA_INVISIBILITY_SET", args[1]);
                     return true;
                 default:
                     return false;

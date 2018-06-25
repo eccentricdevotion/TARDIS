@@ -53,7 +53,7 @@ import java.util.UUID;
 public class TARDISSignListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validSigns = new ArrayList<>();
+    private final List<Material> validSigns = new ArrayList<>();
 
     public TARDISSignListener(TARDIS plugin) {
         this.plugin = plugin;

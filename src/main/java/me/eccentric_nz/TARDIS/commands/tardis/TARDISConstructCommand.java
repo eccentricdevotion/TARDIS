@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISConstructCommand {
+class TARDISConstructCommand {
 
     private final TARDIS plugin;
     private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4");

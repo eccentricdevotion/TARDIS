@@ -28,11 +28,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISSQLUpdate implements Runnable {
+class TARDISSQLUpdate implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    Connection connection = service.getConnection();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> data;
     private final HashMap<String, Object> where;
@@ -62,15 +62,13 @@ public class TARDISSQLUpdate implements Runnable {
         String wheres;
         StringBuilder sbu = new StringBuilder();
         StringBuilder sbw = new StringBuilder();
-        data.entrySet().forEach((entry) -> {
-            sbu.append(entry.getKey()).append(" = ?,");
-        });
-        where.entrySet().forEach((entry) -> {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
+        data.forEach((key, value) -> sbu.append(key).append(" = ?,"));
+        where.forEach((key, value) -> {
+            sbw.append(key).append(" = ");
+            if (value instanceof String || value instanceof UUID) {
+                sbw.append("'").append(value).append("' AND ");
             } else {
-                sbw.append(entry.getValue()).append(" AND ");
+                sbw.append(value).append(" AND ");
             }
         });
         where.clear();

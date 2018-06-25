@@ -32,7 +32,7 @@ import java.util.UUID;
 public class TARDISAttributes {
 
     // This may be modified
-    public ItemStack stack;
+    private final ItemStack stack;
     private final NbtList attributes;
 
     public TARDISAttributes(ItemStack stack) {

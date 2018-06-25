@@ -191,16 +191,14 @@ public class TARDISEjectListener implements Listener {
                 if (name != null && !name.isEmpty()) {
                     llama.setCustomName(name);
                 }
-                Tameable tamed = llama;
                 if (tmlla.isTamed()) {
-                    tamed.setTamed(true);
-                    tamed.setOwner(player);
+                    llama.setTamed(true);
+                    llama.setOwner(player);
                 }
                 llama.setDomestication(tmlla.getDomesticity());
                 llama.setJumpStrength(tmlla.getJumpStrength());
                 if (tmlla.hasChest()) {
-                    ChestedHorse ch = llama;
-                    ch.setCarryingChest(true);
+                    llama.setCarryingChest(true);
                 }
                 LlamaInventory inv = llama.getInventory();
                 inv.setContents(tmlla.getHorseinventory());

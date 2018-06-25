@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSiegeCommand {
+class TARDISSiegeCommand {
 
     private final TARDIS plugin;
     private final List<String> siegeArgs = Arrays.asList("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");

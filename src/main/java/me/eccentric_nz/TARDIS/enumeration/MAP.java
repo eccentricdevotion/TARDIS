@@ -24,7 +24,7 @@ import java.util.Map;
  * @author eccentric_nz
  */
 public enum MAP {
-
+    // TODO use new Map API if it exists
     ADMIN((byte) 1968, "Server Admin Circuit"),
     ARS((byte) 1973, "TARDIS ARS Circuit"),
     BIO((byte) 1969, "Bio-scanner Circuit"),
@@ -54,7 +54,7 @@ public enum MAP {
         this.displayName = displayName;
     }
 
-    public byte getData() {
+    private byte getData() {
         return data;
     }
 

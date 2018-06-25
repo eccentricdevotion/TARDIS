@@ -74,7 +74,6 @@ public class Parameters {
     private boolean permsArea = false;
     private boolean permsNether = false;
     private boolean permsTheEnd = false;
-    private final boolean permsWorld = false;
     private boolean repectWorldBorder = false;
     private boolean respectFactions = false;
     private boolean respectGreifPrevention = false;
@@ -101,10 +100,6 @@ public class Parameters {
 
     public boolean permsTheEnd() {
         return permsTheEnd;
-    }
-
-    public boolean permsWorld() {
-        return permsWorld;
     }
 
     public boolean repectWorldBorder() {

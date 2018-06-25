@@ -47,7 +47,8 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
     public Location getlocation() {
         WorldAndRange war = getWorldandRange(worlds);
         // loop till random attempts limit reached
-        for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
+        int limit = plugin.getConfig().getInt("travel.random_attempts");
+        for (int n = 0; n < limit; n++) {
             // get random values in range
             int randX = random.nextInt(war.getRangeX());
             int randZ = random.nextInt(war.getRangeZ());

@@ -69,7 +69,7 @@ public class TARDISCircuitDamager {
         }
     }
 
-    public void setCircuitDamage(String c, int decremented, boolean destroy) {
+    private void setCircuitDamage(String c, int decremented, boolean destroy) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);

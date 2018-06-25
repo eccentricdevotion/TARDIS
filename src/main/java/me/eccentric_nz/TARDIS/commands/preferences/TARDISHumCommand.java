@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISHumCommand {
+class TARDISHumCommand {
 
     public boolean setHumPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {

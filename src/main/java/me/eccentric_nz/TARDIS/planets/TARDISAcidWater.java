@@ -1,18 +1,18 @@
-/**
- * This file is borrowed from ASkyBlock. (https://github.com/tastybento/acidisland)
- * <p>
- * ASkyBlock is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
- * <p>
- * ASkyBlock is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * <p>
- * You should have received a copy of the GNU General Public License along with ASkyBlock. If not, see
- * <http://www.gnu.org/licenses/>.
- * <p>
- * Adapted by eccentric_nz for the TARDIS plugin
+/*
+  This file is borrowed from ASkyBlock. (https://github.com/tastybento/acidisland)
+  <p>
+  ASkyBlock is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+  License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+  version.
+  <p>
+  ASkyBlock is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  details.
+  <p>
+  You should have received a copy of the GNU General Public License along with ASkyBlock. If not, see
+  <http://www.gnu.org/licenses/>.
+  <p>
+  Adapted by eccentric_nz for the TARDIS plugin
  */
 package me.eccentric_nz.TARDIS.planets;
 
@@ -44,7 +44,6 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISAcidWater implements Listener {
@@ -168,11 +167,11 @@ public class TARDISAcidWater implements Listener {
     }
 
     /**
-     * @param player
-     * @return A double between 0.0 and 0.80 that reflects how much armor the
-     * player has on. The higher the value, the more protection they have.
+     * @param player The player to get damage for
+     * @return A double between 0.0 and 0.80 that reflects how much armor the player has on. The higher the value, the
+     * more protection they have.
      */
-    static public double getDamageReduced(Player player) {
+    private double getDamageReduced(Player player) {
         org.bukkit.inventory.PlayerInventory inv = player.getInventory();
         ItemStack boots = inv.getBoots();
         ItemStack helmet = inv.getHelmet();

@@ -23,9 +23,9 @@ import java.util.Random;
 /**
  * @author eccentric_nz
  */
-public class TARDISRandomArchiveName {
+class TARDISRandomArchiveName {
 
-    public static final List<String> NAMES = new ArrayList<>();
+    private static final List<String> NAMES = new ArrayList<>();
     private static final Random RANDOM = new Random();
 
     static {

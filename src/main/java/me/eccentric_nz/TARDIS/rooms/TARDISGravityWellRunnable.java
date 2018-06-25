@@ -28,11 +28,14 @@ import org.bukkit.util.Vector;
  */
 public class TARDISGravityWellRunnable implements Runnable {
 
-    TARDIS plugin;
-    Player p;
-    double up;
-    double end;
-    int task, x, z, dir;
+    private final TARDIS plugin;
+    private final Player p;
+    private final double up;
+    private final double end;
+    private int task;
+    private final int x;
+    private final int z;
+    private final int dir;
 
     public TARDISGravityWellRunnable(TARDIS plugin, Player p, double up, double end, int x, int z, int dir) {
         this.plugin = plugin;

@@ -23,7 +23,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISChunksCommand {
+class TARDISChunksCommand {
 
     private final TARDIS plugin;
 
@@ -33,9 +33,7 @@ public class TARDISChunksCommand {
 
     public boolean listChunks(CommandSender sender) {
         if (plugin.getGeneralKeeper().getTardisChunkList().size() > 0) {
-            plugin.getGeneralKeeper().getTardisChunkList().forEach((c) -> {
-                sender.sendMessage(plugin.getPluginName() + c.getWorld().getName() + ": " + c);
-            });
+            plugin.getGeneralKeeper().getTardisChunkList().forEach((c) -> sender.sendMessage(plugin.getPluginName() + c.getWorld().getName() + ": " + c));
         } else {
             TARDISMessage.send(sender, "NO_CHUNKS");
         }

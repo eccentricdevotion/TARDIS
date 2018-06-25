@@ -44,8 +44,7 @@ public class TARDISARSSlot {
 
     public void setY(int y) {
         // convert to the actual y coordinate of the start of the chunk
-        int sl = getChunkY(y);
-        this.y = sl;
+        this.y = getChunkY(y);
     }
 
     public int getX() {
@@ -54,8 +53,7 @@ public class TARDISARSSlot {
 
     public void setX(int x) {
         // convert to the actual x coordinate of the start of the chunk
-        int sx = getChunkX(x, chunk);
-        this.x = sx;
+        this.x = getChunkX(x, chunk);
     }
 
     public int getZ() {
@@ -64,8 +62,7 @@ public class TARDISARSSlot {
 
     public void setZ(int z) {
         // convert to the actual z coordinate of the start of the chunk
-        int sz = getChunkZ(z, chunk);
-        this.z = sz;
+        this.z = getChunkZ(z, chunk);
     }
 
     private int getChunkX(int xx, Chunk c) {

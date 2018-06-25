@@ -32,7 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -139,7 +139,7 @@ public class TARDISDiskCraftListener implements Listener {
                                             preset = PRESET.getPreset(m).toString();
                                         }
                                         if (!preset.isEmpty()) {
-                                            List<String> disk_lore = Arrays.asList(preset);
+                                            List<String> disk_lore = Collections.singletonList(preset);
                                             disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
                                             ItemMeta dim = disk.getItemMeta();
                                             dim.setDisplayName("Preset Storage Disk");

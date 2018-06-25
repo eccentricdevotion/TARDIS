@@ -40,7 +40,7 @@ import java.util.Locale;
 public class TARDISSpace {
 
     private final TARDIS plugin;
-    public World tardisWorld = null;
+    private World tardisWorld = null;
 
     public TARDISSpace(TARDIS plugin) {
         this.plugin = plugin;
@@ -143,9 +143,7 @@ public class TARDISSpace {
     }
 
     public void keepNight() {
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            timechk();
-        }, 60L, 1200L);
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, this::timechk, 60L, 1200L);
     }
 
     private void timechk() {

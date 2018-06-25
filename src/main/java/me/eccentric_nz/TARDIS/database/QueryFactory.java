@@ -33,8 +33,8 @@ import java.util.UUID;
 public class QueryFactory {
 
     private final TARDIS plugin;
-    TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    Connection connection = service.getConnection();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
     private final String prefix;
 
     public QueryFactory(TARDIS plugin) {
@@ -68,8 +68,8 @@ public class QueryFactory {
         String questions;
         StringBuilder sbf = new StringBuilder();
         StringBuilder sbq = new StringBuilder();
-        data.entrySet().forEach((entry) -> {
-            sbf.append(entry.getKey()).append(",");
+        data.forEach((key, value) -> {
+            sbf.append(key).append(",");
             sbq.append("?,");
         });
         fields = sbf.toString().substring(0, sbf.length() - 1);
@@ -161,12 +161,12 @@ public class QueryFactory {
         Statement statement = null;
         String values;
         StringBuilder sbw = new StringBuilder();
-        where.entrySet().forEach((entry) -> {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
+        where.forEach((key, value) -> {
+            sbw.append(key).append(" = ");
+            if (value instanceof String || value instanceof UUID) {
+                sbw.append("'").append(value).append("' AND ");
             } else {
-                sbw.append(entry.getValue()).append(" AND ");
+                sbw.append(value).append(" AND ");
             }
         });
         where.clear();

@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISFlightAdjustment {
+class TARDISFlightAdjustment {
 
     private final TARDIS plugin;
     private final List<Integer> angles;

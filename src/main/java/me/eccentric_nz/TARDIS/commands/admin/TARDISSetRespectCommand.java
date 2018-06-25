@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetRespectCommand {
+class TARDISSetRespectCommand {
 
     private final TARDIS plugin;
     private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");

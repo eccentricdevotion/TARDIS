@@ -113,13 +113,11 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
      * @param p      the player using the GUI
      * @param remove whether to stop tracking the upgrade
      */
-    public void close(Player p, boolean remove) {
+    private void close(Player p, boolean remove) {
         if (remove) {
             plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         }
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 
     /**
@@ -127,7 +125,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
      *
      * @param p the player using the GUI
      */
-    public void back(Player p) {
+    private void back(Player p) {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();

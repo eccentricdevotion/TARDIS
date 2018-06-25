@@ -34,7 +34,7 @@ public class TARDISRandomCollection<String> {
         this(new Random());
     }
 
-    public TARDISRandomCollection(Random random) {
+    private TARDISRandomCollection(Random random) {
         this.random = random;
     }
 

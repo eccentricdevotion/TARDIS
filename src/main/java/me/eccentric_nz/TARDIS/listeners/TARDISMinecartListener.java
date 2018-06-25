@@ -190,9 +190,7 @@ public class TARDISMinecartListener implements Listener {
             }
         }
         // start a delayed task to remove the chunk
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk);
-        }, delay);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk), delay);
         minecart.remove();
         Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);
         InventoryHolder smc = (InventoryHolder) e;
@@ -214,7 +212,7 @@ public class TARDISMinecartListener implements Listener {
         }
     }
 
-    public Location findTrack(Location center) {
+    private Location findTrack(Location center) {
         Block centerBlock = center.getBlock();
         Block block;
         for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
@@ -226,11 +224,11 @@ public class TARDISMinecartListener implements Listener {
         return null;
     }
 
-    public boolean isTrack(Block block) {
+    private boolean isTrack(Block block) {
         return isTrack(block.getType());
     }
 
-    public boolean isTrack(Material mat) {
+    private boolean isTrack(Material mat) {
         return (plugin.getGeneralKeeper().getRails().contains(mat));
     }
 

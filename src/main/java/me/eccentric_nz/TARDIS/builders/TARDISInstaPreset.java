@@ -49,13 +49,12 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISInstaPreset {
+class TARDISInstaPreset {
 
     private final TARDIS plugin;
     private final BuildData bd;
     private final BlockData cham_id;
     private final boolean rebuild;
-    private Block sponge;
     private final PRESET preset;
     private TARDISChameleonColumn column;
     private final Material[] colours;
@@ -333,7 +332,7 @@ public class TARDISInstaPreset {
                                 if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
                                     int sy = y - 1;
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
-                                    sponge = world.getBlockAt(xx, sy, zz);
+                                    Block sponge = world.getBlockAt(xx, sy, zz);
                                     plugin.getWorldGuardUtils().sponge(sponge, true);
                                 } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                                     plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
@@ -503,9 +502,7 @@ public class TARDISInstaPreset {
                 }
             }
         }
-        do_at_end.forEach((pb) -> {
-            plugin.getBlockUtils().setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getData(), bd.getTardisID());
-        });
+        do_at_end.forEach((pb) -> plugin.getBlockUtils().setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getData(), bd.getTardisID()));
         if (!rebuild) {
             // message travellers in tardis
             HashMap<String, Object> where = new HashMap<>();
@@ -513,19 +510,17 @@ public class TARDISInstaPreset {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
             if (rst.resultSet()) {
                 List<UUID> travellers = rst.getData();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    travellers.forEach((s) -> {
-                        Player trav = plugin.getServer().getPlayer(s);
-                        if (trav != null) {
-                            String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                            TARDISMessage.send(trav, message);
-                            // TARDIS has travelled so add players to list so they can receive Artron on exit
-                            if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-                                plugin.getTrackerKeeper().getHasTravelled().add(s);
-                            }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> travellers.forEach((s) -> {
+                    Player trav = plugin.getServer().getPlayer(s);
+                    if (trav != null) {
+                        String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
+                        TARDISMessage.send(trav, message);
+                        // TARDIS has travelled so add players to list so they can receive Artron on exit
+                        if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
+                            plugin.getTrackerKeeper().getHasTravelled().add(s);
                         }
-                    });
-                }, 30L);
+                    }
+                }), 30L);
             }
         }
         plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
@@ -563,19 +558,19 @@ public class TARDISInstaPreset {
 
     private static class ProblemBlock {
 
-        Location l;
-        BlockData data;
+        final Location l;
+        final BlockData data;
 
-        public ProblemBlock(Location l, BlockData data) {
+        ProblemBlock(Location l, BlockData data) {
             this.l = l;
             this.data = data;
         }
 
-        public Location getL() {
+        Location getL() {
             return l;
         }
 
-        public BlockData getData() {
+        BlockData getData() {
             return data;
         }
     }

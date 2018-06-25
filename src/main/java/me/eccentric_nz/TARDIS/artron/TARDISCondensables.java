@@ -225,7 +225,6 @@ public class TARDISCondensables {
             condensables.put("DARK_OAK_PRESSURE_PLATE", 1);
             condensables.put("DARK_OAK_SAPLING", 2);
             condensables.put("DARK_OAK_SLAB", 2);
-            condensables.put("DARK_OAK_STAIRS", 1);
             condensables.put("DARK_OAK_STAIRS", 11);
             condensables.put("DARK_OAK_TRAPDOOR", 6);
             condensables.put("DARK_PRISMARINE", 32);
@@ -751,9 +750,7 @@ public class TARDISCondensables {
             condensables.put("ZOMBIE_HEAD", 200);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
-            items.forEach((item) -> {
-                condensables.put(item, plugin.getCondensablesConfig().getInt(item));
-            });
+            items.forEach((item) -> condensables.put(item, plugin.getCondensablesConfig().getInt(item)));
         }
     }
 

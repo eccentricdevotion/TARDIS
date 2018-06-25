@@ -374,6 +374,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                             }
                                         }
                                     } catch (IOException ex) {
+                                        plugin.debug("Could not serialize inventory!");
                                     }
                                 }
                                 if (!hasBiomeDisk) {
@@ -387,9 +388,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         if (upper.equals("LIST")) {
                             StringBuilder buf = new StringBuilder();
-                            BIOME_SUBS.forEach((bi) -> {
-                                buf.append(bi).append(", ");
-                            });
+                            BIOME_SUBS.forEach((bi) -> buf.append(bi).append(", "));
                             String b = buf.toString().substring(0, buf.length() - 2);
                             TARDISMessage.send(player, "BIOMES", b);
                             return true;
@@ -730,7 +729,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         return w_str;
     }
 
-    public static boolean isNumber(String str) {
+    private static boolean isNumber(String str) {
         if (str == null) {
             return false;
         }

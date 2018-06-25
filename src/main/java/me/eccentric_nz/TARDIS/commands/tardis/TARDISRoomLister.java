@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISRoomLister {
+class TARDISRoomLister {
 
     private final TARDIS plugin;
     private final Player player;
@@ -42,12 +42,10 @@ public class TARDISRoomLister {
 
     public void list() {
         TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
-        options.entrySet().forEach((map) -> {
-            player.sendMessage(map.getKey());
-            if (map.getValue().size() > 0) {
-                map.getValue().forEach((s) -> {
-                    player.sendMessage("    " + s);
-                });
+        options.forEach((key, value) -> {
+            player.sendMessage(key);
+            if (value.size() > 0) {
+                value.forEach((s) -> player.sendMessage("    " + s));
             } else {
                 TARDISMessage.send(player, "ROOM_NONE");
             }

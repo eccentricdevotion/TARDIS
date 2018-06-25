@@ -41,7 +41,7 @@ import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
  *
  * @author eccentric_nz
  */
-public class TARDISCommandSetter {
+class TARDISCommandSetter {
 
     private final TARDIS plugin;
 

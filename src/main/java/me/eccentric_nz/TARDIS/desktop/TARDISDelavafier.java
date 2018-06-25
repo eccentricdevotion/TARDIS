@@ -31,11 +31,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDelavafier {
+class TARDISDelavafier {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    int startx, starty = 64, startz;
+    private int startx;
+    private final int starty = 64;
+    private int startz;
 
     public TARDISDelavafier(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;

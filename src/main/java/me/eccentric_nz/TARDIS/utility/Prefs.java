@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class Prefs {
+class Prefs {
 
     public Prefs(Player player, Boolean sfx, String hum) {
         this.player = player;

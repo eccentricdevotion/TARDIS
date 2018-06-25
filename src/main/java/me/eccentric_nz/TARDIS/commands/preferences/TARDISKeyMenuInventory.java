@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISKeyMenuInventory {
+class TARDISKeyMenuInventory {
 
     private final ItemStack[] menu;
 
@@ -136,10 +136,9 @@ public class TARDISKeyMenuInventory {
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
 
-        ItemStack[] stack = {brass, plain, spade, silver, seal, variant, s_plain, clara, perception,
+        return new ItemStack[]{brass, plain, spade, silver, seal, variant, s_plain, clara, perception,
                 null, susan, null, era, null, sally, null, bromley, null,
                 null, null, null, null, info, null, null, null, close};
-        return stack;
     }
 
     public ItemStack[] getMenu() {

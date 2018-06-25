@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRescueCommand {
+class TARDISRescueCommand {
 
     private final TARDIS plugin;
 
@@ -70,7 +70,7 @@ public class TARDISRescueCommand {
                 if (rsp.resultSet() && rsp.isAutoRescueOn()) {
                     // go straight to rescue
                     TARDISRescue res = new TARDISRescue(plugin);
-                    plugin.getTrackerKeeper().getChat().remove(saved);
+                    plugin.getTrackerKeeper().getChat().remove(savedUUID);
                     // delay it so the chat appears before the message
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);

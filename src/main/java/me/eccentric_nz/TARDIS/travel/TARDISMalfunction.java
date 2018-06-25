@@ -90,7 +90,7 @@ public class TARDISMalfunction {
         return l;
     }
 
-    public void doMalfunction(Location l, int id, Player p, String eps, String creeper, Location handbrake) {
+    private void doMalfunction(Location l, int id, Player p, String eps, String creeper, Location handbrake) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);

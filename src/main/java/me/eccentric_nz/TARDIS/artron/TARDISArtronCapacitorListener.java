@@ -60,7 +60,7 @@ import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSig
 public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<>();
+    private final List<Material> validBlocks = new ArrayList<>();
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -194,9 +194,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         lore.set(1, "0");
                                         im.setLore(lore);
                                         is.setItemMeta(im);
-                                        is.getEnchantments().keySet().forEach((e) -> {
-                                            is.removeEnchantment(e);
-                                        });
+                                        is.getEnchantments().keySet().forEach(is::removeEnchantment);
                                         TARDISMessage.send(player, "CELL_TRANSFER");
                                     }
                                 }
@@ -307,8 +305,6 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISMessage.send(player, "ENERGY_UNDER_10");
                                     return;
                                 }
-                                HashMap<String, Object> wherep = new HashMap<>();
-                                wherep.put("uuid", player.getUniqueId().toString());
                                 if (hasPrefs) {
                                     int level = rsp.getArtronLevel();
                                     if (level < 1) {

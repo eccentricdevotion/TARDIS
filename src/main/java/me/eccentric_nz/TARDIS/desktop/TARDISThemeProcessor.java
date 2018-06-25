@@ -35,7 +35,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISThemeProcessor {
+class TARDISThemeProcessor {
 
     private final TARDIS plugin;
     private final UUID uuid;

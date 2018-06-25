@@ -128,12 +128,9 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         boolean safe = false;
         int count = 0;
         Block block = l.getBlock();
-        while (true) {
+        do {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
-                break;
-            }
-        }
+        } while (block.getType().equals(Material.WATER) || block.getType().equals(Material.ICE));
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < 5; n++) {
             int[] s = TARDISTimeTravel.getStartLocation(loc, d);

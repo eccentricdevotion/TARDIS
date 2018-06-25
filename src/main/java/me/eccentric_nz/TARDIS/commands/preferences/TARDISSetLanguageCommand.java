@@ -29,7 +29,7 @@ import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.uc
 /**
  * @author eccentric_nz
  */
-public class TARDISSetLanguageCommand {
+class TARDISSetLanguageCommand {
 
     public boolean setLanguagePref(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];

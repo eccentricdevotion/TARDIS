@@ -33,7 +33,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoteBackCommand {
+class TARDISRemoteBackCommand {
 
     private final TARDIS plugin;
 
@@ -105,9 +105,7 @@ public class TARDISRemoteBackCommand {
         bd.setRebuild(false);
         bd.setSubmarine(rsb.isSubmarine());
         bd.setTardisID(id);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getPresetBuilder().buildPreset(bd);
-        }, 20L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
         plugin.getTrackerKeeper().getRescue().remove(id);
         return true;

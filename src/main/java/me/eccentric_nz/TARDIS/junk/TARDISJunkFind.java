@@ -27,7 +27,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkFind {
+class TARDISJunkFind {
 
     private final TARDIS plugin;
 

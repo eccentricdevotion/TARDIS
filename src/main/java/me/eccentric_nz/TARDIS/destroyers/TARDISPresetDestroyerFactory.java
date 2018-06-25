@@ -360,9 +360,7 @@ public class TARDISPresetDestroyerFactory {
 
     public void destroyLampTrapdoors(Location l, COMPASS d) {
         Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
-        plugin.getGeneralKeeper().getFaces().forEach((f) -> {
-            lamp.getRelative(f).setType(Material.AIR);
-        });
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setType(Material.AIR));
     }
 
     private BlockFace getOppositeFace(COMPASS c) {
@@ -375,7 +373,6 @@ public class TARDISPresetDestroyerFactory {
                 return BlockFace.NORTH;
             default:
                 return BlockFace.WEST;
-
         }
     }
 

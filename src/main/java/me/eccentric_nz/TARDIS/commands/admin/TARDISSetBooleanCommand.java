@@ -30,7 +30,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetBooleanCommand {
+class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
     private final List<String> require_restart = Arrays.asList("use_block_stack", "use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles", "switch_resource_packs", "handles");

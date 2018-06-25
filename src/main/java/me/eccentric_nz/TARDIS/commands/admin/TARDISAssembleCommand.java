@@ -29,7 +29,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISAssembleCommand {
+class TARDISAssembleCommand {
 
     private final TARDIS plugin;
 
@@ -44,9 +44,7 @@ public class TARDISAssembleCommand {
             TARDISMessage.send(sender, "ASSEMBLE_ALL");
             return true;
         } else if (player.equalsIgnoreCase("list")) {
-            plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> {
-                plugin.debug("TARDIS id: " + d);
-            });
+            plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
             return true;
         } else {
             // turn off dispersal for this player

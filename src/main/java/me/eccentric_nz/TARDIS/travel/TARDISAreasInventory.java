@@ -38,7 +38,7 @@ public class TARDISAreasInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] terminal;
-    Player p;
+    private final Player p;
 
     public TARDISAreasInventory(TARDIS plugin, Player p) {
         this.plugin = plugin;

@@ -81,11 +81,8 @@ public class TARDISShapedRecipe {
         keyDisplay = key_colour_lookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
         sonicDisplay = sonic_colour_lookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
         Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
-        shaped.forEach((s) -> {
-            plugin.getServer().addRecipe(makeRecipe(s));
-        });
+        shaped.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
     }
-
 
     private ShapedRecipe makeRecipe(String s) {
         /*
@@ -137,6 +134,7 @@ public class TARDISShapedRecipe {
                 char c = g.charAt(0);
                 String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
                 Material m = Material.valueOf(recipe_iddata[0]);
+                // TODO use new Map API if it exists
                 if (recipe_iddata.length == 2) {
                     int recipe_data = TARDISNumberParsers.parseInt(recipe_iddata[1]);
                     r.setIngredient(c, m, recipe_data);

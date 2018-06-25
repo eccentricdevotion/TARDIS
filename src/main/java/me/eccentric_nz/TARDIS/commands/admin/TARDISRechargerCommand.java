@@ -30,7 +30,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISRechargerCommand {
+class TARDISRechargerCommand {
 
     private final TARDIS plugin;
 

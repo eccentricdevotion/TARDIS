@@ -32,7 +32,7 @@ public class TARDISChatPaginator {
     public static final int AVERAGE_CHAT_PAGE_WIDTH = 65; // Will typically not wrap using an average character distribution
     public static final int UNBOUNDED_PAGE_WIDTH = Integer.MAX_VALUE;
     public static final int OPEN_CHAT_PAGE_HEIGHT = 20; // The height of an expanded chat window
-    public static final int CLOSED_CHAT_PAGE_HEIGHT = 10; // The height of the default chat window
+    private static final int CLOSED_CHAT_PAGE_HEIGHT = 10; // The height of the default chat window
     public static final int UNBOUNDED_PAGE_HEIGHT = Integer.MAX_VALUE;
 
     /**
@@ -55,7 +55,7 @@ public class TARDISChatPaginator {
      * @param pageHeight        The desired number of lines in a page.
      * @return A single chat page.
      */
-    public static ChatPage paginate(String unpaginatedString, int pageNumber, int lineLength, int pageHeight) {
+    private static ChatPage paginate(String unpaginatedString, int pageNumber, int lineLength, int pageHeight) {
         String[] lines = wordWrap(unpaginatedString, lineLength);
         int totalPages = lines.length / pageHeight + (lines.length % pageHeight == 0 ? 0 : 1);
         int actualPageNumber = pageNumber <= totalPages ? pageNumber : totalPages;
@@ -146,7 +146,7 @@ public class TARDISChatPaginator {
         private final int pageNumber;
         private final int totalPages;
 
-        public ChatPage(String[] lines, int pageNumber, int totalPages) {
+        ChatPage(String[] lines, int pageNumber, int totalPages) {
             this.lines = lines;
             this.pageNumber = pageNumber;
             this.totalPages = totalPages;

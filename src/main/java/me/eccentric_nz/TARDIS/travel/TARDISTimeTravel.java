@@ -71,7 +71,7 @@ public class TARDISTimeTravel {
      * @param e           the environment(s) the player has chosen (or is allowed) to travel to.
      * @param this_world  the world the Police Box is currently in
      * @param malfunction whether there should be a malfunction
-     * @param current
+     * @param current     the current location of the TARDIS
      * @return a random Location
      */
     public Location randomDestination(Player p, int rx, int rz, int ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
@@ -198,7 +198,7 @@ public class TARDISTimeTravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("uuid", p.getUniqueId().toString());
@@ -328,7 +328,7 @@ public class TARDISTimeTravel {
      * Checks if a location is safe for the TARDIS Police Box to land at. Used for debugging purposes only. The Police
      * Box requires a clear 4 x 3 x 4 (d x w x h) area.
      *
-     * @param loc
+     * @param loc the location to test
      * @param d   the direction the Police Box is facing.
      */
     public void testSafeLocation(Location loc, COMPASS d) {
@@ -472,7 +472,8 @@ public class TARDISTimeTravel {
      * @param quarter one fourth of the max_distance config option.
      * @param rx      the data bit of the x-repeater setting.
      * @param ry      the data bit of the y-repeater setting.
-     * @param max     the max_distance config option.
+     * @param e       a string to determine where to start the random search from
+     * @param l       the current TARDIS location
      */
     private int randomX(Random rand, int range, int quarter, int rx, int ry, String e, Location l) {
         int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
@@ -516,7 +517,8 @@ public class TARDISTimeTravel {
      * @param quarter one fourth of the max_distance config option.
      * @param rz      the data bit of the x-repeater setting.
      * @param ry      the data bit of the y-repeater setting.
-     * @param max     the max_distance config option.
+     * @param e       a string to determine where to start the random search from
+     * @param l       the current TARDIS location
      */
     private int randomZ(Random rand, int range, int quarter, int rz, int ry, String e, Location l) {
         int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
@@ -554,12 +556,9 @@ public class TARDISTimeTravel {
 
     public Location submarine(Block b, COMPASS d) {
         Block block = b;
-        while (true) {
+        do {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.WATER) && !Tag.ICE.isTagged(block.getType())) {
-                break;
-            }
-        }
+        } while (block.getType().equals(Material.WATER) || Tag.ICE.isTagged(block.getType()));
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < attempts; n++) {
             if (isSafeSubmarine(loc, d)) {

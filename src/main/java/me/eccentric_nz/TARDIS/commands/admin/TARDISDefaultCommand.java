@@ -25,7 +25,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISDefaultCommand {
+class TARDISDefaultCommand {
 
     private final TARDIS plugin;
 

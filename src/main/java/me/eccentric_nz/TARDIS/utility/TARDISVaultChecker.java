@@ -38,7 +38,7 @@ public class TARDISVaultChecker implements Runnable {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
+    private final List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
     private final String prefix;
 
     public TARDISVaultChecker(TARDIS plugin) {

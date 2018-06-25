@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISManualFlightStarter implements Runnable {
+class TARDISManualFlightStarter implements Runnable {
 
     private final TARDIS plugin;
     private final Player player;

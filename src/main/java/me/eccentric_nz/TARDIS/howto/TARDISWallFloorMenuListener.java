@@ -116,9 +116,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
     @Override
     public void close(Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 
     /**
@@ -126,7 +124,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
      *
      * @param p the player using the GUI
      */
-    public void back(Player p) {
+    private void back(Player p) {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();

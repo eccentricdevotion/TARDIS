@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISRecipeLister {
+class TARDISRecipeLister {
 
     private final TARDIS plugin;
     private final CommandSender sender;
@@ -43,11 +43,9 @@ public class TARDISRecipeLister {
     public void list() {
         TARDISMessage.send(sender, "RECIPE_VIEW");
         sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Recipe Result");
-        options.entrySet().forEach((map) -> {
-            sender.sendMessage(map.getKey());
-            map.getValue().forEach((s) -> {
-                sender.sendMessage("    " + s);
-            });
+        options.forEach((key, value) -> {
+            sender.sendMessage(key);
+            value.forEach((s) -> sender.sendMessage("    " + s));
         });
     }
 

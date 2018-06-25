@@ -232,9 +232,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         set.put("sonic_type", colour);
         if (im.hasLore()) {
             List<String> lore = im.getLore();
-            fields.entrySet().forEach((map) -> {
-                set.put(map.getValue(), (lore.contains(map.getKey())) ? 1 : 0);
-            });
+            fields.forEach((key, value) -> set.put(value, (lore.contains(key)) ? 1 : 0));
         }
         new QueryFactory(plugin).doUpdate("sonic", set, where);
         plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());

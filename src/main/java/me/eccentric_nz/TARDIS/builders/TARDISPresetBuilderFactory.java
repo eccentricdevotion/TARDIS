@@ -48,10 +48,10 @@ import java.util.Random;
 public class TARDISPresetBuilderFactory {
 
     private final TARDIS plugin;
-    HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
+    private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
     public final List<PRESET> no_block_under_door;
-    public final List<PRESET> notSubmarinePresets;
-    Random rand;
+    private final List<PRESET> notSubmarinePresets;
+    private final Random rand;
 
     public TARDISPresetBuilderFactory(TARDIS plugin) {
         this.plugin = plugin;
@@ -178,7 +178,7 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    public PRESET adapt(Biome biome, ADAPTION adaption) {
+    private PRESET adapt(Biome biome, ADAPTION adaption) {
         if (adaption.equals(ADAPTION.BLOCK)) {
             return PRESET.OLD;
         } else {

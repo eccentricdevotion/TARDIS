@@ -43,7 +43,7 @@ public class ArchiveUpdate {
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean setInUse() {
+    public void setInUse() {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -69,11 +69,11 @@ public class ArchiveUpdate {
                     ps.executeUpdate();
                 }
             } else {
-                return false;
+                return;
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for archive update! " + e.getMessage());
-            return false;
+            return;
         } finally {
             try {
                 if (rs != null) {
@@ -89,6 +89,5 @@ public class ArchiveUpdate {
                 plugin.debug("Error closing archive update! " + e.getMessage());
             }
         }
-        return true;
     }
 }

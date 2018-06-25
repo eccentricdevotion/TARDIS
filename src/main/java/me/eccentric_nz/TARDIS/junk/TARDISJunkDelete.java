@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkDelete {
+class TARDISJunkDelete {
 
     private final TARDIS plugin;
 

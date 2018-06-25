@@ -27,7 +27,7 @@ import java.sql.*;
  *
  * @author eccentric_nz
  */
-public class TARDISDispersalUpdater {
+class TARDISDispersalUpdater {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

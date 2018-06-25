@@ -26,7 +26,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-public class TARDISSQLUpdateControl implements Runnable {
+class TARDISSQLUpdateControl implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

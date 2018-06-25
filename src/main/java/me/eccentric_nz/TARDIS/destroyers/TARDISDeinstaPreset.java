@@ -170,9 +170,7 @@ public class TARDISDeinstaPreset {
         tid.put("police_box", 1);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
         if (rsb.resultSet()) {
-            rsb.getData().forEach((rb) -> {
-                TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
-            });
+            rsb.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
         }
         // if just hiding don't remove block protection
         if (!hide) {
@@ -182,9 +180,7 @@ public class TARDISDeinstaPreset {
             Block siege = dd.getLocation().getBlock();
             siege.setType(Material.BROWN_MUSHROOM_BLOCK);
             MultipleFacing mf = (MultipleFacing) siege.getBlockData();
-            mf.getAllowedFaces().forEach((face) -> {
-                mf.setFace(face, true);
-            });
+            mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
             siege.setData(mf);
         }
         // refresh chunk

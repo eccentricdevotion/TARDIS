@@ -91,9 +91,7 @@ public class TARDISQuitListener implements Listener {
                         delay = 20L;
                     }
                     if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                        }, delay);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
                     }
                     // if lights are on, turn them off
                     if (lights) {

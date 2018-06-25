@@ -61,9 +61,7 @@ public class TARDISDoorOpener {
             if (!rs.getOuterBlock().getChunk().isLoaded()) {
                 rs.getOuterBlock().getChunk().load();
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                open(rs.getOuterBlock(), rs.getInnerBlock(), false);
-            }, 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> open(rs.getOuterBlock(), rs.getInnerBlock(), false), 5L);
         }
     }
 

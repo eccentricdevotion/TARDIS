@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-public class TARDISRecordingManager {
+class TARDISRecordingManager {
 
     /**
      * If the recorder skips running we need to count because if this happens x times in a row, the recorder will delay

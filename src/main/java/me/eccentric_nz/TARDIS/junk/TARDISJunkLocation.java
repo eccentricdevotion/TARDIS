@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkLocation {
+class TARDISJunkLocation {
 
     private final TARDIS plugin;
     private Location current;

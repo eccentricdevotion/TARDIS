@@ -46,9 +46,7 @@ public class TARDISCreeperChecker {
      * A repeating task that checks if the charged creeper in the TARDIS Artron Energy Capacitor is still there.
      */
     public void startCreeperCheck() {
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            checkCreepers();
-        }, 600L, 12000L);
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> checkCreepers(), 600L, 12000L);
     }
 
     /**

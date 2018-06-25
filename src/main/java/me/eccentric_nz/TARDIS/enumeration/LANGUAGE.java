@@ -62,7 +62,7 @@ public enum LANGUAGE {
     ur("URDU"),
     vi("VIETNAMESE");
 
-    public String lang;
+    private final String lang;
 
     LANGUAGE(String lang) {
         this.lang = lang;

@@ -30,7 +30,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISWallsInventory {
+class TARDISWallsInventory {
 
     private final ItemStack[] menu;
     private final TARDIS plugin;

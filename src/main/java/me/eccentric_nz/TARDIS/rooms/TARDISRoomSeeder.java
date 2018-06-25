@@ -150,11 +150,11 @@ public class TARDISRoomSeeder implements Listener {
                     // remove blocks from condenser table if rooms_require_blocks is true
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
-                        c_data.getBlockIDCount().entrySet().forEach((entry) -> {
+                        c_data.getBlockIDCount().forEach((key1, value) -> {
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", c_data.getTardis_id());
-                            wherec.put("block_data", entry.getKey());
-                            qf.alterCondenserBlockCount(entry.getValue(), wherec);
+                            wherec.put("block_data", key1);
+                            qf.alterCondenserBlockCount(value, wherec);
                         });
                         plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
                     }

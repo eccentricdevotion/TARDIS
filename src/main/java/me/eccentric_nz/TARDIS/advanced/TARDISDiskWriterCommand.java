@@ -52,7 +52,7 @@ public class TARDISDiskWriterCommand {
             is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Save Storage Disk");
-            im.setLore(Arrays.asList("Blank"));
+            im.setLore(Collections.singletonList("Blank"));
             is.setItemMeta(im);
         } else {
             is = player.getInventory().getItemInMainHand();
@@ -226,7 +226,7 @@ public class TARDISDiskWriterCommand {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta() && disks.contains(is.getItemMeta().getDisplayName())) {
             ItemMeta im = is.getItemMeta();
-            List<String> lore = Arrays.asList("Blank");
+            List<String> lore = Collections.singletonList("Blank");
             im.setLore(lore);
             is.setItemMeta(im);
             TARDISMessage.send(player, "DISK_ERASE");

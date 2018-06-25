@@ -29,7 +29,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetSizeCommand {
+class TARDISSetSizeCommand {
 
     private final TARDIS plugin;
 

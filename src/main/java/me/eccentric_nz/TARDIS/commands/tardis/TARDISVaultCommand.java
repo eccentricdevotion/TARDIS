@@ -31,14 +31,13 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISVaultCommand {
+class TARDISVaultCommand {
 
     private final TARDIS plugin;
 
     public TARDISVaultCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
-
 
     public boolean addDropChest(Player player) {
         // check permission

@@ -52,14 +52,13 @@ import java.util.logging.Level;
  */
 public class TARDII implements TardisAPI {
 
-    private HashMap<String, Integer> timelords;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    Random random = new Random();
+    private final Random random = new Random();
 
     @Override
     public HashMap<String, Integer> getTimelordMap() {
-        timelords = new HashMap<>();
+        HashMap<String, Integer> timelords = new HashMap<>();
         Statement statement = null;
         ResultSet rs = null;
         String query = "SELECT tardis_id, owner FROM " + TARDIS.plugin.getPrefix() + "tardis";
@@ -180,7 +179,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomOverworldLocation(String world, Player p) {
-        return getRandomLocation(Arrays.asList(world), Environment.NORMAL, p);
+        return getRandomLocation(Collections.singletonList(world), Environment.NORMAL, p);
     }
 
     @Override
@@ -190,7 +189,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomNetherLocation(String world, Player p) {
-        return getRandomLocation(Arrays.asList(world), Environment.NETHER, p);
+        return getRandomLocation(Collections.singletonList(world), Environment.NETHER, p);
     }
 
     @Override
@@ -200,7 +199,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomEndLocation(String world, Player p) {
-        return getRandomLocation(Arrays.asList(world), Environment.THE_END, p);
+        return getRandomLocation(Collections.singletonList(world), Environment.THE_END, p);
     }
 
     @Override
@@ -407,9 +406,7 @@ public class TARDII implements TardisAPI {
     @Override
     public List<String> getWallFloorBlocks() {
         List<String> blocks = new ArrayList<>();
-        TARDISWalls.BLOCKS.forEach((m) -> {
-            blocks.add(m.toString());
-        });
+        TARDISWalls.BLOCKS.forEach((m) -> blocks.add(m.toString()));
         return blocks;
     }
 

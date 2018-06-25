@@ -25,8 +25,8 @@ import java.util.HashMap;
  */
 public class TARDISCondenserData {
 
-    HashMap<String, Integer> blockIDCount = new HashMap<>();
-    int tardis_id;
+    private HashMap<String, Integer> blockIDCount = new HashMap<>();
+    private int tardis_id;
 
     public TARDISCondenserData() {
     }

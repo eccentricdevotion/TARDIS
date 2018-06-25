@@ -30,7 +30,7 @@ import java.util.Arrays;
  *
  * @author eccentric_nz
  */
-public class TARDISSeedRecipeInventory {
+class TARDISSeedRecipeInventory {
 
     private final ItemStack[] menu;
     private final Material block;

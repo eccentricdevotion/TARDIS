@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISSonicActivatorInventory {
+class TARDISSonicActivatorInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] activator;
@@ -53,9 +53,7 @@ public class TARDISSonicActivatorInventory {
         // get the Sonic Generator recipe
         String difficulty = (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) ? "hard" : "easy";
         Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients").getKeys(false);
-        ingredients.forEach((s) -> {
-            lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s));
-        });
+        ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
         lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
         // info
         ItemStack info = new ItemStack(Material.BOOK, 1);
@@ -69,10 +67,9 @@ public class TARDISSonicActivatorInventory {
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
 
-        ItemStack[] stack = {
+        return new ItemStack[]{
                 null, null, null, null, null, null, null, info, close
         };
-        return stack;
     }
 
     public ItemStack[] getActivator() {

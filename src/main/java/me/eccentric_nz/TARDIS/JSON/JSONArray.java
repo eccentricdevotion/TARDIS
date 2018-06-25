@@ -30,7 +30,6 @@ import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -145,9 +144,8 @@ public final class JSONArray {
     public JSONArray(Collection collection) {
         myArrayList = new ArrayList();
         if (collection != null) {
-            Iterator iter = collection.iterator();
-            while (iter.hasNext()) {
-                myArrayList.add(JSONObject.wrap(iter.next()));
+            for (Object aCollection : collection) {
+                myArrayList.add(JSONObject.wrap(aCollection));
             }
         }
     }
@@ -155,7 +153,7 @@ public final class JSONArray {
     /**
      * Construct a JSONArray from an array
      *
-     * @param array
+     * @param array the array
      * @throws JSONException If not an array.
      */
     public JSONArray(Object array) throws JSONException {

@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISTravelBar {
+class TARDISTravelBar {
 
     private final TARDIS plugin;
     private int taskID;

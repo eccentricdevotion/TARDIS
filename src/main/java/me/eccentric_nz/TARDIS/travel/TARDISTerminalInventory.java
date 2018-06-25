@@ -21,7 +21,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * John Lumic was a business tycoon, owner of Cybus Industries and the creator of the Cybermen. Though he publicly
@@ -81,19 +81,19 @@ public class TARDISTerminalInventory {
         ItemStack x = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
         ItemMeta xim = x.getItemMeta();
         xim.setDisplayName("X");
-        xim.setLore(Arrays.asList("0"));
+        xim.setLore(Collections.singletonList("0"));
         x.setItemMeta(xim);
         // z
         ItemStack z = new ItemStack(Material.YELLOW_WOOL, 1);
         ItemMeta zim = z.getItemMeta();
         zim.setDisplayName("Z");
-        zim.setLore(Arrays.asList("0"));
+        zim.setLore(Collections.singletonList("0"));
         z.setItemMeta(zim);
         // multiplier
         ItemStack m = new ItemStack(Material.PURPLE_WOOL, 1);
         ItemMeta mim = m.getItemMeta();
         mim.setDisplayName(plugin.getLanguage().getString("BUTTON_MULTI"));
-        mim.setLore(Arrays.asList("x1"));
+        mim.setLore(Collections.singletonList("x1"));
         m.setItemMeta(mim);
         // environments
         // current
@@ -153,7 +153,7 @@ public class TARDISTerminalInventory {
         cim.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
         c.setItemMeta(cim);
 
-        ItemStack[] is = {
+        return new ItemStack[]{
                 null, ten, null, twentyfive, null, fifty, null, onehundred, null,
                 neg, null, null, null, x, null, null, null, pos,
                 neg, null, null, null, z, null, null, null, pos,
@@ -161,7 +161,6 @@ public class TARDISTerminalInventory {
                 u, null, w, null, r, null, e, null, sub,
                 null, t, null, null, s, null, null, c, null
         };
-        return is;
     }
 
     public ItemStack[] getTerminal() {

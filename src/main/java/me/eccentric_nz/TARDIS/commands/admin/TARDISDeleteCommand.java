@@ -150,9 +150,7 @@ public class TARDISDeleteCommand {
                 if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("TARDIS_WORLD_")) {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
-                    players.forEach((p) -> {
-                        p.kickPlayer("World scheduled for deletion!");
-                    });
+                    players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
                     if (plugin.isMVOnServer()) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
                     }

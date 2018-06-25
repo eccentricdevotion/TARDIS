@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISToggleOnOffCommand {
+class TARDISToggleOnOffCommand {
 
     private final TARDIS plugin;
     private final List<String> was;

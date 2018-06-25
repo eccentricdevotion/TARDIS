@@ -36,9 +36,7 @@ public class TARDISPlayThemeCommand {
         SongPlayer sp = new SongPlayer(s);
         sp.addPlayer(p);
         sp.setPlaying(true);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId());
-        }, 2200L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId()), 2200L);
         return true;
     }
 }

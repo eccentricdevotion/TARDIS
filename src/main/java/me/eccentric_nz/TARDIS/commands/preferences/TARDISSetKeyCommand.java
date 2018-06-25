@@ -30,7 +30,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetKeyCommand {
+class TARDISSetKeyCommand {
 
     private final TARDIS plugin;
     private final List<Material> keys = new ArrayList<>();
@@ -41,6 +41,7 @@ public class TARDISSetKeyCommand {
             try {
                 keys.add(Material.valueOf(m));
             } catch (IllegalArgumentException e) {
+                plugin.debug("Illegal Key value!");
             }
         });
     }

@@ -100,7 +100,7 @@ public class TARDISARSMap {
         ami.setDisplayName(plugin.getLanguage().getString("BUTTON_WHERE"));
         where.setItemMeta(ami);
 
-        ItemStack[] is = {
+        return new ItemStack[]{
                 null, pad_up, null, null, black, black, black, black, black,
                 pad_left, loa, pad_right, null, black, black, black, black, black,
                 null, pad_down, null, null, black, black, black, black, black,
@@ -108,7 +108,6 @@ public class TARDISARSMap {
                 null, null, null, null, black, black, black, black, black,
                 close, null, where, null, null, null, null, null, null
         };
-        return is;
     }
 
     public ItemStack[] getMap() {

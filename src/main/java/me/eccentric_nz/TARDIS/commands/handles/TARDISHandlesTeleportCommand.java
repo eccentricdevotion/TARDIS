@@ -131,9 +131,7 @@ public class TARDISHandlesTeleportCommand {
             bd.setRebuild(false);
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }, delay * 2);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
         }
     }
 }

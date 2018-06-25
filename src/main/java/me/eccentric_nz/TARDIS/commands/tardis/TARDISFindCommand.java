@@ -29,7 +29,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISFindCommand {
+class TARDISFindCommand {
 
     private final TARDIS plugin;
 

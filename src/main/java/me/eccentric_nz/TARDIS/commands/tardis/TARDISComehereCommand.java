@@ -49,7 +49,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISComehereCommand {
+class TARDISComehereCommand {
 
     private final TARDIS plugin;
 
@@ -249,9 +249,7 @@ public class TARDISComehereCommand {
                 bd.setRebuild(false);
                 bd.setSubmarine(sub);
                 bd.setTardisID(id);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    plugin.getPresetBuilder().buildPreset(bd);
-                }, delay * 2);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                 // remove energy from TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);

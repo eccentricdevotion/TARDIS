@@ -157,9 +157,8 @@ public class TARDISHorseListener implements Listener {
                             if (plugin.isHelperOnServer()) {
                                 plugin.getTardisHelper().setHorseSpeed(equine, tmhor.getSpeed());
                             }
-                            Tameable tamed = equine;
-                            tamed.setTamed(true);
-                            tamed.setOwner(p);
+                            equine.setTamed(true);
+                            equine.setOwner(p);
 
                             // teleport player and remove from travellers table
                             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
@@ -167,9 +166,7 @@ public class TARDISHorseListener implements Listener {
                             where.put("uuid", p.getUniqueId().toString());
                             new QueryFactory(plugin).doDelete("travellers", where);
                             // set player as passenger
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                equine.addPassenger(p);
-                            }, 10L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> equine.addPassenger(p), 10L);
                         }
                     }
                 }

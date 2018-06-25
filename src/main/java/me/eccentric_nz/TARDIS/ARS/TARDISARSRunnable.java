@@ -43,13 +43,12 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-public class TARDISARSRunnable implements Runnable {
+class TARDISARSRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISARSSlot slot;
     private final ARS room;
     private final Player p;
-    private int id;
     private final int tardis_id;
 
     public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id) {
@@ -107,11 +106,11 @@ public class TARDISARSRunnable implements Runnable {
             // remove BLOCKS from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
-                roomBlockCounts.entrySet().forEach((entry) -> {
+                roomBlockCounts.forEach((key, value) -> {
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", tardis_id);
-                    wherec.put("block_data", entry.getKey());
-                    qf.alterCondenserBlockCount(entry.getValue(), wherec);
+                    wherec.put("block_data", key);
+                    qf.alterCondenserBlockCount(value, wherec);
                 });
             }
             // take their energy!
@@ -123,10 +122,6 @@ public class TARDISARSRunnable implements Runnable {
                 TARDISMessage.send(p, "ARS_CANCEL", whichroom, String.format("%d", taskID));
             }
         }
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     private HashMap<String, Integer> getRoomBlockCounts(String room, String uuid) {

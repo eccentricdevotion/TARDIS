@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Class to compare version strings. Borrowed from StackOverflow.
  *
@@ -40,10 +42,7 @@ public class Version implements Comparable<Version> {
     }
 
     @Override
-    public int compareTo(Version that) {
-        if (that == null) {
-            return 1;
-        }
+    public int compareTo(@NotNull Version that) {
         String[] thisParts = get().split("\\.");
         String[] thatParts = that.get().split("\\.");
         int length = Math.max(thisParts.length, thatParts.length);
@@ -78,7 +77,6 @@ public class Version implements Comparable<Version> {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        return hash;
+        return 3;
     }
 }

@@ -37,7 +37,7 @@ import java.util.Random;
  * The Tenth Doctor used a device above the inside of the door of the TARDIS to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
-public class TARDISExcitationRunnable implements Runnable {
+class TARDISExcitationRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Location location;
@@ -77,11 +77,7 @@ public class TARDISExcitationRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                snow.forEach((block) -> {
-                    block.setType(Material.AIR);
-                });
-            }, 40L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setType(Material.AIR)), 40L);
         }
     }
 

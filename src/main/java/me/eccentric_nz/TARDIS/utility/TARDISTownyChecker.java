@@ -84,7 +84,7 @@ public class TARDISTownyChecker {
      * @param l the location instance to check
      * @return An instance of the TownyData class that, if necessary, we can use to do further checks
      */
-    public TownyData playerIsResident(Player p, Location l) {
+    private TownyData playerIsResident(Player p, Location l) {
 
         TownyData td = new TownyData();
 
@@ -129,7 +129,7 @@ public class TARDISTownyChecker {
      * @param l the location instance to check
      * @return true if the player can land in an allied (same Nation) town
      */
-    public boolean playerIsCompatriot(Player p, Location l) {
+    private boolean playerIsCompatriot(Player p, Location l) {
         TownyData td = playerIsResident(p, l);
         if (td.canTravel()) {
             return true;
@@ -154,7 +154,9 @@ public class TARDISTownyChecker {
      */
     private enum TownyRegion {
 
-        wilderness, town, nation
+        wilderness,
+        town,
+        nation
     }
 
     /**
@@ -166,27 +168,27 @@ public class TARDISTownyChecker {
         private TownBlock townBlock;
         private Resident resident;
 
-        public boolean canTravel() {
+        boolean canTravel() {
             return travel;
         }
 
-        public void setCanTravel(boolean travel) {
+        void setCanTravel(boolean travel) {
             this.travel = travel;
         }
 
-        public TownBlock getTownBlock() {
+        TownBlock getTownBlock() {
             return townBlock;
         }
 
-        public void setTownBlock(TownBlock townBlock) {
+        void setTownBlock(TownBlock townBlock) {
             this.townBlock = townBlock;
         }
 
-        public Resident getResident() {
+        Resident getResident() {
             return resident;
         }
 
-        public void setResident(Resident resident) {
+        void setResident(Resident resident) {
             this.resident = resident;
         }
     }

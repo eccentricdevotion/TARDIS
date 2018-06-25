@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISSQLiteDatabaseUpdater {
+class TARDISSQLiteDatabaseUpdater {
 
     private final List<String> areaupdates = new ArrayList<>();
     private final List<String> blockupdates = new ArrayList<>();
@@ -46,7 +46,6 @@ public class TARDISSQLiteDatabaseUpdater {
     private final List<String> inventoryupdates = new ArrayList<>();
     private final List<String> chameleonupdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
-    private final long now = System.currentTimeMillis();
     private final Statement statement;
     private final TARDIS plugin;
     private final String prefix;
@@ -118,6 +117,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
         tardisupdates.add("last_known_name TEXT COLLATE NOCASE DEFAULT ''");
+        long now = System.currentTimeMillis();
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
         tardisupdates.add("lights_on INTEGER DEFAULT 1");
         tardisupdates.add("monsters INTEGER DEFAULT 0");

@@ -41,7 +41,7 @@ public class TARDISDatabaseConnection {
     }
 
     public Connection connection = null;
-    public Statement statement = null;
+    private Statement statement = null;
 
     public void setConnection(String path) throws Exception {
         Class.forName("org.sqlite.JDBC");
@@ -76,7 +76,7 @@ public class TARDISDatabaseConnection {
 
     /**
      * @return an exception
-     * @throws CloneNotSupportedException
+     * @throws CloneNotSupportedException No cloning allowed
      */
     @Override
     protected Object clone() throws CloneNotSupportedException {
@@ -86,7 +86,7 @@ public class TARDISDatabaseConnection {
     /**
      * Test the database connection
      *
-     * @param connection
+     * @param connection the database connection to test
      */
     public void testConnection(Connection connection) {
         if (isMySQL) {

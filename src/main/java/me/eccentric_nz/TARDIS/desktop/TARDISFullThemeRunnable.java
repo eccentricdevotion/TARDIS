@@ -65,8 +65,18 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final UUID uuid;
     private final TARDISUpgradeData tud;
     private boolean running;
-    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, j = 2;
-    World world;
+    private int id;
+    private int slot;
+    private int level = 0;
+    private int row = 0;
+    private int h;
+    private int w;
+    private int c;
+    private int startx;
+    private int starty;
+    private int startz;
+    private int j = 2;
+    private World world;
     private final List<Block> lampblocks = new ArrayList<>();
     private List<Chunk> chunks;
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
@@ -79,19 +89,21 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private Block postBedrock;
-    JSONArray arr;
-    Material wall_type, floor_type;
-    byte wall_data, floor_data;
-    QueryFactory qf;
+    private JSONArray arr;
+    private Material wall_type;
+    private Material floor_type;
+    private byte wall_data;
+    private byte floor_data;
+    private final QueryFactory qf;
     private HashMap<String, Object> set;
     private HashMap<String, Object> where;
-    boolean own_world;
-    Location wg1;
-    Location wg2;
-    boolean downgrade = false;
-    Chunk chunk;
-    Player player;
-    Location ender = null;
+    private boolean own_world;
+    private Location wg1;
+    private Location wg2;
+    private boolean downgrade = false;
+    private Chunk chunk;
+    private Player player;
+    private Location ender = null;
     private Archive archive_next;
     private Archive archive_prev;
 
@@ -274,45 +286,33 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             });
             // put on the door, redstone torches, signs, and the repeaters
-            postDoorBlocks.entrySet().forEach((entry) -> {
-                Block pdb = entry.getKey();
-//                pdb.setType(Material.IRON_DOOR);
-                pdb.setData(entry.getValue());
+            postDoorBlocks.forEach((pdb, value) -> {
+                //                pdb.setType(Material.IRON_DOOR);
+                pdb.setData(value);
             });
-            postRedstoneTorchBlocks.entrySet().forEach((entry) -> {
-                Block prtb = entry.getKey();
-                prtb.setData(entry.getValue());
+            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
+            postLeverBlocks.forEach((plb, value) -> {
+                //                plb.setType(Material.LEVER);
+                plb.setData(value);
             });
-            postLeverBlocks.entrySet().forEach((entry) -> {
-                Block plb = entry.getKey();
-//                plb.setType(Material.LEVER);
-                plb.setData(entry.getValue());
+            postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
+            postRepeaterBlocks.forEach((prb, value) -> {
+                //                prb.setType(Material.REPEATER);
+                prb.setData(value);
             });
-            postTorchBlocks.entrySet().forEach((entry) -> {
-                Block ptb = entry.getKey();
-                ptb.setData(entry.getValue());
-            });
-            postRepeaterBlocks.entrySet().forEach((entry) -> {
-                Block prb = entry.getKey();
-//                prb.setType(Material.REPEATER);
-                prb.setData(entry.getValue());
-            });
-            postStickyPistonBaseBlocks.entrySet().forEach((entry) -> {
-                Block pspb = entry.getKey();
+            postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
 //                pspb.setType(Material.STICKY_PISTON);
-                pspb.setData(entry.getValue());
+                pspb.setData(value);
             });
-            postPistonBaseBlocks.entrySet().forEach((entry) -> {
-                Block ppb = entry.getKey();
+            postPistonBaseBlocks.forEach((ppb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
 //                ppb.setType(Material.PISTON);
-                ppb.setData(entry.getValue());
+                ppb.setData(value);
             });
-            postPistonExtensionBlocks.entrySet().forEach((entry) -> {
-                Block ppeb = entry.getKey();
-//                ppeb.setType(Material.PISTON_HEAD);
-                ppeb.setData(entry.getValue());
+            postPistonExtensionBlocks.forEach((ppeb, value) -> {
+                //                ppeb.setType(Material.PISTON_HEAD);
+                ppeb.setData(value);
             });
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
@@ -390,9 +390,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 // clean up space above coral console
                 int tidy = starty + h;
                 int plus = 32 - h;
-                chunks.forEach((chk) -> {
-                    setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), plus);
-                });
+                chunks.forEach((chk) -> setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), plus));
             }
             // add / remove chunks from the chunks table
             HashMap<String, Object> wherec = new HashMap<>();
@@ -407,9 +405,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 setc.put("x", hunk.getX());
                 setc.put("z", hunk.getZ());
                 return setc;
-            }).forEachOrdered((setc) -> {
-                qf.doInsert("chunks", setc);
-            });
+            }).forEachOrdered((setc) -> qf.doInsert("chunks", setc));
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;

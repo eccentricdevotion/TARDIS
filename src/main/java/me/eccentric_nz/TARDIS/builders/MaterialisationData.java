@@ -34,7 +34,6 @@ import java.util.HashMap;
 public class MaterialisationData {
 
     private final TARDIS plugin;
-    private final String uuid;
     private Biome biome;
     private COMPASS direction;
     private Location location;
@@ -45,11 +44,10 @@ public class MaterialisationData {
     private boolean siege;
     private int tardisID;
 
-    public MaterialisationData(TARDIS plugin, String uuid) {
+    protected MaterialisationData(TARDIS plugin, String uuid) {
         this.plugin = plugin;
-        this.uuid = uuid;
         // get player preferences
-        setPlayerDefaults(this.uuid);
+        setPlayerDefaults(uuid);
     }
 
     public Biome getBiome() {

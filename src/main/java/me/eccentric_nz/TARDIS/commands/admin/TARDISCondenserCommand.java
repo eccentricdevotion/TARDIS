@@ -29,14 +29,13 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-public class TARDISCondenserCommand {
+class TARDISCondenserCommand {
 
     private final TARDIS plugin;
 
     public TARDISCondenserCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
-
 
     public boolean set(CommandSender sender) {
         if (!(sender instanceof Player)) {

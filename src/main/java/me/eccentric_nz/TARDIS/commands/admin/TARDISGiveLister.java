@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISGiveLister {
+class TARDISGiveLister {
 
     private final TARDIS plugin;
     private final CommandSender sender;
@@ -42,11 +42,9 @@ public class TARDISGiveLister {
     public void list() {
         sender.sendMessage(plugin.getPluginName() + "You can 'give' the following items:");
         sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
-        options.entrySet().forEach((map) -> {
-            sender.sendMessage(map.getKey());
-            map.getValue().forEach((s) -> {
-                sender.sendMessage("    " + s);
-            });
+        options.forEach((key, value) -> {
+            sender.sendMessage(key);
+            value.forEach((s) -> sender.sendMessage("    " + s));
         });
     }
 

@@ -80,8 +80,6 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
     @Override
     public void close(Player p) {
         plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 }

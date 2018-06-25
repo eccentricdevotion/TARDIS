@@ -36,7 +36,7 @@ public class TARDISTemporalLocatorInventory {
 
     private final ItemStack[] temporal;
     private final TARDIS plugin;
-    List<String> time = new ArrayList<>();
+    private final List<String> time = new ArrayList<>();
 
     public TARDISTemporalLocatorInventory(TARDIS plugin) {
         this.plugin = plugin;

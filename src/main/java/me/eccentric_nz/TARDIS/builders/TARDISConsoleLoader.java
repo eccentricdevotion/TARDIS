@@ -34,12 +34,12 @@ import java.util.Locale;
 public class TARDISConsoleLoader {
 
     private final TARDIS plugin;
-    String seed;
-    String permission;
-    String description;
-    boolean beacon;
-    boolean lanterns;
-    boolean save = false;
+    private String seed;
+    private String permission;
+    private String description;
+    private boolean beacon;
+    private boolean lanterns;
+    private boolean save = false;
 
     public TARDISConsoleLoader(TARDIS plugin) {
         this.plugin = plugin;

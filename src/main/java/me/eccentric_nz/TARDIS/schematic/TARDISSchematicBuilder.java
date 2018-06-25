@@ -41,8 +41,7 @@ public class TARDISSchematicBuilder {
     private final World w;
     private final int id, sx, ex, sy, ey, sz, ez;
     private final int[] controls = {0, 2, 3, 4, 5};
-    private HashMap<Integer, Location> map;
-    private Location h, rw, rx, rz, ry;
+    private Location h;
 
     public TARDISSchematicBuilder(TARDIS plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
         this.plugin = plugin;
@@ -59,33 +58,30 @@ public class TARDISSchematicBuilder {
     public ArchiveData build() {
         boolean ars = true;
         // get locations of controls first and compare their coords...
-        map = new HashMap<>();
+        HashMap<Integer, Location> map = new HashMap<>();
         for (int c : controls) {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             whereh.put("type", c);
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
             if (rsc.resultSet()) {
+                Location location = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0, 0);
                 switch (c) {
                     case 2:
                         // world repeater
-                        rw = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0, 0);
-                        map.put(c, rw);
+                        map.put(c, location);
                         break;
                     case 3:
                         // x repeater
-                        rx = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0, 0);
-                        map.put(c, rx);
+                        map.put(c, location);
                         break;
                     case 4:
                         // z repeater
-                        rz = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0, 0);
-                        map.put(c, rz);
+                        map.put(c, location);
                         break;
                     case 5:
                         // distance multiplier
-                        ry = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0, 0);
-                        map.put(c, ry);
+                        map.put(c, location);
                         break;
                     default:
                         // handbrake
@@ -203,8 +199,7 @@ public class TARDISSchematicBuilder {
         schematic.put("relative", relative);
         schematic.put("dimensions", dimensions);
         schematic.put("input", levels);
-        ArchiveData ad = new ArchiveData(schematic, beacon);
-        return ad;
+        return new ArchiveData(schematic, beacon);
     }
 
     private boolean isControlBlock(Location l, World w, int x, int y, int z) {
@@ -217,7 +212,7 @@ public class TARDISSchematicBuilder {
         private final JSONObject JSON;
         private final int beacon;
 
-        public ArchiveData(JSONObject JSON, int beacon) {
+        ArchiveData(JSONObject JSON, int beacon) {
             this.JSON = JSON;
             this.beacon = beacon;
         }

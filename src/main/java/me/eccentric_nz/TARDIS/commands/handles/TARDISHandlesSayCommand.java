@@ -16,20 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesSayCommand {
-
-    private final TARDIS plugin;
-
-    public TARDISHandlesSayCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+class TARDISHandlesSayCommand {
 
     public boolean say(Player player, String[] args) {
         StringBuilder sb = new StringBuilder();

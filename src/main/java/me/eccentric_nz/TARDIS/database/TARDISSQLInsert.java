@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISSQLInsert implements Runnable {
+class TARDISSQLInsert implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -59,8 +59,8 @@ public class TARDISSQLInsert implements Runnable {
         String questions;
         StringBuilder sbf = new StringBuilder();
         StringBuilder sbq = new StringBuilder();
-        data.entrySet().forEach((entry) -> {
-            sbf.append(entry.getKey()).append(",");
+        data.forEach((key, value) -> {
+            sbf.append(key).append(",");
             sbq.append("?,");
         });
         fields = sbf.toString().substring(0, sbf.length() - 1);

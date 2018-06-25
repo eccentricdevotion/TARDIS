@@ -37,11 +37,11 @@ public class TARDISVector3D {
     /**
      * Construct an immutable 3D vector.
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
      */
-    public TARDISVector3D(double x, double y, double z) {
+    private TARDISVector3D(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -95,9 +95,9 @@ public class TARDISVector3D {
     /**
      * Adds the current vector and a given vector together, producing a result vector.
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x the x coordinate to add
+     * @param y the y coordinate to add
+     * @param z the z coordinate to add
      * @return The new result vector.
      */
     public TARDISVector3D add(double x, double y, double z) {
@@ -120,9 +120,9 @@ public class TARDISVector3D {
     /**
      * Substracts the current vector and a given vector together, producing a result vector.
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x the x coordinate to subtract
+     * @param y the y coordinate to subtract
+     * @param z the z coordinate to subtract
      * @return The new result vector.
      */
     public TARDISVector3D subtract(double x, double y, double z) {

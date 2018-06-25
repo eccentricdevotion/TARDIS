@@ -45,7 +45,7 @@ public class TARDISAttributeType {
      *
      * @param minecraftId - the ID of the type.
      */
-    public TARDISAttributeType(String minecraftId) {
+    private TARDISAttributeType(String minecraftId) {
         this.minecraftId = minecraftId;
     }
 
@@ -64,7 +64,7 @@ public class TARDISAttributeType {
      * @return The registered type.
      */
     // Constructors should have no side-effects!
-    public TARDISAttributeType register() {
+    private TARDISAttributeType register() {
         TARDISAttributeType old = LOOKUP.putIfAbsent(minecraftId, this);
         return old != null ? old : this;
     }

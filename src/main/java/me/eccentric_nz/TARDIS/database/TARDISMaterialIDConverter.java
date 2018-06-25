@@ -35,7 +35,7 @@ public class TARDISMaterialIDConverter {
     private final TARDIS plugin;
     private final String prefix;
     public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
-    public final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
+    private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
 
     public TARDISMaterialIDConverter(TARDIS plugin) {
         this.plugin = plugin;
@@ -729,10 +729,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_TYPE_LOOKUP.put("PURPLE_CLAY", "PURPLE_TERRACOTTA");
         LEGACY_TYPE_LOOKUP.put("QUARTZ", "QUARTZ_BLOCK");
         LEGACY_TYPE_LOOKUP.put("RED_CLAY", "RED_TERRACOTTA");
-        LEGACY_TYPE_LOOKUP.put("RED_NETHER_BRICK", "RED_NETHER_BRICK");
-        LEGACY_TYPE_LOOKUP.put("SMOOTH_BRICK", "SMOOTH_STONE");
         LEGACY_TYPE_LOOKUP.put("SPRUCE_WOOD", "SPRUCE_PLANKS");
-        LEGACY_TYPE_LOOKUP.put("STONE_BRICK", "SMOOTH_BRICKS");
         LEGACY_TYPE_LOOKUP.put("WHITE_CLAY", "WHITE_TERRACOTTA");
         LEGACY_TYPE_LOOKUP.put("YELLOW_CLAY", "YELLOW_TERRACOTTA");
     }

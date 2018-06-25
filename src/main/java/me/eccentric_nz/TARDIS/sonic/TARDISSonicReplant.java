@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class TARDISSonicReplant implements Runnable {
+class TARDISSonicReplant implements Runnable {
 
     private final TARDIS plugin;
     private final Block block;

@@ -36,9 +36,7 @@ public class TARDISJunkTabComplete extends TARDISCompleter implements TabComplet
 
     public TARDISJunkTabComplete() {
         List<String> mats = new ArrayList<>();
-        TARDISWalls.BLOCKS.forEach((m) -> {
-            mats.add(m.toString());
-        });
+        TARDISWalls.BLOCKS.forEach((m) -> mats.add(m.toString()));
         MAT_SUBS = ImmutableList.copyOf(mats);
     }
 

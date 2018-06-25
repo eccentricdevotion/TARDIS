@@ -47,7 +47,7 @@ import java.util.UUID;
 public class TARDISBindListener implements Listener {
 
     private final TARDIS plugin;
-    List<Material> validBlocks = new ArrayList<>();
+    private final List<Material> validBlocks = new ArrayList<>();
 
     public TARDISBindListener(TARDIS plugin) {
         this.plugin = plugin;

@@ -39,7 +39,7 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISLampsCommand {
+class TARDISLampsCommand {
 
     private final TARDIS plugin;
 

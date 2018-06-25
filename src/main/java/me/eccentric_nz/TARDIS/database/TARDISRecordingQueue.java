@@ -30,7 +30,7 @@ public class TARDISRecordingQueue {
     }
 
     /**
-     * @param data
+     * @param data The data string to add to the queue
      */
     public static void addToQueue(String data) {
         if (data == null) {

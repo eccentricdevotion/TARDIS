@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISAbortCommand {
+class TARDISAbortCommand {
 
     private final TARDIS plugin;
 

@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISHadsTypeCommand {
+class TARDISHadsTypeCommand {
 
     public boolean setHadsPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {

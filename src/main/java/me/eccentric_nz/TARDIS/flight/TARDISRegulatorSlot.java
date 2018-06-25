@@ -29,19 +29,19 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISRegulatorSlot {
+class TARDISRegulatorSlot {
 
-    public final List<Integer> bounds = Arrays.asList(
+    final List<Integer> bounds = Arrays.asList(
             0, 1, 2, 3, 4,
             9, 10, 11, 12, 13,
             18, 19, 20, 21, 22,
             27, 28, 29, 30, 31,
             36, 37, 38, 39, 40
     );
-    public final ItemStack box;
-    public final ItemStack vortex;
+    final ItemStack box;
+    final ItemStack vortex;
 
-    public TARDISRegulatorSlot() {
+    TARDISRegulatorSlot() {
         box = new ItemStack(Material.BLUE_WOOL, 1);
         ItemMeta ler = box.getItemMeta();
         ler.setDisplayName("Regulator");
@@ -49,19 +49,19 @@ public class TARDISRegulatorSlot {
         vortex = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
     }
 
-    public int upSlot(int current_slot) {
+    int upSlot(int current_slot) {
         return current_slot - 9;
     }
 
-    public int leftSlot(int current_slot) {
+    int leftSlot(int current_slot) {
         return current_slot - 1;
     }
 
-    public int rightSlot(int current_slot) {
+    int rightSlot(int current_slot) {
         return current_slot + 1;
     }
 
-    public int downSlot(int current_slot) {
+    int downSlot(int current_slot) {
         return current_slot + 9;
     }
 }

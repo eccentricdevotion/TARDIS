@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-public class TARDISARSProcessor {
+class TARDISARSProcessor {
 
     private final TARDIS plugin;
     private final int id;

@@ -271,9 +271,7 @@ public class TARDISSonicListener implements Listener {
                                     TARDISMessage.send(hit, "FREEZE", player.getName());
                                     UUID uuid = hit.getUniqueId();
                                     frozenPlayers.add(uuid);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        frozenPlayers.remove(uuid);
-                                    }, 100L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> frozenPlayers.remove(uuid), 100L);
                                 } else if (player.hasPermission("tardis.sonic.standard")) {
                                     standardSonic(player);
                                 }
@@ -591,7 +589,6 @@ public class TARDISSonicListener implements Listener {
                             case BLACK_WOOL:
                                 if (!dye.getType().equals(Material.INK_SAC)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case BLUE_CARPET:
@@ -601,7 +598,6 @@ public class TARDISSonicListener implements Listener {
                             case BLUE_WOOL:
                                 if (!dye.getType().equals(Material.LAPIS_LAZULI)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case BROWN_CARPET:
@@ -611,7 +607,6 @@ public class TARDISSonicListener implements Listener {
                             case BROWN_WOOL:
                                 if (!dye.getType().equals(Material.COCOA_BEANS)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case CYAN_CARPET:
@@ -621,7 +616,6 @@ public class TARDISSonicListener implements Listener {
                             case CYAN_WOOL:
                                 if (!dye.getType().equals(Material.CYAN_DYE)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case GRAY_CARPET:
@@ -631,7 +625,6 @@ public class TARDISSonicListener implements Listener {
                             case GRAY_WOOL:
                                 if (!dye.getType().equals(Material.GRAY_DYE)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case GREEN_CARPET:
@@ -641,7 +634,6 @@ public class TARDISSonicListener implements Listener {
                             case GREEN_WOOL:
                                 if (!dye.getType().equals(Material.CACTUS_GREEN)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case LIGHT_BLUE_CARPET:
@@ -651,7 +643,6 @@ public class TARDISSonicListener implements Listener {
                             case LIGHT_BLUE_WOOL:
                                 if (!dye.getType().equals(Material.LIGHT_BLUE_DYE)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case LIGHT_GRAY_CARPET:
@@ -661,7 +652,6 @@ public class TARDISSonicListener implements Listener {
                             case LIGHT_GRAY_WOOL:
                                 if (!dye.getType().equals(Material.LIGHT_GRAY_DYE)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case LIME_CARPET:
@@ -698,7 +688,6 @@ public class TARDISSonicListener implements Listener {
                             case PINK_WOOL:
                                 if (!dye.getType().equals(Material.PINK_DYE)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case PURPLE_CARPET:
@@ -708,7 +697,6 @@ public class TARDISSonicListener implements Listener {
                             case PURPLE_WOOL:
                                 if (!dye.getType().equals(Material.PURPLE_DYE)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case RED_CARPET:
@@ -718,7 +706,6 @@ public class TARDISSonicListener implements Listener {
                             case RED_WOOL:
                                 if (!dye.getType().equals(Material.ROSE_RED)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case WHITE_CARPET:
@@ -728,7 +715,6 @@ public class TARDISSonicListener implements Listener {
                             case WHITE_WOOL:
                                 if (!dye.getType().equals(Material.BONE_MEAL)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             case YELLOW_CARPET:
@@ -738,7 +724,6 @@ public class TARDISSonicListener implements Listener {
                             case YELLOW_WOOL:
                                 if (!dye.getType().equals(Material.DANDELION_YELLOW)) {
                                     changeColour(b, dye, inv, player);
-                                } else {
                                 }
                                 break;
                             default:
@@ -832,9 +817,7 @@ public class TARDISSonicListener implements Listener {
                 if (is.hasItemMeta()) {
                     ItemMeta im1 = is.getItemMeta();
                     if (im1.hasDisplayName() && ChatColor.stripColor(im1.getDisplayName()).equals("Sonic Screwdriver")) {
-                        player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> {
-                            player.getInventory().getItemInMainHand().removeEnchantment(e);
-                        });
+                        player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
                     } else {
                         // find the screwdriver in the player's inventory
                         removeSonicEnchant(player.getInventory());
@@ -854,9 +837,7 @@ public class TARDISSonicListener implements Listener {
         }
         ItemStack stack = inv.getItem(first);
         if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-            stack.getEnchantments().keySet().forEach((e) -> {
-                stack.removeEnchantment(e);
-            });
+            stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
         }
     }
 
@@ -891,14 +872,14 @@ public class TARDISSonicListener implements Listener {
         }
     }
 
-    public void scan(Location scan_loc, Player player) {
+    private void scan(Location scan_loc, Player player) {
         // record nearby entities
         HashMap<EntityType, Integer> scannedentities = new HashMap<>();
         List<String> playernames = new ArrayList<>();
         getNearbyEntities(scan_loc, 16).forEach((k) -> {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
-                Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
+                Integer entity_count = scannedentities.getOrDefault(et, 0);
                 boolean visible = true;
                 if (et.equals(EntityType.PLAYER)) {
                     Player entPlayer = (Player) k;
@@ -931,12 +912,8 @@ public class TARDISSonicListener implements Listener {
         }, 20L);
         // get biome
         Biome biome = scan_loc.getBlock().getBiome();
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "BIOME_TYPE", biome.toString());
-        }, 40L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time);
-        }, 60L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome.toString()), 40L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
         String weather;
         switch (biome) {
@@ -969,28 +946,20 @@ public class TARDISSonicListener implements Listener {
                 weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
                 break;
         }
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "SCAN_WEATHER", weather);
-        }, 80L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
-        }, 100L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
-        }, 120L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_WEATHER", weather), 80L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
             TARDISMessage.send(player, "SCAN_ENTS");
             if (scannedentities.size() > 0) {
-                scannedentities.entrySet().forEach((entry) -> {
+                scannedentities.forEach((key, value) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
-                        playernames.forEach((p) -> {
-                            buf.append(", ").append(p);
-                        });
+                    if (key.equals(EntityType.PLAYER) && playernames.size() > 0) {
+                        playernames.forEach((p) -> buf.append(", ").append(p));
                         message = " (" + buf.toString().substring(2) + ")";
                     }
-                    player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                    player.sendMessage("    " + key + ": " + value + message);
                 });
                 scannedentities.clear();
             } else {

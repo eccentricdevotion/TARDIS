@@ -52,8 +52,8 @@ public class TARDISJunkDestroyer implements Runnable {
     private final Location junkLoc;
     private final Location effectsLoc;
     private Location vortexJunkLoc;
-    World world;
-    Biome biome;
+    private final World world;
+    private final Biome biome;
     private int fryTask;
 
     public TARDISJunkDestroyer(TARDIS plugin, DestroyData pdd) {
@@ -77,7 +77,7 @@ public class TARDISJunkDestroyer implements Runnable {
         if (i < 25) {
             i++;
             if (i == 1) {
-                getJunkTravellers(4.0d).forEach((e) -> {
+                getJunkTravellers().forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
@@ -94,14 +94,12 @@ public class TARDISJunkDestroyer implements Runnable {
                 if (rs.resultSet()) {
                     // teleport players to vortex
                     vortexJunkLoc = plugin.getLocationUtils().getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
-                    getJunkTravellers(4.0d).forEach((e) -> {
+                    getJunkTravellers().forEach((e) -> {
                         if (e instanceof Player) {
                             Player p = (Player) e;
                             Location relativeLoc = getRelativeLocation(p);
                             p.teleport(relativeLoc);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                p.teleport(relativeLoc);
-                            }, 2L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
                         }
                     });
                     TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisID());
@@ -129,9 +127,7 @@ public class TARDISJunkDestroyer implements Runnable {
                             }
                         }
                         // refresh the chunks
-                        chunks.forEach((chink) -> {
-                            plugin.getTardisHelper().refreshChunk(chink);
-                        });
+                        chunks.forEach((chink) -> plugin.getTardisHelper().refreshChunk(chink));
                         chunks.clear();
                     }
                 }
@@ -178,10 +174,10 @@ public class TARDISJunkDestroyer implements Runnable {
         return l;
     }
 
-    private List<Entity> getJunkTravellers(double d) {
+    private List<Entity> getJunkTravellers() {
         // spawn an entity
         Entity orb = junkLoc.getWorld().spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
-        List<Entity> ents = orb.getNearbyEntities(d, d, d);
+        List<Entity> ents = orb.getNearbyEntities(4.0, 4.0, 4.0);
         orb.remove();
         return ents;
     }

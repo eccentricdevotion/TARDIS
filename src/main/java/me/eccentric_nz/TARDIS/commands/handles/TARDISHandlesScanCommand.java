@@ -48,7 +48,7 @@ import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEn
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesScanCommand {
+class TARDISHandlesScanCommand {
 
     private final TARDIS plugin;
     private final Player player;
@@ -140,7 +140,7 @@ public class TARDISHandlesScanCommand {
                     // silent
                     et = EntityType.SPLASH_POTION;
                 }
-                Integer entity_count = (scannedEntities.containsKey(et)) ? scannedEntities.get(et) : 0;
+                Integer entity_count = scannedEntities.getOrDefault(et, 0);
                 if (visible) {
                     scannedEntities.put(et, entity_count + 1);
                 }
@@ -163,9 +163,7 @@ public class TARDISHandlesScanCommand {
         TARDISMessage.handlesSend(player, "SCAN_WORLD", worldname);
         TARDISMessage.handlesSend(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         BukkitScheduler bsched = plugin.getServer().getScheduler();
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "SCAN_DIRECTION", tardisDirection.toString());
-        }, 20L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
         Biome tmb;
         if (whereIsIt.equals(plugin.getLanguage().getString("SCAN_CURRENT"))) {
@@ -188,12 +186,8 @@ public class TARDISHandlesScanCommand {
             tmb = scan_loc.getBlock().getBiome();
         }
         Biome biome = tmb;
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "BIOME_TYPE", biome.toString());
-        }, 40L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "SCAN_TIME", daynight + " / " + time);
-        }, 60L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "BIOME_TYPE", biome.toString()), 40L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
         String weather;
         switch (biome) {
@@ -226,15 +220,9 @@ public class TARDISHandlesScanCommand {
                 weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
                 break;
         }
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "SCAN_WEATHER", weather);
-        }, 80L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity()));
-        }, 100L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature()));
-        }, 120L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_WEATHER", weather), 80L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
             if (scannedEntities.size() > 0) {
                 TARDISMessage.handlesSend(player, "SCAN_ENTS");
@@ -242,9 +230,7 @@ public class TARDISHandlesScanCommand {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
                     if (entry.getKey().equals(EntityType.PLAYER) && playerNames.size() > 0) {
-                        playerNames.forEach((p) -> {
-                            buf.append(", ").append(p);
-                        });
+                        playerNames.forEach((p) -> buf.append(", ").append(p));
                         message = " (" + buf.toString().substring(2) + ")";
                     }
                     // delay

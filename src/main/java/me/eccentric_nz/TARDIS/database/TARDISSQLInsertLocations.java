@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-public class TARDISSQLInsertLocations implements Runnable {
+class TARDISSQLInsertLocations implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -62,8 +62,8 @@ public class TARDISSQLInsertLocations implements Runnable {
         String questions;
         StringBuilder sbf = new StringBuilder();
         StringBuilder sbq = new StringBuilder();
-        data.entrySet().forEach((entry) -> {
-            sbf.append(entry.getKey()).append(",");
+        data.forEach((key, value) -> {
+            sbf.append(key).append(",");
             sbq.append("?,");
         });
         fields = sbf.toString().substring(0, sbf.length() - 1);

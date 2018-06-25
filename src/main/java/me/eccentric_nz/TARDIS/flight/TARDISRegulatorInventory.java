@@ -27,7 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISRegulatorInventory {
+class TARDISRegulatorInventory {
 
     private final ItemStack[] regulator;
 

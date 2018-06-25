@@ -38,7 +38,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoteTravelCommand {
+class TARDISRemoteTravelCommand {
 
     private final TARDIS plugin;
 

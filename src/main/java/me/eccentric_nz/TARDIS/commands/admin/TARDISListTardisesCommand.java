@@ -33,7 +33,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISListTardisesCommand {
+class TARDISListTardisesCommand {
 
     private final TARDIS plugin;
 
@@ -69,9 +69,7 @@ public class TARDISListTardisesCommand {
                 TARDISMessage.send(sender, "FILE_SAVED");
                 return true;
             } else if (args[1].equalsIgnoreCase("portals")) {
-                plugin.getTrackerKeeper().getPortals().entrySet().forEach((map) -> {
-                    sender.sendMessage("TARDIS id: " + map.getValue().getTardisId() + " has a portal open at: " + map.getKey().toString());
-                });
+                plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
                 return true;
             } else {
                 new TARDISAbandonLister(plugin).list(sender);

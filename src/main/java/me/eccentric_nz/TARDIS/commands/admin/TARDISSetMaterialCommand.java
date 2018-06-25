@@ -29,7 +29,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetMaterialCommand {
+class TARDISSetMaterialCommand {
 
     private final TARDIS plugin;
 

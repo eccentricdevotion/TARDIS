@@ -241,7 +241,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     // Maps still seem to use numeric values
-    public void showShapedRecipe(Player p, String str) {
+    private void showShapedRecipe(Player p, String str) {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         p.closeInventory();
         plugin.getTrackerKeeper().getRecipeView().add(p.getUniqueId());
@@ -256,6 +256,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 }
                 if (item.getType().equals(Material.MAP)) {
                     ItemMeta im = item.getItemMeta();
+                    // TODO use new Map API if it exists
                     im.setDisplayName(getDisplayName(item.getData().getData()));
                     item.setItemMeta(im);
                 }
@@ -307,7 +308,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     // Maps still seem to use numeric values
-    public void showShapelessRecipe(Player player, String str) {
+    private void showShapelessRecipe(Player player, String str) {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
@@ -315,6 +316,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         for (int i = 0; i < ingredients.size(); i++) {
             if (ingredients.get(i).getType().equals(Material.MAP)) {
                 ItemMeta im = ingredients.get(i).getItemMeta();
+                // TODO use new Map API if it exists
                 im.setDisplayName(getDisplayName(ingredients.get(i).getData().getData()));
                 ingredients.get(i).setItemMeta(im);
             }
@@ -337,7 +339,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.openInventory(inv);
     }
 
-    public void showTARDISRecipe(Player player, String type) {
+    private void showTARDISRecipe(Player player, String type) {
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, "§4TARDIS " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
         // redstone torch
@@ -348,13 +350,13 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
         in_meta.setDisplayName("Interior walls");
-        in_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
+        in_meta.setLore(Collections.singletonList("Any valid Wall/Floor block"));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
         fl_meta.setDisplayName("Interior floors");
-        fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
+        fl_meta.setLore(Collections.singletonList("Any valid Wall/Floor block"));
         in_floor.setItemMeta(fl_meta);
         // seed block
         ItemStack block = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
@@ -379,6 +381,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.openInventory(inv);
     }
 
+    // TODO use new Map API if it exists
     private String getDisplayName(byte data) {
         MAP map = MAP.getMap(data);
         if (map != null) {

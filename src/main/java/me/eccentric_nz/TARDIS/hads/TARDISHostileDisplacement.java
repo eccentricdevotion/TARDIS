@@ -45,7 +45,7 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISHostileDisplacement {
+class TARDISHostileDisplacement {
 
     private final TARDIS plugin;
     private final List<Integer> angles;
@@ -140,9 +140,7 @@ public class TARDISHostileDisplacement {
                         bd.setRebuild(false);
                         bd.setSubmarine(rsc.isSubmarine());
                         bd.setTardisID(id);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            plugin.getPresetBuilder().buildPreset(bd);
-                        }, delay * 2);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // message time lord
                         String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
                         player.sendMessage(message);

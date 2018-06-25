@@ -64,16 +64,12 @@ public class TARDISMessage {
     }
 
     public static void handlesMessage(Player p, String message) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-            message(p, HANDLES + message);
-        }, 2L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + message), 2L);
     }
 
     public static void handlesSend(Player p, String key) {
         String local = TARDIS.plugin.getLanguage().getString(key);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-            message(p, HANDLES + local);
-        }, 2L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + local), 2L);
     }
 
     public static void send(Player p, String key, String sub) {
@@ -83,9 +79,7 @@ public class TARDISMessage {
 
     public static void handlesSend(Player p, String key, String sub) {
         String local = TARDIS.plugin.getLanguage().getString(key);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-            message(p, HANDLES + String.format(local, sub));
-        }, 2L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + String.format(local, sub)), 2L);
     }
 
     public static void send(CommandSender cs, String key) {

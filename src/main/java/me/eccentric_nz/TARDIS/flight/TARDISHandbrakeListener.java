@@ -178,9 +178,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         // track handbrake clicked for takeoff when door closed
                                         plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                                         // give them 30 seconds to close the door
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
-                                        }, 600L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
                                     new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, flight_mode);

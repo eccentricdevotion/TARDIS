@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoveMobSpawnDeny {
+class TARDISRemoveMobSpawnDeny {
 
     private final TARDIS plugin;
     private WorldGuardPlugin wg;
@@ -53,9 +53,9 @@ public class TARDISRemoveMobSpawnDeny {
         World vortex = plugin.getServer().getWorld(world);
         // get the regions for this world
         Map<String, ProtectedRegion> regions = wg.getRegionManager(vortex).getRegions();
-        regions.entrySet().forEach((map) -> {
-            if (map.getKey().startsWith("tardis_")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + map.getKey() + " mob-spawning -w " + world);
+        regions.forEach((key, value) -> {
+            if (key.startsWith("tardis_")) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + key + " mob-spawning -w " + world);
             }
         });
         return true;

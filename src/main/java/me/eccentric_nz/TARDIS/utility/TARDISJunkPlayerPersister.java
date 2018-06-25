@@ -37,9 +37,7 @@ public class TARDISJunkPlayerPersister {
         where.put("chameleon_preset", "JUNK_MODE");
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", true, 2);
         if (rs.resultSet()) {
-            rs.getData().forEach((t) -> {
-                plugin.getTrackerKeeper().getJunkPlayers().put(t.getUuid(), t.getTardis_id());
-            });
+            rs.getData().forEach((t) -> plugin.getTrackerKeeper().getJunkPlayers().put(t.getUuid(), t.getTardis_id()));
         }
     }
 }

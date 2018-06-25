@@ -34,7 +34,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-public class TARDISAddRegionsCommand {
+class TARDISAddRegionsCommand {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

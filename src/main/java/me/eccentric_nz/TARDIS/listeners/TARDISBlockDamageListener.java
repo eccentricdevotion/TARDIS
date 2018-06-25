@@ -84,7 +84,7 @@ public class TARDISBlockDamageListener implements Listener {
                     }
                 }
                 if (!isDoor && rb.getPolice_box() == 1) {
-                    int damage = (plugin.getTrackerKeeper().getDamage().containsKey(id)) ? plugin.getTrackerKeeper().getDamage().get(id) : 0;
+                    int damage = plugin.getTrackerKeeper().getDamage().getOrDefault(id, 0);
                     plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
                     if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                         new TARDISHostileAction(plugin).processAction(id, p);
@@ -145,8 +145,6 @@ public class TARDISBlockDamageListener implements Listener {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
             BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
@@ -157,9 +155,7 @@ public class TARDISBlockDamageListener implements Listener {
             bd.setRebuild(true);
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }, 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
             // set hidden to false
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);

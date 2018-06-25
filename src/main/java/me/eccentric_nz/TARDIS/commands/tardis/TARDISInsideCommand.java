@@ -29,7 +29,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISInsideCommand {
+class TARDISInsideCommand {
 
     private final TARDIS plugin;
 

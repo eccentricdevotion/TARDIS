@@ -21,7 +21,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -145,7 +145,7 @@ public class TARDISARSInventory {
                 ItemStack room = new ItemStack(Material.getMaterial(a.getMaterial()), 1);
                 ItemMeta im = room.getItemMeta();
                 im.setDisplayName(a.getDescriptiveName());
-                List<String> lore = Arrays.asList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a.getActualName() + ".cost"));
+                List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a.getActualName() + ".cost"));
                 im.setLore(lore);
                 room.setItemMeta(im);
                 is[i] = room;

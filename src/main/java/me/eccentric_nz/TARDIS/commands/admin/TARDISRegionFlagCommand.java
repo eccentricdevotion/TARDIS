@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISRegionFlagCommand {
+class TARDISRegionFlagCommand {
 
     private final TARDIS plugin;
     private final List<String> which = Arrays.asList("entry", "exit");

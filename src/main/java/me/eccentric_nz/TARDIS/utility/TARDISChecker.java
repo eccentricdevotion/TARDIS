@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
 public class TARDISChecker {
 
     private final TARDIS plugin;
-    private String root;
 
     public TARDISChecker(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,7 +49,7 @@ public class TARDISChecker {
         } else {
             server_world = s_world + File.separator + "data" + File.separator;
         }
-        root = container.getAbsolutePath() + File.separator + server_world;
+        String root = container.getAbsolutePath() + File.separator + server_world;
         for (int i = 1963; i < 1984; i++) {
             String map = "map_" + i + ".dat";
             File file = new File(root, map);
@@ -95,6 +94,7 @@ public class TARDISChecker {
                 try {
                     out.close();
                 } catch (IOException e) {
+                    System.err.println(plugin.getPluginName() + "Could not close the output stream.");
                 }
             }
         } catch (FileNotFoundException e) {
@@ -104,6 +104,7 @@ public class TARDISChecker {
                 try {
                     in.close();
                 } catch (IOException e) {
+                    System.err.println(plugin.getPluginName() + "Could not close the input stream.");
                 }
             }
         }

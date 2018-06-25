@@ -33,14 +33,14 @@ import java.net.URL;
 public abstract class YandexTranslatorAPI {
     //Encoding type
 
-    protected static final String ENCODING = "UTF-8";
+    static final String ENCODING = "UTF-8";
 
-    protected static String apiKey;
+    static String apiKey;
     private static String referrer;
 
-    protected static final String PARAM_API_KEY = "key=",
-            PARAM_LANG_PAIR = "&lang=",
-            PARAM_TEXT = "&text=";
+    static final String PARAM_API_KEY = "key=";
+    static final String PARAM_LANG_PAIR = "&lang=";
+    static final String PARAM_TEXT = "&text=";
 
     /**
      * Sets the API key.
@@ -94,10 +94,10 @@ public abstract class YandexTranslatorAPI {
      * Forms a request, sends it using the GET method and returns the value with the given label from the resulting JSON
      * response.
      *
-     * @param url
-     * @param jsonValProperty
+     * @param url             a uniform resource locator
+     * @param jsonValProperty a JSON string
      * @return a string
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception a generic exception
      */
     protected static String retrievePropString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
@@ -109,19 +109,19 @@ public abstract class YandexTranslatorAPI {
      * Forms a request, sends it using the GET method and returns the contents of the array of strings with the given
      * label, with multiple strings concatenated.
      *
-     * @param url
-     * @param jsonValProperty
+     * @param url             a uniform resource locator
+     * @param jsonValProperty a JSON string
      * @return a string of concatenated values
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception a generic exception
      */
-    protected static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
+    static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
         String[] translationArr = jsonObjValToStringArr(response, jsonValProperty);
-        String combinedTranslations = "";
+        StringBuilder combinedTranslations = new StringBuilder();
         for (String s : translationArr) {
-            combinedTranslations += s;
+            combinedTranslations.append(s);
         }
-        return combinedTranslations.trim();
+        return combinedTranslations.toString().trim();
     }
 
     // Helper method to parse a JSONObject containing an array of Strings with the given label.
@@ -179,7 +179,7 @@ public abstract class YandexTranslatorAPI {
     }
 
     //Check if ready to make request, if not, throw a RuntimeException
-    protected static void validateServiceState() throws Exception {
+    static void validateServiceState() throws Exception {
         if (apiKey == null || apiKey.length() < 27) {
             throw new RuntimeException("INVALID_API_KEY - Please set the API Key with your Yandex API Key");
         }

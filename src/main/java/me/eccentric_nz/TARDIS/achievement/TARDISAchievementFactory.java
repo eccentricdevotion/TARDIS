@@ -46,7 +46,7 @@ public class TARDISAchievementFactory {
     private final TARDIS plugin;
     private final Player player;
     private final ADVANCEMENT advancement;
-    int size;
+    private final int size;
 
     public TARDISAchievementFactory(TARDIS plugin, Player player, ADVANCEMENT advancement, int size) {
         this.plugin = plugin;
@@ -97,9 +97,7 @@ public class TARDISAchievementFactory {
                     ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
                     Inventory inv = player.getInventory();
                     HashMap<Integer, ItemStack> excess = inv.addItem(is);
-                    excess.entrySet().forEach((me) -> {
-                        player.getWorld().dropItem(player.getLocation(), me.getValue());
-                    });
+                    excess.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
                 }
                 // set achievement as done
                 seta.put("completed", 1);

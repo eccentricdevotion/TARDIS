@@ -38,13 +38,11 @@ import java.util.List;
  */
 public class TARDISSonicUpgradeListener implements Listener {
 
-    private final TARDIS plugin;
     private final Material sonicMaterial;
     private final HashMap<String, String> upgrades = new HashMap<>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
-        this.plugin = plugin;
-        String[] split = this.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         sonicMaterial = Material.valueOf(split[0]);
         upgrades.put("Admin Upgrade", "admin");
         upgrades.put("Bio-scanner Upgrade", "bio");

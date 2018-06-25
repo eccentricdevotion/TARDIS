@@ -260,9 +260,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
                                             if (tardis.getPreset().equals(PRESET.NEW) || tardis.getPreset().equals(PRESET.OLD)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                                    new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                                                }, 1L);
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), 1L);
                                             }
                                             // if lights are on, turn them off
                                             new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
@@ -300,9 +298,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     // place siege block
                                     siege.setType(Material.BROWN_MUSHROOM_BLOCK);
                                     MultipleFacing mf = (MultipleFacing) siege.getBlockData();
-                                    mf.getAllowedFaces().forEach((face) -> {
-                                        mf.setFace(face, true);
-                                    });
+                                    mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
                                     siege.setData(mf);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);

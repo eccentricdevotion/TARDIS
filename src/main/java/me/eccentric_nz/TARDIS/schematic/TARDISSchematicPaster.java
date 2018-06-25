@@ -36,13 +36,13 @@ import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 /**
  * @author eccentric_nz
  */
-public class TARDISSchematicPaster {
+class TARDISSchematicPaster {
 
     private final TARDIS plugin;
     private final Player player;
-    HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
-    HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
-    HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
+    private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
 
     public TARDISSchematicPaster(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -106,9 +106,7 @@ public class TARDISSchematicPaster {
                 }
             }
         }
-        postRedstoneTorches.entrySet().forEach((entry) -> {
-            Block prtb = entry.getKey();
-            BlockData ptdata = entry.getValue();
+        postRedstoneTorches.forEach((prtb, ptdata) -> {
             prtb.setType(Material.REDSTONE_TORCH, true);
             prtb.setData(ptdata);
         });

@@ -32,13 +32,14 @@ import org.bukkit.block.Block;
  */
 public class TARDISRoomData {
 
-    COMPASS direction;
-    String room;
-    Location location;
-    Block block;
-    JSONObject schematic;
-    int tardis_id;
-    Material middleType, floorType;
+    private COMPASS direction;
+    private String room;
+    private Location location;
+    private Block block;
+    private JSONObject schematic;
+    private int tardis_id;
+    private Material middleType;
+    private Material floorType;
 
     public TARDISRoomData() {
     }

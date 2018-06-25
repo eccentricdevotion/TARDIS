@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author eccentric_nz
  */
-public class TARDISTagCommand {
+class TARDISTagCommand {
 
     private final TARDIS plugin;
 
@@ -60,7 +60,8 @@ public class TARDISTagCommand {
     }
 
     private String getHoursMinutesSeconds(long millis) {
-        return String.format("%02dh:%02dm:%02ds",
+        return String.format(
+                "%02dh:%02dm:%02ds",
                 TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                 TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));

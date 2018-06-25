@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-public class TARDISArchSerialization {
+class TARDISArchSerialization {
 
     public static String toDatabase(ItemStack[] inventory) {
         try {

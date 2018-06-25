@@ -152,7 +152,7 @@ public class TARDISDestroyerInner {
     }
 
     //Originally stolen from Babarix. Thank you :)
-    public Chest getDoubleChest(Block block) {
+    private Chest getDoubleChest(Block block) {
         Chest chest = null;
         if (block.getRelative(BlockFace.NORTH).getType().equals(Material.CHEST)) {
             chest = (Chest) block.getRelative(BlockFace.NORTH).getState();

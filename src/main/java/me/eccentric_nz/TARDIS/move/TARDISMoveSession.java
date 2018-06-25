@@ -39,7 +39,7 @@ public class TARDISMoveSession {
         setLocation(p.getLocation());
     }
 
-    public void setStaleLocation(boolean active) {
+    private void setStaleLocation(boolean active) {
         staleLocation = active;
     }
 
@@ -64,7 +64,7 @@ public class TARDISMoveSession {
         this.loc = loc;
     }
 
-    public Location getLocation() {
+    private Location getLocation() {
         return loc;
     }
 }

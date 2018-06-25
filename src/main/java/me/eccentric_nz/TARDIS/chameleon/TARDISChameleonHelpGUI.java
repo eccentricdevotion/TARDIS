@@ -21,12 +21,12 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISChameleonHelpGUI {
+class TARDISChameleonHelpGUI {
 
     private final TARDIS plugin;
     private final ItemStack[] help;
@@ -59,55 +59,55 @@ public class TARDISChameleonHelpGUI {
         ItemStack one = new ItemStack(Material.BOWL, 1);
         ItemMeta oe = one.getItemMeta();
         oe.setDisplayName("1");
-        oe.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_FRONT")));
+        oe.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_FRONT")));
         one.setItemMeta(oe);
         // two
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta to = two.getItemMeta();
         to.setDisplayName("2");
-        to.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_MIDDLE")));
+        to.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_MIDDLE")));
         two.setItemMeta(to);
         // three
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta te = three.getItemMeta();
         te.setDisplayName("3");
-        te.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_BACK")));
+        te.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_BACK")));
         three.setItemMeta(te);
         // four
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta fr = four.getItemMeta();
         fr.setDisplayName("4");
-        fr.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_B_MIDDLE")));
+        fr.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_B_MIDDLE")));
         four.setItemMeta(fr);
         // five
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta fe = five.getItemMeta();
         fe.setDisplayName("5");
-        fe.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_BACK")));
+        fe.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_BACK")));
         five.setItemMeta(fe);
         // six
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta sx = six.getItemMeta();
         sx.setDisplayName("6");
-        sx.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_MIDDLE")));
+        sx.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_MIDDLE")));
         six.setItemMeta(sx);
         // seven
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta sn = seven.getItemMeta();
         sn.setDisplayName("7");
-        sn.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_FRONT")));
+        sn.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_FRONT")));
         seven.setItemMeta(sn);
         // eight
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta et = eight.getItemMeta();
         et.setDisplayName("8");
-        et.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_F_MIDDLE")));
+        et.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_F_MIDDLE")));
         eight.setItemMeta(et);
         // nine
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta ne = nine.getItemMeta();
         ne.setDisplayName("9");
-        ne.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
+        ne.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
         nine.setItemMeta(ne);
         // grid
         ItemStack grid = new ItemStack(Material.BOWL, 1);
@@ -147,7 +147,7 @@ public class TARDISChameleonHelpGUI {
         ou.setDisplayName("4");
         f.setItemMeta(ou);
 
-        ItemStack[] is = {
+        return new ItemStack[]{
                 back, null, null, info, info2, null, null, null, null,
                 null, null, null, null, null, null, null, column, null,
                 null, grid, null, null, null, null, null, f, null,
@@ -155,7 +155,6 @@ public class TARDISChameleonHelpGUI {
                 two, nine, six, null, example, null, null, w, null,
                 one, eight, seven, null, null, null, null, o, null
         };
-        return is;
     }
 
     public ItemStack[] getHelp() {

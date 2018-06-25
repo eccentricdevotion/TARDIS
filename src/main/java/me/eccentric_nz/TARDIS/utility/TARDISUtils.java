@@ -142,7 +142,6 @@ public class TARDISUtils {
         return colour;
     }
 
-
     public int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);
@@ -215,12 +214,11 @@ public class TARDISUtils {
             int sbx = l.getBlockX() - 1;
             int sbz = l.getBlockZ() - 1;
             World w = l.getWorld();
-            boolean run = true;
             // reset biome and it's not The End
             if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.VOID) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
                 // reset the biome
-                for (int c = 0; c < 3 && run; c++) {
-                    for (int r = 0; r < 3 && run; r++) {
+                for (int c = 0; c < 3; c++) {
+                    for (int r = 0; r < 3; r++) {
                         try {
                             w.setBiome(sbx + c, sbz + r, biome);
                         } catch (NullPointerException e) {
@@ -233,7 +231,7 @@ public class TARDISUtils {
                 Chunk chunk = w.getChunkAt(l);
                 plugin.getTardisHelper().refreshChunk(chunk);
             }
-            return run;
+            return true;
         }
         return true;
     }

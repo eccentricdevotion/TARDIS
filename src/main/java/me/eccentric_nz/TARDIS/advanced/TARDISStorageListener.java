@@ -52,7 +52,7 @@ import java.util.Locale;
 public class TARDISStorageListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    List<String> inv_titles = new ArrayList<>();
+    private final List<String> inv_titles = new ArrayList<>();
     private final List<Material> onlythese = new ArrayList<>();
 
     public TARDISStorageListener(TARDIS plugin) {
@@ -82,7 +82,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             STORAGE store = STORAGE.valueOf(tmp);
             saveCurrentStorage(inv, store.getTable(), (Player) event.getPlayer());
         } else if (!title.equals("§4TARDIS Console")) {
-            /**
+            /*
              * Fix incorrect Bukkit behaviour
              *
              * https://bukkit.atlassian.net/browse/BUKKIT-2788

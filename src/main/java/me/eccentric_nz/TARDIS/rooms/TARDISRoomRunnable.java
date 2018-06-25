@@ -51,39 +51,39 @@ public class TARDISRoomRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Location l;
-    JSONObject s;
+    private final JSONObject s;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int tardis_id;
     private final Material wall_type, floor_type;
-    Material type;
-    BlockData data;
-    String room;
-    String grammar;
+    private Material type;
+    private BlockData data;
+    private final String room;
+    private String grammar;
     private boolean running;
-    Player p;
-    World world;
-    List<Chunk> chunkList = new ArrayList<>();
-    List<Block> iceblocks = new ArrayList<>();
-    List<Block> lampblocks = new ArrayList<>();
-    List<Block> caneblocks = new ArrayList<>();
-    List<Block> melonblocks = new ArrayList<>();
-    List<Block> potatoblocks = new ArrayList<>();
-    List<Block> carrotblocks = new ArrayList<>();
-    List<Block> pumpkinblocks = new ArrayList<>();
-    List<Block> wheatblocks = new ArrayList<>();
-    List<Block> farmlandblocks = new ArrayList<>();
-    List<Material> notThese = new ArrayList<>();
-    HashMap<Block, BlockData> cocoablocks = new HashMap<>();
-    HashMap<Block, BlockData> doorblocks = new HashMap<>();
-    HashMap<Block, BlockData> leverblocks = new HashMap<>();
-    HashMap<Block, BlockData> torchblocks = new HashMap<>();
-    HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
-    HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
-    HashMap<Block, TARDISBannerData> standingBanners = new HashMap<>();
-    HashMap<Block, TARDISBannerData> wallBanners = new HashMap<>();
-    BlockFace[] repeaterData = new BlockFace[6];
-    HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
-    JSONArray arr;
+    private final Player p;
+    private World world;
+    private final List<Chunk> chunkList = new ArrayList<>();
+    private final List<Block> iceblocks = new ArrayList<>();
+    private final List<Block> lampblocks = new ArrayList<>();
+    private final List<Block> caneblocks = new ArrayList<>();
+    private final List<Block> melonblocks = new ArrayList<>();
+    private final List<Block> potatoblocks = new ArrayList<>();
+    private final List<Block> carrotblocks = new ArrayList<>();
+    private final List<Block> pumpkinblocks = new ArrayList<>();
+    private final List<Block> wheatblocks = new ArrayList<>();
+    private final List<Block> farmlandblocks = new ArrayList<>();
+    private final List<Material> notThese = new ArrayList<>();
+    private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
+    private final HashMap<Block, BlockData> doorblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
+    private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> standingBanners = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> wallBanners = new HashMap<>();
+    private final BlockFace[] repeaterData = new BlockFace[6];
+    private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
+    private JSONArray arr;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -158,66 +158,52 @@ public class TARDISRoomRunnable implements Runnable {
             if (iceblocks.size() > 0) {
                 TARDISMessage.send(p, "ICE");
                 // set all the ice to water
-                iceblocks.forEach((ice) -> {
-                    ice.setType(Material.WATER);
-                });
+                iceblocks.forEach((ice) -> ice.setType(Material.WATER));
                 iceblocks.clear();
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
                 // set the repeaters
-                mushroomblocks.entrySet().forEach((entry) -> {
+                mushroomblocks.forEach((key, value) -> {
                     BlockData repeater = Material.REPEATER.createBlockData();
                     Directional directional = (Directional) repeater;
-                    directional.setFacing(entry.getValue());
-                    entry.getKey().setData(directional, true);
+                    directional.setFacing(value);
+                    key.setData(directional, true);
                 });
                 mushroomblocks.clear();
             }
             if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                 // plant the sugar cane
-                caneblocks.forEach((cane) -> {
-                    cane.setType(Material.SUGAR_CANE);
-                });
+                caneblocks.forEach((cane) -> cane.setType(Material.SUGAR_CANE));
                 caneblocks.clear();
                 // attach the cocoa
-                cocoablocks.entrySet().forEach((entry) -> {
-                    entry.getKey().setType(Material.COCOA);
-                    entry.getKey().setData(entry.getValue(), true);
+                cocoablocks.forEach((key, value) -> {
+                    key.setType(Material.COCOA);
+                    key.setData(value, true);
                 });
                 cocoablocks.clear();
                 // plant the melon
-                melonblocks.forEach((melon) -> {
-                    melon.setType(Material.MELON_STEM);
-                });
+                melonblocks.forEach((melon) -> melon.setType(Material.MELON_STEM));
                 melonblocks.clear();
                 // plant the pumpkin
-                pumpkinblocks.forEach((pumpkin) -> {
-                    pumpkin.setType(Material.PUMPKIN_STEM);
-                });
+                pumpkinblocks.forEach((pumpkin) -> pumpkin.setType(Material.PUMPKIN_STEM));
                 pumpkinblocks.clear();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // plant the wheat
-                    wheatblocks.forEach((wheat) -> {
-                        wheat.setType(Material.WHEAT);
-                    });
+                    wheatblocks.forEach((wheat) -> wheat.setType(Material.WHEAT));
                     wheatblocks.clear();
                     // plant the carrot
-                    carrotblocks.forEach((carrot) -> {
-                        carrot.setType(Material.CARROT);
-                    });
+                    carrotblocks.forEach((carrot) -> carrot.setType(Material.CARROT));
                     carrotblocks.clear();
                     // plant the potato
-                    potatoblocks.forEach((potato) -> {
-                        potato.setType(Material.POTATO);
-                    });
+                    potatoblocks.forEach((potato) -> potato.setType(Material.POTATO));
                     potatoblocks.clear();
                 }, 5L);
             }
             if (room.equals("VILLAGE")) {
                 // put doors on
-                doorblocks.entrySet().forEach((entry) -> {
-                    entry.getKey().setType(Material.OAK_DOOR);
-                    entry.getKey().setData(entry.getValue(), true);
+                doorblocks.forEach((key, value) -> {
+                    key.setType(Material.OAK_DOOR);
+                    key.setData(value, true);
                 });
                 doorblocks.clear();
             }
@@ -227,25 +213,17 @@ public class TARDISRoomRunnable implements Runnable {
                 farmland.setMoisture(farmland.getMaximumMoisture());
             });
             // put levers on
-            leverblocks.entrySet().forEach((entry) -> {
-                entry.getKey().setData(entry.getValue(), true);
-            });
+            leverblocks.forEach((key, value) -> key.setData(value, true));
             leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
-            lampblocks.forEach((lamp) -> {
-                lamp.setType(Material.REDSTONE_LAMP);
-            });
+            lampblocks.forEach((lamp) -> lamp.setType(Material.REDSTONE_LAMP));
             lampblocks.clear();
             // put torches on
-            torchblocks.entrySet().forEach((entry) -> {
-                entry.getKey().setData(entry.getValue(), true);
-            });
+            torchblocks.forEach((key, value) -> key.setData(value, true));
             torchblocks.clear();
             // put redstone torches on
-            redstoneTorchblocks.entrySet().forEach((entry) -> {
-                entry.getKey().setData(entry.getValue(), true);
-            });
+            redstoneTorchblocks.forEach((key, value) -> key.setData(value, true));
             torchblocks.clear();
             // set banners
             setBanners(standingBanners);
@@ -526,9 +504,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (level == 4 && room.equals("GREENHOUSE")) {
                     // set all the ice to water
-                    iceblocks.forEach((ice) -> {
-                        ice.setType(Material.WATER);
-                    });
+                    iceblocks.forEach((ice) -> ice.setType(Material.WATER));
                     iceblocks.clear();
                 }
             }
@@ -728,7 +704,9 @@ public class TARDISRoomRunnable implements Runnable {
     private boolean checkRoomNextDoor(Block b) {
         if (b.getLocation().getBlockZ() < (resetz + 10) && !b.getRelative(BlockFace.EAST).getType().equals(Material.AIR)) {
             return true;
-        } else return !b.getRelative(BlockFace.SOUTH).getType().equals(Material.AIR);
+        } else {
+            return !b.getRelative(BlockFace.SOUTH).getType().equals(Material.AIR);
+        }
     }
 
     public void setTask(int task) {

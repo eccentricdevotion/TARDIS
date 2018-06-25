@@ -46,16 +46,15 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISMaterialisationPreset implements Runnable {
+class TARDISMaterialisationPreset implements Runnable {
 
     private final TARDIS plugin;
     private final BuildData bd;
     private final int loops;
     private final PRESET preset;
-    public int task;
+    private int task;
     private int i;
     private final BlockData cham_id;
-    private Block sponge;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
@@ -156,8 +155,6 @@ public class TARDISMaterialisationPreset implements Runnable {
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
                     setBiome(world, x, z, bd.useTexture(), true);
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", bd.getTardisID());
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
                             String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
@@ -340,7 +337,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
                                             int sy = y - 1;
                                             plugin.getBlockUtils().setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
-                                            sponge = world.getBlockAt(xx, sy, zz);
+                                            Block sponge = world.getBlockAt(xx, sy, zz);
                                             plugin.getWorldGuardUtils().sponge(sponge, true);
                                         } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                                             plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
@@ -830,7 +827,7 @@ public class TARDISMaterialisationPreset implements Runnable {
         }
     }
 
-    public void setBiome(World world, int x, int z, boolean pp, boolean umbrella) {
+    private void setBiome(World world, int x, int z, boolean pp, boolean umbrella) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && pp) {
             List<Chunk> chunks = new ArrayList<>();
             Chunk chunk = bd.getLocation().getChunk();

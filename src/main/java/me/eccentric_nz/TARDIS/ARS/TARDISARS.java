@@ -29,7 +29,7 @@ public enum TARDISARS implements ARS {
     ANTIGRAVITY("SANDSTONE", "ANTIGRAVITY", "Anti-gravity Well", 1),
     AQUARIUM("TUBE_CORAL_BLOCK", "AQUARIUM", "Aquarium", 1),
     ARBORETUM("OAK_LEAVES", "ARBORETUM", "Arboretum", 1),
-    BAKER("END_STON", "BAKER", "4th Doctor's Secondary Console", 1),
+    BAKER("END_STONE", "BAKER", "4th Doctor's Secondary Console", 1),
     BEDROOM("GLOWSTONE", "BEDROOM", "Bedroom", 1),
     BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "BIRDCAGE", "Bird Cage", 1),
     EMPTY("GLASS", "EMPTY", "Empty", 1),
@@ -137,11 +137,7 @@ public enum TARDISARS implements ARS {
      * @return ARS room if found, or null
      */
     public static ARS ARSFor(Material material) {
-        if (EXTENDED_MATERIAL.containsKey(material)) {
-            return EXTENDED_MATERIAL.get(material);
-        } else {
-            return SLOT;
-        }
+        return EXTENDED_MATERIAL.getOrDefault(material, SLOT);
     }
 
     public static void addNewARS(ARS room) {

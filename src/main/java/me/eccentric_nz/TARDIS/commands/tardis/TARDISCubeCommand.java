@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISCubeCommand {
+class TARDISCubeCommand {
 
     private final TARDIS plugin;
 

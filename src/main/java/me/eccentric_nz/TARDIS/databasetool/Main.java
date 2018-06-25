@@ -35,7 +35,7 @@ public class Main {
      * @param sqlite  the SQLite file to migrate
      * @param mysql   the SQL file to write to
      * @param prefix  the desired table prefix
-     * @throws IOException
+     * @throws IOException if the file cannot be read
      */
     public static void process(PrintWriter console, File sqlite, File mysql, String prefix) throws IOException {
         if (!sqlite.canRead()) {

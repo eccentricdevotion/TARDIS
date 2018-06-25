@@ -31,14 +31,13 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISCheckLocCommand {
+class TARDISCheckLocCommand {
 
     private final TARDIS plugin;
 
     public TARDISCheckLocCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
-
 
     public boolean doACheckLocation(Player player, String[] args) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();

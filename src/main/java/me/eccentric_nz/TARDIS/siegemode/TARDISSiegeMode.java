@@ -101,9 +101,7 @@ public class TARDISSiegeMode {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getPresetBuilder().buildPreset(bd);
-            }, 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             set.put("siege_on", 0);
             // remove trackers
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {

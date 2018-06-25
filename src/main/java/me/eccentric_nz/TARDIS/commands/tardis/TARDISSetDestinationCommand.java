@@ -35,14 +35,13 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetDestinationCommand {
+class TARDISSetDestinationCommand {
 
     private final TARDIS plugin;
 
     public TARDISSetDestinationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
-
 
     public boolean doSetDestination(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {

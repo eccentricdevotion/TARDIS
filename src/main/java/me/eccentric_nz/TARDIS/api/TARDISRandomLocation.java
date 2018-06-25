@@ -31,13 +31,13 @@ import java.util.Random;
 /**
  * @author eccentric_nz
  */
-public class TARDISRandomLocation {
+class TARDISRandomLocation {
 
     private final TARDIS plugin;
     private final Parameters param;
     private final Random random = new Random();
 
-    public TARDISRandomLocation(TARDIS plugin, List<String> list, Parameters param) {
+    TARDISRandomLocation(TARDIS plugin, List<String> list, Parameters param) {
         this.plugin = plugin;
         this.param = param;
     }
@@ -46,7 +46,7 @@ public class TARDISRandomLocation {
         return null;
     }
 
-    public final List<World> getWorlds(List<String> list) {
+    final List<World> getWorlds(List<String> list) {
         List<World> worlds = new ArrayList<>();
         list.forEach((s) -> {
             World o = Bukkit.getServer().getWorld(s);
@@ -57,7 +57,7 @@ public class TARDISRandomLocation {
         return worlds;
     }
 
-    public WorldAndRange getWorldandRange(List<World> worlds) {
+    WorldAndRange getWorldandRange(List<World> worlds) {
         int listlen = worlds.size();
         World w;
         int minX;

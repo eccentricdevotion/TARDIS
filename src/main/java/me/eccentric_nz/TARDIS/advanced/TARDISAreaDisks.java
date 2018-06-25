@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISAreaDisks {
+class TARDISAreaDisks {
 
     private final TARDIS plugin;
 

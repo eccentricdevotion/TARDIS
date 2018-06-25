@@ -76,9 +76,7 @@ public class ResultSetCurrentLocation {
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
-            where.entrySet().forEach((entry) -> {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            });
+            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "current" + wheres;
@@ -112,11 +110,7 @@ public class ResultSetCurrentLocation {
                         biome = Biome.valueOf(rs.getString("biome"));
                     } catch (IllegalArgumentException e) {
                         // may have a pre-1.9 biome stored so do old biome lookup...
-                        if (TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(rs.getString("biome"))) {
-                            biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.get(rs.getString("biome"));
-                        } else {
-                            biome = null;
-                        }
+                        biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.getOrDefault(rs.getString("biome"), null);
                     }
                 }
             } else {

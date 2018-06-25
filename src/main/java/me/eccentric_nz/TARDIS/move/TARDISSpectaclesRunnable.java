@@ -36,7 +36,7 @@ public class TARDISSpectaclesRunnable implements Runnable {
     private final TARDIS plugin;
     private final HashMap<COMPASS, Door> bottom = new HashMap<>();
     private final Door upper;
-    private final Door lower;
+//    private final Door lower;
 
     public TARDISSpectaclesRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -51,28 +51,28 @@ public class TARDISSpectaclesRunnable implements Runnable {
 //        this.bottom.put(COMPASS.NORTH, (byte) 3);
         upper = (Door) Material.IRON_DOOR.createBlockData();
         upper.setHalf(Bisected.Half.TOP);
-        lower = (Door) Material.IRON_DOOR.createBlockData();
-        lower.setHalf(Bisected.Half.BOTTOM);
-        lower.setHinge(Door.Hinge.RIGHT);
-        lower.setFacing(BlockFace.EAST);
+//        lower = (Door) Material.IRON_DOOR.createBlockData();
+//        lower.setHalf(Bisected.Half.BOTTOM);
+//        lower.setHinge(Door.Hinge.RIGHT);
+//        lower.setFacing(BlockFace.EAST);
     }
 
     @Override
 
     public void run() {
-        plugin.getTrackerKeeper().getInvisibleDoors().entrySet().forEach((map) -> {
-            Player p = plugin.getServer().getPlayer(map.getKey());
-            if (p != null && p.isOnline() && plugin.getTrackerKeeper().getSpectacleWearers().contains(map.getKey())) {
+        plugin.getTrackerKeeper().getInvisibleDoors().forEach((key, value) -> {
+            Player p = plugin.getServer().getPlayer(key);
+            if (p != null && p.isOnline() && plugin.getTrackerKeeper().getSpectacleWearers().contains(key)) {
                 String b = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getRelative(BlockFace.UP).toString();
-                if (b.equals(map.getValue().toString())) {
+                if (b.equals(value.toString())) {
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                    if (rs.fromUUID(map.getKey().toString())) {
+                    if (rs.fromUUID(key.toString())) {
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                         if (rsc.resultSet()) {
-                            p.sendBlockChange(map.getValue().getLocation(), bottom.get(rsc.getDirection()));
-                            p.sendBlockChange(map.getValue().getRelative(BlockFace.UP).getLocation(), upper);
+                            p.sendBlockChange(value.getLocation(), bottom.get(rsc.getDirection()));
+                            p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);
                         }
                     }
                 }

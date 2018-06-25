@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesTakeoffCommand {
+class TARDISHandlesTakeoffCommand {
 
     private final TARDIS plugin;
 
@@ -84,9 +84,7 @@ public class TARDISHandlesTakeoffCommand {
                             // track handbrake clicked for takeoff when door closed
                             plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                             // give them 30 seconds to close the door
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
-                            }, 600L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                             return true;
                         }
                         Location location = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());

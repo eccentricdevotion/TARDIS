@@ -62,7 +62,7 @@ public class TARDISArtronLevels {
      * player is warned.
      *
      * @param id       the unique TARDIS database key
-     * @param required
+     * @param required the amount of Artron energy needed
      * @param p        the player to message
      * @return a boolean - true if the TARDIS has sufficient energy
      */

@@ -26,7 +26,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetDifficultyCommand {
+class TARDISSetDifficultyCommand {
 
     private final TARDIS plugin;
 

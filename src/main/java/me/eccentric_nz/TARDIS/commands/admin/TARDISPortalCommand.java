@@ -28,7 +28,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-public class TARDISPortalCommand {
+class TARDISPortalCommand {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

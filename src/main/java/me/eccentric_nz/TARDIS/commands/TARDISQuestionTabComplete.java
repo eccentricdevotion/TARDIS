@@ -35,7 +35,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
 
     private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS;
-    List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
+    private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
 
     public TARDISQuestionTabComplete(TARDIS plugin) {
         this.plugin = plugin;

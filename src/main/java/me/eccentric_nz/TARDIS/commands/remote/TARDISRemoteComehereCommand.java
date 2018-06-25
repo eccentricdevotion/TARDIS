@@ -47,7 +47,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoteComehereCommand {
+class TARDISRemoteComehereCommand {
 
     private final TARDIS plugin;
 
@@ -221,9 +221,7 @@ public class TARDISRemoteComehereCommand {
         bd.setRebuild(false);
         bd.setSubmarine(sub);
         bd.setTardisID(id);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getPresetBuilder().buildPreset(bd);
-        }, delay * 2);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
         plugin.getTrackerKeeper().getRescue().remove(id);
         return true;

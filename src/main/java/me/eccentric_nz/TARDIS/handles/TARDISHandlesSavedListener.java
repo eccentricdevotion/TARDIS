@@ -41,7 +41,7 @@ import java.util.UUID;
 public class TARDISHandlesSavedListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    public final HashMap<UUID, Integer> selectedSlot = new HashMap<>();
+    private final HashMap<UUID, Integer> selectedSlot = new HashMap<>();
 
     public TARDISHandlesSavedListener(TARDIS plugin) {
         super(plugin);
@@ -200,7 +200,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
      * @param inv  the inventory to update
      * @param slot the slot number to add a line of lore to
      */
-    public void setSlots(Inventory inv, int slot) {
+    private void setSlots(Inventory inv, int slot) {
         for (int s = 0; s < 45; s++) {
             ItemStack is = inv.getItem(s);
             if (is != null) {

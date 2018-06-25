@@ -130,7 +130,7 @@ public class TARDISArea {
                 String n = a.getAreaName();
                 // is time travel destination within a defined TARDIS area?
                 if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
-                    // does the player have permmission to travel here
+                    // does the player have permission to travel here
                     if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
                         plugin.getTrackerKeeper().getPerm().put(p.getUniqueId(), "tardis.area." + n);
                         chk = true;
@@ -181,7 +181,7 @@ public class TARDISArea {
                     }
                 }
             }
-            if (chk == true) {
+            if (chk) {
                 World w = plugin.getServer().getWorld(wStr);
                 if (w != null) {
                     int y = a.getY();

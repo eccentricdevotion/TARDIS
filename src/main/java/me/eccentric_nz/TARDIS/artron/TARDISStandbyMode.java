@@ -47,9 +47,9 @@ public class TARDISStandbyMode implements Runnable {
         // get TARDISes that are powered on
         HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
         QueryFactory qf = new QueryFactory(plugin);
-        ids.entrySet().forEach((map) -> {
-            int id = map.getKey();
-            int level = map.getValue().getLevel();
+        ids.forEach((key, value) -> {
+            int id = key;
+            int level = value.getLevel();
             // not while travelling or recharging and only until they hit zero
             if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
                 // remove some energy
@@ -62,14 +62,14 @@ public class TARDISStandbyMode implements Runnable {
                 wherep.put("tardis_id", id);
                 HashMap<String, Object> setp = new HashMap<>();
                 setp.put("powered_on", 0);
-                OfflinePlayer player = plugin.getServer().getOfflinePlayer(map.getValue().getUuid());
+                OfflinePlayer player = plugin.getServer().getOfflinePlayer(value.getUuid());
                 if (player.isOnline()) {
                     TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
                     TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
                 }
                 long delay = 0;
                 // if hidden, rebuild
-                if (map.getValue().isHidden()) {
+                if (value.isHidden()) {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                     if (player.isOnline()) {
                         TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
@@ -77,17 +77,15 @@ public class TARDISStandbyMode implements Runnable {
                     delay = 20L;
                 }
                 // police box lamp, delay it incase the TARDIS needs rebuilding
-                if (map.getValue().getPreset().equals(PRESET.NEW) || map.getValue().getPreset().equals(PRESET.OLD)) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                    }, delay);
+                if (value.getPreset().equals(PRESET.NEW) || value.getPreset().equals(PRESET.OLD)) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
                 }
                 // if lights are on, turn them off
-                if (map.getValue().isLights()) {
-                    new TARDISLampToggler(plugin).flickSwitch(id, map.getValue().getUuid(), true, map.getValue().isLanterns());
+                if (value.isLights()) {
+                    new TARDISLampToggler(plugin).flickSwitch(id, value.getUuid(), true, value.isLanterns());
                 }
                 // if beacon is on turn it off
-                new TARDISBeaconToggler(plugin).flickSwitch(map.getValue().getUuid(), id, false);
+                new TARDISBeaconToggler(plugin).flickSwitch(value.getUuid(), id, false);
                 // update database
                 qf.doUpdate("tardis", setp, wherep);
             }

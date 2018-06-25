@@ -40,13 +40,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISDematerialisationPreset implements Runnable {
+class TARDISDematerialisationPreset implements Runnable {
 
     private final TARDIS plugin;
     private final DestroyData dd;
     private final int loops;
     private final PRESET preset;
-    public int task;
+    private int task;
     private int i;
     private final BlockData cham_id;
     private final TARDISChameleonColumn column;
@@ -361,14 +361,12 @@ public class TARDISDematerialisationPreset implements Runnable {
             new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, false, preset);
             if (preset.equals(PRESET.JUNK_MODE)) {
                 // teleport player(s) to exit (tmd.getFromToLocation())
-                getJunkTravellers(1.0d).forEach((e) -> {
+                getJunkTravellers().forEach((e) -> {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            p.teleport(relativeLoc);
-                        }, 2L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
                     }
                 });
             }
@@ -387,10 +385,10 @@ public class TARDISDematerialisationPreset implements Runnable {
         return l;
     }
 
-    private List<Entity> getJunkTravellers(double d) {
+    private List<Entity> getJunkTravellers() {
         // spawn an entity
         Entity orb = dd.getLocation().getWorld().spawnEntity(dd.getLocation(), EntityType.EXPERIENCE_ORB);
-        List<Entity> ents = orb.getNearbyEntities(d, d, d);
+        List<Entity> ents = orb.getNearbyEntities(1.0, 1.0, 1.0);
         orb.remove();
         return ents;
     }

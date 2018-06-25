@@ -23,7 +23,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkTime {
+class TARDISJunkTime {
 
     private final TARDIS plugin;
 

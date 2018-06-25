@@ -30,7 +30,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesLockUnlockCommand {
+class TARDISHandlesLockUnlockCommand {
 
     private final TARDIS plugin;
 

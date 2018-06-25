@@ -89,9 +89,7 @@ public class TARDISTelepathicListener implements Listener {
                     }
                 }
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                block.setType(Material.DAYLIGHT_DETECTOR);
-            }, 3L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setType(Material.DAYLIGHT_DETECTOR), 3L);
         }
     }
 

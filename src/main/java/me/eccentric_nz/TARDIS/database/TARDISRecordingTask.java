@@ -31,13 +31,13 @@ public class TARDISRecordingTask implements Runnable {
         this.plugin = plugin;
     }
 
-    public void save() {
+    private void save() {
         if (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
             insertIntoDatabase();
         }
     }
 
-    public void insertIntoDatabase() {
+    private void insertIntoDatabase() {
         PreparedStatement s = null;
         Connection connection;
         try {
@@ -120,7 +120,7 @@ public class TARDISRecordingTask implements Runnable {
         scheduleNextRecording();
     }
 
-    protected int getTickDelayForNextBatch() {
+    private int getTickDelayForNextBatch() {
 
         // If we have too many rejected connections, increase the schedule
         if (TARDISRecordingManager.failedDbConnectionCount > 5) {
@@ -129,7 +129,7 @@ public class TARDISRecordingTask implements Runnable {
         return 5;
     }
 
-    protected void scheduleNextRecording() {
+    private void scheduleNextRecording() {
         if (!plugin.isEnabled()) {
             plugin.debug("Can't schedule new recording tasks as plugin is now disabled. If you're shutting down the server, ignore me.");
             return;

@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISVillager extends TARDISMob {
+class TARDISVillager extends TARDISMob {
 
     private Profession profession;
     private List<MerchantRecipe> trades;

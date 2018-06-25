@@ -48,7 +48,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISMaterialseFromVortex implements Runnable {
+class TARDISMaterialseFromVortex implements Runnable {
 
     private final TARDIS plugin;
     private final int id;
@@ -122,9 +122,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         // add a potion effect to the player
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                         long cloister_delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 262L : 360L;
-                        scheduler.scheduleSyncDelayedTask(plugin, () -> {
-                            TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell");
-                        }, cloister_delay);
+                        scheduler.scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell"), cloister_delay);
                     } else {
                         malfunction = false;
                     }
@@ -180,9 +178,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (bar) {
                         long tt = travel_time;
                         // start travel bar
-                        scheduler.scheduleSyncDelayedTask(plugin, () -> {
-                            new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false);
-                        }, flight_mode_delay);
+                        scheduler.scheduleSyncDelayedTask(plugin, () -> new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false), flight_mode_delay);
                     }
                     // cancel repeating sfx task
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {

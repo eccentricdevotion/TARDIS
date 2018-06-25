@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class NoteBlockPlayer {
+class NoteBlockPlayer {
 
     public static final HashMap<UUID, List<SongPlayer>> PLAYING_SONGS = new HashMap<>();
 
@@ -35,8 +35,6 @@ public class NoteBlockPlayer {
         if (PLAYING_SONGS.get(p.getUniqueId()) == null) {
             return;
         }
-        PLAYING_SONGS.get(p.getUniqueId()).forEach((s) -> {
-            s.removePlayer(p);
-        });
+        PLAYING_SONGS.get(p.getUniqueId()).forEach((s) -> s.removePlayer(p));
     }
 }

@@ -27,7 +27,7 @@ public enum ADAPTION {
     BIOME(ChatColor.GREEN),
     BLOCK(ChatColor.AQUA);
 
-    public ChatColor colour;
+    private final ChatColor colour;
 
     ADAPTION(ChatColor colour) {
         this.colour = colour;

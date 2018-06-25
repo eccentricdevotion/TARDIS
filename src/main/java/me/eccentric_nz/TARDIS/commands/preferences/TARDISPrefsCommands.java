@@ -161,18 +161,19 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         case "floor":
                         case "siege_wall":
                         case "siege_floor":
-                            return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
+                            return new TARDISFloorCommand().setFloorOrWallBlock(player, args, qf);
                         default:
                             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                                 TARDISMessage.send(player, "PREF_ON_OFF", pref);
                                 return false;
                             }
-                            if (pref.equals("build")) {
-                                return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                            } else if (pref.equals("junk")) {
-                                return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
-                            } else {
-                                return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
+                            switch (pref) {
+                                case "build":
+                                    return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                                case "junk":
+                                    return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
+                                default:
+                                    return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
                             }
                     }
                 } else {

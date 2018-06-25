@@ -40,8 +40,8 @@ import java.util.Random;
 public class TARDISSpawnListener implements Listener {
 
     private final TARDIS plugin;
-    List<SpawnReason> good_spawns = new ArrayList<>();
-    List<Biome> biomes = new ArrayList<>();
+    private final List<SpawnReason> good_spawns = new ArrayList<>();
+    private final List<Biome> biomes = new ArrayList<>();
     private final Random rand;
 
     public TARDISSpawnListener(TARDIS plugin) {
@@ -75,7 +75,7 @@ public class TARDISSpawnListener implements Listener {
      * <p>
      * It also prevents natural mob spawning in the TARDIS DEEP_OCEAN biome.
      *
-     * @param event
+     * @param event A creature spawn event
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntitySpawn(CreatureSpawnEvent event) {
@@ -97,9 +97,7 @@ public class TARDISSpawnListener implements Listener {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
                     TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        event.getEntity().remove();
-                    }, 2L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
                 }
             }
         } else {
@@ -188,7 +186,6 @@ public class TARDISSpawnListener implements Listener {
                     break;
                 }
             }
-
         }
         // check if location is in region
         return three_by_three == 3;
