@@ -167,7 +167,7 @@ junk:
     enabled: true
     return: -1
     particles: true
-# abandoment
+# abandonment
 abandon:
     enabled: true
     reduce_count: true
