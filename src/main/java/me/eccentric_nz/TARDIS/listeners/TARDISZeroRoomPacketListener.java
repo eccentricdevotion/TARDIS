@@ -45,12 +45,12 @@ public final class TARDISZeroRoomPacketListener implements Listener {
     /**
      * Prevents the occupants of zero rooms from sending or receiving chat.
      *
-     * @param plugin An instance of the TARDIS plugin
+     * @param instance An instance of the TARDIS plugin
      */
-    public TARDISZeroRoomPacketListener(TARDIS plugin) {
+    public TARDISZeroRoomPacketListener(TARDIS instance) {
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
         manager.addPacketListener(
-                new PacketAdapter(plugin, ListenerPriority.NORMAL, Collections.singletonList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
+                new PacketAdapter(instance, ListenerPriority.NORMAL, Collections.singletonList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
                     @Override
                     public void onPacketSending(PacketEvent event) {
                         boolean send = false;
@@ -75,13 +75,13 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                                                 }
                                             }
                                         }
-                                        if (!send && plugin.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
+                                        if (!send && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
                                             event.setCancelled(true);
                                         }
                                     }
                                 } catch (JSONException e) {
-                                    plugin.debug("Invalid JSON in packet!");
-                                    plugin.debug(json);
+                                    instance.debug("Invalid JSON in packet!");
+                                    instance.debug(json);
                                 }
                             }
                         }
