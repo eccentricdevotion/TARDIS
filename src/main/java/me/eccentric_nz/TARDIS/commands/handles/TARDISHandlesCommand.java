@@ -62,7 +62,7 @@ public class TARDISHandlesCommand implements CommandExecutor {
             case "remind":
                 return new TARDISHandlesRemindCommand(plugin).doReminder(player, args);
             case "say":
-                return new TARDISHandlesSayCommand(plugin).say(player, args);
+                return new TARDISHandlesSayCommand().say(player, args);
             case "scan":
                 return new TARDISHandlesScanCommand(plugin, player, TARDISNumberParsers.parseInt(args[2])).sayScan();
             case "takeoff":
