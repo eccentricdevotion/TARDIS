@@ -94,18 +94,8 @@ public class TARDISArchInventory {
             if (rsToInv.next()) {
                 // set their inventory to the saved one
                 try {
-                    String to_inv = rsToInv.getString("inventory");
-                    ItemStack[] i;
-                    ItemStack[] a;
-                    if (to_inv.startsWith("[")) {
-                        // old data format
-                        i = TARDISInventorySerialization.toItemStacks(to_inv);
-                        a = TARDISInventorySerialization.toItemStacks(rsToInv.getString("armour"));
-                    } else {
-                        // new data format - supports Fireworks meta
-                        i = TARDISArchSerialization.fromDatabase(to_inv);
-                        a = TARDISArchSerialization.fromDatabase(rsToInv.getString("armour"));
-                    }
+                    ItemStack[] i = TARDISArchSerialization.fromDatabase(rsToInv.getString("inventory"));
+                    ItemStack[] a = TARDISArchSerialization.fromDatabase(rsToInv.getString("armour"));
                     p.getInventory().setContents(i);
                     p.getInventory().setArmorContents(a);
                     reapplyCustomAttributes(p, rsToInv.getString("attributes"));
