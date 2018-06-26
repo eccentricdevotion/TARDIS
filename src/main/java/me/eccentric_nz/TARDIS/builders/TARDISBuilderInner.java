@@ -116,8 +116,7 @@ public class TARDISBuilderInner {
         HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
         HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
         HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
+        HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Location ender = null;
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
@@ -205,8 +204,8 @@ public class TARDISBuilderInner {
                     if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0 && !below) {
                         world.setBiome(x, z, Biome.VOID);
                     }
-                    type = Material.valueOf((String) c.get("type"));
                     data = plugin.getServer().createBlockData(c.getString("data"));
+                    type = data.getMaterial();
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
                         String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
@@ -373,7 +372,6 @@ public class TARDISBuilderInner {
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
                         if (type.equals(Material.COMMAND_BLOCK)) {
-//                            type = Material.STONE_BRICKS;
                             data = Material.STONE_BRICKS.createBlockData();
                             if (schm.getPermission().equals("ender")) {
                                 data = Material.END_STONE_BRICKS.createBlockData();
@@ -426,17 +424,13 @@ public class TARDISBuilderInner {
                         postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.LEVER)) {
                         postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.WALL_SIGN)) {
+                    } else if (type.equals(Material.WALL_SIGN) || type.equals(Material.SIGN)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (TARDISStaticUtils.isBanner(type)) {
                         JSONObject state = c.optJSONObject("banner");
                         if (state != null) {
-                            TARDISBannerData tbd = new TARDISBannerData(type, data, state);
-                            if (TARDISStaticUtils.isStandingBanner(type)) {
-                                postStandingBanners.put(world.getBlockAt(x, y, z), tbd);
-                            } else {
-                                postWallBanners.put(world.getBlockAt(x, y, z), tbd);
-                            }
+                            TARDISBannerData tbd = new TARDISBannerData(data, state);
+                            postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
                         }
                     } else if (TARDISStaticUtils.isInfested(type)) {
                         // legacy monster egg stone for controls
@@ -530,7 +524,6 @@ public class TARDISBuilderInner {
             if (s == 0) {
                 // always make the control centre the first sign
                 Block psb = entry.getKey();
-//                psb.setType(Material.WALL_SIGN);
                 psb.setData(entry.getValue());
                 if (entry.getValue().getMaterial().equals(Material.WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
@@ -553,8 +546,7 @@ public class TARDISBuilderInner {
             lamp.setType(lantern);
         });
         lampblocks.clear();
-        TARDISBannerSetter.setBanners(postStandingBanners);
-        TARDISBannerSetter.setBanners(postWallBanners);
+        TARDISBannerSetter.setBanners(postBannerBlocks);
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {

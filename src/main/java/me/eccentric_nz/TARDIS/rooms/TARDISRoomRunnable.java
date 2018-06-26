@@ -79,8 +79,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> standingBanners = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> wallBanners = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private JSONArray arr;
@@ -226,8 +225,7 @@ public class TARDISRoomRunnable implements Runnable {
             redstoneTorchblocks.forEach((key, value) -> key.setData(value, true));
             torchblocks.clear();
             // set banners
-            setBanners(standingBanners);
-            setBanners(wallBanners);
+            setBanners(bannerblocks);
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 chunkList.forEach((ch) -> {
@@ -247,8 +245,8 @@ public class TARDISRoomRunnable implements Runnable {
         } else {
             // place one block
             JSONObject v = arr.getJSONArray(level).getJSONArray(row).getJSONObject(col);
-            type = Material.valueOf(v.getString("type"));
             data = plugin.getServer().createBlockData(v.getString("data"));
+            type = data.getMaterial();
 //            if (type.equals(Material.DROPPER)) {
 //                byte bit = data;
 //                switch (bit) {
@@ -454,12 +452,8 @@ public class TARDISRoomRunnable implements Runnable {
                 Block banner = world.getBlockAt(startx, starty, startz);
                 JSONObject state = v.optJSONObject("banner");
                 if (state != null) {
-                    TARDISBannerData tbd = new TARDISBannerData(type, data, state);
-                    if (TARDISStaticUtils.isStandingBanner(type)) {
-                        standingBanners.put(banner, tbd);
-                    } else {
-                        wallBanners.put(banner, tbd);
-                    }
+                    TARDISBannerData tbd = new TARDISBannerData(data, state);
+                    bannerblocks.put(banner, tbd);
                 }
             }
             if (type.equals(Material.FARMLAND)) {

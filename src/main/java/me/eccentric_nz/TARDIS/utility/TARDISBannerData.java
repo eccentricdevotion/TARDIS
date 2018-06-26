@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
-import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 
 /**
@@ -25,18 +24,12 @@ import org.bukkit.block.data.BlockData;
  */
 public class TARDISBannerData {
 
-    private final Material material;
     private final BlockData data;
     private final JSONObject state;
 
-    public TARDISBannerData(Material material, BlockData data, JSONObject state) {
-        this.material = material;
+    public TARDISBannerData(BlockData data, JSONObject state) {
         this.data = data;
         this.state = state;
-    }
-
-    public Material getMaterial() {
-        return material;
     }
 
     public BlockData getData() {

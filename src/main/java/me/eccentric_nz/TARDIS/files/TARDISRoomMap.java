@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
+import org.bukkit.block.data.BlockData;
 
 import java.io.File;
 import java.util.HashMap;
@@ -98,7 +99,9 @@ public class TARDISRoomMap {
                     JSONArray r = (JSONArray) floor.get(row);
                     for (int col = 0; col < l; col++) {
                         JSONObject c = (JSONObject) r.get(col);
-                        String bid = c.getString("type");
+                        // TODO create method to extract Material string from stored BlockData string as we don't want to create BlockData instances if we don't need to
+                        BlockData data = plugin.getServer().createBlockData(c.getString("data"));
+                        String bid = data.getMaterial().toString();
                         if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
                         }

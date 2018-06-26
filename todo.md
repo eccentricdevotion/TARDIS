@@ -5,6 +5,8 @@
 
 ## Next version `4.0-beta-1`
 1. Update to Minecraft/Spigot 1.13 - _started_
+   * **All we need is BlockData!** - _started_
+   * Update `TARDISDataRecalculator.java` to return properly calculated BlockData
    * Update ARS records at first run - _started_
    * Update configs - _started_
    * Update / test schematic creation / pasting - _started_

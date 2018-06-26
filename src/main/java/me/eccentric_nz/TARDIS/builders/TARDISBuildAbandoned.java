@@ -112,8 +112,7 @@ class TARDISBuildAbandoned {
         HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
         HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
         HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
+        HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Location ender = null;
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
@@ -160,8 +159,8 @@ class TARDISBuildAbandoned {
                     if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                         world.setBiome(x, z, Biome.VOID);
                     }
-                    type = Material.valueOf((String) c.get("type"));
                     data = plugin.getServer().createBlockData(c.getString("data"));
+                    type = data.getMaterial();
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
                         String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
@@ -375,12 +374,8 @@ class TARDISBuildAbandoned {
                     } else if (TARDISStaticUtils.isBanner(type)) {
                         JSONObject state = c.optJSONObject("banner");
                         if (state != null) {
-                            TARDISBannerData tbd = new TARDISBannerData(type, data, state);
-                            if (TARDISStaticUtils.isStandingBanner(type)) {
-                                postStandingBanners.put(world.getBlockAt(x, y, z), tbd);
-                            } else {
-                                postWallBanners.put(world.getBlockAt(x, y, z), tbd);
-                            }
+                            TARDISBannerData tbd = new TARDISBannerData(data, state);
+                            postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
                         }
                     } else if (TARDISStaticUtils.isInfested(type)) {
                         // legacy monster egg stone for controls
@@ -491,8 +486,7 @@ class TARDISBuildAbandoned {
             lamp.setType(lantern);
         });
         lampblocks.clear();
-        TARDISBannerSetter.setBanners(postStandingBanners);
-        TARDISBannerSetter.setBanners(postWallBanners);
+        TARDISBannerSetter.setBanners(postBannerBlocks);
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().addWGProtection(UUID.randomUUID().toString(), pos, world);
         }

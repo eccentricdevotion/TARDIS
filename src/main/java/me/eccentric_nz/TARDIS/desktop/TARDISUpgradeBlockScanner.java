@@ -31,6 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.io.File;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class TARDISUpgradeBlockScanner {
     private int startz;
     private int count = 0;
     private Material type;
-    private byte data;
+    private BlockData data;
 
     public TARDISUpgradeBlockScanner(TARDIS plugin, TARDISUpgradeData tud, UUID uuid) {
         this.plugin = plugin;
@@ -118,8 +119,8 @@ public class TARDISUpgradeBlockScanner {
                         int x = startx + row;
                         int y = starty + level;
                         int z = startz + col;
-                        type = Material.valueOf((String) c.get("type"));
-                        data = c.getByte("data");
+                        data = plugin.getServer().createBlockData(c.getString("data"));
+                        type = data.getMaterial();
                         Block b = world.getBlockAt(x, y, z);
                         if (type.equals(Material.ORANGE_WOOL)) {
                             type = wall_type;
@@ -210,7 +211,6 @@ public class TARDISUpgradeBlockScanner {
                             v--;
                         }
                         if (!b.getType().equals(type)) {
-                            //plugin.debug(b.getType().toString() + " != " + type.toString());
                             count++;
                         }
                     }

@@ -98,7 +98,7 @@ public class TARDISExteriorRenderer {
                                     ib.setType(Material.ORANGE_WOOL, true);
                                     break;
                                 default:
-                                    ib.setType(eb.getType());
+                                    ib.setData(eb.getBlockData(), true);
                             }
                         }
                         zz++;

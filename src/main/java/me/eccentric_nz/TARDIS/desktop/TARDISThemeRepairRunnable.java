@@ -374,8 +374,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                     world.setBiome(x, z, Biome.VOID);
                 }
-                Material type = Material.valueOf((String) bb.get("type"));
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
+                Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -41,8 +40,7 @@ class TARDISSchematicPaster {
     private final TARDIS plugin;
     private final Player player;
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
 
     public TARDISSchematicPaster(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -79,10 +77,9 @@ class TARDISSchematicPaster {
                 JSONArray row = (JSONArray) level.get(w);
                 for (int l = 0; l < len; l++) {
                     JSONObject col = (JSONObject) row.get(l);
-                    Material m = Material.valueOf((String) col.get("type"));
                     BlockData data = plugin.getServer().createBlockData(col.getString("data"));
                     Block block = world.getBlockAt(x + w, y + h, z + l);
-                    switch (m) {
+                    switch (data.getMaterial()) {
                         case REDSTONE_TORCH:
                             postRedstoneTorches.put(block, data);
                             break;
@@ -90,16 +87,11 @@ class TARDISSchematicPaster {
                         case WHITE_WALL_BANNER:
                             JSONObject state = col.optJSONObject("banner");
                             if (state != null) {
-                                TARDISBannerData tbd = new TARDISBannerData(m, data, state);
-                                if (TARDISStaticUtils.isStandingBanner(m)) {
-                                    postStandingBanners.put(block, tbd);
-                                } else {
-                                    postWallBanners.put(block, tbd);
-                                }
+                                TARDISBannerData tbd = new TARDISBannerData(data, state);
+                                postBanners.put(block, tbd);
                             }
                             break;
                         default:
-//                            block.setType(m);
                             block.setData(data, true);
                             break;
                     }
@@ -110,8 +102,7 @@ class TARDISSchematicPaster {
             prtb.setType(Material.REDSTONE_TORCH, true);
             prtb.setData(ptdata);
         });
-        setBanners(postStandingBanners);
-        setBanners(postWallBanners);
+        setBanners(postBanners);
         return true;
     }
 }

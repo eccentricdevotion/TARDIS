@@ -423,8 +423,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                     world.setBiome(x, z, Biome.VOID);
                 }
-                Material type = Material.valueOf((String) bb.get("type"));
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
+                Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -553,7 +553,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
                     if (type.equals(Material.COMMAND_BLOCK)) {
-//                        type = Material.STONE_BRICKS;
                         data = Material.STONE_BRICKS.createBlockData();
                         if (tud.getSchematic().getPermission().equals("ender")) {
                             data = Material.END_STONE_BRICKS.createBlockData();

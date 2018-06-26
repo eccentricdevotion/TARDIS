@@ -29,6 +29,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.HashMap;
 
@@ -139,39 +140,39 @@ public class TARDISSchematicBuilder {
                 for (int c = minz; c <= maxz; c++) {
                     JSONObject obj = new JSONObject();
                     Block b = w.getBlockAt(r, l, c);
-                    Material m = b.getType();
-                    String mat = m.toString();
+                    BlockData data = b.getBlockData();
+                    Material m = data.getMaterial();
                     // set ARS block
                     if (ars && m.equals(Material.AIR)) {
-                        mat = "INFESTED_COBBLESTONE";
+                        data = Material.INFESTED_COBBLESTONE.createBlockData();
                         ars = false;
                     }
                     switch (m) {
                         case REPEATER:
                             // random location blocks
                             if (isControlBlock(map.get(f), w, r, l, c)) {
-                                mat = "BROWN_MUSHROOM_BLOCK";
+                                // TODO set BlockData as all outer
+                                data = Material.BROWN_MUSHROOM_BLOCK.createBlockData();
                                 f++;
                             }
                             break;
                         case LEVER:
                             // handbrake
                             if (isControlBlock(h, w, r, l, c)) {
-                                mat = "CAKE";
+                                data = Material.CAKE.createBlockData();
                             }
                             break;
                         default:
                             break;
                     }
                     if (l == by && r == bx && c == bz) {
-                        mat = "BEDROCK";
+                        data = Material.BEDROCK.createBlockData();
                     }
                     if (l == cy && r == cx && c == cz) {
-                        mat = (m.equals(Material.BEACON)) ? "BEACON" : "COMMAND";
+                        data = (m.equals(Material.BEACON)) ? Material.BEACON.createBlockData() : Material.COMMAND_BLOCK.createBlockData();
                         beacon = (m.equals(Material.BEACON)) ? 1 : 0;
                     }
-                    obj.put("type", mat);
-                    obj.put("data", b.getBlockData().getAsString());
+                    obj.put("data", data.getAsString());
                     // banners
                     if (TARDISStaticUtils.isBanner(m)) {
                         JSONObject state = new JSONObject();

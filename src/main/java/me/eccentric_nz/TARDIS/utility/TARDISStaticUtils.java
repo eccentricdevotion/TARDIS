@@ -301,28 +301,4 @@ public class TARDISStaticUtils {
                 return false;
         }
     }
-
-    public static boolean isStandingBanner(Material material) {
-        switch (material) {
-            case BLACK_BANNER:
-            case BLUE_BANNER:
-            case BROWN_BANNER:
-            case CYAN_BANNER:
-            case GRAY_BANNER:
-            case GREEN_BANNER:
-            case LIGHT_BLUE_BANNER:
-            case LIGHT_GRAY_BANNER:
-            case LIME_BANNER:
-            case MAGENTA_BANNER:
-            case ORANGE_BANNER:
-            case PINK_BANNER:
-            case PURPLE_BANNER:
-            case RED_BANNER:
-            case WHITE_BANNER:
-            case YELLOW_BANNER:
-                return true;
-            default:
-                return false;
-        }
-    }
 }

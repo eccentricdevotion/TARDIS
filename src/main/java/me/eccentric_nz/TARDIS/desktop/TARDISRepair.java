@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -150,7 +151,8 @@ class TARDISRepair {
                             int y = starty + level;
                             int z = startz + col;
                             JSONObject c = (JSONObject) r.get(col);
-                            String bid = c.getString("type");
+                            BlockData data = plugin.getServer().createBlockData(c.getString("data"));
+                            String bid = data.getMaterial().toString();
                             if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                                 continue;
                             }
@@ -161,6 +163,7 @@ class TARDISRepair {
                                     continue;
                                 }
                             }
+                            // TODO process WOOL properly - use Tag + Material
                             if (bid.equals("WOOL")) {
                                 switch (c.getByte("data")) {
                                     case 1:

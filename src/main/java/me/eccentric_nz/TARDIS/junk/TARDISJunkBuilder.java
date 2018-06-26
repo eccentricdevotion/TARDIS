@@ -123,8 +123,8 @@ public class TARDISJunkBuilder implements Runnable {
                                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                                     world.setBiome(x, z, Biome.VOID);
                                 }
-                                type = Material.getMaterial(c.getString("type"));
                                 data = plugin.getServer().createBlockData(c.getString("data"));
+                                type = data.getMaterial();
                                 if (type.equals(Material.CAKE)) {
                                     /*
                                      * This block will be converted to a lever

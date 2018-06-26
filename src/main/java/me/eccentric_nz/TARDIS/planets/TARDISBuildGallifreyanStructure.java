@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -151,8 +150,7 @@ class TARDISBuildGallifreyanStructure {
         HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
         HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
         HashMap<Block, BlockData> postLadderBlocks = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postStandingBanners = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postWallBanners = new HashMap<>();
+        HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Block chest;
         Material type;
         BlockData data;
@@ -170,8 +168,8 @@ class TARDISBuildGallifreyanStructure {
                     int y = starty + level;
                     int z = startz + col;
 
-                    type = Material.valueOf((String) c.get("type"));
                     data = plugin.getServer().createBlockData(c.getString("data"));
+                    type = data.getMaterial();
 
                     // if it's the door, don't set it just remember its block then do it at the end
                     switch (type) {
@@ -261,12 +259,8 @@ class TARDISBuildGallifreyanStructure {
                         case YELLOW_WALL_BANNER:
                             JSONObject state = c.optJSONObject("banner");
                             if (state != null) {
-                                TARDISBannerData tbd = new TARDISBannerData(type, data, state);
-                                if (TARDISStaticUtils.isStandingBanner(type)) {
-                                    postStandingBanners.put(world.getBlockAt(x, y, z), tbd);
-                                } else {
-                                    postWallBanners.put(world.getBlockAt(x, y, z), tbd);
-                                }
+                                TARDISBannerData tbd = new TARDISBannerData(data, state);
+                                postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
                             }
                             break;
                         case SPONGE:
@@ -290,38 +284,30 @@ class TARDISBuildGallifreyanStructure {
         }
         // put on the door, redstone torches, signs, and the repeaters
         postDoorBlocks.forEach((pdb, value) -> {
-            //            pdb.setType(Material.IRON_DOOR);
             pdb.setData(value);
         });
         postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
         postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
         postSignBlocks.forEach((psb, value) -> {
-            //            prb.setType(Material.WALL_SIGN);
             psb.setData(value);
         });
         postStickyPistonBaseBlocks.forEach((pspb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-//            pspb.setType(Material.STICKY_PISTON);
             pspb.setData(value);
         });
         postPistonBaseBlocks.forEach((ppb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-//            ppb.setType(Material.PISTON);
             ppb.setData(value);
         });
         postPistonExtensionBlocks.forEach((ppeb, value) -> {
-            //            ppeb.setType(Material.PISTON_HEAD);
             ppeb.setData(value);
         });
         postLeverBlocks.forEach((plb, value) -> {
-            //            plb.setType(Material.LEVER);
             plb.setData(value);
         });
         postLadderBlocks.forEach((pldb, value) -> {
-            //            pldb.setType(Material.LADDER);
             pldb.setData(value);
         });
-        setBanners(postStandingBanners);
-        setBanners(postWallBanners);
+        setBanners(postBannerBlocks);
     }
 }
