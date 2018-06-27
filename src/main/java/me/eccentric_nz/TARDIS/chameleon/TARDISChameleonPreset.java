@@ -246,6 +246,17 @@ public class TARDISChameleonPreset {
         boat.makePresets(true, false);
     }
 
+    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric, boolean duck) {
+        TARDISChameleonColumn tcc;
+        BlockData[][] blockDataArr = getBlockDataFromArray(strings);
+        if (d.equals(COMPASS.EAST)) {
+            tcc = new TARDISChameleonColumn(blockDataArr);
+        } else {
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
+        }
+        return tcc;
+    }
+
     public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric, boolean duck) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
@@ -255,6 +266,22 @@ public class TARDISChameleonPreset {
             tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
         }
         return tcc;
+    }
+
+    /**
+     * Converts a 2D String array to a 2D BlockData array.
+     *
+     * @param arr the String array
+     * @return a 2D array of BlockData
+     */
+    private static BlockData[][] getBlockDataFromArray(String[][] arr) {
+        BlockData[][] preset = new BlockData[10][4];
+        for (int col = 0; col < 10; col++) {
+            for (int block = 0; block < 4; block++) {
+                preset[col][block] = Bukkit.createBlockData(arr[col][block]);
+            }
+        }
+        return preset;
     }
 
     /**

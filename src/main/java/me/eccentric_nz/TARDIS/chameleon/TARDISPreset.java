@@ -29,9 +29,9 @@ import java.util.EnumMap;
  */
 class TARDISPreset {
 
-    private String blueprint_id;
-    private String stained_id;
-    private String glass_id;
+    private String[][] blueprintData;
+    private String[][] stainedData;
+    private String[][] glassData;
     private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
@@ -41,9 +41,9 @@ class TARDISPreset {
 
     public void makePresets(boolean assymetric, boolean duck) {
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint_id, assymetric, duck));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained_id, assymetric, duck));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glass_id, assymetric, duck));
+            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, assymetric, duck));
+            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData, assymetric, duck));
+            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData, assymetric, duck));
         }
     }
 
@@ -59,27 +59,15 @@ class TARDISPreset {
         return glass;
     }
 
-    public String getBlueprint_id() {
-        return blueprint_id;
+    void setBlueprintData(String[][] blueprintData) {
+        this.blueprintData = blueprintData;
     }
 
-    void setBlueprint_id(String blueprint_id) {
-        this.blueprint_id = blueprint_id;
+    void setStainedData(String[][] stainedData) {
+        this.stainedData = stainedData;
     }
 
-    public String getStained_id() {
-        return stained_id;
-    }
-
-    void setStained_id(String stained_id) {
-        this.stained_id = stained_id;
-    }
-
-    public String getGlass_id() {
-        return glass_id;
-    }
-
-    void setGlass_id(String glass_id) {
-        this.glass_id = glass_id;
+    void setGlassData(String[][] glassData) {
+        this.glassData = glassData;
     }
 }

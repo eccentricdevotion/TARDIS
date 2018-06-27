@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -45,8 +47,18 @@ public class TARDISConstructColumn {
         where.put("tardis_id", id);
         ResultSetChameleon rs = new ResultSetChameleon(plugin, where);
         if (rs.resultSet()) {
-            String json = rs.getData().get(field + "ID");
-            return TARDISChameleonPreset.buildTARDISChameleonColumn(d, json, false, false);
+            String json = rs.getData().get(field);
+            // convert to String[][] array
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray outer = (JSONArray) jsonObject.get("input");
+            String[][] strings = new String[10][4];
+            for (int i = 0; i < 10; i++) {
+                JSONArray inner = (JSONArray) outer.get(i);
+                for (int j = 0; j < 4; j++) {
+                    strings[i][j] = inner.getString(j);
+                }
+            }
+            return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, false, false);
         }
         return null;
     }

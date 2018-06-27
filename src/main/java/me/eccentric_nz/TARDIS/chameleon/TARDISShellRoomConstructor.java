@@ -68,19 +68,18 @@ public class TARDISShellRoomConstructor {
             int fy = block_loc.getBlockY() + 1;
             int fz = block_loc.getBlockZ() - 1;
             TARDISMessage.send(player, "PRESET_SCAN");
-            StringBuilder sb_id = new StringBuilder("[");
-            StringBuilder sb_data = new StringBuilder("[");
+            StringBuilder sb_blue_data = new StringBuilder("[");
             // TODO get all block data as need to keep sign...
-            StringBuilder sb_stain_mat = new StringBuilder("[");
-            StringBuilder sb_glass_id = new StringBuilder("[");
+            StringBuilder sb_stain_data = new StringBuilder("[");
+            StringBuilder sb_glass_data = new StringBuilder("[");
             for (int c = 0; c < 10; c++) {
-                sb_id.append("[");
-                sb_data.append("[");
-                sb_stain_mat.append("[");
-                sb_glass_id.append("[");
+                sb_blue_data.append("[");
+                sb_stain_data.append("[");
+                sb_glass_data.append("[");
                 for (int y = fy; y < (fy + 4); y++) {
                     Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                     Material material = b.getType();
+                    // TODO need to use BlockData.getAsString()
                     String matStr = material.toString();
                     if (material.equals(Material.SPONGE)) {
                         matStr = "AIR"; // convert sponge to air
@@ -90,51 +89,44 @@ public class TARDISShellRoomConstructor {
                     }
                     BlockData data = b.getBlockData();
                     if (y == (fy + 3)) {
-                        sb_id.append(matStr);
-                        sb_data.append(data.getAsString());
+                        sb_blue_data.append(data.getAsString());
                         if (TARDISMaterials.not_glass.contains(material)) {
-                            sb_stain_mat.append(matStr);
-                            sb_glass_id.append(matStr);
+                            sb_stain_data.append(matStr);
+                            sb_glass_data.append(matStr);
                         } else {
                             String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
-                            sb_stain_mat.append(colour);
-                            sb_glass_id.append("GLASS");
+                            sb_stain_data.append(colour);
+                            sb_glass_data.append("GLASS");
                         }
                     } else {
-                        sb_id.append(matStr).append(",");
-                        sb_data.append(data.getAsString()).append(",");
+                        sb_blue_data.append(data.getAsString()).append(",");
                         if (TARDISMaterials.not_glass.contains(material)) {
-                            sb_stain_mat.append(matStr).append(",");
-                            sb_glass_id.append(matStr).append(",");
+                            sb_stain_data.append(matStr).append(",");
+                            sb_glass_data.append(matStr).append(",");
                         } else {
                             String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
-                            sb_stain_mat.append(colour).append(",");
-                            sb_glass_id.append("GLASS,");
+                            sb_stain_data.append(colour).append(",");
+                            sb_glass_data.append("GLASS,");
                         }
                     }
                 }
                 if (c == 9) {
-                    sb_id.append("]");
-                    sb_data.append("]");
-                    sb_stain_mat.append("]");
-                    sb_glass_id.append("]");
+                    sb_blue_data.append("]");
+                    sb_stain_data.append("]");
+                    sb_glass_data.append("]");
                 } else {
-                    sb_id.append("],");
-                    sb_data.append("],");
-                    sb_stain_mat.append("],");
-                    sb_glass_id.append("],");
+                    sb_blue_data.append("],");
+                    sb_stain_data.append("],");
+                    sb_glass_data.append("],");
                 }
             }
-            sb_id.append("]");
-            sb_data.append("]");
-            sb_stain_mat.append("]");
-            sb_glass_id.append("]");
-            String ids = sb_id.toString();
-            String datas = sb_data.toString();
-            String stain_ids = sb_stain_mat.toString();
-            String glass_ids = sb_glass_id.toString();
-            String jsonBlue = new JSONArray(ids).toString();
-            String jsonData = new JSONArray(datas).toString();
+            sb_blue_data.append("]");
+            sb_stain_data.append("]");
+            sb_glass_data.append("]");
+            String datas = sb_blue_data.toString();
+            String stain_ids = sb_stain_data.toString();
+            String glass_ids = sb_glass_data.toString();
+            String jsonBlue = new JSONArray(datas).toString();
             String jsonStain = new JSONArray(stain_ids).toString();
             String jsonGlass = new JSONArray(glass_ids).toString();
             // save chameleon construct
@@ -143,10 +135,9 @@ public class TARDISShellRoomConstructor {
             ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("blueprintID", jsonBlue);
-            set.put("blueprintData", jsonData);
-            set.put("stainID", jsonStain);
-            set.put("glassID", jsonGlass);
+            set.put("blueprintData", jsonBlue);
+            set.put("stainData", jsonStain);
+            set.put("glassData", jsonGlass);
             // read the sign
             if (sign != null) {
                 Sign s = (Sign) sign;
