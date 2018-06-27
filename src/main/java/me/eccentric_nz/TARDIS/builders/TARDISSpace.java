@@ -50,7 +50,7 @@ public class TARDISSpace {
      * Gets custom world for the specified TARDIS. If the world does not exist, it is created.
      *
      * @param name the name of this world
-     * @return a new TARDID World
+     * @return a new TARDIS World
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
