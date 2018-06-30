@@ -75,7 +75,17 @@ public class ResultSetArchive {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    archive = new Archive(rs.getInt("archive_id"), UUID.fromString(rs.getString("uuid")), rs.getString("name"), rs.getString("console_size"), rs.getBoolean("beacon"), rs.getBoolean("lanterns"), rs.getInt("use"), new JSONObject(rs.getString("data")), rs.getString("description"));
+                    archive = new Archive(
+                            rs.getInt("archive_id"),
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getString("name"),
+                            rs.getString("console_size"),
+                            rs.getBoolean("beacon"),
+                            rs.getBoolean("lanterns"),
+                            rs.getInt("use"),
+                            new JSONObject(rs.getString("data")),
+                            rs.getString("description")
+                    );
                 }
             } else {
                 return false;

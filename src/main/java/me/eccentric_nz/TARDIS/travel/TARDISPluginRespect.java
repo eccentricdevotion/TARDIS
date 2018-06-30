@@ -103,7 +103,7 @@ public class TARDISPluginRespect {
         if (flag.repectWorldBorder()) {
             if (plugin.isHelperOnServer()) {
                 WorldBorder wb = l.getWorld().getWorldBorder();
-                if (!TARDISVanillaBorderChecker.isInBorder(wb, l)) {
+                if (!wb.isInside(l)) {
                     if (flag.messagePlayer()) {
                         TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
                     }
