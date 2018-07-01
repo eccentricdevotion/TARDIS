@@ -396,7 +396,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             try {
                                 Biome biome = Biome.valueOf(upper);
                                 TARDISMessage.send(player, "BIOME_SEARCH");
-
+                                World w;
+                                int x;
+                                int z;
                                 HashMap<String, Object> wherecl = new HashMap<>();
                                 wherecl.put("tardis_id", id);
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -404,11 +406,35 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
-                                if (rsc.getWorld().getName().equals("Skaro")) {
-                                    TARDISMessage.send(player, "BIOME_NOT_SKARO");
-                                    return true;
+                                // have they specified a world argument?
+                                if (args.length > 2) {
+                                    // must be in the vortex
+                                    if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        TARDISMessage.send(player, "BIOME_FROM_VORTEX");
+                                        return true;
+                                    }
+                                    if (args[2].equalsIgnoreCase("Skaro")) {
+                                        TARDISMessage.send(player, "BIOME_NOT_SKARO");
+                                        return true;
+                                    }
+                                    // get the world
+                                    w = plugin.getServer().getWorld(args[2]);
+                                    if (w == null) {
+                                        TARDISMessage.send(player, "WORLD_DELETED", args[2]);
+                                        return true;
+                                    }
+                                    x = 0;
+                                    z = 0;
+                                } else {
+                                    if (rsc.getWorld().getName().equals("Skaro")) {
+                                        TARDISMessage.send(player, "BIOME_NOT_SKARO");
+                                        return true;
+                                    }
+                                    w = rsc.getWorld();
+                                    x = rsc.getX() + 5;
+                                    z = rsc.getZ() + 5;
                                 }
-                                Location tb = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX() + 5, rsc.getZ() + 5);
+                                Location tb = searchBiome(player, id, biome, w, x, z);
                                 if (tb == null) {
                                     TARDISMessage.send(player, "BIOME_NOT_FOUND");
                                     return true;

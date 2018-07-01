@@ -22,7 +22,7 @@
    * Add transmat to Handles requests - _started_
 8. `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
 9. Save PRESET when performing `/tardis save [name] true` - _started_
-10. Tardis biome travel world selection (only if drifting in Time Vortex) - `/ttravel biome [biome] [world]`
+10. Tardis biome travel world selection (only if drifting in Time Vortex) - `/ttravel biome [biome] [world]` - _started_
 10. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
