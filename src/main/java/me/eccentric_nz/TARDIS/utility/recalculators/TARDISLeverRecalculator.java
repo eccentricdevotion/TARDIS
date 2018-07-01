@@ -92,5 +92,4 @@ public class TARDISLeverRecalculator {
         }
         return lever;
     }
-
 }

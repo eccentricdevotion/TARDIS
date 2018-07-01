@@ -112,5 +112,4 @@ public class TARDISStairRecalculator {
         }
         return stair;
     }
-
 }

@@ -230,7 +230,7 @@ public class TARDISRoomRunnable implements Runnable {
             if (chunkList.size() > 0) {
                 chunkList.forEach((ch) -> {
                     if (plugin.getConfig().getBoolean("creation.sky_biome")) {
-                        // refesh the cunk so ctm textures show
+                        // refresh the chunk so ctm textures show
                         //world.refreshChunk(ch.getX(), ch.getZ());
                         plugin.getTardisHelper().refreshChunk(ch);
                     }

@@ -6,7 +6,6 @@
 ## Next version `4.0-beta-1`
 1. Update to Minecraft/Spigot 1.13 - _started_
    * **All we need is BlockData!** - _started_
-   * Update `TARDISDataRecalculator.java` to return properly calculated BlockData
    * Update ARS records at first run - _started_
    * Update configs - _started_
    * Update / test schematic creation / pasting - _started_
@@ -23,6 +22,7 @@
    * Add transmat to Handles requests - _started_
 8. `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
 9. Save PRESET when performing `/tardis save [name] true` - _started_
+10. Tardis biome travel world selection (only if drifting in Time Vortex) - `/ttravel biome [biome] [world]`
 10. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
