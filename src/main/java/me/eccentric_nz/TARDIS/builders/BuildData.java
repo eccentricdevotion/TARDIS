@@ -45,16 +45,8 @@ public final class BuildData extends MaterialisationData {
         return CTM;
     }
 
-    public void setCTM(boolean CTM) {
-        this.CTM = CTM;
-    }
-
     public boolean shouldAddSign() {
         return addSign;
-    }
-
-    public void setAddSign(boolean addSign) {
-        this.addSign = addSign;
     }
 
     public boolean isMalfunction() {
@@ -67,10 +59,6 @@ public final class BuildData extends MaterialisationData {
 
     public boolean useMinecartSounds() {
         return minecartSounds;
-    }
-
-    public void setMinecartSounds(boolean minecartSounds) {
-        this.minecartSounds = minecartSounds;
     }
 
     public boolean isRebuild() {

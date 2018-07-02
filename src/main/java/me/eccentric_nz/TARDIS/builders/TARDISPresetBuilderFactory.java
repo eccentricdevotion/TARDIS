@@ -142,7 +142,7 @@ public class TARDISPresetBuilderFactory {
                     deinsta.instaDestroyPreset(bd, false, demat);
                 }
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id.createBlockData(), 3);
+                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id.createBlockData(), tardis.getAdaption(), 3);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
@@ -156,7 +156,7 @@ public class TARDISPresetBuilderFactory {
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id.createBlockData(), 18);
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id.createBlockData(), tardis.getAdaption(), 18);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
@@ -165,8 +165,7 @@ public class TARDISPresetBuilderFactory {
                 // delay by the usual time so handbrake message shows after materialisation sound
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id.createBlockData(), false);
-                    insta.buildPreset();
+                    new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id.createBlockData(), false).buildPreset();
                 }, 375L);
             }
             // update demat so it knows about the current preset after it has changed
