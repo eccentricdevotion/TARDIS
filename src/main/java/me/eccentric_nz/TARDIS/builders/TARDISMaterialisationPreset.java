@@ -59,10 +59,12 @@ class TARDISMaterialisationPreset implements Runnable {
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
     private final Material[] colours;
+    private final Material[] glassColours;
     private final Random rand;
     private final Material random_colour;
+    private final Material random_glass;
     private final ChatColor sign_colour;
-    private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
+    //    private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
     private Block handbrake;
     private BlockData h_data;
 
@@ -97,7 +99,10 @@ class TARDISMaterialisationPreset implements Runnable {
             glass_column = plugin.getPresets().getGlass(preset, bd.getDirection());
         }
         colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
-        random_colour = colours[rand.nextInt(13)];
+        glassColours = new Material[]{Material.WHITE_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.MAGENTA_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS, Material.LIME_STAINED_GLASS, Material.PINK_STAINED_GLASS, Material.CYAN_STAINED_GLASS, Material.PURPLE_STAINED_GLASS, Material.BLUE_STAINED_GLASS, Material.BROWN_STAINED_GLASS, Material.GREEN_STAINED_GLASS, Material.RED_STAINED_GLASS};
+        int r = rand.nextInt(13);
+        random_colour = colours[r];
+        random_glass = glassColours[r];
         sign_colour = plugin.getUtils().getSignColour();
     }
 
@@ -255,23 +260,25 @@ class TARDISMaterialisationPreset implements Runnable {
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
                                     break;
                                 case WHITE_WOOL:
-                                case ORANGE_WOOL:
-                                case MAGENTA_WOOL:
-                                case LIGHT_BLUE_WOOL:
-                                case YELLOW_WOOL:
+//                                case ORANGE_WOOL:
+//                                case MAGENTA_WOOL:
+//                                case LIGHT_BLUE_WOOL:
+//                                case YELLOW_WOOL:
                                 case LIME_WOOL:
-                                case PINK_WOOL:
-                                case GRAY_WOOL:
-                                case LIGHT_GRAY_WOOL:
-                                case CYAN_WOOL:
-                                case PURPLE_WOOL:
-                                case BLUE_WOOL:
-                                case BROWN_WOOL:
-                                case GREEN_WOOL:
-                                case RED_WOOL:
-                                case BLACK_WOOL:
+//                                case PINK_WOOL:
+//                                case GRAY_WOOL:
+//                                case LIGHT_GRAY_WOOL:
+//                                case CYAN_WOOL:
+//                                case PURPLE_WOOL:
+//                                case BLUE_WOOL:
+//                                case BROWN_WOOL:
+//                                case GREEN_WOOL:
+//                                case RED_WOOL:
+//                                case BLACK_WOOL:
                                     if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
+                                    } else {
+                                        plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, mat);
                                     }
                                     break;
                                 case TORCH: // lamps, glowstone and torches
@@ -613,30 +620,31 @@ class TARDISMaterialisationPreset implements Runnable {
                                 }
                                 break;
                             case WHITE_WOOL:
-                            case ORANGE_WOOL:
-                            case MAGENTA_WOOL:
-                            case LIGHT_BLUE_WOOL:
-                            case YELLOW_WOOL:
+//                            case ORANGE_WOOL:
+//                            case MAGENTA_WOOL:
+//                            case LIGHT_BLUE_WOOL:
+//                            case YELLOW_WOOL:
                             case LIME_WOOL:
-                            case PINK_WOOL:
-                            case GRAY_WOOL:
-                            case LIGHT_GRAY_WOOL:
-                            case CYAN_WOOL:
-                            case PURPLE_WOOL:
+//                            case PINK_WOOL:
+//                            case GRAY_WOOL:
+//                            case LIGHT_GRAY_WOOL:
+//                            case CYAN_WOOL:
+//                            case PURPLE_WOOL:
                             case BLUE_WOOL:
-                            case BROWN_WOOL:
-                            case GREEN_WOOL:
-                            case RED_WOOL:
-                            case BLACK_WOOL:
+//                            case BROWN_WOOL:
+//                            case GREEN_WOOL:
+//                            case RED_WOOL:
+//                            case BLACK_WOOL:
                                 if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
-                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
-                                }
-                                if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                    plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, random_colour);
+                                } else if ((preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && plugin.getConfig().getBoolean("police_box.set_biome")) {
                                     // set a quartz pillar block instead
                                     Directional directional = (Directional) Material.QUARTZ_PILLAR.createBlockData();
                                     BlockFace face = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? BlockFace.NORTH : BlockFace.EAST;
                                     directional.setFacing(face);
-                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisID());
+                                    plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, directional);
+                                } else {
+                                    plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }
                                 break;
                             case TORCH: // lamps, glowstone and torches
@@ -699,19 +707,22 @@ class TARDISMaterialisationPreset implements Runnable {
                             case GREEN_STAINED_GLASS:
                             case RED_STAINED_GLASS:
                             case BLACK_STAINED_GLASS:
-                                Material chad;
+                                Material chad = coldatas[yy].getMaterial();
                                 if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_STAINED_GLASS))) {
-                                    chad = random_colour;
-                                } else {
-                                    // if it was a wool / stained glass / stained clay block get the data from that
+                                    chad = random_glass;
+                                } else if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.FACTORY)) {
+                                    // if it was a wool / stained glass / stained terracotta block get the data from that
                                     BlockData[] finaldatas = column.getBlockData()[n];
                                     Material finalMat = finaldatas[yy].getMaterial();
                                     if (TARDISMaterials.has_colour.contains(finalMat)) {
+                                        String[] split;
                                         if (preset.equals(PRESET.FACTORY)) {
-                                            chad = cham_id.getMaterial();
+                                            split = cham_id.getMaterial().toString().split("_");
                                         } else {
-                                            chad = finaldatas[yy].getMaterial();
+                                            split = finaldatas[yy].getMaterial().toString().split("_");
                                         }
+                                        // convert to glass
+                                        chad = Material.valueOf(split[0] + "_STAINED_GLASS");
                                     } else {
                                         chad = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial());
                                     }
@@ -724,7 +735,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                 } else {
                                     Rotatable rotatable = (Rotatable) coldatas[yy];
                                     rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, rotatable);
                                 }
                                 break;
                             case REDSTONE_BLOCK:
@@ -734,22 +745,22 @@ class TARDISMaterialisationPreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }
                                 break;
-                            case WHITE_TERRACOTTA:
-                            case ORANGE_TERRACOTTA:
-                            case MAGENTA_TERRACOTTA:
-                            case LIGHT_BLUE_TERRACOTTA:
-                            case YELLOW_TERRACOTTA:
-                            case LIME_TERRACOTTA:
-                            case PINK_TERRACOTTA:
-                            case GRAY_TERRACOTTA:
+//                            case WHITE_TERRACOTTA:
+//                            case ORANGE_TERRACOTTA:
+//                            case MAGENTA_TERRACOTTA:
+//                            case LIGHT_BLUE_TERRACOTTA:
+//                            case YELLOW_TERRACOTTA:
+//                            case LIME_TERRACOTTA:
+//                            case PINK_TERRACOTTA:
+//                            case GRAY_TERRACOTTA:
                             case LIGHT_GRAY_TERRACOTTA:
-                            case CYAN_TERRACOTTA:
-                            case PURPLE_TERRACOTTA:
-                            case BLUE_TERRACOTTA:
-                            case BROWN_TERRACOTTA:
-                            case GREEN_TERRACOTTA:
-                            case RED_TERRACOTTA:
-                            case BLACK_TERRACOTTA:
+//                            case CYAN_TERRACOTTA:
+//                            case PURPLE_TERRACOTTA:
+//                            case BLUE_TERRACOTTA:
+//                            case BROWN_TERRACOTTA:
+//                            case GREEN_TERRACOTTA:
+//                            case RED_TERRACOTTA:
+//                            case BLACK_TERRACOTTA:
                                 BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                                 break;
