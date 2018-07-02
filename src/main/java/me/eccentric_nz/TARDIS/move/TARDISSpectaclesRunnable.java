@@ -34,27 +34,20 @@ import java.util.HashMap;
 public class TARDISSpectaclesRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final HashMap<COMPASS, Door> bottom = new HashMap<>();
+    private final HashMap<COMPASS, Door> lower = new HashMap<>();
     private final Door upper;
-//    private final Door lower;
 
     public TARDISSpectaclesRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        // TODO set door facing, hinge, half in BlockData for each compass direction - use Material.createBlockData(String data) method?
-        bottom.put(COMPASS.EAST, (Door) Material.IRON_DOOR.createBlockData());
-        bottom.put(COMPASS.SOUTH, (Door) Material.IRON_DOOR.createBlockData());
-        bottom.put(COMPASS.WEST, (Door) Material.IRON_DOOR.createBlockData());
-        bottom.put(COMPASS.NORTH, (Door) Material.IRON_DOOR.createBlockData());
-//        this.bottom.put(COMPASS.EAST, (byte) 0);
-//        this.bottom.put(COMPASS.SOUTH, (byte) 1);
-//        this.bottom.put(COMPASS.WEST, (byte) 2);
-//        this.bottom.put(COMPASS.NORTH, (byte) 3);
+        Door door = (Door) Material.IRON_DOOR.createBlockData();
+        door.setHalf(Bisected.Half.BOTTOM);
+        door.setHinge(Door.Hinge.RIGHT);
+        lower.put(COMPASS.EAST, calculateFacing(door, COMPASS.EAST));
+        lower.put(COMPASS.SOUTH, calculateFacing(door, COMPASS.SOUTH));
+        lower.put(COMPASS.WEST, calculateFacing(door, COMPASS.WEST));
+        lower.put(COMPASS.NORTH, calculateFacing(door, COMPASS.NORTH));
         upper = (Door) Material.IRON_DOOR.createBlockData();
         upper.setHalf(Bisected.Half.TOP);
-//        lower = (Door) Material.IRON_DOOR.createBlockData();
-//        lower.setHalf(Bisected.Half.BOTTOM);
-//        lower.setHinge(Door.Hinge.RIGHT);
-//        lower.setFacing(BlockFace.EAST);
     }
 
     @Override
@@ -71,12 +64,34 @@ public class TARDISSpectaclesRunnable implements Runnable {
                         wherec.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                         if (rsc.resultSet()) {
-                            p.sendBlockChange(value.getLocation(), bottom.get(rsc.getDirection()));
+                            p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));
                             p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);
                         }
                     }
                 }
             }
         });
+    }
+
+    private Door calculateFacing(Door door, COMPASS compass) {
+        switch (compass) {
+            case SOUTH:
+                // this.bottom.put(COMPASS.SOUTH, (byte) 1);
+                door.setFacing(BlockFace.SOUTH);
+                break;
+            case WEST:
+                // this.bottom.put(COMPASS.WEST, (byte) 2);
+                door.setFacing(BlockFace.WEST);
+                break;
+            case NORTH:
+                // this.bottom.put(COMPASS.NORTH, (byte) 3);
+                door.setFacing(BlockFace.NORTH);
+                break;
+            default:
+                // this.bottom.put(COMPASS.EAST, (byte) 0);
+                door.setFacing(BlockFace.EAST);
+                break;
+        }
+        return door;
     }
 }

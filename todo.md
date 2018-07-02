@@ -12,7 +12,6 @@
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
    * Check sonic replanter / chest sorter features still work
    * Add new biomes (end and ocean)
-   * Correctly set BlockData in `sendBlockChange(Location loc, BlockData data)` in TARDISSpectaclesRunnable
 2. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
 3. Aquarium room - _started_, maybe a Turtle Beach room?
 4. Check database updater (Material) changes

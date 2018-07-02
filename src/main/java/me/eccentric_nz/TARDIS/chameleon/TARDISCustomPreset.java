@@ -40,10 +40,7 @@ public class TARDISCustomPreset {
     private String firstLine;
     private String secondLine;
 
-    public TARDISCustomPreset() {
-    }
-
-    // TODO covert to new BlockData / JSON implementation
+    // TODO convert to new BlockData / JSON implementation
     public void makePresets() {
         // get the custom preset file and read the contents
         // ignore lines that start with a #
