@@ -116,9 +116,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISArtronCapacitorListener(plugin), plugin);
-        if (plugin.isHelperOnServer()) {
-            plugin.getPM().registerEvents(new TARDISArtronFurnaceListener(plugin), plugin);
-        }
+        plugin.getPM().registerEvents(new TARDISArtronFurnaceListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
         if (!plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
@@ -246,9 +244,6 @@ class TARDISListenerRegisterer {
             new TARDISZeroRoomPacketListener(plugin);
         }
         if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
-            TARDISKeyboardPacketListener kpl = new TARDISKeyboardPacketListener(plugin);
-            plugin.getPM().registerEvents(kpl, plugin);
-            kpl.startSignPackets();
             if (plugin.isDisguisesOnServer()) {
                 if (plugin.getConfig().getBoolean("arch.enabled")) {
                     plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);

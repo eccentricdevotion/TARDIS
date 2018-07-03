@@ -182,7 +182,13 @@ public class TARDIS extends JavaPlugin {
         Version minversion = new Version("1.13");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
-            // check for WorldBorder class
+            // TARDISChunkGenerator needs to be enabled
+            if (!loadHelper()) {
+                console.sendMessage(pluginName + ChatColor.RED + "This plugin requires TARDISChunkGenerator to function, disabling...");
+                hasVersion = false;
+                pm.disablePlugin(this);
+                return;
+            }
             hasVersion = true;
             for (Map.Entry<String, String> plg : versions.entrySet()) {
                 if (!checkPluginVersion(plg.getKey(), plg.getValue())) {
@@ -230,7 +236,6 @@ public class TARDIS extends JavaPlugin {
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
-            loadHelper();
             try {
                 difficulty = DIFFICULTY.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
@@ -703,12 +708,14 @@ public class TARDIS extends JavaPlugin {
     /**
      * Checks if the TARDISChunkGenerator plugin is available, and loads support if it is.
      */
-    private void loadHelper() {
+    private boolean loadHelper() {
         if (pm.getPlugin("TARDISChunkGenerator") != null) {
             debug("Hooking into TARDISChunkGenerator!");
             helperOnServer = true;
             tardisHelper = (TARDISHelper) plugin.getPM().getPlugin("TARDISChunkGenerator");
+            return true;
         }
+        return false;
     }
 
     public TARDISHelper getTardisHelper() {

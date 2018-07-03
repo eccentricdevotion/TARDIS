@@ -337,7 +337,7 @@ public class TARDISButtonListener implements Listener {
                                             sign.update();
                                             plugin.getTrackerKeeper().getSign().put(buttonloc, sign);
                                             plugin.getTrackerKeeper().getKeyboard().add(id);
-                                            TARDISKeyboardPacketListener.displaySignEditor(player, block);
+                                            plugin.getTardisHelper().openSignGUI(player, block);
                                         }
                                     } else {
                                         // controls GUI
