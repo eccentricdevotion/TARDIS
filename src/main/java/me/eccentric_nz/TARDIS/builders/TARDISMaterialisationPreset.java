@@ -271,7 +271,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, party, bd.getTardisID());
                                     break;
                                 case BLUE_WOOL:
-                                    BlockData old = (preset.equals(PRESET.OLD) && adapt.equals(ADAPTION.BLOCK)) ? cham_id : colData[yy];
+                                    BlockData old = ((preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && adapt.equals(ADAPTION.BLOCK)) ? cham_id : colData[yy];
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, old, bd.getTardisID());
                                     break;
                                 case TORCH: // lamps, glowstone and torches
@@ -606,12 +606,14 @@ class TARDISMaterialisationPreset implements Runnable {
                                 plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, party);
                                 break;
                             case BLUE_WOOL:
-                                if ((preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                if (adapt.equals(ADAPTION.OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && plugin.getConfig().getBoolean("police_box.set_biome")) {
                                     // set a quartz pillar block instead
                                     Directional directional = (Directional) Material.QUARTZ_PILLAR.createBlockData();
                                     BlockFace face = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? BlockFace.NORTH : BlockFace.EAST;
                                     directional.setFacing(face);
                                     plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, directional);
+                                } else if (adapt.equals(ADAPTION.BLOCK) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                    plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, cham_id);
                                 } else {
                                     plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, mat);
                                 }
