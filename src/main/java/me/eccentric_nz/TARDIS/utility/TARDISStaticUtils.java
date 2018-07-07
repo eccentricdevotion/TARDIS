@@ -188,20 +188,6 @@ public class TARDISStaticUtils {
     }
 
     /**
-     * Get a shortened name for a sign.
-     *
-     * @param name    the name to shorten
-     * @param useDots whether to add dots after the shortened name
-     * @return the shortened name
-     */
-    public static String getShortenedName(String name, boolean useDots) {
-        if (name.length() > 16) {
-            name = useDots ? name.substring(0, 14) + ".." : name.substring(0, 16);
-        }
-        return name;
-    }
-
-    /**
      * Sets the Chameleon Sign text or messages the player.
      *
      * @param loc  the location string retrieved from the database

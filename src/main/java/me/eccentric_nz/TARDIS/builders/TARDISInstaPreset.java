@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
@@ -370,6 +372,11 @@ class TARDISInstaPreset {
                                         if (player_name == null) {
                                             // cache lookup failed, player may have disconnected
                                             player_name = tardis.getOwner();
+                                        }
+                                        if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
+                                            Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
+                                            User user = essentials.getUser(tardis.getUuid());
+                                            player_name = ChatColor.stripColor(user.getNick(false));
                                         }
                                         String owner;
                                         if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {

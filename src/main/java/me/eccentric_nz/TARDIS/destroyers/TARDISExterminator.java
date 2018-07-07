@@ -203,18 +203,18 @@ public class TARDISExterminator {
                     break;
             }
             int signy = -2;
-            // if the sign was on the TARDIS destroy the TARDIS!
-            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
-            dd.setDirection(d);
-            dd.setLocation(bb_loc);
-            dd.setPlayer(player);
-            dd.setHide(true);
-            dd.setOutside(false);
-            dd.setSubmarine(rsc.isSubmarine());
-            dd.setTardisID(id);
-            dd.setBiome(rsc.getBiome());
-            plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
+                // if the sign was on the TARDIS destroy the TARDIS!
+                DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+                dd.setDirection(d);
+                dd.setLocation(bb_loc);
+                dd.setPlayer(player);
+                dd.setHide(true);
+                dd.setOutside(false);
+                dd.setSubmarine(rsc.isSubmarine());
+                dd.setTardisID(id);
+                dd.setBiome(rsc.getBiome());
+                plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
                 if (!tardis.isHidden()) {
                     // remove Police Box
                     plugin.getPresetDestroyer().destroyPreset(dd);
