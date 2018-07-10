@@ -215,7 +215,7 @@ public class TARDISUtils {
             int sbz = l.getBlockZ() - 1;
             World w = l.getWorld();
             // reset biome and it's not The End
-            if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.VOID) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
+            if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.THE_VOID) || (l.getBlock().getBiome().equals(Biome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
                 // reset the biome
                 for (int c = 0; c < 3; c++) {
                     for (int r = 0; r < 3; r++) {

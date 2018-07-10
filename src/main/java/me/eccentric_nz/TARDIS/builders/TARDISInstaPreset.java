@@ -458,7 +458,7 @@ class TARDISInstaPreset {
                             world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                         }
                         break;
-                    case PORTAL:
+                    case NETHER_PORTAL:
                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         break;

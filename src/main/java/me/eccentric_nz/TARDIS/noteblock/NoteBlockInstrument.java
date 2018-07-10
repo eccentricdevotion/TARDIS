@@ -25,17 +25,17 @@ class NoteBlockInstrument {
     public static Sound getInstrument(byte instrument) {
         switch (instrument) {
             case 0:
-                return Sound.BLOCK_NOTE_HARP;
+                return Sound.BLOCK_NOTE_BLOCK_HARP;
             case 1:
-                return Sound.BLOCK_NOTE_BASS;
+                return Sound.BLOCK_NOTE_BLOCK_BASS;
             case 2:
-                return Sound.BLOCK_NOTE_BASEDRUM;
+                return Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
             case 3:
-                return Sound.BLOCK_NOTE_SNARE;
+                return Sound.BLOCK_NOTE_BLOCK_SNARE;
             case 4:
-                return Sound.BLOCK_NOTE_HAT;
+                return Sound.BLOCK_NOTE_BLOCK_HAT;
         }
-        return Sound.BLOCK_NOTE_HARP;
+        return Sound.BLOCK_NOTE_BLOCK_HARP;
     }
 
     public static Instrument getBukkitInstrument(byte instrument) {

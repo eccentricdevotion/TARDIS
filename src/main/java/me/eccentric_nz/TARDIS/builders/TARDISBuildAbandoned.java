@@ -158,7 +158,7 @@ class TARDISBuildAbandoned {
                     int z = startz + col;
                     // if we're setting the biome to sky, do it now
                     if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                        world.setBiome(x, z, Biome.VOID);
+                        world.setBiome(x, z, Biome.THE_VOID);
                     }
                     data = plugin.getServer().createBlockData(c.getString("data"));
                     type = data.getMaterial();
@@ -224,7 +224,7 @@ class TARDISBuildAbandoned {
                                 type = Material.getMaterial(split[0] + "_" + use_clay.toString());
                         }
                     }
-                    if (type.equals(Material.MOB_SPAWNER)) { // scanner button
+                    if (type.equals(Material.SPAWNER)) { // scanner button
                         /*
                          * mob spawner will be converted to the correct id by
                          * setBlock(), but remember it for the scanner.

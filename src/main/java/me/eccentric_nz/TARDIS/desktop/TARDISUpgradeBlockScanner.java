@@ -134,7 +134,7 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.CAKE)) {
                             type = Material.LEVER;
                         }
-                        if (type.equals(Material.MOB_SPAWNER)) {
+                        if (type.equals(Material.SPAWNER)) {
                             type = Material.OAK_BUTTON;
                         }
                         if (type.equals(Material.RED_MUSHROOM_BLOCK)) {

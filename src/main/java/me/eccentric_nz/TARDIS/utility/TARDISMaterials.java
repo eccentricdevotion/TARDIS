@@ -56,15 +56,15 @@ public class TARDISMaterials {
 
     public static final List<Material> precious = Arrays.asList(Material.BEDROCK, Material.COAL_ORE, Material.DIAMOND_BLOCK, Material.DIAMOND_ORE, Material.EMERALD_BLOCK, Material.EMERALD_ORE, Material.NETHER_QUARTZ_ORE, Material.GOLD_BLOCK, Material.GOLD_ORE, Material.IRON_BLOCK, Material.IRON_ORE, Material.JACK_O_LANTERN, Material.LAPIS_BLOCK, Material.LAPIS_BLOCK, Material.MELON, Material.OBSIDIAN, Material.PUMPKIN, Material.REDSTONE_BLOCK, Material.REDSTONE_ORE, Material.SEA_LANTERN);
 
-    public static final List<Material> fish_buckets = Arrays.asList(Material.CLOWNFISH_BUCKET, Material.COD_BUCKET, Material.PUFFERFISH_BUCKET, Material.SALMON_BUCKET);
+    public static final List<Material> fish_buckets = Arrays.asList(Material.TROPICAL_FISH_BUCKET, Material.COD_BUCKET, Material.PUFFERFISH_BUCKET, Material.SALMON_BUCKET);
 
     public static final HashMap<Material, EntityType> fishMap = new HashMap<Material, EntityType>() {
         private static final long serialVersionUID = 3109256773218160485L;
 
         {
-            put(Material.CLOWNFISH_BUCKET, EntityType.TROPICAL_FISH);
+            put(Material.TROPICAL_FISH_BUCKET, EntityType.TROPICAL_FISH);
             put(Material.COD_BUCKET, EntityType.COD);
-            put(Material.PUFFERFISH_BUCKET, EntityType.PUFFER_FISH);
+            put(Material.PUFFERFISH_BUCKET, EntityType.PUFFERFISH);
             put(Material.SALMON_BUCKET, EntityType.SALMON);
         }
     };

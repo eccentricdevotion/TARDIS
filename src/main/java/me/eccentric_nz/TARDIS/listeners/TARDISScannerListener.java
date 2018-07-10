@@ -294,27 +294,28 @@ public class TARDISScannerListener implements Listener {
         switch (biome) {
             case DESERT:
             case DESERT_HILLS:
-            case MUTATED_DESERT:
+            case DESERT_LAKES:
             case SAVANNA:
-            case SAVANNA_ROCK:
-            case MUTATED_SAVANNA:
-            case MUTATED_SAVANNA_ROCK:
-            case MESA:
-            case MUTATED_MESA:
-            case MUTATED_MESA_CLEAR_ROCK:
-            case MUTATED_MESA_ROCK:
-            case MESA_ROCK:
-            case MESA_CLEAR_ROCK:
+            case SAVANNA_PLATEAU:
+            case SHATTERED_SAVANNA:
+            case SHATTERED_SAVANNA_PLATEAU:
+            case BADLANDS:
+            case BADLANDS_PLATEAU:
+            case ERODED_BADLANDS:
+            case MODIFIED_BADLANDS_PLATEAU:
+            case MODIFIED_WOODED_BADLANDS_PLATEAU:
+            case WOODED_BADLANDS_PLATEAU:
                 weather = plugin.getLanguage().getString("WEATHER_DRY");
                 break;
-            case ICE_FLATS:
-            case MUTATED_ICE_FLATS:
+            case SNOWY_TUNDRA:
+            case ICE_SPIKES:
             case FROZEN_OCEAN:
             case FROZEN_RIVER:
-            case COLD_BEACH:
-            case TAIGA_COLD:
-            case TAIGA_COLD_HILLS:
-            case MUTATED_TAIGA_COLD:
+            case SNOWY_BEACH:
+            case SNOWY_TAIGA:
+            case SNOWY_MOUNTAINS:
+            case SNOWY_TAIGA_HILLS:
+            case SNOWY_TAIGA_MOUNTAINS:
                 weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
                 break;
             default:

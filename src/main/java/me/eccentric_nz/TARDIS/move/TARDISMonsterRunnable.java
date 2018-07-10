@@ -221,7 +221,7 @@ public class TARDISMonsterRunnable implements Runnable {
     private boolean canSpawn(Location l, int r) {
         // get biome
         Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
-        if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND_SHORE)) {
+        if (biome.equals(Biome.MUSHROOM_FIELDS) || biome.equals(Biome.MUSHROOM_FIELD_SHORE)) {
             return false;
         }
         // worldguard

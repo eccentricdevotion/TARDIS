@@ -42,9 +42,9 @@ class TARDISLazarusTWAInventory {
     public TARDISLazarusTWAInventory(TARDIS plugin) {
         this.plugin = plugin;
         terminal = getItemStack();
-        disguises.add(Material.COD_MOB_SPAWN_EGG);
-        disguises.add(Material.PUFFER_FISH_SPAWN_EGG);
-        disguises.add(Material.SALMON_MOB_SPAWN_EGG);
+        disguises.add(Material.COD_SPAWN_EGG);
+        disguises.add(Material.PUFFERFISH_SPAWN_EGG);
+        disguises.add(Material.SALMON_SPAWN_EGG);
         disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
     }
 

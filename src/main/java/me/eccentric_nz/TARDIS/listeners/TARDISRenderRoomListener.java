@@ -106,7 +106,7 @@ public class TARDISRenderRoomListener implements Listener {
                 tp_loc.setPitch(p.getLocation().getPitch());
                 tp_loc.setYaw(p.getLocation().getYaw());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    p.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+                    p.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                     p.teleport(tp_loc);
                     plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
                     if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId()) && plugin.getPM().isPluginEnabled("Citizens")) {

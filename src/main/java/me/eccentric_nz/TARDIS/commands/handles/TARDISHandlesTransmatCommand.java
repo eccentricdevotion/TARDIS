@@ -25,7 +25,7 @@ public class TARDISHandlesTransmatCommand {
         transmat.setPitch(location.getPitch());
         TARDISMessage.handlesSend(player, "TRANSMAT");
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            player.playSound(transmat, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+            player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
             player.teleport(transmat);
         }, 10L);
     }

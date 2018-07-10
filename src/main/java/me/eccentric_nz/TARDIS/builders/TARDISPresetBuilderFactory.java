@@ -182,8 +182,8 @@ public class TARDISPresetBuilderFactory {
             return PRESET.OLD;
         } else {
             switch (biome) {
-                case BEACHES:
-                case COLD_BEACH:
+                case BEACH:
+                case SNOWY_BEACH:
                 case RIVER:
                 case FROZEN_RIVER:
                     return PRESET.BOAT;
@@ -193,68 +193,69 @@ public class TARDISPresetBuilderFactory {
                     return PRESET.YELLOW;
                 case DESERT:
                 case DESERT_HILLS:
-                case MUTATED_DESERT:
+                case DESERT_LAKES:
                     return PRESET.DESERT;
-                case EXTREME_HILLS:
-                case EXTREME_HILLS_WITH_TREES:
-                case MUTATED_EXTREME_HILLS:
-                case MUTATED_EXTREME_HILLS_WITH_TREES:
-                case SMALLER_EXTREME_HILLS:
+                case MOUNTAINS:
+                case WOODED_MOUNTAINS:
+                case GRAVELLY_MOUNTAINS:
+                case MODIFIED_GRAVELLY_MOUNTAINS:
+                case SNOWY_MOUNTAINS:
                     return PRESET.EXTREME_HILLS;
                 case FOREST:
-                case FOREST_HILLS:
-                case MUTATED_BIRCH_FOREST:
-                case MUTATED_BIRCH_FOREST_HILLS:
-                case MUTATED_FOREST:
+                case TALL_BIRCH_HILLS:
+                case BIRCH_FOREST_HILLS:
+                case BIRCH_FOREST:
+                case TALL_BIRCH_FOREST:
                     return PRESET.FOREST;
-                case HELL:
+                case NETHER:
                     return PRESET.NETHER;
-                case ICE_FLATS:
-                case ICE_MOUNTAINS:
+                case SNOWY_TUNDRA:
                     return PRESET.ICE_FLATS;
-                case MUTATED_ICE_FLATS:
+                case ICE_SPIKES:
                     return PRESET.ICE_SPIKES;
                 case JUNGLE:
                 case JUNGLE_HILLS:
                 case JUNGLE_EDGE:
-                case MUTATED_JUNGLE:
-                case MUTATED_JUNGLE_EDGE:
+                case MODIFIED_JUNGLE:
+                case MODIFIED_JUNGLE_EDGE:
                     return PRESET.JUNGLE;
-                case MESA:
-                case MESA_ROCK:
-                case MESA_CLEAR_ROCK:
-                case MUTATED_MESA:
-                case MUTATED_MESA_CLEAR_ROCK:
-                case MUTATED_MESA_ROCK:
+                case BADLANDS:
+                case ERODED_BADLANDS:
+                case BADLANDS_PLATEAU:
+                case MODIFIED_BADLANDS_PLATEAU:
+                case MODIFIED_WOODED_BADLANDS_PLATEAU:
+                case WOODED_BADLANDS_PLATEAU:
                     return PRESET.MESA;
-                case MUSHROOM_ISLAND:
-                case MUSHROOM_ISLAND_SHORE:
+                case MUSHROOM_FIELDS:
+                case MUSHROOM_FIELD_SHORE:
                     return PRESET.SHROOM;
                 case PLAINS:
-                case MUTATED_PLAINS:
+                case SUNFLOWER_PLAINS:
                     return PRESET.PLAINS;
-                case ROOFED_FOREST:
-                case MUTATED_ROOFED_FOREST:
+                case DARK_FOREST:
+                case DARK_FOREST_HILLS:
                     return PRESET.ROOFED_FOREST;
                 case SAVANNA:
-                case SAVANNA_ROCK:
-                case MUTATED_SAVANNA:
-                case MUTATED_SAVANNA_ROCK:
+                case SHATTERED_SAVANNA:
+                case SAVANNA_PLATEAU:
+                case SHATTERED_SAVANNA_PLATEAU:
                     return PRESET.SAVANNA;
-                case SWAMPLAND:
-                case MUTATED_SWAMPLAND:
+                case SWAMP:
+                case SWAMP_HILLS:
                     return PRESET.SWAMP;
-                case SKY:
+                case THE_END:
                     return PRESET.THEEND;
                 case TAIGA:
                 case TAIGA_HILLS:
-                case MUTATED_TAIGA:
-                case MUTATED_REDWOOD_TAIGA:
-                case MUTATED_REDWOOD_TAIGA_HILLS:
+                case TAIGA_MOUNTAINS:
+                case GIANT_SPRUCE_TAIGA:
+                case GIANT_SPRUCE_TAIGA_HILLS:
+                case GIANT_TREE_TAIGA:
+                case GIANT_TREE_TAIGA_HILLS:
                     return PRESET.TAIGA;
-                case TAIGA_COLD:
-                case TAIGA_COLD_HILLS:
-                case MUTATED_TAIGA_COLD:
+                case SNOWY_TAIGA:
+                case SNOWY_TAIGA_MOUNTAINS:
+                case SNOWY_TAIGA_HILLS:
                     return PRESET.COLD_TAIGA;
                 default:
                     return PRESET.FACTORY;

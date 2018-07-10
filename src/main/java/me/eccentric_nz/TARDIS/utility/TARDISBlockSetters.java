@@ -60,7 +60,7 @@ public class TARDISBlockSetters {
                     lever.setFacing(BlockFace.SOUTH);
                     b.setData(lever);
                     break;
-                case MOB_SPAWNER:
+                case SPAWNER:
                     // mob spawner -> scanner button
                     b.setType(Material.OAK_BUTTON);
                     Switch button = (Switch) b.getBlockData();
@@ -93,7 +93,7 @@ public class TARDISBlockSetters {
                     lever.setFacing(BlockFace.SOUTH);
                     b.setData(lever);
                     break;
-                case MOB_SPAWNER:
+                case SPAWNER:
                     // mob spawner -> scanner button
                     b.setType(Material.OAK_BUTTON);
                     Switch button = (Switch) b.getBlockData();
@@ -126,7 +126,7 @@ public class TARDISBlockSetters {
                     lever.setFacing(BlockFace.SOUTH);
                     b.setData(lever);
                     break;
-                case MOB_SPAWNER:
+                case SPAWNER:
                     // mob spawner -> scanner button
                     b.setType(Material.OAK_BUTTON);
                     Switch button = (Switch) b.getBlockData();
@@ -162,7 +162,7 @@ public class TARDISBlockSetters {
                     lever.setFacing(BlockFace.SOUTH);
                     b.setData(lever);
                     break;
-                case MOB_SPAWNER:
+                case SPAWNER:
                     // mob spawner -> scanner button
                     b.setType(Material.OAK_BUTTON);
                     Switch button = (Switch) b.getBlockData();
@@ -199,7 +199,7 @@ public class TARDISBlockSetters {
                     lever.setFacing(BlockFace.SOUTH);
                     b.setData(lever);
                     break;
-                case MOB_SPAWNER:
+                case SPAWNER:
                     // mob spawner -> scanner button
                     b.setType(Material.OAK_BUTTON);
                     Switch button = (Switch) b.getBlockData();
@@ -235,7 +235,7 @@ public class TARDISBlockSetters {
                     lever.setFacing(BlockFace.SOUTH);
                     b.setData(lever);
                     break;
-                case MOB_SPAWNER:
+                case SPAWNER:
                     // mob spawner -> scanner button
                     b.setType(Material.OAK_BUTTON);
                     Switch button = (Switch) b.getBlockData();

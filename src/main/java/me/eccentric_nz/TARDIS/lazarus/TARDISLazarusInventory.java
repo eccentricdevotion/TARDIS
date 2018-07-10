@@ -54,7 +54,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
         disguises.add(Material.ENDERMAN_SPAWN_EGG);
         disguises.add(Material.ENDERMITE_SPAWN_EGG);
-        disguises.add(Material.EVOCATION_ILLAGER_SPAWN_EGG);
+        disguises.add(Material.EVOKER_SPAWN_EGG);
 //        disguises.add(Material.GHAST_SPAWN_EGG);
         disguises.add(Material.GUARDIAN_SPAWN_EGG);
         disguises.add(Material.HORSE_SPAWN_EGG);
@@ -81,7 +81,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.TURTLE_SPAWN_EGG);
         disguises.add(Material.VEX_SPAWN_EGG);
         disguises.add(Material.VILLAGER_SPAWN_EGG);
-        disguises.add(Material.VINDICATION_ILLAGER_SPAWN_EGG);
+        disguises.add(Material.VINDICATOR_SPAWN_EGG);
         disguises.add(Material.WITCH_SPAWN_EGG);
         disguises.add(Material.WITHER_SKELETON_SPAWN_EGG);
         disguises.add(Material.WOLF_SPAWN_EGG);

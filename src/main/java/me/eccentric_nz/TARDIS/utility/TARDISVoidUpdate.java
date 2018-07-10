@@ -80,10 +80,10 @@ public class TARDISVoidUpdate {
             int ex = sx + 16;
             int sz = (cz + SPIRAL.get(idx).y) * 16;
             int ez = sz + 16;
-            if (world.getBlockAt(sx, 64, sz).getBiome().equals(Biome.SKY)) {
+            if (world.getBlockAt(sx, 64, sz).getBiome().equals(Biome.THE_END)) {
                 for (int x = sx; x < ex; x++) {
                     for (int z = sz; z < ez; z++) {
-                        world.setBiome(x, z, Biome.VOID);
+                        world.setBiome(x, z, Biome.THE_VOID);
                     }
                 }
             }

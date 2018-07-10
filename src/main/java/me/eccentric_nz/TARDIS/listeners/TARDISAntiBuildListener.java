@@ -71,7 +71,7 @@ public class TARDISAntiBuildListener implements Listener {
         no_place.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
         no_place.add(Material.ENDERMAN_SPAWN_EGG);
         no_place.add(Material.ENDERMITE_SPAWN_EGG);
-        no_place.add(Material.EVOCATION_ILLAGER_SPAWN_EGG);
+        no_place.add(Material.EVOKER_SPAWN_EGG);
         no_place.add(Material.FLINT_AND_STEEL);
         no_place.add(Material.FURNACE_MINECART);
         no_place.add(Material.GHAST_SPAWN_EGG);
@@ -108,7 +108,7 @@ public class TARDISAntiBuildListener implements Listener {
         no_place.add(Material.TNT_MINECART);
         no_place.add(Material.VEX_SPAWN_EGG);
         no_place.add(Material.VILLAGER_SPAWN_EGG);
-        no_place.add(Material.VINDICATION_ILLAGER_SPAWN_EGG);
+        no_place.add(Material.VINDICATOR_SPAWN_EGG);
         no_place.add(Material.WATER_BUCKET);
         no_place.add(Material.WITCH_SPAWN_EGG);
         no_place.add(Material.WITHER_SKELETON_SPAWN_EGG);

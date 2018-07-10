@@ -269,7 +269,7 @@ class TARDISBuildGallifreyanStructure {
                                 TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                             }
                             break;
-                        case MOB_SPAWNER:
+                        case SPAWNER:
                             Block spawner = world.getBlockAt(x, y, z);
                             spawner.setType(type);
                             CreatureSpawner cs = (CreatureSpawner) spawner.getState();

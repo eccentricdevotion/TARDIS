@@ -372,7 +372,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 int z = startz + col;
                 // if we're setting the biome to sky, do it now
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, z, Biome.VOID);
+                    world.setBiome(x, z, Biome.THE_VOID);
                 }
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
                 Material type = data.getMaterial();
@@ -393,7 +393,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     type = floor_type;
                 }
-                if (type.equals(Material.MOB_SPAWNER)) { // scanner button
+                if (type.equals(Material.SPAWNER)) { // scanner button
                     /*
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.

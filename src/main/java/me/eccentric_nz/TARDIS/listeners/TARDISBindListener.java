@@ -200,7 +200,7 @@ public class TARDISBindListener implements Listener {
                                                 tp_loc.setYaw(rsm.getYaw());
                                                 tp_loc.setPitch(player.getLocation().getPitch());
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                                    player.playSound(tp_loc, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+                                                    player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                                                     player.teleport(tp_loc);
                                                 }, 10L);
                                             }

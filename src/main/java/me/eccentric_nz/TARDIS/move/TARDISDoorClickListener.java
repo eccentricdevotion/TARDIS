@@ -524,7 +524,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherev, false);
                                             if (rsv.resultSet()) {
                                                 Player tl = plugin.getServer().getPlayer(tluuid);
-                                                Sound knock = (blockType.equals(Material.IRON_DOOR)) ? Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR : Sound.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
+                                                Sound knock = (blockType.equals(Material.IRON_DOOR)) ? Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR : Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR;
                                                 tl.getWorld().playSound(tl.getLocation(), knock, 3.0F, 3.0F);
                                             }
                                         }

@@ -62,10 +62,10 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.OCELOT_BABY);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
-        biomes.add(Biome.HELL);
-        biomes.add(Biome.MUSHROOM_ISLAND);
-        biomes.add(Biome.MUSHROOM_ISLAND_SHORE);
-        biomes.add(Biome.SKY);
+        biomes.add(Biome.NETHER);
+        biomes.add(Biome.MUSHROOM_FIELDS);
+        biomes.add(Biome.MUSHROOM_FIELD_SHORE);
+        biomes.add(Biome.THE_END);
         rand = new Random();
     }
 
@@ -122,20 +122,20 @@ public class TARDISSpawnListener implements Listener {
             }
             // always deny MUSHROOM, HELL and SKY biomes
             switch (l.getBlock().getBiome()) {
-                case MUSHROOM_ISLAND:
-                case HELL:
+                case MUSHROOM_FIELDS:
+                case NETHER:
                     if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
                         event.setCancelled(true);
                         return;
                     }
                     return;
-                case SKY:
+                case THE_END:
                     if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
                         event.setCancelled(true);
                         return;
                     }
                     break;
-                case MUSHROOM_ISLAND_SHORE:
+                case MUSHROOM_FIELD_SHORE:
                     if (!event.getEntity().getType().equals(EntityType.SQUID)) {
                         event.setCancelled(true);
                         return;

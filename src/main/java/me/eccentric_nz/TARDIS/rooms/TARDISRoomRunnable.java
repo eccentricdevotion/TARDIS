@@ -351,7 +351,7 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.doInsert("vaults", setv);
             }
             // set farm
-            if (type.equals(Material.MOB_SPAWNER) && room.equals("FARM")) {
+            if (type.equals(Material.SPAWNER) && room.equals("FARM")) {
                 HashMap<String, Object> setf = new HashMap<>();
                 setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheref = new HashMap<>();
@@ -576,7 +576,7 @@ public class TARDISRoomRunnable implements Runnable {
             }
             // if we're setting the biome to sky, do it now
             if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                world.setBiome(startx, startz, Biome.VOID);
+                world.setBiome(startx, startz, Biome.THE_VOID);
             }
             if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                 if (type.equals(Material.WATER)) {

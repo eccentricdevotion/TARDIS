@@ -487,7 +487,7 @@ public class TARDISFarmer {
                         case COD:
                             fish_tank.add(3.0d, 1.5d, 3.0d);
                             break;
-                        case PUFFER_FISH:
+                        case PUFFERFISH:
                             fish_tank.add(-3.0d, 1.5d, 3.0d);
                             break;
                         case SALMON:

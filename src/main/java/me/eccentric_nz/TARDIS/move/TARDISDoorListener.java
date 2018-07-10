@@ -386,7 +386,7 @@ public class TARDISDoorListener {
                 if (!m) {
                     TARDISSounds.playTARDISSound(l, "tardis_enter");
                 } else {
-                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }
                 break;
             default:

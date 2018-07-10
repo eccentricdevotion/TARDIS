@@ -170,12 +170,12 @@ public class TARDISExteriorRenderer {
             Material base;
             Material stone;
             switch (biome) {
-                case SKY:
+                case THE_END:
                     sky = Material.BLACK_WOOL;
                     base = Material.END_STONE;
                     stone = Material.OBSIDIAN;
                     break;
-                case HELL:
+                case NETHER:
                     sky = Material.BLACK_WOOL;
                     base = Material.NETHERRACK;
                     stone = Material.NETHER_QUARTZ_ORE;
@@ -339,7 +339,7 @@ public class TARDISExteriorRenderer {
         plugin.getTrackerKeeper().getRenderRoomOccupants().add(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             transmat(p, d, location);
-            p.playSound(location, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+            p.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
             TARDISMessage.send(p, "RENDER_EXIT");
         }, 10L);
     }

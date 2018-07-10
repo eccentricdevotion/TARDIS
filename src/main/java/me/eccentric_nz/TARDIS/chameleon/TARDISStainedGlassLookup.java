@@ -251,8 +251,8 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.MAGENTA_TERRACOTTA, Material.MAGENTA_STAINED_GLASS);
         stain.put(Material.MAGENTA_WOOL, Material.MAGENTA_STAINED_GLASS);
         stain.put(Material.MAGMA_BLOCK, Material.ORANGE_STAINED_GLASS);
-        stain.put(Material.MELON_BLOCK, Material.LIME_STAINED_GLASS);
-        stain.put(Material.MOB_SPAWNER, Material.WHITE_STAINED_GLASS);
+        stain.put(Material.MELON, Material.LIME_STAINED_GLASS);
+        stain.put(Material.SPAWNER, Material.WHITE_STAINED_GLASS);
         stain.put(Material.MOSSY_COBBLESTONE, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.MYCELIUM, Material.PINK_STAINED_GLASS);
         stain.put(Material.NETHERRACK, Material.RED_STAINED_GLASS);
@@ -299,7 +299,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.PISTON, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.PLAYER_HEAD, Material.PINK_STAINED_GLASS);
         stain.put(Material.PLAYER_WALL_HEAD, Material.PINK_STAINED_GLASS);
-        stain.put(Material.PORTAL, Material.PURPLE_STAINED_GLASS);
+        stain.put(Material.NETHER_PORTAL, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.POTATOES, Material.GREEN_STAINED_GLASS);
         stain.put(Material.POWERED_RAIL, Material.RED_STAINED_GLASS);
         stain.put(Material.PRISMARINE, Material.GREEN_STAINED_GLASS);

@@ -92,7 +92,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(49, Material.OBSIDIAN);
         LEGACY_ID_LOOKUP.put(50, Material.TORCH);
         LEGACY_ID_LOOKUP.put(51, Material.FIRE);
-        LEGACY_ID_LOOKUP.put(52, Material.MOB_SPAWNER);
+        LEGACY_ID_LOOKUP.put(52, Material.SPAWNER);
         LEGACY_ID_LOOKUP.put(53, Material.OAK_STAIRS);
         LEGACY_ID_LOOKUP.put(54, Material.CHEST);
         LEGACY_ID_LOOKUP.put(55, Material.REDSTONE_WIRE);
@@ -130,7 +130,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(87, Material.NETHERRACK);
         LEGACY_ID_LOOKUP.put(88, Material.SOUL_SAND);
         LEGACY_ID_LOOKUP.put(89, Material.GLOWSTONE);
-        LEGACY_ID_LOOKUP.put(90, Material.PORTAL);
+        LEGACY_ID_LOOKUP.put(90, Material.NETHER_PORTAL);
         LEGACY_ID_LOOKUP.put(91, Material.JACK_O_LANTERN);
         LEGACY_ID_LOOKUP.put(92, Material.CAKE);
         LEGACY_ID_LOOKUP.put(93, Material.REPEATER);
@@ -143,7 +143,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(100, Material.RED_MUSHROOM_BLOCK);
         LEGACY_ID_LOOKUP.put(101, Material.IRON_BARS);
         LEGACY_ID_LOOKUP.put(102, Material.GLASS_PANE);
-        LEGACY_ID_LOOKUP.put(103, Material.MELON_BLOCK);
+        LEGACY_ID_LOOKUP.put(103, Material.MELON);
         LEGACY_ID_LOOKUP.put(104, Material.PUMPKIN_STEM);
         LEGACY_ID_LOOKUP.put(105, Material.MELON_STEM);
         LEGACY_ID_LOOKUP.put(106, Material.VINE);
@@ -420,7 +420,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(379, Material.BREWING_STAND);
         LEGACY_ID_LOOKUP.put(380, Material.CAULDRON);
         LEGACY_ID_LOOKUP.put(381, Material.ENDER_EYE);
-        LEGACY_ID_LOOKUP.put(382, Material.SPECKLED_MELON);
+        LEGACY_ID_LOOKUP.put(382, Material.GLISTERING_MELON_SLICE);
         LEGACY_ID_LOOKUP.put(383, Material.INFESTED_STONE);
         LEGACY_ID_LOOKUP.put(384, Material.EXPERIENCE_BOTTLE);
         LEGACY_ID_LOOKUP.put(385, Material.FIRE_CHARGE);
@@ -471,7 +471,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(430, Material.ACACIA_DOOR);
         LEGACY_ID_LOOKUP.put(431, Material.DARK_OAK_DOOR);
         LEGACY_ID_LOOKUP.put(432, Material.CHORUS_FRUIT);
-        LEGACY_ID_LOOKUP.put(433, Material.CHORUS_FRUIT_POPPED);
+        LEGACY_ID_LOOKUP.put(433, Material.POPPED_CHORUS_FRUIT);
         LEGACY_ID_LOOKUP.put(434, Material.BEETROOT);
         LEGACY_ID_LOOKUP.put(435, Material.BEETROOT_SEEDS);
         LEGACY_ID_LOOKUP.put(436, Material.BEETROOT_SOUP);

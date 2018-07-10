@@ -113,7 +113,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         for (int col = sz; col <= ez; col++) {
                             Block b = world.getBlockAt(row, level, col);
                             b.setType(Material.AIR);
-                            if (level == sy && ((b.getBiome().equals(Biome.SKY) && !junkLoc.getWorld().getEnvironment().equals(Environment.THE_END)) || b.getBiome().equals(Biome.VOID)) && biome != null) {
+                            if (level == sy && ((b.getBiome().equals(Biome.THE_END) && !junkLoc.getWorld().getEnvironment().equals(Environment.THE_END)) || b.getBiome().equals(Biome.THE_VOID)) && biome != null) {
                                 if (!chunks.contains(b.getChunk())) {
                                     chunks.add(b.getChunk());
                                 }
