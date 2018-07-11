@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
@@ -28,9 +26,9 @@ import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -268,12 +266,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                                     PRESET preset = rs.getTardis().getPreset();
                                                     Sign sign = getSign(current, rscl.getDirection(), preset);
                                                     if (sign != null) {
-                                                        String player_name = player.getDisplayName();
-                                                        if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
-                                                            Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
-                                                            User user = essentials.getUser(tardis.getUuid());
-                                                            player_name = ChatColor.stripColor(user.getNick(false));
-                                                        }
+                                                        String player_name = TARDISStaticUtils.getNick(player);
                                                         String owner;
                                                         if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
                                                             owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;

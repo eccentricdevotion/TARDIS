@@ -368,9 +368,8 @@ class TARDISInstaPreset {
                                     ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                                     if (rst.resultSet()) {
                                         Tardis tardis = rst.getTardis();
-                                        String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(tardis.getUuid());
+                                        String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
                                         if (player_name == null) {
-                                            // cache lookup failed, player may have disconnected
                                             player_name = tardis.getOwner();
                                         }
                                         if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {

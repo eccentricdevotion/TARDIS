@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
@@ -382,15 +380,9 @@ class TARDISMaterialisationPreset implements Runnable {
                                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                                                 if (rst.resultSet()) {
                                                     Tardis tardis = rst.getTardis();
-                                                    String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(tardis.getUuid());
+                                                    String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
                                                     if (player_name == null) {
-                                                        // cache lookup failed, player may have disconnected
                                                         player_name = tardis.getOwner();
-                                                    }
-                                                    if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
-                                                        Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
-                                                        User user = essentials.getUser(tardis.getUuid());
-                                                        player_name = ChatColor.stripColor(user.getNick(false));
                                                     }
                                                     String owner;
                                                     if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
