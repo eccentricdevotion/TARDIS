@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Rassilon was the founder of Time Lord civilisation and perhaps the single greatest figure of Gallifreyan history. He
@@ -127,7 +128,7 @@ public class TARDISAchievementFactory {
     }
 
     public static boolean checkAdvancement(String adv) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, "drwho/" + adv);
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, "drwho/" + adv.toLowerCase(Locale.ENGLISH));
         Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
             TARDIS.plugin.debug("Advancement 'tardis:drwho/" + adv + "' exists :)");
@@ -139,7 +140,7 @@ public class TARDISAchievementFactory {
     }
 
     public static void grantAdvancement(ADVANCEMENT adv, Player player) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, "drwho/" + adv.getConfigName());
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, "drwho/" + adv.getConfigName().toLowerCase(Locale.ENGLISH));
         Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
             AdvancementProgress avp = player.getAdvancementProgress(a);

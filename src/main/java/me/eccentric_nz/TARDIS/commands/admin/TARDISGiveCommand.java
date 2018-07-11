@@ -391,23 +391,23 @@ public class TARDISGiveCommand implements CommandExecutor {
         String message = item_to_give;
         switch (item) {
             case "bow-tie":
-                List<String> colours = Arrays.asList("White", "Orange", "Magenta", "Light_Blue", "Yellow", "Lime", "Pink", "Grey", "Light_Grey", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black");
+                List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
-                    NamespacedKey nsk = new NamespacedKey(plugin, bt + "_Bow_Tie");
+                    NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                     kbm.addRecipe(nsk);
                 });
                 message = "Bow Ties";
                 break;
             case "jelly-baby":
-                List<String> flavours = Arrays.asList("Vanilla", "Orange", "Watermelon", "Bubblegum", "Lemon", "Lime", "Strawberry", "Earl_Grey", "Vodka", "Island_Punch", "Grape", "Blueberry", "Cappuccino", "Apple", "Raspberry", "Licorice");
+                List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
-                    NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_Jelly_Baby");
+                    NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                     kbm.addRecipe(nsk);
                 });
                 message = "Jelly Babies";
                 break;
             default:
-                NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_"));
+                NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ENGLISH));
                 kbm.addRecipe(nsk);
         }
         book.setItemMeta(kbm);

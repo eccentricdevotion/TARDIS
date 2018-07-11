@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -79,7 +80,7 @@ class TARDISFurnaceRecipe {
         Material recipe_m = Material.valueOf(ingredient);
         float experience = (float) plugin.getRecipesConfig().getDouble("furnace." + s + ".experience");
         int cooktime = plugin.getRecipesConfig().getInt("furnace." + s + ".cooktime");
-        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_"));
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         f = new FurnaceRecipe(key, is, recipe_m, experience, cooktime);
 
         return f;

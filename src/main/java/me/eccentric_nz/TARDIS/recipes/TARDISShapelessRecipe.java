@@ -26,6 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -71,7 +72,7 @@ public class TARDISShapelessRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
         }
         is.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_"));
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         for (String i : ingredients) {
             String[] recipe_idata = i.split(":");

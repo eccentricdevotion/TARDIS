@@ -118,7 +118,7 @@ public class TARDISShapedRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
         is.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_"));
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape
         String difficulty = (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
