@@ -67,9 +67,6 @@ public class TARDISQuitListener implements Listener {
                     plugin.getGeneralKeeper().getTardisChunkList().remove(chunk);
                 }
             }
-            // remove player from the TARDIS UUID cache
-            plugin.getGeneralKeeper().getUUIDCache().getCache().remove(event.getPlayer().getName());
-            plugin.getGeneralKeeper().getUUIDCache().getNameCache().remove(event.getPlayer().getUniqueId());
             // power down TARDIS
             if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
                 // check if powered on

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -107,7 +108,7 @@ public class ResultSetDiskStorage {
                     if (!rs.wasNull()) {
                         uuid = UUID.fromString(rs.getString("uuid"));
                     } else {
-                        uuid = plugin.getGeneralKeeper().getUUIDCache().getZERO_UUID();
+                        uuid = TARDISStaticUtils.getZERO_UUID();
                     }
                     savesOne = rs.getString("saves_one");
                     if (rs.wasNull()) {

@@ -169,10 +169,6 @@ public class TARDISJoinListener implements Listener {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);
-            // add TARDIS player to UUID cache
-            plugin.getGeneralKeeper().getUUIDCache().ensurePlayerUUID(player.getName());
-            // also add reverse lookup
-            plugin.getGeneralKeeper().getUUIDCache().getNameCache().put(player.getUniqueId(), player.getName());
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {

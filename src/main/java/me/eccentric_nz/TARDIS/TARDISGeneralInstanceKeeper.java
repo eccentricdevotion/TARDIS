@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
-import me.eccentric_nz.TARDIS.utility.TARDISUUIDCache;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,7 +87,6 @@ public class TARDISGeneralInstanceKeeper {
     private final List<String> sonicRails = new ArrayList<>();
     private final List<String> sonicWires = new ArrayList<>();
     private final TARDIS plugin;
-    private final TARDISUUIDCache UUIDCache;
     private final YamlConfiguration pluginYAML;
     private long junkTime;
     private boolean junkTravelling = false;
@@ -99,7 +97,6 @@ public class TARDISGeneralInstanceKeeper {
         this.plugin = plugin;
         roomArgs = buildRoomArgs();
         transparent = buildTransparent();
-        UUIDCache = new TARDISUUIDCache(plugin);
         doorListener = new TARDISDoorListener(plugin);
         interactables = buildInteractables();
         sign_lookup = buildSignLookup();
@@ -264,10 +261,6 @@ public class TARDISGeneralInstanceKeeper {
 
     public void setTardisTravelCommand(TARDISTravelCommands tardisTravelCommand) {
         this.tardisTravelCommand = tardisTravelCommand;
-    }
-
-    public TARDISUUIDCache getUUIDCache() {
-        return UUIDCache;
     }
 
     public List<String> getRoomArgs() {
