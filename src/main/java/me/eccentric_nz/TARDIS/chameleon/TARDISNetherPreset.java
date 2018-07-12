@@ -55,7 +55,7 @@ public class TARDISNetherPreset extends TARDISPreset {
         blueprintData[6][0] = "minecraft:nether_brick_stairs[half=bottom,facing=north,shape=straight]";
         blueprintData[6][1] = "minecraft:nether_brick_stairs[half=top,facing=north,shape=straight]";
         blueprintData[6][2] = "minecraft:nether_brick_stairs[half=bottom,facing=north,shape=outer_right]";
-        blueprintData[6][3] = "minecraft:";
+        blueprintData[6][3] = "minecraft:air";
         blueprintData[7][0] = "minecraft:iron_door[half=lower,hinge=right,facing=east,open=false]";
         blueprintData[7][1] = "minecraft:iron_door[half=upper,hinge=right,facing=east,open=false]";
         blueprintData[7][2] = "minecraft:nether_brick_stairs[half=bottom,facing=east,shape=straight]";
@@ -66,7 +66,7 @@ public class TARDISNetherPreset extends TARDISPreset {
         blueprintData[8][3] = "minecraft:glowstone";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
-        blueprintData[9][2] = "minecraft:wall_sign[facing=east]";
+        blueprintData[9][2] = "minecraft:wall_sign[facing=west]";
         blueprintData[9][3] = "minecraft:air";
         setBlueprintData(blueprintData);
         // set stained data strings
@@ -109,7 +109,7 @@ public class TARDISNetherPreset extends TARDISPreset {
         stainedData[8][3] = "minecraft:yellow_stained_glass";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
-        stainedData[9][2] = "minecraft:wall_sign[facing=east]";
+        stainedData[9][2] = "minecraft:wall_sign[facing=west]";
         stainedData[9][3] = "minecraft:air";
         setStainedData(stainedData);
         // set glass data strings
@@ -152,7 +152,7 @@ public class TARDISNetherPreset extends TARDISPreset {
         glassData[8][3] = "minecraft:glass";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
-        glassData[9][2] = "minecraft:wall_sign[facing=east]";
+        glassData[9][2] = "minecraft:wall_sign[facing=west]";
         glassData[9][3] = "minecraft:air";
         setGlassData(glassData);
     }

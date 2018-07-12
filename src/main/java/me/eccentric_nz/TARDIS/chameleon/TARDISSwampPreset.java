@@ -67,7 +67,7 @@ public class TARDISSwampPreset extends TARDISPreset {
         blueprintData[9][0] = "minecraft:oak_slab[type=top]";
         blueprintData[9][1] = "minecraft:air";
         blueprintData[9][2] = "minecraft:air";
-        blueprintData[9][3] = "minecraft:wall_sign[facing=east]";
+        blueprintData[9][3] = "minecraft:wall_sign[facing=west]";
         setBlueprintData(blueprintData);
         // set stained data strings
         String[][] stainedData = new String[10][4];
@@ -110,7 +110,7 @@ public class TARDISSwampPreset extends TARDISPreset {
         stainedData[9][0] = "minecraft:brown_stained_glass";
         stainedData[9][1] = "minecraft:air";
         stainedData[9][2] = "minecraft:air";
-        stainedData[9][3] = "minecraft:wall_sign[facing=east]";
+        stainedData[9][3] = "minecraft:wall_sign[facing=west]";
         setStainedData(stainedData);
         // set glass data strings
         String[][] glassData = new String[10][4];
@@ -153,7 +153,7 @@ public class TARDISSwampPreset extends TARDISPreset {
         glassData[9][0] = "minecraft:glass";
         glassData[9][1] = "minecraft:air";
         glassData[9][2] = "minecraft:air";
-        glassData[9][3] = "minecraft:wall_sign[facing=east]";
+        glassData[9][3] = "minecraft:wall_sign[facing=west]";
         setGlassData(glassData);
     }
 }
