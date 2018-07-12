@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -39,8 +38,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.util.HashMap;
-
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
@@ -140,17 +137,7 @@ class TARDISBuildGallifreyanStructure {
         int h = dimensions.getInt("height");
         int w = dimensions.getInt("width");
         int l = dimensions.getInt("length");
-        // TODO remove blocks that are not in the schematic
-        HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
-        HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
         HashMap<Block, BlockData> postLadderBlocks = new HashMap<>();
-        HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Block chest;
         Material type;
         BlockData data;
@@ -197,71 +184,8 @@ class TARDISBuildGallifreyanStructure {
                                 }
                             }
                             break;
-                        case IRON_DOOR:
-                            // doors
-                            postDoorBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case REDSTONE_TORCH:
-                            postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case TORCH:
-                            postTorchBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case STICKY_PISTON:
-                            postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case PISTON:
-                            postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case PISTON_HEAD:
-                            postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case LEVER:
-                            postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
                         case LADDER:
                             postLadderBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case WALL_SIGN:
-                            postSignBlocks.put(world.getBlockAt(x, y, z), data);
-                            break;
-                        case BLACK_BANNER:
-                        case BLUE_BANNER:
-                        case BROWN_BANNER:
-                        case CYAN_BANNER:
-                        case GRAY_BANNER:
-                        case GREEN_BANNER:
-                        case LIGHT_BLUE_BANNER:
-                        case LIGHT_GRAY_BANNER:
-                        case LIME_BANNER:
-                        case MAGENTA_BANNER:
-                        case ORANGE_BANNER:
-                        case PINK_BANNER:
-                        case PURPLE_BANNER:
-                        case RED_BANNER:
-                        case WHITE_BANNER:
-                        case YELLOW_BANNER:
-                        case BLACK_WALL_BANNER:
-                        case BLUE_WALL_BANNER:
-                        case BROWN_WALL_BANNER:
-                        case CYAN_WALL_BANNER:
-                        case GRAY_WALL_BANNER:
-                        case GREEN_WALL_BANNER:
-                        case LIGHT_BLUE_WALL_BANNER:
-                        case LIGHT_GRAY_WALL_BANNER:
-                        case LIME_WALL_BANNER:
-                        case MAGENTA_WALL_BANNER:
-                        case ORANGE_WALL_BANNER:
-                        case PINK_WALL_BANNER:
-                        case PURPLE_WALL_BANNER:
-                        case RED_WALL_BANNER:
-                        case WHITE_WALL_BANNER:
-                        case YELLOW_WALL_BANNER:
-                            JSONObject state = c.optJSONObject("banner");
-                            if (state != null) {
-                                TARDISBannerData tbd = new TARDISBannerData(data, state);
-                                postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
-                            }
                             break;
                         case SPONGE:
                             Block swap_block = world.getBlockAt(x, y, z);
@@ -282,32 +206,8 @@ class TARDISBuildGallifreyanStructure {
                 }
             }
         }
-        // put on the door, redstone torches, signs, and the repeaters
-        postDoorBlocks.forEach((pdb, value) -> {
-            pdb.setData(value);
-        });
-        postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
-        postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
-        postSignBlocks.forEach((psb, value) -> {
-            psb.setData(value);
-        });
-        postStickyPistonBaseBlocks.forEach((pspb, value) -> {
-            plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-            pspb.setData(value);
-        });
-        postPistonBaseBlocks.forEach((ppb, value) -> {
-            plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-            ppb.setData(value);
-        });
-        postPistonExtensionBlocks.forEach((ppeb, value) -> {
-            ppeb.setData(value);
-        });
-        postLeverBlocks.forEach((plb, value) -> {
-            plb.setData(value);
-        });
         postLadderBlocks.forEach((pldb, value) -> {
             pldb.setData(value);
         });
-        setBanners(postBannerBlocks);
     }
 }
