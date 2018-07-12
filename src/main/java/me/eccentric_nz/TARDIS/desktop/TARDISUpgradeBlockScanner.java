@@ -137,7 +137,7 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.SPAWNER)) {
                             type = Material.OAK_BUTTON;
                         }
-                        if (type.equals(Material.RED_MUSHROOM_BLOCK)) {
+                        if (type.equals(Material.MUSHROOM_STEM)) {
                             type = Material.REPEATER;
                         }
                         if (TARDISMaterials.infested.contains(type)) {

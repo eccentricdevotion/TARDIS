@@ -29,7 +29,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.MultipleFacing;
 
 import java.util.HashMap;
 
@@ -151,8 +153,14 @@ public class TARDISSchematicBuilder {
                         case REPEATER:
                             // random location blocks
                             if (isControlBlock(map.get(f), w, r, l, c)) {
-                                // TODO set BlockData as all outer
-                                data = Material.BROWN_MUSHROOM_BLOCK.createBlockData();
+                                MultipleFacing mushroom = (MultipleFacing) Material.MUSHROOM_STEM.createBlockData();
+                                mushroom.setFace(BlockFace.DOWN, true);
+                                mushroom.setFace(BlockFace.EAST, true);
+                                mushroom.setFace(BlockFace.NORTH, true);
+                                mushroom.setFace(BlockFace.SOUTH, true);
+                                mushroom.setFace(BlockFace.UP, true);
+                                mushroom.setFace(BlockFace.WEST, true);
+                                data = mushroom;
                                 f++;
                             }
                             break;
