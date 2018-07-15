@@ -163,41 +163,25 @@ class TARDISRepair {
                                     continue;
                                 }
                             }
-                            // TODO process WOOL properly - use Tag + Material
-                            if (bid.equals("WOOL")) {
-                                switch (c.getByte("data")) {
-                                    case 1:
-                                        if (!world.getBlockAt(x, y, z).getType().equals(wall_type)) {
-                                            String bstr = bid + ":" + c.getByte("data");
-                                            if (blockIDs.containsKey(bstr)) {
-                                                Integer count = blockIDs.get(bstr) + 1;
-                                                blockIDs.put(bstr, count);
-                                            } else {
-                                                blockIDs.put(bstr, 1);
-                                            }
-                                        }
-                                        break;
-                                    case 8:
-                                        if (!world.getBlockAt(x, y, z).getType().equals(floor_type)) {
-                                            String bstr = bid + ":" + c.getByte("data");
-                                            if (blockIDs.containsKey(bstr)) {
-                                                Integer count = blockIDs.get(bstr) + 1;
-                                                blockIDs.put(bstr, count);
-                                            } else {
-                                                blockIDs.put(bstr, 1);
-                                            }
-                                        }
-                                        break;
-                                    default:
-                                        if (!world.getBlockAt(x, y, z).getType().toString().equals(bid)) {
-                                            if (blockIDs.containsKey(bid)) {
-                                                Integer count = blockIDs.get(bid) + 1;
-                                                blockIDs.put(bid, count);
-                                            } else {
-                                                blockIDs.put(bid, 1);
-                                            }
-                                        }
-                                        break;
+                            if (bid.equals("ORANGE_WOOL")) {
+                                if (!world.getBlockAt(x, y, z).getType().equals(wall_type)) {
+                                    String bstr = bid + ":" + c.getByte("data");
+                                    if (blockIDs.containsKey(bstr)) {
+                                        Integer count = blockIDs.get(bstr) + 1;
+                                        blockIDs.put(bstr, count);
+                                    } else {
+                                        blockIDs.put(bstr, 1);
+                                    }
+                                }
+                            } else if (bid.equals("LIGHT_GRAY_WOOL")) {
+                                if (!world.getBlockAt(x, y, z).getType().equals(floor_type)) {
+                                    String bstr = bid + ":" + c.getByte("data");
+                                    if (blockIDs.containsKey(bstr)) {
+                                        Integer count = blockIDs.get(bstr) + 1;
+                                        blockIDs.put(bstr, count);
+                                    } else {
+                                        blockIDs.put(bstr, 1);
+                                    }
                                 }
                             } else if (!world.getBlockAt(x, y, z).getType().toString().equals(bid)) {
                                 if (blockIDs.containsKey(bid)) {
