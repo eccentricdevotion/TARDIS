@@ -554,7 +554,6 @@ public class TARDISRoomRunnable implements Runnable {
                             case GRAY_WOOL:
                             case LIGHT_GRAY_WOOL:
                             case ORANGE_WOOL:
-                                // TODO add other wools?
                             case STONE_BRICKS:
                                 break;
                             default:

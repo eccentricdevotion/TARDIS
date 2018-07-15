@@ -49,6 +49,8 @@ public class TARDISShellRoomConstructor {
     private final int[] orderx;
     private final int[] orderz;
     private Block sign;
+    private final String AIR = Material.AIR.createBlockData().toString();
+    private final String GLASS = Material.GLASS.createBlockData().toString();
 
     public TARDISShellRoomConstructor(TARDIS plugin) {
         this.plugin = plugin;
@@ -69,7 +71,6 @@ public class TARDISShellRoomConstructor {
             int fz = block_loc.getBlockZ() - 1;
             TARDISMessage.send(player, "PRESET_SCAN");
             StringBuilder sb_blue_data = new StringBuilder("[");
-            // TODO get all block data as need to keep sign...
             StringBuilder sb_stain_data = new StringBuilder("[");
             StringBuilder sb_glass_data = new StringBuilder("[");
             for (int c = 0; c < 10; c++) {
@@ -79,34 +80,33 @@ public class TARDISShellRoomConstructor {
                 for (int y = fy; y < (fy + 4); y++) {
                     Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                     Material material = b.getType();
-                    // TODO need to use BlockData.getAsString()
-                    String matStr = material.toString();
+                    BlockData data = b.getBlockData();
+                    String dataStr = data.getAsString();
                     if (material.equals(Material.SPONGE)) {
-                        matStr = "AIR"; // convert sponge to air
+                        dataStr = AIR; // convert sponge to air
                     }
                     if (material.equals(Material.WALL_SIGN)) {
                         sign = b;
                     }
-                    BlockData data = b.getBlockData();
                     if (y == (fy + 3)) {
                         sb_blue_data.append(data.getAsString());
                         if (TARDISMaterials.not_glass.contains(material)) {
-                            sb_stain_data.append(matStr);
-                            sb_glass_data.append(matStr);
+                            sb_stain_data.append(dataStr);
+                            sb_glass_data.append(dataStr);
                         } else {
-                            String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
-                            sb_stain_data.append(colour);
-                            sb_glass_data.append("GLASS");
+                            Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                            sb_stain_data.append(colour.createBlockData().getAsString());
+                            sb_glass_data.append(GLASS);
                         }
                     } else {
                         sb_blue_data.append(data.getAsString()).append(",");
                         if (TARDISMaterials.not_glass.contains(material)) {
-                            sb_stain_data.append(matStr).append(",");
-                            sb_glass_data.append(matStr).append(",");
+                            sb_stain_data.append(dataStr).append(",");
+                            sb_glass_data.append(dataStr).append(",");
                         } else {
-                            String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
-                            sb_stain_data.append(colour).append(",");
-                            sb_glass_data.append("GLASS,");
+                            Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                            sb_stain_data.append(colour.createBlockData().getAsString());
+                            sb_glass_data.append(GLASS).append(",");
                         }
                     }
                 }
