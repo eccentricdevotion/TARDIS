@@ -917,30 +917,30 @@ public class TARDISSonicListener implements Listener {
         // get weather
         String weather;
         switch (biome) {
+            case BADLANDS:
+            case BADLANDS_PLATEAU:
             case DESERT:
             case DESERT_HILLS:
             case DESERT_LAKES:
+            case ERODED_BADLANDS:
+            case MODIFIED_BADLANDS_PLATEAU:
+            case MODIFIED_WOODED_BADLANDS_PLATEAU:
             case SAVANNA:
             case SAVANNA_PLATEAU:
             case SHATTERED_SAVANNA:
             case SHATTERED_SAVANNA_PLATEAU:
-            case BADLANDS:
-            case BADLANDS_PLATEAU:
-            case ERODED_BADLANDS:
-            case MODIFIED_BADLANDS_PLATEAU:
-            case MODIFIED_WOODED_BADLANDS_PLATEAU:
             case WOODED_BADLANDS_PLATEAU:
                 weather = plugin.getLanguage().getString("WEATHER_DRY");
                 break;
-            case SNOWY_TUNDRA:
-            case ICE_SPIKES:
             case FROZEN_OCEAN:
             case FROZEN_RIVER:
+            case ICE_SPIKES:
             case SNOWY_BEACH:
-            case SNOWY_TAIGA:
             case SNOWY_MOUNTAINS:
+            case SNOWY_TAIGA:
             case SNOWY_TAIGA_HILLS:
             case SNOWY_TAIGA_MOUNTAINS:
+            case SNOWY_TUNDRA:
                 weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
                 break;
             default:

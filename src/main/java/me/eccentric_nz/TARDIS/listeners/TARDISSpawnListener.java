@@ -62,9 +62,13 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.OCELOT_BABY);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
-        biomes.add(Biome.NETHER);
-        biomes.add(Biome.MUSHROOM_FIELDS);
+        biomes.add(Biome.END_BARRENS);
+        biomes.add(Biome.END_HIGHLANDS);
+        biomes.add(Biome.END_MIDLANDS);
         biomes.add(Biome.MUSHROOM_FIELD_SHORE);
+        biomes.add(Biome.MUSHROOM_FIELDS);
+        biomes.add(Biome.NETHER);
+        biomes.add(Biome.SMALL_END_ISLANDS);
         biomes.add(Biome.THE_END);
         rand = new Random();
     }

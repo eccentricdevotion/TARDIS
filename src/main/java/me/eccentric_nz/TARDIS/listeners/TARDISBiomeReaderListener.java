@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
@@ -63,7 +64,7 @@ public class TARDISBiomeReaderListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
                 Biome biome = event.getClickedBlock().getBiome();
-                if (biome.equals(Biome.THE_END) || biome.equals(Biome.NETHER) || biome.equals(Biome.THE_VOID)) {
+                if (TARDISConstants.END_BIOMES.contains(biome) || biome.equals(Biome.NETHER) || biome.equals(Biome.THE_VOID)) {
                     TARDISMessage.send(player, "BIOME_READER_NOT_VALID");
                     return;
                 }

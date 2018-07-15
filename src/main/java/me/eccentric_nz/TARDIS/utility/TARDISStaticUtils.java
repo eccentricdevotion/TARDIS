@@ -108,7 +108,21 @@ public class TARDISStaticUtils {
      * @return true if it is ocean
      */
     public static boolean isOceanBiome(Biome b) {
-        return (b.equals(Biome.OCEAN) || b.equals(Biome.DEEP_OCEAN) || b.equals(Biome.FROZEN_OCEAN));
+        switch (b) {
+            case OCEAN:
+            case COLD_OCEAN:
+            case DEEP_COLD_OCEAN:
+            case DEEP_FROZEN_OCEAN:
+            case DEEP_LUKEWARM_OCEAN:
+            case DEEP_OCEAN:
+            case DEEP_WARM_OCEAN:
+            case FROZEN_OCEAN:
+            case LUKEWARM_OCEAN:
+            case WARM_OCEAN:
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**

@@ -183,45 +183,52 @@ public class TARDISPresetBuilderFactory {
         } else {
             switch (biome) {
                 case BEACH:
-                case SNOWY_BEACH:
-                case RIVER:
                 case FROZEN_RIVER:
+                case RIVER:
+                case SNOWY_BEACH:
                     return PRESET.BOAT;
+                case COLD_OCEAN:
+                case DEEP_COLD_OCEAN:
+                case DEEP_LUKEWARM_OCEAN:
                 case DEEP_OCEAN:
+                case DEEP_WARM_OCEAN:
                 case FROZEN_OCEAN:
+                case LUKEWARM_OCEAN:
                 case OCEAN:
+                case WARM_OCEAN:
                     return PRESET.YELLOW;
                 case DESERT:
                 case DESERT_HILLS:
                 case DESERT_LAKES:
                     return PRESET.DESERT;
-                case MOUNTAINS:
-                case WOODED_MOUNTAINS:
                 case GRAVELLY_MOUNTAINS:
                 case MODIFIED_GRAVELLY_MOUNTAINS:
+                case MOUNTAINS:
                 case SNOWY_MOUNTAINS:
+                case WOODED_MOUNTAINS:
                     return PRESET.EXTREME_HILLS;
-                case FOREST:
-                case TALL_BIRCH_HILLS:
-                case BIRCH_FOREST_HILLS:
                 case BIRCH_FOREST:
+                case BIRCH_FOREST_HILLS:
+                case FOREST:
                 case TALL_BIRCH_FOREST:
+                case TALL_BIRCH_HILLS:
                     return PRESET.FOREST;
                 case NETHER:
                     return PRESET.NETHER;
                 case SNOWY_TUNDRA:
+                case DEEP_FROZEN_OCEAN:
                     return PRESET.ICE_FLATS;
                 case ICE_SPIKES:
                     return PRESET.ICE_SPIKES;
                 case JUNGLE:
-                case JUNGLE_HILLS:
                 case JUNGLE_EDGE:
+                case JUNGLE_HILLS:
                 case MODIFIED_JUNGLE:
                 case MODIFIED_JUNGLE_EDGE:
                     return PRESET.JUNGLE;
                 case BADLANDS:
-                case ERODED_BADLANDS:
                 case BADLANDS_PLATEAU:
+                case ERODED_BADLANDS:
                 case MODIFIED_BADLANDS_PLATEAU:
                 case MODIFIED_WOODED_BADLANDS_PLATEAU:
                 case WOODED_BADLANDS_PLATEAU:
@@ -243,19 +250,23 @@ public class TARDISPresetBuilderFactory {
                 case SWAMP:
                 case SWAMP_HILLS:
                     return PRESET.SWAMP;
+                case END_BARRENS:
+                case END_HIGHLANDS:
+                case END_MIDLANDS:
+                case SMALL_END_ISLANDS:
                 case THE_END:
                     return PRESET.THEEND;
-                case TAIGA:
-                case TAIGA_HILLS:
-                case TAIGA_MOUNTAINS:
                 case GIANT_SPRUCE_TAIGA:
                 case GIANT_SPRUCE_TAIGA_HILLS:
                 case GIANT_TREE_TAIGA:
                 case GIANT_TREE_TAIGA_HILLS:
+                case TAIGA:
+                case TAIGA_HILLS:
+                case TAIGA_MOUNTAINS:
                     return PRESET.TAIGA;
                 case SNOWY_TAIGA:
-                case SNOWY_TAIGA_MOUNTAINS:
                 case SNOWY_TAIGA_HILLS:
+                case SNOWY_TAIGA_MOUNTAINS:
                     return PRESET.COLD_TAIGA;
                 default:
                     return PRESET.FACTORY;
