@@ -21,19 +21,8 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum COMPASS {
 
-    EAST((byte) 15),
-    SOUTH((byte) 9),
-    WEST((byte) 13),
-    NORTH((byte) 11);
-
-    private final byte upperData;
-
-    COMPASS(byte upperData) {
-        this.upperData = upperData;
-    }
-
-    // TODO add block data value instead of byte?
-    public byte getUpperData() {
-        return upperData;
-    }
+    EAST,
+    SOUTH,
+    WEST,
+    NORTH
 }
