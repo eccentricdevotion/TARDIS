@@ -78,7 +78,7 @@ class TARDISSonicReplant implements Runnable {
                             Cocoa cocoa = (Cocoa) block.getBlockData();
                             cocoa.setFacing(c_data.get(f));
                             cocoa.setAge(0);
-                            block.setData(cocoa);
+                            block.setBlockData(cocoa);
                         }
                     });
                 } else {

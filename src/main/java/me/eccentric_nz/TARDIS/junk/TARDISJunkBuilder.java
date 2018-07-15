@@ -190,7 +190,7 @@ public class TARDISJunkBuilder implements Runnable {
                         postTerminalBlock.setType(Material.WALL_SIGN);
                         Directional sign = (Directional) Material.WALL_SIGN.createBlockData();
                         sign.setFacing(BlockFace.EAST);
-                        postTerminalBlock.setData(sign);
+                        postTerminalBlock.setBlockData(sign);
                         if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                             Sign ts = (Sign) postTerminalBlock.getState();
                             ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));

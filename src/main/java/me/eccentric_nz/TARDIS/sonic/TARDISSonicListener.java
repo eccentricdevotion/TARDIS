@@ -421,7 +421,7 @@ public class TARDISSonicListener implements Listener {
                                     plugin.getGeneralKeeper().getSonicRails().add(b.getLocation().toString());
                                     rail.setPowered(true);
                                 }
-                                b.setData(rail, true);
+                                b.setBlockData(rail, true);
                                 break;
                             case IRON_DOOR:
                                 // get bottom door block
@@ -443,11 +443,11 @@ public class TARDISSonicListener implements Listener {
                                     Block door_bottom = tmp;
                                     Openable openable = (Openable) door_bottom.getBlockData();
                                     openable.setOpen(true);
-                                    door_bottom.setData(openable, true);
+                                    door_bottom.setBlockData(openable, true);
                                     // return the door to its previous state after 3 seconds
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         openable.setOpen(false);
-                                        door_bottom.setData(openable, true);
+                                        door_bottom.setBlockData(openable, true);
                                         plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
                                     }, 60L);
                                 }
@@ -468,7 +468,7 @@ public class TARDISSonicListener implements Listener {
                                 } else if (setExtension(b)) {
                                     plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
                                     piston.setExtended(true);
-                                    b.setData(piston, true);
+                                    b.setBlockData(piston, true);
                                     player.playSound(b.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1.0f, 1.0f);
                                 }
                                 break;
@@ -499,7 +499,7 @@ public class TARDISSonicListener implements Listener {
                                             wire.setPower(0);
                                         }
                                     });
-                                    b.setData(wire, true);
+                                    b.setBlockData(wire, true);
                                 } else {
                                     plugin.getGeneralKeeper().getSonicWires().add(b.getLocation().toString());
                                     wire.setPower(15);
@@ -509,7 +509,7 @@ public class TARDISSonicListener implements Listener {
                                             wire.setPower(13);
                                         }
                                     });
-                                    b.setData(wire, true);
+                                    b.setBlockData(wire, true);
                                 }
                                 break;
                             default:
@@ -1004,13 +1004,13 @@ public class TARDISSonicListener implements Listener {
                             Openable openable = (Openable) lowerdoor.getBlockData();
                             boolean open = !openable.isOpen();
                             openable.setOpen(open);
-                            lowerdoor.setData(openable, true);
+                            lowerdoor.setBlockData(openable, true);
                             if (blockType.equals(Material.IRON_DOOR)) {
                                 plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
                                 // return the door to its previous state after 3 seconds
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     openable.setOpen(!open);
-                                    lowerdoor.setData(openable, true);
+                                    lowerdoor.setBlockData(openable, true);
                                     plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
                                 }, 60L);
                             }
@@ -1020,7 +1020,7 @@ public class TARDISSonicListener implements Listener {
                 case LEVER:
                     Powerable lever = (Powerable) targetBlock.getBlockData();
                     lever.setPowered(!lever.isPowered());
-                    targetBlock.setData(lever, true);
+                    targetBlock.setBlockData(lever, true);
                     break;
                 case ACACIA_BUTTON:
                 case BIRCH_BUTTON:
@@ -1031,11 +1031,11 @@ public class TARDISSonicListener implements Listener {
                 case STONE_BUTTON:
                     Powerable button = (Powerable) targetBlock.getBlockData();
                     button.setPowered(true);
-                    targetBlock.setData(button, true);
+                    targetBlock.setBlockData(button, true);
                     long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         button.setPowered(false);
-                        targetBlock.setData(button);
+                        targetBlock.setBlockData(button);
                     }, delay);
                     break;
                 default:
@@ -1070,7 +1070,7 @@ public class TARDISSonicListener implements Listener {
         l.setType(Material.PISTON_HEAD);
         Piston piston = (Piston) b.getBlockData();
         piston.setExtended(true);
-        b.setData(piston, true);
+        b.setBlockData(piston, true);
     }
 
     private void ignite(Block b, Player p) {

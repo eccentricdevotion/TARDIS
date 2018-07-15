@@ -494,37 +494,37 @@ public class TARDISBuilderInner {
             }
         }
         // put on the door, redstone torches, signs, and the repeaters
-        postDoorBlocks.forEach((pdb, value) -> pdb.setData(value));
-        postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
-        postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
+        postDoorBlocks.forEach((pdb, value) -> pdb.setBlockData(value));
+        postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
+        postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
         postRepeaterBlocks.forEach((prb, value) -> {
             //            prb.setType(Material.REPEATER);
-            prb.setData(value);
+            prb.setBlockData(value);
         });
         postStickyPistonBaseBlocks.forEach((pspb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
 //            pspb.setType(Material.STICKY_PISTON);
-            pspb.setData(value);
+            pspb.setBlockData(value);
         });
         postPistonBaseBlocks.forEach((ppb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
 //            ppb.setType(Material.PISTON);
-            ppb.setData(value);
+            ppb.setBlockData(value);
         });
         postPistonExtensionBlocks.forEach((ppeb, value) -> {
             //            ppeb.setType(Material.PISTON_HEAD);
-            ppeb.setData(value);
+            ppeb.setBlockData(value);
         });
         postLeverBlocks.forEach((plb, value) -> {
             //            plb.setType(Material.LEVER);
-            plb.setData(value);
+            plb.setBlockData(value);
         });
         int s = 0;
         for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
             if (s == 0) {
                 // always make the control centre the first sign
                 Block psb = entry.getKey();
-                psb.setData(entry.getValue());
+                psb.setBlockData(entry.getValue());
                 if (entry.getValue().getMaterial().equals(Material.WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");

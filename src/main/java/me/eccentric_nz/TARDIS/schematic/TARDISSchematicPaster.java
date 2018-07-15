@@ -92,7 +92,7 @@ class TARDISSchematicPaster {
                             }
                             break;
                         default:
-                            block.setData(data, true);
+                            block.setBlockData(data, true);
                             break;
                     }
                 }
@@ -100,7 +100,7 @@ class TARDISSchematicPaster {
         }
         postRedstoneTorches.forEach((prtb, ptdata) -> {
             prtb.setType(Material.REDSTONE_TORCH, true);
-            prtb.setData(ptdata);
+            prtb.setBlockData(ptdata);
         });
         setBanners(postBanners);
         return true;

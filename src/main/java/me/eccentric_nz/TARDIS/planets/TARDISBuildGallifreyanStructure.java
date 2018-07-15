@@ -207,7 +207,7 @@ class TARDISBuildGallifreyanStructure {
             }
         }
         postLadderBlocks.forEach((pldb, value) -> {
-            pldb.setData(value);
+            pldb.setBlockData(value);
         });
     }
 }

@@ -193,7 +193,7 @@ public class TARDISHandlesProcessor {
                                             if (!button.isPowered()) {
                                                 button.setPowered(true);
                                             }
-                                            block.setData(button, true);
+                                            block.setBlockData(button, true);
                                         }
                                         break;
                                 }

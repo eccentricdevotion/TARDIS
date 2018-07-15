@@ -38,7 +38,7 @@ public class TARDISBannerSetter {
         banners.forEach((key, tbd) -> {
             JSONObject state = tbd.getState();
             Block pbb = key.getLocation().getBlock();
-            pbb.setData(tbd.getData(), true);
+            pbb.setBlockData(tbd.getData(), true);
             Banner banner = (Banner) pbb.getState();
             DyeColor dye = DyeColor.valueOf(state.getString("colour"));
             banner.setBaseColor(dye);

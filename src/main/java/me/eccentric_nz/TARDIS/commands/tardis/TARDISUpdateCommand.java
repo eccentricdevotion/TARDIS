@@ -92,7 +92,7 @@ class TARDISUpdateCommand {
                             door.setHinge(Hinge.LEFT);
                         }
                     }
-                    block.setData(door);
+                    block.setBlockData(door);
                 }
                 return true;
             }

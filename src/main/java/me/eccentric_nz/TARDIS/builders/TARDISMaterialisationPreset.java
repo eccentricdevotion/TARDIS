@@ -707,7 +707,7 @@ class TARDISMaterialisationPreset implements Runnable {
             } else {
                 if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
                     handbrake.setType(Material.LEVER);
-                    handbrake.setData(h_data);
+                    handbrake.setBlockData(h_data);
                     // remember its location
                     String location = handbrake.getLocation().toString();
                     saveJunkControl(location, "handbrake");

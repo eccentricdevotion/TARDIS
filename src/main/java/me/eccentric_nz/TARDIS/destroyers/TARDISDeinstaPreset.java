@@ -181,7 +181,7 @@ public class TARDISDeinstaPreset {
             siege.setType(Material.BROWN_MUSHROOM_BLOCK);
             MultipleFacing mf = (MultipleFacing) siege.getBlockData();
             mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
-            siege.setData(mf);
+            siege.setBlockData(mf);
         }
         // refresh chunk
         plugin.getTardisHelper().refreshChunk(chunk);

@@ -200,7 +200,7 @@ public class TARDISSiegeListener implements Listener {
             // set the mushroom faces
             MultipleFacing mf = (MultipleFacing) siege.getBlockData();
             mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
-            siege.setData(mf);
+            siege.setBlockData(mf);
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);

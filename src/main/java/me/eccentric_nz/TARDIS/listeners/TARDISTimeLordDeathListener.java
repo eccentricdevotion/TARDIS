@@ -299,7 +299,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     siege.setType(Material.BROWN_MUSHROOM_BLOCK);
                                     MultipleFacing mf = (MultipleFacing) siege.getBlockData();
                                     mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
-                                    siege.setData(mf);
+                                    siege.setBlockData(mf);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);

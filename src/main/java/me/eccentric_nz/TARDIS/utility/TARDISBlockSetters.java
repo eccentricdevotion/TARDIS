@@ -58,7 +58,7 @@ public class TARDISBlockSetters {
                     Switch lever = (Switch) b.getBlockData();
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
-                    b.setData(lever);
+                    b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
@@ -66,10 +66,10 @@ public class TARDISBlockSetters {
                     Switch button = (Switch) b.getBlockData();
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
-                    b.setData(button);
+                    b.setBlockData(button);
                     break;
                 default:
-                    b.setData(blockData);
+                    b.setBlockData(blockData);
                     break;
             }
         }
@@ -91,7 +91,7 @@ public class TARDISBlockSetters {
                     Switch lever = (Switch) b.getBlockData();
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
-                    b.setData(lever);
+                    b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
@@ -99,10 +99,10 @@ public class TARDISBlockSetters {
                     Switch button = (Switch) b.getBlockData();
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
-                    b.setData(button);
+                    b.setBlockData(button);
                     break;
                 default:
-                    b.setData(bd);
+                    b.setBlockData(bd);
                     break;
             }
         }
@@ -124,7 +124,7 @@ public class TARDISBlockSetters {
                     Switch lever = (Switch) b.getBlockData();
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
-                    b.setData(lever);
+                    b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
@@ -132,7 +132,7 @@ public class TARDISBlockSetters {
                     Switch button = (Switch) b.getBlockData();
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
-                    b.setData(button);
+                    b.setBlockData(button);
                     break;
                 default:
                     b.setType(material, true);
@@ -160,7 +160,7 @@ public class TARDISBlockSetters {
                     Switch lever = (Switch) b.getBlockData();
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
-                    b.setData(lever);
+                    b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
@@ -168,10 +168,10 @@ public class TARDISBlockSetters {
                     Switch button = (Switch) b.getBlockData();
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
-                    b.setData(button);
+                    b.setBlockData(button);
                     break;
                 default:
-                    b.setData(data);
+                    b.setBlockData(data);
                     break;
             }
         }
@@ -197,7 +197,7 @@ public class TARDISBlockSetters {
                     Switch lever = (Switch) b.getBlockData();
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
-                    b.setData(lever);
+                    b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
@@ -205,10 +205,10 @@ public class TARDISBlockSetters {
                     Switch button = (Switch) b.getBlockData();
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
-                    b.setData(button);
+                    b.setBlockData(button);
                     break;
                 default:
-                    b.setData(blockData);
+                    b.setBlockData(blockData);
                     break;
             }
         }
@@ -233,7 +233,7 @@ public class TARDISBlockSetters {
                     Switch lever = (Switch) b.getBlockData();
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
-                    b.setData(lever);
+                    b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
@@ -241,7 +241,7 @@ public class TARDISBlockSetters {
                     Switch button = (Switch) b.getBlockData();
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
-                    b.setData(button);
+                    b.setBlockData(button);
                     break;
                 default:
                     b.setType(material);
@@ -273,7 +273,7 @@ public class TARDISBlockSetters {
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
-        b.setData(data);
+        b.setBlockData(data);
     }
 
     /**
@@ -300,7 +300,7 @@ public class TARDISBlockSetters {
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         BlockData blockData = Bukkit.createBlockData(data);
-        b.setData(blockData);
+        b.setBlockData(blockData);
     }
 
     /**

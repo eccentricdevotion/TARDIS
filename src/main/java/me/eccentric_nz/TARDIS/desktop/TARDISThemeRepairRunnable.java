@@ -247,38 +247,38 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // put on the door, redstone torches, signs, and the repeaters
             postDoorBlocks.forEach((pdb, value) -> {
                 //                pdb.setType(Material.IRON_DOOR);
-                pdb.setData(value);
+                pdb.setBlockData(value);
             });
-            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setData(value));
+            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
             postLeverBlocks.forEach((plb, value) -> {
                 //                plb.setType(Material.LEVER);
-                plb.setData(value);
+                plb.setBlockData(value);
             });
-            postTorchBlocks.forEach((ptb, value) -> ptb.setData(value));
+            postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
             postRepeaterBlocks.forEach((prb, value) -> {
                 //                prb.setType(Material.REPEATER);
-                prb.setData(value);
+                prb.setBlockData(value);
             });
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
 //                pspb.setType(Material.STICKY_PISTON);
-                pspb.setData(value);
+                pspb.setBlockData(value);
             });
             postPistonBaseBlocks.forEach((ppb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
 //                ppb.setType(Material.PISTON);
-                ppb.setData(value);
+                ppb.setBlockData(value);
             });
             postPistonExtensionBlocks.forEach((ppeb, value) -> {
                 //                ppeb.setType(Material.PISTON_HEAD);
-                ppeb.setData(value);
+                ppeb.setBlockData(value);
             });
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
                     Block psb = entry.getKey();
                     psb.setType(Material.WALL_SIGN);
-                    psb.setData(entry.getValue());
+                    psb.setBlockData(entry.getValue());
                     if (psb.getType().equals(Material.WALL_SIGN)) {
                         Sign cs = (Sign) psb.getState();
                         cs.setLine(0, "");

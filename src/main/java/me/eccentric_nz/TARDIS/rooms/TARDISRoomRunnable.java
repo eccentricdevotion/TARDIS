@@ -166,7 +166,7 @@ public class TARDISRoomRunnable implements Runnable {
                     BlockData repeater = Material.REPEATER.createBlockData();
                     Directional directional = (Directional) repeater;
                     directional.setFacing(value);
-                    key.setData(directional, true);
+                    key.setBlockData(directional, true);
                 });
                 mushroomblocks.clear();
             }
@@ -177,7 +177,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // attach the cocoa
                 cocoablocks.forEach((key, value) -> {
                     key.setType(Material.COCOA);
-                    key.setData(value, true);
+                    key.setBlockData(value, true);
                 });
                 cocoablocks.clear();
                 // plant the melon
@@ -202,7 +202,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // put doors on
                 doorblocks.forEach((key, value) -> {
                     key.setType(Material.OAK_DOOR);
-                    key.setData(value, true);
+                    key.setBlockData(value, true);
                 });
                 doorblocks.clear();
             }
@@ -212,17 +212,17 @@ public class TARDISRoomRunnable implements Runnable {
                 farmland.setMoisture(farmland.getMaximumMoisture());
             });
             // put levers on
-            leverblocks.forEach((key, value) -> key.setData(value, true));
+            leverblocks.forEach((key, value) -> key.setBlockData(value, true));
             leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
             lampblocks.forEach((lamp) -> lamp.setType(Material.REDSTONE_LAMP));
             lampblocks.clear();
             // put torches on
-            torchblocks.forEach((key, value) -> key.setData(value, true));
+            torchblocks.forEach((key, value) -> key.setBlockData(value, true));
             torchblocks.clear();
             // put redstone torches on
-            redstoneTorchblocks.forEach((key, value) -> key.setData(value, true));
+            redstoneTorchblocks.forEach((key, value) -> key.setBlockData(value, true));
             torchblocks.clear();
             // set banners
             setBanners(bannerblocks);
