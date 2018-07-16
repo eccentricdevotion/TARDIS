@@ -790,8 +790,12 @@ public class TARDIS extends JavaPlugin {
                 getRoomsConfig().set("rooms." + s + ".user", true);
             }
             if (getRoomsConfig().getBoolean("rooms." + s + ".enabled")) {
-                Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
-                map.put(m, s);
+                try {
+                    Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
+                    map.put(m, s);
+                } catch (IllegalArgumentException e) {
+                    debug("Invalid room seed: " + getRoomsConfig().getString("rooms." + s + ".seed"));
+                }
             }
         });
         saveConfig();

@@ -136,16 +136,12 @@ public class TARDISSchematicCommand implements CommandExecutor {
                         for (int c = minz; c <= maxz; c++) {
                             JSONObject obj = new JSONObject();
                             Block b = w.getBlockAt(r, l, c);
-                            obj.put("type", b.getType().toString());
-                            // does the block have blockdata
                             String blockData = b.getBlockData().getAsString();
-                            plugin.debug("blockData: " + blockData);
                             obj.put("data", blockData);
                             // banners
                             if (TARDISStaticUtils.isBanner(b.getType())) {
                                 JSONObject state = new JSONObject();
                                 Banner banner = (Banner) b.getState();
-//                                state.put("colour", banner.getBaseColor().toString());
                                 JSONArray patterns = new JSONArray();
                                 if (banner.numberOfPatterns() > 0) {
                                     banner.getPatterns().forEach((p) -> {
