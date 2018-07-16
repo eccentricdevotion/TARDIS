@@ -4,6 +4,7 @@
 1. Fix bugs!
 
 ## Next version `4.0-beta-1`
+0. Recreate all schematics in the new format
 1. Update to Minecraft/Spigot 1.13 - _started_
    * **All we need is BlockData!** - _started_
    * Update ARS records at first run - _started_

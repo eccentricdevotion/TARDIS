@@ -70,7 +70,7 @@ MaxHeight: 85
 ExtrudeMode: BottomDown
 
 # The blocks to extrude your BO3 through
-ExtrudeThroughBlocks: AIR,RED_ROSE,LONG_GRASS,YELLOW_FLOWER
+ExtrudeThroughBlocks: AIR,POPPY,LONG_GRASS,DANDELION
 
 # Objects can have other objects attacthed to it: branches. Branches can also
 # have branches attached to it, which can also have branches, etc. This is the

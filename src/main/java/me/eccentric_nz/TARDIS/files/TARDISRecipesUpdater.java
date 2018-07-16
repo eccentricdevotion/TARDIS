@@ -32,45 +32,45 @@ public class TARDISRecipesUpdater {
 
     private final TARDIS plugin;
     private final FileConfiguration recipes_config;
-    private final HashMap<String, Integer> flavours = new HashMap<>();
-    private final HashMap<String, Integer> colours = new HashMap<>();
+    private final HashMap<String, String> flavours = new HashMap<>();
+    private final HashMap<String, String> colours = new HashMap<>();
     private final HashMap<String, Integer> damage = new HashMap<>();
 
     public TARDISRecipesUpdater(TARDIS plugin) {
         this.plugin = plugin;
         recipes_config = plugin.getRecipesConfig();
-        flavours.put("Licorice", 0);
-        flavours.put("Raspberry", 1);
-        flavours.put("Apple", 2);
-        flavours.put("Cappuccino", 3);
-        flavours.put("Blueberry", 4);
-        flavours.put("Grape", 5);
-        flavours.put("Island Punch", 6);
-        flavours.put("Vodka", 7);
-        flavours.put("Earl Grey", 8);
-        flavours.put("Strawberry", 9);
-        flavours.put("Lime", 10);
-        flavours.put("Lemon", 11);
-        flavours.put("Bubblegum", 12);
-        flavours.put("Watermelon", 13);
-        flavours.put("Orange", 14);
-        flavours.put("Vanilla", 15);
-        colours.put("White", 0);
-        colours.put("Orange", 1);
-        colours.put("Magenta", 2);
-        colours.put("Light Blue", 3);
-        colours.put("Yellow", 4);
-        colours.put("Lime", 5);
-        colours.put("Pink", 6);
-        colours.put("Grey", 7);
-        colours.put("Light Grey", 8);
-        colours.put("Cyan", 9);
-        colours.put("Purple", 10);
-        colours.put("Blue", 11);
-        colours.put("Brown", 12);
-        colours.put("Green", 13);
-        colours.put("Red", 14);
-        colours.put("Black", 15);
+        flavours.put("Licorice", "INK_SAC");
+        flavours.put("Raspberry", "RED_ROSE");
+        flavours.put("Apple", "CACTUS_GREEN");
+        flavours.put("Cappuccino", "COCOA_BEANS");
+        flavours.put("Blueberry", "LAPIS_LAZULI");
+        flavours.put("Grape", "PURPLE_DYE");
+        flavours.put("Island Punch", "CYAN_DYE");
+        flavours.put("Vodka", "LIGHT_GRAY_DYE");
+        flavours.put("Earl Grey", "GRAY_DYE");
+        flavours.put("Strawberry", "PINK_DYE");
+        flavours.put("Lime", "LIME_DYE");
+        flavours.put("Lemon", "DANDELION_YELLOW");
+        flavours.put("Bubblegum", "LIGHT_BLUE_DYE");
+        flavours.put("Watermelon", "MAGENTA_DYE");
+        flavours.put("Orange", "ORANGE_DYE");
+        flavours.put("Vanilla", "BONE_MEAL");
+        colours.put("White", "WHITE_WOOL");
+        colours.put("Orange", "ORANGE_WOOL");
+        colours.put("Magenta", "MAGENTA_WOOL");
+        colours.put("Light Blue", "LIGHT_BLUE_WOOL");
+        colours.put("Yellow", "YELLOW_WOOL");
+        colours.put("Lime", "LIME_WOOL");
+        colours.put("Pink", "PINK_WOOL");
+        colours.put("Grey", "GRAY_WOOL");
+        colours.put("Light Grey", "LIGHT_GRAY_WOOL");
+        colours.put("Cyan", "CYAN_WOOL");
+        colours.put("Purple", "PURPLE_WOOL");
+        colours.put("Blue", "BLUE_WOOL");
+        colours.put("Brown", "BROWN_WOOL");
+        colours.put("Green", "GREEN_WOOL");
+        colours.put("Red", "RED_WOOL");
+        colours.put("Black", "BLACK_WOOL");
         damage.put("shaped.TARDIS ARS Circuit.lore", 20);
         damage.put("shaped.TARDIS Chameleon Circuit.lore", 25);
         damage.put("shaped.TARDIS Input Circuit.lore", 50);
@@ -84,8 +84,21 @@ public class TARDISRecipesUpdater {
     public void addRecipes() {
         int i = 0;
         // fix lore
-        recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
-        recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
+        if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":")) {
+            recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "LAPIS_LAZULI");
+            recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "LAPIS_LAZULI");
+            recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.L", "LAPIS_LAZULI");
+            recipes_config.set("shaped.TARDIS Materialisation Circuit.easy_ingredients.L", "LAPIS_LAZULI");
+            recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.L", "LAPIS_LAZULI");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SAC");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SAC");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "ROSE_RED");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "ROSE_RED");
+            recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
+            recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
+        }
         if (!recipes_config.contains("shaped.Handles")) {
             recipes_config.set("shaped.Handles.easy_shape", "III,ISI,IRI");
             recipes_config.set("shaped.Handles.easy_ingredients.I", "IRON_INGOT");
@@ -199,16 +212,16 @@ public class TARDISRecipesUpdater {
         } else if (recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.T").equals("REDSTONE_TORCH")) {
             recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
         }
-        if (!recipes_config.contains("shaped.White Bow Tie")) {
-            for (Map.Entry<String, Integer> map : colours.entrySet()) {
+        if (!recipes_config.contains("shaped.White Bow Tie") || recipes_config.getString("shaped.White Bow Tie.easy_ingredients.W").contains(":")) {
+            for (Map.Entry<String, String> map : colours.entrySet()) {
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.S", "STRING");
-                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.W", "WOOL:" + map.getValue());
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.W", map.getValue());
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_shape", "STS,L-L,WWW");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.S", "STRING");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.T", "TRIPWIRE_HOOK");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.L", "LEATHER");
-                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.W", "WOOL:" + map.getValue());
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.W", map.getValue());
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.result", "LEATHER_CHESTPLATE");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.amount", 1);
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.lore", "Bow ties are cool!");
@@ -268,10 +281,10 @@ public class TARDISRecipesUpdater {
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
-            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "INK_SACK:1");
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "ROSE_RED");
             recipes_config.set("shaped.Jammy Dodger.hard_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.hard_ingredients.W", "WHEAT");
-            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "INK_SACK:1");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "ROSE_RED");
             recipes_config.set("shaped.Jammy Dodger.result", "COOKIE");
             recipes_config.set("shaped.Jammy Dodger.amount", 8);
             recipes_config.set("shaped.Jammy Dodger.lore", "");
@@ -289,16 +302,16 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Fish Finger.lore", "Best eaten with custard!");
             i++;
         }
-        if (!recipes_config.contains("shapeless.Bowl of Custard")) {
+        if (!recipes_config.contains("shapeless.Bowl of Custard") || recipes_config.getString("shapeless.Bowl of Custard.result").contains("SOUP")) {
             recipes_config.set("shapeless.Bowl of Custard.recipe", "BOWL,MILK_BUCKET,EGG");
-            recipes_config.set("shapeless.Bowl of Custard.result", "MUSHROOM_SOUP");
+            recipes_config.set("shapeless.Bowl of Custard.result", "MUSHROOM_STEW");
             recipes_config.set("shapeless.Bowl of Custard.amount", 1);
             recipes_config.set("shapeless.Bowl of Custard.lore", "");
             i++;
         }
-        if (!recipes_config.contains("shapeless.Vanilla Jelly Baby")) {
-            for (Map.Entry<String, Integer> map : flavours.entrySet()) {
-                recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.recipe", "SUGAR,SLIME_BALL,INK_SACK:" + map.getValue());
+        if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") || recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe").contains(":")) {
+            for (Map.Entry<String, String> map : flavours.entrySet()) {
+                recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.recipe", "SUGAR,SLIME_BALL," + map.getValue());
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.result", "MELON");
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.amount", 4);
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.lore", "");
@@ -363,12 +376,12 @@ public class TARDISRecipesUpdater {
         }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
-            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SACK:0");
-            recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "INK_SACK:5");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SAC");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.G", "GOLD_NUGGET");
             recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
-            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SACK:0");
-            recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "INK_SACK:5");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SAC");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.G", "GOLD_BLOCK");
             recipes_config.set("shaped.Painter Circuit.result", "MAP:1979");
             recipes_config.set("shaped.Painter Circuit.amount", 1);

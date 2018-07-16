@@ -8,7 +8,7 @@
 # This should be the value of the biomeConfig you wish to extend.
 # The extended config will be loaded, at which point the configs included below
 # will overwrite any configs loaded from the extended config.
-BiomeExtends: 
+BiomeExtends:
 
 # When set to true, all resources of the parent biome (if any) will be copied
 # to the resources queue of this biome. If a resource in the parent biome looks
@@ -50,7 +50,7 @@ BiomeColor: #AAAA44
 # Replace this biome to specified after the terrain is generated.
 # This will make the world files contain the id of the specified biome, instead of the id of this biome.
 # This will cause saplings, colors and mob spawning work as in specified biome.
-ReplaceToBiomeName: 
+ReplaceToBiomeName:
 
 ####################
 # Isle biomes only #
@@ -61,7 +61,7 @@ ReplaceToBiomeName:
 
 # List of biomes in which this biome will spawn as an isle.
 # For example, Mushroom Isles spawn inside the Ocean biome.
-IsleInBiome: 
+IsleInBiome:
 
 # Size of this biome when spawned as an isle biome in BiomeMode: Normal.
 # Valid values range from 0 to GenerationDepth.
@@ -82,11 +82,11 @@ BiomeRarityWhenIsle: 100
 # List of biomes this biome can be a border of.
 # For example, the Beach biome is a border on the Ocean biome, so
 # it can spawn anywhere on the border of an ocean.
-BiomeIsBorder: 
+BiomeIsBorder:
 
 # List of biomes that cancel spawning of this biome.
 # For example, the Beach biome will never spawn next to an Extreme Hills biome.
-NotBorderNear: 
+NotBorderNear:
 
 # Size of this biome when spawned as a border biome in BiomeMode: Normal.
 # Valid values range from 0 to GenerationDepth.
@@ -119,7 +119,7 @@ SmoothRadius: 2
 # If the value is less than 0, then it will cause the terrain to either increase to a lower height before leveling out or decrease in height if the value is a large enough negative.
 MaxAverageHeight: 1.0
 
-# If this value is greater than 0, then it will affect how much, on average, the terrain (usually at the ottom of the ocean) will fall before leveling off when it begins to decrease in elevation. 
+# If this value is greater than 0, then it will affect how much, on average, the terrain (usually at the ottom of the ocean) will fall before leveling off when it begins to decrease in elevation.
 # If the value is less than 0, then it will cause the terrain to either fall to a lesser depth before leveling out or increase in height if the value is a large enough negative.
 MaxAverageDepth: -1.0
 
@@ -142,7 +142,7 @@ DisableBiomeHeight: false
 # Values which affect your configuration may be found only experimentally. Values may be very big, like ~3000.0 depends from height
 # Example:
 #   CustomHeightControl:0.0,-2500.0,0.0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-# Makes empty layer above bedrock layer. 
+# Makes empty layer above bedrock layer.
 CustomHeightControl: 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 
 
@@ -212,12 +212,12 @@ GroundBlock: DIRT
 
 # Alternatively, you can use Mesa, MesaForest or MesaBryce to get blocks
 # like the blocks found in the Mesa biomes.
-SurfaceAndGroundControl: 
+SurfaceAndGroundControl:
 
 # Replace Variable: (blockFrom,blockTo[:blockDataTo][,minHeight,maxHeight])
 # Example :
 #   ReplacedBlocks: (GRASS,DIRT,100,127),(GRAVEL,GLASS)
-# Replace grass block to dirt from 100 to 127 height and replace gravel to glass on all height 
+# Replace grass block to dirt from 100 to 127 height and replace gravel to glass on all height
 ReplacedBlocks: None
 
 ################################
@@ -321,7 +321,7 @@ FoliageColorIsMultiplier: true
 # Frequency:      number of attempts to place this resource in each chunk.
 # Rarity:         chance for each attempt, Rarity:100 - mean 100% to pass, Rarity:1 - mean 1% to pass.
 # MinAltitude and MaxAltitude: height limits.
-# BlockSource:    mean where or whereupon resource will be placed 
+# BlockSource:    mean where or whereupon resource will be placed
 # TreeType:       Tree (original oak tree) - BigTree - Birch - TallBirch - SwampTree -
 #                 HugeMushroom (randomly red or brown) - HugeRedMushroom - HugeBrownMushroom -
 #                 Taiga1 - Taiga2 - HugeTaiga1 - HugeTaiga2 -
@@ -372,7 +372,7 @@ Grass(DoubleTallgrass,Grouped,10,15.0,GRASS,DIRT)
 Tree(50,SwampTree,20,GroundBush,50,JungleTree,35,CocoaTree,100)
 Grass(Fern,NotGrouped,20,100.0,GRASS,DIRT)
 Grass(Tallgrass,NotGrouped,60,100.0,GRASS,DIRT)
-Plant(MELON_BLOCK,1,100.0,0,128,GRASS,DIRT)
+Plant(MELON,1,100.0,0,128,GRASS,DIRT)
 Plant(Poppy,4,100.0,0,128,GRASS,DIRT)
 Plant(Dandelion,4,100.0,0,128,GRASS,DIRT)
 Plant(PUMPKIN,1,3.0,0,128,GRASS)
@@ -404,7 +404,7 @@ CustomStructure(siluriabuilding,5.0)
 #######################################################################
 
 # These objects will spawn when using the UseBiome keyword.
-BiomeObjects: 
+BiomeObjects:
 
 
 #######################################################################
@@ -436,7 +436,7 @@ VillageType: wood
 MineshaftType: normal
 
 # The mineshaft rarity from 0 to 100. 0 = no mineshafts, 1 = default rarity, 100 = a wooden chaos.
-# Note that mineshafts will never spawn, regardless of this setting, if 
+# Note that mineshafts will never spawn, regardless of this setting, if
 # MineshaftType was set to disabled
 MineshaftRarity: 1.0
 

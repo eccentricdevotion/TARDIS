@@ -898,7 +898,7 @@ shapeless:
         lore: ""
     Bowl of Custard:
         recipe: BOWL,MILK_BUCKET,EGG
-        result: MUSHROOM_SOUP
+        result: MUSHROOM_STEW
         amount: 1
         lore: ""
     Vanilla Jelly Baby:

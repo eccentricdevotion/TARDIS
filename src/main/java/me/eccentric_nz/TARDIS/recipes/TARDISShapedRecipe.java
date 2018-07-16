@@ -86,7 +86,7 @@ public class TARDISShapedRecipe {
 
     private ShapedRecipe makeRecipe(String s) {
         /*
-         * shape: A-A,BBB,CDC ingredients: A: 1 B: 2 C: '5:2' D: 57 result: 276
+         * shape: A-A,BBB,CDC ingredients: A: STONE B: GRASS_BLOCK C: BIRCH_PLANKS D: DIAMOND_BLOCK result: DIAMOND_SWORD
          * amount: 1 lore: "The vorpal blade\ngoes snicker-snack!" enchantment:
          * FIRE_ASPECT strength: 3
          */

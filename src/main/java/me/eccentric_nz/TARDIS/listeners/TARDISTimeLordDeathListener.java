@@ -327,8 +327,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         // change to a dark theme
                                         SCHEMATIC schm = tardis.getSchematic();
                                         TARDISUpgradeData tud = new TARDISUpgradeData();
-                                        tud.setFloor("WOOL:15");
-                                        tud.setWall("WOOL:7");
+                                        tud.setFloor("BLACK_WOOL");
+                                        tud.setWall("GRAY_WOOL");
                                         tud.setSchematic(schm);
                                         tud.setPrevious(schm);
                                         // start the rebuild

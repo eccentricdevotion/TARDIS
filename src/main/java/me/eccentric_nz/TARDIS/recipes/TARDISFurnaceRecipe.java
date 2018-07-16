@@ -48,8 +48,8 @@ class TARDISFurnaceRecipe {
     private FurnaceRecipe makeRecipe(String s) {
         FurnaceRecipe f;
         /*
-         recipe: '35:0'
-         result: '35:15'
+         recipe: WHITE_WOOL
+         result: BLACK_WOOL
          experience: 0.0
          cooktime: 200
          displayname: true

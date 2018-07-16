@@ -52,7 +52,7 @@ friends:
   repeatable: false
   auto: false
   message: Life of the party!
-  icon: RED_ROSE
+  icon: POPPY
 travel:
   name: Got the travel bug
   description: Travel in your TARDIS

@@ -35,7 +35,7 @@ public enum TARDISARS implements ARS {
     EMPTY("GLASS", "EMPTY", "Empty", 1),
     FARM("DIRT", "FARM", "Mob Farm", 1),
     GRAVITY("MOSSY_COBBLESTONE", "GRAVITY", "Gravity Well", 1),
-    GREENHOUSE("MELON_BLOCK", "GREENHOUSE", "Greenhouse", 1),
+    GREENHOUSE("MELON", "GREENHOUSE", "Greenhouse", 1),
     HARMONY("STONE_BRICK_STAIRS", "HARMONY", "Eye of Harmony", 1),
     HUTCH("ACACIA_LOG", "HUTCH", "Rabbit Hutch", 1),
     IGLOO("PACKED_ICE", "IGLOO", "Igloo", 1),
