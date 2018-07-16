@@ -4,7 +4,7 @@
 1. Fix bugs!
 
 ## Next version `4.0-beta-1`
-0. Recreate all schematics in the new format
+0. Recreate all schematics in the new format - _started_
 1. Update to Minecraft/Spigot 1.13 - _started_
    * **All we need is BlockData!** - _started_
    * Update ARS records at first run - _started_
@@ -24,6 +24,7 @@
 9. Save PRESET when performing `/tardis save [name] true` - _started_
 10. Tardis biome travel world selection (only if drifting in Time Vortex) - `/ttravel biome [biome] [world]` - _started_
 11. Debug `TARDISMonsterRunnable.isTimelord()`
+12. Update recipes.yml for RECORD\_? -> MUSIC\_DISC\_?
 12. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ## TARDIS data pack
