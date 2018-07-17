@@ -56,14 +56,14 @@ public class TARDISBoatPreset extends TARDISPreset {
         blueprintData[6][1] = "minecraft:air";
         blueprintData[6][2] = "minecraft:air";
         blueprintData[6][3] = "minecraft:air";
-        blueprintData[7][0] = "minecraft:oak_slab[half=bottom]";
+        blueprintData[7][0] = "minecraft:oak_slab[type=bottom]";
         blueprintData[7][1] = "minecraft:air";
-        blueprintData[7][2] = "minecraft:White_wool";
+        blueprintData[7][2] = "minecraft:white_wool";
         blueprintData[7][3] = "minecraft:air";
         blueprintData[8][0] = "minecraft:oak_stairs[half=bottom,facing=east]";
         blueprintData[8][1] = "minecraft:air";
-        blueprintData[8][2] = "minecraft:White_wool";
-        blueprintData[8][3] = "minecraft:White_wool";
+        blueprintData[8][2] = "minecraft:white_wool";
+        blueprintData[8][3] = "minecraft:white_wool";
         blueprintData[9][0] = "minecraft:oak_trapdoor[half=bottom,facing=west,open=true]";
         blueprintData[9][1] = "minecraft:air";
         blueprintData[9][2] = "minecraft:air";

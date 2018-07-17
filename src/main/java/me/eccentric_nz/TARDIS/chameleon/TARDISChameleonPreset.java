@@ -23,11 +23,8 @@ import me.eccentric_nz.TARDIS.utility.recalculators.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.*;
 import org.bukkit.block.data.Bisected.Half;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.Rail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -94,7 +91,8 @@ public class TARDISChameleonPreset {
     private final TARDISWellPreset well;
     private final TARDISWindmillPreset windmill;
     private final TARDISYellowSubmarinePreset yellow;
-    public final TARDISCustomPreset custom;
+    // TODO renable custom preset
+    //    public final TARDISCustomPreset custom;
     // biome adaptive presets
     private final TARDISRenderPreset render;
     private final TARDISExtremeHillsPreset extreme;
@@ -163,7 +161,7 @@ public class TARDISChameleonPreset {
         well = new TARDISWellPreset();
         windmill = new TARDISWindmillPreset();
         yellow = new TARDISYellowSubmarinePreset();
-        custom = new TARDISCustomPreset();
+//        custom = new TARDISCustomPreset();
         render = new TARDISRenderPreset();
         extreme = new TARDISExtremeHillsPreset();
         forest = new TARDISForestPreset();
@@ -231,7 +229,7 @@ public class TARDISChameleonPreset {
         well.makePresets(false, false);
         windmill.makePresets(true, false);
         yellow.makePresets(false, false);
-        custom.makePresets();
+//        custom.makePresets();
         render.makePresets(false, false);
         extreme.makePresets(false, false);
         forest.makePresets(true, false);
@@ -423,20 +421,34 @@ public class TARDISChameleonPreset {
                             data[col][block] = new TARDISLeverRecalculator().recalculate(data[col][block], d);
                             break;
                         case SIGN:
-                        case WALL_SIGN:
-                            Directional sign = (Directional) data[col][block];
+                            Rotatable sign = (Rotatable) data[col][block];
                             switch (d) {
                                 case SOUTH:
-                                    sign.setFacing(BlockFace.NORTH);
+                                    sign.setRotation(BlockFace.NORTH);
                                     break;
                                 case WEST:
-                                    sign.setFacing(BlockFace.EAST);
+                                    sign.setRotation(BlockFace.EAST);
                                     break;
                                 default:
-                                    sign.setFacing(BlockFace.SOUTH);
+                                    sign.setRotation(BlockFace.SOUTH);
                                     break;
                             }
                             data[col][block] = sign;
+                            break;
+                        case WALL_SIGN:
+                            Directional wall_sign = (Directional) data[col][block];
+                            switch (d) {
+                                case SOUTH:
+                                    wall_sign.setFacing(BlockFace.NORTH);
+                                    break;
+                                case WEST:
+                                    wall_sign.setFacing(BlockFace.EAST);
+                                    break;
+                                default:
+                                    wall_sign.setFacing(BlockFace.SOUTH);
+                                    break;
+                            }
+                            data[col][block] = wall_sign;
                             break;
                         case OAK_STAIRS:
                         case COBBLESTONE_STAIRS:
@@ -509,16 +521,17 @@ public class TARDISChameleonPreset {
                             data[col][block] = jack;
                             break;
                         default: // vine
-                            Directional vine = (Directional) data[col][block];
+                            MultipleFacing vine = (MultipleFacing) data[col][block];
+                            vine.setFace(BlockFace.EAST, false);
                             switch (d) {
                                 case SOUTH:
-                                    vine.setFacing(BlockFace.SOUTH);
+                                    vine.setFace(BlockFace.SOUTH, true);
                                     break;
                                 case WEST:
-                                    vine.setFacing(BlockFace.WEST);
+                                    vine.setFace(BlockFace.WEST, true);
                                     break;
                                 default:
-                                    vine.setFacing(BlockFace.NORTH);
+                                    vine.setFace(BlockFace.NORTH, true);
                                     break;
                             }
                             data[col][block] = vine;
@@ -638,8 +651,8 @@ public class TARDISChameleonPreset {
                 return windmill.getBlueprint().get(d);
             case YELLOW:
                 return yellow.getBlueprint().get(d);
-            case CUSTOM:
-                return custom.getBlueprint().get(d);
+//            case CUSTOM:
+//                return custom.getBlueprint().get(d);
             case EXTREME_HILLS:
                 return extreme.getBlueprint().get(d);
             case FOREST:
@@ -775,8 +788,8 @@ public class TARDISChameleonPreset {
                 return windmill.getGlass().get(d);
             case YELLOW:
                 return yellow.getGlass().get(d);
-            case CUSTOM:
-                return custom.getGlass().get(d);
+//            case CUSTOM:
+//                return custom.getGlass().get(d);
             case EXTREME_HILLS:
                 return extreme.getGlass().get(d);
             case FOREST:
@@ -912,8 +925,8 @@ public class TARDISChameleonPreset {
                 return windmill.getStained().get(d);
             case YELLOW:
                 return yellow.getStained().get(d);
-            case CUSTOM:
-                return custom.getStained().get(d);
+//            case CUSTOM:
+//                return custom.getStained().get(d);
             case EXTREME_HILLS:
                 return extreme.getStained().get(d);
             case FOREST:

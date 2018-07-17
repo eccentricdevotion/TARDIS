@@ -23,7 +23,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -36,6 +38,8 @@ public class TARDISMaterialIDConverter {
     private final String prefix;
     public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
     private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
+    private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
+    public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
 
     public TARDISMaterialIDConverter(TARDIS plugin) {
         this.plugin = plugin;
@@ -85,7 +89,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(42, Material.IRON_BLOCK);
         LEGACY_ID_LOOKUP.put(43, Material.STONE_SLAB);
         LEGACY_ID_LOOKUP.put(44, Material.STONE_SLAB);
-        LEGACY_ID_LOOKUP.put(45, Material.BRICK);
+        LEGACY_ID_LOOKUP.put(45, Material.BRICKS);
         LEGACY_ID_LOOKUP.put(46, Material.TNT);
         LEGACY_ID_LOOKUP.put(47, Material.BOOKSHELF);
         LEGACY_ID_LOOKUP.put(48, Material.MOSSY_COBBLESTONE);
@@ -732,6 +736,23 @@ public class TARDISMaterialIDConverter {
         LEGACY_TYPE_LOOKUP.put("SPRUCE_WOOD", "SPRUCE_PLANKS");
         LEGACY_TYPE_LOOKUP.put("WHITE_CLAY", "WHITE_TERRACOTTA");
         LEGACY_TYPE_LOOKUP.put("YELLOW_CLAY", "YELLOW_TERRACOTTA");
+
+        COLOUR_LOOKUP.put(0, "WHITE");
+        COLOUR_LOOKUP.put(1, "ORANGE");
+        COLOUR_LOOKUP.put(2, "MAGENTA");
+        COLOUR_LOOKUP.put(3, "LIGHT_BLUE");
+        COLOUR_LOOKUP.put(4, "YELLOW");
+        COLOUR_LOOKUP.put(5, "LIME");
+        COLOUR_LOOKUP.put(6, "PINK");
+        COLOUR_LOOKUP.put(7, "GRAY");
+        COLOUR_LOOKUP.put(8, "LIGHT_GRAY");
+        COLOUR_LOOKUP.put(9, "CYAN");
+        COLOUR_LOOKUP.put(10, "PURPLE");
+        COLOUR_LOOKUP.put(11, "BLUE");
+        COLOUR_LOOKUP.put(12, "BROWN");
+        COLOUR_LOOKUP.put(13, "GREEN");
+        COLOUR_LOOKUP.put(14, "RED");
+        COLOUR_LOOKUP.put(15, "BLACK");
     }
 
     public void checkCondenserData() {
@@ -803,7 +824,7 @@ public class TARDISMaterialIDConverter {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT pp_id, wall, floor, siege_wall, siege_floor FROM " + prefix + "player_prefs";
-        String update = "UPDATE " + prefix + "player_prefs SET wall = ?, SET floor = ?, SET siege_wall = ?, SET siege_floor = ? WHERE c_id = ?";
+        String update = "UPDATE " + prefix + "player_prefs SET wall = ?, floor = ?, siege_wall = ?, siege_floor = ? WHERE pp_id = ?";
         int i = 0;
         try {
             service.testConnection(connection);
@@ -814,10 +835,10 @@ public class TARDISMaterialIDConverter {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    String wall = rs.getString("block_data");
-                    String floor = rs.getString("block_data");
-                    String siegeWall = rs.getString("block_data");
-                    String siegeFloor = rs.getString("block_data");
+                    String wall = rs.getString("wall");
+                    String floor = rs.getString("floor");
+                    String siegeWall = rs.getString("siege_wall");
+                    String siegeFloor = rs.getString("siege_floor");
                     Material material;
                     try {
                         material = Material.valueOf(wall);
@@ -869,7 +890,7 @@ public class TARDISMaterialIDConverter {
                 connection.commit();
             }
         } catch (SQLException e) {
-            plugin.debug("Conversion error for condenser materials! " + e.getMessage());
+            plugin.debug("Conversion error for player_prefs materials! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -884,12 +905,77 @@ public class TARDISMaterialIDConverter {
                 // reset auto commit
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                plugin.debug("Error closing condenser table (converting IDs)! " + e.getMessage());
+                plugin.debug("Error closing player_prefs table (converting IDs)! " + e.getMessage());
             }
         }
         if (i > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
             plugin.getConfig().set("conversions.player_prefs_materials", true);
+            plugin.saveConfig();
+        }
+    }
+
+    public void checkBlockData() {
+        PreparedStatement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
+        String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
+        int i = 0;
+        try {
+            service.testConnection(connection);
+            connection.setAutoCommit(false);
+            // do condenser data
+            statement = connection.prepareStatement(query);
+            ps = connection.prepareStatement(update);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    int b_id = rs.getInt("b_id");
+                    int block = rs.getInt("block");
+                    int data = rs.getInt("data");
+                    Material material = LEGACY_ID_LOOKUP.get(block);
+                    if (material != null) {
+                        if (data != 0) {
+                            if (COLOURED.contains(block)) {
+                                String white = material.toString();
+                                String[] tmp = white.split("_");
+                                String colour = white.replace(tmp[0], COLOUR_LOOKUP.get(data));
+                                material = Material.valueOf(colour);
+                            }
+                        }
+                        // update the record
+                        ps.setString(1, material.createBlockData().getAsString());
+                        ps.setInt(2, b_id);
+                        ps.addBatch();
+                        i++;
+                    }
+                }
+                ps.executeBatch();
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            plugin.debug("Conversion error for blocks materials! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                // reset auto commit
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                plugin.debug("Error closing blocks table (converting ID & data)! " + e.getMessage());
+            }
+        }
+        if (i > 0) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
+            plugin.getConfig().set("conversions.block_materials", true);
             plugin.saveConfig();
         }
     }

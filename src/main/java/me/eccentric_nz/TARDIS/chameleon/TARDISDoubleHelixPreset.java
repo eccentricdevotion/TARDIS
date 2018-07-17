@@ -61,7 +61,7 @@ public class TARDISDoubleHelixPreset extends TARDISPreset {
         blueprintData[7][2] = "minecraft:stone_brick_stairs[half=top,facing=east,shape=straight]";
         blueprintData[7][3] = "minecraft:air";
         blueprintData[8][0] = "minecraft:oak_trapdoor[half=top,facing=west,open=false]";
-        blueprintData[8][1] = "minecraft:stone_slab[half=top]";
+        blueprintData[8][1] = "minecraft:stone_slab[type=top]";
         blueprintData[8][2] = "minecraft:glowstone";
         blueprintData[8][3] = "minecraft:air";
         blueprintData[9][0] = "minecraft:air";

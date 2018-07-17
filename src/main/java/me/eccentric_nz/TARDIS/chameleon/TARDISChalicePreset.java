@@ -28,31 +28,31 @@ public class TARDISChalicePreset extends TARDISPreset {
     public TARDISChalicePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
-        blueprintData[0][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[0][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[0][1] = "minecraft:air";
         blueprintData[0][2] = "minecraft:quartz_stairs[half=bottom,facing=south,shape=straight]";
         blueprintData[0][3] = "minecraft:quartz_block";
-        blueprintData[1][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[1][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[1][1] = "minecraft:air";
         blueprintData[1][2] = "minecraft:quartz_stairs[half=bottom,facing=south,shape=straight]";
         blueprintData[1][3] = "minecraft:quartz_block";
-        blueprintData[2][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[2][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[2][1] = "minecraft:air";
         blueprintData[2][2] = "minecraft:quartz_stairs[half=bottom,facing=south,shape=outer_right]";
         blueprintData[2][3] = "minecraft:quartz_block";
-        blueprintData[3][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[3][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[3][1] = "minecraft:air";
         blueprintData[3][2] = "minecraft:quartz_stairs[half=bottom,facing=west,shape=straight]";
         blueprintData[3][3] = "minecraft:quartz_block";
-        blueprintData[4][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[4][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[4][1] = "minecraft:air";
         blueprintData[4][2] = "minecraft:quartz_stairs[half=bottom,facing=north,shape=outer_left]";
         blueprintData[4][3] = "minecraft:quartz_block";
-        blueprintData[5][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[5][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[5][1] = "minecraft:air";
         blueprintData[5][2] = "minecraft:quartz_stairs[half=bottom,facing=north,shape=straight]";
         blueprintData[5][3] = "minecraft:quartz_block";
-        blueprintData[6][0] = "minecraft:quartz_slab[half=bottom]";
+        blueprintData[6][0] = "minecraft:quartz_slab[type=bottom]";
         blueprintData[6][1] = "minecraft:air";
         blueprintData[6][2] = "minecraft:quartz_stairs[half=bottom,facing=north,shape=outer_right]";
         blueprintData[6][3] = "minecraft:quartz_block";

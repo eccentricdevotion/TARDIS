@@ -25,7 +25,6 @@ package me.eccentric_nz.TARDIS.chameleon;
  */
 public class TARDISAngelUpPreset extends TARDISPreset {
 
-
     public TARDISAngelUpPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
@@ -35,8 +34,8 @@ public class TARDISAngelUpPreset extends TARDISPreset {
         blueprintData[0][3] = "minecraft:air";
         blueprintData[1][0] = "minecraft:air";
         blueprintData[1][1] = "minecraft:air";
-        blueprintData[1][2] = "minecraft:stone_brick_stairs[half=top,facing=south";
-        blueprintData[1][3] = "minecraft:stone_brick_stairs[half=bottom,facing=north";
+        blueprintData[1][2] = "minecraft:stone_brick_stairs[half=top,facing=south]";
+        blueprintData[1][3] = "minecraft:stone_brick_stairs[half=bottom,facing=north]";
         blueprintData[2][0] = "minecraft:air";
         blueprintData[2][1] = "minecraft:air";
         blueprintData[2][2] = "minecraft:air";
@@ -51,8 +50,8 @@ public class TARDISAngelUpPreset extends TARDISPreset {
         blueprintData[4][3] = "minecraft:air";
         blueprintData[5][0] = "minecraft:air";
         blueprintData[5][1] = "minecraft:air";
-        blueprintData[5][2] = "minecraft:stone_brick_stairs[half=top,facing=north";
-        blueprintData[5][3] = "minecraft:stone_brick_stairs[half=bottom,facing=south";
+        blueprintData[5][2] = "minecraft:stone_brick_stairs[half=top,facing=north]";
+        blueprintData[5][3] = "minecraft:stone_brick_stairs[half=bottom,facing=south]";
         blueprintData[6][0] = "minecraft:air";
         blueprintData[6][1] = "minecraft:air";
         blueprintData[6][2] = "minecraft:air";

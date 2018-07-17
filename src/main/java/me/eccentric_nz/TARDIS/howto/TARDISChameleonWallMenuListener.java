@@ -50,7 +50,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
     public TARDISChameleonWallMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        rows = this.plugin.getBlocksConfig().getIntegerList("chameleon_blocks").size() / 8 + 1;
+        rows = this.plugin.getBlocksConfig().getStringList("chameleon_blocks").size() / 8 + 1;
         blocks = getChameleonBlocks();
     }
 
@@ -163,13 +163,18 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (String id : plugin.getBlocksConfig().getStringList("chameleon_blocks")) {
-            ItemStack is = new ItemStack(Material.getMaterial(id), 1);
-            stacks[r][c] = is;
-            c++;
-            if (c == 8) {
-                r++;
-                c = 0;
+        for (String mat : plugin.getBlocksConfig().getStringList("chameleon_blocks")) {
+            try {
+                Material material = Material.getMaterial(mat);
+                ItemStack is = new ItemStack(material, 1);
+                stacks[r][c] = is;
+                c++;
+                if (c == 8) {
+                    r++;
+                    c = 0;
+                }
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Chameleon block material [" + mat + "] was invalid!");
             }
         }
         return stacks;

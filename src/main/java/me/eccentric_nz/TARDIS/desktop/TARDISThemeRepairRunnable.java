@@ -246,31 +246,25 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             });
             // put on the door, redstone torches, signs, and the repeaters
             postDoorBlocks.forEach((pdb, value) -> {
-                //                pdb.setType(Material.IRON_DOOR);
                 pdb.setBlockData(value);
             });
             postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
             postLeverBlocks.forEach((plb, value) -> {
-                //                plb.setType(Material.LEVER);
                 plb.setBlockData(value);
             });
             postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
             postRepeaterBlocks.forEach((prb, value) -> {
-                //                prb.setType(Material.REPEATER);
                 prb.setBlockData(value);
             });
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-//                pspb.setType(Material.STICKY_PISTON);
                 pspb.setBlockData(value);
             });
             postPistonBaseBlocks.forEach((ppb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-//                ppb.setType(Material.PISTON);
                 ppb.setBlockData(value);
             });
             postPistonExtensionBlocks.forEach((ppeb, value) -> {
-                //                ppeb.setType(Material.PISTON_HEAD);
                 ppeb.setBlockData(value);
             });
             int s = 0;

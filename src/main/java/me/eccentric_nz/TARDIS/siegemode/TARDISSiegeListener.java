@@ -29,6 +29,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -381,16 +382,20 @@ public class TARDISSiegeListener implements Listener {
     }
 
     private boolean isSiegeCube(ItemStack is) {
+        // TODO find out how to check item atck is all faces true
 //        return (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && is.getData().getData() == (byte) 14);
         return is.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
     }
 
     private boolean isSiegeCube(Block b) {
-        boolean faced = true;
-        MultipleFacing mf = (MultipleFacing) b.getBlockData();
-        for (BlockFace face : mf.getAllowedFaces()) {
-            if (!mf.hasFace(face)) {
-                return false;
+        boolean faced = b.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
+        BlockData blockData = b.getBlockData();
+        if (blockData instanceof MultipleFacing) {
+            MultipleFacing mf = (MultipleFacing) b.getBlockData();
+            for (BlockFace face : mf.getAllowedFaces()) {
+                if (!mf.hasFace(face)) {
+                    return false;
+                }
             }
         }
         return faced;

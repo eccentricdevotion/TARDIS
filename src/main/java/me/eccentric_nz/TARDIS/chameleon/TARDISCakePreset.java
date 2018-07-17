@@ -156,7 +156,7 @@ public class TARDISCakePreset extends TARDISPreset {
         glassData[8][3] = "minecraft:air";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
-        glassData[9][2] = "minecraft:minecraft:wall_sign[facing=west]";
+        glassData[9][2] = "minecraft:wall_sign[facing=west]";
         glassData[9][3] = "minecraft:air";
         setGlassData(glassData);
     }

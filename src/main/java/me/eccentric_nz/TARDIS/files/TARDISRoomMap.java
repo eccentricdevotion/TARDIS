@@ -57,7 +57,7 @@ public class TARDISRoomMap {
                 if (sch.exists()) {
                     makeRoomMap(basepath + lower, r);
                 } else {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in 'user_schematics' and was disabled!");
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                 }
             }
@@ -121,9 +121,9 @@ public class TARDISRoomMap {
 
     // TODO check material string extraction from BlockData#getAsString()
     private String getMaterialAsString(String data) {
-        plugin.debug("getMaterialAsString: " + data);
         String[] square = data.split("\\[");
         String[] keyed = square[0].split(":");
+//        plugin.debug("Material: " + keyed[1].toUpperCase());
         return keyed[1].toUpperCase();
     }
 }

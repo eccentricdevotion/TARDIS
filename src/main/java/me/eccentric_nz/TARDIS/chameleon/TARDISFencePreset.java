@@ -31,7 +31,7 @@ public class TARDISFencePreset extends TARDISPreset {
         blueprintData[0][0] = "minecraft:bricks";
         blueprintData[0][1] = "minecraft:bricks";
         blueprintData[0][2] = "minecraft:bricks";
-        blueprintData[0][3] = "minecraft:brick_slab[half=bottom]";
+        blueprintData[0][3] = "minecraft:brick_slab[type=bottom]";
         blueprintData[1][0] = "minecraft:air";
         blueprintData[1][1] = "minecraft:air";
         blueprintData[1][2] = "minecraft:air";
@@ -55,11 +55,11 @@ public class TARDISFencePreset extends TARDISPreset {
         blueprintData[6][0] = "minecraft:bricks";
         blueprintData[6][1] = "minecraft:bricks";
         blueprintData[6][2] = "minecraft:bricks";
-        blueprintData[6][3] = "minecraft:brick_slab[half=bottom]";
+        blueprintData[6][3] = "minecraft:brick_slab[type=bottom]";
         blueprintData[7][0] = "minecraft:iron_bars";
         blueprintData[7][1] = "minecraft:iron_bars";
         blueprintData[7][2] = "minecraft:iron_bars";
-        blueprintData[7][3] = "minecraft:brick_slab[half=bottom]";
+        blueprintData[7][3] = "minecraft:brick_slab[type=bottom]";
         blueprintData[8][0] = "minecraft:air";
         blueprintData[8][1] = "minecraft:air";
         blueprintData[8][2] = "minecraft:air";

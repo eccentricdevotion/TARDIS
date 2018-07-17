@@ -59,7 +59,7 @@ public class TARDISMushroomPreset extends TARDISPreset {
         blueprintData[7][0] = "minecraft:iron_door[half=lower,hinge=left,facing=west,open=false]";
         blueprintData[7][1] = "minecraft:iron_door[half=upper,hinge=left,facing=west,open=false]";
         blueprintData[7][2] = "minecraft:air";
-        blueprintData[7][3] = "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=true";
+        blueprintData[7][3] = "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=true]";
         blueprintData[8][0] = "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=true]";
         blueprintData[8][1] = "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=true]";
         blueprintData[8][2] = "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=true]";

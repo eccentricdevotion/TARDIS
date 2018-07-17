@@ -66,7 +66,7 @@ public class TARDISRubberDuckPreset extends TARDISPreset {
         blueprintData[8][3] = "minecraft:air";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
-        blueprintData[9][2] = "minecraft:acacia_slab[half=top]";
+        blueprintData[9][2] = "minecraft:acacia_slab[type=top]";
         blueprintData[9][3] = "minecraft:air";
         setBlueprintData(blueprintData);
         // set stained data strings

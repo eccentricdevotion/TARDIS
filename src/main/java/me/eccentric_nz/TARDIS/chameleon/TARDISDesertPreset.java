@@ -31,7 +31,7 @@ public class TARDISDesertPreset extends TARDISPreset {
         blueprintData[0][0] = "minecraft:sandstone";
         blueprintData[0][1] = "minecraft:orange_terracotta";
         blueprintData[0][2] = "minecraft:sandstone";
-        blueprintData[0][3] = "minecraft:sandstone_slab[half=bottom]";
+        blueprintData[0][3] = "minecraft:sandstone_slab[type=bottom]";
         blueprintData[1][0] = "minecraft:orange_terracotta";
         blueprintData[1][1] = "minecraft:sandstone";
         blueprintData[1][2] = "minecraft:orange_terracotta";
@@ -39,7 +39,7 @@ public class TARDISDesertPreset extends TARDISPreset {
         blueprintData[2][0] = "minecraft:sandstone";
         blueprintData[2][1] = "minecraft:orange_terracotta";
         blueprintData[2][2] = "minecraft:sandstone";
-        blueprintData[2][3] = "minecraft:sandstone_slab[half=bottom]";
+        blueprintData[2][3] = "minecraft:sandstone_slab[type=bottom]";
         blueprintData[3][0] = "minecraft:orange_terracotta";
         blueprintData[3][1] = "minecraft:sandstone";
         blueprintData[3][2] = "minecraft:orange_terracotta";
@@ -47,7 +47,7 @@ public class TARDISDesertPreset extends TARDISPreset {
         blueprintData[4][0] = "minecraft:sandstone";
         blueprintData[4][1] = "minecraft:orange_terracotta";
         blueprintData[4][2] = "minecraft:sandstone";
-        blueprintData[4][3] = "minecraft:sandstone_slab[half=bottom]";
+        blueprintData[4][3] = "minecraft:sandstone_slab[type=bottom]";
         blueprintData[5][0] = "minecraft:orange_terracotta";
         blueprintData[5][1] = "minecraft:sandstone";
         blueprintData[5][2] = "minecraft:orange_terracotta";
@@ -55,7 +55,7 @@ public class TARDISDesertPreset extends TARDISPreset {
         blueprintData[6][0] = "minecraft:sandstone";
         blueprintData[6][1] = "minecraft:orange_terracotta";
         blueprintData[6][2] = "minecraft:sandstone";
-        blueprintData[6][3] = "minecraft:sandstone_slab[half=bottom]";
+        blueprintData[6][3] = "minecraft:sandstone_slab[type=bottom]";
         blueprintData[7][0] = "minecraft:iron_door[half=lower,hinge=right,facing=east,open=false]";
         blueprintData[7][1] = "minecraft:iron_door[half=upper,hinge=right,facing=east,open=false]";
         blueprintData[7][2] = "minecraft:sandstone";

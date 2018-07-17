@@ -263,6 +263,12 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
+            if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
+                TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
+                tmic.checkCondenserData();
+                tmic.checkPlayerPrefsData();
+                tmic.checkBlockData();
+            }
             bl.loadProtectBlocks();
             bl.loadGravityWells();
             if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
@@ -270,11 +276,6 @@ public class TARDIS extends JavaPlugin {
             }
             loadPerms();
             loadBooks();
-            if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials")) {
-                TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
-                tmic.checkCondenserData();
-                tmic.checkPlayerPrefsData();
-            }
             resourcePack = getServerTP();
             // copy maps
             new TARDISChecker(this).checkMapsAndAdvancements();

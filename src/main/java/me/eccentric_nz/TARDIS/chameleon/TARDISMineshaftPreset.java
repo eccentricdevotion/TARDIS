@@ -33,7 +33,7 @@ public class TARDISMineshaftPreset extends TARDISPreset {
         blueprintData[0][2] = "minecraft:oak_planks";
         blueprintData[0][3] = "minecraft:air";
         blueprintData[1][0] = "minecraft:air";
-        blueprintData[1][1] = "minecraft:web";
+        blueprintData[1][1] = "minecraft:cobweb";
         blueprintData[1][2] = "minecraft:air";
         blueprintData[1][3] = "minecraft:air";
         blueprintData[2][0] = "minecraft:oak_fence";

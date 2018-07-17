@@ -1,3 +1,5 @@
+# version - do not change
+version: 5
 # TARDIS wall interior blocks - middle block in the creation stack
 tardis_blocks:
 - LAPIS_BLOCK
@@ -62,7 +64,7 @@ tardis_blocks:
 - HAY_BLOCK
 - TERRACOTTA
 - PACKED_ICE
-# TARDIS Police Box blocks - these are allowed block IDs
+# TARDIS Police Box blocks - these are allowed block Materials
 chameleon_blocks:
 - STONE
 - DIRT
@@ -82,6 +84,12 @@ chameleon_blocks:
 - JUNGLE_LOG
 - ACACIA_LOG
 - DARK_OAK_LOG
+- STRIPPED_OAK_LOG
+- STRIPPED_BIRCH_LOG
+- STRIPPED_SPRUCE_LOG
+- STRIPPED_JUNGLE_LOG
+- STRIPPED_ACACIA_LOG
+- STRIPPED_DARK_OAK_LOG
 - OAK_LEAVES
 - BIRCH_LEAVES
 - SPRUCE_LEAVES
@@ -112,7 +120,7 @@ chameleon_blocks:
 - BLACK_WOOL
 - GOLD_BLOCK
 - IRON_BLOCK
-- BRICK
+- BRICKS
 - TNT
 - BOOKSHELF
 - MOSSY_COBBLESTONE
@@ -150,8 +158,9 @@ chameleon_blocks:
 - BROWN_MUSHROOM_BLOCK
 - RED_MUSHROOM_BLOCK
 - MELON
+- MUSHROOM_STEM
 - MYCELIUM
-- NETHER_BRICK
+- NETHER_BRICKS
 - END_STONE
 - REDSTONE_LAMP
 - EMERALD_ORE
@@ -196,6 +205,7 @@ chameleon_blocks:
 - TERRACOTTA
 - COAL_BLOCK
 - PACKED_ICE
+- BLUE_ICE
 - RED_SANDSTONE
 - PURPUR_BLOCK
 - PURPUR_PILLAR
@@ -248,9 +258,7 @@ under_door_blocks:
 - ACACIA_LEAVES
 - DARK_OAK_LEAVES
 - WATER
-- FLOWING_WATER
 - LAVA
-- FLOWING_LAVA
 - OAK_SAPLING
 - BIRCH_SAPLING
 - SPRUCE_SAPLING

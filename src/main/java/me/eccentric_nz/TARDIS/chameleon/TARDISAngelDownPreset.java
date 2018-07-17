@@ -49,8 +49,8 @@ public class TARDISAngelDownPreset extends TARDISPreset {
         blueprintData[4][2] = "minecraft:air";
         blueprintData[4][3] = "minecraft:air";
         blueprintData[5][0] = "minecraft:air";
-        blueprintData[5][1] = "minecraft:stone_brick_stairs[half=top,facing=]";
-        blueprintData[5][2] = "minecraft:stone_brick_stairs[half=top,facing=]";
+        blueprintData[5][1] = "minecraft:stone_brick_stairs[half=top,facing=north]";
+        blueprintData[5][2] = "minecraft:stone_brick_stairs[half=top,facing=south]";
         blueprintData[5][3] = "minecraft:air";
         blueprintData[6][0] = "minecraft:air";
         blueprintData[6][1] = "minecraft:air";
