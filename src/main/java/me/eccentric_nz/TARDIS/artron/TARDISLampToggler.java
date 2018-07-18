@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -50,7 +52,7 @@ public class TARDISLampToggler {
                 use_wool = rsp.isWoolLightsOn();
                 lantern = rsp.isLanternsOn();
             }
-            Material onlamp = (lantern) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
+            BlockData onlamp = (lantern) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
             for (Block b : rsl.getData()) {
                 while (!b.getChunk().isLoaded()) {
                     b.getChunk().load();
@@ -58,15 +60,15 @@ public class TARDISLampToggler {
                 if (on) {
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         if (use_wool) {
-                            b.setType(Material.BLACK_WOOL);
+                            b.setBlockData(TARDISConstants.BLACK);
                         } else if (lantern) {
-                            b.setType(Material.INFESTED_STONE);
+                            b.setBlockData(Material.INFESTED_STONE.createBlockData());
                         } else {
-                            b.setType(Material.SPONGE);
+                            b.setBlockData(Material.SPONGE.createBlockData());
                         }
                     }
                 } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
-                    b.setType(onlamp);
+                    b.setBlockData(onlamp);
                 }
             }
         }

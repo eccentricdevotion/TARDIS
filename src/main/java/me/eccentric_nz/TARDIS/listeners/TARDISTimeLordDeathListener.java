@@ -296,8 +296,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setBiome(rsc.getBiome());
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // place siege block
-                                    siege.setType(Material.BROWN_MUSHROOM_BLOCK);
-                                    MultipleFacing mf = (MultipleFacing) siege.getBlockData();
+                                    MultipleFacing mf = (MultipleFacing) Material.BROWN_MUSHROOM_BLOCK.createBlockData();
                                     mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
                                     siege.setBlockData(mf);
                                     // track this siege block

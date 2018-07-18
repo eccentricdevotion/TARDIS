@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -50,7 +51,7 @@ public class TARDISShellRoomConstructor {
     private final int[] orderz;
     private Block sign;
     private final String AIR = Material.AIR.createBlockData().toString();
-    private final String GLASS = Material.GLASS.createBlockData().toString();
+    private final String GLASS = TARDISConstants.GLASS.toString();
 
     public TARDISShellRoomConstructor(TARDIS plugin) {
         this.plugin = plugin;

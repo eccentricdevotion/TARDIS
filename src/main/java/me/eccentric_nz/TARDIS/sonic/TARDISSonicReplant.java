@@ -57,14 +57,14 @@ class TARDISSonicReplant implements Runnable {
         switch (type) {
             case BEETROOT_SEEDS:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.BEETROOTS);
+                    block.setBlockData(Material.BEETROOTS.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.BEETROOT));
                 }
                 break;
             case CARROT:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.CARROTS);
+                    block.setBlockData(Material.CARROTS.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.CARROT));
                 }
@@ -74,8 +74,7 @@ class TARDISSonicReplant implements Runnable {
                     plugin.getGeneralKeeper().getFaces().forEach((f) -> {
                         // only jungle logs
                         if (block.getRelative(f).getType().equals(log)) {
-                            block.setType(Material.COCOA);
-                            Cocoa cocoa = (Cocoa) block.getBlockData();
+                            Cocoa cocoa = (Cocoa) Material.COCOA.createBlockData();
                             cocoa.setFacing(c_data.get(f));
                             cocoa.setAge(0);
                             block.setBlockData(cocoa);
@@ -87,42 +86,42 @@ class TARDISSonicReplant implements Runnable {
                 break;
             case MELON_SEEDS:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.MELON_STEM);
+                    block.setBlockData(Material.MELON_STEM.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.MELON_SEEDS));
                 }
                 break;
             case NETHER_WART:
                 if (under.getType().equals(soul) && block.getType().equals(air)) {
-                    block.setType(Material.NETHER_WART);
+                    block.setBlockData(Material.NETHER_WART.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.NETHER_WART));
                 }
                 break;
             case POTATO:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.POTATOES);
+                    block.setBlockData(Material.POTATOES.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.POTATO));
                 }
                 break;
             case PUMPKIN_SEEDS:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.PUMPKIN_STEM);
+                    block.setBlockData(Material.PUMPKIN_STEM.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.PUMPKIN_SEEDS));
                 }
                 break;
             case SUGAR_CANE:
                 if ((under.getType().equals(grass) || under.getType().equals(dirt) || under.getType().equals(sand)) && block.getType().equals(air)) {
-                    block.setType(Material.SUGAR_CANE);
+                    block.setBlockData(Material.SUGAR_CANE.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SUGAR_CANE));
                 }
                 break;
             case WHEAT_SEEDS:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
-                    block.setType(Material.WHEAT);
+                    block.setBlockData(Material.WHEAT.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.WHEAT_SEEDS));
                 }

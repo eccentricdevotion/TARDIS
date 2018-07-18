@@ -140,7 +140,7 @@ public class TARDISSiegeListener implements Listener {
         im.setLore(lore);
         is.setItemMeta(im);
         // set block to AIR
-        b.setType(Material.AIR);
+        b.setBlockData(Material.AIR.createBlockData());
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
         item.setInvulnerable(true);
         // track it
@@ -197,7 +197,7 @@ public class TARDISSiegeListener implements Listener {
             // turn the drop into a block
             item.remove();
             Block siege = loc.getBlock();
-            siege.setType(Material.BROWN_MUSHROOM_BLOCK);
+            siege.setBlockData(Material.BROWN_MUSHROOM_BLOCK.createBlockData());
             // set the mushroom faces
             MultipleFacing mf = (MultipleFacing) siege.getBlockData();
             mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));

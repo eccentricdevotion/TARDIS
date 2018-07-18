@@ -26,12 +26,12 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.*;
 import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.*;
-import org.bukkit.block.*;
-import org.bukkit.block.data.Bisected;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
+import org.bukkit.block.data.*;
 import org.bukkit.block.data.Bisected.Half;
-import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.Openable;
-import org.bukkit.block.data.Powerable;
 import org.bukkit.block.data.type.Piston;
 import org.bukkit.block.data.type.RedstoneRail;
 import org.bukkit.block.data.type.RedstoneWire;
@@ -408,7 +408,6 @@ public class TARDISSonicListener implements Listener {
                         }
                         playSonicSound(player, now, 600L, "sonic_short");
                         Material blockType = b.getType();
-                        BlockState bs = b.getState();
                         // do redstone activation
                         switch (blockType) {
                             case DETECTOR_RAIL:
@@ -459,9 +458,9 @@ public class TARDISSonicListener implements Listener {
                                 if (plugin.getGeneralKeeper().getSonicPistons().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicPistons().remove(b.getLocation().toString());
                                     for (BlockFace f : faces) {
-                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
-                                            b.getRelative(f).setType(Material.GLASS, true);
-                                            b.getRelative(f).setType(Material.AIR, true);
+                                        if (b.getRelative(f).getType().equals(TARDISConstants.AIR)) {
+                                            b.getRelative(f).setBlockData(TARDISConstants.GLASS, true);
+                                            b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                                             break;
                                         }
                                     }
@@ -476,16 +475,16 @@ public class TARDISSonicListener implements Listener {
                                 if (blockType.equals(Material.REDSTONE_LAMP)) {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
                                     for (BlockFace f : faces) {
-                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
-                                            b.getRelative(f).setType(Material.REDSTONE_BLOCK, true);
-                                            b.setType(Material.REDSTONE_LAMP);
-                                            b.getRelative(f).setType(Material.AIR, true);
+                                        if (b.getRelative(f).getType().equals(TARDISConstants.AIR)) {
+                                            b.getRelative(f).setBlockData(TARDISConstants.POWER, true);
+                                            b.setBlockData(TARDISConstants.LAMP);
+                                            b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                                             break;
                                         }
                                     }
                                 } else if (plugin.getGeneralKeeper().getSonicLamps().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicLamps().remove(b.getLocation().toString());
-                                    b.setType(Material.REDSTONE_LAMP);
+                                    b.setBlockData(TARDISConstants.LAMP);
                                 }
                                 break;
                             case REDSTONE_WIRE:
@@ -544,7 +543,7 @@ public class TARDISSonicListener implements Listener {
                                 }
                                 l.getWorld().playSound(l, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
                                 // set the block to AIR
-                                b.setType(Material.AIR);
+                                b.setBlockData(TARDISConstants.AIR);
                             } else if (mat.equals(Material.SNOW) || mat.equals(Material.SNOW_BLOCK)) {
                                 // how many?
                                 int balls;
@@ -554,7 +553,7 @@ public class TARDISSonicListener implements Listener {
                                     Snow snow = (Snow) b;
                                     balls = 1 + snow.getLayers();
                                 }
-                                b.setType(Material.AIR);
+                                b.setBlockData(TARDISConstants.AIR);
                                 b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOWBALL, balls));
                             } else {
                                 b.breakNaturally();
@@ -800,8 +799,8 @@ public class TARDISSonicListener implements Listener {
                 break;
         }
         String joined = String.join("_", split);
-        Material material = Material.valueOf(joined);
-        block.setType(material, true);
+        BlockData data = Material.valueOf(joined).createBlockData();
+        block.setBlockData(data, true);
     }
 
     public void playSonicSound(Player player, long now, long cooldown, String sound) {
@@ -973,7 +972,6 @@ public class TARDISSonicListener implements Listener {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
-            BlockState bs = targetBlock.getState();
             switch (blockType) {
                 case ACACIA_DOOR:
                 case BIRCH_DOOR:
@@ -1057,7 +1055,7 @@ public class TARDISSonicListener implements Listener {
                 // check the block further on for AIR
                 Block two = b.getRelative(face, 2);
                 if (two.getType().equals(Material.AIR)) {
-                    two.setType(mat);
+                    two.setBlockData(mat.createBlockData());
                     extend(b, l);
                     return true;
                 }
@@ -1067,7 +1065,7 @@ public class TARDISSonicListener implements Listener {
     }
 
     private void extend(Block b, Block l) {
-        l.setType(Material.PISTON_HEAD);
+        l.setBlockData(Material.PISTON_HEAD.createBlockData());
         Piston piston = (Piston) b.getBlockData();
         piston.setExtended(true);
         b.setBlockData(piston, true);
@@ -1077,13 +1075,13 @@ public class TARDISSonicListener implements Listener {
         if (!checkBlockRespect(p, b)) {
             Block above = b.getRelative(BlockFace.UP);
             if (b.getType().equals(Material.TNT)) {
-                b.setType(Material.AIR);
+                b.setBlockData(TARDISConstants.AIR);
                 b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.PRIMED_TNT);
                 plugin.getPM().callEvent(new BlockIgniteEvent(b, IgniteCause.FLINT_AND_STEEL, p));
                 return;
             }
-            if (above.getType().equals(Material.AIR)) {
-                above.setType(Material.FIRE);
+            if (above.getType().equals(TARDISConstants.AIR)) {
+                above.setBlockData(TARDISConstants.FIRE);
                 // call a block ignite event
                 plugin.getPM().callEvent(new BlockIgniteEvent(b, IgniteCause.FLINT_AND_STEEL, p));
             }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -238,9 +239,9 @@ public class TARDISBlockStackListener implements Listener {
                         setlocs.put("direction", d);
                         qf.insertLocations(setlocs, biome, lastInsertId);
                         // remove redstone torch/lapis and iron blocks
-                        block.setType(Material.AIR);
-                        blockBelow.setType(Material.AIR);
-                        blockBottom.setType(Material.AIR);
+                        block.setBlockData(TARDISConstants.AIR);
+                        blockBelow.setBlockData(TARDISConstants.AIR);
+                        blockBottom.setBlockData(TARDISConstants.AIR);
                         // turn the block stack into a TARDIS
                         BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
                         bd.setDirection(COMPASS.valueOf(d));

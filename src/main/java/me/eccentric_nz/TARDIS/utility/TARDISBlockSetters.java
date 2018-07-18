@@ -54,16 +54,16 @@ public class TARDISBlockSetters {
             switch (blockData.getMaterial()) {
                 case CAKE:
                     // cake -> handbrake
-                    b.setType(Material.LEVER);
-                    Switch lever = (Switch) b.getBlockData();
+                    blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
-                    b.setType(Material.OAK_BUTTON);
-                    Switch button = (Switch) b.getBlockData();
+                    blockData = Material.OAK_BUTTON.createBlockData();
+                    Switch button = (Switch) blockData;
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
@@ -83,20 +83,21 @@ public class TARDISBlockSetters {
      */
     public static void setBlock(Location l, BlockData bd) {
         Block b = l.getBlock();
+        BlockData blockData;
         if (b != null) {
             switch (bd.getMaterial()) {
                 case CAKE:
                     // cake -> handbrake
-                    b.setType(Material.LEVER);
-                    Switch lever = (Switch) b.getBlockData();
+                    blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
-                    b.setType(Material.OAK_BUTTON);
-                    Switch button = (Switch) b.getBlockData();
+                    blockData = Material.OAK_BUTTON.createBlockData();
+                    Switch button = (Switch) blockData;
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
@@ -116,26 +117,27 @@ public class TARDISBlockSetters {
      */
     public static void setBlock(Location l, Material material) {
         Block b = l.getBlock();
+        BlockData blockData = material.createBlockData();
         if (b != null) {
             switch (material) {
                 case CAKE:
                     // cake -> handbrake
-                    b.setType(Material.LEVER);
-                    Switch lever = (Switch) b.getBlockData();
+                    blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
-                    b.setType(Material.OAK_BUTTON);
-                    Switch button = (Switch) b.getBlockData();
+                    blockData = Material.OAK_BUTTON.createBlockData();
+                    Switch button = (Switch) blockData;
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
                 default:
-                    b.setType(material, true);
+                    b.setBlockData(blockData, true);
                     break;
             }
         }
@@ -156,16 +158,16 @@ public class TARDISBlockSetters {
             switch (data.getMaterial()) {
                 case CAKE:
                     // cake -> handbrake
-                    b.setType(Material.LEVER);
-                    Switch lever = (Switch) b.getBlockData();
+                    BlockData blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
-                    b.setType(Material.OAK_BUTTON);
-                    Switch button = (Switch) b.getBlockData();
+                    BlockData oak = Material.OAK_BUTTON.createBlockData();
+                    Switch button = (Switch) oak;
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
@@ -193,16 +195,16 @@ public class TARDISBlockSetters {
             switch (blockData.getMaterial()) {
                 case CAKE:
                     // cake -> handbrake
-                    b.setType(Material.LEVER);
-                    Switch lever = (Switch) b.getBlockData();
+                    blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
-                    b.setType(Material.OAK_BUTTON);
-                    Switch button = (Switch) b.getBlockData();
+                    blockData = Material.OAK_BUTTON.createBlockData();
+                    Switch button = (Switch) blockData;
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
@@ -215,7 +217,7 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified typeId and data.
+     * Sets a block to the specified Material.
      *
      * @param w        the world the block is in.
      * @param x        the x co-ordinate of the block.
@@ -225,26 +227,27 @@ public class TARDISBlockSetters {
      */
     public static void setBlock(World w, int x, int y, int z, Material material) {
         Block b = w.getBlockAt(x, y, z);
+        BlockData blockData = material.createBlockData();
         if (b != null) {
             switch (material) {
                 case CAKE:
                     // cake -> handbrake
-                    b.setType(Material.LEVER);
-                    Switch lever = (Switch) b.getBlockData();
+                    blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
                     lever.setFace(Switch.Face.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
                 case SPAWNER:
                     // mob spawner -> scanner button
-                    b.setType(Material.OAK_BUTTON);
-                    Switch button = (Switch) b.getBlockData();
+                    blockData = Material.OAK_BUTTON.createBlockData();
+                    Switch button = (Switch) blockData;
                     button.setFace(Switch.Face.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
                 default:
-                    b.setType(material);
+                    b.setBlockData(blockData);
                     break;
             }
         }
@@ -326,7 +329,7 @@ public class TARDISBlockSetters {
         qf.doInsert("blocks", set);
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
-        b.setType(material);
+        b.setBlockData(material.createBlockData());
     }
 
     /**
@@ -348,7 +351,7 @@ public class TARDISBlockSetters {
         set.put("police_box", type);
         new QueryFactory(TARDIS.plugin).doInsert("blocks", set);
         // set the block
-        b.setType(m, true);
+        b.setBlockData(m.createBlockData(), true);
     }
 
     /**
@@ -382,7 +385,7 @@ public class TARDISBlockSetters {
             qf.doInsert("blocks", set);
             plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
             // set the block
-            b.setType(Material.BARRIER);
+            b.setBlockData(Material.BARRIER.createBlockData());
         }
     }
 }

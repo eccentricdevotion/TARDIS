@@ -27,6 +27,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,6 +47,7 @@ import java.util.Locale;
 public class TARDISAreaCommands implements CommandExecutor {
 
     private final TARDIS plugin;
+    public static final BlockData SNOW = Material.SNOW_BLOCK.createBlockData();
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -153,13 +155,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int maz = a.getMaxZ();
                     World w = plugin.getServer().getWorld(a.getWorld());
                     Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
-                    b1.setType(Material.SNOW_BLOCK);
+                    b1.setBlockData(SNOW);
                     Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
-                    b2.setType(Material.SNOW_BLOCK);
+                    b2.setBlockData(SNOW);
                     Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
-                    b3.setType(Material.SNOW_BLOCK);
+                    b3.setBlockData(SNOW);
                     Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
-                    b4.setType(Material.SNOW_BLOCK);
+                    b4.setBlockData(SNOW);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
                     return true;
                 case "yard":
@@ -168,19 +170,19 @@ public class TARDISAreaCommands implements CommandExecutor {
                         return false;
                     }
                     // set some basic defaults
-                    Material fill = Material.COBBLESTONE;
-                    Material dock = Material.BRICK;
+                    BlockData fill = Material.COBBLESTONE.createBlockData();
+                    BlockData dock = Material.BRICK.createBlockData();
                     if (args.length > 2) {
                         try {
-                            fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                            fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH)).createBlockData();
                             if (args.length > 3) {
-                                dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH));
+                                dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH)).createBlockData();
                             }
                         } catch (IllegalArgumentException e) {
                             TARDISMessage.send(player, "ARG_MATERIAL");
                             return true;
                         }
-                        if (!fill.isBlock() || !dock.isBlock() || !fill.isSolid() || !dock.isSolid()) {
+                        if (!fill.getMaterial().isBlock() || !dock.getMaterial().isBlock() || !fill.getMaterial().isSolid() || !dock.getMaterial().isSolid()) {
                             TARDISMessage.send(player, "ARG_NOT_BLOCK");
                             return true;
                         }
@@ -202,9 +204,9 @@ public class TARDISAreaCommands implements CommandExecutor {
                         for (int z = yardMinZ; z <= yardMaxZ; z++) {
                             int y = yardWorld.getHighestBlockYAt(x, z) - 1;
                             if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
-                                yardWorld.getBlockAt(x, y, z).setType(dock);
+                                yardWorld.getBlockAt(x, y, z).setBlockData(dock);
                             } else {
-                                yardWorld.getBlockAt(x, y, z).setType(fill);
+                                yardWorld.getBlockAt(x, y, z).setBlockData(fill);
                             }
                         }
                     }
@@ -255,6 +257,7 @@ public class TARDISAreaCommands implements CommandExecutor {
         private final Block b2;
         private final Block b3;
         private final Block b4;
+        private final BlockData air = Material.AIR.createBlockData();
 
         SetAir(Block b1, Block b2, Block b3, Block b4) {
             this.b1 = b1;
@@ -265,10 +268,10 @@ public class TARDISAreaCommands implements CommandExecutor {
 
         @Override
         public void run() {
-            b1.setType(Material.AIR);
-            b2.setType(Material.AIR);
-            b3.setType(Material.AIR);
-            b4.setType(Material.AIR);
+            b1.setBlockData(air);
+            b2.setBlockData(air);
+            b3.setBlockData(air);
+            b4.setBlockData(air);
         }
     }
 }

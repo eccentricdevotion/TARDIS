@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
@@ -143,8 +144,8 @@ public class TARDISDeinstaPreset {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
-                    if (!b.getType().equals(Material.AIR)) {
-                        b.setType(Material.AIR);
+                    if (!b.getType().equals(TARDISConstants.AIR)) {
+                        b.setBlockData(TARDISConstants.AIR);
                     }
                 }
             }
@@ -178,7 +179,7 @@ public class TARDISDeinstaPreset {
         }
         if (dd.isSiege()) {
             Block siege = dd.getLocation().getBlock();
-            siege.setType(Material.BROWN_MUSHROOM_BLOCK);
+            siege.setBlockData(Material.BROWN_MUSHROOM_BLOCK.createBlockData());
             MultipleFacing mf = (MultipleFacing) siege.getBlockData();
             mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
             siege.setBlockData(mf);

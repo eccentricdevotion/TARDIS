@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -287,38 +288,31 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             });
             // put on the door, redstone torches, signs, and the repeaters
             postDoorBlocks.forEach((pdb, value) -> {
-                //                pdb.setType(Material.IRON_DOOR);
                 pdb.setBlockData(value);
             });
             postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
             postLeverBlocks.forEach((plb, value) -> {
-                //                plb.setType(Material.LEVER);
                 plb.setBlockData(value);
             });
             postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
             postRepeaterBlocks.forEach((prb, value) -> {
-                //                prb.setType(Material.REPEATER);
                 prb.setBlockData(value);
             });
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-//                pspb.setType(Material.STICKY_PISTON);
                 pspb.setBlockData(value);
             });
             postPistonBaseBlocks.forEach((ppb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-//                ppb.setType(Material.PISTON);
                 ppb.setBlockData(value);
             });
             postPistonExtensionBlocks.forEach((ppeb, value) -> {
-                //                ppeb.setType(Material.PISTON_HEAD);
                 ppeb.setBlockData(value);
             });
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
                     Block psb = entry.getKey();
-//                    psb.setType(Material.WALL_SIGN);
                     psb.setBlockData(entry.getValue());
                     if (psb.getType().equals(Material.WALL_SIGN)) {
                         Sign cs = (Sign) psb.getState();
@@ -334,12 +328,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 s++;
             }
             lampblocks.forEach((lamp) -> {
-                Material l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
-                lamp.setType(l);
+                BlockData l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+                lamp.setBlockData(l);
             });
             lampblocks.clear();
             if (postBedrock != null) {
-                postBedrock.setType(Material.GLASS);
+                postBedrock.setBlockData(TARDISConstants.GLASS);
             }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
@@ -730,7 +724,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
-                    b.setType(Material.AIR);
+                    b.setBlockData(TARDISConstants.AIR);
                 }
             }
         }

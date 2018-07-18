@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
 
 import java.util.Arrays;
@@ -51,6 +53,15 @@ public class TARDISConstants {
     public static final List<Material> GOOD_MATERIALS = Arrays.asList(Material.AIR, Material.BROWN_MUSHROOM, Material.BROWN_MUSHROOM_BLOCK, Material.DEAD_BUSH, Material.ALLIUM, Material.AZURE_BLUET, Material.BLUE_ORCHID, Material.FERN, Material.GRASS, Material.LARGE_FERN, Material.LILAC, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_TULIP, Material.ROSE_BUSH, Material.SUNFLOWER, Material.WHITE_TULIP, Material.TALL_GRASS, Material.NETHER_WART, Material.RED_MUSHROOM, Material.ROSE_BUSH, Material.OAK_SAPLING, Material.DARK_OAK_SAPLING, Material.BIRCH_SAPLING, Material.SPRUCE_SAPLING, Material.JUNGLE_SAPLING, Material.ACACIA_SAPLING, Material.SNOW, Material.DANDELION);
     public static final List<Material> GOOD_WATER = Arrays.asList(Material.AIR, Material.WATER);
     public static final List<String> CIRCUITS = Arrays.asList("Bio-scanner Circuit", "Diamond Disruptor Circuit", "Emerald Environment Circuit", "Ignite Circuit", "Painter Circuit", "Perception Circuit", "Redstone Activator Circuit", "Rift Circuit", "Server Admin Circuit", "Sonic Oscillator", "TARDIS ARS Circuit", "TARDIS Chameleon Circuit", "TARDIS Input Circuit", "TARDIS Invisibility Circuit", "TARDIS Locator Circuit", "TARDIS Materialisation Circuit", "TARDIS Memory Circuit", "TARDIS Randomiser Circuit", "TARDIS Scanner Circuit", "TARDIS Stattenheim Circuit", "TARDIS Telepathic Circuit", "TARDIS Temporal Circuit");
+    public static final BlockData AIR = Material.AIR.createBlockData();
+    public static final BlockData FIRE = Material.FIRE.createBlockData();
+    public static final BlockData LAMP = Bukkit.createBlockData("minecraft:redstone_lamp[lit=true]");
+    public static final BlockData SNOW = Material.SNOW.createBlockData();
+    public static final BlockData GLASS = Material.GLASS.createBlockData();
+    public static final BlockData POWER = Material.REDSTONE_BLOCK.createBlockData();
+    public static final BlockData LANTERN = Material.SEA_LANTERN.createBlockData();
+    public static final BlockData BLACK = Material.BLACK_WOOL.createBlockData();
+    public static final BlockData DAYLIGHT = Material.DAYLIGHT_DETECTOR.createBlockData();
 
     /**
      * Creates a HashMap from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks

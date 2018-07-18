@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -107,7 +108,7 @@ class TARDISRoomRemover {
             for (int x = sx; x <= ex; x++) {
                 for (int z = sz; z <= ez; z++) {
                     Block block = w.getBlockAt(x, y, z);
-                    block.setType(Material.AIR);
+                    block.setBlockData(TARDISConstants.AIR);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
                     if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
                         if (block.getType().equals(Material.LIME_WOOL) || block.getType().equals(Material.PINK_WOOL)) {

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -25,12 +26,10 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Lever;
 
 import java.util.HashMap;
 
@@ -46,11 +45,9 @@ public class TARDISTakeoff {
     }
 
     public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, int flight_mode) {
-        BlockState state = block.getState();
-        Lever lever = (Lever) state.getData();
+        Switch lever = (Switch) block.getBlockData();
         lever.setPowered(false);
-        state.setData(lever);
-        state.update();
+        block.setBlockData(lever);
         if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
         }
@@ -100,11 +97,9 @@ public class TARDISTakeoff {
                 beac_on = rsp.isBeaconOn();
                 bar = rsp.isTravelbarOn();
             }
-            BlockState state = handbrake.getBlock().getState();
-            Lever lever = (Lever) state.getData();
+            Switch lever = (Switch) handbrake.getBlock().getBlockData();
             lever.setPowered(false);
-            state.setData(lever);
-            state.update();
+            handbrake.getBlock().setBlockData(lever);
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
             }
@@ -144,6 +139,6 @@ public class TARDISTakeoff {
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
-        b.setType(Material.GLASS);
+        b.setBlockData(TARDISConstants.GLASS);
     }
 }

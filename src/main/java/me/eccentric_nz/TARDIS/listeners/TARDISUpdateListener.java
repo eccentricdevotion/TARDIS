@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONTROL;
@@ -253,7 +254,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 Block detector = block;
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setType(Material.DAYLIGHT_DETECTOR), 3L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setBlockData(TARDISConstants.DAYLIGHT), 3L);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType.equals(Material.LEVER)) {
                 // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block

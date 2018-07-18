@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.List;
 
@@ -34,7 +36,9 @@ class TARDISLampsRunnable implements Runnable {
     private final TARDIS plugin;
     private final List<Block> lamps;
     private final long start;
-    private final Material light;
+    private final BlockData light;
+    private final BlockData BLACK = TARDISConstants.BLACK;
+    private final BlockData SPONGE = Material.SPONGE.createBlockData();
     private final boolean use_wool;
     private final boolean lights_on;
     private int task;
@@ -44,7 +48,7 @@ class TARDISLampsRunnable implements Runnable {
         this.plugin = plugin;
         this.lamps = lamps;
         this.start = start;
-        this.light = light;
+        this.light = light.createBlockData();
         this.use_wool = use_wool;
         lights_on = (lamps.get(0).getType().equals(this.light));
     }
@@ -58,12 +62,12 @@ class TARDISLampsRunnable implements Runnable {
         lamps.forEach((b) -> {
             if (b.getType().equals(light)) {
                 if (use_wool) {
-                    b.setType(Material.BLACK_WOOL);
+                    b.setBlockData(BLACK);
                 } else {
-                    b.setType(Material.SPONGE);
+                    b.setBlockData(SPONGE);
                 }
             } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
-                b.setType(light);
+                b.setBlockData(light);
             }
         });
         if (System.currentTimeMillis() > start) {
@@ -71,16 +75,16 @@ class TARDISLampsRunnable implements Runnable {
             if (lights_on) {
                 lamps.forEach((b) -> {
                     if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
-                        b.setType(light);
+                        b.setBlockData(light);
                     }
                 });
             } else {
                 lamps.forEach((b) -> {
                     if (b.getType().equals(light)) {
                         if (use_wool) {
-                            b.setType(Material.BLACK_WOOL);
+                            b.setBlockData(BLACK);
                         } else {
-                            b.setType(Material.SPONGE);
+                            b.setBlockData(SPONGE);
                         }
                     }
                 });

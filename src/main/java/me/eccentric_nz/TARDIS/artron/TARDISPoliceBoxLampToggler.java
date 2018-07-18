@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,21 +50,12 @@ public class TARDISPoliceBoxLampToggler {
             if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
                 if (on) {
                     // turn on
-                    redstone.setType(Material.REDSTONE_BLOCK);
+                    redstone.setBlockData(TARDISConstants.POWER);
                 } else {
                     // turn off
-                    redstone.setType(Material.BLUE_WOOL);
+                    redstone.setBlockData(Material.BLUE_WOOL.createBlockData());
                 }
             }
-//            if (lamp.getType().equals(Material.REDSTONE_LAMP) && !on) {
-//                // turn off
-//                redstone.setType(Material.BLUE_WOOL);
-//                return;
-//            }
-//            if (lamp.getType().equals(Material.REDSTONE_LAMP) && on) {
-//                // turn on
-//                redstone.setType(Material.REDSTONE_BLOCK);
-//            }
         }
     }
 }

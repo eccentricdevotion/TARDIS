@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -27,7 +28,6 @@ import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -70,7 +70,7 @@ public class TARDISBeaconToggler {
                     while (!b.getChunk().isLoaded()) {
                         b.getChunk().load();
                     }
-                    b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
+                    b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
                     if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
                         plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardis_id());
                     }

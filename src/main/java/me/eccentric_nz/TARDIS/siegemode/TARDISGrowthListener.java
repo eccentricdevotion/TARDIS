@@ -62,7 +62,7 @@ public class TARDISGrowthListener implements Listener {
                 // grow an extra step
                 if (species.equals(Material.AIR)) {
                     // with cactus and sugar cane the block returned is AIR
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType()), 3L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setBlockData(plant.getRelative(BlockFace.DOWN).getType().createBlockData()), 3L);
                 } else {
                     // get current level
                     Ageable ageable = (Ageable) plant;
@@ -71,7 +71,7 @@ public class TARDISGrowthListener implements Listener {
                         case CACTUS:
                         case SUGAR_CANE:
                             // with cactus and sugar cane the block returned is AIR
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setType(plant.getRelative(BlockFace.DOWN).getType()), 3L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setBlockData(plant.getRelative(BlockFace.DOWN).getType().createBlockData()), 3L);
                             break;
                         case BEETROOTS:
                         case CARROTS:

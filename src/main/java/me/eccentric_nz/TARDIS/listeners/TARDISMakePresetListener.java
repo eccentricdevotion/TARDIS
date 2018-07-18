@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -50,7 +51,7 @@ public class TARDISMakePresetListener implements Listener {
     private final int[] orderx;
     private final int[] orderz;
     private final String AIR = Material.AIR.createBlockData().toString();
-    private final String GLASS = Material.GLASS.createBlockData().toString();
+    private final String GLASS = TARDISConstants.GLASS.toString();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;

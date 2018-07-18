@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 
 /**
  * The Genetic Manipulation Device uses hypersonic sound waves to destabilise the cell structure, then a metagenic
@@ -34,6 +35,8 @@ class TARDISLazarusRunnable implements Runnable {
     private int taskID;
     private static final int LOOPS = 12;
     private int i = 0;
+    private final BlockData MOSSY = Material.MOSSY_COBBLESTONE_WALL.createBlockData();
+    private final BlockData PLAIN = Material.COBBLESTONE_WALL.createBlockData();
 
     public TARDISLazarusRunnable(TARDIS plugin, Block b) {
         this.plugin = plugin;
@@ -47,19 +50,19 @@ class TARDISLazarusRunnable implements Runnable {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
-                    b.getRelative(face).setType(Material.MOSSY_COBBLESTONE_WALL);
-                    b.getRelative(face).getRelative(BlockFace.UP).setType(Material.MOSSY_COBBLESTONE_WALL);
+                    b.getRelative(face).setBlockData(MOSSY);
+                    b.getRelative(face).getRelative(BlockFace.UP).setBlockData(MOSSY);
                 } else {
                     // set plain
-                    b.getRelative(face).setType(Material.COBBLESTONE_WALL);
-                    b.getRelative(face).getRelative(BlockFace.UP).setType(Material.COBBLESTONE_WALL);
+                    b.getRelative(face).setBlockData(PLAIN);
+                    b.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
                 }
             });
             i++;
         } else {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
-                b.getRelative(face).setType(Material.COBBLESTONE_WALL);
-                b.getRelative(face).getRelative(BlockFace.UP).setType(Material.COBBLESTONE_WALL);
+                b.getRelative(face).setBlockData(PLAIN);
+                b.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
             });
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;

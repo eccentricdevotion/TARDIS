@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -34,6 +35,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,6 +51,7 @@ import java.util.HashMap;
 public class TARDISPresetDestroyerFactory {
 
     private final TARDIS plugin;
+    private final BlockData AIR = Material.AIR.createBlockData();
 
     public TARDISPresetDestroyerFactory(TARDIS plugin) {
         this.plugin = plugin;
@@ -118,8 +121,8 @@ public class TARDISPresetDestroyerFactory {
                 Location l = TARDISLocationGetters.getLocationFromDB(dl, f, f);
                 if (l != null) {
                     Block b = l.getBlock();
-                    b.setType(Material.AIR);
-                    b.getRelative(BlockFace.UP).setType(Material.AIR);
+                    b.setBlockData(TARDISConstants.AIR);
+                    b.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
                 }
             }
         }
@@ -360,7 +363,7 @@ public class TARDISPresetDestroyerFactory {
 
     public void destroyLampTrapdoors(Location l, COMPASS d) {
         Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
-        plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setType(Material.AIR));
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TARDISConstants.AIR));
     }
 
     private BlockFace getOppositeFace(COMPASS c) {

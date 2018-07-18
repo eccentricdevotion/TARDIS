@@ -157,7 +157,7 @@ public class TARDISRoomRunnable implements Runnable {
             if (iceblocks.size() > 0) {
                 TARDISMessage.send(p, "ICE");
                 // set all the ice to water
-                iceblocks.forEach((ice) -> ice.setType(Material.WATER));
+                iceblocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
                 iceblocks.clear();
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
@@ -172,51 +172,50 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                 // plant the sugar cane
-                caneblocks.forEach((cane) -> cane.setType(Material.SUGAR_CANE));
+                caneblocks.forEach((cane) -> cane.setBlockData(Material.SUGAR_CANE.createBlockData()));
                 caneblocks.clear();
                 // attach the cocoa
                 cocoablocks.forEach((key, value) -> {
-                    key.setType(Material.COCOA);
                     key.setBlockData(value, true);
                 });
                 cocoablocks.clear();
                 // plant the melon
-                melonblocks.forEach((melon) -> melon.setType(Material.MELON_STEM));
+                melonblocks.forEach((melon) -> melon.setBlockData(Material.MELON_STEM.createBlockData()));
                 melonblocks.clear();
                 // plant the pumpkin
-                pumpkinblocks.forEach((pumpkin) -> pumpkin.setType(Material.PUMPKIN_STEM));
+                pumpkinblocks.forEach((pumpkin) -> pumpkin.setBlockData(Material.PUMPKIN_STEM.createBlockData()));
                 pumpkinblocks.clear();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // plant the wheat
-                    wheatblocks.forEach((wheat) -> wheat.setType(Material.WHEAT));
+                    wheatblocks.forEach((wheat) -> wheat.setBlockData(Material.WHEAT.createBlockData()));
                     wheatblocks.clear();
                     // plant the carrot
-                    carrotblocks.forEach((carrot) -> carrot.setType(Material.CARROT));
+                    carrotblocks.forEach((carrot) -> carrot.setBlockData(Material.CARROT.createBlockData()));
                     carrotblocks.clear();
                     // plant the potato
-                    potatoblocks.forEach((potato) -> potato.setType(Material.POTATO));
+                    potatoblocks.forEach((potato) -> potato.setBlockData(Material.POTATO.createBlockData()));
                     potatoblocks.clear();
                 }, 5L);
             }
             if (room.equals("VILLAGE")) {
                 // put doors on
                 doorblocks.forEach((key, value) -> {
-                    key.setType(Material.OAK_DOOR);
                     key.setBlockData(value, true);
                 });
                 doorblocks.clear();
             }
             // water farmland
             farmlandblocks.forEach((fl) -> {
-                Farmland farmland = (Farmland) fl;
+                Farmland farmland = (Farmland) fl.getBlockData();
                 farmland.setMoisture(farmland.getMaximumMoisture());
+                fl.setBlockData(farmland);
             });
             // put levers on
             leverblocks.forEach((key, value) -> key.setBlockData(value, true));
             leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
-            lampblocks.forEach((lamp) -> lamp.setType(Material.REDSTONE_LAMP));
+            lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
             lampblocks.clear();
             // put torches on
             torchblocks.forEach((key, value) -> key.setBlockData(value, true));
@@ -498,7 +497,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (level == 4 && room.equals("GREENHOUSE")) {
                     // set all the ice to water
-                    iceblocks.forEach((ice) -> ice.setType(Material.WATER));
+                    iceblocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
                     iceblocks.clear();
                 }
             }
@@ -536,8 +535,8 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     if (bottomdoorblock != null) {
                         Block topdoorblock = bottomdoorblock.getRelative(BlockFace.UP);
-                        bottomdoorblock.setType(Material.AIR);
-                        topdoorblock.setType(Material.AIR);
+                        bottomdoorblock.setBlockData(TARDISConstants.AIR);
+                        topdoorblock.setBlockData(TARDISConstants.AIR);
                     }
                 }
             }

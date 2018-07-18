@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
@@ -105,7 +106,7 @@ public class TARDISJettisonSeeder implements Listener {
                     TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
                     if (remover.remove()) {
                         plugin.getTrackerKeeper().getJettison().remove(uuid);
-                        block.setType(Material.AIR);
+                        block.setBlockData(TARDISConstants.AIR);
                         l.getWorld().playEffect(l, Effect.POTION_BREAK, 9);
                         // ok they clicked it, so give them their energy!
                         int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));

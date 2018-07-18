@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -100,7 +101,7 @@ public class TARDISKeyboardListener implements Listener {
             plugin.getTrackerKeeper().getSign().remove(loc);
             // cancel the edit and give the sign back to the player
             event.setCancelled(true);
-            event.getBlock().setType(Material.AIR);
+            event.getBlock().setBlockData(TARDISConstants.AIR);
             if (p.getGameMode() != GameMode.CREATIVE) {
                 ItemStack itemInHand = p.getInventory().getItemInMainHand();
                 if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {

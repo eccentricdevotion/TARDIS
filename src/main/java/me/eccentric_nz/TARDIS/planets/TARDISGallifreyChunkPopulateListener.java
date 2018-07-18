@@ -75,7 +75,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
             chunks.add(chunk);
             // remove STRUCTURE_BLOCK so we don't get this chunk again
             Block structure = chunk.getBlock(x, y, z);
-            structure.setType(Material.RED_SAND);
+            structure.setBlockData(Material.RED_SAND.createBlockData());
             // create structure
             new TARDISBuildGallifreyanStructure(plugin).buildCity(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
         }, 1L);

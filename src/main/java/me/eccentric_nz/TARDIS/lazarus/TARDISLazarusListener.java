@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 public class TARDISLazarusListener implements Listener {
 
     private final TARDIS plugin;
+    public static final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
 
     public TARDISLazarusListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -72,8 +74,8 @@ public class TARDISLazarusListener implements Listener {
                     // track the block
                     plugin.getTrackerKeeper().getLazarus().put(player.getUniqueId(), b);
                     // close the door
-                    b.getRelative(BlockFace.SOUTH).setType(Material.COBBLESTONE_WALL);
-                    b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.COBBLESTONE_WALL);
+                    b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
+                    b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
                     // open the GUI
                     Inventory inv = plugin.getServer().createInventory(player, 54, "§4Genetic Manipulator");
                     if (player.isSneaking()) {

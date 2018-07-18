@@ -195,7 +195,7 @@ class TARDISBuildGallifreyanStructure {
                             break;
                         case SPAWNER:
                             Block spawner = world.getBlockAt(x, y, z);
-                            spawner.setType(type);
+                            spawner.setBlockData(type.createBlockData());
                             CreatureSpawner cs = (CreatureSpawner) spawner.getState();
                             cs.setSpawnedType(EntityType.VILLAGER);
                             break;

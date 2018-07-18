@@ -24,7 +24,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.*;
-import org.bukkit.block.data.Bisected.Half;
 
 import java.util.Arrays;
 import java.util.List;
@@ -376,34 +375,31 @@ public class TARDISChameleonPreset {
                         case JUNGLE_DOOR:
                         case ACACIA_DOOR:
                         case DARK_OAK_DOOR:
-                            Bisected bisected = (Bisected) data[col][block];
-                            if (bisected.getHalf().equals(Half.BOTTOM)) {
-                                // data is either a 0 or a 2
-                                Directional door = (Directional) data[col][block];
-                                switch (d) {
-                                    case SOUTH:
-                                        if (door.getFacing().equals(BlockFace.EAST)) {
-                                            door.setFacing(BlockFace.SOUTH);
-                                        } else {
-                                            door.setFacing(BlockFace.NORTH);
-                                        }
-                                        break;
-                                    case WEST:
-                                        if (door.getFacing().equals(BlockFace.EAST)) {
-                                            door.setFacing(BlockFace.WEST);
-                                        } else {
-                                            door.setFacing(BlockFace.EAST);
-                                        }
-                                        break;
-                                    default:
-                                        if (door.getFacing().equals(BlockFace.EAST)) {
-                                            door.setFacing(BlockFace.NORTH);
-                                        } else {
-                                            door.setFacing(BlockFace.SOUTH);
-                                        }
-                                        break;
-                                }
+                            Directional door = (Directional) data[col][block];
+                            switch (d) {
+                                case SOUTH:
+                                    if (door.getFacing().equals(BlockFace.EAST)) {
+                                        door.setFacing(BlockFace.SOUTH);
+                                    } else {
+                                        door.setFacing(BlockFace.NORTH);
+                                    }
+                                    break;
+                                case WEST:
+                                    if (door.getFacing().equals(BlockFace.EAST)) {
+                                        door.setFacing(BlockFace.WEST);
+                                    } else {
+                                        door.setFacing(BlockFace.EAST);
+                                    }
+                                    break;
+                                default:
+                                    if (door.getFacing().equals(BlockFace.EAST)) {
+                                        door.setFacing(BlockFace.NORTH);
+                                    } else {
+                                        door.setFacing(BlockFace.SOUTH);
+                                    }
+                                    break;
                             }
+                            data[col][block] = door;
                             break;
                         case RAIL:
                             Rail rail = (Rail) data[col][block];

@@ -187,7 +187,6 @@ public class TARDISJunkBuilder implements Runnable {
                         }
                     }
                     if (postTerminalBlock != null) {
-                        postTerminalBlock.setType(Material.WALL_SIGN);
                         Directional sign = (Directional) Material.WALL_SIGN.createBlockData();
                         sign.setFacing(BlockFace.EAST);
                         postTerminalBlock.setBlockData(sign);

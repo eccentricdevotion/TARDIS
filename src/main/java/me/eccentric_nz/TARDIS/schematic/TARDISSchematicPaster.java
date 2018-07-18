@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -129,7 +128,6 @@ class TARDISSchematicPaster {
             }
         }
         postRedstoneTorches.forEach((prtb, ptdata) -> {
-            prtb.setType(Material.REDSTONE_TORCH, true);
             prtb.setBlockData(ptdata);
         });
         setBanners(postBanners);

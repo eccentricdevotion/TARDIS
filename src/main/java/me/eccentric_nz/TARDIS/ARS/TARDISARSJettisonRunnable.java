@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -78,7 +79,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                             }
                         }
                     }
-                    b.setType(Material.AIR);
+                    b.setBlockData(TARDISConstants.AIR);
                 }
             }
         }

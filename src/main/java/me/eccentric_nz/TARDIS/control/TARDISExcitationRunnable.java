@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -68,7 +68,7 @@ class TARDISExcitationRunnable implements Runnable {
                 s.setY(location.getWorld().getHighestBlockYAt(s));
                 Block b = s.getBlock();
                 if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
-                    b.setType(Material.SNOW);
+                    b.setBlockData(TARDISConstants.SNOW);
                     snow.add(b);
                 }
             }
@@ -77,7 +77,7 @@ class TARDISExcitationRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setType(Material.AIR)), 40L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setBlockData(TARDISConstants.AIR)), 40L);
         }
     }
 

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -498,25 +499,20 @@ public class TARDISBuilderInner {
         postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
         postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
         postRepeaterBlocks.forEach((prb, value) -> {
-            //            prb.setType(Material.REPEATER);
             prb.setBlockData(value);
         });
         postStickyPistonBaseBlocks.forEach((pspb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-//            pspb.setType(Material.STICKY_PISTON);
             pspb.setBlockData(value);
         });
         postPistonBaseBlocks.forEach((ppb, value) -> {
             plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-//            ppb.setType(Material.PISTON);
             ppb.setBlockData(value);
         });
         postPistonExtensionBlocks.forEach((ppeb, value) -> {
-            //            ppeb.setType(Material.PISTON_HEAD);
             ppeb.setBlockData(value);
         });
         postLeverBlocks.forEach((plb, value) -> {
-            //            plb.setType(Material.LEVER);
             plb.setBlockData(value);
         });
         int s = 0;
@@ -539,11 +535,11 @@ public class TARDISBuilderInner {
             s++;
         }
         if (postBedrock != null) {
-            postBedrock.setType(Material.REDSTONE_BLOCK);
+            postBedrock.setBlockData(TARDISConstants.POWER);
         }
         lampblocks.forEach((lamp) -> {
-            Material lantern = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
-            lamp.setType(lantern);
+            BlockData lantern = (schm.hasLanterns()) ? TARDISConstants.LANTERN : Material.REDSTONE_LAMP.createBlockData();
+            lamp.setBlockData(lantern);
         });
         lampblocks.clear();
         TARDISBannerSetter.setBanners(postBannerBlocks);

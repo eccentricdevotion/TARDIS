@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -91,7 +92,9 @@ public class TARDISArtronFurnaceListener implements Listener {
                         }, 2L);
                     }
                 }
-            } else plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
+            } else {
+                plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
+            }
         }
     }
 
@@ -175,7 +178,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("TARDIS Artron Furnace");
             is.setItemMeta(im);
-            block.setType(Material.AIR);
+            block.setBlockData(TARDISConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
             if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
                 // reset biome

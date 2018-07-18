@@ -34,17 +34,16 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.Comparator;
 import org.bukkit.block.data.type.Repeater;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.material.Lever;
 
 import java.util.HashMap;
 import java.util.List;
@@ -115,11 +114,9 @@ public class TARDISJunkControlListener implements Listener {
                                 TARDISMessage.send(player, "JUNK_NOT_FOUND");
                                 return;
                             }
-                            BlockState state = block.getState();
-                            Lever lever = (Lever) state.getData();
+                            Switch lever = (Switch) block.getBlockData();
                             lever.setPowered(!lever.isPowered());
-                            state.setData(lever);
-                            state.update();
+                            block.setBlockData(lever);
                             // destroy junk TARDIS
                             DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                             dd.setPlayer(player);

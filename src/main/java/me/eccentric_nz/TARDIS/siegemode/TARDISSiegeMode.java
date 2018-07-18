@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -33,7 +34,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -89,7 +89,7 @@ public class TARDISSiegeMode {
             }
             plugin.getPM().callEvent(new TARDISSiegeOffEvent(p, tardis));
             // remove siege block
-            siege.setType(Material.AIR);
+            siege.setBlockData(TARDISConstants.AIR);
             // rebuild preset
             BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());

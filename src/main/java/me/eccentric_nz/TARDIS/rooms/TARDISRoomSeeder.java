@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -136,10 +137,10 @@ public class TARDISRoomSeeder implements Listener {
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
                 if (builder.build()) {
                     // remove seed block and set door blocks to AIR as well
-                    block.setType(Material.AIR);
+                    block.setBlockData(TARDISConstants.AIR);
                     Block doorway = block.getRelative(facing, 2);
-                    doorway.setType(Material.AIR);
-                    doorway.getRelative(BlockFace.UP).setType(Material.AIR);
+                    doorway.setBlockData(TARDISConstants.AIR);
+                    doorway.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");

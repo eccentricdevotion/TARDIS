@@ -31,11 +31,10 @@ import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Orientable;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
@@ -569,7 +568,7 @@ class TARDISMaterialisationPreset implements Runnable {
                             case BEDROCK:
                                 if (preset.equals(PRESET.THEEND) && i == loops) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
-                                    world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
+                                    world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }
@@ -606,12 +605,12 @@ class TARDISMaterialisationPreset implements Runnable {
                                 plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, party);
                                 break;
                             case BLUE_WOOL:
-                                if (adapt.equals(ADAPTION.OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                if (adapt.equals(ADAPTION.OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.shouldUseCTM() && n == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && plugin.getConfig().getBoolean("police_box.set_biome")) {
                                     // set a quartz pillar block instead
-                                    Directional directional = (Directional) Material.QUARTZ_PILLAR.createBlockData();
-                                    BlockFace face = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? BlockFace.NORTH : BlockFace.EAST;
-                                    directional.setFacing(face);
-                                    plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, directional);
+                                    Orientable orientable = (Orientable) Material.QUARTZ_PILLAR.createBlockData();
+                                    Axis axis = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? Axis.X : Axis.Z;
+                                    orientable.setAxis(axis);
+                                    plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, orientable);
                                 } else if (adapt.equals(ADAPTION.BLOCK) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                     plugin.getBlockUtils().setBlock(world, xx, (y + yy), zz, cham_id);
                                 } else {
@@ -655,7 +654,7 @@ class TARDISMaterialisationPreset implements Runnable {
                             case NETHERRACK:
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 if (preset.equals(PRESET.TORCH) && i == loops) {
-                                    world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
+                                    world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                                 }
                                 break;
                             case NETHER_PORTAL:
@@ -707,7 +706,6 @@ class TARDISMaterialisationPreset implements Runnable {
                 }
             } else {
                 if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
-                    handbrake.setType(Material.LEVER);
                     handbrake.setBlockData(h_data);
                     // remember its location
                     String location = handbrake.getLocation().toString();

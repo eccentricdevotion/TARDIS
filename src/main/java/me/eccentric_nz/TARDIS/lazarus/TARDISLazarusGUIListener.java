@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -379,8 +380,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
             if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
-                b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
-                b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
+                b.getRelative(BlockFace.SOUTH).setBlockData(TARDISConstants.AIR);
+                b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
             }
             untrack(uuid);
         }
@@ -399,8 +400,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     }
 
     private void openDoor(Block b) {
-        b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
-        b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
+        b.getRelative(BlockFace.SOUTH).setBlockData(TARDISConstants.AIR);
+        b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
     }
 
     private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {

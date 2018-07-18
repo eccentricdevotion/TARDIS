@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.*;
@@ -231,7 +232,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         c.setPowered(true);
                                         if (beaconData.length > 2) {
                                             Location bl = new Location(w, bx, by, bz);
-                                            bl.getBlock().setType(Material.GLASS);
+                                            bl.getBlock().setBlockData(TARDISConstants.GLASS);
                                         }
                                     }
                                     // set the capacitor to 50% charge

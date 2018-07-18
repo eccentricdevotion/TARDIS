@@ -72,6 +72,7 @@ public class TARDISDoorOpener {
         if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             Openable openable = (Openable) block.getBlockData();
             openable.setOpen(true);
+            block.setBlockData(openable, true);
             if (add && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                 // get all companion UUIDs
                 List<UUID> uuids = new ArrayList<>();

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -208,9 +209,9 @@ public class TARDISAntiBuildListener implements Listener {
             Block b = event.getClickedBlock();
             b.getState().update();
             for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
-                if (b.getRelative(f).getType().equals(Material.AIR)) {
-                    b.getRelative(f).setType(Material.GLASS, true);
-                    b.getRelative(f).setType(Material.AIR, true);
+                if (b.getRelative(f).getType().equals(TARDISConstants.AIR)) {
+                    b.getRelative(f).setBlockData(TARDISConstants.GLASS, true);
+                    b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                     break;
                 }
             }

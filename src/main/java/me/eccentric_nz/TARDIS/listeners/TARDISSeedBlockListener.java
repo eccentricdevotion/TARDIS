@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -117,7 +118,7 @@ public class TARDISSeedBlockListener implements Listener {
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set the block to AIR
-                event.getBlock().setType(Material.AIR);
+                event.getBlock().setBlockData(TARDISConstants.AIR);
                 w.dropItemNaturally(l, is);
             }
             trackTARDISSeed.remove(l);
@@ -166,7 +167,7 @@ public class TARDISSeedBlockListener implements Listener {
                         // remove seed data
                         trackTARDISSeed.remove(l);
                         // remove seed block
-                        event.getClickedBlock().setType(Material.AIR);
+                        event.getClickedBlock().setBlockData(TARDISConstants.AIR);
                     }
                 }
             }

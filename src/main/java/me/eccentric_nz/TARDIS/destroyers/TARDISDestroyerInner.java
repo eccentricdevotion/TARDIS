@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -103,11 +104,11 @@ public class TARDISDestroyerInner {
                             Chest chest = getDoubleChest(b);
                             if (chest != null) {
                                 chest.getInventory().clear();
-                                chest.getBlock().setType(Material.AIR);
-                                container.getBlock().setType(Material.AIR);
+                                chest.getBlock().setBlockData(TARDISConstants.AIR);
+                                container.getBlock().setBlockData(TARDISConstants.AIR);
                             } else if (container != null) {
                                 container.getInventory().clear();
-                                container.getBlock().setType(Material.AIR);
+                                container.getBlock().setBlockData(TARDISConstants.AIR);
                             }
                         }
                         // if it's a furnace clear the inventory first

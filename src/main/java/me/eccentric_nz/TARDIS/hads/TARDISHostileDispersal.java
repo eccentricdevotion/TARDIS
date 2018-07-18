@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -31,6 +32,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -171,15 +173,15 @@ class TARDISHostileDispersal {
                         falls.add(fb);
                         fb.setDropItem(false);
                         fb.setVelocity(new Vector(v, v, v));
-                        b.setType(Material.AIR);
+                        b.setBlockData(TARDISConstants.AIR);
                     }
                 }
             }
         }
-        Material mat = tmp;
+        BlockData mat = tmp.createBlockData();
         // schedule task to remove fallen blocks
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> falls.forEach((f) -> {
-            f.getLocation().getBlock().setType(Material.AIR);
+            f.getLocation().getBlock().setBlockData(TARDISConstants.AIR);
             f.remove();
         }), 10L);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -187,7 +189,7 @@ class TARDISHostileDispersal {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block block = w.getBlockAt((sbx + xx), (sby), (sbz + zz));
-                    block.setType(mat);
+                    block.setBlockData(mat);
                 }
             }
         }, 15L);

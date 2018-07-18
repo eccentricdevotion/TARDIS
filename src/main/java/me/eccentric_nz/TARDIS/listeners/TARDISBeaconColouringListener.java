@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -277,7 +278,7 @@ public class TARDISBeaconColouringListener implements Listener {
                 break;
         }
         String joined = String.join("_", split);
-        Material material = Material.valueOf(joined);
-        block.setType(material, true);
+        BlockData data = Material.valueOf(joined).createBlockData();
+        block.setBlockData(data, true);
     }
 }

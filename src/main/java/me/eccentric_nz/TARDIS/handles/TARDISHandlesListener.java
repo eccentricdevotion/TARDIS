@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
@@ -61,7 +62,7 @@ public class TARDISHandlesListener implements Listener {
         }
         event.setCancelled(true);
         // set block to AIR
-        b.setType(Material.AIR);
+        b.setBlockData(TARDISConstants.AIR);
         // drop a custom BIRCH_BUTTON
         ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();

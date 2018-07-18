@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -189,7 +190,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             if (rss.getSonic().isActivated()) {
                 event.setCancelled(true);
                 // set block to AIR
-                b.setType(Material.AIR);
+                b.setBlockData(TARDISConstants.AIR);
                 // drop a custom FLOWER_POT_ITEM
                 ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
                 ItemMeta im = is.getItemMeta();

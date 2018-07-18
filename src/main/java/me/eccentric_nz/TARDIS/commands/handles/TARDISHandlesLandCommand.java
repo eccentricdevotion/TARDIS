@@ -34,9 +34,8 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
-import org.bukkit.block.BlockState;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Lever;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,13 +79,11 @@ class TARDISHandlesLandCommand {
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (rsc.resultSet()) {
                     Location location = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
-                    BlockState state = location.getBlock().getState();
-                    Lever lever = (Lever) state.getData();
                     TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
                     // Changes the lever to on
+                    Switch lever = (Switch) location.getBlock().getBlockData();
                     lever.setPowered(true);
-                    state.setData(lever);
-                    state.update();
+                    location.getBlock().setBlockData(lever);
                     // Check if it's at a recharge point
                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                     tal.recharge(id);

@@ -33,12 +33,11 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Orientable;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
@@ -254,7 +253,7 @@ class TARDISInstaPreset {
                     case BEDROCK:
                         if (preset.equals(PRESET.THEEND)) {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                            world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
+                            world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         } else {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
@@ -280,10 +279,10 @@ class TARDISInstaPreset {
                         }
                         if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                             // set a quartz pillar block instead
-                            Directional directional = (Directional) Material.QUARTZ_PILLAR.createBlockData();
-                            BlockFace face = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? BlockFace.NORTH : BlockFace.EAST;
-                            directional.setFacing(face);
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisID());
+                            Orientable orientable = (Orientable) Material.QUARTZ_PILLAR.createBlockData();
+                            Axis axis = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? Axis.X : Axis.Z;
+                            orientable.setAxis(axis);
+                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, orientable, bd.getTardisID());
                         }
                         break;
                     case TORCH: // lamps, glowstone and torches
@@ -455,7 +454,7 @@ class TARDISInstaPreset {
                     case NETHERRACK:
                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         if (preset.equals(PRESET.TORCH)) {
-                            world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
+                            world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         }
                         break;
                     case NETHER_PORTAL:

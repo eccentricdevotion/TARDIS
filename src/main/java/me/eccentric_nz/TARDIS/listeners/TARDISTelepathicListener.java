@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -89,7 +90,7 @@ public class TARDISTelepathicListener implements Listener {
                     }
                 }
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setType(Material.DAYLIGHT_DETECTOR), 3L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TARDISConstants.DAYLIGHT), 3L);
         }
     }
 
@@ -109,7 +110,7 @@ public class TARDISTelepathicListener implements Listener {
         }
         event.setCancelled(true);
         // set block to AIR
-        b.setType(Material.AIR);
+        b.setBlockData(TARDISConstants.AIR);
         // drop a custom DAYLIGHT_DETECTOR
         ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
         ItemMeta im = is.getItemMeta();

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -26,7 +27,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
@@ -112,7 +112,7 @@ public class TARDISJunkDestroyer implements Runnable {
                     for (int row = ex; row >= sx; row--) {
                         for (int col = sz; col <= ez; col++) {
                             Block b = world.getBlockAt(row, level, col);
-                            b.setType(Material.AIR);
+                            b.setBlockData(TARDISConstants.AIR);
                             if (level == sy && ((b.getBiome().equals(Biome.THE_END) && !junkLoc.getWorld().getEnvironment().equals(Environment.THE_END)) || b.getBiome().equals(Biome.THE_VOID)) && biome != null) {
                                 if (!chunks.contains(b.getChunk())) {
                                     chunks.add(b.getChunk());

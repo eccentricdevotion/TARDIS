@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Lightable;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
     private final int maxX;
     private final int maxZ;
     private int c = 0;
+    private final Lightable lightable = (Lightable) Material.REDSTONE_TORCH.createBlockData();
 
     public TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
         this.plugin = plugin;
@@ -51,8 +53,11 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
     @Override
     public void run() {
         if (c % 5 < 3) {
-            t.setType(Material.REDSTONE_TORCH);
+            lightable.setLit(false);
+        } else {
+            lightable.setLit(true);
         }
+        t.setBlockData(lightable);
         // check if player is in Junk TARDIS effects zone
         List<UUID> remove = new ArrayList<>();
         plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {

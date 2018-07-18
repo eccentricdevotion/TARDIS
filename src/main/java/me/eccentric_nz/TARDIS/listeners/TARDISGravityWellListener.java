@@ -243,7 +243,7 @@ public class TARDISGravityWellListener implements Listener {
                                     break;
                             }
                             // set the block to light grey wool
-                            b.setType(Material.LIGHT_GRAY_WOOL, true);
+                            b.setBlockData(Material.LIGHT_GRAY_WOOL.createBlockData(), true);
                             TARDISMessage.send(player, "GRAVITY_REMOVED");
                         }
                     } else {

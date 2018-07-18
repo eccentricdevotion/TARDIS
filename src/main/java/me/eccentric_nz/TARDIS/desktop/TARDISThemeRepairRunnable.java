@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -271,7 +272,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
                     Block psb = entry.getKey();
-                    psb.setType(Material.WALL_SIGN);
                     psb.setBlockData(entry.getValue());
                     if (psb.getType().equals(Material.WALL_SIGN)) {
                         Sign cs = (Sign) psb.getState();
@@ -287,12 +287,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 s++;
             }
             lampblocks.forEach((lamp) -> {
-                Material l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
-                lamp.setType(l);
+                BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+                lamp.setBlockData(l);
             });
             lampblocks.clear();
             if (postBedrock != null) {
-                postBedrock.setType(Material.GLASS);
+                postBedrock.setBlockData(TARDISConstants.GLASS);
             }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
@@ -592,7 +592,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
-                    b.setType(Material.AIR);
+                    b.setBlockData(TARDISConstants.AIR);
                 }
             }
         }

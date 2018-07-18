@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
@@ -32,14 +33,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.material.Lever;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -146,8 +146,6 @@ public class TARDISHandbrakeListener implements Listener {
                             TARDISMessage.send(player, "HANDBRAKE_IN_VORTEX");
                         } else {
                             Action action = event.getAction();
-                            BlockState state = block.getState();
-                            Lever lever = (Lever) state.getData();
                             // should the beacon turn on
                             HashMap<String, Object> wherek = new HashMap<>();
                             wherek.put("uuid", uuid.toString());
@@ -190,9 +188,9 @@ public class TARDISHandbrakeListener implements Listener {
                                 if (!tardis.isHandbrake_on()) {
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
+                                    Switch lever = (Switch) block.getBlockData();
                                     lever.setPowered(true);
-                                    state.setData(lever);
-                                    state.update();
+                                    block.setBlockData(lever);
                                     // Check if it's at a recharge point
                                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                     tal.recharge(id);
@@ -247,7 +245,7 @@ public class TARDISHandbrakeListener implements Listener {
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
-        b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
+        b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
     private boolean isDoorOpen(int id) {

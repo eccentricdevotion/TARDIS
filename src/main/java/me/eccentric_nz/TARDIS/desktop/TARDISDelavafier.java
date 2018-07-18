@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -38,6 +39,8 @@ class TARDISDelavafier {
     private int startx;
     private final int starty = 64;
     private int startz;
+    public static final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
+    public static final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
 
     public TARDISDelavafier(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
@@ -73,10 +76,10 @@ class TARDISDelavafier {
                         Block b = world.getBlockAt(x, y, z);
                         Material type = b.getType();
                         if (type.equals(Material.LAVA)) {
-                            b.setType(Material.ORANGE_TERRACOTTA);
+                            b.setBlockData(ORANGE);
                         }
                         if (type.equals(Material.WATER)) {
-                            b.setType(Material.LIGHT_BLUE_STAINED_GLASS);
+                            b.setBlockData(GLASS);
                         }
                     }
                 }

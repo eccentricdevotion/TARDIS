@@ -17,11 +17,14 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,15 +42,16 @@ public class TARDISBlackWoolToggler {
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
-            Material mat;
+            BlockData mat;
             if (isAir(b)) {
-                mat = Material.BLACK_WOOL;
+                mat = TARDISConstants.BLACK;
             } else {
-                mat = Material.AIR;
+                mat = Material.AIR.createBlockData();
             }
-            b.setType(mat);
-            b.getRelative(BlockFace.UP).setType(mat);
-            if (TARDISStaticUtils.isDoorOpen(b.getRelative(BlockFace.SOUTH))) {
+            b.setBlockData(mat);
+            b.getRelative(BlockFace.UP).setBlockData(mat);
+            Block door = b.getRelative(BlockFace.SOUTH);
+            if (Tag.DOORS.isTagged(door.getType()) && TARDISStaticUtils.isDoorOpen(door)) {
                 // toggle doors shut
                 new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
             }

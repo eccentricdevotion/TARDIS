@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -196,12 +197,12 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     } else {
                                                         // torches
                                                         blue[first][second] = tid.createBlockData().getAsString();
-                                                        glass[first][second] = Material.GLASS.createBlockData().getAsString();
+                                                        glass[first][second] = TARDISConstants.GLASS.getAsString();
                                                         stain[first][second] = (tid.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getAsString() : Material.RED_STAINED_GLASS.createBlockData().getAsString();
                                                     }
                                                 } else {
                                                     blue[first][second] = tid.createBlockData().getAsString();
-                                                    glass[first][second] = Material.GLASS.createBlockData().getAsString();
+                                                    glass[first][second] = TARDISConstants.GLASS.getAsString();
                                                     stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(tid).createBlockData().getAsString();
                                                 }
                                             } else {

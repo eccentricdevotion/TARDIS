@@ -68,6 +68,7 @@ public class TARDISDoorCloser {
         if (block != null && plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             Openable closeable = (Openable) block.getBlockData();
             closeable.setOpen(false);
+            block.setBlockData(closeable, true);
         }
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // get all companion UUIDs

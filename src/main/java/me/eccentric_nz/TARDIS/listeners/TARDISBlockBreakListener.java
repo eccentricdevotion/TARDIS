@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -122,7 +123,7 @@ public class TARDISBlockBreakListener implements Listener {
                             TARDISMessage.send(player, "RIFT_REMOVED");
                             event.setCancelled(true);
                             // drop Rift Manipulator
-                            event.getBlock().setType(Material.AIR);
+                            event.getBlock().setBlockData(TARDISConstants.AIR);
                             ItemStack rm = new ItemStack(Material.BEACON, 1);
                             ItemMeta im = rm.getItemMeta();
                             im.setDisplayName("Rift Manipulator");
