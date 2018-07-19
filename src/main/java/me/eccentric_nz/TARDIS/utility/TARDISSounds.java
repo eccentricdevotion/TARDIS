@@ -79,7 +79,7 @@ public class TARDISSounds {
     }
 
     /**
-     * Plays a TARIS sound for the specified player.
+     * Plays a TARDIS sound for the specified player.
      *
      * @param p The player
      * @param s The sound to play
