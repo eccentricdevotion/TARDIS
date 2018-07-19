@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -57,15 +58,18 @@ public class TARDISFarmBlockListener implements Listener {
         if (!player.hasPermission("tardis.sonic.plant")) {
             return;
         }
+        Block block = event.getBlock();
+        if (!TARDISMaterials.crops.contains(block.getType())) {
+            return;
+        }
         ItemStack stack = player.getInventory().getItemInMainHand();
         if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
             ItemMeta im = stack.getItemMeta();
             if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
-                Block block = event.getBlock();
                 if (block.getType().equals(Material.SUGAR_CANE) && player.getInventory().contains(sc)) {
                     processHarvest(player, sc, block);
                 } else {
-                    Ageable ageable = (Ageable) block;
+                    Ageable ageable = (Ageable) block.getBlockData();
                     if (ageable.getAge() == ageable.getMaximumAge()) {
                         switch (block.getType()) {
                             case BEETROOTS:
