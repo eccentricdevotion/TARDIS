@@ -814,7 +814,7 @@ public class TARDISMaterialIDConverter {
         }
         if (i > 0) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
-            plugin.getConfig().set("conversions.condenser_done", true);
+            plugin.getConfig().set("conversions.condenser_materials", true);
             plugin.saveConfig();
         }
     }
