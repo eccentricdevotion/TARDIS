@@ -149,7 +149,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case blocks:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("b_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getInt("block"), rs.getInt("data"), rs.getInt("police_box")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("b_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("data"), rs.getInt("police_box")) + end;
                                     bw.write(str);
                                     break;
                                 case chameleon:

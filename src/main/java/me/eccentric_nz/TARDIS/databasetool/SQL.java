@@ -79,7 +79,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sback (back_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (back_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sblocks (b_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', `block` int(6) DEFAULT '0', `data` int(6) DEFAULT '0', police_box int(1) DEFAULT '0', PRIMARY KEY (b_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sblocks (b_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', `data` text, police_box int(1) DEFAULT '0', PRIMARY KEY (b_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %schameleon (chameleon_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', blueprintID varchar(256) DEFAULT '', blueprintData varchar(256) DEFAULT '', stainID varchar(256) DEFAULT '', stainData varchar(256) DEFAULT '', glassID varchar(256) DEFAULT '', glassData varchar(256) DEFAULT '', line1 varchar(48) DEFAULT '', line2 varchar(48) DEFAULT '', line3 varchar(48) DEFAULT '', line4 varchar(48) DEFAULT '', PRIMARY KEY (chameleon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -158,7 +158,7 @@ public class SQL {
 
             "INSERT INTO `%sback` (`back_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES",
 
-            "INSERT INTO `%sblocks` (`b_id`, `tardis_id`, `location`, `block`, `data`, `police_box`) VALUES",
+            "INSERT INTO `%sblocks` (`b_id`, `tardis_id`, `location`, `data`, `police_box`) VALUES",
 
             "INSERT INTO `%schameleon` (`chameleon_id`, `tardis_id`, `blueprintID`, `blueprintData`, `stainID`, `stainData`, `glassID`, `glassData`, `line1`, `line2`, `line3`, `line4`) VALUES",
 
@@ -237,7 +237,7 @@ public class SQL {
 
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
 
-            "(%s, %s, '%s', %s, %s, %s)",
+            "(%s, %s, '%s', '%s', %s)",
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
 

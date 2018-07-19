@@ -4,6 +4,7 @@
 1. Fix bugs!
 
 ## Next version `4.0-beta-1`
+0. Make sure block data is being inserted into database correctly - might need to change the default value for exisiting fields / or remove field altogether
 1. Convert maps to new NBT format - when checking maps check the NBT tag (TARDISHelper?)
 2. Recreate all schematics in the new format - _started_
 3. Update to Minecraft/Spigot 1.13 - _started_
