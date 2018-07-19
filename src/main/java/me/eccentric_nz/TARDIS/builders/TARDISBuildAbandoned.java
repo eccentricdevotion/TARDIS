@@ -352,6 +352,7 @@ class TARDISBuildAbandoned {
                         String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         setpb.put("tardis_id", dbID);
                         setpb.put("location", loc);
+                        setpb.put("data", "minecraft:air");
                         setpb.put("police_box", 0);
                         qf.doInsert("blocks", setpb);
                         plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);

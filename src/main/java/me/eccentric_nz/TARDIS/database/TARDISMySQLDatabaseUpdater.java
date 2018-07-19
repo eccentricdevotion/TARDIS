@@ -205,6 +205,13 @@ class TARDISMySQLDatabaseUpdater {
                 String lamp_query = "ALTER TABLE " + prefix + "player_prefs CHANGE `lamp` `lamp` VARCHAR(64) NULL DEFAULT ''";
                 statement.executeUpdate(lamp_query);
             }
+            // update data type for data in blocks
+            String blockdata_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+            ResultSet rsbdc = statement.executeQuery(blockdata_check);
+            if (rsbdc.next() && !rsbdc.getString("DATA_TYPE").equalsIgnoreCase("text")) {
+                String blockdata_query = "ALTER TABLE " + prefix + "blocks CHANGE `data` `data` TEXT";
+                statement.executeUpdate(blockdata_query);
+            }
             // add biome to current location
             String bio_query = "SHOW COLUMNS FROM " + prefix + "current LIKE 'biome'";
             ResultSet rsbio = statement.executeQuery(bio_query);

@@ -581,6 +581,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
+                    setpb.put("data", "minecraft:air");
                     setpb.put("police_box", 0);
                     qf.doInsert("blocks", setpb);
                     plugin.getGeneralKeeper().getProtectBlockMap().put(loc, id);
