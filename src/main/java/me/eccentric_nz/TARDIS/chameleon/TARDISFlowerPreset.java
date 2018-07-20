@@ -109,7 +109,7 @@ public class TARDISFlowerPreset extends TARDISPreset {
         stainedData[8][3] = "minecraft:yellow_stained_glass";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
-        stainedData[9][2] = "minecraft:air]";
+        stainedData[9][2] = "minecraft:air";
         stainedData[9][3] = "minecraft:air";
         setStainedData(stainedData);
         // set glass data strings
