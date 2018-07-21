@@ -4,33 +4,23 @@
 1. Fix bugs!
 
 ## Next version `4.0-beta-1`
-0. Make sure block data is being inserted into database correctly - might need to change the default value for exisiting fields / or remove field altogether
 1. Convert maps to new NBT format - when checking maps check the NBT tag (TARDISHelper?)
-2. Recreate all schematics in the new format - _started_
-3. Update to Minecraft/Spigot 1.13 - _started_
+2. Update to Minecraft/Spigot 1.13 - _started_
    * **All we need is BlockData!** - _started_
-   * Update ARS records at first run - _started_
-   * Update configs - _started_
-   * Update / test schematic creation / pasting - _started_
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-   * Check sonic replanter / chest sorter features still work
-   * Add new biomes (end and ocean)
-4. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
-5. Aquarium room - _started_, maybe a Turtle Beach room?
-6. Check database updater (Material) changes
-7. Add player preference to bypass `tardis rescue accept` - _started_
-8. Add `invisibility` setting to TARDIS areas - _started_
-9. Add Transmat signs and command/database table to set interior transmat locations - _started_
-   * Add transmat to Handles requests - _started_
-10. `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
-11. Save PRESET when performing `/tardis save [name] true` - _started_
-12. Tardis biome travel world selection (only if drifting in Time Vortex) - `/ttravel biome [biome] [world]` - _started_
-13. Debug `TARDISMonsterRunnable.isTimelord()`
-14. Update recipes.yml for RECORD\_? -> MUSIC\_DISC\_?
-15. Fix Biome adaptive presets dropping flowers & seeds (properly)
-16. Test test test
+3. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
+4. Test Aquarium room
+5. Test player preference to bypass `tardis rescue accept` - _started_
+6. Test `invisibility` setting to TARDIS areas - _started_
+7. Test Transmat signs
+   * Test Handles transmat requests
+8. Test `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
+9. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+10. Debug `TARDISMonsterRunnable.isTimelord()`
+11. Fix Biome adaptive presets dropping flowers & seeds (properly)
+12. Test test test
 
-## TARDIS data pack
+## TARDIS data pack?
 * Move custom advancements to here
 * Add TARDIS recipes (where possible)
 * Add TARDIS tags
