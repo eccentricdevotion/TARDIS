@@ -9,10 +9,10 @@
    * **All we need is BlockData!** - _started_
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
 3. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
-4. Test Aquarium room
+4. Remove magma blocks from AQUARIUM
 5. Test player preference to bypass `tardis rescue accept` - _started_
 6. Test `invisibility` setting to TARDIS areas - _started_
-7. Test Transmat signs
+7. Test Transmat signs to non-console destinations
    * Test Handles transmat requests
 8. Test `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
 9. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`

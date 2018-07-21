@@ -141,7 +141,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 }
                 TARDISMessage.send(player, "BIND_REMOVED", firstArgs.get(dtype));
                 return true;
-            } else {
+            } else if (args[0].equalsIgnoreCase("transmat")) {
                 int did = 0;
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
@@ -155,12 +155,21 @@ public class TARDISBindCommands implements CommandExecutor {
                     set.put("dest_name", "transmat");
                     set.put("type", 6);
                     did = qf.doSyncInsert("destinations", set);
+                    if (did != 0) {
+                        plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
+                        TARDISMessage.send(player, "BIND_CLICK");
+                        return true;
+                    }
                 }
+            } else {
                 // all the rest require at least 2 arguments
                 if (args.length < 2) {
                     TARDISMessage.send(player, "TOO_FEW_ARGS");
                     return false;
                 }
+                int did = 0;
+                QueryFactory qf = new QueryFactory(plugin);
+                HashMap<String, Object> set = new HashMap<>();
                 if (args[0].equalsIgnoreCase("save")) { // type 0
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
