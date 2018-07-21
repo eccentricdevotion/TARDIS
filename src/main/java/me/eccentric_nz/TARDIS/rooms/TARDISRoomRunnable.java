@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -176,7 +177,6 @@ public class TARDISRoomRunnable implements Runnable {
                 iceblocks.clear();
             }
             if (room.equals("AQUARIUM")) {
-                plugin.debug("AQUARIUM start flora");
                 // add some underwater flora
                 int plusx = aqua_spawn.getBlockX() + 2;
                 int minusx = aqua_spawn.getBlockX() - 2;
@@ -470,9 +470,16 @@ public class TARDISRoomRunnable implements Runnable {
             if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE"))) {
                 HashMap<String, Object> sets = new HashMap<>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                HashMap<String, Object> wheres = new HashMap<>();
-                wheres.put("tardis_id", tardis_id);
-                qf.doUpdate("farming", sets, wheres);
+                ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
+                if (rsf.resultSet()) {
+                    HashMap<String, Object> wheres = new HashMap<>();
+                    wheres.put("tardis_id", tardis_id);
+                    // update
+                    qf.doUpdate("farming", sets, wheres);
+                } else {
+                    sets.put("tardis_id", tardis_id);
+                    qf.doInsert("farming", sets);
+                }
                 // replace with correct block
                 switch (ROOM.valueOf(room)) {
                     case VILLAGE:
@@ -517,9 +524,17 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (type.equals(Material.DEAD_HORN_CORAL_BLOCK) && room.equals("AQUARIUM")) {
                 HashMap<String, Object> setaqua = new HashMap<>();
-                setaqua.put("tardis_id", tardis_id);
                 setaqua.put("aquarium", world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                qf.doInsert("farming", setaqua);
+                ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
+                if (rsf.resultSet()) {
+                    HashMap<String, Object> wheres = new HashMap<>();
+                    wheres.put("tardis_id", tardis_id);
+                    // update
+                    qf.doUpdate("farming", setaqua, wheres);
+                } else {
+                    setaqua.put("tardis_id", tardis_id);
+                    qf.doInsert("farming", setaqua);
+                }
                 data = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw.createBlockData() : floor_type.createBlockData();
                 turnOnFarming(p, qf);
                 aqua_spawn = new Location(world, startx, starty + 1, startz);
