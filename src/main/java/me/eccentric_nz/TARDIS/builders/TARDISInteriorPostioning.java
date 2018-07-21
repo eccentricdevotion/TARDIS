@@ -16,17 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -164,6 +170,56 @@ public class TARDISInteriorPostioning {
                 int cz = sz + z;
                 w.regenerateChunk(cx, cz);
                 w.unloadChunk(cx, cz, true);
+            }
+        }
+    }
+
+    public void reclaimChunks(World w, int id) {
+        // get ARS data
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetARS rs = new ResultSetARS(plugin, where);
+        if (rs.resultSet()) {
+            String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
+            Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
+            for (int l = 0; l < 3; l++) {
+                for (int x = 0; x < 9; x++) {
+                    for (int z = 0; z < 9; z++) {
+                        if (!json[l][x][z].equalsIgnoreCase("STONE")) {
+                            // get ARS slot
+                            TARDISARSSlot slot = new TARDISARSSlot();
+                            slot.setChunk(c);
+                            slot.setY(l);
+                            slot.setX(x);
+                            slot.setZ(z);
+                            for (int y = 0; y < 16; y++) {
+                                for (int col = 0; col < 16; col++) {
+                                    for (int row = 0; row < 16; row++) {
+                                        w.getBlockAt(slot.getX() + row, slot.getY() + y, slot.getZ() + col).setBlockData(TARDISConstants.AIR);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void reclaimZeroChunk(World w, TARDISTIPSData data) {
+        // get starting chunk
+        Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
+        Chunk chunk = w.getChunkAt(l);
+        Block block = chunk.getBlock(0, 0, 0);
+        int sx = block.getX();
+        int sz = block.getZ();
+        for (int y = 64; y < 80; y++) {
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    int cx = sx + x;
+                    int cz = sz + z;
+                    w.getBlockAt(cx, y, cz).setBlockData(TARDISConstants.AIR);
+                }
             }
         }
     }
