@@ -31,9 +31,11 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Farmland;
+import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -73,6 +75,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final List<Block> wheatblocks = new ArrayList<>();
     private final List<Block> farmlandblocks = new ArrayList<>();
     private final List<Material> notThese = new ArrayList<>();
+    private final List<BlockData> flora = new ArrayList<>();
     private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
     private final HashMap<Block, BlockData> doorblocks = new HashMap<>();
     private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
@@ -83,6 +86,8 @@ public class TARDISRoomRunnable implements Runnable {
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private JSONArray arr;
+    private final Random random;
+    private Location aqua_spawn;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -121,6 +126,16 @@ public class TARDISRoomRunnable implements Runnable {
         notThese.add(Material.SUGAR_CANE);
         notThese.add(Material.TORCH);
         notThese.add(Material.WHEAT);
+        flora.add(Material.BRAIN_CORAL.createBlockData());
+        flora.add(Material.BUBBLE_CORAL.createBlockData());
+        flora.add(Material.FIRE_CORAL.createBlockData());
+        flora.add(Material.HORN_CORAL.createBlockData());
+        flora.add(Material.KELP_PLANT.createBlockData());
+        flora.add(Material.SEA_PICKLE.createBlockData());
+        flora.add(Material.SEAGRASS.createBlockData());
+        flora.add(Material.TALL_SEAGRASS.createBlockData());
+        flora.add(Material.TUBE_CORAL.createBlockData());
+        random = new Random();
     }
 
     /**
@@ -159,6 +174,116 @@ public class TARDISRoomRunnable implements Runnable {
                 // set all the ice to water
                 iceblocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
                 iceblocks.clear();
+            }
+            if (room.equals("AQUARIUM")) {
+                plugin.debug("AQUARIUM start flora");
+                // add some underwater flora
+                int plusx = aqua_spawn.getBlockX() + 2;
+                int minusx = aqua_spawn.getBlockX() - 2;
+                int plusz = aqua_spawn.getBlockZ() + 2;
+                int minusz = aqua_spawn.getBlockZ() - 2;
+                int y = aqua_spawn.getBlockY();
+                int minusy = aqua_spawn.getBlockY() - 1;
+                for (int ax = plusx; ax < plusx + 5; ax++) {
+                    for (int az = plusz; az < plusz + 5; az++) {
+                        if (world.getBlockAt(ax, minusy, az).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
+                            BlockData f = flora.get(random.nextInt(flora.size()));
+                            switch (f.getMaterial()) {
+                                case KELP:
+                                    world.getBlockAt(ax, y + 1, az).setBlockData(f);
+                                    world.getBlockAt(ax, y + 2, az).setBlockData(f);
+                                    break;
+                                case TALL_SEAGRASS:
+                                    ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
+                                    world.getBlockAt(ax, y, az).setBlockData(f);
+                                    ((Bisected) f).setHalf(Bisected.Half.TOP);
+                                    world.getBlockAt(ax, y + 1, az).setBlockData(f);
+                                    break;
+                                case SEA_PICKLE:
+                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    world.getBlockAt(ax, y, az).setBlockData(f);
+                                    break;
+                                default:
+                                    world.getBlockAt(ax, y, az).setBlockData(f);
+                            }
+                        }
+                    }
+                }
+                for (int bx = minusx; bx > minusx - 5; bx--) {
+                    for (int bz = plusz; bz < plusz + 5; bz++) {
+                        if (world.getBlockAt(bx, minusy, bz).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
+                            BlockData f = flora.get(random.nextInt(flora.size()));
+                            switch (f.getMaterial()) {
+                                case KELP:
+                                    world.getBlockAt(bx, y + 1, bz).setBlockData(f);
+                                    world.getBlockAt(bx, y + 2, bz).setBlockData(f);
+                                    break;
+                                case TALL_SEAGRASS:
+                                    ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
+                                    world.getBlockAt(bx, y, bz).setBlockData(f);
+                                    ((Bisected) f).setHalf(Bisected.Half.TOP);
+                                    world.getBlockAt(bx, y + 1, bz).setBlockData(f);
+                                    break;
+                                case SEA_PICKLE:
+                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    world.getBlockAt(bx, y, bz).setBlockData(f);
+                                    break;
+                                default:
+                                    world.getBlockAt(bx, y, bz).setBlockData(f);
+                            }
+                        }
+                    }
+                }
+                for (int cx = minusx; cx > minusx - 5; cx--) {
+                    for (int cz = minusz; cz > minusz - 5; cz--) {
+                        if (world.getBlockAt(cx, minusy, cz).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
+                            BlockData f = flora.get(random.nextInt(flora.size()));
+                            switch (f.getMaterial()) {
+                                case KELP:
+                                    world.getBlockAt(cx, y + 1, cz).setBlockData(f);
+                                    world.getBlockAt(cx, y + 2, cz).setBlockData(f);
+                                    break;
+                                case TALL_SEAGRASS:
+                                    ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
+                                    world.getBlockAt(cx, y, cz).setBlockData(f);
+                                    ((Bisected) f).setHalf(Bisected.Half.TOP);
+                                    world.getBlockAt(cx, y + 1, cz).setBlockData(f);
+                                    break;
+                                case SEA_PICKLE:
+                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    world.getBlockAt(cx, y, cz).setBlockData(f);
+                                    break;
+                                default:
+                                    world.getBlockAt(cx, y, cz).setBlockData(f);
+                            }
+                        }
+                    }
+                }
+                for (int dx = plusx; dx < plusx + 5; dx++) {
+                    for (int dz = minusz; dz > minusz - 5; dz--) {
+                        if (world.getBlockAt(dx, minusy, dz).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
+                            BlockData f = flora.get(random.nextInt(flora.size()));
+                            switch (f.getMaterial()) {
+                                case KELP:
+                                    world.getBlockAt(dx, y + 1, dz).setBlockData(f);
+                                    world.getBlockAt(dx, y + 2, dz).setBlockData(f);
+                                    break;
+                                case TALL_SEAGRASS:
+                                    ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
+                                    world.getBlockAt(dx, y, dz).setBlockData(f);
+                                    ((Bisected) f).setHalf(Bisected.Half.TOP);
+                                    world.getBlockAt(dx, y + 1, dz).setBlockData(f);
+                                    break;
+                                case SEA_PICKLE:
+                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    world.getBlockAt(dx, y, dz).setBlockData(f);
+                                    break;
+                                default:
+                                    world.getBlockAt(dx, y, dz).setBlockData(f);
+                            }
+                        }
+                    }
+                }
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
                 // set the repeaters
@@ -397,6 +522,7 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.doInsert("farming", setaqua);
                 data = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw.createBlockData() : floor_type.createBlockData();
                 turnOnFarming(p, qf);
+                aqua_spawn = new Location(world, startx, starty + 1, startz);
             }
             // remember shell room button
             if (type.equals(Material.STONE_BUTTON) && room.equals("SHELL")) {
