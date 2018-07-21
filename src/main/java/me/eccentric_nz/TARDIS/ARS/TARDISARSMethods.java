@@ -152,7 +152,7 @@ public class TARDISARSMethods {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
-            String config_path = TARDISARS.ARSFor(room).getActualName();
+            String config_path = TARDISARS.ARSFor(material.toString()).getActualName();
             List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
             im.setLore(lore);
         } else {
@@ -404,7 +404,7 @@ public class TARDISARSMethods {
             for (int j = 0; j < 5; j++) {
                 int slot = i + (j * 9);
                 Material material = Material.valueOf(map[indexx][indexz]);
-                String name = TARDISARS.ARSFor(material).getDescriptiveName();
+                String name = TARDISARS.ARSFor(map[indexx][indexz]).getDescriptiveName();
                 setSlot(inv, slot, material, name, uuid, false);
                 indexz++;
             }
