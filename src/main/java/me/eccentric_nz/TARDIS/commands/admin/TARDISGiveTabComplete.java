@@ -51,8 +51,6 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
         } else if (args.length == 2) {
             return partial(lastArg, GIVE_SUBS);
         } else if (args.length == 3) {
-            return partial(lastArg, GIVE_KNOWLEDGE);
-        } else {
             String sub = args[1];
             if (sub.equals("kit")) {
                 return partial(lastArg, KIT_SUBS);
@@ -60,6 +58,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             if (sub.equals("seed")) {
                 return partial(lastArg, SEED_SUBS);
             }
+            return partial(lastArg, GIVE_KNOWLEDGE);
         }
         return ImmutableList.of();
     }
