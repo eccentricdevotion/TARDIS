@@ -138,9 +138,7 @@ class TARDISARSProcessor {
                 }
             }
             for (Map.Entry<TARDISARSSlot, ARS> c : changed.entrySet()) {
-                plugin.debug("room? " + c.getValue().getActualName());
                 int cost = plugin.getRoomsConfig().getInt("rooms." + c.getValue().getActualName() + ".cost");
-                plugin.debug("rooms." + c.getValue().getActualName() + ".cost: " + cost);
                 totalcost += cost;
             }
             ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);

@@ -78,15 +78,15 @@ public class TARDISFileCopier {
         for (TARDISARS ta : TARDISARS.values()) {
             if (ta.getOffset() != 0) {
                 String str = basepath + ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm";
-                copy(str, plugin.getResource(ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm"), false, plugin.getPluginName());
+                copy(str, plugin.getResource(ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm"), true, plugin.getPluginName());
             }
         }
         String zeronstr = basepath + "zero.tschm";
-        copy(zeronstr, plugin.getResource("zero.tschm"), false, plugin.getPluginName());
+        copy(zeronstr, plugin.getResource("zero.tschm"), true, plugin.getPluginName());
         String junknstr = basepath + "junk.tschm";
         copy(junknstr, plugin.getResource("junk.tschm"), true, plugin.getPluginName());
         String tmpnstr = userbasepath + "template.tschm";
-        copy(tmpnstr, plugin.getResource("template.tschm"), false, plugin.getPluginName());
+        copy(tmpnstr, plugin.getResource("template.tschm"), true, plugin.getPluginName());
         String gallifreynstr = basepath + "gallifrey.tschm";
         copy(gallifreynstr, plugin.getResource("gallifrey.tschm"), true, plugin.getPluginName());
     }
