@@ -37,6 +37,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Lightable;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -539,7 +540,13 @@ public class TARDISBuilderInner {
             postBedrock.setBlockData(TARDISConstants.POWER);
         }
         lampblocks.forEach((lamp) -> {
-            BlockData lantern = (schm.hasLanterns()) ? TARDISConstants.LANTERN : Material.REDSTONE_LAMP.createBlockData();
+            BlockData lantern;
+            if (schm.hasLanterns()) {
+                lantern = TARDISConstants.LANTERN;
+            } else {
+                lantern = TARDISConstants.LAMP;
+                ((Lightable) lantern).setLit(true);
+            }
             lamp.setBlockData(lantern);
         });
         lampblocks.clear();
