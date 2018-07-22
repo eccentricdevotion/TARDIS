@@ -46,7 +46,7 @@ public class TARDISBlackWoolToggler {
             if (isAir(b)) {
                 mat = TARDISConstants.BLACK;
             } else {
-                mat = Material.AIR.createBlockData();
+                mat = TARDISConstants.AIR;
             }
             b.setBlockData(mat);
             b.getRelative(BlockFace.UP).setBlockData(mat);

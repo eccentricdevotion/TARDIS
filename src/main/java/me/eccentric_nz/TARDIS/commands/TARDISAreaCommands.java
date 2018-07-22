@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -257,7 +258,7 @@ public class TARDISAreaCommands implements CommandExecutor {
         private final Block b2;
         private final Block b3;
         private final Block b4;
-        private final BlockData air = Material.AIR.createBlockData();
+        private final BlockData air = TARDISConstants.AIR;
 
         SetAir(Block b1, Block b2, Block b3, Block b4) {
             this.b1 = b1;

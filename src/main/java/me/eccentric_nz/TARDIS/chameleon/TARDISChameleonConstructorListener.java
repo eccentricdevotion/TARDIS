@@ -152,7 +152,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     buildConstruct(tardis.getPreset().toString(), id, new QueryFactory(plugin), tardis.getChameleon(), player);
                                     break;
                                 case 8:
-                                    String air = Material.AIR.createBlockData().getAsString();
+                                    String air = TARDISConstants.AIR.getAsString();
                                     // process
                                     String[][] blue = new String[10][4];
                                     String[][] stain = new String[10][4];

@@ -9,16 +9,15 @@
    * **All we need is BlockData!** - _started_
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
 3. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
-4. Remove magma blocks from AQUARIUM
 5. Test player preference to bypass `tardis rescue accept` - _started_
-6. Test `invisibility` setting to TARDIS areas - _started_
+6. Test `invisibility` setting to TARDIS areas
 7. Test Transmat signs to non-console destinations
+   * Add a way to remove the transmat binding
    * Test Handles transmat requests
 8. Test `/tardisbind chameleon [off|adapt|invisible|PRESET]` - _started_
 9. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-10. Debug `TARDISMonsterRunnable.isTimelord()`
-11. Fix Biome adaptive presets dropping flowers & seeds (properly)
-12. Test test test
+10. Fix Biome adaptive presets dropping flowers & seeds (properly)
+11. Test test test
 
 ## TARDIS data pack?
 * Move custom advancements to here

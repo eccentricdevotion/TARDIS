@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -140,7 +141,7 @@ public class TARDISSiegeListener implements Listener {
         im.setLore(lore);
         is.setItemMeta(im);
         // set block to AIR
-        b.setBlockData(Material.AIR.createBlockData());
+        b.setBlockData(TARDISConstants.AIR);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
         item.setInvulnerable(true);
         // track it

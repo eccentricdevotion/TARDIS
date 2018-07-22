@@ -51,7 +51,7 @@ import java.util.HashMap;
 public class TARDISPresetDestroyerFactory {
 
     private final TARDIS plugin;
-    private final BlockData AIR = Material.AIR.createBlockData();
+    private final BlockData AIR = TARDISConstants.AIR;
 
     public TARDISPresetDestroyerFactory(TARDIS plugin) {
         this.plugin = plugin;

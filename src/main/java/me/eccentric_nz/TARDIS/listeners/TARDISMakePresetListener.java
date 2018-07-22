@@ -50,7 +50,7 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final String AIR = Material.AIR.createBlockData().toString();
+    private final String AIR = TARDISConstants.AIR.toString();
     private final String GLASS = TARDISConstants.GLASS.toString();
 
     public TARDISMakePresetListener(TARDIS plugin) {
