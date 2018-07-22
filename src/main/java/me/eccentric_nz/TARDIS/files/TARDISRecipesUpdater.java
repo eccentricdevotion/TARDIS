@@ -85,7 +85,6 @@ public class TARDISRecipesUpdater {
         int i = 0;
         // update for 1.13
 //        if (recipes_config.getString("shaped.TARDIS Locator.easy_ingredients.C").contains(":")) {
-        recipes_config.set("shaped.TARDIS Locator.easy_ingredients.C", "RED_WOOL");
         recipes_config.set("shaped.3-D Glasses.easy_ingredients.C", "CYAN_STAINED_GLASS");
         recipes_config.set("shaped.3-D Glasses.easy_ingredients.M", "MAGENTA_STAINED_GLASS");
         recipes_config.set("shaped.3-D Glasses.hard_ingredients.C", "CYAN_STAINED_GLASS");
@@ -96,63 +95,112 @@ public class TARDISRecipesUpdater {
         recipes_config.set("shaped.Artron Storage Cell.easy_ingredients.L", "LIME_STAINED_GLASS");
         recipes_config.set("shaped.Artron Storage Cell.hard_ingredients.L", "LIME_STAINED_GLASS");
         recipes_config.set("shaped.Bio-scanner Circuit.hard_ingredients.R", "REPEATER");
+        recipes_config.set("shaped.Bio-scanner Circuit.result", "FILLED_MAP:1969");
         recipes_config.set("shaped.Blank Storage Disk.result", "MUSIC_DISC_STRAD");
+        recipes_config.set("shaped.Diamond Disruptor Circuit.result", "FILLED_MAP:1971");
         recipes_config.set("shaped.Emerald Environment Circuit.easy_ingredients.L", "OAK_LEAVES");
         recipes_config.set("shaped.Emerald Environment Circuit.hard_ingredients.L", "OAK_LEAVES");
+        recipes_config.set("shaped.Emerald Environment Circuit.result", "FILLED_MAP:1972");
         recipes_config.set("shaped.Fish Finger.easy_ingredients.F", "COD");
         recipes_config.set("shaped.Fish Finger.hard_ingredients.F", "COD");
         recipes_config.set("shaped.Fish Finger.result", "COOKED_COD");
+        recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "FILLED_MAP:1966");
         recipes_config.set("shaped.Fob Watch.easy_ingredients.W", "CLOCK");
+        recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "FILLED_MAP:1966");
         recipes_config.set("shaped.Fob Watch.hard_ingredients.W", "CLOCK");
         recipes_config.set("shaped.Fob Watch.result", "CLOCK");
         recipes_config.set("shaped.Handles.easy_ingredients.S", "SKELETON_SKULL");
         recipes_config.set("shaped.Handles.hard_ingredients.S", "SKELETON_SKULL");
         recipes_config.set("shaped.Handles.result", "BIRCH_BUTTON");
+        recipes_config.set("shaped.Ignite Circuit.result", "FILLED_MAP:1982");
+        recipes_config.set("shaped.Painter Circuit.result", "FILLED_MAP:1979");
         recipes_config.set("shaped.Perception Circuit.easy_ingredients.C", "COMPARATOR");
         recipes_config.set("shaped.Perception Circuit.easy_ingredients.D", "REPEATER");
         recipes_config.set("shaped.Perception Circuit.easy_ingredients.T", "REDSTONE_TORCH");
         recipes_config.set("shaped.Perception Circuit.hard_ingredients.C", "COMPARATOR");
         recipes_config.set("shaped.Perception Circuit.hard_ingredients.D", "REPEATER");
         recipes_config.set("shaped.Perception Circuit.hard_ingredients.T", "REDSTONE_TORCH");
+        recipes_config.set("shaped.Perception Circuit.result", "FILLED_MAP:1978");
         recipes_config.set("shaped.Perception Filter.easy_ingredients.C", "COMPARATOR");
+        recipes_config.set("shaped.Perception Filter.hard_ingredients.C", "FILLED_MAP:1978");
         recipes_config.set("shaped.Redstone Activator Circuit.easy_ingredients.C", "COMPARATOR");
         recipes_config.set("shaped.Redstone Activator Circuit.hard_ingredients.C", "COMPARATOR");
         recipes_config.set("shaped.Redstone Activator Circuit.hard_ingredients.R", "REPEATER");
+        recipes_config.set("shaped.Redstone Activator Circuit.result", "FILLED_MAP:1970");
+        recipes_config.set("shaped.Rift Circuit.result", "FILLED_MAP:1983");
         recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK");
+        recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "FILLED_MAP:1983");
         recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK");
+        recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "FILLED_MAP:1983");
+        recipes_config.set("shaped.Server Admin Circuit.easy_ingredients.O", "FILLED_MAP:1967");
+        recipes_config.set("shaped.Server Admin Circuit.hard_ingredients.O", "FILLED_MAP:1967");
+        recipes_config.set("shaped.Server Admin Circuit.result", "FILLED_MAP:1968");
         recipes_config.set("shaped.Sonic Generator.easy_ingredients.F", "FLOWER_POT");
         recipes_config.set("shaped.Sonic Generator.hard_ingredients.F", "FLOWER_POT");
         recipes_config.set("shaped.Sonic Generator.result", "FLOWER_POT");
+        recipes_config.set("shaped.Sonic Oscillator.result", "FILLED_MAP:1967");
+        recipes_config.set("shaped.Sonic Screwdriver.hard_ingredients.O", "FILLED_MAP:1967");
+        recipes_config.set("shaped.Stattenheim Remote.hard_ingredients.L", "FILLED_MAP:1963");
         recipes_config.set("shaped.TARDIS ARS Circuit.easy_ingredients.S", "WHEAT_SEEDS");
         recipes_config.set("shaped.TARDIS ARS Circuit.easy_ingredients.T", "REDSTONE_TORCH");
         recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.D", "REPEATER");
         recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.P", "PISTON");
         recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.S", "WHEAT_SEEDS");
         recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.T", "REDSTONE_TORCH");
+        recipes_config.set("shaped.TARDIS ARS Circuit.result", "FILLED_MAP:1973");
+        recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "FILLED_MAP:1972");
+        recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "FILLED_MAP:1972");
         recipes_config.set("shaped.TARDIS Biome Reader.result", "BRICK");
         recipes_config.set("shaped.TARDIS Chameleon Circuit.hard_ingredients.D", "REPEATER");
+        recipes_config.set("shaped.TARDIS Chameleon Circuit.hard_ingredients.M", "FILLED_MAP:1964");
+        recipes_config.set("shaped.TARDIS Chameleon Circuit.result", "FILLED_MAP:1966");
+        recipes_config.set("shaped.TARDIS Input Circuit.result", "FILLED_MAP:1976");
+        recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "FILLED_MAP:1978");
+        recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "FILLED_MAP:1978");
+        recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "FILLED_MAP:1981");
         recipes_config.set("shaped.TARDIS Key.hard_ingredients.C", "COMPARATOR");
         recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.D", "REPEATER");
         recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.D", "REPEATER");
+        recipes_config.set("shaped.TARDIS Locator Circuit.result", "FILLED_MAP:1965");
+        recipes_config.set("shaped.TARDIS Locator.easy_ingredients.C", "RED_WOOL");
+        recipes_config.set("shaped.TARDIS Locator.hard_ingredients.C", "FILLED_MAP:1965");
         recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.D", "REPEATER");
         recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.I", "ENDER_EYE");
+        recipes_config.set("shaped.TARDIS Materialisation Circuit.result", "FILLED_MAP:1964");
         recipes_config.set("shaped.TARDIS Memory Circuit.easy_ingredients.T", "REDSTONE_TORCH");
         recipes_config.set("shaped.TARDIS Memory Circuit.hard_ingredients.R", "RED_SAND");
         recipes_config.set("shaped.TARDIS Memory Circuit.hard_ingredients.T", "REDSTONE_TORCH");
+        recipes_config.set("shaped.TARDIS Memory Circuit.result", "FILLED_MAP:1975");
         recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "END_STONE");
         recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "END_STONE");
+        recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "FILLED_MAP:1980");
         recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.C", "COMPARATOR");
         recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
         recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "COMPARATOR");
+        recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "FILLED_MAP:1964");
         recipes_config.set("shaped.TARDIS Scanner Circuit.easy_ingredients.G", "GLASS_PANE");
+        recipes_config.set("shaped.TARDIS Scanner Circuit.result", "FILLED_MAP:1977");
+        recipes_config.set("shaped.TARDIS Stattenheim Circuit.easy_ingredients.L", "FILLED_MAP:1965");
+        recipes_config.set("shaped.TARDIS Stattenheim Circuit.easy_ingredients.M", "FILLED_MAP:1964");
+        recipes_config.set("shaped.TARDIS Stattenheim Circuit.hard_ingredients.L", "FILLED_MAP:1965");
+        recipes_config.set("shaped.TARDIS Stattenheim Circuit.hard_ingredients.M", "FILLED_MAP:1964");
+        recipes_config.set("shaped.TARDIS Stattenheim Circuit.result", "FILLED_MAP:1963");
         recipes_config.set("shaped.TARDIS Temporal Circuit.easy_ingredients.W", "CLOCK");
         recipes_config.set("shaped.TARDIS Temporal Circuit.hard_ingredients.W", "CLOCK");
+        recipes_config.set("shaped.TARDIS Temporal Circuit.result", "FILLED_MAP:1974");
+        recipes_config.set("shapeless.Admin Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1968");
+        recipes_config.set("shapeless.Bio-scanner Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1969");
         recipes_config.set("shapeless.Biome Storage Disk.recipe", "MUSIC_DISC_STRAD,EMERALD");
         recipes_config.set("shapeless.Biome Storage Disk.result", "MUSIC_DISC_CAT");
+        recipes_config.set("shapeless.Diamond Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1971");
+        recipes_config.set("shapeless.Emerald Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1972");
+        recipes_config.set("shapeless.Ignite Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1982");
+        recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1979");
         recipes_config.set("shapeless.Player Storage Disk.recipe", "MUSIC_DISC_STRAD,LAPIS_BLOCK");
         recipes_config.set("shapeless.Player Storage Disk.result", "MUSIC_DISC_WAIT");
-        recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,MAP:1966");
+        recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,FILLED_MAP:1966");
         recipes_config.set("shapeless.Preset Storage Disk.result", "MUSIC_DISC_MALL");
+        recipes_config.set("shapeless.Redstone Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1970");
         recipes_config.set("shapeless.Save Storage Disk.recipe", "MUSIC_DISC_STRAD,REDSTONE");
         recipes_config.set("shapeless.Save Storage Disk.result", "MUSIC_DISC_CHIRP");
         if (recipes_config.getString("shapeless.Island Punch Jelly Baby.lore").equals("Orange")) {
@@ -238,17 +286,17 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rift Circuit.hard_shape", "-D-,DND,-D-");
             recipes_config.set("shaped.Rift Circuit.hard_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.Rift Circuit.hard_ingredients.N", "NETHER_STAR");
-            recipes_config.set("shaped.Rift Circuit.result", "MAP:1983");
+            recipes_config.set("shaped.Rift Circuit.result", "FILLED_MAP:1983");
             recipes_config.set("shaped.Rift Circuit.amount", 1);
             recipes_config.set("shaped.Rift Circuit.lore", "");
             //
             recipes_config.set("shaped.Rift Manipulator.easy_shape", "-A-,ACA,RAR");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK");
-            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "MAP:1983");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "FILLED_MAP:1983");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Rift Manipulator.hard_shape", "-A-,ACA,NAN");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK");
-            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "MAP:1983");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "FILLED_MAP:1983");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.N", "NETHER_STAR");
             recipes_config.set("shaped.Rift Manipulator.result", "BEACON");
             recipes_config.set("shaped.Rift Manipulator.amount", 1);
@@ -284,7 +332,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "REDSTONE_COMPARATOR");
             recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.K", "GOLD_NUGGET");
-            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "MAP:1964");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "FILLED_MAP:1964");
             recipes_config.set("shaped.TARDIS Remote Key.result", "GOLD_NUGGET");
             recipes_config.set("shaped.TARDIS Remote Key.amount", 1);
             recipes_config.set("shaped.TARDIS Remote Key.lore", "Deadlock & unlock~Hide & rebuild");
@@ -326,11 +374,11 @@ public class TARDISRecipesUpdater {
         }
         if (!recipes_config.contains("shaped.Fob Watch")) {
             recipes_config.set("shaped.Fob Watch.easy_shape", "-C-,-W-,R-R");
-            recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "MAP:1966");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "FILLED_MAP:1966");
             recipes_config.set("shaped.Fob Watch.easy_ingredients.W", "CLOCK");
             recipes_config.set("shaped.Fob Watch.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Fob Watch.hard_shape", "-C-,IWI,R-R");
-            recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "MAP:1966");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "FILLED_MAP:1966");
             recipes_config.set("shaped.Fob Watch.hard_ingredients.W", "CLOCK");
             recipes_config.set("shaped.Fob Watch.hard_ingredients.I", "IRON_INGOT");
             recipes_config.set("shaped.Fob Watch.hard_ingredients.R", "REDSTONE");
@@ -341,12 +389,12 @@ public class TARDISRecipesUpdater {
         }
         if (!recipes_config.contains("shaped.TARDIS Biome Reader")) {
             recipes_config.set("shaped.TARDIS Biome Reader.easy_shape", "---,-C-,SDT");
-            recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "MAP:1972");
+            recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "FILLED_MAP:1972");
             recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.S", "SAND");
             recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.D", "DIRT");
             recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.T", "STONE");
             recipes_config.set("shaped.TARDIS Biome Reader.hard_shape", "-C-,SDT,LWN");
-            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "MAP:1972");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "FILLED_MAP:1972");
             recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.S", "SAND");
             recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.D", "DIRT");
             recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.T", "STONE");
@@ -411,7 +459,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.C", "COMPASS");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "END_STONE");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
-            recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "MAP:1980");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "FILLED_MAP:1980");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.amount", 1);
             recipes_config.set("shaped.TARDIS Randomiser Circuit.lore", "Uses left~50");
             i++;
@@ -419,15 +467,15 @@ public class TARDISRecipesUpdater {
         if (!recipes_config.contains("shaped.TARDIS Invisibility Circuit")) {
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_shape", "-D-,P-E,-W-");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.D", "DIAMOND");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "MAP:1978");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "FILLED_MAP:1978");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.E", "EMERALD");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_shape", "-D-,P-E,-W-");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.D", "DIAMOND");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "MAP:1978");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "FILLED_MAP:1978");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.E", "EMERALD");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "MAP:1981");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "FILLED_MAP:1981");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.amount", 1);
             recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
             i++;
@@ -463,7 +511,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SAC");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.G", "GOLD_BLOCK");
-            recipes_config.set("shaped.Painter Circuit.result", "MAP:1979");
+            recipes_config.set("shaped.Painter Circuit.result", "FILLED_MAP:1979");
             recipes_config.set("shaped.Painter Circuit.amount", 1);
             recipes_config.set("shaped.Painter Circuit.lore", "");
             i++;
@@ -472,7 +520,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
         }
         if (!recipes_config.contains("shapeless.Painter Upgrade")) {
-            recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,MAP:1979");
+            recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1979");
             recipes_config.set("shapeless.Painter Upgrade.result", "BLAZE_ROD");
             recipes_config.set("shapeless.Painter Upgrade.amount", 1);
             recipes_config.set("shapeless.Painter Upgrade.lore", "");
@@ -486,13 +534,13 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Ignite Circuit.hard_ingredients.N", "NETHERRACK");
             recipes_config.set("shaped.Ignite Circuit.hard_ingredients.F", "FLINT_AND_STEEL");
             recipes_config.set("shaped.Ignite Circuit.hard_ingredients.L", "LAVA_BUCKET");
-            recipes_config.set("shaped.Ignite Circuit.result", "MAP:1982");
+            recipes_config.set("shaped.Ignite Circuit.result", "FILLED_MAP:1982");
             recipes_config.set("shaped.Ignite Circuit.amount", 1);
             recipes_config.set("shaped.Ignite Circuit.lore", "");
             i++;
         }
         if (!recipes_config.contains("shapeless.Ignite Upgrade")) {
-            recipes_config.set("shapeless.Ignite Upgrade.recipe", "BLAZE_ROD,MAP:1982");
+            recipes_config.set("shapeless.Ignite Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1982");
             recipes_config.set("shapeless.Ignite Upgrade.result", "BLAZE_ROD");
             recipes_config.set("shapeless.Ignite Upgrade.amount", 1);
             recipes_config.set("shapeless.Ignite Upgrade.lore", "");

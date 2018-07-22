@@ -94,9 +94,9 @@ public class TARDISShapedRecipe {
         Material mat = Material.valueOf(result_iddata[0]);
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
         ItemStack is;
-        if (result_iddata.length == 2) {
-            short result_data = TARDISNumberParsers.parseShort(result_iddata[1]);
-            is = new ItemStack(mat, amount, result_data);
+        if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
+            int map = TARDISNumberParsers.parseInt(result_iddata[1]);
+            is = plugin.getTardisHelper().setMapNBT(new ItemStack(mat, amount), map);
         } else {
             is = new ItemStack(mat, amount);
         }
@@ -135,7 +135,7 @@ public class TARDISShapedRecipe {
                 String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
                 Material m = Material.valueOf(recipe_iddata[0]);
                 // TODO use new Map API if it exists
-                if (recipe_iddata.length == 2) {
+                if (recipe_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
                     int recipe_data = TARDISNumberParsers.parseInt(recipe_iddata[1]);
                     r.setIngredient(c, m, recipe_data);
                 } else {
