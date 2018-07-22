@@ -50,8 +50,7 @@ public class TARDISShellRoomConstructor {
     private final int[] orderx;
     private final int[] orderz;
     private Block sign;
-    private final String AIR = Material.AIR.createBlockData().toString();
-    private final String GLASS = TARDISConstants.GLASS.toString();
+    private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
 
     public TARDISShellRoomConstructor(TARDIS plugin) {
         this.plugin = plugin;
@@ -64,12 +63,32 @@ public class TARDISShellRoomConstructor {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
             Location block_loc = block.getLocation();
             World w = block_loc.getWorld();
             int fx = block_loc.getBlockX() + 2;
             int fy = block_loc.getBlockY() + 1;
             int fz = block_loc.getBlockZ() - 1;
+            // do a check to see if there are actually any blocks there
+            // must be at least one block and one door
+            boolean hasBlock = false;
+            boolean hasDoor = false;
+            for (int c = 0; c < 10; c++) {
+                for (int y = fy; y < fy + 4; y++) {
+                    Block fb = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
+                    if (fb.getType() != Material.AIR) {
+                        if (TARDISMaterials.doors.contains(fb.getType())) {
+                            hasDoor = true;
+                        } else {
+                            hasBlock = true;
+                        }
+                    }
+                }
+            }
+            if (!hasBlock && !hasDoor) {
+                TARDISMessage.send(player, "SHELL_MIN_BLOCKS");
+                return;
+            }
+            Tardis tardis = rs.getTardis();
             TARDISMessage.send(player, "PRESET_SCAN");
             StringBuilder sb_blue_data = new StringBuilder("[");
             StringBuilder sb_stain_data = new StringBuilder("[");
@@ -82,31 +101,28 @@ public class TARDISShellRoomConstructor {
                     Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                     Material material = b.getType();
                     BlockData data = b.getBlockData();
-                    String dataStr = data.getAsString();
-                    if (material.equals(Material.SPONGE)) {
-                        dataStr = AIR; // convert sponge to air
-                    }
+                    String dataStr = addQuotes(data.getAsString());
                     if (material.equals(Material.WALL_SIGN)) {
                         sign = b;
                     }
                     if (y == (fy + 3)) {
-                        sb_blue_data.append(data.getAsString());
+                        sb_blue_data.append(addQuotes(data.getAsString()));
                         if (TARDISMaterials.not_glass.contains(material)) {
                             sb_stain_data.append(dataStr);
                             sb_glass_data.append(dataStr);
                         } else {
                             Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
-                            sb_stain_data.append(colour.createBlockData().getAsString());
+                            sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
                             sb_glass_data.append(GLASS);
                         }
                     } else {
-                        sb_blue_data.append(data.getAsString()).append(",");
+                        sb_blue_data.append(addQuotes(data.getAsString())).append(",");
                         if (TARDISMaterials.not_glass.contains(material)) {
                             sb_stain_data.append(dataStr).append(",");
                             sb_glass_data.append(dataStr).append(",");
                         } else {
                             Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
-                            sb_stain_data.append(colour.createBlockData().getAsString());
+                            sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
                             sb_glass_data.append(GLASS).append(",");
                         }
                     }
@@ -141,11 +157,11 @@ public class TARDISShellRoomConstructor {
             set.put("glassData", jsonGlass);
             // read the sign
             if (sign != null) {
-                Sign s = (Sign) sign;
-                String s1 = (s.getLine(0).contains("&PLAYER")) ? player.getName() : s.getLine(0);
-                String s2 = (s.getLine(1).contains("&PLAYER")) ? player.getName() : s.getLine(1);
-                String s3 = (s.getLine(2).contains("&PLAYER")) ? player.getName() : s.getLine(2);
-                String s4 = (s.getLine(3).contains("&PLAYER")) ? player.getName() : s.getLine(3);
+                Sign s = (Sign) sign.getState();
+                String s1 = (s.getLine(0).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(0);
+                String s2 = (s.getLine(1).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(1);
+                String s3 = (s.getLine(2).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(2);
+                String s4 = (s.getLine(3).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(3);
                 set.put("line1", s1);
                 set.put("line2", s2);
                 set.put("line3", s3);
@@ -191,5 +207,9 @@ public class TARDISShellRoomConstructor {
             int uses_left = tcc.getChameleonUses();
             new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
         }
+    }
+
+    private String addQuotes(String s) {
+        return "\"" + s + "\"";
     }
 }

@@ -47,7 +47,7 @@ public class TARDISConstructColumn {
         where.put("tardis_id", id);
         ResultSetChameleon rs = new ResultSetChameleon(plugin, where);
         if (rs.resultSet()) {
-            String json = rs.getData().get(field);
+            String json = "{\"input\":" + rs.getData().get(field) + "}";
             // convert to String[][] array
             JSONObject jsonObject = new JSONObject(json);
             JSONArray outer = (JSONArray) jsonObject.get("input");

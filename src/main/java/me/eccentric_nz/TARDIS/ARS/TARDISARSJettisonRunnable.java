@@ -98,11 +98,17 @@ class TARDISARSJettisonRunnable implements Runnable {
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {
-                // get tardis_id
                 int secondary = (r.equals("BAKER")) ? 1 : 2;
                 HashMap<String, Object> del = new HashMap<>();
                 del.put("tardis_id", id);
                 del.put("secondary", secondary);
+                qf.doDelete("controls", del);
+            }
+            // if it is a shell room remove the button control
+            if (r.equals("SHELL")) {
+                HashMap<String, Object> del = new HashMap<>();
+                del.put("tardis_id", id);
+                del.put("type", 25);
                 qf.doDelete("controls", del);
             }
             if (r.equals("RENDERER")) {

@@ -92,9 +92,9 @@ class TARDISMaterialisationPreset implements Runnable {
             plugin.getPresets().setR(rand.nextInt(2));
         }
         if (this.preset.equals(PRESET.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprint", bd.getDirection()).getColumn();
-            stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stain", bd.getDirection()).getColumn();
-            glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glass", bd.getDirection()).getColumn();
+            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
+            stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stainData", bd.getDirection()).getColumn();
+            glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glassData", bd.getDirection()).getColumn();
         } else {
             column = plugin.getPresets().getColumn(preset, bd.getDirection());
             stained_column = plugin.getPresets().getStained(preset, bd.getDirection());
