@@ -54,7 +54,7 @@ public class TARDISMaterials {
 
     public static final List<Material> not_glass = Arrays.asList(Material.AIR, Material.GLASS, Material.TORCH, Material.SIGN, Material.OAK_DOOR, Material.BIRCH_DOOR, Material.SPRUCE_DOOR, Material.JUNGLE_DOOR, Material.ACACIA_DOOR, Material.DARK_OAK_DOOR, Material.WALL_SIGN, Material.IRON_DOOR, Material.REDSTONE_TORCH, Material.REDSTONE_WALL_TORCH, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.VINE, Material.REDSTONE_LAMP);
 
-    public static final List<Material> precious = Arrays.asList(Material.BEDROCK, Material.COAL_ORE, Material.DIAMOND_BLOCK, Material.DIAMOND_ORE, Material.EMERALD_BLOCK, Material.EMERALD_ORE, Material.NETHER_QUARTZ_ORE, Material.GOLD_BLOCK, Material.GOLD_ORE, Material.IRON_BLOCK, Material.IRON_ORE, Material.JACK_O_LANTERN, Material.LAPIS_BLOCK, Material.LAPIS_BLOCK, Material.MELON, Material.OBSIDIAN, Material.PUMPKIN, Material.REDSTONE_BLOCK, Material.REDSTONE_ORE, Material.SEA_LANTERN);
+    public static final List<Material> precious = Arrays.asList(Material.BEDROCK, Material.COAL_ORE, Material.DIAMOND_BLOCK, Material.DIAMOND_ORE, Material.EMERALD_BLOCK, Material.EMERALD_ORE, Material.NETHER_QUARTZ_ORE, Material.GOLD_BLOCK, Material.GOLD_ORE, Material.IRON_BLOCK, Material.IRON_ORE, Material.LAPIS_BLOCK, Material.LAPIS_BLOCK, Material.OBSIDIAN, Material.REDSTONE_BLOCK, Material.REDSTONE_ORE);
 
     public static final List<Material> crops = Arrays.asList(Material.SUGAR_CANE, Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.MELON_STEM, Material.PUMPKIN_STEM, Material.NETHER_WART, Material.POTATOES, Material.COCOA);
 

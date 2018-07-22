@@ -41,6 +41,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -178,13 +179,16 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                 if (doors.contains(d.getType())) {
                                                     // doors
                                                     BlockData did = d.getType().createBlockData();
-                                                    Bisected bisected = (Bisected) did;
+                                                    Door door = (Door) did;
+                                                    door.setFacing(BlockFace.EAST);
+                                                    door.setHinge(Door.Hinge.RIGHT);
                                                     if ((s + c) == 52) {
-                                                        bisected.setHalf(Bisected.Half.BOTTOM);
+                                                        door.setHalf(Bisected.Half.BOTTOM);
                                                     } else {
-                                                        bisected.setHalf(Bisected.Half.TOP);
+                                                        door.setHalf(Bisected.Half.TOP);
                                                     }
-                                                    String dataStr = bisected.getAsString();
+                                                    // set facing / hinge
+                                                    String dataStr = door.getAsString();
                                                     blue[first][second] = dataStr;
                                                     stain[first][second] = dataStr;
                                                     glass[first][second] = dataStr;
@@ -237,9 +241,9 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> set = new HashMap<>();
-                                    set.put("blueprintID", jsonBlue);
-                                    set.put("stainID", jsonStain);
-                                    set.put("glassID", jsonGlass);
+                                    set.put("blueprintData", jsonBlue);
+                                    set.put("stainData", jsonStain);
+                                    set.put("glassData", jsonGlass);
                                     if (rsc.resultSet()) {
                                         // update
                                         HashMap<String, Object> whereu = new HashMap<>();
