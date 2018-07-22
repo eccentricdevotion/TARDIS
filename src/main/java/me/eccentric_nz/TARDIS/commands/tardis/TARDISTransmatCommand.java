@@ -61,7 +61,7 @@ class TARDISTransmatCommand {
         }
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", location.getWorld().toString());
+        set.put("world", location.getWorld().getName());
         set.put("x", location.getX());
         set.put("y", location.getY());
         set.put("z", location.getZ());
@@ -78,6 +78,7 @@ class TARDISTransmatCommand {
             set.put("name", args[1]);
             qf.doInsert("transmats", set);
         }
+        TARDISMessage.send(player, "TRANSMAT_SAVED");
         return true;
     }
 }

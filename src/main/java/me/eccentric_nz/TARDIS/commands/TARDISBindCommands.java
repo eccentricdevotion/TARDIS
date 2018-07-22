@@ -163,7 +163,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 if (args.length > 1) {
-                    set.put("preset", args[2]);
+                    set.put("preset", args[1]);
                 } else {
                     set.put("preset", "console");
                 }
@@ -261,8 +261,10 @@ public class TARDISBindCommands implements CommandExecutor {
                             return true;
                         }
                     }
+                    set.put("tardis_id", id);
                     set.put("dest_name", which);
                     set.put("type", 5);
+                    set.put("preset", which);
                     did = qf.doSyncInsert("destinations", set);
                 }
                 if (did != 0) {
