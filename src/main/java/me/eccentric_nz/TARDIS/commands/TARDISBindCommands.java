@@ -125,8 +125,25 @@ public class TARDISBindCommands implements CommandExecutor {
                     TARDISMessage.send(player, "BIND_NO_SAVE");
                     return true;
                 }
-                int did = rsd.getDest_id();
                 int dtype = rsd.getType();
+                int did = rsd.getDest_id();
+                if (rsd.getDest_name().equals("transmat")) {
+                    if (args.length < 3) {
+                        TARDISMessage.send(player, "TOO_FEW_ARGS");
+                        return false;
+                    } else {
+                        HashMap<String, Object> wheremat = new HashMap<>();
+                        wheremat.put("tardis_id", id);
+                        wheremat.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
+                        wheremat.put("preset", args[2]);
+                        ResultSetDestinations rsmat = new ResultSetDestinations(plugin, wheremat, false);
+                        if (!rsmat.resultSet()) {
+                            TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                            return true;
+                        }
+                        did = rsmat.getDest_id();
+                    }
+                }
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("dest_id", did);
@@ -141,25 +158,22 @@ public class TARDISBindCommands implements CommandExecutor {
                 }
                 TARDISMessage.send(player, "BIND_REMOVED", firstArgs.get(dtype));
                 return true;
-            } else if (args[0].equalsIgnoreCase("transmat")) {
-                int did = 0;
+            } else if (args[0].equalsIgnoreCase("transmat")) { // type 6
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
-                if (args[0].equalsIgnoreCase("transmat")) { // type 6
-                    if (args.length > 1) {
-                        set.put("preset", args[2]);
-                    } else {
-                        set.put("preset", "console");
-                    }
-                    set.put("dest_name", "transmat");
-                    set.put("type", 6);
-                    did = qf.doSyncInsert("destinations", set);
-                    if (did != 0) {
-                        plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
-                        TARDISMessage.send(player, "BIND_CLICK");
-                        return true;
-                    }
+                if (args.length > 1) {
+                    set.put("preset", args[2]);
+                } else {
+                    set.put("preset", "console");
+                }
+                set.put("dest_name", "transmat");
+                set.put("type", 6);
+                int did = qf.doSyncInsert("destinations", set);
+                if (did != 0) {
+                    plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
+                    TARDISMessage.send(player, "BIND_CLICK");
+                    return true;
                 }
             } else {
                 // all the rest require at least 2 arguments
