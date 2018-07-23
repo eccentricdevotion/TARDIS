@@ -68,9 +68,9 @@ public class TARDISMalfunction {
             int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
             int r = rand.nextInt(100);
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-            byte x = (byte) rand.nextInt(15);
-            byte z = (byte) rand.nextInt(15);
-            byte y = (byte) rand.nextInt(15);
+            int x = rand.nextInt(4) + 1;
+            int z = rand.nextInt(4) + 1;
+            int y = rand.nextInt(4) + 1;
             if (r > end) {
                 // get random the_end location
                 l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, cl);
