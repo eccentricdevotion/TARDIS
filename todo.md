@@ -4,23 +4,19 @@
 1. Fix bugs!
 
 ## Next version `4.0-beta-1`
-1. Convert maps to new NBT format - when checking maps check the NBT tag - _started_
-2. Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-3. Test player preference to bypass `tardis rescue accept` - _started_
-4. Test `invisibility` setting to TARDIS areas
-5. Test Handles transmat requests
-6. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-7. Fix Biome adaptive presets dropping flowers & seeds (properly)
-8. Add Tropical Fish variants to mob farming
-9. If no `amount` argument is given to the `/tardisgive` command default to 1
-10. Test test test
+1. Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
+2. Test player preference to bypass `tardis rescue accept` - _started_
+3. Test `invisibility` setting to TARDIS areas
+4. Test Handles transmat requests
+5. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+6. Fix Biome adaptive presets dropping flowers & seeds (properly)
+7. Test test test
 
 ## TARDIS data pack
-* Add TARDIS recipes (where possible)?
+* Add TARDIS recipes?
 * Add TARDIS tags?
 
 ## Future version `?+`
-* TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 * TARDISSonicBlaster addon? - _unlikely_
 * Slimmer TARDIS option via Optifine's CEM mod? - _maybe_
 * Add more API Events that other plugins can listen for? - _unlikely_

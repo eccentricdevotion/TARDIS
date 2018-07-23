@@ -33,6 +33,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
+import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,7 @@ public class TARDISFarmer {
             List<TARDISLlama> old_macd_had_a_llama = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<>();
-            TARDISMob old_macd_had_a_fish = null;
+            TARDISFish old_macd_had_a_fish = null;
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<>();
             List<TARDISParrot> old_macd_had_a_parrot = new ArrayList<>();
@@ -450,9 +451,14 @@ public class TARDISFarmer {
                 }
                 ItemStack fishBucket = p.getInventory().getItemInMainHand();
                 if (fishBucket != null && TARDISMaterials.fish_buckets.contains(fishBucket.getType())) {
-                    old_macd_had_a_fish = new TARDISMob();
+                    old_macd_had_a_fish = new TARDISFish();
                     old_macd_had_a_fish.setType(TARDISMaterials.fishMap.get(fishBucket.getType()));
-                    // TODO if tropical fish, set variant (will need to create TARDISFish class that extends TARDISMob)
+                    if (fishBucket.getType().equals(Material.TROPICAL_FISH_BUCKET)) {
+                        TropicalFishBucketMeta fbim = (TropicalFishBucketMeta) fishBucket.getItemMeta();
+                        old_macd_had_a_fish.setColour(fbim.getBodyColor());
+                        old_macd_had_a_fish.setPattern(fbim.getPattern());
+                        old_macd_had_a_fish.setPatternColour(fbim.getPatternColor());
+                    }
                 }
                 if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0 || old_macd_had_a_fish != null) {
                     boolean canfarm;
@@ -502,11 +508,12 @@ public class TARDISFarmer {
                     }
                     plugin.setTardisSpawn(true);
                     Entity fish = world.spawnEntity(fish_tank, old_macd_had_a_fish.getType());
-                    // TODO set tropical variant
-//                    if (old_macd_had_a_fish.getType().equals(EntityType.TROPICAL_FISH)) {
-//                        TropicalFish tf = (TropicalFish)fish;
-//                        tf.setVariant(old_macd_had_a_fish.getVariant());
-//                    }
+                    if (old_macd_had_a_fish.getType().equals(EntityType.TROPICAL_FISH)) {
+                        TropicalFish tf = (TropicalFish) fish;
+                        tf.setBodyColor(old_macd_had_a_fish.getColour());
+                        tf.setPattern(old_macd_had_a_fish.getPattern());
+                        tf.setPatternColor(old_macd_had_a_fish.getPatternColour());
+                    }
                     // change fish bucket to empty bucket
                     p.getInventory().getItemInMainHand().setType(Material.BUCKET);
                     p.updateInventory();
