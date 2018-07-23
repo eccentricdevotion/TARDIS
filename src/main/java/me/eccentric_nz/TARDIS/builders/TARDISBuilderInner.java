@@ -446,25 +446,25 @@ public class TARDISBuilderInner {
                             Directional directional = (Directional) data;
                             switch (j) {
                                 case 2:
-                                    directional.setFacing(BlockFace.EAST);
+                                    directional.setFacing(BlockFace.WEST);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 3, repeater, 0);
                                     break;
                                 case 3:
-                                    directional.setFacing(BlockFace.SOUTH);
+                                    directional.setFacing(BlockFace.NORTH);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 2, repeater, 0);
                                     break;
                                 case 4:
-                                    directional.setFacing(BlockFace.NORTH);
+                                    directional.setFacing(BlockFace.SOUTH);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 5, repeater, 0);
                                     break;
                                 default:
-                                    directional.setFacing(BlockFace.WEST);
+                                    directional.setFacing(BlockFace.EAST);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                     qf.insertSyncControl(dbID, 4, repeater, 0);
