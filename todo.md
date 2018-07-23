@@ -8,7 +8,7 @@
 2. Update to Minecraft/Spigot 1.13 - _started_
    * **All we need is BlockData!** - _started_
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-3. Fix random location finding timing out
+3. Fix advancements not showing
 4. Test player preference to bypass `tardis rescue accept` - _started_
 5. Test `invisibility` setting to TARDIS areas
 6. Test Handles transmat requests

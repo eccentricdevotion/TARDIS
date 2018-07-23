@@ -99,13 +99,13 @@ public class TARDISRandomButton {
                     TARDISMessage.send(player, "FLIGHT_BAD");
                     return;
                 }
-                if (repeaters[0] <= 3) { // first position
+                if (repeaters[0] == 1) { // first position
                     environment = "THIS";
                 }
-                if (repeaters[0] >= 4 && repeaters[0] <= 7) { // second position
+                if (repeaters[0] == 2) { // second position
                     environment = "NORMAL";
                 }
-                if (repeaters[0] >= 8 && repeaters[0] <= 11) { // third position
+                if (repeaters[0] == 3) { // third position
                     if (plugin.getConfig().getBoolean("travel.nether") && player.hasPermission("tardis.nether")) {
                         // check they have enough artron energy to travel to the NETHER
                         if (level < nether_min) {
@@ -119,7 +119,7 @@ public class TARDISRandomButton {
                         TARDISMessage.send(player, message, "Nether");
                     }
                 }
-                if (repeaters[0] >= 12 && repeaters[0] <= 15) { // last position
+                if (repeaters[0] == 4) { // last position
                     if (plugin.getConfig().getBoolean("travel.the_end") && player.hasPermission("tardis.end")) {
                         // check they have enough artron energy to travel to THE_END
                         if (level < the_end_min) {

@@ -63,9 +63,9 @@ public class TARDISTimeTravel {
      * Retrieves a random location determined from the TARDIS repeater or terminal settings.
      *
      * @param p           a player object used to check permissions against.
-     * @param rx          the data bit setting of the x-repeater, this determines the distance in the x direction.
-     * @param rz          the data bit setting of the z-repeater, this determines the distance in the z direction.
-     * @param ry          the data bit setting of the y-repeater, this determines the multiplier for both the x and z
+     * @param rx          the delay setting of the x-repeater, this determines the distance in the x direction.
+     * @param rz          the delay setting of the z-repeater, this determines the distance in the z direction.
+     * @param ry          the delay setting of the y-repeater, this determines the multiplier for both the x and z
      *                    directions.
      * @param d           the direction the TARDIS Police Box faces.
      * @param e           the environment(s) the player has chosen (or is allowed) to travel to.
@@ -192,7 +192,7 @@ public class TARDISTimeTravel {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
                     count = 0;
-                    // randomX(Random rand, int range, int quarter, byte rx, byte ry, int max)
+                    // randomX(Random rand, int range, int quarter, int rx, int ry, int max)
                     wherex = randomX(rand, range, quarter, rx, ry, e, current);
                     wherez = randomZ(rand, range, quarter, rz, ry, e, current);
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
@@ -470,8 +470,8 @@ public class TARDISTimeTravel {
      * @param rand    an object of type Random.
      * @param range   the maximum the random number can be.
      * @param quarter one fourth of the max_distance config option.
-     * @param rx      the data bit of the x-repeater setting.
-     * @param ry      the data bit of the y-repeater setting.
+     * @param rx      the delay of the x-repeater setting.
+     * @param ry      the delay of the y-repeater setting.
      * @param e       a string to determine where to start the random search from
      * @param l       the current TARDIS location
      */
@@ -480,32 +480,13 @@ public class TARDISTimeTravel {
         int wherex;
         wherex = rand.nextInt(range);
         // add the distance from the x and z repeaters
-        if (rx <= 3) {
-            wherex += quarter;
-        }
-        if (rx >= 4 && rx <= 7) {
-            wherex += (quarter * 2);
-        }
-        if (rx >= 8 && rx <= 11) {
-            wherex += (quarter * 3);
-        }
-        if (rx >= 12 && rx <= 15) {
-            wherex += (quarter * 4);
-        }
+        wherex += (quarter * rx);
         // add chance of negative values
         if (rand.nextInt(2) == 1) {
             wherex = 0 - wherex;
         }
         // use multiplier based on position of third (y) repeater
-        if (ry >= 4 && ry <= 7) {
-            wherex *= 2;
-        }
-        if (ry >= 8 && ry <= 11) {
-            wherex *= 3;
-        }
-        if (ry >= 12 && ry <= 15) {
-            wherex *= 4;
-        }
+        wherex *= ry;
         return wherex + currentx;
     }
 
@@ -515,8 +496,8 @@ public class TARDISTimeTravel {
      * @param rand    an object of type Random.
      * @param range   the maximum the random number can be.
      * @param quarter one fourth of the max_distance config option.
-     * @param rz      the data bit of the x-repeater setting.
-     * @param ry      the data bit of the y-repeater setting.
+     * @param rz      the delay of the x-repeater setting.
+     * @param ry      the delay of the y-repeater setting.
      * @param e       a string to determine where to start the random search from
      * @param l       the current TARDIS location
      */
@@ -525,32 +506,13 @@ public class TARDISTimeTravel {
         int wherez;
         wherez = rand.nextInt(range);
         // add the distance from the x and z repeaters
-        if (rz <= 3) {
-            wherez += quarter;
-        }
-        if (rz >= 4 && rz <= 7) {
-            wherez += (quarter * 2);
-        }
-        if (rz >= 8 && rz <= 11) {
-            wherez += (quarter * 3);
-        }
-        if (rz >= 12 && rz <= 15) {
-            wherez += (quarter * 4);
-        }
+        wherez += (quarter * rz);
         // add chance of negative values
         if (rand.nextInt(2) == 1) {
             wherez = 0 - wherez;
         }
         // use multiplier based on position of third (y) repeater
-        if (ry >= 4 && ry <= 7) {
-            wherez *= 2;
-        }
-        if (ry >= 8 && ry <= 11) {
-            wherez *= 3;
-        }
-        if (ry >= 12 && ry <= 15) {
-            wherez *= 4;
-        }
+        wherez *= ry;
         return wherez + currentz;
     }
 
