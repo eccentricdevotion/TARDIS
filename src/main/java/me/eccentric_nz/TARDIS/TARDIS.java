@@ -946,7 +946,7 @@ public class TARDIS extends JavaPlugin {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
             Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
             Version version = new Version(twa.getDescription().getVersion());
-            return (version.compareTo(new Version("2.4")) >= 0);
+            return (version.compareTo(new Version("3.0")) >= 0);
         } else {
             return false;
         }
