@@ -128,10 +128,10 @@ public class TARDISAchievementFactory {
     }
 
     public static boolean checkAdvancement(String adv) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, "drwho/" + adv.toLowerCase(Locale.ENGLISH));
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.toLowerCase(Locale.ENGLISH));
         Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
-            TARDIS.plugin.debug("Advancement 'tardis:drwho/" + adv + "' exists :)");
+            TARDIS.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
             return true;
         } else {
             TARDIS.plugin.debug("There is no advancement with that key, try reloading - /minecraft:reload");
@@ -140,12 +140,12 @@ public class TARDISAchievementFactory {
     }
 
     public static void grantAdvancement(ADVANCEMENT adv, Player player) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, "drwho/" + adv.getConfigName().toLowerCase(Locale.ENGLISH));
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.getConfigName());
         Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
             AdvancementProgress avp = player.getAdvancementProgress(a);
             if (!avp.isDone()) {
-                TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:drwho/" + adv.getConfigName());
+                TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
             }
         } else {
             player.sendMessage(ChatColor.YELLOW + "Advancement Made!");

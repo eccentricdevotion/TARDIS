@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import org.bukkit.ChatColor;
 
 import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -40,19 +38,10 @@ public class TARDISChecker {
         // is there a worlds container?
         File container = plugin.getServer().getWorldContainer();
         String s_world = plugin.getServer().getWorlds().get(0).getName();
-        // check for MCPC+
-        Pattern pat = Pattern.compile("MCPC", Pattern.DOTALL);
-        Matcher mat = pat.matcher(plugin.getServer().getVersion());
-        String server_world;
-        if (mat.find()) {
-            server_world = "data" + File.separator;
-        } else {
-            server_world = s_world + File.separator + "data" + File.separator;
-        }
-        String root = container.getAbsolutePath() + File.separator + server_world;
+        String dataRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "data" + File.separator;
         for (int i = 1963; i < 1984; i++) {
             String map = "map_" + i + ".dat";
-            File file = new File(root, map);
+            File file = new File(dataRoot, map);
             if (!file.exists()) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("MAP_NOT_FOUND"), map));
                 plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("MAP_COPYING"), map));
@@ -60,20 +49,26 @@ public class TARDISChecker {
             }
         }
         // check if directories exist
-        root = root + File.separator + "advancements" + File.separator + "tardis" + File.separator + "drwho";
-        File tardisdrwhodir = new File(root);
-        if (!tardisdrwhodir.exists()) {
+        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
+        File tardisDir = new File(dataPacksRoot);
+        if (!tardisDir.exists()) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
-            tardisdrwhodir.mkdirs();
+            tardisDir.mkdirs();
         }
         for (ADVANCEMENT advancement : ADVANCEMENT.values()) {
             String json = advancement.getConfigName() + ".json";
-            File jfile = new File(root, json);
+            File jfile = new File(dataPacksRoot, json);
             if (!jfile.exists()) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
                 plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
                 copy(json, jfile);
             }
+        }
+        String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
+        File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
+        if (!mcmeta.exists()) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
+            copy("pack.mcmeta", mcmeta);
         }
     }
 

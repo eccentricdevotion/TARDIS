@@ -1,15 +1,14 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:skull",
-            "data": 4
+            "item": "minecraft:creeper_head"
         },
         "title": "Lucky hunter",
         "description": "Kill a charged creeper",
         "show_toast": true,
         "announce_to_chat": true
     },
-    "parent": "tardis:drwho/root",
+    "parent": "tardis:root",
     "criteria": {
         "kill_charged_creeper": {
             "trigger": "minecraft:player_killed_entity",

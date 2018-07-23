@@ -1,12 +1,12 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:red_flower"
+            "item": "minecraft:red_tulip"
         },
         "title": "The host with the most",
         "description": "Add companions to your TARDIS"
     },
-    "parent": "tardis:drwho/tardis",
+    "parent": "tardis:tardis",
     "criteria": {
         "make_friends": {
             "trigger": "minecraft:impossible"

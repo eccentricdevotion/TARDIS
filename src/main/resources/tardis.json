@@ -6,7 +6,7 @@
         "title": "Create a TARDIS",
         "description": "The time vortex awaits!"
     },
-    "parent": "tardis:drwho/craft",
+    "parent": "tardis:craft",
     "criteria": {
         "built_tardis": {
             "trigger": "minecraft:impossible"

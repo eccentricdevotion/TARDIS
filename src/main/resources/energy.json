@@ -6,7 +6,7 @@
         "title": "Power hungry",
         "description": "Overcharge the Artron Energy Capacitor"
     },
-    "parent": "tardis:drwho/tardis",
+    "parent": "tardis:tardis",
     "criteria": {
         "overcharge": {
             "trigger": "minecraft:impossible"

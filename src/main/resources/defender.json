@@ -1,102 +1,102 @@
 {
-	"display": {
-		"icon": {
-			"item": "minecraft:bow"
-		},
-		"title": "Defender of the universe",
-		"description": "Kill one of every Whovian monster"
-	},
-	"parent": "tardis:drwho/root",
-	"criteria": {
-		"cyberman": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:zombie",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Cyberman Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Cyberman Chest\"}}},{\"id\":\"minecraft:iron_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Cyberman Head\"}}}]}"
-				}
-			}
-		},
-		"dalek": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:skeleton",
-					"nbt": "{\"ArmorItems\":[{},{},{},{\"id\":\"minecraft:vine\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Dalek Head\"}}}]}"
-				}
-			}
-		},
-		"empty_child": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:skeleton",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Chest\"}}},{\"id\":\"minecraft:iron_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Head\"}}}]}"
-				}
-			}
-		},
-		"ice_warrior": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:zombie_pigman",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Ice Warrior Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Ice Warrior Chest\"}}},{\"id\":\"minecraft:iron_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Ice Warrior Head\"}}}]}"
-				}
-			}
-		},
-		"silent": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:enderman",
-					"nbt": "{\"Passengers\":[{\"id\":\"minecraft:guardian\"}]}"
-				}
-			}
-		},
-		"silurian": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:skeleton",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Siluria Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Head\"}}}]}"
-				}
-			}
-		},
-		"sontaran": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:zombie",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Sontaran Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Sontaran Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Sontaran Head\"}}}]}"
-				}
-			}
-		},
-		"vashta_nerada": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:skeleton",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Vashta Nerada Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Vashta Nerada Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Vashta Nerada Head\"}}}]}"
-				}
-			}
-		},
-		"weeping_angel": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:skeleton",
-					"nbt": "{\"ArmorItems\":[{\"id\":\"minecraft:iron_boots\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Feet\"}}},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Chest\"}}},{\"id\":\"minecraft:skull\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Head\"}}}]}"
-				}
-			}
-		},
-		"zygon": {
-			"trigger": "minecraft:player_killed_entity",
-			"conditions": {
-				"entity": {
-					"type": "minecraft:zombie",
-					"nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Zygon Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Zygon Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Zygon Head\"}}}]}"
-				}
-			}
-		}
-	}
+    "display": {
+        "icon": {
+            "item": "minecraft:bow"
+        },
+        "title": "Defender of the universe",
+        "description": "Kill one of every Whovian monster"
+    },
+    "parent": "tardis:root",
+    "criteria": {
+        "cyberman": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:zombie",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Cyberman Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Cyberman Chest\"}}},{\"id\":\"minecraft:iron_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Cyberman Head\"}}}]}"
+                }
+            }
+        },
+        "dalek": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:skeleton",
+                    "nbt": "{\"ArmorItems\":[{},{},{},{\"id\":\"minecraft:vine\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Dalek Head\"}}}]}"
+                }
+            }
+        },
+        "empty_child": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:skeleton",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Chest\"}}},{\"id\":\"minecraft:iron_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Head\"}}}]}"
+                }
+            }
+        },
+        "ice_warrior": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:zombie_pigman",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Ice Warrior Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Ice Warrior Chest\"}}},{\"id\":\"minecraft:iron_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Ice Warrior Head\"}}}]}"
+                }
+            }
+        },
+        "silent": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:enderman",
+                    "nbt": "{\"Passengers\":[{\"id\":\"minecraft:guardian\"}]}"
+                }
+            }
+        },
+        "silurian": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:skeleton",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Siluria Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Empty Child Head\"}}}]}"
+                }
+            }
+        },
+        "sontaran": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:zombie",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Sontaran Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Sontaran Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Sontaran Head\"}}}]}"
+                }
+            }
+        },
+        "vashta_nerada": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:skeleton",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Vashta Nerada Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Vashta Nerada Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Vashta Nerada Head\"}}}]}"
+                }
+            }
+        },
+        "weeping_angel": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:skeleton",
+                    "nbt": "{\"ArmorItems\":[{\"id\":\"minecraft:iron_boots\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Feet\"}}},{\"id\":\"minecraft:iron_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Legs\"}}},{\"id\":\"minecraft:iron_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Chest\"}}},{\"id\":\"minecraft:skull\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Weeping Angel Head\"}}}]}"
+                }
+            }
+        },
+        "zygon": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:zombie",
+                    "nbt": "{\"ArmorItems\":[{},{\"id\":\"minecraft:golden_leggings\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Zygon Legs\"}}},{\"id\":\"minecraft:golden_chestplate\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Zygon Chest\"}}},{\"id\":\"minecraft:golden_helmet\",\"Count\":1,\"tag\":{\"display\":{\"Name\":\"Zygon Head\"}}}]}"
+                }
+            }
+        }
+    }
 }

@@ -5,15 +5,13 @@
 
 ## Next version `4.0-beta-1`
 1. Convert maps to new NBT format - when checking maps check the NBT tag - _started_
-2. Update to Minecraft/Spigot 1.13 - _started_
-   * **All we need is BlockData!** - _started_
-   * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-3. Fix advancements not showing
-4. Test player preference to bypass `tardis rescue accept` - _started_
-5. Test `invisibility` setting to TARDIS areas
-6. Test Handles transmat requests
-7. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-8. Fix Biome adaptive presets dropping flowers & seeds (properly)
+2. Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
+3. Test player preference to bypass `tardis rescue accept` - _started_
+4. Test `invisibility` setting to TARDIS areas
+5. Test Handles transmat requests
+6. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+7. Fix Biome adaptive presets dropping flowers & seeds (properly)
+8. Add Tropical Fish variants to mob farming
 9. Test test test
 
 ## TARDIS data pack?

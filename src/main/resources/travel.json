@@ -6,7 +6,7 @@
         "title": "Got the travel bug",
         "description": "Travel in your TARDIS"
     },
-    "parent": "tardis:drwho/tardis",
+    "parent": "tardis:tardis",
     "criteria": {
         "travel_in_tardis": {
             "trigger": "minecraft:impossible"

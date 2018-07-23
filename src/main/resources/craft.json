@@ -8,7 +8,7 @@
         "show_toast": true,
         "announce_to_chat": true
     },
-    "parent": "tardis:drwho/root",
+    "parent": "tardis:root",
     "criteria": {
         "craft_seed": {
             "trigger": "minecraft:inventory_changed",
