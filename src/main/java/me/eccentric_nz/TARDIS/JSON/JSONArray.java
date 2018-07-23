@@ -286,23 +286,6 @@ public final class JSONArray {
     }
 
     /**
-     * Get the byte value associated with an index.
-     *
-     * @param index The index must be between 0 and length() - 1.
-     * @return The value.
-     * @throws JSONException If the key is not found or if the value cannot be converted to a number.
-     */
-    public byte getByte(int index) throws JSONException {
-        Object object = get(index);
-        try {
-            return object instanceof Number ? ((Number) object).byteValue()
-                    : Byte.parseByte((String) object);
-        } catch (NumberFormatException e) {
-            throw new JSONException("JSONArray[" + index + "] is not a number.");
-        }
-    }
-
-    /**
      * Get the string associated with an index.
      *
      * @param index The index must be between 0 and length() - 1.

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 
-
 /**
  * @author eccentric_nz
  */
@@ -37,38 +36,6 @@ public class TARDISNumberParsers {
         } catch (NumberFormatException n) {
             TARDIS.plugin.debug("Could not convert to int, the string was: " + i);
             n.printStackTrace();
-        }
-        return num;
-    }
-
-    /**
-     * Parses a string for a byte.
-     *
-     * @param i the string to convert to an byte.
-     * @return a number
-     */
-    public static byte parseByte(String i) {
-        byte num = (byte) 0;
-        try {
-            num = Byte.parseByte(i);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.debug("Could not convert to byte, the string was: " + i);
-        }
-        return num;
-    }
-
-    /**
-     * Parses a string for a short.
-     *
-     * @param i the string to convert to a short.
-     * @return a number
-     */
-    public static short parseShort(String i) {
-        short num = 0;
-        try {
-            num = Short.parseShort(i);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.debug("Could not convert to short, the string was: " + i);
         }
         return num;
     }

@@ -113,7 +113,7 @@ public class TARDISTerminalInventory {
             r = new ItemStack(Material.NETHERRACK, 1);
             ndn = "Nether";
         } else {
-            r = new ItemStack(Material.DIRT, 1, (byte) 1);
+            r = new ItemStack(Material.PODZOL, 1);
             ndn = plugin.getConfig().getString("travel.terminal.nether");
         }
         ItemMeta rim = r.getItemMeta();
@@ -126,7 +126,7 @@ public class TARDISTerminalInventory {
             e = new ItemStack(Material.END_STONE, 1);
             edn = "The End";
         } else {
-            e = new ItemStack(Material.DIRT, 1, (byte) 2);
+            e = new ItemStack(Material.COARSE_DIRT, 1);
             edn = plugin.getConfig().getString("travel.terminal.the_end");
         }
         ItemMeta eim = e.getItemMeta();

@@ -90,8 +90,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private JSONArray arr;
     private Material wall_type;
     private Material floor_type;
-    private byte wall_data;
-    private byte floor_data;
     private final QueryFactory qf;
     private HashMap<String, Object> set;
     private HashMap<String, Object> where;
@@ -210,8 +208,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             String floor[] = tud.getFloor().split(":");
             wall_type = Material.valueOf(wall[0]);
             floor_type = Material.valueOf(floor[0]);
-            wall_data = TARDISNumberParsers.parseByte(wall[1]);
-            floor_data = TARDISNumberParsers.parseByte(floor[1]);
             // get input array
             arr = (JSONArray) obj.get("input");
             // clear existing lamp blocks

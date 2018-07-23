@@ -16,59 +16,38 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import com.google.common.collect.Maps;
-
-import java.util.Map;
-
 /**
  * @author eccentric_nz
  */
 public enum MAP {
-    // TODO use new Map API if it exists
-    ADMIN((byte) 1968, "Server Admin Circuit"),
-    ARS((byte) 1973, "TARDIS ARS Circuit"),
-    BIO((byte) 1969, "Bio-scanner Circuit"),
-    CHAMELEON((byte) 1966, "TARDIS Chameleon Circuit"),
-    DIAMOND((byte) 1971, "Diamond Disruptor Circuit"),
-    EMERALD((byte) 1972, "Emerald Environment Circuit"),
-    INPUT((byte) 1976, "TARDIS Input Circuit"),
-    INVISIBILITY((byte) 1981, "TARDIS Invisibility Circuit"),
-    LOCATOR((byte) 1965, "TARDIS Locator Circuit"),
-    MATERIALISATION((byte) 1964, "TARDIS Materialisation Circuit"),
-    MEMORY((byte) 1975, "TARDIS Memory Circuit"),
-    PAINTER((byte) 1979, "Painter Circuit"),
-    PERCEPTION((byte) 1978, "Perception Circuit"),
-    RANDOM((byte) 1980, "TARDIS Randomiser Circuit"),
-    REDSTONE((byte) 1970, "Redstone Activator Circuit"),
-    SCANNER((byte) 1977, "TARDIS Scanner Circuit"),
-    SONIC((byte) 1967, "Sonic Oscillator"),
-    STATTENHEIM((byte) 1963, "TARDIS Stattenheim Circuit"),
-    TEMPORAL((byte) 1974, "TARDIS Temporal Circuit"),;
+    
+    ADMIN("Server Admin Circuit"),
+    ARS("TARDIS ARS Circuit"),
+    BIO("Bio-scanner Circuit"),
+    CHAMELEON("TARDIS Chameleon Circuit"),
+    DIAMOND("Diamond Disruptor Circuit"),
+    EMERALD("Emerald Environment Circuit"),
+    INPUT("TARDIS Input Circuit"),
+    INVISIBILITY("TARDIS Invisibility Circuit"),
+    LOCATOR("TARDIS Locator Circuit"),
+    MATERIALISATION("TARDIS Materialisation Circuit"),
+    MEMORY("TARDIS Memory Circuit"),
+    PAINTER("Painter Circuit"),
+    PERCEPTION("Perception Circuit"),
+    RANDOM("TARDIS Randomiser Circuit"),
+    REDSTONE("Redstone Activator Circuit"),
+    SCANNER("TARDIS Scanner Circuit"),
+    SONIC("Sonic Oscillator"),
+    STATTENHEIM("TARDIS Stattenheim Circuit"),
+    TEMPORAL("TARDIS Temporal Circuit");
 
-    byte data;
     String displayName;
-    private final static Map<Byte, MAP> BY_BYTE = Maps.newHashMap();
 
-    MAP(byte data, String displayName) {
-        this.data = data;
+    MAP(String displayName) {
         this.displayName = displayName;
-    }
-
-    private byte getData() {
-        return data;
     }
 
     public String getDisplayName() {
         return displayName;
-    }
-
-    public static MAP getMap(Byte data) {
-        return BY_BYTE.get(data);
-    }
-
-    static {
-        for (MAP map : values()) {
-            BY_BYTE.put(map.getData(), map);
-        }
     }
 }

@@ -269,17 +269,17 @@ class TARDISPresetInventory {
         rus.setDisplayName("Chorus Flower");
         cho.setItemMeta(rus);
         // Andesite
-        ItemStack and = new ItemStack(Material.STONE, 1, (byte) 6);
+        ItemStack and = new ItemStack(Material.ANDESITE, 1);
         ItemMeta esi = and.getItemMeta();
         esi.setDisplayName("Andesite Box");
         and.setItemMeta(esi);
         // Diorite
-        ItemStack dio = new ItemStack(Material.STONE, 1, (byte) 4);
+        ItemStack dio = new ItemStack(Material.DIORITE, 1);
         ItemMeta rit = dio.getItemMeta();
         rit.setDisplayName("Diorite Box");
         dio.setItemMeta(rit);
         // Granite
-        ItemStack gra = new ItemStack(Material.STONE, 1, (byte) 2);
+        ItemStack gra = new ItemStack(Material.GRANITE, 1);
         ItemMeta nit = gra.getItemMeta();
         nit.setDisplayName("Granite Box");
         gra.setItemMeta(nit);
