@@ -4,17 +4,17 @@
 1. Fix bugs!
 
 ## Next version `4.0-beta-1`
-1. Convert maps to new NBT format - when checking maps check the NBT tag (TARDISHelper?)
+1. Convert maps to new NBT format - when checking maps check the NBT tag - _started_
 2. Update to Minecraft/Spigot 1.13 - _started_
    * **All we need is BlockData!** - _started_
    * Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-3. Shell Room - [https://dev.bukkit.org/projects/tardis/issues/1536](https://dev.bukkit.org/projects/tardis/issues/1536) - _started_
-5. Test player preference to bypass `tardis rescue accept` - _started_
-6. Test `invisibility` setting to TARDIS areas
-7. Test Handles transmat requests
-9. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-10. Fix Biome adaptive presets dropping flowers & seeds (properly)
-11. Test test test
+3. Fix random location finding timing out
+4. Test player preference to bypass `tardis rescue accept` - _started_
+5. Test `invisibility` setting to TARDIS areas
+6. Test Handles transmat requests
+7. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+8. Fix Biome adaptive presets dropping flowers & seeds (properly)
+9. Test test test
 
 ## TARDIS data pack?
 * Move custom advancements to here
