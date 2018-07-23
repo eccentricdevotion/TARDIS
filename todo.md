@@ -3,7 +3,7 @@
 ## Current bugfix version `3.8.3`
 1. Fix bugs!
 
-## Next version `4.0-beta-1`
+## Next version `4.0.0`
 1. Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
 2. Test player preference to bypass `tardis rescue accept` - _started_
 3. Test `invisibility` setting to TARDIS areas
