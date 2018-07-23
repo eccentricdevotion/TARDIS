@@ -49,8 +49,8 @@ public class TARDISShapelessRecipe {
 
     private ShapelessRecipe makeRecipe(String s) {
         /*
-         recipe: 106,106,106
-         result: 341
+         recipe: VINE,VINE,VINE
+         result: SLIME_BALL
          amount: 1
          displayname: false
          lore: ""
@@ -77,13 +77,7 @@ public class TARDISShapelessRecipe {
         for (String i : ingredients) {
             String[] recipe_idata = i.split(":");
             Material m = Material.valueOf(recipe_idata[0]);
-            // TODO use new Map API if it exists
-            if (recipe_idata.length == 2 && mat.equals(Material.FILLED_MAP)) {
-                int recipe_data = TARDISNumberParsers.parseInt(recipe_idata[1]);
-                r.addIngredient(m, recipe_data);
-            } else {
-                r.addIngredient(m);
-            }
+            r.addIngredient(m);
         }
         shapelessRecipes.put(s, r);
         return r;

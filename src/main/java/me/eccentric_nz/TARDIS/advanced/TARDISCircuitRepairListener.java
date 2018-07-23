@@ -38,19 +38,19 @@ import java.util.List;
 public class TARDISCircuitRepairListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Byte, String> circuits = new HashMap<>();
+    private final HashMap<Integer, String> circuits = new HashMap<>();
 
     public TARDISCircuitRepairListener(TARDIS plugin) {
         this.plugin = plugin;
-        circuits.put((byte) 1973, "ars");
-        circuits.put((byte) 1966, "chameleon");
-        circuits.put((byte) 1976, "input");
-        circuits.put((byte) 1981, "invisibility");
-        circuits.put((byte) 1964, "materialisation");
-        circuits.put((byte) 1975, "memory");
-        circuits.put((byte) 1980, "randomiser");
-        circuits.put((byte) 1977, "scanner");
-        circuits.put((byte) 1974, "temporal");
+        circuits.put(1973, "ars");
+        circuits.put(1966, "chameleon");
+        circuits.put(1976, "input");
+        circuits.put(1981, "invisibility");
+        circuits.put(1964, "materialisation");
+        circuits.put(1975, "memory");
+        circuits.put(1980, "randomiser");
+        circuits.put(1977, "scanner");
+        circuits.put(1974, "temporal");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -66,7 +66,7 @@ public class TARDISCircuitRepairListener implements Listener {
             ItemStack[] items = anvil.getContents();
             ItemStack first = items[0];
             // is it a single map with item meta?
-            if (first != null && first.getType().equals(Material.MAP) && first.hasItemMeta() && first.getAmount() == 1) {
+            if (first != null && first.getType().equals(Material.FILLED_MAP) && first.hasItemMeta() && first.getAmount() == 1) {
                 // get the item meta
                 ItemMeta fim = first.getItemMeta();
                 if (fim.hasDisplayName()) {
@@ -81,8 +81,8 @@ public class TARDISCircuitRepairListener implements Listener {
                                 // get the uses left
                                 int left = TARDISNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
-                                // TODO use new Map API if it exists
-                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(first.getData().getData()));
+                                int map = plugin.getTardisHelper().getMapNumber(first);
+                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(map));
                                 // is it used?
                                 if (left < uses) {
                                     ItemStack two = items[1];

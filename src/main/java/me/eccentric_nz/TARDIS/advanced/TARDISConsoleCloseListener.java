@@ -114,7 +114,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     ItemStack is = inv.getItem(i);
                     if (is != null) {
                         Material mat = is.getType();
-                        if (!mat.equals(Material.MAP) && is.hasItemMeta()) {
+                        if (!mat.equals(Material.FILLED_MAP) && is.hasItemMeta()) {
                             boolean ignore = false;
                             HashMap<String, Object> set_next = new HashMap<>();
                             HashMap<String, Object> set_tardis = new HashMap<>();
@@ -299,7 +299,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     TARDISMessage.send(p, "ADV_BLANK");
                                 }
                             }
-                        } else if (mat.equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
+                        } else if (mat.equals(Material.FILLED_MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
                             // Randomiser Circuit
                             Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
                             if (l != null) {

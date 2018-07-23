@@ -28,21 +28,21 @@ import java.util.List;
 public enum DISK_CIRCUIT {
 
     AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
-    ARS("TARDIS ARS Circuit", Material.MAP),
+    ARS("TARDIS ARS Circuit", Material.FILLED_MAP),
     BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
-    CHAMELEON("TARDIS Chameleon Circuit", Material.MAP),
-    INPUT("TARDIS Input Circuit", Material.MAP),
-    INVISIBILITY("TARDIS Invisibility Circuit", Material.MAP),
+    CHAMELEON("TARDIS Chameleon Circuit", Material.FILLED_MAP),
+    INPUT("TARDIS Input Circuit", Material.FILLED_MAP),
+    INVISIBILITY("TARDIS Invisibility Circuit", Material.FILLED_MAP),
     KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
-    MATERIALISATION("TARDIS Materialisation Circuit", Material.MAP),
-    MEMORY("TARDIS Memory Circuit", Material.MAP),
+    MATERIALISATION("TARDIS Materialisation Circuit", Material.FILLED_MAP),
+    MEMORY("TARDIS Memory Circuit", Material.FILLED_MAP),
     PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT),
     PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL),
-    RANDOMISER("TARDIS Randomiser Circuit", Material.MAP),
+    RANDOMISER("TARDIS Randomiser Circuit", Material.FILLED_MAP),
     SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
-    SCANNER("TARDIS Scanner Circuit", Material.MAP),
+    SCANNER("TARDIS Scanner Circuit", Material.FILLED_MAP),
     SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
-    TEMPORAL("TARDIS Temporal Circuit", Material.MAP);
+    TEMPORAL("TARDIS Temporal Circuit", Material.FILLED_MAP);
 
     String name;
     Material material;

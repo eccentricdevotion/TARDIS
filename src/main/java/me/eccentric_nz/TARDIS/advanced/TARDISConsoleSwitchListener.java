@@ -48,7 +48,7 @@ import java.util.List;
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Byte> gui_circuits = Arrays.asList((byte) 1966, (byte) 1973, (byte) 1974, (byte) 1975, (byte) 1976, (byte) 1977);
+    private final List<Integer> gui_circuits = Arrays.asList(1966, 1973, 1974, 1975, 1976, 1977);
 
     public TARDISConsoleSwitchListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -72,9 +72,8 @@ public class TARDISConsoleSwitchListener implements Listener {
                 int slot = event.getRawSlot();
                 if (slot >= 0 && slot < 9) {
                     ItemStack item = inv.getItem(slot);
-                    if (item != null && item.getType().equals(Material.MAP)) {
-                        // TODO use new Map API if it exists
-                        byte map = item.getData().getData();
+                    if (item != null && item.getType().equals(Material.FILLED_MAP)) {
+                        int map = plugin.getTardisHelper().getMapNumber(item);
                         if (gui_circuits.contains(map)) {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
@@ -85,23 +84,23 @@ public class TARDISConsoleSwitchListener implements Listener {
                                     ItemStack[] stack = null;
                                     Inventory new_inv = null;
                                     switch (map) {
-                                        case (byte) 1966: // Chameleon circuit
+                                        case 1966: // Chameleon circuit
                                             new_inv = plugin.getServer().createInventory(p, 27, "§4Chameleon Circuit");
                                             stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                             break;
-                                        case (byte) 1973: // ARS circuit
+                                        case 1973: // ARS circuit
                                             new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
                                             stack = new TARDISARSInventory(plugin).getARS();
                                             break;
-                                        case (byte) 1974: // Temporal circuit
+                                        case 1974: // Temporal circuit
                                             new_inv = plugin.getServer().createInventory(p, 27, "§4Temporal Locator");
                                             stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
                                             break;
-                                        case (byte) 1975: // Memory circuit (saves/areas)
+                                        case 1975: // Memory circuit (saves/areas)
                                             new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
                                             stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id()).getTerminal();
                                             break;
-                                        case (byte) 1976: // Input circuit (terminal)
+                                        case 1976: // Input circuit (terminal)
                                             new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
                                             stack = new TARDISTerminalInventory(plugin).getTerminal();
                                             break;

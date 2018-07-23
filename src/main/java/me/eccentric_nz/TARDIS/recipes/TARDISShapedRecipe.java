@@ -134,13 +134,7 @@ public class TARDISShapedRecipe {
                 char c = g.charAt(0);
                 String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
                 Material m = Material.valueOf(recipe_iddata[0]);
-                // TODO use new Map API if it exists
-                if (recipe_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
-                    int recipe_data = TARDISNumberParsers.parseInt(recipe_iddata[1]);
-                    r.setIngredient(c, m, recipe_data);
-                } else {
-                    r.setIngredient(c, m);
-                }
+                r.setIngredient(c, m);
             });
         } catch (IllegalArgumentException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");

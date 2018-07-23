@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MAP;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -248,43 +247,34 @@ public class TARDISRecipeCommands implements CommandExecutor {
         Inventory inv = plugin.getServer().createInventory(p, 27, "§4" + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
+        int mapCount = 0;
         for (int j = 0; j < recipeShape.length; j++) {
             for (int k = 0; k < recipeShape[j].length(); k++) {
                 ItemStack item = ingredientMap.get(recipeShape[j].toCharArray()[k]);
                 if (item == null) {
                     continue;
                 }
-                if (item.getType().equals(Material.MAP)) {
-                    ItemMeta im = item.getItemMeta();
-                    // TODO use new Map API if it exists
-                    im.setDisplayName(getDisplayName(item.getData().getData()));
-                    item.setItemMeta(im);
+                ItemMeta im = item.getItemMeta();
+                if (item.getType().equals(Material.FILLED_MAP)) {
+                    im.setDisplayName(getDisplayName(str, mapCount));
+                    mapCount++;
                 }
                 if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
-                    ItemMeta im = item.getItemMeta();
                     im.setDisplayName("TARDIS Key");
-                    item.setItemMeta(im);
                 }
                 if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
-                    ItemMeta im = item.getItemMeta();
                     im.setDisplayName("Blaster Battery");
-                    item.setItemMeta(im);
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
-                    ItemMeta im = item.getItemMeta();
                     im.setDisplayName("Acid Bucket");
-                    item.setItemMeta(im);
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
-                    ItemMeta im = item.getItemMeta();
                     im.setDisplayName("Acid Battery");
-                    item.setItemMeta(im);
                 }
-                if (str.equals("Rift Manipulator") && item.getType().equals(Material.MAP)) {
-                    ItemMeta im = item.getItemMeta();
+                if (str.equals("Rift Manipulator") && item.getType().equals(Material.FILLED_MAP)) {
                     im.setDisplayName("Rift Circuit");
-                    item.setItemMeta(im);
                 }
+                item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
             }
         }
@@ -313,18 +303,17 @@ public class TARDISRecipeCommands implements CommandExecutor {
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, "§4" + str + " recipe");
+        int mapCount = 0;
         for (int i = 0; i < ingredients.size(); i++) {
-            if (ingredients.get(i).getType().equals(Material.MAP)) {
-                ItemMeta im = ingredients.get(i).getItemMeta();
-                // TODO use new Map API if it exists
-                im.setDisplayName(getDisplayName(ingredients.get(i).getData().getData()));
-                ingredients.get(i).setItemMeta(im);
+            ItemMeta im = ingredients.get(i).getItemMeta();
+            if (ingredients.get(i).getType().equals(Material.FILLED_MAP)) {
+                im.setDisplayName(getDisplayName(str, mapCount));
+                mapCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
-                ItemMeta im = ingredients.get(i).getItemMeta();
                 im.setDisplayName("Blank Storage Disk");
-                ingredients.get(i).setItemMeta(im);
             }
+            ingredients.get(i).setItemMeta(im);
             inv.setItem(i * 9, ingredients.get(i));
         }
         ItemStack result = recipe.getResult();
@@ -381,13 +370,33 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.openInventory(inv);
     }
 
-    // TODO use new Map API if it exists
-    private String getDisplayName(byte data) {
-        MAP map = MAP.getMap(data);
-        if (map != null) {
-            return map.getDisplayName();
-        } else {
-            return "Map #" + data;
+    private String getDisplayName(String recipe, int mapCount) {
+        switch (recipe) {
+            case "TARDIS Locator":
+                return "TARDIS Locator Circuit"; // 1965
+            case "Stattenheim Remote":
+                return "TARDIS Stattenheim Circuit"; // 1963
+            case "TARDIS Chameleon Circuit":
+            case "TARDIS Remote Key":
+                return "TARDIS Materialisation Circuit"; // 1964
+            case "TARDIS Invisibility Circuit":
+            case "Perception Filter":
+                return "Perception Circuit"; // 1978
+            case "Sonic Screwdriver":
+            case "Server Admin Circuit":
+                return "Sonic Oscillator"; // 1967
+            case "Fob Watch":
+                return "TARDIS Chameleon Circuit"; // 1966
+            case "TARDIS Biome Reader":
+                return "Emerald Environment Circuit"; // 1972
+            case "Rift Manipulator":
+                return "Rift Circuit"; // 1983
+            default:  //TARDIS Stattenheim Circuit"
+                if (mapCount == 0) {
+                    return "TARDIS Locator Circuit"; // 1965
+                } else {
+                    return "TARDIS Materialisation Circuit"; // 1964
+                }
         }
     }
 }
