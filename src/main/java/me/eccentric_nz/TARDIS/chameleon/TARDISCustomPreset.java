@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,12 +41,18 @@ public class TARDISCustomPreset {
     private String firstLine;
     private String secondLine;
 
-    // TODO convert to new BlockData / JSON implementation
     public void makePresets() {
         // get the custom preset file and read the contents
         // ignore lines that start with a #
-        String[] custom_data = new String[9];
-        File custom_file = TARDIS.plugin.getTardisCopier().copy("custom_preset.txt");
+        String[] custom_data = new String[6];
+        File custom_file;
+        if (!TARDIS.plugin.getConfig().getBoolean("conversions.custom_preset")) {
+            custom_file = TARDISFileCopier.copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"), true, TARDIS.plugin.getPluginName());
+            TARDIS.plugin.getConfig().set("conversions.custom_preset", true);
+            TARDIS.plugin.saveConfig();
+        } else {
+            custom_file = TARDIS.plugin.getTardisCopier().copy("custom_preset.txt");
+        }
         BufferedReader bufRdr = null;
         int i = 0;
         try {

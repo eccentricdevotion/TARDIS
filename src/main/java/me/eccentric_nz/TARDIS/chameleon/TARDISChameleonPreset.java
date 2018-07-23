@@ -90,8 +90,7 @@ public class TARDISChameleonPreset {
     private final TARDISWellPreset well;
     private final TARDISWindmillPreset windmill;
     private final TARDISYellowSubmarinePreset yellow;
-    // TODO renable custom preset
-    //    public final TARDISCustomPreset custom;
+    public final TARDISCustomPreset custom;
     // biome adaptive presets
     private final TARDISRenderPreset render;
     private final TARDISExtremeHillsPreset extreme;
@@ -160,7 +159,7 @@ public class TARDISChameleonPreset {
         well = new TARDISWellPreset();
         windmill = new TARDISWindmillPreset();
         yellow = new TARDISYellowSubmarinePreset();
-//        custom = new TARDISCustomPreset();
+        custom = new TARDISCustomPreset();
         render = new TARDISRenderPreset();
         extreme = new TARDISExtremeHillsPreset();
         forest = new TARDISForestPreset();
@@ -228,7 +227,7 @@ public class TARDISChameleonPreset {
         well.makePresets(false, false);
         windmill.makePresets(true, false);
         yellow.makePresets(false, false);
-//        custom.makePresets();
+        custom.makePresets();
         render.makePresets(false, false);
         extreme.makePresets(false, false);
         forest.makePresets(true, false);

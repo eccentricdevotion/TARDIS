@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -50,8 +51,7 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final String AIR = TARDISConstants.AIR.toString();
-    private final String GLASS = TARDISConstants.GLASS.toString();
+    private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -84,77 +84,74 @@ public class TARDISMakePresetListener implements Listener {
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
                 TARDISMessage.send(player, "PRESET_SCAN");
-                StringBuilder sb_blueprint = new StringBuilder("[");
-                StringBuilder sb_stained = new StringBuilder("[");
-                StringBuilder sb_glass = new StringBuilder("[");
+                StringBuilder sb_blue_data = new StringBuilder("[");
+                StringBuilder sb_stain_data = new StringBuilder("[");
+                StringBuilder sb_glass_data = new StringBuilder("[");
                 for (int c = 0; c < 10; c++) {
-                    sb_blueprint.append("[");
-                    sb_stained.append("[");
-                    sb_glass.append("[");
+                    sb_blue_data.append("[");
+                    sb_stain_data.append("[");
+                    sb_glass_data.append("[");
                     for (int y = fy; y < (fy + 4); y++) {
                         Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                         Material material = b.getType();
                         BlockData data = b.getBlockData();
-                        String dataStr = data.getAsString();
-                        if (material.equals(Material.SPONGE)) {
-                            dataStr = AIR; // convert sponge to air
-                        }
+                        String dataStr = addQuotes(data.getAsString());
                         if (y == (fy + 3)) {
-                            sb_blueprint.append(data.getAsString());
+                            sb_blue_data.append(addQuotes(data.getAsString()));
                             if (TARDISMaterials.not_glass.contains(material)) {
-                                sb_stained.append(dataStr);
-                                sb_glass.append(dataStr);
+                                sb_stain_data.append(dataStr);
+                                sb_glass_data.append(dataStr);
                             } else {
-                                String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
-                                sb_stained.append(colour);
-                                sb_glass.append(GLASS);
+                                Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                                sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
+                                sb_glass_data.append(GLASS);
                             }
                         } else {
-                            sb_blueprint.append(data.getAsString()).append(",");
+                            sb_blue_data.append(addQuotes(data.getAsString())).append(",");
                             if (TARDISMaterials.not_glass.contains(material)) {
-                                sb_stained.append(dataStr).append(",");
-                                sb_glass.append(dataStr).append(",");
+                                sb_stain_data.append(dataStr).append(",");
+                                sb_glass_data.append(dataStr).append(",");
                             } else {
-                                String colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).toString();
-                                sb_stained.append(colour).append(",");
-                                sb_glass.append(GLASS).append(",");
+                                Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                                sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
+                                sb_glass_data.append(GLASS).append(",");
                             }
                         }
                     }
                     if (c == 9) {
-                        sb_blueprint.append("]");
-                        sb_stained.append("]");
-                        sb_glass.append("]");
+                        sb_blue_data.append("]");
+                        sb_stain_data.append("]");
+                        sb_glass_data.append("]");
                     } else {
-                        sb_blueprint.append("],");
-                        sb_stained.append("],");
-                        sb_glass.append("],");
+                        sb_blue_data.append("],");
+                        sb_stain_data.append("],");
+                        sb_glass_data.append("],");
                     }
                 }
-                sb_blueprint.append("]");
-                sb_stained.append("]");
-                sb_glass.append("]");
-                String blueprints = sb_blueprint.toString();
-                String stained = sb_stained.toString();
-                String glass = sb_glass.toString();
+                sb_blue_data.append("]");
+                sb_stain_data.append("]");
+                sb_glass_data.append("]");
+                String datas = sb_blue_data.toString();
+                String stain_ids = sb_stain_data.toString();
+                String glass_ids = sb_glass_data.toString();
+                String jsonBlue = new JSONArray(datas).toString();
+                String jsonStain = new JSONArray(stain_ids).toString();
+                String jsonGlass = new JSONArray(glass_ids).toString();
                 String filename = "custom_preset_" + name + ".txt";
                 String file = plugin.getDataFolder() + File.separator + filename;
                 try {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                     bw.write("##start custom blueprint");
                     bw.newLine();
-                    bw.newLine();
-                    bw.write("#start custom blueprint");
-                    bw.newLine();
-                    bw.write(blueprints);
+                    bw.write(jsonBlue);
                     bw.newLine();
                     bw.write("##start custom stain");
                     bw.newLine();
-                    bw.write(stained);
+                    bw.write(jsonStain);
                     bw.newLine();
                     bw.write("##start custom glass");
                     bw.newLine();
-                    bw.write(glass);
+                    bw.write(jsonGlass);
                     bw.newLine();
                     bw.write("##sign text - first line is player's name");
                     bw.newLine();
@@ -177,5 +174,9 @@ public class TARDISMakePresetListener implements Listener {
                 TARDISMessage.send(player, "PRESET_DONE", filename);
             }
         }
+    }
+
+    private String addQuotes(String s) {
+        return "\"" + s + "\"";
     }
 }

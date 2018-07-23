@@ -186,3 +186,4 @@ conversions:
     condenser_materials: true
     player_prefs_materials: true
     block_materials: true
+    custom_preset: true

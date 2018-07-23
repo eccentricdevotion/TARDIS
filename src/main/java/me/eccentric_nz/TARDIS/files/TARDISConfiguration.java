@@ -100,6 +100,7 @@ public class TARDISConfiguration {
         boolOptions.put("conversions.condenser_materials", false);
         boolOptions.put("conversions.player_prefs_materials", false);
         boolOptions.put("conversions.block_materials", false);
+        boolOptions.put("conversions.custom_preset", false);
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds_with_perms", false);
         boolOptions.put("creation.create_worlds", false);

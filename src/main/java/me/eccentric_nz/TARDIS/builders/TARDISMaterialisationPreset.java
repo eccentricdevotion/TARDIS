@@ -405,14 +405,13 @@ class TARDISMaterialisationPreset implements Runnable {
                                             }
                                             String line1;
                                             String line2;
-                                            // TODO renable custom preset
-//                                            if (preset.equals(PRESET.CUSTOM)) {
-//                                                line1 = plugin.getPresets().custom.getFirstLine();
-//                                                line2 = plugin.getPresets().custom.getSecondLine();
-//                                            } else {
-                                            line1 = preset.getFirstLine();
-                                            line2 = preset.getSecondLine();
-//                                            }
+                                            if (preset.equals(PRESET.CUSTOM)) {
+                                                line1 = plugin.getPresets().custom.getFirstLine();
+                                                line2 = plugin.getPresets().custom.getSecondLine();
+                                            } else {
+                                                line1 = preset.getFirstLine();
+                                                line2 = preset.getSecondLine();
+                                            }
                                             switch (preset) {
                                                 case ANGEL:
                                                     s.setLine(0, sign_colour + line1);

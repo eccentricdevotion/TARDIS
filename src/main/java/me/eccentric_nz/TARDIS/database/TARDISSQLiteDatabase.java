@@ -50,7 +50,6 @@ public class TARDISSQLiteDatabase {
     public void createTables() {
         service.setIsMySQL(false);
         try {
-            // TODO update default fields for any ids and materials
             statement = connection.createStatement();
 
             // Table structure for table 'achievements'
