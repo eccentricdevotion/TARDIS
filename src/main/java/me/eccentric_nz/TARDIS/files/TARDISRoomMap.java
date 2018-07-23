@@ -119,11 +119,9 @@ public class TARDISRoomMap {
         }
     }
 
-    // TODO check material string extraction from BlockData#getAsString()
     private String getMaterialAsString(String data) {
         String[] square = data.split("\\[");
         String[] keyed = square[0].split(":");
-//        plugin.debug("Material: " + keyed[1].toUpperCase());
         return keyed[1].toUpperCase();
     }
 }

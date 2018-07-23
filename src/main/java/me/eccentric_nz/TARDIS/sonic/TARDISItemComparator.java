@@ -35,7 +35,6 @@ import java.util.Comparator;
 
 class TARDISItemComparator implements Comparator<ItemStack> {
 
-    // TODO check this still works
     @Override
     public int compare(ItemStack item1, ItemStack item2) {
         if (item1 == null && item2 != null) {

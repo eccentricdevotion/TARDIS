@@ -237,7 +237,6 @@ public class TARDISDoorListener {
                         parrot.setBaby();
                     }
                     parrot.setVariant(pet.getVariant());
-                    // TODO use new API if it exists
                     if (pet.isOnLeftShoulder() || pet.isOnRightShoulder()) {
                         if (pet.isOnLeftShoulder()) {
                             player.setShoulderEntityLeft(parrot);

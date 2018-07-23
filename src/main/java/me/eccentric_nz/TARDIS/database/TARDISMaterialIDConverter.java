@@ -400,7 +400,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(355, Material.RED_BED);
         LEGACY_ID_LOOKUP.put(356, Material.REPEATER);
         LEGACY_ID_LOOKUP.put(357, Material.COOKIE);
-        LEGACY_ID_LOOKUP.put(358, Material.MAP);
+        LEGACY_ID_LOOKUP.put(358, Material.FILLED_MAP);
         LEGACY_ID_LOOKUP.put(359, Material.SHEARS);
         LEGACY_ID_LOOKUP.put(360, Material.MELON);
         LEGACY_ID_LOOKUP.put(361, Material.PUMPKIN_SEEDS);

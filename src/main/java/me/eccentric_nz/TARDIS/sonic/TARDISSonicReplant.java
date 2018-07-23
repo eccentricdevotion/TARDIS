@@ -51,7 +51,6 @@ class TARDISSonicReplant implements Runnable {
         c_data.put(BlockFace.EAST, BlockFace.WEST);
     }
 
-    // TODO check if we need to set the Ageable BlockData for all plant types
     @Override
     public void run() {
         switch (type) {

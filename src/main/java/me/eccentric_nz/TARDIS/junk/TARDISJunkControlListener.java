@@ -268,7 +268,6 @@ public class TARDISJunkControlListener implements Listener {
             if (txt.isEmpty()) {
                 txt = "0";
             }
-            // TODO check delay values
             int multiplier = repeaterMap.get(r.getDelay());
             int positiveNegative = (c.getMode().equals(Comparator.Mode.COMPARE)) ? 1 : -1;
             // get current coord

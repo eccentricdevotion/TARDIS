@@ -12,12 +12,12 @@
 6. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 7. Fix Biome adaptive presets dropping flowers & seeds (properly)
 8. Add Tropical Fish variants to mob farming
-9. Test test test
+9. If no `amount` argument is given to the `/tardisgive` command default to 1
+10. Test test test
 
-## TARDIS data pack?
-* Move custom advancements to here
-* Add TARDIS recipes (where possible)
-* Add TARDIS tags
+## TARDIS data pack
+* Add TARDIS recipes (where possible)?
+* Add TARDIS tags?
 
 ## Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?

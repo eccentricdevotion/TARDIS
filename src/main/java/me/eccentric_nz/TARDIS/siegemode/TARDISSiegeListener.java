@@ -383,8 +383,6 @@ public class TARDISSiegeListener implements Listener {
     }
 
     private boolean isSiegeCube(ItemStack is) {
-        // TODO find out how to check item atck is all faces true
-//        return (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && is.getData().getData() == (byte) 14);
         return is.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
     }
 
