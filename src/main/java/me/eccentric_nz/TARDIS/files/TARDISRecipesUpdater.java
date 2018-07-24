@@ -36,9 +36,9 @@ public class TARDISRecipesUpdater {
     private final HashMap<String, String> colours = new HashMap<>();
     private final HashMap<String, Integer> damage = new HashMap<>();
 
-    public TARDISRecipesUpdater(TARDIS plugin) {
+    public TARDISRecipesUpdater(TARDIS plugin, FileConfiguration recipes_config) {
         this.plugin = plugin;
-        recipes_config = plugin.getRecipesConfig();
+        this.recipes_config = recipes_config;
         flavours.put("Licorice", "INK_SAC");
         flavours.put("Raspberry", "ROSE_RED");
         flavours.put("Apple", "CACTUS_GREEN");

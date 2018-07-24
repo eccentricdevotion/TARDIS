@@ -208,11 +208,10 @@ public class TARDIS extends JavaPlugin {
             }
             saveDefaultConfig();
             loadCustomConfigs();
-            loadLanguage();
             loadSigns();
             loadChameleonGUIs();
+            loadLanguage();
             new TARDISConfiguration(this).checkConfig();
-            new TARDISRecipesUpdater(this).addRecipes();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
             // update database update last known names
@@ -522,6 +521,7 @@ public class TARDIS extends JavaPlugin {
         }
         // load the language
         signs = YamlConfiguration.loadConfiguration(file);
+        new TARDISSignsUpdater(this, signs).checkSignsConfig();
     }
 
     /**
@@ -538,40 +538,33 @@ public class TARDIS extends JavaPlugin {
         }
         // load the language
         chameleonGuis = YamlConfiguration.loadConfiguration(file);
+        new TARDISChameleonGuiUpdater(this, chameleonGuis).checkChameleonConfig();
     }
 
     /**
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        tardisCopier.copy("achievements.yml");
-        tardisCopier.copy("artron.yml");
-        tardisCopier.copy("blocks.yml");
-        tardisCopier.copy("rooms.yml");
-        tardisCopier.copy("planets.yml");
-        tardisCopier.copy("tag.yml");
-        tardisCopier.copy("recipes.yml");
-        tardisCopier.copy("kits.yml");
-        tardisCopier.copy("condensables.yml");
-        tardisCopier.copy("custom_consoles.yml");
-        achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
-        if (achievementConfig.getString("travel.message").equals("Life of the party!")) {
-            achievementConfig.set("travel.message", "There and back again!");
-            try {
-                achievementConfig.save(getDataFolder() + File.separator + "achievements.yml");
-            } catch (IOException io) {
-                debug("Could not save achievements.yml " + io);
-            }
+        List<String> files = Arrays.asList("achievements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
+        for (String f : files) {
+            tardisCopier.copy(f);
         }
-        artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
-        blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
-        roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
         planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
-        tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
+        new TARDISPlanetsUpdater(this, planetsConfig).checkPlanetsConfig();
+        roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
+        new TARDISRoomsUpdater(this, roomsConfig).checkRoomsConfig();
+        artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
+        new TARDISArtronUpdater(this).checkArtronConfig();
+        blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
+        new TARDISBlocksUpdater(this, blocksConfig).checkBlocksConfig();
         recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
-        kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
+        new TARDISRecipesUpdater(this, recipesConfig).addRecipes();
         condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
+        new TARDISCondensablesUpdater(this, condensablesConfig).checkCondensables();
         customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
+        kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
+        achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
+        tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
     }
 
     /**
