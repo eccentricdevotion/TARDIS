@@ -25,7 +25,10 @@ import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,24 +55,6 @@ public class TARDISBlockLoader {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
         if (rsb.resultSet()) {
             rsb.getData().forEach((rp) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rp.getStrLocation(), rp.getTardis_id()));
-            // fix AIR in block field
-            TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-            Connection connection = service.getConnection();
-            PreparedStatement ps = null;
-            try {
-                ps = connection.prepareStatement("UPDATE blocks SET block = '0' WHERE block = 'AIR'");
-                ps.executeUpdate();
-            } catch (SQLException e) {
-                plugin.debug("ResultSet error for block protection load! " + e.getMessage());
-            } finally {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                } catch (SQLException e) {
-                    plugin.debug("Error closing block protection load! " + e.getMessage());
-                }
-            }
         }
     }
 

@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.database;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -839,6 +836,10 @@ public class TARDISMaterialIDConverter {
                     String floor = rs.getString("floor");
                     String siegeWall = rs.getString("siege_wall");
                     String siegeFloor = rs.getString("siege_floor");
+                    String newWall = rs.getString("wall");
+                    String newFloor = rs.getString("floor");
+                    String newSiegeWall = rs.getString("siege_wall");
+                    String newSiegeFloor = rs.getString("siege_floor");
                     Material material;
                     try {
                         material = Material.valueOf(wall);
@@ -846,7 +847,7 @@ public class TARDISMaterialIDConverter {
                         // look up blockData to get the correct material...
                         String mat = LEGACY_TYPE_LOOKUP.get(wall);
                         if (mat != null) {
-                            wall = mat;
+                            newWall = mat;
                         }
                     }
                     try {
@@ -855,7 +856,7 @@ public class TARDISMaterialIDConverter {
                         // look up blockData to get the correct material...
                         String mat = LEGACY_TYPE_LOOKUP.get(floor);
                         if (mat != null) {
-                            floor = mat;
+                            newFloor = mat;
                         }
                     }
                     try {
@@ -864,7 +865,7 @@ public class TARDISMaterialIDConverter {
                         // look up blockData to get the correct material...
                         String mat = LEGACY_TYPE_LOOKUP.get(siegeWall);
                         if (mat != null) {
-                            siegeWall = mat;
+                            newSiegeWall = mat;
                         }
                     }
                     try {
@@ -873,21 +874,25 @@ public class TARDISMaterialIDConverter {
                         // look up blockData to get the correct material...
                         String mat = LEGACY_TYPE_LOOKUP.get(siegeFloor);
                         if (mat != null) {
-                            siegeFloor = mat;
+                            newSiegeFloor = mat;
                         }
                     }
-                    int pp_id = rs.getInt("pp_id");
-                    // update the record
-                    ps.setString(1, wall);
-                    ps.setString(2, floor);
-                    ps.setString(3, siegeWall);
-                    ps.setString(4, siegeFloor);
-                    ps.setInt(5, pp_id);
-                    ps.addBatch();
-                    i++;
+                    if (!wall.equals(newWall) || !floor.equals(newFloor) || !siegeWall.equals(newSiegeWall) || !siegeFloor.equals(newSiegeFloor)) {
+                        int pp_id = rs.getInt("pp_id");
+                        // update the record
+                        ps.setString(1, newWall);
+                        ps.setString(2, newFloor);
+                        ps.setString(3, newSiegeWall);
+                        ps.setString(4, newSiegeFloor);
+                        ps.setInt(5, pp_id);
+                        ps.addBatch();
+                        i++;
+                    }
                 }
-                ps.executeBatch();
-                connection.commit();
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                }
             }
         } catch (SQLException e) {
             plugin.debug("Conversion error for player_prefs materials! " + e.getMessage());
@@ -916,43 +921,49 @@ public class TARDISMaterialIDConverter {
     }
 
     public void checkBlockData() {
+        Statement checker = null;
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        String check = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'";
         String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
         String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
         int i = 0;
         try {
             service.testConnection(connection);
             connection.setAutoCommit(false);
-            // do condenser data
-            statement = connection.prepareStatement(query);
-            ps = connection.prepareStatement(update);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int b_id = rs.getInt("b_id");
-                    int block = rs.getInt("block");
-                    int data = rs.getInt("data");
-                    Material material = LEGACY_ID_LOOKUP.get(block);
-                    if (material != null) {
-                        if (data != 0) {
-                            if (COLOURED.contains(block)) {
-                                String white = material.toString();
-                                String[] tmp = white.split("_");
-                                String colour = white.replace(tmp[0], COLOUR_LOOKUP.get(data));
-                                material = Material.valueOf(colour);
+            checker = connection.createStatement();
+            ResultSet rsfc = checker.executeQuery(check);
+            if (rsfc.next()) {
+                // do condenser data
+                statement = connection.prepareStatement(query);
+                ps = connection.prepareStatement(update);
+                rs = statement.executeQuery();
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        int b_id = rs.getInt("b_id");
+                        int block = rs.getInt("block");
+                        int data = rs.getInt("data");
+                        Material material = LEGACY_ID_LOOKUP.get(block);
+                        if (material != null) {
+                            if (data != 0) {
+                                if (COLOURED.contains(block)) {
+                                    String white = material.toString();
+                                    String[] tmp = white.split("_");
+                                    String colour = white.replace(tmp[0], COLOUR_LOOKUP.get(data));
+                                    material = Material.valueOf(colour);
+                                }
                             }
+                            // update the record
+                            ps.setString(1, material.createBlockData().getAsString());
+                            ps.setInt(2, b_id);
+                            ps.addBatch();
+                            i++;
                         }
-                        // update the record
-                        ps.setString(1, material.createBlockData().getAsString());
-                        ps.setInt(2, b_id);
-                        ps.addBatch();
-                        i++;
                     }
+                    ps.executeBatch();
+                    connection.commit();
                 }
-                ps.executeBatch();
-                connection.commit();
             }
         } catch (SQLException e) {
             plugin.debug("Conversion error for blocks materials! " + e.getMessage());
@@ -966,6 +977,9 @@ public class TARDISMaterialIDConverter {
                 }
                 if (statement != null) {
                     statement.close();
+                }
+                if (checker != null) {
+                    checker.close();
                 }
                 // reset auto commit
                 connection.setAutoCommit(true);

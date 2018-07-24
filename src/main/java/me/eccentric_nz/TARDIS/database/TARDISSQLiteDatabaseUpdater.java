@@ -322,18 +322,22 @@ class TARDISSQLiteDatabaseUpdater {
                 String delVoid = "DROP TABLE '" + prefix + "void'";
                 statement.executeUpdate(delVoid);
             }
-            // transfer farming locations from `tardis` table to `farming` table
-            String farmQuery = "SELECT farm_id FROM " + prefix + "farming";
-            ResultSet rsf = statement.executeQuery(farmQuery);
-            if (!rsf.isBeforeFirst()) {
-                String tardisFarms = "SELECT tardis_id, birdcage, farm, hutch, igloo, stable, stall, village FROM " + prefix + "tardis";
-                ResultSet rstf = statement.executeQuery(tardisFarms);
-                if (rstf.isBeforeFirst()) {
-                    while (rstf.next()) {
-                        String updateFarms = String.format("INSERT INTO " + prefix + "farming (tardis_id, birdcage, farm, hutch, igloo, stable, stall, village) VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", rstf.getInt("tardis_id"), rstf.getString("birdcage"), rstf.getString("farm"), rstf.getString("hutch"), rstf.getString("igloo"), rstf.getString("stable"), rstf.getString("stall"), rstf.getString("village"));
-                        statement.executeQuery(updateFarms);
+            // transfer farming locations from `tardis` table to `farming` table - only if updating!
+            String farmCheckQuery = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%farm TEXT%'";
+            ResultSet rsfc = statement.executeQuery(farmCheckQuery);
+            if (rsfc.next()) {
+                String farmQuery = "SELECT farm_id FROM " + prefix + "farming";
+                ResultSet rsf = statement.executeQuery(farmQuery);
+                if (!rsf.isBeforeFirst()) {
+                    String tardisFarms = "SELECT tardis_id, birdcage, farm, hutch, igloo, stable, stall, village FROM " + prefix + "tardis";
+                    ResultSet rstf = statement.executeQuery(tardisFarms);
+                    if (rstf.isBeforeFirst()) {
+                        while (rstf.next()) {
+                            String updateFarms = String.format("INSERT INTO " + prefix + "farming (tardis_id, birdcage, farm, hutch, igloo, stable, stall, village) VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", rstf.getInt("tardis_id"), rstf.getString("birdcage"), rstf.getString("farm"), rstf.getString("hutch"), rstf.getString("igloo"), rstf.getString("stable"), rstf.getString("stall"), rstf.getString("village"));
+                            statement.executeQuery(updateFarms);
+                        }
+                        i++;
                     }
-                    i++;
                 }
             }
         } catch (SQLException e) {

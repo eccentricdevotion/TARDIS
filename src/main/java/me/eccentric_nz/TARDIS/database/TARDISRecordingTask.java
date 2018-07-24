@@ -63,7 +63,7 @@ public class TARDISRecordingTask implements Runnable {
                 }
                 // Connection valid, proceed
                 connection.setAutoCommit(false);
-                s = connection.prepareStatement("INSERT INTO blocks (tardis_id,location,block,data,police_box) VALUES (?,?,?,?,1)");
+                s = connection.prepareStatement("INSERT INTO blocks (tardis_id,location,data,police_box) VALUES (?,?,?,1)");
                 int i = 0;
                 while (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
                     if (connection.isClosed()) {
@@ -82,8 +82,7 @@ public class TARDISRecordingTask implements Runnable {
                         String loco = plugin.getLocationUtils().getLocationFromBukkitString(a).add(0.0d, -1.0d, 0.0d).toString();
                         s.setInt(1, rs.getReplacedBlock().getTardis_id());
                         s.setString(2, loco);
-                        s.setInt(3, 208);
-                        s.setInt(4, 0);
+                        s.setString(4, "minecraft:grass_path");
                         s.addBatch();
                     }
                     // Break out of the loop and just commit what we have
