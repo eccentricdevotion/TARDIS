@@ -23,18 +23,13 @@
 package me.eccentric_nz.TARDIS.arch;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.arch.attributes.*;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class TARDISArchInventory {
@@ -46,8 +41,6 @@ public class TARDISArchInventory {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
         String inv = TARDISArchSerialization.toDatabase(p.getInventory().getContents());
-        String attr = TARDISAttributeSerialization.toDatabase(getAttributeMap(p.getInventory().getContents()));
-        String arm_attr = TARDISAttributeSerialization.toDatabase(getAttributeMap(p.getInventory().getArmorContents()));
         String arm = TARDISArchSerialization.toDatabase(p.getInventory().getArmorContents());
         Statement statement = null;
         PreparedStatement ps = null;
@@ -67,8 +60,6 @@ public class TARDISArchInventory {
                 ps = connection.prepareStatement(updateQuery);
                 ps.setString(1, inv);
                 ps.setString(2, arm);
-                ps.setString(3, attr);
-                ps.setString(4, arm_attr);
                 ps.setInt(5, id);
                 ps.executeUpdate();
                 ps.close();
@@ -81,8 +72,6 @@ public class TARDISArchInventory {
                 ps.setInt(3, arch);
                 ps.setString(4, inv);
                 ps.setString(5, arm);
-                ps.setString(6, attr);
-                ps.setString(7, arm_attr);
                 ps.executeUpdate();
                 ps.close();
             }
@@ -98,8 +87,6 @@ public class TARDISArchInventory {
                     ItemStack[] a = TARDISArchSerialization.fromDatabase(rsToInv.getString("armour"));
                     p.getInventory().setContents(i);
                     p.getInventory().setArmorContents(a);
-                    reapplyCustomAttributes(p, rsToInv.getString("attributes"));
-                    reapplyCustomAttributes(p, rsToInv.getString("armour_attributes"));
                 } catch (IOException ex) {
                     System.err.println("Could not restore inventory on Chameleon Arch change, " + ex);
                 }
@@ -165,45 +152,6 @@ public class TARDISArchInventory {
                     System.err.println("Could not clear inventory on Chameleon Arch death, " + e);
                 }
             }
-        }
-    }
-
-    private HashMap<Integer, List<TARDISAttributeData>> getAttributeMap(ItemStack[] stacks) {
-        HashMap<Integer, List<TARDISAttributeData>> map = new HashMap<>();
-        int add = (stacks.length == 4) ? 36 : 0;
-        for (int s = 0; s < stacks.length; s++) {
-            ItemStack i = stacks[s];
-            if (i != null && !i.getType().equals(Material.AIR)) {
-                TARDISAttributes attributes = new TARDISAttributes(i);
-                if (attributes.size() > 0) {
-                    List<TARDISAttributeData> ist = new ArrayList<>();
-                    for (TARDISAttribute a : attributes.values()) {
-                        TARDISAttributeData data = new TARDISAttributeData(a.getName(), a.getAttributeType().getMinecraftId(), a.getAmount(), a.getOperation());
-                        ist.add(data);
-                    }
-                    map.put(s + add, ist);
-                }
-            }
-        }
-        return map;
-    }
-
-    private void reapplyCustomAttributes(Player p, String data) {
-        try {
-            HashMap<Integer, List<TARDISAttributeData>> cus = TARDISAttributeSerialization.fromDatabase(data);
-            cus.forEach((key, value) -> {
-                int slot = key;
-                if (slot != -1) {
-                    ItemStack is = p.getInventory().getItem(slot);
-                    TARDISAttributes attributes = new TARDISAttributes(is);
-                    value.forEach((ad) -> {
-                        attributes.add(TARDISAttribute.newBuilder().name(ad.getAttribute()).type(TARDISAttributeType.fromId(ad.getAttributeID())).operation(ad.getOperation()).amount(ad.getValue()).build());
-                        p.getInventory().setItem(key, attributes.getStack());
-                    });
-                }
-            });
-        } catch (IOException e) {
-            System.err.println("Could not reapply custom attributes, " + e);
         }
     }
 }
