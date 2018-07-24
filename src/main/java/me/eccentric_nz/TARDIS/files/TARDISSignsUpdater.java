@@ -22,7 +22,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -31,17 +31,29 @@ public class TARDISSignsUpdater {
 
     private final TARDIS plugin;
     private final FileConfiguration signs_config;
+    private final HashMap<String, List<String>> strings = new HashMap<>();
 
     public TARDISSignsUpdater(TARDIS plugin, FileConfiguration signs_config) {
         this.plugin = plugin;
         this.signs_config = signs_config;
+        strings.put("chameleon", Arrays.asList("Chameleon", "Circuit"));
+        strings.put("info", Arrays.asList("Information", "System"));
+        strings.put("ars", Arrays.asList("Architectural", "Reconfiguration", "System"));
+        strings.put("temporal", Arrays.asList("Temporal", "Locator"));
+        strings.put("terminal", Arrays.asList("Destination", "Terminal"));
+        strings.put("saves", Arrays.asList("Saved", "Locations"));
+        strings.put("control", Arrays.asList("Control", "Centre"));
+        strings.put("keyboard", Collections.singletonList("Keyboard"));
+        strings.put("junk", Collections.singletonList("Destination"));
     }
 
     public void checkSignsConfig() {
         int i = 0;
-        if (!signs_config.contains("junk")) {
-            signs_config.set("junk", Collections.singletonList("Destination"));
-            i++;
+        for (Map.Entry<String, List<String>> entry : strings.entrySet()) {
+            if (!signs_config.contains(entry.getKey())) {
+                signs_config.set(entry.getKey(), entry.getValue());
+                i++;
+            }
         }
         try {
             String signPath = plugin.getDataFolder() + File.separator + "language" + File.separator + "signs.yml";

@@ -208,7 +208,6 @@ public class TARDISConfiguration {
      * removed.
      */
     public void checkConfig() {
-        plugin.debug("checkConfig");
         int i = 0;
         if (!config.contains("rechargers")) {
             plugin.getConfig().createSection("rechargers");
