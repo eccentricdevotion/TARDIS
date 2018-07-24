@@ -31,6 +31,7 @@ creation:
 # outer TARDIS
 police_box:
     default_preset: FACTORY
+    tards_lamp: REDSTONE_LAMP
     name_tardis: false
     materialise: true
     confirm_timeout: 15
@@ -180,6 +181,7 @@ handles:
     reminders:
         enabled: true
         schedule: 1200
+rechargers: {}
 # don't touch
 conversions:
     ars_materials: true

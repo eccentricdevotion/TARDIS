@@ -922,7 +922,7 @@ shapeless:
         amount: 4
         lore: ''
     Lemon Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,YELLOW_DYE
+        recipe: SUGAR,SLIME_BALL,DANDELION_YELLOW
         result: MELON
         amount: 4
         lore: ''
