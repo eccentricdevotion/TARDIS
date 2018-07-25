@@ -27,6 +27,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,7 +82,8 @@ public class TARDISCircuitRepairListener implements Listener {
                                 // get the uses left
                                 int left = TARDISNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
-                                int map = plugin.getTardisHelper().getMapNumber(first);
+                                MapMeta mapMeta = (MapMeta) fim;
+                                int map = (mapMeta.hasMapId()) ? mapMeta.getMapId() : 1963;
                                 int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(map));
                                 // is it used?
                                 if (left < uses) {

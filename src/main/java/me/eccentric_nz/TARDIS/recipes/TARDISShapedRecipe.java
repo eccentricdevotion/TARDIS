@@ -25,6 +25,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -93,13 +94,7 @@ public class TARDISShapedRecipe {
         String[] result_iddata = plugin.getRecipesConfig().getString("shaped." + s + ".result").split(":");
         Material mat = Material.valueOf(result_iddata[0]);
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
-        ItemStack is;
-        if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
-            int map = TARDISNumberParsers.parseInt(result_iddata[1]);
-            is = plugin.getTardisHelper().setMapNBT(new ItemStack(mat, amount), map);
-        } else {
-            is = new ItemStack(mat, amount);
-        }
+        ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
         if (s.equals("TARDIS Key") && keyDisplay != null) {
             im.setDisplayName(keyDisplay + s);
@@ -117,7 +112,14 @@ public class TARDISShapedRecipe {
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
-        is.setItemMeta(im);
+        if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
+            int map = TARDISNumberParsers.parseInt(result_iddata[1]);
+            MapMeta mapMeta = (MapMeta) im;
+            mapMeta.setMapId(map);
+            is.setItemMeta(mapMeta);
+        } else {
+            is.setItemMeta(im);
+        }
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape

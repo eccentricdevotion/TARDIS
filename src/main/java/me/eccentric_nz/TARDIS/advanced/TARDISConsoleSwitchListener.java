@@ -34,6 +34,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,8 +73,9 @@ public class TARDISConsoleSwitchListener implements Listener {
                 int slot = event.getRawSlot();
                 if (slot >= 0 && slot < 9) {
                     ItemStack item = inv.getItem(slot);
-                    if (item != null && item.getType().equals(Material.FILLED_MAP)) {
-                        int map = plugin.getTardisHelper().getMapNumber(item);
+                    if (item != null && item.getType().equals(Material.FILLED_MAP) && item.hasItemMeta()) {
+                        MapMeta mapMeta = (MapMeta) item.getItemMeta();
+                        int map = (mapMeta.hasMapId()) ? mapMeta.getMapId() : 1963;
                         if (gui_circuits.contains(map)) {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
