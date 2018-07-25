@@ -64,8 +64,8 @@ public class TARDISPerceptionFilterListener implements Listener {
                         if (chestplate == null) {
                             // equip the chest slot with the perception filter
                             player.getInventory().setChestplate(is);
-                            player.updateInventory();
                             player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                            player.updateInventory();
                             // make the player invisible
                             plugin.getFilter().addPerceptionFilter(player);
                         } else {
@@ -80,7 +80,7 @@ public class TARDISPerceptionFilterListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPerceptioFilterRemove(InventoryClickEvent event) {
+    public void onPerceptionFilterRemove(InventoryClickEvent event) {
         if (event.getInventory().getType().equals(InventoryType.CRAFTING)) {
             int slot = event.getRawSlot();
             if (slot >= 0 && slot == 6) {
