@@ -137,8 +137,7 @@ public class TARDISDestroyerInner {
             } else {
                 coords = tips.getTIPSData(slot);
             }
-//            tips.reclaimChunks(w, coords);
-            tips.reclaimChunks(w, id);
+            tips.reclaimChunks(w, coords);
             wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
