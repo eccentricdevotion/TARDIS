@@ -59,7 +59,7 @@ public class TARDISVaultListener implements Listener {
                     return;
                 }
                 // sort contents
-                TARDISSonicSorterListener.sortInventory(inv, 0, inv.getSize());
+                TARDISSonicSorterListener.sortInventory(inv);
                 World w = chest.getWorld();
                 // get vault dimensions
                 int sx = rs.getX();
@@ -100,7 +100,7 @@ public class TARDISVaultListener implements Listener {
                                             // put it in the chest
                                             cinv.setItem(cinv.firstEmpty(), get);
                                             // sort the chest
-                                            TARDISSonicSorterListener.sortInventory(cinv, 0, cinv.getSize());
+                                            TARDISSonicSorterListener.sortInventory(cinv);
                                             // get any other stacks
                                             slot = inv.first(m);
                                         }

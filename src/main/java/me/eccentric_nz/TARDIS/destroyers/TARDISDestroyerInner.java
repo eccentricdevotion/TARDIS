@@ -100,7 +100,7 @@ public class TARDISDestroyerInner {
                         // if it's a chest clear the inventory first
                         if (mat.equals(Material.CHEST)) {
                             Chest container = (Chest) b.getState();
-                            //Is it a double chest?
+                            // is it a double chest?
                             Chest chest = getDoubleChest(b);
                             if (chest != null) {
                                 chest.getInventory().clear();
@@ -152,7 +152,7 @@ public class TARDISDestroyerInner {
         }
     }
 
-    //Originally stolen from Babarix. Thank you :)
+    // Originally stolen from Babarix. Thank you :)
     private Chest getDoubleChest(Block block) {
         Chest chest = null;
         if (block.getRelative(BlockFace.NORTH).getType().equals(Material.CHEST)) {

@@ -54,7 +54,7 @@ public class TARDISSmelterListener implements Listener {
                 return;
             }
             // sort contents
-            TARDISSonicSorterListener.sortInventory(inv, 0, inv.getSize());
+            TARDISSonicSorterListener.sortInventory(inv);
             // get fuel chests
             List<Chest> fuelChests = rs.getFuelChests();
             List<Chest> oreChests = rs.getOreChests();

@@ -26,9 +26,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPI;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,7 +74,6 @@ public class TARDISSonicSorterListener implements Listener {
                 if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                     Block block = event.getClickedBlock();
                     if (block != null && (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST)) {
-                        Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
                         boolean allow = true;
                         // is Lockette on the server?
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
@@ -93,7 +95,36 @@ public class TARDISSonicSorterListener implements Listener {
                             allow = new TARDISTownyChecker(plugin, true).checkTowny(player, block.getLocation());
                         }
                         if (allow) {
-                            sortInventory(inventory, 0, inventory.getSize());
+                            Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
+                            Chest chest = (Chest) block.getBlockData();
+                            // is it a double trapped chest?
+                            if (block.getType() == Material.TRAPPED_CHEST && !chest.getType().equals(Chest.Type.SINGLE)) {
+                                // get the other side of this double chest
+                                Block other;
+                                switch (chest.getFacing()) {
+                                    case NORTH:
+                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.EAST) : block.getRelative(BlockFace.WEST);
+                                        break;
+                                    case WEST:
+                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.NORTH) : block.getRelative(BlockFace.SOUTH);
+                                        break;
+                                    case SOUTH:
+                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.WEST) : block.getRelative(BlockFace.EAST);
+                                        break;
+                                    default:
+                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.SOUTH) : block.getRelative(BlockFace.NORTH);
+                                        break;
+                                }
+                                Inventory otherInventory = ((InventoryHolder) other.getState()).getInventory();
+                                ItemStack[] both = (ItemStack[]) ArrayUtils.addAll(inventory.getContents(), otherInventory.getContents());
+                                both = sortInventory(both);
+                                ItemStack[] firstArray = Arrays.copyOf(both, 27);
+                                ItemStack[] secondArray = Arrays.copyOfRange(both, 27, 54);
+                                inventory.setContents((chest.getType().equals(Chest.Type.LEFT)) ? secondArray : firstArray);
+                                otherInventory.setContents((chest.getType().equals(Chest.Type.LEFT)) ? firstArray : secondArray);
+                            } else {
+                                sortInventory(inventory);
+                            }
                             TARDISMessage.send(player, "CHEST_SORTED");
                         }
                     }
@@ -102,9 +133,9 @@ public class TARDISSonicSorterListener implements Listener {
         }
     }
 
-    public static void sortInventory(Inventory inventory, int startIndex, int endIndex) {
-        ItemStack[] items = inventory.getContents();
-        for (int i = startIndex; i < endIndex; i++) {
+    public static ItemStack[] sortInventory(ItemStack[] items) {
+        int endIndex = items.length;
+        for (int i = 0; i < endIndex; i++) {
             ItemStack item1 = items[i];
             if (item1 == null) {
                 continue;
@@ -137,7 +168,11 @@ public class TARDISSonicSorterListener implements Listener {
                 }
             }
         }
-        Arrays.sort(items, startIndex, endIndex, new TARDISItemComparator());
-        inventory.setContents(items);
+        Arrays.sort(items, 0, endIndex, new TARDISItemComparator());
+        return items;
+    }
+
+    public static void sortInventory(Inventory inventory) {
+        inventory.setContents(sortInventory(inventory.getContents()));
     }
 }
