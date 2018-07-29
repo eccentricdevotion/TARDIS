@@ -92,7 +92,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("recharger", "");
         firstsStr.put("region_flag", "");
         firstsStr.put("reload", "");
-        firstsStr.put("remove_flag", "");
         firstsStr.put("repair", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
@@ -254,9 +253,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("add_regions")) {
                         return new TARDISAddRegionsCommand(plugin).doCheck(sender);
-                    }
-                    if (first.equals("remove_flag")) {
-                        return new TARDISRemoveMobSpawnDeny(plugin).doAllowMobSpawning(sender);
                     }
                 }
                 if (first.equals("adv")) {

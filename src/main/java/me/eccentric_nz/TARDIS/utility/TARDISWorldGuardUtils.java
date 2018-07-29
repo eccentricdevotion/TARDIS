@@ -17,12 +17,15 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.bukkit.listener.SpongeUtil;
 import com.sk89q.worldguard.domains.DefaultDomain;
+import com.sk89q.worldguard.internal.platform.WorldGuardPlatform;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -47,7 +50,8 @@ import java.util.*;
 public class TARDISWorldGuardUtils {
 
     private final TARDIS plugin;
-    private WorldGuardPlugin wg;
+    private WorldGuardPlugin wgp;
+    private WorldGuardPlatform wg;
 
     /**
      * Checks if WorldGuard is on the server.
@@ -57,7 +61,8 @@ public class TARDISWorldGuardUtils {
     public TARDISWorldGuardUtils(TARDIS plugin) {
         this.plugin = plugin;
         if (plugin.isWorldGuardOnServer()) {
-            wg = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
+            wgp = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
+            wg = WorldGuard.getInstance().getPlatform();
         }
     }
 
@@ -69,7 +74,10 @@ public class TARDISWorldGuardUtils {
      * @return true of false depending on whether the player has permission to build at this location
      */
     public boolean canBuild(Player p, Location l) {
-        return wg.canBuild(p, l);
+        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
+        ApplicableRegionSet rs = rm.getApplicableRegions(vector);
+        return rs.canBuild(wgp.wrapPlayer(p));
     }
 
     /**
@@ -87,7 +95,10 @@ public class TARDISWorldGuardUtils {
         }
         // WorldGuard will throw an IllegalArgumentException if the build flag is given to allows()
         if (f.toLowerCase(Locale.ENGLISH).equals("build")) {
-            return wg.canBuild(p, l);
+            Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+            RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
+            ApplicableRegionSet rs = rm.getApplicableRegions(vector);
+            return rs.canBuild(wgp.wrapPlayer(p));
         }
         // get the flag to check
         StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
@@ -95,7 +106,9 @@ public class TARDISWorldGuardUtils {
             return true;
         }
         // get the regions for this location
-        ApplicableRegionSet rs = wg.getRegionManager(l.getWorld()).getApplicableRegions(l);
+        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
+        ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(null, flag);
     }
 
@@ -108,7 +121,7 @@ public class TARDISWorldGuardUtils {
      * @param two an end location of a cuboid region
      */
     public void addWGProtection(Player p, Location one, Location two) {
-        RegionManager rm = wg.getRegionManager(one.getWorld());
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(one.getWorld().getName()));
         BlockVector b1;
         BlockVector b2;
         int cube = plugin.getConfig().getInt("creation.border_radius") * 16;
@@ -126,13 +139,13 @@ public class TARDISWorldGuardUtils {
         dd.addPlayer(p.getName());
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
-        //flags.put(DefaultFlag.TNT, State.DENY);
-        flags.put(DefaultFlag.ENDER_BUILD, State.DENY);
-        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
-        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
-        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
-        flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.USE, State.ALLOW);
+        //flags.put(Flags.TNT, State.DENY);
+        flags.put(Flags.ENDER_BUILD, State.DENY);
+        flags.put(Flags.FIRE_SPREAD, State.DENY);
+        flags.put(Flags.LAVA_FIRE, State.DENY);
+        flags.put(Flags.LAVA_FLOW, State.DENY);
+        flags.put(Flags.LIGHTER, State.DENY);
+        flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
@@ -151,7 +164,7 @@ public class TARDISWorldGuardUtils {
      * @param w    the world we are creating the region in
      */
     public void addWGProtection(String p, TARDISTIPSData data, World w) {
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         BlockVector b1 = new BlockVector(data.getMinX(), 0, data.getMinZ());
         BlockVector b2 = new BlockVector(data.getMaxX(), 256, data.getMaxZ());
         String region_id = "tardis_" + p;
@@ -161,16 +174,16 @@ public class TARDISWorldGuardUtils {
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
         if (!p.equals("junk")) {
-            flags.put(DefaultFlag.ENTRY, State.DENY);
+            flags.put(Flags.ENTRY, State.DENY);
         } else {
-            flags.put(DefaultFlag.BUILD, State.DENY);
+            flags.put(Flags.BUILD, State.DENY);
         }
-        //flags.put(DefaultFlag.TNT, State.DENY);
-        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
-        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
-        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
-        flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.USE, State.ALLOW);
+        //flags.put(Flags.TNT, State.DENY);
+        flags.put(Flags.FIRE_SPREAD, State.DENY);
+        flags.put(Flags.LAVA_FIRE, State.DENY);
+        flags.put(Flags.LAVA_FLOW, State.DENY);
+        flags.put(Flags.LIGHTER, State.DENY);
+        flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         if (!p.equals("junk")) {
@@ -194,7 +207,7 @@ public class TARDISWorldGuardUtils {
      * @param two  an end location of a cuboid region
      */
     public void addRechargerProtection(Player p, String name, Location one, Location two) {
-        RegionManager rm = wg.getRegionManager(one.getWorld());
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(one.getWorld().getName()));
         BlockVector b1;
         BlockVector b2;
         b1 = makeBlockVector(one);
@@ -204,12 +217,12 @@ public class TARDISWorldGuardUtils {
         dd.addPlayer(p.getName());
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
-        flags.put(DefaultFlag.TNT, State.DENY);
-        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
-        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
-        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
-        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
-        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(Flags.TNT, State.DENY);
+        flags.put(Flags.CREEPER_EXPLOSION, State.DENY);
+        flags.put(Flags.FIRE_SPREAD, State.DENY);
+        flags.put(Flags.LAVA_FIRE, State.DENY);
+        flags.put(Flags.LAVA_FLOW, State.DENY);
+        flags.put(Flags.LIGHTER, State.DENY);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
@@ -227,20 +240,20 @@ public class TARDISWorldGuardUtils {
      * @param two  an end location of a cuboid region
      */
     public void addRendererProtection(String name, Location one, Location two) {
-        RegionManager rm = wg.getRegionManager(one.getWorld());
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(one.getWorld().getName()));
         BlockVector b1;
         BlockVector b2;
         b1 = makeBlockVector(one);
         b2 = makeBlockVector(two);
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("renderer_" + name, b1, b2);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
-        flags.put(DefaultFlag.TNT, State.DENY);
-        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
-        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
-        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
-        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
-        flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.LEAF_DECAY, State.DENY);
+        flags.put(Flags.TNT, State.DENY);
+        flags.put(Flags.CREEPER_EXPLOSION, State.DENY);
+        flags.put(Flags.FIRE_SPREAD, State.DENY);
+        flags.put(Flags.LAVA_FIRE, State.DENY);
+        flags.put(Flags.LAVA_FLOW, State.DENY);
+        flags.put(Flags.LIGHTER, State.DENY);
+        flags.put(Flags.LEAF_DECAY, State.DENY);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
@@ -257,7 +270,7 @@ public class TARDISWorldGuardUtils {
      * @param p the player's name
      */
     public void removeRegion(World w, String p) {
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         rm.removeRegion("tardis_" + p);
         try {
             rm.save();
@@ -272,8 +285,9 @@ public class TARDISWorldGuardUtils {
      * @param l the TARDIS interior location
      */
     public void removeRegion(Location l) {
-        RegionManager rm = wg.getRegionManager(l.getWorld());
-        ApplicableRegionSet ars = rm.getApplicableRegions(l);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
+        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
             LinkedList<String> regions = new LinkedList<>();
@@ -305,7 +319,7 @@ public class TARDISWorldGuardUtils {
      */
     public void removeRechargerRegion(String name) {
         World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + name + ".world"));
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         rm.removeRegion("tardis_recharger_" + name);
         try {
             rm.save();
@@ -322,7 +336,7 @@ public class TARDISWorldGuardUtils {
      * @param r the room region to remove
      */
     public void removeRoomRegion(World w, String p, String r) {
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         if (rm.hasRegion(r + "_" + p)) {
             rm.removeRegion(r + "_" + p);
             try {
@@ -341,7 +355,7 @@ public class TARDISWorldGuardUtils {
      * @param a     the player to add
      */
     public void addMemberToRegion(World w, String owner, String a) {
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         if (rm.hasRegion("tardis_" + owner)) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + owner + " " + a + " -w " + w.getName());
         }
@@ -355,7 +369,7 @@ public class TARDISWorldGuardUtils {
      * @param a     the player to add
      */
     public void removeMemberFromRegion(World w, String owner, String a) {
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         if (rm.hasRegion("tardis_" + owner)) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + owner + " " + a + " -w " + w.getName());
         }
@@ -370,7 +384,7 @@ public class TARDISWorldGuardUtils {
      * @param which the region type to update
      */
     public void updateRegionForNameChange(World w, String o, UUID uuid, String which) {
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         String region = which + "_" + o;
         if (rm.hasRegion(region)) {
             ProtectedRegion pr = rm.getRegion(region);
@@ -392,8 +406,9 @@ public class TARDISWorldGuardUtils {
      * @param uuid     the UUID of the player
      */
     public void updateRegionForClaim(Location location, UUID uuid) {
-        RegionManager rm = wg.getRegionManager(location.getWorld());
-        ApplicableRegionSet ars = rm.getApplicableRegions(location);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(location.getWorld().getName()));
+        Vector vector = new Vector(location.getX(), location.getY(), location.getZ());
+        ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
             LinkedList<String> regions = new LinkedList<>();
@@ -439,10 +454,10 @@ public class TARDISWorldGuardUtils {
     public void sponge(Block b, boolean clear) {
         if (clear) {
             // remove water
-            SpongeUtil.clearSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
+            SpongeUtil.clearSpongeWater(wgp, b.getWorld(), b.getX(), b.getY(), b.getZ());
         } else {
             // put water back
-            SpongeUtil.addSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
+            SpongeUtil.addSpongeWater(wgp, b.getWorld(), b.getX(), b.getY(), b.getZ());
         }
     }
 
@@ -454,7 +469,10 @@ public class TARDISWorldGuardUtils {
      * @return whether the block can be broken
      */
     public boolean canBreakBlock(Player p, Block b) {
-        return wg.canBuild(p, b);
+        Vector vector = new Vector(b.getX(), b.getY(), b.getZ());
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(b.getWorld().getName()));
+        ApplicableRegionSet rs = rm.getApplicableRegions(vector);
+        return rs.canBuild(wgp.wrapPlayer(p));
     }
 
     /**
@@ -469,7 +487,7 @@ public class TARDISWorldGuardUtils {
         if (w == null) {
             return null;
         }
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         return rm.getRegion("tardis_" + p);
     }
 
@@ -481,9 +499,9 @@ public class TARDISWorldGuardUtils {
      */
     public List<String> getRegions(World w) {
         List<String> regions = new ArrayList<>();
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         rm.getRegions().forEach((key, value) -> {
-            if (key.contains("tardis") && value.getFlags().containsKey(DefaultFlag.BUILD)) {
+            if (key.contains("tardis") && value.getFlags().containsKey(Flags.BUILD)) {
                 regions.add(key);
             }
         });
@@ -498,7 +516,7 @@ public class TARDISWorldGuardUtils {
      */
     public List<String> getTARDISRegions(World w) {
         List<String> regions = new ArrayList<>();
-        RegionManager rm = wg.getRegionManager(w);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
         rm.getRegions().forEach((key, value) -> {
             if (key.contains("tardis")) {
                 regions.add(key);
@@ -514,8 +532,9 @@ public class TARDISWorldGuardUtils {
      * @return true if mobs can spawn, otherwise false
      */
     public boolean mobsCanSpawnAtLocation(Location l) {
-        RegionManager rm = wg.getRegionManager(l.getWorld());
-        ApplicableRegionSet ars = rm.getApplicableRegions(l);
-        return ars.testState(null, DefaultFlag.MOB_SPAWNING);
+        RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
+        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        ApplicableRegionSet ars = rm.getApplicableRegions(vector);
+        return ars.testState(null, Flags.MOB_SPAWNING);
     }
 }
