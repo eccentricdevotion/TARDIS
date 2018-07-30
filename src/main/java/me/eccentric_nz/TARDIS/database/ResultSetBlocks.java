@@ -99,7 +99,7 @@ public class ResultSetBlocks {
                             rs.getInt("tardis_id"),
                             plugin.getLocationUtils().getLocationFromBukkitString(str),
                             str,
-                            plugin.getServer().createBlockData(rs.getString("data")),
+                            plugin.getServer().createBlockData((rs.getString("data").equals("0")) ? "minecraft:air" : rs.getString("data")),
                             rs.getInt("police_box")
                     );
                     if (multiple) {
