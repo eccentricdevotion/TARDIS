@@ -340,6 +340,9 @@ permissions:
       tardis.handles.communicator: true
       tardis.handles.program: true
     default: op
+  tardis.paper_bag:
+    description: Allows a player to store and dispense Jelly Babies from a paper bag.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]

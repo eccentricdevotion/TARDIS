@@ -622,6 +622,8 @@ OCCUPY_MUST_BE_IN: "You cannot set occupancy to OCCUPIED unless you are inside t
 OCCUPY_MUST_BE_OUT: "You cannot set occupancy to UNOCCUPIED unless you are outside the TARDIS!"
 OCCUPY_OUT: "UNOCCUPIED"
 OCCUPY_SET: "TARDIS occupation was set to: %s"
+PAPER_BAG_EMPTY: "The paper bag doesn't have any Jelly Babies in it! SHIFT-click the bag to put some in."
+PAPER_BAG_SLOT: "There is no room in your inventory for a Jelly Bean!"
 PLATE_NOT_FOUND: "Could not find the door pressure plate! Check the seed block position."
 PLAYER_IN_AREA: "The player is in a TARDIS area! Please use %s"
 PLAYER_NO_RECORD: "Could not find a TARDIS record for player: %s!"

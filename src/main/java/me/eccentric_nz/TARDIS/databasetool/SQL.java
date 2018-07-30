@@ -49,6 +49,7 @@ public class SQL {
         lamps,
         movers,
         next,
+        paper_bag,
         player_prefs,
         portals,
         programs,
@@ -112,6 +113,8 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %smovers (uuid varchar(48) NOT NULL, PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %snext (next_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (next_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %spaper_bag (paper_bag_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', flavour_1 varchar(12) DEFAULT '', amount_1 int(2) DEFAULT '0', flavour_2 varchar(12) DEFAULT '', amount_2 int(2) DEFAULT '0', flavour_3 varchar(12) DEFAULT '', amount_3 int(2) DEFAULT '0', flavour_4 varchar(12) DEFAULT '', amount_4 int(2) DEFAULT '0', PRIMARY KEY (paper_bag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %splayer_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA', siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA', auto_on int(1) DEFAULT '0', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', hads_type varchar(12) DEFAULT 'DISPLACEMENT', build_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, lamp varchar(64) DEFAULT '', language varchar(32) DEFAULT 'ENGLISH', texture_on int(1) DEFAULT '0', texture_in varchar(512) DEFAULT '', texture_out varchar(512) DEFAULT 'default', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', wool_lights_on int(1) DEFAULT '0', ctm_on int(1) DEFAULT '0', sign_on int(1) DEFAULT '1', telepathy_on int(1) DEFAULT '0', travelbar_on int(1) DEFAULT '0', farm_on int(1) DEFAULT '1', lanterns_on int(1) DEFAULT '0', policebox_textures_on int(1) DEFAULT '1', auto_siege_on int(1) DEFAULT '0', flying_mode int(1) DEFAULT '1', difficulty int(1) DEFAULT '0', auto_powerup_on int(1) DEFAULT '0', auto_rescue_on int(1) DEFAULT '0', hum varchar(24) DEFAULT '', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -192,6 +195,8 @@ public class SQL {
 
             "INSERT INTO `%snext` (`next_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES",
 
+            "INSERT INTO `%spaper_bag` (`paper_bag_id`, `uuid`, `flavour_1`, `amount_1`, `flavour_2`, `amount_2`, `flavour_3`, `amount_3`, `flavour_4`, `amount_4`) VALUES",
+
             "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `auto_on`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `eps_on`, `eps_message`, `lamp`, `language`, `texture_on`, `texture_in`, `texture_out`, `submarine_on`, `dnd_on`, `minecart_on`, `renderer_on`, `wool_lights_on`, `ctm_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `farm_on`,  `lanterns_on`, `policebox_textures_on`, `auto_siege_on`, `flying_mode`, `difficulty`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES",
 
             "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES",
@@ -270,6 +275,8 @@ public class SQL {
             "('%s')",
 
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
+
+            "(%s, '%s', '%s', %s, '%s', %s, '%s', %s, '%s', %s)",
 
             "(%s, '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', %s, %s, %s, '%s', %s, %s, '%s', '%s', '%s', %s, '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s')",
 

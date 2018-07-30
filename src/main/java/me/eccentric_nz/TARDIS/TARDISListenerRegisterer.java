@@ -179,6 +179,7 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
             plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISPaperBagListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPistonListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPrefsMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);

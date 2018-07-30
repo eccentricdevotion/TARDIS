@@ -212,6 +212,10 @@ public class Main {
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("next_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine")) + end;
                                     bw.write(str);
                                     break;
+                                case paper_bag:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("paper_bag_id"), rs.getString("uuid"), rs.getString("flavour_1"), rs.getInt("amount_1"), rs.getString("flavour_2"), rs.getInt("amount_2"), rs.getString("flavour_3"), rs.getInt("amount_3"), rs.getString("flavour_4"), rs.getInt("amount_4")) + end;
+                                    bw.write(str);
+                                    break;
                                 case player_prefs:
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("lamp"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("ctm_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("policebox_textures_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("difficulty"), rs.getInt("auto_powerup_on"), rs.getInt("auto_rescue_on"), rs.getString("hum")) + end;
                                     bw.write(str);
