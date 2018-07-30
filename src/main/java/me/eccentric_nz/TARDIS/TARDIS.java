@@ -262,15 +262,15 @@ public class TARDIS extends JavaPlugin {
                     alwaysNight.keepNight();
                 }
             }
-            TARDISBlockLoader bl = new TARDISBlockLoader(this);
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
                 tmic.checkCondenserData();
                 tmic.checkPlayerPrefsData();
                 tmic.checkBlockData();
             }
-            bl.loadProtectBlocks();
+            TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();
+            bl.loadProtectBlocks();
             if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
                 bl.loadAntiBuild();
             }
