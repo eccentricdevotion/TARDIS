@@ -227,6 +227,17 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
             recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
         }
+        if (!recipes_config.contains("shaped.Paper Bag")) {
+            recipes_config.set("shaped.Paper Bag.easy_shape", "---,PLP,-P-");
+            recipes_config.set("shaped.Paper Bag.easy_ingredients.P", "PAPER");
+            recipes_config.set("shaped.Paper Bag.easy_ingredients.L", "LAPIS_BLOCK");
+            recipes_config.set("shaped.Paper Bag.hard_shape", "---,PLP,-P-");
+            recipes_config.set("shaped.Paper Bag.hard_ingredients.P", "PAPER");
+            recipes_config.set("shaped.Paper Bag.hard_ingredients.L", "SHULKER_BOX");
+            recipes_config.set("shaped.Paper Bag.result", "PAPER");
+            recipes_config.set("shaped.Paper Bag.amount", 1);
+            recipes_config.set("shaped.Paper Bag.lore", "Smaller on the outside");
+        }
         if (!recipes_config.contains("shaped.Handles")) {
             recipes_config.set("shaped.Handles.easy_shape", "III,ISI,IRI");
             recipes_config.set("shaped.Handles.easy_ingredients.I", "IRON_INGOT");
@@ -437,10 +448,10 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Bowl of Custard.lore", "");
             i++;
         }
-        if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") || recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe").contains(":")) {
+        if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") || recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe").contains(":") || recipes_config.getString("shapeless.Vanilla Jelly Baby.result").equals("MELON")) {
             for (Map.Entry<String, String> map : flavours.entrySet()) {
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.recipe", "SUGAR,SLIME_BALL," + map.getValue());
-                recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.result", "MELON");
+                recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.result", "MELON_SLICE");
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.amount", 4);
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.lore", "");
                 i++;

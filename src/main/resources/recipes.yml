@@ -837,6 +837,18 @@ shaped:
         result: LEATHER_HELMET
         amount: 1
         lore: ""
+    Paper Bag:
+        easy_shape: ---,PLP,-P-
+        easy_ingredients:
+            P: PAPER
+            L: LAPIS_BLOCK
+        hard_shape: ---,PLP,-P-
+        hard_ingredients:
+            P: PAPER
+            L: SHULKER_BOX
+        result: PAPER
+        amount: 1
+        lore: "Smaller on the outside "
 # -------------------
 # these are the shapeless recipes
 # -------------------
@@ -903,82 +915,82 @@ shapeless:
         lore: ""
     Vanilla Jelly Baby:
         recipe: SUGAR,SLIME_BALL,BONE_MEAL
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Orange Jelly Baby:
         recipe: SUGAR,SLIME_BALL,ORANGE_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Watermelon Jelly Baby:
         recipe: SUGAR,SLIME_BALL,MAGENTA_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Bubblegum Jelly Baby:
         recipe: SUGAR,SLIME_BALL,LIGHT_BLUE_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Lemon Jelly Baby:
         recipe: SUGAR,SLIME_BALL,DANDELION_YELLOW
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Lime Jelly Baby:
         recipe: SUGAR,SLIME_BALL,LIME_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Strawberry Jelly Baby:
         recipe: SUGAR,SLIME_BALL,PINK_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Earl Grey Jelly Baby:
         recipe: SUGAR,SLIME_BALL,GRAY_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Vodka Jelly Baby:
         recipe: SUGAR,SLIME_BALL,LIGHT_GRAY_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Island Punch Jelly Baby:
         recipe: SUGAR,SLIME_BALL,CYAN_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: 'Orange'
     Grape Jelly Baby:
         recipe: SUGAR,SLIME_BALL,PURPLE_DYE
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Blueberry Jelly Baby:
         recipe: SUGAR,SLIME_BALL,LAPIS_LAZULI
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Cappuccino Jelly Baby:
         recipe: SUGAR,SLIME_BALL,COCOA_BEANS
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Apple Jelly Baby:
         recipe: SUGAR,SLIME_BALL,CACTUS_GREEN
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Raspberry Jelly Baby:
         recipe: SUGAR,SLIME_BALL,ROSE_RED
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
     Licorice Jelly Baby:
         recipe: SUGAR,SLIME_BALL,INK_SAC
-        result: MELON
+        result: MELON_SLICE
         amount: 4
         lore: ''
 # -------------------
