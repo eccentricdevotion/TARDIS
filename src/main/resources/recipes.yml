@@ -4,1002 +4,1004 @@
 # shaped recipes start here
 # -------------------
 shaped:
-    TARDIS Locator:
-        easy_shape: OIO,ICI,OIO
-        easy_ingredients:
-            O: GRAVEL
-            I: IRON_INGOT
-            C: RED_WOOL
-        hard_shape: OIO,ICI,OIO
-        hard_ingredients:
-            O: OBSIDIAN
-            I: IRON_INGOT
-            C: 'FILLED_MAP:1965'
-        result: COMPASS
-        amount: 1
-        lore: ""
-    Stattenheim Remote:
-        easy_shape: OBO,-L-,RRR
-        easy_ingredients:
-            O: OBSIDIAN
-            B: STONE_BUTTON
-            L: LAPIS_LAZULI
-            R: REDSTONE
-        hard_shape: OBO,OLO,RRR
-        hard_ingredients:
-            O: OBSIDIAN
-            B: STONE_BUTTON
-            L: 'FILLED_MAP:1963'
-            R: REDSTONE
-        result: FLINT
-        amount: 1
-        lore: "Right-click block~to call TARDIS"
-    TARDIS Remote Key:
-        easy_shape: RCR,-K-,-T-
-        easy_ingredients:
-            R: REDSTONE
-            C: COMPARATOR
-            K: GOLD_NUGGET
-            T: REDSTONE_TORCH
-        hard_shape: RCR,-K-,-T-
-        hard_ingredients:
-            R: REDSTONE
-            C: COMPARATOR
-            K: GOLD_NUGGET
-            T: 'FILLED_MAP:1964'
-        result: GOLD_NUGGET
-        amount: 1
-        lore: "Deadlock & unlock~Hide & rebuild"
-    TARDIS Locator Circuit:
-        easy_shape: RQR,RIR,DRL
-        easy_ingredients:
-            R: REDSTONE
-            Q: QUARTZ
-            I: IRON_INGOT
-            D: REPEATER
-            L: LAPIS_LAZULI
-        hard_shape: RQR,RIR,DRL
-        hard_ingredients:
-            R: REDSTONE
-            Q: QUARTZ
-            I: IRON_INGOT
-            D: REPEATER
-            L: LAPIS_LAZULI
-        result: 'FILLED_MAP:1965'
-        amount: 1
-        lore: ""
-    TARDIS Materialisation Circuit:
-        easy_shape: IDI,-L-,QRQ
-        easy_ingredients:
-            I: IRON_INGOT
-            R: REDSTONE
-            L: LAPIS_LAZULI
-            Q: QUARTZ
-        hard_shape: IDI,DLD,QRQ
-        hard_ingredients:
-            I: ENDER_EYE
-            D: REPEATER
-            R: REDSTONE
-            L: LAPIS_LAZULI
-            Q: QUARTZ
-        result: 'FILLED_MAP:1964'
-        amount: 1
-        lore: "Uses left~50"
-    TARDIS Stattenheim Circuit:
-        easy_shape: ---,LRM,QQQ
-        easy_ingredients:
-            L: 'FILLED_MAP:1965'
-            R: REDSTONE
-            M: 'FILLED_MAP:1964'
-            Q: QUARTZ
-        hard_shape: ---,LRM,QQQ
-        hard_ingredients:
-            L: 'FILLED_MAP:1965'
-            R: REDSTONE
-            M: 'FILLED_MAP:1964'
-            Q: QUARTZ
-        result: 'FILLED_MAP:1963'
-        amount: 1
-        lore: ""
-    TARDIS Chameleon Circuit:
-        easy_shape: -G-,RER,-G-
-        easy_ingredients:
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
-            R: REDSTONE
-        hard_shape: DGD,GEG,RMR
-        hard_ingredients:
-            D: REPEATER
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
-            R: REDSTONE
-            M: 'FILLED_MAP:1964'
-        result: 'FILLED_MAP:1966'
-        amount: 1
-        lore: "Uses left~25"
-    TARDIS ARS Circuit:
-        easy_shape: SSS,T-T,RRR
-        easy_ingredients:
-            S: WHEAT_SEEDS
-            T: REDSTONE_TORCH
-            R: REDSTONE
-        hard_shape: SSS,DPT,RRR
-        hard_ingredients:
-            S: WHEAT_SEEDS
-            D: REPEATER
-            P: PISTON
-            T: REDSTONE_TORCH
-            R: REDSTONE
-        result: 'FILLED_MAP:1973'
-        amount: 1
-        lore: "Uses left~20"
-    TARDIS Temporal Circuit:
-        easy_shape: -I-,RWR,-I-
-        easy_ingredients:
-            I: IRON_INGOT
-            R: REDSTONE
-            W: CLOCK
-        hard_shape: -I-,RWR,QIQ
-        hard_ingredients:
-            I: IRON_INGOT
-            R: REDSTONE
-            W: CLOCK
-            Q: QUARTZ
-        result: 'FILLED_MAP:1974'
-        amount: 1
-        lore: "Uses left~20"
-    TARDIS Memory Circuit:
-        easy_shape: -T-,TCT,-T-
-        easy_ingredients:
-            T: REDSTONE_TORCH
-            C: CHEST
-        hard_shape: RTR,TCT,RTR
-        hard_ingredients:
-            R: RED_SAND
-            T: REDSTONE_TORCH
-            C: TRAPPED_CHEST
-        result: 'FILLED_MAP:1975'
-        amount: 1
-        lore: "Uses left~20"
-    TARDIS Input Circuit:
-        easy_shape: -R-,-S-,-R-
-        easy_ingredients:
-            R: REDSTONE
-            S: SIGN
-        hard_shape: -R-,-S-,-R-
-        hard_ingredients:
-            R: REDSTONE
-            S: SIGN
-        result: 'FILLED_MAP:1976'
-        amount: 1
-        lore: "Uses left~50"
-    TARDIS Scanner Circuit:
-        easy_shape: GRG,RGR,GRG
-        easy_ingredients:
-            G: GLASS_PANE
-            R: REDSTONE
-        hard_shape: GRG,RER,GRG
-        hard_ingredients:
-            G: GLASS
-            E: SPIDER_EYE
-            R: REDSTONE
-        result: 'FILLED_MAP:1977'
-        amount: 1
-        lore: "Uses left~20"
-    TARDIS Randomiser Circuit:
-        easy_shape: -D-,NCE,-W-
-        easy_ingredients:
-            D: DIRT
-            N: NETHERRACK
-            C: COMPASS
-            E: END_STONE
-            W: WATER_BUCKET
-        hard_shape: -D-,NCE,-W-
-        hard_ingredients:
-            D: DIRT
-            N: NETHERRACK
-            C: COMPASS
-            E: END_STONE
-            W: WATER_BUCKET
-        result: 'FILLED_MAP:1980'
-        amount: 1
-        lore: "Uses left~50"
-    TARDIS Invisibility Circuit:
-        easy_shape: -D-,P-E,-W-
-        easy_ingredients:
-            D: DIAMOND
-            P: 'FILLED_MAP:1978'
-            E: EMERALD
-            W: 'POTION'
-        hard_shape: -D-,P-E,-W-
-        hard_ingredients:
-            D: DIAMOND
-            P: 'FILLED_MAP:1978'
-            E: EMERALD
-            W: 'POTION'
-        result: 'FILLED_MAP:1981'
-        amount: 1
-        lore: "Uses left~5"
-    TARDIS Telepathic Circuit:
-        easy_shape: -S-,SES,-S-
-        easy_ingredients:
-            S: SLIME_BALL
-            E: EMERALD
-        hard_shape: -S-,SPS,ESE
-        hard_ingredients:
-            S: SLIME_BALL
-            P: 'POTION'
-            E: EMERALD
-        result: 'DAYLIGHT_DETECTOR'
-        amount: 1
-        lore: "Allow companions to~use TARDIS commands"
-    Perception Filter:
-        easy_shape: S-S,-S-,RGC
-        easy_ingredients:
-            S: STRING
-            R: REDSTONE
-            G: GOLD_NUGGET
-            C: COMPARATOR
-        hard_shape: S-S,-S-,RGC
-        hard_ingredients:
-            S: STRING
-            R: REDSTONE
-            G: GOLD_NUGGET
-            C: 'FILLED_MAP:1978'
-        result: GOLD_NUGGET
-        amount: 1
-        lore: ""
-    Perception Circuit:
-        easy_shape: IGI,CEC,DTD
-        easy_ingredients:
-            I: IRON_INGOT
-            G: GOLDEN_CARROT
-            C: COMPARATOR
-            E: FERMENTED_SPIDER_EYE
-            D: REPEATER
-            T: REDSTONE_TORCH
-        hard_shape: IGI,CEC,DTD
-        hard_ingredients:
-            I: IRON_INGOT
-            G: GOLDEN_CARROT
-            C: COMPARATOR
-            E: FERMENTED_SPIDER_EYE
-            D: REPEATER
-            T: REDSTONE_TORCH
-        result: 'FILLED_MAP:1978'
-        amount: 1
-        lore: ""
-    TARDIS Key:
-        easy_shape: ---,-R-,-G-
-        easy_ingredients:
-            R: REDSTONE
-            G: GOLD_NUGGET
-        hard_shape: ---,-C-,-G-
-        hard_ingredients:
-            C: COMPARATOR
-            G: GOLD_NUGGET
-        result: GOLD_NUGGET
-        amount: 1
-        lore: "Enter and exit your TARDIS"
-    Blank Storage Disk:
-        easy_shape: QQQ,Q-Q,QQQ
-        easy_ingredients:
-            Q: QUARTZ
-        hard_shape: QQQ,Q-Q,QQQ
-        hard_ingredients:
-            Q: QUARTZ
-        result: MUSIC_DISC_STRAD
-        amount: 1
-        lore: ""
-    Sonic Oscillator:
-        easy_shape: RQR,R-R,RQR
-        easy_ingredients:
-            Q: QUARTZ
-            R: REDSTONE
-        hard_shape: RQR,RBR,RQR
-        hard_ingredients:
-            Q: QUARTZ
-            R: REDSTONE
-            B: STONE_BUTTON
-        result: 'FILLED_MAP:1967'
-        amount: 1
-        lore: ""
-    Sonic Screwdriver:
-        easy_shape: -Q-,-I-,-I-
-        easy_ingredients:
-            Q: QUARTZ
-            I: IRON_INGOT
-        hard_shape: -Q-,-I-,-O-
-        hard_ingredients:
-            Q: QUARTZ
-            I: IRON_INGOT
-            O: 'FILLED_MAP:1967'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Sonic Generator:
-        easy_shape: GRG,-F-,-S-
-        easy_ingredients:
-            G: GOLD_NUGGET
-            R: REDSTONE
-            F: FLOWER_POT
-            S: BLAZE_ROD
-        hard_shape: GRG,-F-,-S-
-        hard_ingredients:
-            G: GOLD_INGOT
-            R: REDSTONE_BLOCK
-            F: FLOWER_POT
-            S: BLAZE_ROD
-        result: FLOWER_POT
-        amount: 1
-        lore: ""
-    Server Admin Circuit:
-        easy_shape: BBB,BOB,BBB
-        easy_ingredients:
-            B: BEDROCK
-            O: 'FILLED_MAP:1967'
-        hard_shape: BBB,BOB,BBB
-        hard_ingredients:
-            B: BEDROCK
-            O: 'FILLED_MAP:1967'
-        result: 'FILLED_MAP:1968'
-        amount: 1
-        lore: ""
-    Bio-scanner Circuit:
-        easy_shape: -E-,BRB,-E-
-        easy_ingredients:
-            R: REDSTONE
-            E: SPIDER_EYE
-            B: BONE
-        hard_shape: -E-,BRB,-E-
-        hard_ingredients:
-            R: REPEATER
-            E: SPIDER_EYE
-            B: BONE
-        result: 'FILLED_MAP:1969'
-        amount: 1
-        lore: ""
-    Redstone Activator Circuit:
-        easy_shape: RCR,-I-,RCR
-        easy_ingredients:
-            R: REDSTONE
-            C: COMPARATOR
-            I: IRON_INGOT
-        hard_shape: RCR,-I-,RCR
-        hard_ingredients:
-            R: REPEATER
-            C: COMPARATOR
-            I: IRON_INGOT
-        result: 'FILLED_MAP:1970'
-        amount: 1
-        lore: ""
-    Diamond Disruptor Circuit:
-        easy_shape: -R-,DSD,-R-
-        easy_ingredients:
-            R: REDSTONE
-            D: DIAMOND
-            S: SHEARS
-        hard_shape: -O-,DSD,-O-
-        hard_ingredients:
-            O: OBSIDIAN
-            D: DIAMOND
-            S: SHEARS
-        result: 'FILLED_MAP:1971'
-        amount: 1
-        lore: ""
-    Emerald Environment Circuit:
-        easy_shape: -D-,LEL,-D-
-        easy_ingredients:
-            E: EMERALD
-            D: DIRT
-            L: OAK_LEAVES
-        hard_shape: -S-,LEL,-S-
-        hard_ingredients:
-            E: EMERALD
-            L: OAK_LEAVES
-            S: STONE
-        result: 'FILLED_MAP:1972'
-        amount: 1
-        lore: ""
-    Painter Circuit:
-        easy_shape: -I-,DGD,-I-
-        easy_ingredients:
-            I: INK_SAC
-            D: PURPLE_DYE
-            G: GOLD_NUGGET
-        hard_shape: -I-,DGD,-I-
-        hard_ingredients:
-            I: INK_SAC
-            D: PURPLE_DYE
-            G: GOLD_BLOCK
-        result: 'FILLED_MAP:1979'
-        amount: 1
-        lore: ""
-    Ignite Circuit:
-        easy_shape: -N-,NFN,-N-
-        easy_ingredients:
-            N: NETHERRACK
-            F: FLINT_AND_STEEL
-        hard_shape: LN-,NFN,-NL
-        hard_ingredients:
-            N: NETHERRACK
-            F: FLINT_AND_STEEL
-            L: LAVA_BUCKET
-        result: 'FILLED_MAP:1982'
-        amount: 1
-        lore: ""
-    Artron Storage Cell:
-        easy_shape: -B-,-R-,-L-
-        easy_ingredients:
-            B: BUCKET
-            R: REDSTONE
-            L: LIME_STAINED_GLASS
-        hard_shape: -B-,LRL,-L-
-        hard_ingredients:
-            B: BUCKET
-            L: LIME_STAINED_GLASS
-            R: REDSTONE_BLOCK
-        result: BUCKET
-        amount: 1
-        lore: "Charge Level~0"
-    TARDIS Artron Furnace:
-        easy_shape: ---,OFO,RRR
-        easy_ingredients:
-            O: OBSIDIAN
-            F: FURNACE
-            R: REDSTONE
-        hard_shape: ---,OFO,RRR
-        hard_ingredients:
-            O: OBSIDIAN
-            F: FURNACE
-            R: REDSTONE
-        result: FURNACE
-        amount: 1
-        lore: ""
-    Jammy Dodger:
-        easy_shape: ---,WRW,---
-        easy_ingredients:
-            W: WHEAT
-            R: ROSE_RED
-        hard_shape: ---,WRW,---
-        hard_ingredients:
-            W: WHEAT
-            R: ROSE_RED
-        result: COOKIE
-        amount: 8
-        lore: ""
-    Fish Finger:
-        easy_shape: -B-,-F-,-B-
-        easy_ingredients:
-            B: BREAD
-            F: COD
-        hard_shape: -B-,-F-,-B-
-        hard_ingredients:
-            B: BREAD
-            F: COD
-        result: COOKED_COD
-        amount: 3
-        lore: "Best eaten with custard!"
-    White Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: WHITE_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: WHITE_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Orange Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: ORANGE_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: ORANGE_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Magenta Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: MAGENTA_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: MAGENTA_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Light Blue Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: LIGHT_BLUE_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: LIGHT_BLUE_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Yellow Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: YELLOW_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: YELLOW_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Lime Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: LIME_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: LIME_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Pink Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: PINK_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: PINK_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Grey Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: GRAY_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: GRAY_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Light Grey Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: LIGHT_GRAY_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: LIGHT_GRAY_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Cyan Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: CYAN_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: CYAN_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Purple Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: PURPLE_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: PURPLE_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Blue Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: BLUE_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: BLUE_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Brown Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: BROWN_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: BROWN_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Green Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: GREEN_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: GREEN_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Red Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: RED_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: RED_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    Black Bow Tie:
-        easy_shape: '---,SWS,---'
-        easy_ingredients:
-            S: STRING
-            W: BLACK_WOOL
-        hard_shape: STS,L-L,WWW
-        hard_ingredients:
-            S: STRING
-            T: TRIPWIRE_HOOK
-            L: LEATHER
-            W: BLACK_WOOL
-        result: LEATHER_CHESTPLATE
-        amount: 1
-        lore: Bow ties are cool!
-    3-D Glasses:
-        easy_shape: ---,P-P,CPM
-        easy_ingredients:
-            P: PAPER
-            C: CYAN_STAINED_GLASS_PANE
-            M: MAGENTA_STAINED_GLASS_PANE
-        hard_shape: R-T,P-P,CPM
-        hard_ingredients:
-            R: COMPARATOR
-            T: REDSTONE_TORCH
-            P: PAPER
-            C: CYAN_STAINED_GLASS_PANE
-            M: MAGENTA_STAINED_GLASS_PANE
-        result: LEATHER_HELMET
-        amount: 1
-        lore: ""
-    Fob Watch:
-        easy_shape: -C-,-W-,R-R
-        easy_ingredients:
-            C: 'FILLED_MAP:1966'
-            W: CLOCK
-            R: REDSTONE
-        hard_shape: -C-,IWI,R-R
-        hard_ingredients:
-            C: 'FILLED_MAP:1966'
-            I: IRON_INGOT
-            W: CLOCK
-            R: REDSTONE
-        result: CLOCK
-        amount: 1
-        lore: ""
-    TARDIS Biome Reader:
-        easy_shape: ---,-C-,SDT
-        easy_ingredients:
-            C: 'FILLED_MAP:1972'
-            S: SAND
-            D: DIRT
-            T: STONE
-        hard_shape: -C-,SDT,LWN
-        hard_ingredients:
-            C: 'FILLED_MAP:1972'
-            S: SAND
-            D: DIRT
-            T: STONE
-            L: CLAY
-            W: SNOW_BLOCK
-            N: NETHERRACK
-        result: CLAY_BRICK
-        amount: 1
-        lore: ""
-    Acid Battery:
-        easy_shape: -A-,ARA,-A-
-        easy_ingredients:
-            A: WATER_BUCKET
-            R: REDSTONE
-        hard_shape: -A-,ARA,-A-
-        hard_ingredients:
-            A: WATER_BUCKET
-            R: REDSTONE_BLOCK
-        result: NETHER_BRICK
-        amount: 1
-        lore: ""
-    Rift Circuit:
-        easy_shape: -D-,DND,-D-
-        easy_ingredients:
-            D: DIAMOND
-            N: NETHER_STAR
-        hard_shape: -D-,DND,-D-
-        hard_ingredients:
-            D: DIAMOND
-            N: NETHER_STAR
-        result: 'FILLED_MAP:1983'
-        amount: 1
-        lore: ""
-    Rift Manipulator:
-        easy_shape: -A-,ACA,RAR
-        easy_ingredients:
-            A: NETHER_BRICK
-            C: 'FILLED_MAP:1983'
-            R: REDSTONE
-        hard_shape: -A-,ACA,NAN
-        hard_ingredients:
-            A: NETHER_BRICK
-            C: 'FILLED_MAP:1983'
-            N: NETHER_STAR
-        result: BEACON
-        amount: 1
-        lore: ""
-    Rust Plague Sword:
-        easy_shape: RIR,RIR,-S-
-        easy_ingredients:
-            R: LAVA_BUCKET
-            I: IRON_INGOT
-            S: STICK
-        hard_shape: RIR,RIR,DSD
-        hard_ingredients:
-            R: LAVA_BUCKET
-            I: IRON_INGOT
-            D: DIAMOND
-            S: STICK
-        result: IRON_SWORD
-        amount: 1
-        lore: Dalek Virus Dispenser
-    Handles:
-        easy_shape: III,ISI,IRI
-        easy_ingredients:
-            I: IRON_INGOT
-            S: SKELETON_SKULL
-            R: REDSTONE
-        hard_shape: IDI,ISI,IRI
-        hard_ingredients:
-            I: IRON_INGOT
-            D: DIAMOND
-            S: SKELETON_SKULL
-            R: REDSTONE
-        result: BIRCH_BUTTON
-        amount: 1
-        lore: "Cyberhead from the~Maldovar Market"
-    TARDIS Communicator:
-        easy_shape: N--,IIH,--I
-        easy_ingredients:
-            N: NOTE_BLOCK
-            I: IRON_INGOT
-            H: HOPPER
-        hard_shape: N--,IIH,--D
-        hard_ingredients:
-            N: NOTE_BLOCK
-            I: IRON_INGOT
-            H: HOPPER
-            D: DIAMOND
-        result: LEATHER_HELMET
-        amount: 1
-        lore: ""
-    Paper Bag:
-        easy_shape: ---,PLP,-P-
-        easy_ingredients:
-            P: PAPER
-            L: LAPIS_BLOCK
-        hard_shape: ---,PLP,-P-
-        hard_ingredients:
-            P: PAPER
-            L: SHULKER_BOX
-        result: PAPER
-        amount: 1
-        lore: "Smaller on the outside "
+  TARDIS Locator:
+    easy_shape: OIO,ICI,OIO
+    easy_ingredients:
+      O: GRAVEL
+      I: IRON_INGOT
+      C: RED_WOOL
+    hard_shape: OIO,ICI,OIO
+    hard_ingredients:
+      O: OBSIDIAN
+      I: IRON_INGOT
+      C: 'FILLED_MAP:1965'
+    result: COMPASS
+    amount: 1
+    lore: ""
+  Stattenheim Remote:
+    easy_shape: OBO,-L-,RRR
+    easy_ingredients:
+      O: OBSIDIAN
+      B: STONE_BUTTON
+      L: LAPIS_LAZULI
+      R: REDSTONE
+    hard_shape: OBO,OLO,RRR
+    hard_ingredients:
+      O: OBSIDIAN
+      B: STONE_BUTTON
+      L: 'FILLED_MAP:1963'
+      R: REDSTONE
+    result: FLINT
+    amount: 1
+    lore: "Right-click block~to call TARDIS"
+  TARDIS Remote Key:
+    easy_shape: RCR,-K-,-T-
+    easy_ingredients:
+      R: REDSTONE
+      C: COMPARATOR
+      K: GOLD_NUGGET
+      T: REDSTONE_TORCH
+    hard_shape: RCR,-K-,-T-
+    hard_ingredients:
+      R: REDSTONE
+      C: COMPARATOR
+      K: GOLD_NUGGET
+      T: 'FILLED_MAP:1964'
+    result: GOLD_NUGGET
+    amount: 1
+    lore: "Deadlock & unlock~Hide & rebuild"
+  TARDIS Locator Circuit:
+    easy_shape: RQR,RIR,DRL
+    easy_ingredients:
+      R: REDSTONE
+      Q: QUARTZ
+      I: IRON_INGOT
+      D: REPEATER
+      L: LAPIS_LAZULI
+    hard_shape: RQR,RIR,DRL
+    hard_ingredients:
+      R: REDSTONE
+      Q: QUARTZ
+      I: IRON_INGOT
+      D: REPEATER
+      L: LAPIS_LAZULI
+    result: 'FILLED_MAP:1965'
+    amount: 1
+    lore: ""
+  TARDIS Materialisation Circuit:
+    easy_shape: IDI,-L-,QRQ
+    easy_ingredients:
+      I: IRON_INGOT
+      R: REDSTONE
+      L: LAPIS_LAZULI
+      Q: QUARTZ
+    hard_shape: IDI,DLD,QRQ
+    hard_ingredients:
+      I: ENDER_EYE
+      D: REPEATER
+      R: REDSTONE
+      L: LAPIS_LAZULI
+      Q: QUARTZ
+    result: 'FILLED_MAP:1964'
+    amount: 1
+    lore: "Uses left~50"
+  TARDIS Stattenheim Circuit:
+    easy_shape: ---,LRM,QQQ
+    easy_ingredients:
+      L: 'FILLED_MAP:1965'
+      R: REDSTONE
+      M: 'FILLED_MAP:1964'
+      Q: QUARTZ
+    hard_shape: ---,LRM,QQQ
+    hard_ingredients:
+      L: 'FILLED_MAP:1965'
+      R: REDSTONE
+      M: 'FILLED_MAP:1964'
+      Q: QUARTZ
+    result: 'FILLED_MAP:1963'
+    amount: 1
+    lore: ""
+  TARDIS Chameleon Circuit:
+    easy_shape: -G-,RER,-G-
+    easy_ingredients:
+      G: GOLD_INGOT
+      E: DETECTOR_RAIL
+      R: REDSTONE
+    hard_shape: DGD,GEG,RMR
+    hard_ingredients:
+      D: REPEATER
+      G: GOLD_INGOT
+      E: DETECTOR_RAIL
+      R: REDSTONE
+      M: 'FILLED_MAP:1964'
+    result: 'FILLED_MAP:1966'
+    amount: 1
+    lore: "Uses left~25"
+  TARDIS ARS Circuit:
+    easy_shape: SSS,T-T,RRR
+    easy_ingredients:
+      S: WHEAT_SEEDS
+      T: REDSTONE_TORCH
+      R: REDSTONE
+    hard_shape: SSS,DPT,RRR
+    hard_ingredients:
+      S: WHEAT_SEEDS
+      D: REPEATER
+      P: PISTON
+      T: REDSTONE_TORCH
+      R: REDSTONE
+    result: 'FILLED_MAP:1973'
+    amount: 1
+    lore: "Uses left~20"
+  TARDIS Temporal Circuit:
+    easy_shape: -I-,RWR,-I-
+    easy_ingredients:
+      I: IRON_INGOT
+      R: REDSTONE
+      W: CLOCK
+    hard_shape: -I-,RWR,QIQ
+    hard_ingredients:
+      I: IRON_INGOT
+      R: REDSTONE
+      W: CLOCK
+      Q: QUARTZ
+    result: 'FILLED_MAP:1974'
+    amount: 1
+    lore: "Uses left~20"
+  TARDIS Memory Circuit:
+    easy_shape: -T-,TCT,-T-
+    easy_ingredients:
+      T: REDSTONE_TORCH
+      C: CHEST
+    hard_shape: RTR,TCT,RTR
+    hard_ingredients:
+      R: RED_SAND
+      T: REDSTONE_TORCH
+      C: TRAPPED_CHEST
+    result: 'FILLED_MAP:1975'
+    amount: 1
+    lore: "Uses left~20"
+  TARDIS Input Circuit:
+    easy_shape: -R-,-S-,-R-
+    easy_ingredients:
+      R: REDSTONE
+      S: SIGN
+    hard_shape: -R-,-S-,-R-
+    hard_ingredients:
+      R: REDSTONE
+      S: SIGN
+    result: 'FILLED_MAP:1976'
+    amount: 1
+    lore: "Uses left~50"
+  TARDIS Scanner Circuit:
+    easy_shape: GRG,RGR,GRG
+    easy_ingredients:
+      G: GLASS_PANE
+      R: REDSTONE
+    hard_shape: GRG,RER,GRG
+    hard_ingredients:
+      G: GLASS
+      E: SPIDER_EYE
+      R: REDSTONE
+    result: 'FILLED_MAP:1977'
+    amount: 1
+    lore: "Uses left~20"
+  TARDIS Randomiser Circuit:
+    easy_shape: -D-,NCE,-W-
+    easy_ingredients:
+      D: DIRT
+      N: NETHERRACK
+      C: COMPASS
+      E: END_STONE
+      W: WATER_BUCKET
+    hard_shape: -D-,NCE,-W-
+    hard_ingredients:
+      D: DIRT
+      N: NETHERRACK
+      C: COMPASS
+      E: END_STONE
+      W: WATER_BUCKET
+    result: 'FILLED_MAP:1980'
+    amount: 1
+    lore: "Uses left~50"
+  TARDIS Invisibility Circuit:
+    easy_shape: -D-,P-E,-W-
+    easy_ingredients:
+      D: DIAMOND
+      P: 'FILLED_MAP:1978'
+      E: EMERALD
+      W: 'POTION'
+    hard_shape: -D-,P-E,-W-
+    hard_ingredients:
+      D: DIAMOND
+      P: 'FILLED_MAP:1978'
+      E: EMERALD
+      W: 'POTION'
+    result: 'FILLED_MAP:1981'
+    amount: 1
+    lore: "Uses left~5"
+  TARDIS Telepathic Circuit:
+    easy_shape: -S-,SES,-S-
+    easy_ingredients:
+      S: SLIME_BALL
+      E: EMERALD
+    hard_shape: -S-,SPS,ESE
+    hard_ingredients:
+      S: SLIME_BALL
+      P: 'POTION'
+      E: EMERALD
+    result: 'DAYLIGHT_DETECTOR'
+    amount: 1
+    lore: "Allow companions to~use TARDIS commands"
+  Perception Filter:
+    easy_shape: S-S,-S-,RGC
+    easy_ingredients:
+      S: STRING
+      R: REDSTONE
+      G: GOLD_NUGGET
+      C: COMPARATOR
+    hard_shape: S-S,-S-,RGC
+    hard_ingredients:
+      S: STRING
+      R: REDSTONE
+      G: GOLD_NUGGET
+      C: 'FILLED_MAP:1978'
+    result: GOLD_NUGGET
+    amount: 1
+    lore: ""
+  Perception Circuit:
+    easy_shape: IGI,CEC,DTD
+    easy_ingredients:
+      I: IRON_INGOT
+      G: GOLDEN_CARROT
+      C: COMPARATOR
+      E: FERMENTED_SPIDER_EYE
+      D: REPEATER
+      T: REDSTONE_TORCH
+    hard_shape: IGI,CEC,DTD
+    hard_ingredients:
+      I: IRON_INGOT
+      G: GOLDEN_CARROT
+      C: COMPARATOR
+      E: FERMENTED_SPIDER_EYE
+      D: REPEATER
+      T: REDSTONE_TORCH
+    result: 'FILLED_MAP:1978'
+    amount: 1
+    lore: ""
+  TARDIS Key:
+    easy_shape: ---,-R-,-G-
+    easy_ingredients:
+      R: REDSTONE
+      G: GOLD_NUGGET
+    hard_shape: ---,-C-,-G-
+    hard_ingredients:
+      C: COMPARATOR
+      G: GOLD_NUGGET
+    result: GOLD_NUGGET
+    amount: 1
+    lore: "Enter and exit your TARDIS"
+  Blank Storage Disk:
+    easy_shape: QQQ,Q-Q,QQQ
+    easy_ingredients:
+      Q: QUARTZ
+    hard_shape: QQQ,Q-Q,QQQ
+    hard_ingredients:
+      Q: QUARTZ
+    result: MUSIC_DISC_STRAD
+    amount: 1
+    lore: ""
+  Sonic Oscillator:
+    easy_shape: RQR,R-R,RQR
+    easy_ingredients:
+      Q: QUARTZ
+      R: REDSTONE
+    hard_shape: RQR,RBR,RQR
+    hard_ingredients:
+      Q: QUARTZ
+      R: REDSTONE
+      B: STONE_BUTTON
+    result: 'FILLED_MAP:1967'
+    amount: 1
+    lore: ""
+  Sonic Screwdriver:
+    easy_shape: -Q-,-I-,-I-
+    easy_ingredients:
+      Q: QUARTZ
+      I: IRON_INGOT
+    hard_shape: -Q-,-I-,-O-
+    hard_ingredients:
+      Q: QUARTZ
+      I: IRON_INGOT
+      O: 'FILLED_MAP:1967'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Sonic Generator:
+    easy_shape: GRG,-F-,-S-
+    easy_ingredients:
+      G: GOLD_NUGGET
+      R: REDSTONE
+      F: FLOWER_POT
+      S: BLAZE_ROD
+    hard_shape: GRG,-F-,-S-
+    hard_ingredients:
+      G: GOLD_INGOT
+      R: REDSTONE_BLOCK
+      F: FLOWER_POT
+      S: BLAZE_ROD
+    result: FLOWER_POT
+    amount: 1
+    lore: ""
+  Server Admin Circuit:
+    easy_shape: BBB,BOB,BBB
+    easy_ingredients:
+      B: BEDROCK
+      O: 'FILLED_MAP:1967'
+    hard_shape: BBB,BOB,BBB
+    hard_ingredients:
+      B: BEDROCK
+      O: 'FILLED_MAP:1967'
+    result: 'FILLED_MAP:1968'
+    amount: 1
+    lore: ""
+  Bio-scanner Circuit:
+    easy_shape: -E-,BRB,-E-
+    easy_ingredients:
+      R: REDSTONE
+      E: SPIDER_EYE
+      B: BONE
+    hard_shape: -E-,BRB,-E-
+    hard_ingredients:
+      R: REPEATER
+      E: SPIDER_EYE
+      B: BONE
+    result: 'FILLED_MAP:1969'
+    amount: 1
+    lore: ""
+  Redstone Activator Circuit:
+    easy_shape: RCR,-I-,RCR
+    easy_ingredients:
+      R: REDSTONE
+      C: COMPARATOR
+      I: IRON_INGOT
+    hard_shape: RCR,-I-,RCR
+    hard_ingredients:
+      R: REPEATER
+      C: COMPARATOR
+      I: IRON_INGOT
+    result: 'FILLED_MAP:1970'
+    amount: 1
+    lore: ""
+  Diamond Disruptor Circuit:
+    easy_shape: -R-,DSD,-R-
+    easy_ingredients:
+      R: REDSTONE
+      D: DIAMOND
+      S: SHEARS
+    hard_shape: -O-,DSD,-O-
+    hard_ingredients:
+      O: OBSIDIAN
+      D: DIAMOND
+      S: SHEARS
+    result: 'FILLED_MAP:1971'
+    amount: 1
+    lore: ""
+  Emerald Environment Circuit:
+    easy_shape: -D-,LEL,-D-
+    easy_ingredients:
+      E: EMERALD
+      D: DIRT
+      L: OAK_LEAVES
+    hard_shape: -S-,LEL,-S-
+    hard_ingredients:
+      E: EMERALD
+      L: OAK_LEAVES
+      S: STONE
+    result: 'FILLED_MAP:1972'
+    amount: 1
+    lore: ""
+  Painter Circuit:
+    easy_shape: -I-,DGD,-I-
+    easy_ingredients:
+      I: INK_SAC
+      D: PURPLE_DYE
+      G: GOLD_NUGGET
+    hard_shape: -I-,DGD,-I-
+    hard_ingredients:
+      I: INK_SAC
+      D: PURPLE_DYE
+      G: GOLD_BLOCK
+    result: 'FILLED_MAP:1979'
+    amount: 1
+    lore: ""
+  Ignite Circuit:
+    easy_shape: -N-,NFN,-N-
+    easy_ingredients:
+      N: NETHERRACK
+      F: FLINT_AND_STEEL
+    hard_shape: LN-,NFN,-NL
+    hard_ingredients:
+      N: NETHERRACK
+      F: FLINT_AND_STEEL
+      L: LAVA_BUCKET
+    result: 'FILLED_MAP:1982'
+    amount: 1
+    lore: ""
+  Artron Storage Cell:
+    easy_shape: -B-,-R-,-L-
+    easy_ingredients:
+      B: BUCKET
+      R: REDSTONE
+      L: LIME_STAINED_GLASS
+    hard_shape: -B-,LRL,-L-
+    hard_ingredients:
+      B: BUCKET
+      L: LIME_STAINED_GLASS
+      R: REDSTONE_BLOCK
+    result: BUCKET
+    amount: 1
+    lore: "Charge Level~0"
+  TARDIS Artron Furnace:
+    easy_shape: ---,OFO,RRR
+    easy_ingredients:
+      O: OBSIDIAN
+      F: FURNACE
+      R: REDSTONE
+    hard_shape: ---,OFO,RRR
+    hard_ingredients:
+      O: OBSIDIAN
+      F: FURNACE
+      R: REDSTONE
+    result: FURNACE
+    amount: 1
+    lore: ""
+  Jammy Dodger:
+    easy_shape: ---,WRW,---
+    easy_ingredients:
+      W: WHEAT
+      R: ROSE_RED
+    hard_shape: ---,WRW,---
+    hard_ingredients:
+      W: WHEAT
+      R: ROSE_RED
+    result: COOKIE
+    amount: 8
+    lore: ""
+  Fish Finger:
+    easy_shape: -B-,-F-,-B-
+    easy_ingredients:
+      B: BREAD
+      F: COD
+    hard_shape: -B-,-F-,-B-
+    hard_ingredients:
+      B: BREAD
+      F: COD
+    result: COOKED_COD
+    amount: 3
+    lore: "Best eaten with custard!"
+  White Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: WHITE_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: WHITE_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Orange Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: ORANGE_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: ORANGE_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Magenta Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: MAGENTA_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: MAGENTA_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Light Blue Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: LIGHT_BLUE_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: LIGHT_BLUE_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Yellow Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: YELLOW_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: YELLOW_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Lime Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: LIME_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: LIME_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Pink Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: PINK_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: PINK_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Grey Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: GRAY_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: GRAY_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Light Grey Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: LIGHT_GRAY_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: LIGHT_GRAY_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Cyan Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: CYAN_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: CYAN_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Purple Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: PURPLE_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: PURPLE_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Blue Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: BLUE_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: BLUE_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Brown Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: BROWN_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: BROWN_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Green Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: GREEN_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: GREEN_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Red Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: RED_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: RED_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  Black Bow Tie:
+    easy_shape: '---,SWS,---'
+    easy_ingredients:
+      S: STRING
+      W: BLACK_WOOL
+    hard_shape: STS,L-L,WWW
+    hard_ingredients:
+      S: STRING
+      T: TRIPWIRE_HOOK
+      L: LEATHER
+      W: BLACK_WOOL
+    result: LEATHER_CHESTPLATE
+    amount: 1
+    lore: Bow ties are cool!
+  3-D Glasses:
+    easy_shape: ---,P-P,CPM
+    easy_ingredients:
+      P: PAPER
+      C: CYAN_STAINED_GLASS_PANE
+      M: MAGENTA_STAINED_GLASS_PANE
+    hard_shape: R-T,P-P,CPM
+    hard_ingredients:
+      R: COMPARATOR
+      T: REDSTONE_TORCH
+      P: PAPER
+      C: CYAN_STAINED_GLASS_PANE
+      M: MAGENTA_STAINED_GLASS_PANE
+    result: LEATHER_HELMET
+    amount: 1
+    lore: ""
+  Fob Watch:
+    easy_shape: -C-,-W-,R-R
+    easy_ingredients:
+      C: 'FILLED_MAP:1966'
+      W: CLOCK
+      R: REDSTONE
+    hard_shape: -C-,IWI,R-R
+    hard_ingredients:
+      C: 'FILLED_MAP:1966'
+      I: IRON_INGOT
+      W: CLOCK
+      R: REDSTONE
+    result: CLOCK
+    amount: 1
+    lore: ""
+  TARDIS Biome Reader:
+    easy_shape: ---,-C-,SDT
+    easy_ingredients:
+      C: 'FILLED_MAP:1972'
+      S: SAND
+      D: DIRT
+      T: STONE
+    hard_shape: -C-,SDT,LWN
+    hard_ingredients:
+      C: 'FILLED_MAP:1972'
+      S: SAND
+      D: DIRT
+      T: STONE
+      L: CLAY
+      W: SNOW_BLOCK
+      N: NETHERRACK
+    result: CLAY_BRICK
+    amount: 1
+    lore: ""
+  Acid Battery:
+    easy_shape: -A-,ARA,-A-
+    easy_ingredients:
+      A: WATER_BUCKET
+      R: REDSTONE
+    hard_shape: -A-,ARA,-A-
+    hard_ingredients:
+      A: WATER_BUCKET
+      R: REDSTONE_BLOCK
+    result: NETHER_BRICK
+    amount: 1
+    lore: ""
+  Rift Circuit:
+    easy_shape: -D-,DND,-D-
+    easy_ingredients:
+      D: DIAMOND
+      N: NETHER_STAR
+    hard_shape: -D-,DND,-D-
+    hard_ingredients:
+      D: DIAMOND
+      N: NETHER_STAR
+    result: 'FILLED_MAP:1983'
+    amount: 1
+    lore: ""
+  Rift Manipulator:
+    easy_shape: -A-,ACA,RAR
+    easy_ingredients:
+      A: NETHER_BRICK
+      C: 'FILLED_MAP:1983'
+      R: REDSTONE
+    hard_shape: -A-,ACA,NAN
+    hard_ingredients:
+      A: NETHER_BRICK
+      C: 'FILLED_MAP:1983'
+      N: NETHER_STAR
+    result: BEACON
+    amount: 1
+    lore: ""
+  Rust Plague Sword:
+    easy_shape: RIR,RIR,-S-
+    easy_ingredients:
+      R: LAVA_BUCKET
+      I: IRON_INGOT
+      S: STICK
+    hard_shape: RIR,RIR,DSD
+    hard_ingredients:
+      R: LAVA_BUCKET
+      I: IRON_INGOT
+      D: DIAMOND
+      S: STICK
+    result: IRON_SWORD
+    amount: 1
+    lore: Dalek Virus Dispenser
+  Handles:
+    easy_shape: III,ISI,IRI
+    easy_ingredients:
+      I: IRON_INGOT
+      S: SKELETON_SKULL
+      R: REDSTONE
+    hard_shape: IDI,ISI,IRI
+    hard_ingredients:
+      I: IRON_INGOT
+      D: DIAMOND
+      S: SKELETON_SKULL
+      R: REDSTONE
+    result: BIRCH_BUTTON
+    amount: 1
+    lore: "Cyberhead from the~Maldovar Market"
+  TARDIS Communicator:
+    easy_shape: N--,IIH,--I
+    easy_ingredients:
+      N: NOTE_BLOCK
+      I: IRON_INGOT
+      H: HOPPER
+    hard_shape: N--,IIH,--D
+    hard_ingredients:
+      N: NOTE_BLOCK
+      I: IRON_INGOT
+      H: HOPPER
+      D: DIAMOND
+    result: LEATHER_HELMET
+    amount: 1
+    lore: ""
+  Paper Bag:
+    easy_shape: ---,PLP,-P-
+    easy_ingredients:
+      P: PAPER
+      L: LAPIS_BLOCK
+    hard_shape: -LC,PSP,-P-
+    hard_ingredients:
+      L: LAPIS_BLOCK
+      C: COMPARATOR
+      P: PAPER
+      S: SHULKER_SHELL
+    result: PAPER
+    amount: 1
+    lore: "Smaller on the outside "
 # -------------------
 # these are the shapeless recipes
 # -------------------
 shapeless:
-    Save Storage Disk:
-        recipe: MUSIC_DISC_STRAD,REDSTONE
-        result: MUSIC_DISC_CHIRP
-        amount: 1
-        lore: "Blank"
-    Player Storage Disk:
-        recipe: MUSIC_DISC_STRAD,LAPIS_BLOCK
-        result: MUSIC_DISC_WAIT
-        amount: 1
-        lore: "Blank"
-    Biome Storage Disk:
-        recipe: MUSIC_DISC_STRAD,EMERALD
-        result: MUSIC_DISC_CAT
-        amount: 1
-        lore: "Blank"
-    Preset Storage Disk:
-        recipe: 'MUSIC_DISC_STRAD,FILLED_MAP:1966'
-        result: MUSIC_DISC_MALL
-        amount: 1
-        lore: "Blank"
-    Admin Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1968'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Bio-scanner Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1969'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Redstone Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1970'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Diamond Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1971'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Emerald Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1972'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Painter Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1979'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Ignite Upgrade:
-        recipe: 'BLAZE_ROD,FILLED_MAP:1982'
-        result: BLAZE_ROD
-        amount: 1
-        lore: ""
-    Bowl of Custard:
-        recipe: BOWL,MILK_BUCKET,EGG
-        result: MUSHROOM_STEW
-        amount: 1
-        lore: ""
-    Vanilla Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,BONE_MEAL
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Orange Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,ORANGE_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Watermelon Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,MAGENTA_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Bubblegum Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,LIGHT_BLUE_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Lemon Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,DANDELION_YELLOW
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Lime Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,LIME_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Strawberry Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,PINK_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Earl Grey Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,GRAY_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Vodka Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,LIGHT_GRAY_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Island Punch Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,CYAN_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: 'Orange'
-    Grape Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,PURPLE_DYE
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Blueberry Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,LAPIS_LAZULI
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Cappuccino Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,COCOA_BEANS
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Apple Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,CACTUS_GREEN
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Raspberry Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,ROSE_RED
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
-    Licorice Jelly Baby:
-        recipe: SUGAR,SLIME_BALL,INK_SAC
-        result: MELON_SLICE
-        amount: 4
-        lore: ''
+  Save Storage Disk:
+    recipe: MUSIC_DISC_STRAD,REDSTONE
+    result: MUSIC_DISC_CHIRP
+    amount: 1
+    lore: "Blank"
+  Player Storage Disk:
+    recipe: MUSIC_DISC_STRAD,LAPIS_BLOCK
+    result: MUSIC_DISC_WAIT
+    amount: 1
+    lore: "Blank"
+  Biome Storage Disk:
+    recipe: MUSIC_DISC_STRAD,EMERALD
+    result: MUSIC_DISC_CAT
+    amount: 1
+    lore: "Blank"
+  Preset Storage Disk:
+    recipe: 'MUSIC_DISC_STRAD,FILLED_MAP:1966'
+    result: MUSIC_DISC_MALL
+    amount: 1
+    lore: "Blank"
+  Admin Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1968'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Bio-scanner Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1969'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Redstone Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1970'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Diamond Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1971'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Emerald Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1972'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Painter Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1979'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Ignite Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1982'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
+  Bowl of Custard:
+    recipe: BOWL,MILK_BUCKET,EGG
+    result: MUSHROOM_STEW
+    amount: 1
+    lore: ""
+  Vanilla Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,BONE_MEAL
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Orange Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,ORANGE_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Watermelon Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,MAGENTA_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Bubblegum Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,LIGHT_BLUE_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Lemon Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,DANDELION_YELLOW
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Lime Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,LIME_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Strawberry Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,PINK_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Earl Grey Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,GRAY_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Vodka Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,LIGHT_GRAY_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Island Punch Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,CYAN_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: 'Orange'
+  Grape Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,PURPLE_DYE
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Blueberry Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,LAPIS_LAZULI
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Cappuccino Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,COCOA_BEANS
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Apple Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,CACTUS_GREEN
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Raspberry Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,ROSE_RED
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
+  Licorice Jelly Baby:
+    recipe: SUGAR,SLIME_BALL,INK_SAC
+    result: MELON_SLICE
+    amount: 4
+    lore: ''
 # -------------------
 ## furnace recipes are not used yet...
 # -------------------
 furnace:
-    Nuclear Wool:
-        recipe: WHITE_WOOL
-        result: BLACK_WOOL
-        experience: 0
-        cooktime: 200
-        lore: "Done to a crisp"
+  Nuclear Wool:
+    recipe: WHITE_WOOL
+    result: BLACK_WOOL
+    experience: 0
+    cooktime: 200
+    lore: "Done to a crisp"

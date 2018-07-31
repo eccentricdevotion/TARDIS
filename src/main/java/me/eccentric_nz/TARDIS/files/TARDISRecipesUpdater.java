@@ -227,13 +227,15 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
             recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
         }
-        if (!recipes_config.contains("shaped.Paper Bag")) {
+        if (!recipes_config.contains("shaped.Paper Bag") || !recipes_config.contains("shaped.Paper Bag.hard_ingredients.C")) {
             recipes_config.set("shaped.Paper Bag.easy_shape", "---,PLP,-P-");
             recipes_config.set("shaped.Paper Bag.easy_ingredients.P", "PAPER");
             recipes_config.set("shaped.Paper Bag.easy_ingredients.L", "LAPIS_BLOCK");
-            recipes_config.set("shaped.Paper Bag.hard_shape", "---,PLP,-P-");
+            recipes_config.set("shaped.Paper Bag.hard_shape", "-LC,PSP,-P-");
+            recipes_config.set("shaped.Paper Bag.hard_ingredients.L", "LAPIS_BLOCK");
+            recipes_config.set("shaped.Paper Bag.hard_ingredients.C", "COMPARATOR");
             recipes_config.set("shaped.Paper Bag.hard_ingredients.P", "PAPER");
-            recipes_config.set("shaped.Paper Bag.hard_ingredients.L", "SHULKER_BOX");
+            recipes_config.set("shaped.Paper Bag.hard_ingredients.S", "SHULKER_SHELL");
             recipes_config.set("shaped.Paper Bag.result", "PAPER");
             recipes_config.set("shaped.Paper Bag.amount", 1);
             recipes_config.set("shaped.Paper Bag.lore", "Smaller on the outside");
