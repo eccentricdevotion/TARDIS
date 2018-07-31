@@ -267,6 +267,7 @@ public class TARDIS extends JavaPlugin {
                 tmic.checkCondenserData();
                 tmic.checkPlayerPrefsData();
                 tmic.checkBlockData();
+                new TARDISFarmingConverter(this).update();
             }
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();

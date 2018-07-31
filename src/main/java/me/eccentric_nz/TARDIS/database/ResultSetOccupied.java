@@ -72,7 +72,7 @@ public class ResultSetOccupied {
                 }
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for travellers table! " + e.getMessage());
+            plugin.debug("ResultSet error for travellers table [Occupied]! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -82,7 +82,7 @@ public class ResultSetOccupied {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing travellers table! " + e.getMessage());
+                plugin.debug("Error closing travellers table [Occupied]! " + e.getMessage());
             }
         }
     }

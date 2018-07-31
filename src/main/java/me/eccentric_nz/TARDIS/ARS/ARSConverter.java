@@ -34,9 +34,11 @@ public class ARSConverter {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
+    private final String prefix;
 
     public ARSConverter(TARDIS plugin) {
         this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
     }
 
     public void convertARS() {
@@ -44,10 +46,12 @@ public class ARSConverter {
         PreparedStatement query = null;
         PreparedStatement update = null;
         ResultSet rs = null;
+        int i = 0;
         try {
             service.testConnection(connection);
-            query = connection.prepareStatement("SELECT ars_id, json FROM ars");
-            update = connection.prepareStatement("UPDATE ars set json = ? WHERE ars_id = ?");
+            connection.setAutoCommit(false);
+            query = connection.prepareStatement("SELECT ars_id, json FROM " + prefix + "ars");
+            update = connection.prepareStatement("UPDATE " + prefix + "ars set json = ? WHERE ars_id = ?");
             rs = query.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
@@ -74,8 +78,14 @@ public class ARSConverter {
                     JSONArray arr = new JSONArray(grid);
                     update.setString(1, arr.toString());
                     update.setInt(2, id);
-                    update.executeUpdate();
+                    update.addBatch();
+                    i++;
                 }
+            }
+            if (i > 0) {
+                update.executeBatch();
+                connection.commit();
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ARS records");
             }
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for ars table! " + ex.getMessage());

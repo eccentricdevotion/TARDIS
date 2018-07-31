@@ -251,22 +251,8 @@ class TARDISMySQLDatabaseUpdater {
                 String delVoid = "DROP TABLE '" + prefix + "void'";
                 statement.executeUpdate(delVoid);
             }
-            // transfer farming locations from `tardis` table to `farming` table
-            String farmQuery = "SELECT farm_id FROM " + prefix + "farming";
-            ResultSet rsf = statement.executeQuery(farmQuery);
-            if (!rsf.isBeforeFirst()) {
-                String tardisFarms = "SELECT tardis_id, birdcage, farm, hutch, igloo, stable, stall, village FROM " + prefix + "tardis";
-                ResultSet rstf = statement.executeQuery(tardisFarms);
-                if (rstf.isBeforeFirst()) {
-                    while (rstf.next()) {
-                        String updateFarms = String.format("INSERT INTO " + prefix + "farming (tardis_id, birdcage, farm, hutch, igloo, stable, stall, village) VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", rstf.getInt("tardis_id"), rstf.getString("birdcage"), rstf.getString("farm"), rstf.getString("hutch"), rstf.getString("igloo"), rstf.getString("stable"), rstf.getString("stall"), rstf.getString("village"));
-                        statement.executeQuery(updateFarms);
-                    }
-                    i++;
-                }
-            }
         } catch (SQLException e) {
-            plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());
+            plugin.debug("MySQL database add fields error: " + e.getMessage() + " " + e.getErrorCode());
         }
         if (i > 0) {
             plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");

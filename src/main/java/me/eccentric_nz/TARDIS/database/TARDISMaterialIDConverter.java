@@ -787,8 +787,13 @@ public class TARDISMaterialIDConverter {
                     }
                     i++;
                 }
-                ps.executeBatch();
-                connection.commit();
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
+                    plugin.getConfig().set("conversions.condenser_materials", true);
+                    plugin.saveConfig();
+                }
             }
         } catch (SQLException e) {
             plugin.debug("Conversion error for condenser materials! " + e.getMessage());
@@ -808,11 +813,6 @@ public class TARDISMaterialIDConverter {
             } catch (SQLException e) {
                 plugin.debug("Error closing condenser table (converting IDs)! " + e.getMessage());
             }
-        }
-        if (i > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
-            plugin.getConfig().set("conversions.condenser_materials", true);
-            plugin.saveConfig();
         }
     }
 
@@ -892,6 +892,9 @@ public class TARDISMaterialIDConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
+                    plugin.getConfig().set("conversions.player_prefs_materials", true);
+                    plugin.saveConfig();
                 }
             }
         } catch (SQLException e) {
@@ -913,11 +916,6 @@ public class TARDISMaterialIDConverter {
                 plugin.debug("Error closing player_prefs table (converting IDs)! " + e.getMessage());
             }
         }
-        if (i > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
-            plugin.getConfig().set("conversions.player_prefs_materials", true);
-            plugin.saveConfig();
-        }
     }
 
     public void checkBlockData() {
@@ -925,7 +923,7 @@ public class TARDISMaterialIDConverter {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String check = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'";
+        String check = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
         String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
         String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
         int i = 0;
@@ -935,7 +933,7 @@ public class TARDISMaterialIDConverter {
             checker = connection.createStatement();
             ResultSet rsfc = checker.executeQuery(check);
             if (rsfc.next()) {
-                // do condenser data
+                // do blocks data
                 statement = connection.prepareStatement(query);
                 ps = connection.prepareStatement(update);
                 rs = statement.executeQuery();
