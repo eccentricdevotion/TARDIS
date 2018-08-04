@@ -264,11 +264,12 @@ public class TARDISConfiguration {
         Set<String> cWorlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(true);
         cWorlds.forEach((cw) -> {
             if (!plugin.isMVOnServer() && worldFolderExists(cw)) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                 loadWorld(cw);
             } else {
                 if (plugin.getServer().getWorld(cw) == null) {
                     plugin.getConfig().set("worlds." + cw, null);
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from config.yml");
                     // remove records from database that may contain
                     // the removed world
                     plugin.getCleanUpWorlds().add(cw);
