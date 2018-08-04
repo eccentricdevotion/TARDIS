@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.command.CommandException;
@@ -83,7 +83,7 @@ public class TARDISSiluria {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Siluria NETHER -g " + which + " -t NORMAL");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none Siluria");
             } else {
-                WorldCreator.name("Siluria").type(WorldType.NORMAL).environment(World.Environment.NETHER).createWorld();
+                WorldCreator.name("Siluria").type(WorldType.NORMAL).environment(Environment.NETHER).generator(which).createWorld();
             }
             if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Siluria:" + which);

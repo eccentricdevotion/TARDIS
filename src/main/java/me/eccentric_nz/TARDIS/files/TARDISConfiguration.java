@@ -17,8 +17,12 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -247,9 +251,10 @@ public class TARDISConfiguration {
 
     public void doWorlds() {
         List<World> worlds = plugin.getServer().getWorlds();
+        String defWorld = config.getString("creation.default_world_name");
         worlds.forEach((w) -> {
             String worldname = "worlds." + w.getName();
-            if (!config.contains(worldname) && !worldname.equals(config.getString("creation.default_world_name"))) {
+            if (!config.contains(worldname) && !worldname.equals(defWorld)) {
                 plugin.getConfig().set(worldname, true);
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
             }
@@ -258,13 +263,46 @@ public class TARDISConfiguration {
         // now remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(true);
         cWorlds.forEach((cw) -> {
-            if (plugin.getServer().getWorld(cw) == null) {
-                plugin.getConfig().set("worlds." + cw, null);
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
-                // remove records from database that may contain
-                // the removed world
-                plugin.getCleanUpWorlds().add(cw);
+            if (!plugin.isMVOnServer() && worldFolderExists(cw)) {
+                loadWorld(cw);
+            } else {
+                if (plugin.getServer().getWorld(cw) == null) {
+                    plugin.getConfig().set("worlds." + cw, null);
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
+                    // remove records from database that may contain
+                    // the removed world
+                    plugin.getCleanUpWorlds().add(cw);
+                }
             }
         });
+    }
+
+    private boolean worldFolderExists(String world) {
+        File container = plugin.getServer().getWorldContainer();
+        File[] dirs = container.listFiles();
+        if (dirs != null) {
+            for (File dir : dirs) {
+                if (dir.isDirectory() && dir.getName().equals(world)) {
+                    File level = new File(dir, "level.dat");
+                    if (level.exists()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void loadWorld(String world) {
+        String which = (plugin.getPM().isPluginEnabled("TerrainControl")) ? "TerrainControl" : "OpenTerrainGenerator";
+        if ((world.equals(plugin.getConfig().getString("creation.default_world_name")) || world.equals("TARDIS_Zero_Room"))) {
+            WorldCreator.name(world).type(WorldType.FLAT).environment(Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
+        } else if (world.equals("Gallifrey") || world.equals("Skaro")) {
+            WorldCreator.name(world).type(WorldType.NORMAL).environment(Environment.NORMAL).generator(which).createWorld();
+        } else if (world.equals("Siluria")) {
+            WorldCreator.name(world).type(WorldType.NORMAL).environment(Environment.NETHER).generator(which).createWorld();
+        } else {
+            WorldCreator.name(world).createWorld();
+        }
     }
 }

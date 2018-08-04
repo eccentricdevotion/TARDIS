@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.command.CommandException;
@@ -84,7 +84,7 @@ public class TARDISGallifrey {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Gallifrey NORMAL -g " + which + " -t NORMAL");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none Gallifrey");
             } else {
-                WorldCreator.name("Gallifrey").type(WorldType.NORMAL).environment(World.Environment.NORMAL).createWorld();
+                WorldCreator.name("Gallifrey").type(WorldType.NORMAL).environment(Environment.NORMAL).generator(which).createWorld();
             }
             if (plugin.getPM().isPluginEnabled("My_Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Gallifrey:" + which);

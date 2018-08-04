@@ -224,8 +224,8 @@ public class TARDIS extends JavaPlugin {
             loadInventoryManager();
             checkTCG();
             checkDefaultWorld();
-            cleanUpWorlds();
             setupPlanets();
+            cleanUpWorlds();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             blockUtils = new TARDISBlockSetters(this);
@@ -906,9 +906,10 @@ public class TARDIS extends JavaPlugin {
         if (!getConfig().getBoolean("creation.default_world")) {
             return;
         }
-        if (getServer().getWorld(getConfig().getString("creation.default_world_name")) == null) {
+        String defWorld = getConfig().getString("creation.default_world_name");
+        if (getServer().getWorld(defWorld) == null) {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
-            new TARDISSpace(this).createDefaultWorld(getConfig().getString("creation.default_world_name"));
+            new TARDISSpace(this).createDefaultWorld(defWorld);
         }
     }
 
