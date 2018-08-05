@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
@@ -215,7 +216,7 @@ public class TARDISJunkControlListener implements Listener {
                 return;
             }
             World w;
-            if (plugin.isMVOnServer()) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(line1);
             } else {
                 w = plugin.getServer().getWorld(line1);

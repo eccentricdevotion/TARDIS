@@ -25,10 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -144,7 +141,8 @@ public class TARDISTerminalListener implements Listener {
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<>();
                                 String[] data = terminalDestination.get(uuid).split(":");
-                                String ww = (plugin.isMVOnServer()) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                                String ww = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ?
+                                        plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
                                 set.put("world", ww);
                                 set.put("x", data[1]);
                                 set.put("y", data[2]);
@@ -330,7 +328,7 @@ public class TARDISTerminalListener implements Listener {
 
     private void setCurrent(Inventory inv, Player p, int slot) {
         String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
-        if (plugin.isMVOnServer()) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
         }
         int[] slots = new int[]{36, 38, 40, 42};
@@ -433,7 +431,8 @@ public class TARDISTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return (plugin.isMVOnServer()) ? plugin.getMVHelper().getAlias(world) : world;
+        return (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) :
+                world;
     }
 
     private void checkSettings(Inventory inv, Player p) {
@@ -453,7 +452,8 @@ public class TARDISTerminalListener implements Listener {
                 String world = inv.getItem(i).getItemMeta().getLore().get(0);
                 if (!world.equals("No permission")) {
                     found = true;
-                    World w = (plugin.isMVOnServer()) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
+                    World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ?
+                            plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     if (world.equals(terminalUsers.get(uuid).getWorld().getName())) {

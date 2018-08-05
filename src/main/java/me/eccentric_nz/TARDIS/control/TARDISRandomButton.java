@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -145,7 +146,7 @@ public class TARDISRandomButton {
                     set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
                     String worldname;
-                    if (plugin.isMVOnServer()) {
+                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                         worldname = plugin.getMVHelper().getAlias(rand.getWorld());
                     } else {
                         worldname = rand.getWorld().getName();

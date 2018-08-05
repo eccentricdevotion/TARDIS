@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
@@ -55,7 +56,7 @@ public class TARDISSpace {
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
             String gm = plugin.getConfig().getString("creation.gamemode").toLowerCase(Locale.ENGLISH);
-            if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
@@ -63,7 +64,7 @@ public class TARDISSpace {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " CreativeWorld true");
                 }
                 tardisWorld = plugin.getServer().getWorld(name);
-            } else if (plugin.isMVOnServer()) {
+            } else if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create " + name + " NORMAL -g TARDISChunkGenerator -t FLAT");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
@@ -81,7 +82,7 @@ public class TARDISSpace {
             plugin.getConfig().set("worlds." + name, false);
             plugin.saveConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds gamemode " + gm + " " + name);
@@ -162,11 +163,11 @@ public class TARDISSpace {
     }
 
     public void createDefaultWorld(String name) {
-        if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
-        } else if (plugin.isMVOnServer()) {
+        } else if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create " + name + " NORMAL -g TARDISChunkGenerator -t FLAT");
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
@@ -179,7 +180,7 @@ public class TARDISSpace {
         // add world to config, but disabled by default
         plugin.getConfig().set("worlds." + name, false);
         plugin.saveConfig();
-        if (plugin.getPM().isPluginEnabled("My_Worlds")) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
             plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
             if (plugin.getConfig().getBoolean("creation.keep_night")) {

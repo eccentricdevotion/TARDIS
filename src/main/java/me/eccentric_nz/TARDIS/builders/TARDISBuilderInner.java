@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -295,7 +296,7 @@ public class TARDISBuilderInner {
                             qf.doInsert("doors", setd);
                             // if create_worlds is true, set the world spawn
                             if (own_world) {
-                                if (plugin.isMVOnServer()) {
+                                if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                                     plugin.getMVHelper().setSpawnLocation(world, x, y, z);
                                 } else {
                                     world.setSpawnLocation(x, y, (z + 1));

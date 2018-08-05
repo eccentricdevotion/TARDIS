@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -54,7 +55,8 @@ public class TARDISAbandonLister {
                 wherec.put("tardis_id", t.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                 if (rsc.resultSet()) {
-                    String w = (plugin.isMVOnServer()) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : rsc.getWorld().getName();
+                    String w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ?
+                            plugin.getMVHelper().getAlias(rsc.getWorld()) : rsc.getWorld().getName();
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
                         String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this TARDIS\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + " abandoned\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this TARDIS\"}]}}}]";

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -84,11 +85,11 @@ public class TARDISCondenserListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 if (title.equals("§4Artron Condenser")) {
                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
-                        if (plugin.isMVOnServer() && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
+                        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE) && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
                             TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                             return;
                         }
-                        if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                             MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
                             if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
                                 TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");

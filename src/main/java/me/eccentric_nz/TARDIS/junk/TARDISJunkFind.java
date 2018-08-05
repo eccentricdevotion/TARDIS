@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.junk;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -50,7 +51,7 @@ class TARDISJunkFind {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
                 String world = rsc.getWorld().getName();
-                if (plugin.isMVOnServer()) {
+                if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                     world = plugin.getMVHelper().getAlias(rsc.getWorld());
                 }
                 TARDISMessage.send(sender, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());

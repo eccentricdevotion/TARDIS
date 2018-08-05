@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
@@ -151,10 +152,10 @@ public class TARDISDeleteCommand {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
-                    if (plugin.isMVOnServer()) {
+                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
                     }
-                    if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
                     }
                     if (plugin.getPM().isPluginEnabled("WorldBorder")) {

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -50,7 +51,7 @@ class TARDISFindCommand {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
                     String world = rsc.getWorld().getName();
-                    if (plugin.isMVOnServer()) {
+                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                         world = plugin.getMVHelper().getAlias(rsc.getWorld());
                     }
                     TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());

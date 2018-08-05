@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -69,7 +70,7 @@ public class TARDISLister {
                         TARDISMessage.send(p, "CHARGERS");
                     }
                     String w;
-                    if (plugin.isMVOnServer()) {
+                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                         w = plugin.getMVHelper().getAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
                     } else {
                         w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");

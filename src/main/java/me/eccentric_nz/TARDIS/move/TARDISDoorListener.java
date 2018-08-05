@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
@@ -146,10 +147,10 @@ public class TARDISDoorListener {
      */
     public boolean checkSurvival(World w) {
         boolean bool = false;
-        if (plugin.isMVOnServer()) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
             bool = plugin.getMVHelper().isWorldSurvival(w);
         }
-        if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
             MultiWorldAPI mw = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
             MultiWorldWorldData mww = mw.getWorld(w.getName());
             if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {

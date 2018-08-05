@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
@@ -126,7 +127,6 @@ public class TARDIS extends JavaPlugin {
     private boolean worldGuardOnServer;
     private boolean helperOnServer;
     private boolean disguisesOnServer;
-    private boolean mvOnServer;
     private INVENTORY_MANAGER invManager;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
@@ -145,12 +145,12 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private String prefix;
     private DIFFICULTY difficulty;
+    private WORLD_MANAGER worldManager;
     private BukkitTask recordingTask;
 
     public TARDIS() {
         worldGuardOnServer = false;
         helperOnServer = false;
-        mvOnServer = false;
         invManager = INVENTORY_MANAGER.NONE;
         versions.put("Citizens", "2.0.22");
         versions.put("Factions", "2.8.19");
@@ -207,6 +207,7 @@ public class TARDIS extends JavaPlugin {
                     }
                 }
             }
+            worldManager = WORLD_MANAGER.getWorldManager();
             saveDefaultConfig();
             loadCustomConfigs();
             loadSigns();
@@ -685,16 +686,11 @@ public class TARDIS extends JavaPlugin {
      * Checks if the Multiverse-Core plugin is available, and loads support if it is.
      */
     private void loadMultiverse() {
-        if (pm.isPluginEnabled("Multiverse-Core")) {
+        if (worldManager.equals(WORLD_MANAGER.MULTIVERSE)) {
             Plugin mvplugin = pm.getPlugin("Multiverse-Core");
             debug("Hooking into Multiverse-Core!");
             mvHelper = new TARDISMultiverseHelper(mvplugin);
-            mvOnServer = true;
         }
-    }
-
-    public boolean isMVOnServer() {
-        return mvOnServer;
     }
 
     public TARDISMultiverseHelper getMVHelper() {
@@ -810,10 +806,10 @@ public class TARDIS extends JavaPlugin {
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
             }
-            if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null && pm.getPlugin("My_Worlds") == null)) {
+            if (pm.getPlugin("TARDISChunkGenerator") == null) {
                 getConfig().set("creation.create_worlds", false);
                 saveConfig();
-                console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
+                console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires TARDISChunkGenerator!");
             }
         }
         if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
@@ -1161,6 +1157,10 @@ public class TARDIS extends JavaPlugin {
 
     public void setDifficulty(DIFFICULTY difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public WORLD_MANAGER getWorldManager() {
+        return worldManager;
     }
 
     private void startRecorderTask() {

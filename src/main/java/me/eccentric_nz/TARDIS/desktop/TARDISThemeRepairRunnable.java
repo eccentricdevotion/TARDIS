@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
@@ -408,7 +409,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         qf.doUpdate("doors", setd, whered);
                         // if create_worlds is true, set the world spawn
                         if (own_world) {
-                            if (plugin.isMVOnServer()) {
+                            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                                 plugin.getMVHelper().setSpawnLocation(world, x, y, z);
                             } else {
                                 world.setSpawnLocation(x, y, (z + 1));

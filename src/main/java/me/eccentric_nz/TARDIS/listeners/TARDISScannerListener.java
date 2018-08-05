@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -256,7 +257,7 @@ public class TARDISScannerListener implements Listener {
         // message the player
         TARDISMessage.send(player, "SCAN_RESULT", whereisit);
         String worldname;
-        if (plugin.isMVOnServer()) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
             worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = scan_loc.getWorld().getName();

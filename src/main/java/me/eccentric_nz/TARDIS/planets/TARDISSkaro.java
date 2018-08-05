@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
@@ -84,16 +85,16 @@ public class TARDISSkaro {
                 TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true, plugin.getPluginName());
                 TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
             }
-            if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load Skaro");
-            } else if (plugin.isMVOnServer()) {
+            } else if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create Skaro NORMAL -g " + which + " -t NORMAL");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none Skaro");
             } else {
                 WorldCreator.name("Skaro").type(WorldType.NORMAL).environment(Environment.NORMAL).generator(which).createWorld();
             }
-            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load Skaro:" + which);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -263,11 +264,11 @@ public class TARDISConfiguration {
         // now remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(true);
         cWorlds.forEach((cw) -> {
-            if (!plugin.isMVOnServer() && worldFolderExists(cw)) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
-                loadWorld(cw);
-            } else {
-                if (plugin.getServer().getWorld(cw) == null) {
+            if (plugin.getServer().getWorld(cw) == null) {
+                if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && worldFolderExists(cw)) {
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
+                    loadWorld(cw);
+                } else {
                     plugin.getConfig().set("worlds." + cw, null);
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from config.yml");
                     // remove records from database that may contain

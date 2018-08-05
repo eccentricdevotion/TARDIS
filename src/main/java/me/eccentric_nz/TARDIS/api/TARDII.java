@@ -208,7 +208,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getConfig().getBoolean("worlds." + name)) {
-                if (TARDIS.plugin.isMVOnServer()) {
+                if (TARDIS.plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
                     worlds.add(name);
@@ -224,7 +224,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getConfig().getBoolean("worlds." + name) && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
-                if (TARDIS.plugin.isMVOnServer()) {
+                if (TARDIS.plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
                     worlds.add(name);

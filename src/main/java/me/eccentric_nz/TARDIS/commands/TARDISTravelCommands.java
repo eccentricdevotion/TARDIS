@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.travel.*;
@@ -806,7 +807,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             w = rsc.getWorld();
         } else {
-            if (plugin.isMVOnServer()) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(w_str);
             } else {
                 w = plugin.getServer().getWorld(w_str);

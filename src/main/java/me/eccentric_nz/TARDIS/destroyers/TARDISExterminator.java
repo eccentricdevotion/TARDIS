@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
@@ -330,14 +331,14 @@ public class TARDISExterminator {
                 TARDISMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
             });
-            if (plugin.isMVOnServer()) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }
-            if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw delete " + name);
             }
-            if (plugin.getPM().isPluginEnabled("My_Worlds")) {
+            if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + name);
             }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {

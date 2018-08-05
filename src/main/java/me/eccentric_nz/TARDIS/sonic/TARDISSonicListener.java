@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.*;
 import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.*;
@@ -896,7 +897,7 @@ public class TARDISSonicListener implements Listener {
         long time = scan_loc.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(time);
         String worldname;
-        if (plugin.isMVOnServer()) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
             worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = scan_loc.getWorld().getName();
