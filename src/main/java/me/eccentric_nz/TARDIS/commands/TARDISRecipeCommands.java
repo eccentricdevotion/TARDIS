@@ -47,10 +47,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("a-circuit", "Server Admin Circuit");
         recipeItems.put("acid-battery", "Acid Battery");
         recipeItems.put("ars-circuit", "TARDIS ARS Circuit");
+        recipeItems.put("battery", "Blaster Battery");
         recipeItems.put("bio-circuit", "Bio-scanner Circuit");
         recipeItems.put("biome-disk", "Biome Storage Disk");
         recipeItems.put("blank", "Blank Storage Disk");
-        recipeItems.put("battery", "Blaster Battery");
         recipeItems.put("blaster", "Sonic Blaster");
         recipeItems.put("bow-tie", "Red Bow Tie");
         recipeItems.put("c-circuit", "TARDIS Chameleon Circuit");
@@ -68,17 +68,18 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("i-circuit", "TARDIS Input Circuit");
         recipeItems.put("ignite-circuit", "Ignite Circuit");
         recipeItems.put("invisible", "TARDIS Invisibility Circuit");
-        recipeItems.put("key", "TARDIS Key");
         recipeItems.put("jammy-dodger", "Jammy Dodger");
         recipeItems.put("jelly-baby", "Orange Jelly Baby");
+        recipeItems.put("key", "TARDIS Key");
         recipeItems.put("l-circuit", "TARDIS Locator Circuit");
         recipeItems.put("locator", "TARDIS Locator");
         recipeItems.put("m-circuit", "TARDIS Materialisation Circuit");
         recipeItems.put("memory-circuit", "TARDIS Memory Circuit");
         recipeItems.put("oscillator", "Sonic Oscillator");
+        recipeItems.put("p-circuit", "Perception Circuit");
         recipeItems.put("pad", "Landing Pad");
         recipeItems.put("painter", "Painter Circuit");
-        recipeItems.put("p-circuit", "Perception Circuit");
+        recipeItems.put("paper-bag", "Paper Bag");
         recipeItems.put("player-disk", "Player Storage Disk");
         recipeItems.put("preset-disk", "Preset Storage Disk");
         recipeItems.put("r-circuit", "Redstone Activator Circuit");
@@ -185,8 +186,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 case "i-circuit":
                 case "ignite-circuit":
                 case "invisible":
-                case "key":
                 case "jammy-dodger":
+                case "key":
                 case "l-circuit":
                 case "locator":
                 case "m-circuit":
@@ -194,6 +195,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 case "oscillator":
                 case "p-circuit":
                 case "painter":
+                case "paper-bag":
                 case "r-circuit":
                 case "r-key":
                 case "randomiser-circuit":

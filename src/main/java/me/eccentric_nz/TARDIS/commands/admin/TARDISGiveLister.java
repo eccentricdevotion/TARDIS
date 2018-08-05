@@ -109,6 +109,7 @@ class TARDISGiveLister {
         food.add(ChatColor.GRAY + "fish-finger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Fish Finger");
         food.add(ChatColor.GRAY + "jammy-dodger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jammy Dodger Biscuit");
         food.add(ChatColor.GRAY + "jelly-baby" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jelly Baby");
+        food.add(ChatColor.GRAY + "paper-bag" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Paper Bag");
         give_options.put("Food", food);
         List<String> accessories = new ArrayList<>();
         accessories.add(ChatColor.GREEN + "bow-tie" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Bow Tie");

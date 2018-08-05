@@ -57,10 +57,10 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("acid-battery", "Acid Battery");
         items.put("ars-circuit", "TARDIS ARS Circuit");
         items.put("artron", "");
+        items.put("battery", "Blaster Battery");
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
-        items.put("battery", "Blaster Battery");
         items.put("blaster", "Sonic Blaster");
         items.put("bow-tie", "Red Bow Tie");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
@@ -89,13 +89,14 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("p-circuit", "Perception Circuit");
         items.put("pad", "Landing Pad");
         items.put("painter", "Painter Circuit");
+        items.put("paper-bag", "Paper Bag");
         items.put("player-disk", "Player Storage Disk");
         items.put("preset-disk", "Preset Storage Disk");
         items.put("r-circuit", "Redstone Activator Circuit");
         items.put("r-key", "TARDIS Remote Key");
         items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
-        items.put("remote", "Stattenheim Remote");
         items.put("reader", "TARDIS Biome Reader");
+        items.put("remote", "Stattenheim Remote");
         items.put("rift-circuit", "Rift Circuit");
         items.put("rift-manipulator", "Rift Manipulator");
         items.put("rust", "Rust Plague Sword");
@@ -105,8 +106,8 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("seed", "");
         items.put("sonic", "Sonic Screwdriver");
         items.put("t-circuit", "TARDIS Temporal Circuit");
-        items.put("telepathic", "TARDIS Telepathic Circuit");
         items.put("tachyon", "");
+        items.put("telepathic", "TARDIS Telepathic Circuit");
         items.put("vortex", "Vortex Manipulator");
         items.put("watch", "Fob Watch");
     }
