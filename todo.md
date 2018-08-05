@@ -5,16 +5,15 @@
 
 ## Next version `4.0.0`
 1. Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-2. Test player preference to bypass `tardis rescue accept` - _started_
-3. Test `invisibility` setting to TARDIS areas
+2. Test player preference to bypass `tardis rescue accept`
+3. Test `invisibility` setting in TARDIS areas
 4. Test Handles transmat requests
 5. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 6. Fix Biome adaptive presets dropping flowers & seeds (properly)
 7. Test test test
 
 ## TARDIS data pack
-* Add TARDIS recipes?
-* Add TARDIS tags?
+* Add TARDIS recipes? _probably not as you can't set the display name_
 
 ## Future version `?+`
 * TARDISSonicBlaster addon? - _unlikely_
@@ -42,14 +41,10 @@
    * Judoon
    * Clockwork Droid
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
-5. Rename resource pack to 'TARDIS-Optifine'
- 
-## TIPS visulisation tool
-* Use WorldGuard region data
+5. Rename resource pack to 'TARDIS-Optifine'?
 
 ## Waiting on Bukkit / SpigotAPI
-0. IDs/data are soon to be history... so convert all ID/data use to block data - _started_ 
-1. Get/set horse speed (Attribute API)
+1. Get/set Villager career level and willingness
 
 ## Minecraft API if ever available
 1. Recreate everything with the new API :)

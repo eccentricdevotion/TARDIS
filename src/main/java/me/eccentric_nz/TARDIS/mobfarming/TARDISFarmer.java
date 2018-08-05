@@ -206,10 +206,7 @@ public class TARDISFarmer {
                             tmhor.setHorseInventory(horse.getInventory().getContents());
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
-                            if (plugin.isHelperOnServer()) {
-                                double speed = plugin.getTardisHelper().getHorseSpeed(horse);
-                                tmhor.setSpeed(speed);
-                            }
+                            tmhor.setSpeed(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
                             // check the leash
                             if (horse.isLeashed()) {
                                 Entity leash = horse.getLeashHolder();
@@ -261,10 +258,7 @@ public class TARDISFarmer {
                             tmlla.setHorseInventory(llama.getInventory().getContents());
                             tmlla.setDomesticity(llama.getDomestication());
                             tmlla.setJumpStrength(llama.getJumpStrength());
-                            if (plugin.isHelperOnServer()) {
-                                double speed = plugin.getTardisHelper().getHorseSpeed(llama);
-                                tmlla.setSpeed(speed);
-                            }
+                            tmlla.setSpeed(llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
                             // check the leash
                             if (llama.isLeashed()) {
                                 Entity leash = llama.getLeashHolder();
@@ -406,8 +400,8 @@ public class TARDISFarmer {
                             tv.setName(v.getCustomName());
                             tv.setTrades(v.getRecipes());
                             tv.setRiches(v.getRiches());
+                            tv.setCareer(v.getCareer());
                             if (plugin.isHelperOnServer()) {
-                                tv.setCareer(v.getCareer());
                                 tv.setCareerLevel(plugin.getTardisHelper().getVillagerCareerLevel(v));
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
@@ -703,9 +697,7 @@ public class TARDISFarmer {
                             pinv.addItem(leash);
                             p.updateInventory();
                         }
-                        if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setHorseSpeed(equine, e.getSpeed());
-                        }
+                        equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(e.getSpeed());
                         equine.setRemoveWhenFarAway(false);
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_horse.size() > 0) {
@@ -763,9 +755,7 @@ public class TARDISFarmer {
                             pinv.addItem(leash);
                             p.updateInventory();
                         }
-                        if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setHorseSpeed(cria, ll.getSpeed());
-                        }
+                        cria.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(ll.getSpeed());
                         cria.setRemoveWhenFarAway(false);
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_llama.size() > 0) {

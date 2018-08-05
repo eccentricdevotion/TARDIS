@@ -118,9 +118,7 @@ public class TARDISHorseListener implements Listener {
                         double mh = h.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                         tmhor.setHorseHealth(mh);
                         tmhor.setHealth(h.getHealth());
-                        if (plugin.isHelperOnServer()) {
-                            tmhor.setSpeed(plugin.getTardisHelper().getHorseSpeed(h));
-                        }
+                        tmhor.setSpeed(h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
                         // eject player
                         if (h.eject()) {
                             // remove horse
@@ -154,9 +152,7 @@ public class TARDISHorseListener implements Listener {
                                 ee.setColor(tmhor.getHorseColour());
                                 ee.setStyle(tmhor.getHorseStyle());
                             }
-                            if (plugin.isHelperOnServer()) {
-                                plugin.getTardisHelper().setHorseSpeed(equine, tmhor.getSpeed());
-                            }
+                            equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmhor.getSpeed());
                             equine.setTamed(true);
                             equine.setOwner(p);
 

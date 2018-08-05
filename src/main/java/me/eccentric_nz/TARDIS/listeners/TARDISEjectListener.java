@@ -164,10 +164,7 @@ public class TARDISEjectListener implements Listener {
                 tmlla.setHorseInventory(ll.getInventory().getContents());
                 tmlla.setDomesticity(ll.getDomestication());
                 tmlla.setJumpStrength(ll.getJumpStrength());
-                if (plugin.isHelperOnServer()) {
-                    double speed = plugin.getTardisHelper().getHorseSpeed(ll);
-                    tmlla.setSpeed(speed);
-                }
+                tmlla.setSpeed(ll.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
                 // check the leash
                 if (ll.isLeashed()) {
                     Entity leash = ll.getLeashHolder();
@@ -209,9 +206,7 @@ public class TARDISEjectListener implements Listener {
                     pinv.addItem(leash);
                     player.updateInventory();
                 }
-                if (plugin.isHelperOnServer()) {
-                    plugin.getTardisHelper().setHorseSpeed(llama, tmlla.getSpeed());
-                }
+                llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmlla.getSpeed());
                 ent.remove();
                 break;
             case MUSHROOM_COW:
