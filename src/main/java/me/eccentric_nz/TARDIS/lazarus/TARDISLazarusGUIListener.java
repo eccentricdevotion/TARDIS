@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -86,7 +85,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (name.equals("§4Genetic Manipulator")) {
             event.setCancelled(true);
             if (plugin.checkTWA()) {
-                max_slot = 43;
+                max_slot = 45;
             }
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
@@ -154,7 +153,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
-                plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
+                TARDISLazarusRunnable runnable = new TARDISLazarusRunnable(plugin, b);
+                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 6L, 6L);
+                runnable.setTaskID(taskId);
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // undisguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -177,7 +178,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
-                plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
+                TARDISLazarusRunnable runnable = new TARDISLazarusRunnable(plugin, b);
+                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 6L, 6L);
+                runnable.setTaskID(taskId);
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // disguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -334,16 +337,17 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         ew.setAggressive(getBoolean(inv));
                                         break;
                                     case COW:
-                                    case SKELETON_HORSE:
-                                    case ZOMBIE_HORSE:
-                                    case ZOMBIE:
                                         AgeableWatcher aw = (AgeableWatcher) livingWatcher;
                                         aw.setBaby(getBaby(inv));
+                                        break;
+                                    case ZOMBIE:
+                                        ZombieWatcher zw = (ZombieWatcher) livingWatcher;
+                                        zw.setBaby(getBaby(inv));
                                         break;
                                     case ZOMBIE_VILLAGER:
                                         ZombieVillagerWatcher zvw = (ZombieVillagerWatcher) livingWatcher;
                                         zvw.setBaby(getBaby(inv));
-                                        zvw.setProfession(getZombieProfession(inv));
+                                        zvw.setProfession(getProfession(inv));
                                         break;
                                     case SNOWMAN:
                                         SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
@@ -380,8 +384,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
             if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
-                b.getRelative(BlockFace.SOUTH).setBlockData(TARDISConstants.AIR);
-                b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
+                b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
+                b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
             }
             untrack(uuid);
         }
@@ -400,8 +404,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     }
 
     private void openDoor(Block b) {
-        b.getRelative(BlockFace.SOUTH).setBlockData(TARDISConstants.AIR);
-        b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
+        b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
+        b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
     }
 
     private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {
@@ -481,7 +485,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 } else {
                     o = 1;
                 }
-//                t = VillagerProfession.values()[o].toString();
                 t = Profession.values()[o].toString();
                 professions.put(uuid, o);
                 break;
@@ -572,26 +575,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-//    private VillagerProfession getProfession(Inventory i) {
-//        ItemStack is = i.getItem(48);
-//        ItemMeta im = is.getItemMeta();
-//        try {
-//            return VillagerProfession.valueOf(im.getLore().get(0));
-//        } catch (IllegalArgumentException e) {
-//            return VillagerProfession.FARMER;
-//        }
-//    }
-//
-//    private ZombieProfession getZombieProfession(Inventory i) {
-//        ItemStack is = i.getItem(48);
-//        ItemMeta im = is.getItemMeta();
-//        try {
-//            return ZombieProfession.valueOf(im.getLore().get(0));
-//        } catch (IllegalArgumentException e) {
-//            return ZombieProfession.NORMAL;
-//        }
-//    }
-
     private Profession getProfession(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
@@ -599,17 +582,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             return Profession.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Profession.FARMER;
-        }
-    }
-
-    // TODO use new API once LibsDsiguises supports it
-    private Profession getZombieProfession(Inventory i) {
-        ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        try {
-            return Profession.valueOf(im.getLore().get(0));
-        } catch (IllegalArgumentException e) {
-            return Profession.NORMAL;
         }
     }
 

@@ -42,6 +42,7 @@ class TARDISLazarusInventory {
 
     public TARDISLazarusInventory(TARDIS plugin) {
         this.plugin = plugin;
+        // maximum number of eggs is 45
         disguises.add(Material.BAT_SPAWN_EGG);
         disguises.add(Material.BLAZE_SPAWN_EGG);
         disguises.add(Material.CAVE_SPIDER_SPAWN_EGG);
@@ -55,7 +56,6 @@ class TARDISLazarusInventory {
         disguises.add(Material.ENDERMAN_SPAWN_EGG);
         disguises.add(Material.ENDERMITE_SPAWN_EGG);
         disguises.add(Material.EVOKER_SPAWN_EGG);
-//        disguises.add(Material.GHAST_SPAWN_EGG);
         disguises.add(Material.GUARDIAN_SPAWN_EGG);
         disguises.add(Material.HORSE_SPAWN_EGG);
         disguises.add(Material.HUSK_SPAWN_EGG);
@@ -65,7 +65,6 @@ class TARDISLazarusInventory {
         disguises.add(Material.MULE_SPAWN_EGG);
         disguises.add(Material.OCELOT_SPAWN_EGG);
         disguises.add(Material.PARROT_SPAWN_EGG);
-        disguises.add(Material.PHANTOM_SPAWN_EGG);
         disguises.add(Material.PIG_SPAWN_EGG);
         disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
         disguises.add(Material.RABBIT_SPAWN_EGG);
@@ -103,7 +102,17 @@ class TARDISLazarusInventory {
         for (Material m : disguises) {
             ItemStack egg = new ItemStack(m, 1);
             ItemMeta me = egg.getItemMeta();
-            me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
+            switch (m) {
+                case MOOSHROOM_SPAWN_EGG:
+                    me.setDisplayName("MUSHROOM_COW");
+                    break;
+                case ZOMBIE_PIGMAN_SPAWN_EGG:
+                    me.setDisplayName("PIG_ZOMBIE");
+                    break;
+                default:
+                    me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
+                    break;
+            }
             egg.setItemMeta(me);
             eggs[i] = egg;
             i++;

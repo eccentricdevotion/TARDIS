@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.MultipleFacing;
 
 /**
  * The Genetic Manipulation Device uses hypersonic sound waves to destabilise the cell structure, then a metagenic
@@ -35,12 +35,14 @@ class TARDISLazarusRunnable implements Runnable {
     private int taskID;
     private static final int LOOPS = 12;
     private int i = 0;
-    private final BlockData MOSSY = Material.MOSSY_COBBLESTONE_WALL.createBlockData();
-    private final BlockData PLAIN = Material.COBBLESTONE_WALL.createBlockData();
+    private final MultipleFacing MOSSY = (MultipleFacing) Material.MOSSY_COBBLESTONE_WALL.createBlockData();
+    private final MultipleFacing PLAIN = (MultipleFacing) Material.COBBLESTONE_WALL.createBlockData();
 
     public TARDISLazarusRunnable(TARDIS plugin, Block b) {
         this.plugin = plugin;
         this.b = b;
+        MOSSY.setFace(BlockFace.UP, true);
+        PLAIN.setFace(BlockFace.UP, true);
     }
 
     @Override
@@ -48,6 +50,29 @@ class TARDISLazarusRunnable implements Runnable {
     public void run() {
         if (i < LOOPS) {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
+                switch (face) {
+                    case EAST:
+                    case WEST:
+                        MOSSY.setFace(BlockFace.NORTH, true);
+                        MOSSY.setFace(BlockFace.SOUTH, true);
+                        MOSSY.setFace(BlockFace.EAST, false);
+                        MOSSY.setFace(BlockFace.WEST, false);
+                        PLAIN.setFace(BlockFace.NORTH, true);
+                        PLAIN.setFace(BlockFace.SOUTH, true);
+                        PLAIN.setFace(BlockFace.EAST, false);
+                        PLAIN.setFace(BlockFace.WEST, false);
+                        break;
+                    default:
+                        MOSSY.setFace(BlockFace.NORTH, false);
+                        MOSSY.setFace(BlockFace.SOUTH, false);
+                        MOSSY.setFace(BlockFace.EAST, true);
+                        MOSSY.setFace(BlockFace.WEST, true);
+                        PLAIN.setFace(BlockFace.NORTH, false);
+                        PLAIN.setFace(BlockFace.SOUTH, false);
+                        PLAIN.setFace(BlockFace.EAST, true);
+                        PLAIN.setFace(BlockFace.WEST, true);
+                        break;
+                }
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
                     b.getRelative(face).setBlockData(MOSSY);
@@ -61,6 +86,29 @@ class TARDISLazarusRunnable implements Runnable {
             i++;
         } else {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
+                switch (face) {
+                    case EAST:
+                    case WEST:
+                        MOSSY.setFace(BlockFace.NORTH, true);
+                        MOSSY.setFace(BlockFace.SOUTH, true);
+                        MOSSY.setFace(BlockFace.EAST, false);
+                        MOSSY.setFace(BlockFace.WEST, false);
+                        PLAIN.setFace(BlockFace.NORTH, true);
+                        PLAIN.setFace(BlockFace.SOUTH, true);
+                        PLAIN.setFace(BlockFace.EAST, false);
+                        PLAIN.setFace(BlockFace.WEST, false);
+                        break;
+                    default:
+                        MOSSY.setFace(BlockFace.NORTH, false);
+                        MOSSY.setFace(BlockFace.SOUTH, false);
+                        MOSSY.setFace(BlockFace.EAST, true);
+                        MOSSY.setFace(BlockFace.WEST, true);
+                        PLAIN.setFace(BlockFace.NORTH, false);
+                        PLAIN.setFace(BlockFace.SOUTH, false);
+                        PLAIN.setFace(BlockFace.EAST, true);
+                        PLAIN.setFace(BlockFace.WEST, true);
+                        break;
+                }
                 b.getRelative(face).setBlockData(PLAIN);
                 b.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
             });

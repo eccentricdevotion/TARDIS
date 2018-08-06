@@ -41,11 +41,13 @@ class TARDISLazarusTWAInventory {
 
     public TARDISLazarusTWAInventory(TARDIS plugin) {
         this.plugin = plugin;
-        terminal = getItemStack();
         disguises.add(Material.COD_SPAWN_EGG);
         disguises.add(Material.PUFFERFISH_SPAWN_EGG);
         disguises.add(Material.SALMON_SPAWN_EGG);
         disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
+//        disguises.add(Material.GHAST_SPAWN_EGG);
+//        disguises.add(Material.PHANTOM_SPAWN_EGG);
+        terminal = getItemStack();
     }
 
     /**
@@ -78,11 +80,18 @@ class TARDISLazarusTWAInventory {
         wit.setItemMeta(her);
         eggs[i] = wit;
         i++;
-        // fish
+        // put illusioner
+        ItemStack ill = new ItemStack(Material.BOW, 1);
+        ItemMeta usi = ill.getItemMeta();
+        usi.setDisplayName("ILLUSIONER");
+        ill.setItemMeta(usi);
+        eggs[i] = ill;
+        i++;
+        // fish / ghast / phantom
         for (Material m : disguises) {
             ItemStack egg = new ItemStack(m, 1);
             ItemMeta me = egg.getItemMeta();
-            me.setDisplayName(m.toString().replace("_SPAWN_EGG", "").replace("_MOB", ""));
+            me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
             egg.setItemMeta(me);
             eggs[i] = egg;
             i++;
