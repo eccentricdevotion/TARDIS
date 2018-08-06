@@ -68,7 +68,7 @@ public class TARDISCaveFinder {
                             case 0:
                                 // east
                                 TARDISMessage.send(p, "LOOK_E");
-                                for (int east = startx; east < east + limitx; east += step) {
+                                for (int east = startx; east < startx + limitx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_E");
@@ -79,7 +79,7 @@ public class TARDISCaveFinder {
                             case 1:
                                 // south
                                 TARDISMessage.send(p, "LOOK_S");
-                                for (int south = startz; south < south + limitz; south += step) {
+                                for (int south = startz; south < startz + limitz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_S");
@@ -90,7 +90,7 @@ public class TARDISCaveFinder {
                             case 2:
                                 // west
                                 TARDISMessage.send(p, "LOOK_W");
-                                for (int west = startx; west > west - limitx; west -= step) {
+                                for (int west = startx; west > startx - limitx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_W");
@@ -101,7 +101,7 @@ public class TARDISCaveFinder {
                             case 3:
                                 // north
                                 TARDISMessage.send(p, "LOOK_N");
-                                for (int north = startz; north > north - limitz; north -= step) {
+                                for (int north = startz; north > startz - limitz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_N");
