@@ -155,7 +155,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Citizens", "2.0.22");
         versions.put("Factions", "2.8.19");
         versions.put("GriefPrevention", "14.8");
-        versions.put("LibsDisguises", "9.5.1");
+        versions.put("LibsDisguises", "9.6.0");
         versions.put("MultiWorld", "5.2");
         versions.put("Multiverse-Adventure", "2.5");
         versions.put("Multiverse-Core", "2.5");
