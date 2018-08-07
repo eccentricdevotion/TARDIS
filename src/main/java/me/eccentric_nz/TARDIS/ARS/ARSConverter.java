@@ -60,6 +60,10 @@ public class ARSConverter {
                     if (rs.wasNull()) {
                         continue;
                     }
+                    if (!js.contains("0")) {
+                        // no IDs found, already converted
+                        continue;
+                    }
                     String[][][] grid = new String[3][9][9];
                     JSONArray json = new JSONArray(js);
                     for (int y = 0; y < 3; y++) {
@@ -87,6 +91,8 @@ public class ARSConverter {
                 connection.commit();
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ARS records");
             }
+            plugin.getConfig().set("conversions.ars_materials", true);
+            plugin.saveConfig();
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for ars table! " + ex.getMessage());
         } finally {

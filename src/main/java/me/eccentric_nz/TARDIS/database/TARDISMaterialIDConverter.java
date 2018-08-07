@@ -791,10 +791,10 @@ public class TARDISMaterialIDConverter {
                     ps.executeBatch();
                     connection.commit();
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
-                    plugin.getConfig().set("conversions.condenser_materials", true);
-                    plugin.saveConfig();
                 }
             }
+            plugin.getConfig().set("conversions.condenser_materials", true);
+            plugin.saveConfig();
         } catch (SQLException e) {
             plugin.debug("Conversion error for condenser materials! " + e.getMessage());
         } finally {
@@ -893,10 +893,10 @@ public class TARDISMaterialIDConverter {
                     ps.executeBatch();
                     connection.commit();
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
-                    plugin.getConfig().set("conversions.player_prefs_materials", true);
-                    plugin.saveConfig();
                 }
             }
+            plugin.getConfig().set("conversions.player_prefs_materials", true);
+            plugin.saveConfig();
         } catch (SQLException e) {
             plugin.debug("Conversion error for player_prefs materials! " + e.getMessage());
         } finally {
@@ -959,10 +959,15 @@ public class TARDISMaterialIDConverter {
                             i++;
                         }
                     }
-                    ps.executeBatch();
-                    connection.commit();
+                    if (i > 0) {
+                        ps.executeBatch();
+                        connection.commit();
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
+                    }
                 }
             }
+            plugin.getConfig().set("conversions.block_materials", true);
+            plugin.saveConfig();
         } catch (SQLException e) {
             plugin.debug("Conversion error for blocks materials! " + e.getMessage());
         } finally {
@@ -984,11 +989,6 @@ public class TARDISMaterialIDConverter {
             } catch (SQLException e) {
                 plugin.debug("Error closing blocks table (converting ID & data)! " + e.getMessage());
             }
-        }
-        if (i > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
-            plugin.getConfig().set("conversions.block_materials", true);
-            plugin.saveConfig();
         }
     }
 }
