@@ -79,7 +79,7 @@ public class TARDISLazarusListener implements Listener {
                     // open the GUI
                     Inventory inv = plugin.getServer().createInventory(player, 54, "§4Genetic Manipulator");
                     if (player.isSneaking()) {
-                        inv.setContents(new TARDISLazarusTWAInventory(plugin).getTerminal());
+                        inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
                     } else {
                         inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
                     }

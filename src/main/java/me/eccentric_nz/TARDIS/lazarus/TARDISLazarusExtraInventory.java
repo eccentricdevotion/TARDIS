@@ -33,20 +33,20 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISLazarusTWAInventory {
+class TARDISLazarusExtraInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
     private final List<Material> disguises = new ArrayList<>();
 
-    public TARDISLazarusTWAInventory(TARDIS plugin) {
+    public TARDISLazarusExtraInventory(TARDIS plugin) {
         this.plugin = plugin;
         disguises.add(Material.COD_SPAWN_EGG);
         disguises.add(Material.PUFFERFISH_SPAWN_EGG);
         disguises.add(Material.SALMON_SPAWN_EGG);
         disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
-//        disguises.add(Material.GHAST_SPAWN_EGG);
-//        disguises.add(Material.PHANTOM_SPAWN_EGG);
+        disguises.add(Material.GHAST_SPAWN_EGG);
+        disguises.add(Material.PHANTOM_SPAWN_EGG);
         terminal = getItemStack();
     }
 

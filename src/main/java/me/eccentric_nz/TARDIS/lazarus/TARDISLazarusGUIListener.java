@@ -35,6 +35,7 @@ import org.bukkit.entity.Llama;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TropicalFish;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,20 +53,24 @@ import java.util.*;
 public class TARDISLazarusGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, String> disguises = new HashMap<>();
+    private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
+    private final HashMap<UUID, Integer> cats = new HashMap<>();
     private final HashMap<UUID, Integer> horses = new HashMap<>();
     private final HashMap<UUID, Integer> llamas = new HashMap<>();
-    private final HashMap<UUID, Integer> sheep = new HashMap<>();
-    private final HashMap<UUID, Integer> cats = new HashMap<>();
-    private final HashMap<UUID, Integer> rabbits = new HashMap<>();
     private final HashMap<UUID, Integer> parrots = new HashMap<>();
     private final HashMap<UUID, Integer> professions = new HashMap<>();
+    private final HashMap<UUID, Integer> puffers = new HashMap<>();
+    private final HashMap<UUID, Integer> rabbits = new HashMap<>();
+    private final HashMap<UUID, Integer> sheep = new HashMap<>();
     private final HashMap<UUID, Integer> slimes = new HashMap<>();
-    private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
+    private final HashMap<UUID, Integer> tropics = new HashMap<>();
+    private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
+    private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
     private int max_slot = 36;
+    private final Random random = new Random();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -353,6 +358,21 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
                                         snw.setDerp(!snowmen.get(uuid));
                                         break;
+                                    case TURTLE:
+                                        TurtleWatcher tur = (TurtleWatcher) livingWatcher;
+                                        tur.setBaby(getBaby(inv));
+                                        break;
+                                    case PUFFERFISH:
+                                        PufferFishWatcher puf = (PufferFishWatcher) livingWatcher;
+                                        puf.setPuffState(puffers.get(uuid));
+                                        break;
+                                    case TROPICAL_FISH:
+                                        TropicalFishWatcher tro = (TropicalFishWatcher) livingWatcher;
+                                        tro.setPattern(TropicalFish.Pattern.values()[tropics.get(uuid)]);
+                                        tro.setBodyColor(DyeColor.values()[random.nextInt(16)]);
+                                        tro.setPatternColor(DyeColor.values()[random.nextInt(16)]);
+                                        break;
+
                                     default:
                                         break;
                                 }
@@ -497,6 +517,24 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = slimeSizes.get(o).toString();
                 slimes.put(uuid, o);
+                break;
+            case "PUFFERFISH":
+                if (puffers.containsKey(uuid)) {
+                    o = (puffers.get(uuid) + 1 < 3) ? puffers.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = pufferStates.get(o).toString();
+                puffers.put(uuid, o);
+                break;
+            case "TROPICAL_FISH":
+                if (tropics.containsKey(uuid)) {
+                    o = (tropics.get(uuid) + 1 < 12) ? tropics.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = TropicalFish.Pattern.values()[o].toString();
+                tropics.put(uuid, o);
                 break;
             default:
                 break;
