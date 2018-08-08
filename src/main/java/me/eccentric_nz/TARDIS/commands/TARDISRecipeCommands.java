@@ -98,6 +98,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("tardis", "");
         recipeItems.put("telepathic", "TARDIS Telepathic Circuit");
         recipeItems.put("vortex", "Vortex Manipulator");
+        recipeItems.put("wand", "TARDIS Schematic Wand");
         recipeItems.put("watch", "Fob Watch");
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         t.put("ARS", Material.QUARTZ_BLOCK); // ARS
@@ -234,6 +235,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 case "player-disk":
                 case "preset-disk":
                 case "save-disk":
+                case "wand":
                     showShapelessRecipe(player, recipeItems.get(which));
                     return true;
             }

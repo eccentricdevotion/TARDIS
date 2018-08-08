@@ -53,7 +53,6 @@ public class TARDISShapelessRecipe {
          recipe: VINE,VINE,VINE
          result: SLIME_BALL
          amount: 1
-         displayname: false
          lore: ""
          */
         String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");

@@ -28,6 +28,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -48,7 +50,8 @@ public class TARDISSchematicListener implements Listener {
         }
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!player.getInventory().getItemInMainHand().getType().equals(wand) || !player.hasPermission("tardis.admin")) {
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack == null || !itemStack.getType().equals(wand) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
             return;
         }
         Block b = event.getClickedBlock();
@@ -70,10 +73,24 @@ public class TARDISSchematicListener implements Listener {
     private Material getWand() {
         Material mat;
         try {
-            mat = Material.valueOf(plugin.getConfig().getString("preferences.wand"));
+            mat = Material.valueOf(plugin.getRecipesConfig().getString("shapeless.TARDIS Schematic Wand.result"));
         } catch (IllegalArgumentException e) {
             mat = Material.BONE;
         }
         return mat;
+    }
+
+    private boolean isWand(ItemStack is) {
+        if (!is.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = is.getItemMeta();
+        if (!im.hasDisplayName()) {
+            return false;
+        }
+        if (im.getDisplayName().equals("TARDIS Schematic Wand")) {
+            return true;
+        }
+        return false;
     }
 }

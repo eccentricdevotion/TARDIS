@@ -850,11 +850,16 @@ shaped:
       S: SHULKER_SHELL
     result: PAPER
     amount: 1
-    lore: "Smaller on the outside "
+    lore: "Smaller on the outside"
 # -------------------
 # these are the shapeless recipes
 # -------------------
 shapeless:
+  TARDIS Schematic Wand:
+    recipe: BONE,REDSTONE
+    result: BONE
+    amount: 1
+    lore: "Right-click start\nLeft-click end"
   Save Storage Disk:
     recipe: MUSIC_DISC_STRAD,REDSTONE
     result: MUSIC_DISC_CHIRP

@@ -109,6 +109,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("tachyon", "");
         items.put("telepathic", "TARDIS Telepathic Circuit");
         items.put("vortex", "Vortex Manipulator");
+        items.put("wand", "TARDIS Schematic Wand");
         items.put("watch", "Fob Watch");
     }
 
@@ -232,7 +233,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         String item_to_give = items.get(item);
         ItemStack result;
-        if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("custard") || item.equals("jelly-baby")) {
+        if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("custard") || item.equals("jelly-baby") || item.equals("wand")) {
             ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
             result = recipe.getResult();
         } else {

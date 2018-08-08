@@ -2,190 +2,189 @@
 debug: false
 # how the plugin persists data
 storage:
-    database: sqlite
-    mysql:
-        url: mysql://localhost:3306/TARDIS
-        user: bukkit
-        password: mysecurepassword
-        prefix: ""
+  database: sqlite
+  mysql:
+    url: mysql://localhost:3306/TARDIS
+    user: bukkit
+    password: mysecurepassword
+    prefix: ""
 # inner TARDIS
 creation:
-    create_worlds: false
-    create_worlds_with_perms: false
-    default_world: true
-    default_world_name: TARDIS_TimeVortex
-    tips_limit: 400
-    border_radius: 256
-    gamemode: survival
-    keep_night: true
-    inventory_group: 0
-    add_perms: true
-    enable_legacy: true
-    custom_schematic: false
-    custom_schematic_seed: OBSIDIAN
-    use_block_stack: false
-    use_clay: WOOL
-    count: 0
-    sky_biome: true
-    area: none
+  create_worlds: false
+  create_worlds_with_perms: false
+  default_world: true
+  default_world_name: TARDIS_TimeVortex
+  tips_limit: 400
+  border_radius: 256
+  gamemode: survival
+  keep_night: true
+  inventory_group: 0
+  add_perms: true
+  enable_legacy: true
+  custom_schematic: false
+  custom_schematic_seed: OBSIDIAN
+  use_block_stack: false
+  use_clay: WOOL
+  count: 0
+  sky_biome: true
+  area: none
 # outer TARDIS
 police_box:
-    default_preset: FACTORY
-    tards_lamp: REDSTONE_LAMP
-    name_tardis: false
-    materialise: true
-    confirm_timeout: 15
-    sign_colour: WHITE
-    set_biome: true
-    rebuild_cooldown: 10000
+  default_preset: FACTORY
+  tards_lamp: REDSTONE_LAMP
+  name_tardis: false
+  materialise: true
+  confirm_timeout: 15
+  sign_colour: WHITE
+  set_biome: true
+  rebuild_cooldown: 10000
 # travel settings
 travel:
-    include_default_world: false
-    tp_radius: 500
-    max_distance: 29999983
-    give_key: false
-    the_end: false
-    nether: false
-    terminal:
-        redefine: false
-        nether: world
-        the_end: world
-    land_on_water: true
-    timeout: 5
-    timeout_height: 135
-    random_attempts: 30
-    exile: false
-    per_world_perms: false
-    terminal_step: 1
-    manual_flight_delay: 60
-    grace_period: 10
-    random_circuit:
-        x: 5000
-        z: 5000
-    no_destination_malfunctions: true
+  include_default_world: false
+  tp_radius: 500
+  max_distance: 29999983
+  give_key: false
+  the_end: false
+  nether: false
+  terminal:
+    redefine: false
+    nether: world
+    the_end: world
+  land_on_water: true
+  timeout: 5
+  timeout_height: 135
+  random_attempts: 30
+  exile: false
+  per_world_perms: false
+  terminal_step: 1
+  manual_flight_delay: 60
+  grace_period: 10
+  random_circuit:
+    x: 5000
+    z: 5000
+  no_destination_malfunctions: true
 # general preferences
 preferences:
-    language: en
-    key: GOLD_NUGGET
-    walk_in_tardis: true
-    open_door_policy: false
-    use_worldguard: true
-    respect_worldguard: build
-    respect_towny: nation
-    respect_worldborder: true
-    respect_factions: true
-    respect_grief_prevention: true
-    sfx_volume: 10
-    difficulty: easy
-    strike_lightning: true
-    freeze_cooldown: 60
-    hads_damage: 10
-    hads_distance: 10
-    malfunction: 3
-    malfunction_end: 3
-    malfunction_nether: 3
-    use_default_condensables: true
-    heal_speed: 200
-    default_key: eleventh
-    default_sonic: eleventh
-    wand: BONE
-    nerf_pistons:
-        enabled: false
-        only_tardis_worlds: true
-    render_entities: false
-    spawn_random_monsters: true
-    spawn_limit: 10
-    no_coords: false
-    no_creative_condense: false
-    vortex_fall: kill
+  language: en
+  key: GOLD_NUGGET
+  walk_in_tardis: true
+  open_door_policy: false
+  use_worldguard: true
+  respect_worldguard: build
+  respect_towny: nation
+  respect_worldborder: true
+  respect_factions: true
+  respect_grief_prevention: true
+  sfx_volume: 10
+  difficulty: easy
+  strike_lightning: true
+  freeze_cooldown: 60
+  hads_damage: 10
+  hads_distance: 10
+  malfunction: 3
+  malfunction_end: 3
+  malfunction_nether: 3
+  use_default_condensables: true
+  heal_speed: 200
+  default_key: eleventh
+  default_sonic: eleventh
+  nerf_pistons:
+    enabled: false
+    only_tardis_worlds: true
+  render_entities: false
+  spawn_random_monsters: true
+  spawn_limit: 10
+  no_coords: false
+  no_creative_condense: false
+  vortex_fall: kill
 # desktop theme
 desktop:
-    check_blocks_before_upgrade: false
-    block_change_percent: 25
+  check_blocks_before_upgrade: false
+  block_change_percent: 25
 # circuits
 circuits:
-    damage: false
-    uses:
-        ars: 20
-        chameleon: 25
-        input: 50
-        invisibility: 5
-        materialisation: 50
-        memory: 20
-        randomiser: 50
-        scanner: 20
-        temporal: 20
+  damage: false
+  uses:
+    ars: 20
+    chameleon: 25
+    input: 50
+    invisibility: 5
+    materialisation: 50
+    memory: 20
+    randomiser: 50
+    scanner: 20
+    temporal: 20
 # restrictions
 allow:
-    mob_farming: true
-    spawn_eggs: true
-    emergency_npc: true
-    achievements: true
-    autonomous: true
-    guardians: false
-    hads: true
-    handles: true
-    invisibility: true
-    tp_switch: true
-    all_blocks: false
-    sfx: true
-    wg_flag_set: true
-    zero_room: false
-    external_gravity: false
-    power_down: true
-    power_down_on_quit: false
-    player_difficulty: true
-    3d_doors: false
-    village_travel: false
-    perception_filter: true
-    repair: true
+  mob_farming: true
+  spawn_eggs: true
+  emergency_npc: true
+  achievements: true
+  autonomous: true
+  guardians: false
+  hads: true
+  handles: true
+  invisibility: true
+  tp_switch: true
+  all_blocks: false
+  sfx: true
+  wg_flag_set: true
+  zero_room: false
+  external_gravity: false
+  power_down: true
+  power_down_on_quit: false
+  player_difficulty: true
+  3d_doors: false
+  village_travel: false
+  perception_filter: true
+  repair: true
 # room related
 growth:
-    gravity_max_distance: 15
-    gravity_max_velocity: 5
-    return_room_seed: true
-    rooms_require_blocks: false
-    rooms_condenser_percent: 100
-    room_speed: 4
-    ars_limit: 1
+  gravity_max_distance: 15
+  gravity_max_velocity: 5
+  return_room_seed: true
+  rooms_require_blocks: false
+  rooms_condenser_percent: 100
+  room_speed: 4
+  ars_limit: 1
 # chameleon arch
 arch:
-    enabled: true
-    min_time: 20
-    switch_inventory: true
-    clear_inv_on_death: false
+  enabled: true
+  min_time: 20
+  switch_inventory: true
+  clear_inv_on_death: false
 # siege mode
 siege:
-    enabled: true
-    breeding: 0
-    growth: 0
-    butcher: false
-    creeper: false
-    healing: false
-    texture: false
+  enabled: true
+  breeding: 0
+  growth: 0
+  butcher: false
+  creeper: false
+  healing: false
+  texture: false
 # junk TARDIS
 junk:
-    enabled: true
-    return: -1
-    particles: true
+  enabled: true
+  return: -1
+  particles: true
 # abandonment
 abandon:
-    enabled: true
-    reduce_count: true
+  enabled: true
+  reduce_count: true
 archive:
-    enabled: true
-    limit: 3
+  enabled: true
+  limit: 3
 # handles
 handles:
-    prefix: Hey Handles
-    reminders:
-        enabled: true
-        schedule: 1200
+  prefix: Hey Handles
+  reminders:
+    enabled: true
+    schedule: 1200
 rechargers: {}
 # don't touch
 conversions:
-    ars_materials: true
-    condenser_materials: true
-    player_prefs_materials: true
-    block_materials: true
-    custom_preset: true
+  ars_materials: true
+  condenser_materials: true
+  player_prefs_materials: true
+  block_materials: true
+  custom_preset: true

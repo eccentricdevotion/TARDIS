@@ -218,6 +218,9 @@ public class TARDISConfiguration {
             plugin.getConfig().createSection("rechargers");
             i++;
         }
+        if (config.contains("preferences.wand")) {
+            plugin.getConfig().set("preferences.wand", null);
+        }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {

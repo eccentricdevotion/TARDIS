@@ -128,6 +128,7 @@ class TARDISGiveLister {
             accessories.add(ChatColor.GREEN + "tachyon" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
             accessories.add(ChatColor.GREEN + "vortex" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator");
         }
+        accessories.add(ChatColor.GREEN + "wand" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
         accessories.add(ChatColor.GREEN + "watch" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
         give_options.put("Accessories", accessories);
         return give_options;
