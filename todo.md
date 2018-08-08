@@ -1,16 +1,12 @@
 # TODO
 
-## Current bugfix version `3.8.3`
-1. Fix bugs!
-
-## Next version `4.0.0`
-1. Update Lazarus GUI with new spawn eggs (drowned, turtle, phantom, cod, salmon, pufferfish, tropical fish - waiting on LibsDisguises update) - _started_
-2. Test player preference to bypass `tardis rescue accept`
-3. Test `invisibility` setting in TARDIS areas
-4. Test Handles transmat requests
-5. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-6. Fix Biome adaptive presets dropping flowers & seeds (properly)
-7. Test test test
+## Next version `4.0.3`
+1. Test player preference to bypass `tardis rescue accept`
+2. Test `invisibility` setting in TARDIS areas
+3. Test Handles transmat requests
+4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+5. Fix Biome adaptive presets dropping flowers & seeds (properly)
+6. Test test test
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -53,5 +49,4 @@
 4. A Sonic Screwdriver and a crafting recipe for it
 5. GUIs
 6. Make the TARDIS Police Box an entity
-7. Custom advancements - _done_
-8. Custom monsters
+7. Custom monsters
