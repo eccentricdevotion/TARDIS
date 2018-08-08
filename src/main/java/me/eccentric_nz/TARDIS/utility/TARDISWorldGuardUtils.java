@@ -454,10 +454,10 @@ public class TARDISWorldGuardUtils {
     public void sponge(Block b, boolean clear) {
         if (clear) {
             // remove water
-            SpongeUtil.clearSpongeWater(wgp, b.getWorld(), b.getX(), b.getY(), b.getZ());
+            SpongeUtil.clearSpongeWater(wg.getWorldByName(b.getWorld().getName()), b.getX(), b.getY(), b.getZ());
         } else {
             // put water back
-            SpongeUtil.addSpongeWater(wgp, b.getWorld(), b.getX(), b.getY(), b.getZ());
+            SpongeUtil.addSpongeWater(wg.getWorldByName(b.getWorld().getName()), b.getX(), b.getY(), b.getZ());
         }
     }
 
