@@ -26,12 +26,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPI;
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.type.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -96,35 +93,7 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (allow) {
                             Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
-                            Chest chest = (Chest) block.getBlockData();
-                            // is it a double trapped chest?
-                            if (block.getType() == Material.TRAPPED_CHEST && !chest.getType().equals(Chest.Type.SINGLE)) {
-                                // get the other side of this double chest
-                                Block other;
-                                switch (chest.getFacing()) {
-                                    case NORTH:
-                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.EAST) : block.getRelative(BlockFace.WEST);
-                                        break;
-                                    case WEST:
-                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.NORTH) : block.getRelative(BlockFace.SOUTH);
-                                        break;
-                                    case SOUTH:
-                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.WEST) : block.getRelative(BlockFace.EAST);
-                                        break;
-                                    default:
-                                        other = (chest.getType().equals(Chest.Type.LEFT)) ? block.getRelative(BlockFace.SOUTH) : block.getRelative(BlockFace.NORTH);
-                                        break;
-                                }
-                                Inventory otherInventory = ((InventoryHolder) other.getState()).getInventory();
-                                ItemStack[] both = (ItemStack[]) ArrayUtils.addAll(inventory.getContents(), otherInventory.getContents());
-                                both = sortInventory(both);
-                                ItemStack[] firstArray = Arrays.copyOf(both, 27);
-                                ItemStack[] secondArray = Arrays.copyOfRange(both, 27, 54);
-                                inventory.setContents((chest.getType().equals(Chest.Type.LEFT)) ? secondArray : firstArray);
-                                otherInventory.setContents((chest.getType().equals(Chest.Type.LEFT)) ? firstArray : secondArray);
-                            } else {
-                                sortInventory(inventory);
-                            }
+                            sortInventory(inventory);
                             TARDISMessage.send(player, "CHEST_SORTED");
                         }
                     }
