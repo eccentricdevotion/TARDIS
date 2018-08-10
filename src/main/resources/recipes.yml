@@ -751,7 +751,7 @@ shaped:
       L: CLAY
       W: SNOW_BLOCK
       N: NETHERRACK
-    result: CLAY_BRICK
+    result: BRICK
     amount: 1
     lore: ""
   Acid Battery:

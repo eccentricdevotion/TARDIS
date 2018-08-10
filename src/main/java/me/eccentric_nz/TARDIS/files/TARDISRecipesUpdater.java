@@ -400,7 +400,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Fob Watch.lore", "");
             i++;
         }
-        if (!recipes_config.contains("shaped.TARDIS Biome Reader")) {
+        if (!recipes_config.contains("shaped.TARDIS Biome Reader") || recipes_config.getString("shaped.TARDIS Biome Reader.result").equals("CLAY_BRICK")) {
             recipes_config.set("shaped.TARDIS Biome Reader.easy_shape", "---,-C-,SDT");
             recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "FILLED_MAP:1972");
             recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.S", "SAND");
