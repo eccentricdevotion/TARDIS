@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -59,6 +60,10 @@ public class TARDISRoomMap {
                 } else {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
+                    try {
+                        plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                    } catch (IOException ignored) {
+                    }
                 }
             }
         });
@@ -75,13 +80,13 @@ public class TARDISRoomMap {
         HashMap<String, Integer> blockTypes = new HashMap<>();
         File f = new File(fileStr + ".tschm");
         if (!f.exists()) {
-            plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find a schematic with that name!");
             return false;
         }
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
         if (obj == null) {
-            plugin.debug(plugin.getPluginName() + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions
@@ -98,6 +103,15 @@ public class TARDISRoomMap {
                     JSONArray r = (JSONArray) floor.get(row);
                     for (int col = 0; col < l; col++) {
                         JSONObject c = (JSONObject) r.get(col);
+                        if (!(c.get("data") instanceof String)) {
+                            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
+                            plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
+                            try {
+                                plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                            } catch (IOException ignored) {
+                            }
+                            return false;
+                        }
                         String bid = getMaterialAsString(c.getString("data"));
                         if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
