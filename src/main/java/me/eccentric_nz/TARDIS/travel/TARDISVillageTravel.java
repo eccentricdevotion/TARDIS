@@ -59,6 +59,9 @@ public class TARDISVillageTravel {
                 return null;
             }
             Location loc = plugin.getTardisHelper().getRandomVillage(world);
+            if (loc == null) {
+                return null;
+            }
             // check for space
             Block b = loc.getBlock();
             boolean unsafe = true;
