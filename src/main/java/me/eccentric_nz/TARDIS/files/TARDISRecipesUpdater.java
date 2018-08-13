@@ -211,6 +211,7 @@ public class TARDISRecipesUpdater {
             }
             recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
             recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
         }
         if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":")) {
             recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "LAPIS_LAZULI");
@@ -226,6 +227,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "ROSE_RED");
             recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
             recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
+            i++;
         }
         if (!recipes_config.contains("shaped.Paper Bag") || !recipes_config.contains("shaped.Paper Bag.hard_ingredients.C")) {
             recipes_config.set("shaped.Paper Bag.easy_shape", "---,PLP,-P-");
@@ -239,6 +241,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Paper Bag.result", "PAPER");
             recipes_config.set("shaped.Paper Bag.amount", 1);
             recipes_config.set("shaped.Paper Bag.lore", "Smaller on the outside");
+            i++;
         }
         if (!recipes_config.contains("shaped.Handles")) {
             recipes_config.set("shaped.Handles.easy_shape", "III,ISI,IRI");
@@ -253,6 +256,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Handles.result", "BIRCH_BUTTON");
             recipes_config.set("shaped.Handles.amount", 1);
             recipes_config.set("shaped.Handles.lore", "Cyberhead from the~Maldovar Market");
+            i++;
         }
         if (!recipes_config.contains("shaped.TARDIS Communicator")) {
             recipes_config.set("shaped.TARDIS Communicator.easy_shape", "N--,IIH,--I");
@@ -267,6 +271,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Communicator.result", "LEATHER_HELMET");
             recipes_config.set("shaped.TARDIS Communicator.amount", 1);
             recipes_config.set("shaped.TARDIS Communicator.lore", "");
+            i++;
         }
         if (!recipes_config.contains("shaped.Rust Plague Sword")) {
             recipes_config.set("shaped.Rust Plague Sword.easy_shape", "RIR,RIR,-S-");
@@ -281,6 +286,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rust Plague Sword.result", "IRON_SWORD");
             recipes_config.set("shaped.Rust Plague Sword.amount", 1);
             recipes_config.set("shaped.Rust Plague Sword.lore", "Dalek Virus Dispenser");
+            i++;
         }
         if (!recipes_config.contains("shaped.Acid Battery")) {
             recipes_config.set("shaped.Acid Battery.easy_shape", "-A-,ARA,-A-");
@@ -292,7 +298,9 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Acid Battery.result", "NETHER_BRICK");
             recipes_config.set("shaped.Acid Battery.amount", 1);
             recipes_config.set("shaped.Acid Battery.lore", "");
-            //
+            i++;
+        }
+        if (!recipes_config.contains("shaped.Rift Circuit.lore")) {
             recipes_config.set("shaped.Rift Circuit.easy_shape", "-D-,DND,-D-");
             recipes_config.set("shaped.Rift Circuit.easy_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.Rift Circuit.easy_ingredients.N", "NETHER_STAR");
@@ -302,7 +310,9 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rift Circuit.result", "FILLED_MAP:1983");
             recipes_config.set("shaped.Rift Circuit.amount", 1);
             recipes_config.set("shaped.Rift Circuit.lore", "");
-            //
+            i++;
+        }
+        if (!recipes_config.contains("shaped.Rift Manipulator.lore")) {
             recipes_config.set("shaped.Rift Manipulator.easy_shape", "-A-,ACA,RAR");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "FILLED_MAP:1983");
