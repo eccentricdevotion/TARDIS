@@ -77,7 +77,7 @@ public class TARDISWorldGuardUtils {
         Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
-        return rs.canBuild(wgp.wrapPlayer(p));
+        return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
     }
 
     /**
@@ -98,7 +98,7 @@ public class TARDISWorldGuardUtils {
             Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
             RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
             ApplicableRegionSet rs = rm.getApplicableRegions(vector);
-            return rs.canBuild(wgp.wrapPlayer(p));
+            return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
         }
         // get the flag to check
         StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
@@ -472,7 +472,7 @@ public class TARDISWorldGuardUtils {
         Vector vector = new Vector(b.getX(), b.getY(), b.getZ());
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(b.getWorld().getName()));
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
-        return rs.canBuild(wgp.wrapPlayer(p));
+        return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
     }
 
     /**
