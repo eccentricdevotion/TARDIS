@@ -80,6 +80,9 @@ public class TARDISShapelessRecipe {
             Material m = Material.valueOf(recipe_idata[0]);
             r.addIngredient(m);
         }
+        if (s.contains("Jelly Baby")) {
+            r.setGroup("Jelly Babies");
+        }
         shapelessRecipes.put(s, r);
         return r;
     }
