@@ -57,8 +57,10 @@ public class TARDISCaveFinder {
             boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
                 if (!w.getWorldType().equals(WorldType.FLAT) && worldCheck(w)) {
-                    int limitx = 2000;
-                    int limitz = 2000;
+                    int plusx = startx + 2000;
+                    int plusz = startz + 2000;
+                    int minusx = startx - 2000;
+                    int minusz = startz - 2000;
                     int step = 25;
                     // search in a random direction
                     Integer[] directions = new Integer[]{0, 1, 2, 3};
@@ -68,7 +70,7 @@ public class TARDISCaveFinder {
                             case 0:
                                 // east
                                 TARDISMessage.send(p, "LOOK_E");
-                                for (int east = startx; east < startx + limitx; east += step) {
+                                for (int east = startx; east < plusx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_E");
@@ -79,7 +81,7 @@ public class TARDISCaveFinder {
                             case 1:
                                 // south
                                 TARDISMessage.send(p, "LOOK_S");
-                                for (int south = startz; south < startz + limitz; south += step) {
+                                for (int south = startz; south < plusz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_S");
@@ -90,7 +92,7 @@ public class TARDISCaveFinder {
                             case 2:
                                 // west
                                 TARDISMessage.send(p, "LOOK_W");
-                                for (int west = startx; west > startx - limitx; west -= step) {
+                                for (int west = startx; west > minusx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_W");
@@ -101,7 +103,7 @@ public class TARDISCaveFinder {
                             case 3:
                                 // north
                                 TARDISMessage.send(p, "LOOK_N");
-                                for (int north = startz; north > startz - limitz; north -= step) {
+                                for (int north = startz; north > minusz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
                                     if (chk.isSafe()) {
                                         TARDISMessage.send(p, "CAVE_N");
