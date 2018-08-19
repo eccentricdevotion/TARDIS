@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -43,7 +42,7 @@ public class TARDISBlackWoolToggler {
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
             BlockData mat;
-            if (isAir(b)) {
+            if (plugin.getUtils().isAir(b.getType())) {
                 mat = TARDISConstants.BLACK;
             } else {
                 mat = TARDISConstants.AIR;
@@ -58,15 +57,11 @@ public class TARDISBlackWoolToggler {
         }
     }
 
-    private boolean isAir(Block b) {
-        return b.getType().equals(Material.AIR);
-    }
-
     public boolean isOpen(int id) {
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
-            return (isAir(b));
+            return (plugin.getUtils().isAir(b.getType()));
         } else {
             return false;
         }

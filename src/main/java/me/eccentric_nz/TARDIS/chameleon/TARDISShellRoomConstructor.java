@@ -75,7 +75,7 @@ public class TARDISShellRoomConstructor {
             for (int c = 0; c < 10; c++) {
                 for (int y = fy; y < fy + 4; y++) {
                     Block fb = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
-                    if (fb.getType() != Material.AIR) {
+                    if (!plugin.getUtils().isAir(fb.getType())) {
                         if (TARDISMaterials.doors.contains(fb.getType())) {
                             hasDoor = true;
                         } else {

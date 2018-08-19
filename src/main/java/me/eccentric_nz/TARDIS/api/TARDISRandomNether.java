@@ -62,11 +62,11 @@ public class TARDISRandomNether extends TARDISRandomLocation {
             while (!startBlock.getChunk().isLoaded()) {
                 startBlock.getChunk().load();
             }
-            while (!startBlock.getType().equals(Material.AIR)) {
+            while (!plugin.getUtils().isAir(startBlock.getType())) {
                 startBlock = startBlock.getRelative(BlockFace.DOWN);
             }
             int air = 0;
-            while (startBlock.getType().equals(Material.AIR) && startBlock.getLocation().getBlockY() > 30) {
+            while (plugin.getUtils().isAir(startBlock.getType()) && startBlock.getLocation().getBlockY() > 30) {
                 startBlock = startBlock.getRelative(BlockFace.DOWN);
                 air++;
             }

@@ -346,6 +346,8 @@ public class TARDISGeneralInstanceKeeper {
         // add transparent blocks
         trans.add(Material.ACACIA_SAPLING);
         trans.add(Material.AIR);
+        trans.add(Material.CAVE_AIR);
+        trans.add(Material.VOID_AIR);
         trans.add(Material.ALLIUM);
         trans.add(Material.AZURE_BLUET);
         trans.add(Material.BIRCH_SAPLING);

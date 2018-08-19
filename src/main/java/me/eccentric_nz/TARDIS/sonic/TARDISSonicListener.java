@@ -1049,13 +1049,13 @@ public class TARDISSonicListener implements Listener {
         Material mat = l.getType();
         // check if there is a block there
         if (!mat.equals(Material.PISTON_HEAD)) {
-            if (mat.equals(Material.AIR)) {
+            if (plugin.getUtils().isAir(mat)) {
                 extend(b, l);
                 return true;
             } else {
                 // check the block further on for AIR
                 Block two = b.getRelative(face, 2);
-                if (two.getType().equals(Material.AIR)) {
+                if (plugin.getUtils().isAir(two.getType())) {
                     two.setBlockData(mat.createBlockData());
                     extend(b, l);
                     return true;

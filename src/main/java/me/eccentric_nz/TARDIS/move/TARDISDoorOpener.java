@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Openable;
@@ -194,8 +193,8 @@ public class TARDISDoorOpener {
 
     private boolean checkForSpace(Block b, COMPASS d) {
         BlockFace face = getOppositeFace(d);
-        return (b.getRelative(face).getType().equals(Material.AIR)
-                && b.getRelative(face).getRelative(BlockFace.UP).getType().equals(Material.AIR));
+        return (plugin.getUtils().isAir(b.getRelative(face).getType())
+                && plugin.getUtils().isAir(b.getRelative(face).getRelative(BlockFace.UP).getType()));
     }
 
     private BlockFace getOppositeFace(COMPASS d) {

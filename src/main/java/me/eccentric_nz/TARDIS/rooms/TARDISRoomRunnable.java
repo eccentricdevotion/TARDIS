@@ -661,7 +661,7 @@ public class TARDISRoomRunnable implements Runnable {
                 data = TARDISConstants.AIR;
             } else {
                 Block existing = world.getBlockAt(startx, starty, startz);
-                if (!existing.getType().equals(Material.AIR)) {
+                if (!plugin.getUtils().isAir(existing.getType())) {
                     if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                         switch (type) {
                             case AIR:
@@ -807,10 +807,10 @@ public class TARDISRoomRunnable implements Runnable {
     }
 
     private boolean checkRoomNextDoor(Block b) {
-        if (b.getLocation().getBlockZ() < (resetz + 10) && !b.getRelative(BlockFace.EAST).getType().equals(Material.AIR)) {
+        if (b.getLocation().getBlockZ() < (resetz + 10) && !plugin.getUtils().isAir(b.getRelative(BlockFace.EAST).getType())) {
             return true;
         } else {
-            return !b.getRelative(BlockFace.SOUTH).getType().equals(Material.AIR);
+            return !plugin.getUtils().isAir(b.getRelative(BlockFace.SOUTH).getType());
         }
     }
 

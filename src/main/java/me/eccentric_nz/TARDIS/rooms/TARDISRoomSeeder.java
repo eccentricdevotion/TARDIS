@@ -104,7 +104,7 @@ public class TARDISRoomSeeder implements Listener {
                 BlockFace facing = trd.getFace();
                 // check there is not a block in the direction the player is facing
                 Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
-                if (!check_block.getType().equals(Material.AIR)) {
+                if (!plugin.getUtils().isAir(check_block.getType())) {
                     TARDISMessage.send(player, "ROOM_VOID");
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;

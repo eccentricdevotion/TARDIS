@@ -207,7 +207,7 @@ public class TARDISUpgradeBlockScanner {
                                     type = Material.getMaterial(tsplit[0] + "_" + use_clay.toString());
                             }
                         }
-                        if (type.equals(Material.AIR)) {
+                        if (plugin.getUtils().isAir(type)) {
                             v--;
                         }
                         if (!b.getType().equals(type)) {
