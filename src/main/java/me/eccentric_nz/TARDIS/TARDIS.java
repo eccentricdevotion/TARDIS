@@ -209,10 +209,12 @@ public class TARDIS extends JavaPlugin {
             }
             worldManager = WORLD_MANAGER.getWorldManager();
             saveDefaultConfig();
+//            saveConfig();
+            reloadConfig();
             loadCustomConfigs();
+            loadLanguage();
             loadSigns();
             loadChameleonGUIs();
-            loadLanguage();
             new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
@@ -493,7 +495,7 @@ public class TARDIS extends JavaPlugin {
             }
         }
         // always copy English default
-        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true, pluginName);
+        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
         // get configured language
         String lang = getConfig().getString("preferences.language");
         // check file exists
@@ -519,12 +521,12 @@ public class TARDIS extends JavaPlugin {
         file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
         if (!file.exists()) {
             // copy sign file
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true, pluginName);
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true);
             file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
         }
         // load the language
         signs = YamlConfiguration.loadConfiguration(file);
-        new TARDISSignsUpdater(this, signs).checkSignsConfig();
+        new TARDISSignsUpdater(plugin, signs).checkSignsConfig();
     }
 
     /**
@@ -536,12 +538,12 @@ public class TARDIS extends JavaPlugin {
         file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
         if (!file.exists()) {
             // copy sign file
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true, pluginName);
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
             file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
         }
         // load the language
         chameleonGuis = YamlConfiguration.loadConfiguration(file);
-        new TARDISChameleonGuiUpdater(this, chameleonGuis).checkChameleonConfig();
+        new TARDISChameleonGuiUpdater(plugin, chameleonGuis).checkChameleonConfig();
     }
 
     /**
@@ -594,7 +596,7 @@ public class TARDIS extends JavaPlugin {
             }
         }
         Set<String> booknames = achievementConfig.getKeys(false);
-        booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false, pluginName));
+        booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
     }
 
     /**
@@ -776,10 +778,12 @@ public class TARDIS extends JavaPlugin {
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<>();
         Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
-        rooms.forEach((s) -> {
+        int r = 0;
+        for (String s : rooms) {
             if (!getRoomsConfig().contains("rooms." + s + ".user")) {
                 // set user supplied rooms as `user: true`
                 getRoomsConfig().set("rooms." + s + ".user", true);
+                r++;
             }
             if (getRoomsConfig().getBoolean("rooms." + s + ".enabled")) {
                 try {
@@ -789,8 +793,14 @@ public class TARDIS extends JavaPlugin {
                     debug("Invalid room seed: " + getRoomsConfig().getString("rooms." + s + ".seed"));
                 }
             }
-        });
-        saveConfig();
+        }
+        if (r > 0) {
+            try {
+                getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+            } catch (IOException io) {
+                plugin.debug("Could not save rooms.yml, " + io.getMessage());
+            }
+        }
         return map;
     }
 
