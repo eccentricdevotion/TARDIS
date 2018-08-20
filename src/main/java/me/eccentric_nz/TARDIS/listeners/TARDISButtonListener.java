@@ -196,7 +196,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-                                    Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
+                                    Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
                                     aec.setContents(items);
                                     player.openInventory(aec);
                                     break;
@@ -233,7 +233,7 @@ public class TARDISButtonListener implements Listener {
                                             return;
                                         }
                                         ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
-                                        Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
+                                        Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
                                         ars.setContents(tars);
                                         player.openInventory(ars);
                                     }
@@ -248,7 +248,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
+                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
                                     tmpl.setContents(clocks);
                                     player.openInventory(tmpl);
                                     break;
@@ -342,7 +342,7 @@ public class TARDISButtonListener implements Listener {
                                     } else {
                                         // controls GUI
                                         ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-                                        Inventory cgui = plugin.getServer().createInventory(player, 54, "§4TARDIS Control Menu");
+                                        Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
                                         cgui.setContents(controls);
                                         player.openInventory(cgui);
                                     }
@@ -365,7 +365,7 @@ public class TARDISButtonListener implements Listener {
                                     if (player.isSneaking()) {
                                         // open programming GUI
                                         ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
-                                        Inventory hgui = plugin.getServer().createInventory(player, 54, "§4Handles Program");
+                                        Inventory hgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
                                         hgui.setContents(handles);
                                         player.openInventory(hgui);
                                     } else {

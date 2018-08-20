@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,7 +52,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Chameleon Help")) {
+        if (name.equals(ChatColor.DARK_RED + "Chameleon Help")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
@@ -75,7 +76,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();
-                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
+                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
                                         chamcon.setContents(items);
                                         player.openInventory(chamcon);
                                     }, 2L);
@@ -86,7 +87,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonTemplateGUI tci = new TARDISChameleonTemplateGUI(plugin);
                                         ItemStack[] items = tci.getTemplate();
-                                        Inventory chamtmp = plugin.getServer().createInventory(player, 54, "§4Chameleon Template");
+                                        Inventory chamtmp = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Template");
                                         chamtmp.setContents(items);
                                         player.openInventory(chamtmp);
                                     }, 2L);

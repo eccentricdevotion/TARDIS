@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,7 +53,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     public void onThemeMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS Upgrade Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
@@ -131,7 +132,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
-            Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall Menu");
+            Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall Menu");
             wall.setContents(wall_blocks);
             p.openInventory(wall);
         }, 1L);
@@ -146,7 +147,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
-            Inventory menu = plugin.getServer().createInventory(p, 27, "§4TARDIS Archive");
+            Inventory menu = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Archive");
             menu.setContents(archive);
             p.openInventory(menu);
         }, 1L);

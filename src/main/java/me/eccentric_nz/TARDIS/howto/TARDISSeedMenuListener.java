@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,7 +46,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
     public void onSeedMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS Seeds Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
@@ -57,7 +58,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
                     if (slot != 26) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             ItemStack[] recipe = new TARDISSeedRecipeInventory(is.getType()).getMenu();
-                            Inventory gui = plugin.getServer().createInventory(p, 27, "§4TARDIS Seed Recipe");
+                            Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seed Recipe");
                             gui.setContents(recipe);
                             p.openInventory(gui);
                         }, 2L);

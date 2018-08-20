@@ -87,7 +87,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     public void onLazarusClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Genetic Manipulator")) {
+        if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator")) {
             event.setCancelled(true);
             if (plugin.checkTWA()) {
                 max_slot = 45;
@@ -401,7 +401,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     public void onLazarusClose(InventoryCloseEvent event) {
         String name = event.getInventory().getTitle();
         UUID uuid = event.getPlayer().getUniqueId();
-        if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
+        if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
             if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);

@@ -66,7 +66,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     public void onSaveTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS saves")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS saves")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
@@ -193,7 +193,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
-                                        if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
+                                        if (!lore.get(4).isEmpty() && !lore.get(4).equals(ChatColor.GOLD + "Current location")) {
                                             set.put("direction", lore.get(4));
                                         }
                                         if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
@@ -215,8 +215,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TARDISLand(plugin, id, player).exitVortex();
                                     }
-                                } else if (!lore.contains("§6Current location")) {
-                                    lore.add("§6Current location");
+                                } else if (!lore.contains(ChatColor.GOLD + "Current location")) {
+                                    lore.add(ChatColor.GOLD + "Current location");
                                     im.setLore(lore);
                                     is.setItemMeta(im);
                                 }
@@ -249,7 +249,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
                         ItemStack[] items = sst.getTerminal();
-                        Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
+                        Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
                         areainv.setContents(items);
                         player.openInventory(areainv);
                     }, 2L);
@@ -262,7 +262,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     public void onSaveSignClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
-        if (inv_name.equals("§4TARDIS saves")) {
+        if (inv_name.equals(ChatColor.DARK_RED + "TARDIS saves")) {
             UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();

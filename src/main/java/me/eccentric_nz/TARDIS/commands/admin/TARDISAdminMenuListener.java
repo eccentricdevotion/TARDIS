@@ -51,7 +51,7 @@ public class TARDISAdminMenuListener implements Listener {
     public void onAdminMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Admin Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "Admin Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot < 54) {
@@ -61,13 +61,13 @@ public class TARDISAdminMenuListener implements Listener {
                     // close this gui and load the previous / next page
                     if (option.equals("Previous page")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
                             ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
                             p.openInventory(ppm);
                         }, 1L);
                     } else {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
                             ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
                             p.openInventory(ppm);
                         }, 1L);
@@ -78,7 +78,7 @@ public class TARDISAdminMenuListener implements Listener {
                     Player p = (Player) event.getWhoClicked();
                     // close this gui and load the Player Prefs Menu
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        Inventory ppm = plugin.getServer().createInventory(p, 27, "§4Player Prefs Menu");
+                        Inventory ppm = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Player Prefs Menu");
                         ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
                         p.openInventory(ppm);
                     }, 1L);

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -96,7 +97,7 @@ public class TARDISConsoleListener implements Listener {
                             TARDISMessage.send(p, "POWER_DOWN");
                             return;
                         }
-                        Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
+                        Inventory inv = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "TARDIS Console");
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
                         ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);

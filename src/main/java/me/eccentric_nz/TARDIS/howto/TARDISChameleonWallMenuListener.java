@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,7 +57,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
 
     @EventHandler
     public void onChameleonWallMenuOpen(InventoryOpenEvent event) {
-        if (event.getInventory().getTitle().equals("§4Police Box Wall Menu")) {
+        if (event.getInventory().getTitle().equals(ChatColor.DARK_RED + "Police Box Wall Menu")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -66,7 +67,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
     public void onChameleonWallMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Police Box Wall Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "Police Box Wall Menu")) {
             Player p = (Player) event.getWhoClicked();
             UUID uuid = p.getUniqueId();
             int slot = event.getRawSlot();
@@ -129,7 +130,7 @@ public class TARDISChameleonWallMenuListener extends TARDISMenuListener implemen
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-            Inventory gui = plugin.getServer().createInventory(p, 27, "§4TARDIS Seeds Menu");
+            Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
             gui.setContents(seeds);
             p.openInventory(gui);
         }, 2L);

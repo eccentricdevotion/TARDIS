@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,7 +62,7 @@ public class TARDISHandlesProgramListener implements Listener {
     public void onHandlesGUIClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Handles Program")) {
+        if (name.equals(ChatColor.DARK_RED + "Handles Program")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             if (!scroll_list.containsKey(uuid)) {
@@ -128,7 +129,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
                         ItemStack[] items = thsi.getPrograms();
-                        Inventory programsinv = plugin.getServer().createInventory(player, 54, "§4Saved Programs");
+                        Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
                         programsinv.setContents(items);
                         player.openInventory(programsinv);
                     }, 2L);
@@ -223,7 +224,7 @@ public class TARDISHandlesProgramListener implements Listener {
     public void onHandlesProgramClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
-        if (!title.equals("§4Handles Program")) {
+        if (!title.equals(ChatColor.DARK_RED + "Handles Program")) {
             return;
         }
         Player p = (Player) event.getPlayer();

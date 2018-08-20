@@ -139,7 +139,7 @@ public class TARDISLister {
                         String[] companionData = comps.split(":");
                         ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
                         // open the GUI
-                        Inventory inv = plugin.getServer().createInventory(p, 54, "§4Companions");
+                        Inventory inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Companions");
                         inv.setContents(heads);
                         p.openInventory(inv);
                     } else {

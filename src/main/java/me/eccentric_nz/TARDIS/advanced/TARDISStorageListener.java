@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -81,7 +82,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             }
             STORAGE store = STORAGE.valueOf(tmp);
             saveCurrentStorage(inv, store.getTable(), (Player) event.getPlayer());
-        } else if (!title.equals("§4TARDIS Console")) {
+        } else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console")) {
             /*
              * Fix incorrect Bukkit behaviour
              *

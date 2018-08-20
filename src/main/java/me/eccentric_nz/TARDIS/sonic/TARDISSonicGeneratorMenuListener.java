@@ -88,7 +88,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
     public void onGeneratorMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Sonic Generator")) {
+        if (name.equals(ChatColor.DARK_RED + "Sonic Generator")) {
             Player p = (Player) event.getWhoClicked();
             location = plugin.getTrackerKeeper().getSonicGenerators().get(p.getUniqueId());
             int slot = event.getRawSlot();

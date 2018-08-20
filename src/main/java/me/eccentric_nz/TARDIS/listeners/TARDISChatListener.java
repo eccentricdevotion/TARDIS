@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue.RescueData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -116,7 +117,7 @@ public class TARDISChatListener implements Listener {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());
             // open how to GUI
             ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-            Inventory wall = plugin.getServer().createInventory(p, 27, "§4TARDIS Seeds Menu");
+            Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
             wall.setContents(seeds);
             p.openInventory(wall);
         }

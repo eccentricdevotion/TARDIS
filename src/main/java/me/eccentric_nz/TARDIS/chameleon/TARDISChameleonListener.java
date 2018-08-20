@@ -64,7 +64,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
     public void onChameleonMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Chameleon Circuit")) {
+        if (name.equals(ChatColor.DARK_RED + "Chameleon Circuit")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
@@ -177,7 +177,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISPresetInventory tpi = new TARDISPresetInventory(plugin);
                                         ItemStack[] items = tpi.getPresets();
-                                        Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Chameleon Presets");
+                                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
                                         presetinv.setContents(items);
                                         player.openInventory(presetinv);
                                     }, 2L);
@@ -188,7 +188,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();
-                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
+                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
                                         chamcon.setContents(items);
                                         player.openInventory(chamcon);
                                     }, 2L);

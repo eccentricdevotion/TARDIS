@@ -94,7 +94,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Chameleon Construction")) {
+        if (name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && (slot < 18 || slot == 26 || slot == 43 || slot == 52)) {
@@ -122,7 +122,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
                                         ItemStack[] items = tci.getMenu();
-                                        Inventory chaminv = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                                        Inventory chaminv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                         chaminv.setContents(items);
                                         player.openInventory(chaminv);
                                     }, 2L);
@@ -133,7 +133,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
                                         ItemStack[] items = tci.getHelp();
-                                        Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Chameleon Help");
+                                        Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Help");
                                         chaminv.setContents(items);
                                         player.openInventory(chaminv);
                                     }, 2L);

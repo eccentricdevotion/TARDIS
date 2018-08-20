@@ -58,7 +58,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
     public void onHandlesGUIClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Saved Programs")) {
+        if (name.equals(ChatColor.DARK_RED + "Saved Programs")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             int slot = event.getRawSlot();
@@ -98,7 +98,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, 0);
                     ItemStack[] items = thi.getHandles();
-                    Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Handles Program");
+                    Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
                     chaminv.setContents(items);
                     player.openInventory(chaminv);
                 }, 2L);
@@ -113,7 +113,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, pid);
                         ItemStack[] items = thi.getHandles();
-                        Inventory handlesinv = plugin.getServer().createInventory(player, 54, "§4Handles Program");
+                        Inventory handlesinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
                         handlesinv.setContents(items);
                         player.openInventory(handlesinv);
                     }, 2L);

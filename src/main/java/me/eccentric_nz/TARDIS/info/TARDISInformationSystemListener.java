@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -1227,10 +1228,10 @@ public class TARDISInformationSystemListener implements Listener {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
         TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
-            String menu = key.replaceFirst(value, "§f" + value + "§6");
-            p.sendMessage("§6> " + menu);
+            String menu = key.replaceFirst(value, ChatColor.WHITE + value + ChatColor.GOLD + "");
+            p.sendMessage(ChatColor.GOLD + "> " + menu);
         });
-        p.sendMessage("§6> §fE§6xit");
+        p.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "E" + ChatColor.GOLD + "xit");
     }
 
     /**
@@ -1243,12 +1244,12 @@ public class TARDISInformationSystemListener implements Listener {
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
+        p.sendMessage(ChatColor.GOLD + "" + TARDISDescription.valueOf(item.toString()).getDesc());
         String r = item.toString();
-        p.sendMessage("§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
-        p.sendMessage("§6Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-        p.sendMessage("§6Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-        p.sendMessage("§6Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+        p.sendMessage(ChatColor.GOLD + "Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+        p.sendMessage(ChatColor.GOLD + "Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+        p.sendMessage(ChatColor.GOLD + "Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+        p.sendMessage(ChatColor.GOLD + "Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
         exit(p);
     }
 
@@ -1261,7 +1262,7 @@ public class TARDISInformationSystemListener implements Listener {
     private void showInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
+        p.sendMessage(ChatColor.GOLD + "" + TARDISDescription.valueOf(item.toString()).getDesc());
         exit(p);
     }
 
@@ -1299,8 +1300,8 @@ public class TARDISInformationSystemListener implements Listener {
         }
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6Description: " + desc);
-        p.sendMessage("§6Usage: " + usage);
+        p.sendMessage(ChatColor.GOLD + "Description: " + desc);
+        p.sendMessage(ChatColor.GOLD + "Usage: " + usage);
         exit(p);
     }
 
@@ -1311,7 +1312,7 @@ public class TARDISInformationSystemListener implements Listener {
      */
     private void exit(Player p) {
         plugin.getTrackerKeeper().getInfoMenu().remove(p.getUniqueId());
-        p.sendMessage("§6---");
+        p.sendMessage(ChatColor.GOLD + "---");
         TARDISMessage.send(p, "LOGGED_OUT_INFO");
     }
 }

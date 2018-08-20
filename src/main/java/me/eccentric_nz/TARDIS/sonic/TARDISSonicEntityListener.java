@@ -71,7 +71,7 @@ public class TARDISSonicEntityListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             PlayerInventory pinv = scanned.getInventory();
                             ItemStack[] items = pinv.getStorageContents();
-                            Inventory menu = plugin.getServer().createInventory(player, items.length, "§4" + scanned.getName() + "'s Inventory");
+                            Inventory menu = plugin.getServer().createInventory(player, items.length, ChatColor.DARK_RED + "" + scanned.getName() + "'s Inventory");
                             menu.setContents(items);
                             player.openInventory(menu);
                         }, 40L);
@@ -109,7 +109,7 @@ public class TARDISSonicEntityListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInventoryViewClick(InventoryClickEvent event) {
         String title = event.getInventory().getTitle();
-        if (title.startsWith("§4") && title.endsWith("'s Inventory")) {
+        if (title.startsWith(ChatColor.DARK_RED + "") && title.endsWith("'s Inventory")) {
             event.setCancelled(true);
         }
     }

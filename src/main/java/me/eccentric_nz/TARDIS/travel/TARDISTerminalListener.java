@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -75,7 +76,7 @@ public class TARDISTerminalListener implements Listener {
     public void onDestTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Destination Terminal")) {
+        if (name.equals(ChatColor.DARK_RED + "Destination Terminal")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
@@ -141,8 +142,7 @@ public class TARDISTerminalListener implements Listener {
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<>();
                                 String[] data = terminalDestination.get(uuid).split(":");
-                                String ww = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ?
-                                        plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                                String ww = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
                                 set.put("world", ww);
                                 set.put("x", data[1]);
                                 set.put("y", data[2]);
@@ -191,7 +191,7 @@ public class TARDISTerminalListener implements Listener {
     public void onOpenTerminal(InventoryOpenEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Player && inv.getName().equals("§4Destination Terminal")) {
+        if (holder instanceof Player && inv.getName().equals(ChatColor.DARK_RED + "Destination Terminal")) {
             UUID uuid = ((Player) holder).getUniqueId();
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -431,8 +431,7 @@ public class TARDISTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) :
-                world;
+        return (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : world;
     }
 
     private void checkSettings(Inventory inv, Player p) {
@@ -452,8 +451,7 @@ public class TARDISTerminalListener implements Listener {
                 String world = inv.getItem(i).getItemMeta().getLore().get(0);
                 if (!world.equals("No permission")) {
                     found = true;
-                    World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ?
-                            plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
+                    World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     if (world.equals(terminalUsers.get(uuid).getWorld().getName())) {

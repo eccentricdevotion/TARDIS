@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,7 +42,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
     public void onChameleonConstructorOpen(InventoryOpenEvent event) {
         Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
-        if (inv_name.equals("§4Chameleon Construction")) {
+        if (inv_name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             Player player = ((Player) event.getPlayer());
             plugin.getTrackerKeeper().getConstructors().add(player.getUniqueId());
         }
@@ -51,7 +52,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
     public void onChameleonConstructorClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
-        if (inv_name.equals("§4Chameleon Construction")) {
+        if (inv_name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             Player player = ((Player) event.getPlayer());
             if (plugin.getTrackerKeeper().getConstructors().contains(player.getUniqueId())) {
                 // abort

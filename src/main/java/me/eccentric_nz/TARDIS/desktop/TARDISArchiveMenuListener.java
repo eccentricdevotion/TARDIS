@@ -58,7 +58,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
     public void onThemeMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS Archive")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Archive")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {

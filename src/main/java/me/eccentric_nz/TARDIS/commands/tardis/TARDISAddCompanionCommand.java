@@ -48,7 +48,7 @@ class TARDISAddCompanionCommand {
     public boolean doAddGUI(Player player) {
         if (player.hasPermission("tardis.add")) {
             ItemStack[] items = new TARDISCompanionAddInventory(plugin, player.getUniqueId()).getPlayers();
-            Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Add Companion");
+            Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
             presetinv.setContents(items);
             player.openInventory(presetinv);
         } else {

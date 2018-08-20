@@ -56,7 +56,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
     public void onChameleonPresetClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Chameleon Presets")) {
+        if (name.equals(ChatColor.DARK_RED + "Chameleon Presets")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
@@ -470,7 +470,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         ItemStack[] chameleon = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-                                        Inventory gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                                        Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                         gui.setContents(chameleon);
                                         player.openInventory(gui);
                                     }, 2L);

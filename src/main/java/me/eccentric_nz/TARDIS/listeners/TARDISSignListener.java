@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -164,7 +165,7 @@ public class TARDISSignListener implements Listener {
                         }
                         // open Chameleon Circuit GUI
                         ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-                        Inventory cc_gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                        Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
                     } else if (which == 1 && line1.contains("TARDIS")) {
@@ -200,14 +201,14 @@ public class TARDISSignListener implements Listener {
                             } else {
                                 TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, tid);
                                 ItemStack[] items = sst.getTerminal();
-                                Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                                Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                                 inv.setContents(items);
                                 player.openInventory(inv);
                             }
                         } else {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, tid);
                             ItemStack[] items = sst.getTerminal();
-                            Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                            Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                             inv.setContents(items);
                             player.openInventory(inv);
                         }

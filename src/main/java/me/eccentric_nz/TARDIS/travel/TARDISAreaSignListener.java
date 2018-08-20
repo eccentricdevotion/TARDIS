@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,7 +55,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
     public void onAreaTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS areas")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS areas")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
@@ -94,7 +95,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                     if (rs.fromUUID(player.getUniqueId().toString())) {
                         TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
                         ItemStack[] items = sst.getTerminal();
-                        Inventory saveinv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                        Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                         saveinv.setContents(items);
                         player.openInventory(saveinv);
                     }

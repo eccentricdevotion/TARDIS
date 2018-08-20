@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -79,7 +80,7 @@ public class TARDISPrefsMenuListener implements Listener {
     public void onPrefsMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Player Prefs Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
@@ -91,7 +92,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     if (slot == 23 && im.getDisplayName().equals("Interior hum sound")) {
                         // close this gui and load the sounds GUI
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory hum_inv = plugin.getServer().createInventory(p, 18, "§4TARDIS Interior Sounds");
+                            Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Interior Sounds");
                             // close inventory
                             p.closeInventory();
                             // open new inventory
@@ -160,7 +161,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         if (rs.resultSet()) {
                             // close this gui and load the TARDIS map
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                Inventory new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS Map");
+                                Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Map");
                                 // close inventory
                                 p.closeInventory();
                                 // open new inventory
@@ -175,7 +176,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     if (slot == 26 && im.getDisplayName().equals("Admin Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory menu = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                            Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
                             menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
                             p.openInventory(menu);
                         }, 1L);

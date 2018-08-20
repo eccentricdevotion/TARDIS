@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +52,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     public void onCompanionAddGUIClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Add Companion")) {
+        if (name.equals(ChatColor.DARK_RED + "Add Companion")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
@@ -100,7 +101,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
             close(player);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
-                Inventory cominv = plugin.getServer().createInventory(player, 54, "§4Companions");
+                Inventory cominv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
                 cominv.setContents(items);
                 player.openInventory(cominv);
             }, 2L);

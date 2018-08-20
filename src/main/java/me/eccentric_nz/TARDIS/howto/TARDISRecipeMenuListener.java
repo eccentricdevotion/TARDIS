@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,7 +46,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
     public void onSeedMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS Seed Recipe")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Seed Recipe")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
@@ -58,7 +59,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                             close(p);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
-                                Inventory gui = plugin.getServer().createInventory(p, 27, "§4TARDIS Seeds Menu");
+                                Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
                                 gui.setContents(seeds);
                                 p.openInventory(gui);
                             }, 2L);
@@ -69,7 +70,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                             close(p);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
-                                Inventory gui = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall & Floor Menu");
+                                Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall & Floor Menu");
                                 gui.setContents(recipe);
                                 p.openInventory(gui);
                             }, 2L);

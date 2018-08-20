@@ -27,10 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
@@ -75,7 +72,7 @@ public class TARDISCondenserListener implements Listener {
         InventoryHolder holder = inv.getHolder();
         String title = inv.getName();
         if (holder instanceof Chest) {
-            if (title.equals("§4Artron Condenser") || title.equals("§4Server Condenser")) {
+            if (title.equals(ChatColor.DARK_RED + "Artron Condenser") || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
                 Player player = (Player) event.getPlayer();
                 Chest chest = (Chest) holder;
                 Location loc = chest.getLocation();
@@ -83,7 +80,7 @@ public class TARDISCondenserListener implements Listener {
                 ResultSetTardis rs;
                 boolean isCondenser;
                 HashMap<String, Object> where = new HashMap<>();
-                if (title.equals("§4Artron Condenser")) {
+                if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                         if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE) && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
                             TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
@@ -224,7 +221,7 @@ public class TARDISCondenserListener implements Listener {
         // check inv size
         int inv_size = (is.length > 27) ? 54 : 27;
         holder.getInventory().clear();
-        Inventory aec = plugin.getServer().createInventory(holder, inv_size, "§4" + title);
+        Inventory aec = plugin.getServer().createInventory(holder, inv_size, ChatColor.DARK_RED + "" + title);
         // set the contents to what was in the chest
         aec.setContents(is);
         try {

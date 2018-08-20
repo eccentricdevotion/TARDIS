@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -77,7 +78,7 @@ public class TARDISLazarusListener implements Listener {
                     b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
                     // open the GUI
-                    Inventory inv = plugin.getServer().createInventory(player, 54, "§4Genetic Manipulator");
+                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                     if (player.isSneaking()) {
                         inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
                     } else {

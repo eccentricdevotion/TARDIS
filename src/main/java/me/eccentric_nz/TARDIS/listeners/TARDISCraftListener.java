@@ -129,7 +129,7 @@ public class TARDISCraftListener implements Listener {
                     Material m7 = inv.getItem(7).getType(); // tardis type
                     ItemStack is = new ItemStack(m7, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName("§6TARDIS Seed Block");
+                    im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
                     List<String> lore = new ArrayList<>();
                     lore.add(t.get(m7));
                     lore.add("Walls: " + inv.getItem(6).getType().toString());

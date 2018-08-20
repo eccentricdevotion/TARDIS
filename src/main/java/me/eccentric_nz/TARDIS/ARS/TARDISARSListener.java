@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,7 +60,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     public void onARSTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4Architectural Reconfiguration")) {
+        if (name.equals(ChatColor.DARK_RED + "Architectural Reconfiguration")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();

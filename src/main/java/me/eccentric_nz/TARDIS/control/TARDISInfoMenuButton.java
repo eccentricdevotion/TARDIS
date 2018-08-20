@@ -38,16 +38,16 @@ public class TARDISInfoMenuButton {
         plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
         player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
         player.sendMessage(ChatColor.GOLD + "---*" + plugin.getLanguage().getString("TIS_INFO") + "*---");
-        player.sendMessage("§6> TARDIS §fM§6anual");
-        player.sendMessage("§6> §fI§6tems");
-        player.sendMessage("§6> §fC§6omponents");
-        player.sendMessage("§6> §fS§6onic Components");
-        player.sendMessage("§6> §fD§6isks");
-        player.sendMessage("§6> C§fo§6mmands");
-        player.sendMessage("§6> §fT§6ARDIS Types");
-        player.sendMessage("§6> §fR§6ooms");
-        player.sendMessage("§6> §fF§6ood & Accessories");
-        player.sendMessage("§6> §fP§6lanets");
-        player.sendMessage("§6> §fE§6xit");
+        player.sendMessage(ChatColor.GOLD + "> TARDIS " + ChatColor.WHITE + "M" + ChatColor.GOLD + "anual");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "I" + ChatColor.GOLD + "tems");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "C" + ChatColor.GOLD + "omponents");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "S" + ChatColor.GOLD + "onic Components");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "D" + ChatColor.GOLD + "isks");
+        player.sendMessage(ChatColor.GOLD + "> C" + ChatColor.WHITE + "o" + ChatColor.GOLD + "mmands");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "T" + ChatColor.GOLD + "ARDIS Types");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "R" + ChatColor.GOLD + "ooms");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "F" + ChatColor.GOLD + "ood & Accessories");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "P" + ChatColor.GOLD + "lanets");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.WHITE + "E" + ChatColor.GOLD + "xit");
     }
 }

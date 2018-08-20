@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,7 +47,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
     public void onPrefsMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS Key Prefs Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
@@ -102,7 +103,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
     public void onKeyMenuClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
-        if (!title.equals("§4TARDIS Key Prefs Menu")) {
+        if (!title.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             return;
         }
         ItemStack key = inv.getItem(18);

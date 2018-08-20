@@ -69,7 +69,7 @@ public class TARDISConsoleCloseListener implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
-        if (inv_name.equals("§4TARDIS Console")) {
+        if (inv_name.equals(ChatColor.DARK_RED + "TARDIS Console")) {
             Player p = ((Player) event.getPlayer());
             // get the TARDIS the player is in
             HashMap<String, Object> wheret = new HashMap<>();

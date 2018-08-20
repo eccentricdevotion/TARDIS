@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -113,7 +114,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("sonic")) {
                         // open sonic prefs menu
                         ItemStack[] sonics = new TARDISSonicMenuInventory().getMenu();
-                        Inventory sim = plugin.getServer().createInventory(player, 27, "§4Sonic Prefs Menu");
+                        Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Sonic Prefs Menu");
                         sim.setContents(sonics);
                         player.openInventory(sim);
                         return true;
@@ -121,7 +122,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("key_menu")) {
                         // open sonic prefs menu
                         ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
-                        Inventory sim = plugin.getServer().createInventory(player, 27, "§4TARDIS Key Prefs Menu");
+                        Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Key Prefs Menu");
                         sim.setContents(keys);
                         player.openInventory(sim);
                         return true;

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,7 +59,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
         String name = event.getInventory().getTitle();
-        if (name.equals("§4TARDIS Wall Menu") || name.equals("§4TARDIS Floor Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Wall Menu") || name.equals(ChatColor.DARK_RED + "TARDIS Floor Menu")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -68,8 +69,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     public void onWallMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4TARDIS Wall Menu") || name.equals("§4TARDIS Floor Menu")) {
-            boolean isWall = (name.equals("§4TARDIS Wall Menu"));
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Wall Menu") || name.equals(ChatColor.DARK_RED + "TARDIS Floor Menu")) {
+            boolean isWall = (name.equals(ChatColor.DARK_RED + "TARDIS Wall Menu"));
             Player p = (Player) event.getWhoClicked();
             UUID uuid = p.getUniqueId();
             int slot = event.getRawSlot();
@@ -152,7 +153,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
-            Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Floor Menu");
+            Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Floor Menu");
             wall.setContents(wall_blocks);
             p.openInventory(wall);
         }, 1L);

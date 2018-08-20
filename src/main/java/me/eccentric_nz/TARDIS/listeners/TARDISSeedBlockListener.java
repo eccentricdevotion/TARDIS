@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -73,7 +70,7 @@ public class TARDISSeedBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.hasLore()) {
             return;
         }
-        if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
+        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
             List<String> lore = im.getLore();
             SCHEMATIC schm = CONSOLES.getBY_NAMES().get(lore.get(0));
             Material wall = Material.valueOf(getValuesFromWallString(lore.get(1)));
@@ -110,7 +107,7 @@ public class TARDISSeedBlockListener implements Listener {
                 if (im == null) {
                     return;
                 }
-                im.setDisplayName("§6TARDIS Seed Block");
+                im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
                 List<String> lore = new ArrayList<>();
                 lore.add(data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
                 lore.add("Walls: " + data.getWallType().toString());

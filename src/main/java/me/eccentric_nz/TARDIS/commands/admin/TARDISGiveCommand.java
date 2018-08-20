@@ -328,7 +328,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             is = new ItemStack(schm.getSeedMaterial(), 1);
             // set display name
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName("§6TARDIS Seed Block");
+            im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
             lore.add(type);
             lore.add("Walls: ORANGE_WOOL");
