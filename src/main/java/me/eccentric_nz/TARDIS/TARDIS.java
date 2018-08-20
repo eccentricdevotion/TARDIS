@@ -209,7 +209,6 @@ public class TARDIS extends JavaPlugin {
             }
             worldManager = WORLD_MANAGER.getWorldManager();
             saveDefaultConfig();
-//            saveConfig();
             reloadConfig();
             loadCustomConfigs();
             loadLanguage();
@@ -218,7 +217,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
-            // update database update last known names
+            // update database materials
             if (!getConfig().getBoolean("conversions.ars_materials")) {
                 new ARSConverter(this).convertARS();
                 getConfig().set("conversions.ars_materials", true);
