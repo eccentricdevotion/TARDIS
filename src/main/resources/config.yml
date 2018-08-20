@@ -31,7 +31,7 @@ creation:
 # outer TARDIS
 police_box:
   default_preset: FACTORY
-  tards_lamp: REDSTONE_LAMP
+  tardis_lamp: REDSTONE_LAMP
   name_tardis: false
   materialise: true
   confirm_timeout: 15
