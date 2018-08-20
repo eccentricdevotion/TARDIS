@@ -78,7 +78,7 @@ class TARDISSetIntegerCommand {
         }
         plugin.getArtronConfig().set(first, val);
         try {
-            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "config.yml"));
+            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
