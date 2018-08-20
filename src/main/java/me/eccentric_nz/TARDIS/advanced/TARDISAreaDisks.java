@@ -139,8 +139,8 @@ class TARDISAreaDisks {
                 Inventory inv = plugin.getServer().createInventory(p, 54);
                 inv.setContents(areas);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
+                int count = 0;
                 if (rsa.resultSet()) {
-                    int count = 0;
                     // cycle through areas
                     for (Area map : rsa.getData()) {
                         String name = map.getAreaName();
@@ -161,12 +161,13 @@ class TARDISAreaDisks {
                             }
                         }
                     }
-                    // return the serialized string
-                    if (count > 0) {
-                        return TARDISSerializeInventory.itemStacksToString(inv.getContents());
-                    } else {
-                        return serilized_areas;
-                    }
+                }
+                // return the serialized string
+                if (count > 0) {
+                    return TARDISSerializeInventory.itemStacksToString(inv.getContents());
+                } else {
+                    plugin.debug(serilized_areas);
+                    return serilized_areas;
                 }
             } catch (IOException ex) {
                 plugin.debug("Could not get NEW Area Disk Inventory: " + ex);
