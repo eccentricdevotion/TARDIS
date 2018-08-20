@@ -47,7 +47,7 @@ public class TARDISCustomPreset {
         String[] custom_data = new String[6];
         File custom_file;
         if (!TARDIS.plugin.getConfig().getBoolean("conversions.custom_preset")) {
-            custom_file = TARDISFileCopier.copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"), true, TARDIS.plugin.getPluginName());
+            custom_file = TARDISFileCopier.copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"), true);
             TARDIS.plugin.getConfig().set("conversions.custom_preset", true);
             TARDIS.plugin.saveConfig();
         } else {

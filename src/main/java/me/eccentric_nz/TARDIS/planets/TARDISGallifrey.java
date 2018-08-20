@@ -56,15 +56,15 @@ public class TARDISGallifrey {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Gallifrey");
             worlds_dir.mkdirs();
             // copy WorldConfig.ini file to Gallifrey folder
-            TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("GallifreyWorldConfig.ini"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("GallifreyWorldConfig.ini"), true);
             // copy Caves biome file to Gallifrey WorldBiomes folder
             File biomes_dir = new File(worlds_dir, File.separator + "WorldBiomes");
             biomes_dir.mkdirs();
             String biomes_base_path = biomes_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(biomes_base_path + "Desert M.bc", plugin.getResource("GallifreyDesert M.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Desert.bc", plugin.getResource("GallifreyDesert.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "DesertHills.bc", plugin.getResource("GallifreyDesertHills.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Gallifrey.bc", plugin.getResource("Gallifrey.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Desert M.bc", plugin.getResource("GallifreyDesert M.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Desert.bc", plugin.getResource("GallifreyDesert.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "DesertHills.bc", plugin.getResource("GallifreyDesertHills.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Gallifrey.bc", plugin.getResource("Gallifrey.bc"), true);
             // copy bo3 files to Gallifrey WorldObjects folder
             File objects_dir = new File(worlds_dir, File.separator + "WorldObjects");
             objects_dir.mkdirs();
@@ -73,10 +73,10 @@ public class TARDISGallifrey {
             nbt_dir.mkdirs();
             String nbt_base_path = nbt_dir.getAbsolutePath() + File.separator;
             for (int l = 1; l < 16; l++) {
-                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
+                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true);
             }
             if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Gallifrey plugin:" + which);

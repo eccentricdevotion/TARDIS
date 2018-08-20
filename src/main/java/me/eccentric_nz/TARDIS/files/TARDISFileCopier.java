@@ -71,36 +71,35 @@ public class TARDISFileCopier {
         CONSOLES.getBY_NAMES().values().forEach((ts) -> {
             if (!ts.isCustom()) {
                 String str = basepath + ts.getPermission() + ".tschm";
-                copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true, plugin.getPluginName());
+                copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
             }
         });
         // copy default room files as well
         for (TARDISARS ta : TARDISARS.values()) {
             if (ta.getOffset() != 0) {
                 String str = basepath + ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm";
-                copy(str, plugin.getResource(ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm"), true, plugin.getPluginName());
+                copy(str, plugin.getResource(ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm"), true);
             }
         }
         String zeronstr = basepath + "zero.tschm";
-        copy(zeronstr, plugin.getResource("zero.tschm"), true, plugin.getPluginName());
+        copy(zeronstr, plugin.getResource("zero.tschm"), true);
         String junknstr = basepath + "junk.tschm";
-        copy(junknstr, plugin.getResource("junk.tschm"), true, plugin.getPluginName());
+        copy(junknstr, plugin.getResource("junk.tschm"), true);
         String tmpnstr = userbasepath + "template.tschm";
-        copy(tmpnstr, plugin.getResource("template.tschm"), true, plugin.getPluginName());
+        copy(tmpnstr, plugin.getResource("template.tschm"), true);
         String gallifreynstr = basepath + "gallifrey.tschm";
-        copy(gallifreynstr, plugin.getResource("gallifrey.tschm"), true, plugin.getPluginName());
+        copy(gallifreynstr, plugin.getResource("gallifrey.tschm"), true);
     }
 
     /**
      * Copies the schematic file to the TARDIS plugin directory if it is not present.
      *
-     * @param filepath   the path to the file to write to
-     * @param in         the input file to read from
-     * @param overwrite  whether to overwrite the file
-     * @param pluginName the name of the plugin doing the copy
+     * @param filepath  the path to the file to write to
+     * @param in        the input file to read from
+     * @param overwrite whether to overwrite the file
      * @return a File
      */
-    public static File copy(String filepath, InputStream in, boolean overwrite, String pluginName) {
+    public static File copy(String filepath, InputStream in, boolean overwrite) {
         File file = new File(filepath);
         if (overwrite || !file.exists()) {
             try {
@@ -112,22 +111,22 @@ public class TARDISFileCopier {
                         out.write(buf, 0, len);
                     }
                 } catch (IOException io) {
-                    System.err.println(pluginName + "Could not save the file (" + file.toString() + ").");
+                    System.err.println("[TARDIS] Copier: Could not save the file (" + file.toString() + ").");
                 } finally {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        System.err.println(pluginName + "Could not close the output stream.");
+                        System.err.println("[TARDIS] Copier: Could not close the output stream.");
                     }
                 }
             } catch (FileNotFoundException e) {
-                System.err.println(pluginName + "File not found.");
+                System.err.println("[TARDIS] Copier: File not found: " + filepath);
             } finally {
                 if (in != null) {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        System.err.println(pluginName + "Could not close the input stream.");
+                        System.err.println("[TARDIS] Copier: Could not close the input stream.");
                     }
                 }
             }
@@ -144,6 +143,6 @@ public class TARDISFileCopier {
     public File copy(String filename) {
         String filepath = plugin.getDataFolder() + File.separator + filename;
         InputStream in = plugin.getResource(filename);
-        return copy(filepath, in, false, plugin.getPluginName());
+        return copy(filepath, in, false);
     }
 }

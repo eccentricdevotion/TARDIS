@@ -52,30 +52,30 @@ public class TARDISSiluria {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Siluria");
             worlds_dir.mkdirs();
             // copy WorldConfig.ini file to Siluria folder
-            TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("SiluriaWorldConfig.ini"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("SiluriaWorldConfig.ini"), true);
             // copy Caves biome file to Siluria WorldBiomes folder
             File biomes_dir = new File(worlds_dir, File.separator + "WorldBiomes");
             biomes_dir.mkdirs();
             String biomes_base_path = biomes_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(biomes_base_path + "Caves.bc", plugin.getResource("Caves.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Caves.bc", plugin.getResource("Caves.bc"), true);
             // copy bo3 files to Siluria WorldObjects folder
             File objects_dir = new File(worlds_dir, File.separator + "WorldObjects");
             objects_dir.mkdirs();
             String objects_base_path = objects_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(objects_base_path + "siluriabuilding.bo3", plugin.getResource("siluriabuilding.bo3"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(objects_base_path + "siluriapath_EW.bo3", plugin.getResource("siluriapath_EW.bo3"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(objects_base_path + "siluriapath_NS.bo3", plugin.getResource("siluriapath_NS.bo3"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(objects_base_path + "siluriapath_cross.bo3", plugin.getResource("siluriapath_cross.bo3"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(objects_base_path + "siluriabuilding.bo3", plugin.getResource("siluriabuilding.bo3"), true);
+            TARDISFileCopier.copy(objects_base_path + "siluriapath_EW.bo3", plugin.getResource("siluriapath_EW.bo3"), true);
+            TARDISFileCopier.copy(objects_base_path + "siluriapath_NS.bo3", plugin.getResource("siluriapath_NS.bo3"), true);
+            TARDISFileCopier.copy(objects_base_path + "siluriapath_cross.bo3", plugin.getResource("siluriapath_cross.bo3"), true);
             // copy nbt files to WorldObjects/NBT folder
             File nbt_dir = new File(objects_dir, File.separator + "SNBT");
             nbt_dir.mkdirs();
             String nbt_base_path = nbt_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(nbt_base_path + "MobSpawner.nbt", plugin.getResource("SiluriaMobSpawner.nbt"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(nbt_base_path + "MobSpawner.nbt", plugin.getResource("SiluriaMobSpawner.nbt"), true);
             for (int l = 1; l < 16; l++) {
-                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
+                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true);
             }
             if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Siluria plugin:" + which);

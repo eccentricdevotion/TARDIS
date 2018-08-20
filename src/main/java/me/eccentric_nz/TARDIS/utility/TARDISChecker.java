@@ -85,22 +85,22 @@ public class TARDISChecker {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                System.err.println(plugin.getPluginName() + "Could not save the file (" + file.toString() + ").");
+                System.err.println("[TARDIS] Checker: Could not save the file (" + file.toString() + ").");
             } finally {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    System.err.println(plugin.getPluginName() + "Could not close the output stream.");
+                    System.err.println("[TARDIS] Checker: Could not close the output stream.");
                 }
             }
         } catch (FileNotFoundException e) {
-            System.err.println(plugin.getPluginName() + "File not found.");
+            System.err.println("[TARDIS] Checker: File not found: " + filename);
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    System.err.println(plugin.getPluginName() + "Could not close the input stream.");
+                    System.err.println("[TARDIS] Checker: Could not close the input stream.");
                 }
             }
         }

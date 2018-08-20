@@ -55,35 +55,35 @@ public class TARDISSkaro {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro");
             worlds_dir.mkdirs();
             // copy WorldConfig.ini file to Skaro folder
-            TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("WorldConfig.ini"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("WorldConfig.ini"), true);
             // copy biome files to Skaro WorldBiomes folder
             File biomes_dir = new File(worlds_dir, File.separator + "WorldBiomes");
             biomes_dir.mkdirs();
             String biomes_base_path = biomes_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(biomes_base_path + "Desert.bc", plugin.getResource("Desert.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "DesertHills.bc", plugin.getResource("DesertHills.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Mesa (Bryce).bc", plugin.getResource("Mesa (Bryce).bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau F M.bc", plugin.getResource("Mesa Plateau F M.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau F.bc", plugin.getResource("Mesa Plateau F.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau M.bc", plugin.getResource("Mesa Plateau M.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau.bc", plugin.getResource("Mesa Plateau.bc"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(biomes_base_path + "Mesa.bc", plugin.getResource("Mesa.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Desert.bc", plugin.getResource("Desert.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "DesertHills.bc", plugin.getResource("DesertHills.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Mesa (Bryce).bc", plugin.getResource("Mesa (Bryce).bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau F M.bc", plugin.getResource("Mesa Plateau F M.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau F.bc", plugin.getResource("Mesa Plateau F.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau M.bc", plugin.getResource("Mesa Plateau M.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau.bc", plugin.getResource("Mesa Plateau.bc"), true);
+            TARDISFileCopier.copy(biomes_base_path + "Mesa.bc", plugin.getResource("Mesa.bc"), true);
             // copy bo3 files to Skaro WorldObjects folder
             File objects_dir = new File(worlds_dir, File.separator + "WorldObjects");
             objects_dir.mkdirs();
             String objects_base_path = objects_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(objects_base_path + "dalek1.bo3", plugin.getResource("dalek1.bo3"), true, plugin.getPluginName());
-            TARDISFileCopier.copy(objects_base_path + "dalek2.bo3", plugin.getResource("dalek2.bo3"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(objects_base_path + "dalek1.bo3", plugin.getResource("dalek1.bo3"), true);
+            TARDISFileCopier.copy(objects_base_path + "dalek2.bo3", plugin.getResource("dalek2.bo3"), true);
             // copy nbt files to WorldObjects/NBT folder
             File nbt_dir = new File(objects_dir, File.separator + "NBT");
             nbt_dir.mkdirs();
             String nbt_base_path = nbt_dir.getAbsolutePath() + File.separator;
-            TARDISFileCopier.copy(nbt_base_path + "MobSpawner.nbt", plugin.getResource("MobSpawner.nbt"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(nbt_base_path + "MobSpawner.nbt", plugin.getResource("MobSpawner.nbt"), true);
             for (int l = 1; l < 16; l++) {
-                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true, plugin.getPluginName());
-                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
+                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true);
+                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true);
             }
             if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:" + which);
