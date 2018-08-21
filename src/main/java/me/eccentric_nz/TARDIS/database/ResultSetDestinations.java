@@ -57,7 +57,7 @@ public class ResultSetDestinations {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the destinations table.
      *
      * @param plugin   an instance of the main class.
-     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param multiple a boolean indicating whether multiple rows should be fetched
      */
     public ResultSetDestinations(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {

@@ -40,7 +40,7 @@ public class ResultSetAntiBuild {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis & travellers table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis &amp; travellers table.
      *
      * @param plugin an instance of the main class.
      * @param uuid   the uuid who is trying to build.
@@ -52,8 +52,8 @@ public class ResultSetAntiBuild {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis & travellers table. This method builds an SQL query string from the
-     * parameters supplied and then executes the query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the tardis &amp; travellers table. This method builds an SQL query string from
+     * the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */

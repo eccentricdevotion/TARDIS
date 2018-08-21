@@ -379,7 +379,8 @@ public enum TARDISInfoMenu {
     ACID_BUCKET_RECIPE("TIS|Planets|Skaro|Items|Acid Bucket|Recipe", "ACID_BUCKET", "R"),
     ACID_BATTERY("TIS|Planets|Skaro|Items|Acid Battery", "SKARO_ITEMS", "c"),
     ACID_BATTERY_INFO("TIS|Planets|Skaro|Items|Acid Battery|Info", "ACID_BATTERY", "I"),
-    ACID_BATTERY_RECIPE("TIS|Planets|Skaro|Items|Acid Battery|Recipe", "ACID_BATTERY", "R"),;
+    ACID_BATTERY_RECIPE("TIS|Planets|Skaro|Items|Acid Battery|Recipe", "ACID_BATTERY", "R");
+
     private final String name;
     private final String parent;
     private final String key;
@@ -421,7 +422,7 @@ public enum TARDISInfoMenu {
      * Attempts to get the children of the parent menu.
      *
      * @param parent the parent menu TARDISInfoMenu.toString();
-     * @return a HashMap<String, String> of child menu items, and their (ALT)key
+     * @return a HashMap&lt;String, String&gt; of child menu items, and their (ALT)key
      */
     public static TreeMap<String, String> getChildren(String parent) {
         TreeMap<String, String> children = new TreeMap<>();

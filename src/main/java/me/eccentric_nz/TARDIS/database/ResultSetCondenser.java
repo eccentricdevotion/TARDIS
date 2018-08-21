@@ -47,7 +47,7 @@ public class ResultSetCondenser {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the condenser table.
      *
      * @param plugin an instance of the main class.
-     * @param where  a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
     public ResultSetCondenser(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;

@@ -18,7 +18,8 @@ public class TARDISHandlesTransmatCommand {
      * A site-to-site transport is a special type of transport in which an object or person is transported from one site
      * directly to another, with neither site being a transporter platform.
      *
-     * @param player The player to transmat
+     * @param player   The player to transmat
+     * @param transmat the location to send the player
      */
     public void siteToSiteTransport(Player player, Location transmat) {
         Location location = player.getLocation();

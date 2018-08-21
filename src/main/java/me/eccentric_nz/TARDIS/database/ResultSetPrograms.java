@@ -27,11 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
  * <p>
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -45,12 +44,10 @@ public class ResultSetPrograms {
     private final List<Program> programs;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the programs table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the programs table.
      *
      * @param plugin an instance of the main class.
-     * @param uuid   a HashMap<String, Object> of table fields and values to
-     *               refine the search.
+     * @param uuid   a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
     public ResultSetPrograms(TARDIS plugin, String uuid) {
         this.plugin = plugin;
@@ -60,9 +57,8 @@ public class ResultSetPrograms {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the programs table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the programs table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -79,12 +75,12 @@ public class ResultSetPrograms {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     Program program = new Program(
-                            rs.getInt("program_id"),
-                            "",
-                            rs.getString("name"),
-                            "",
-                            "",
-                            rs.getBoolean("checked")
+                        rs.getInt("program_id"),
+                        "",
+                        rs.getString("name"),
+                        "",
+                        "",
+                        rs.getBoolean("checked")
                     );
                     programs.add(program);
                 }

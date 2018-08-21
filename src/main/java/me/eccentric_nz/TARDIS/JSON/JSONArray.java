@@ -192,13 +192,9 @@ public final class JSONArray {
      */
     public boolean getBoolean(int index) throws JSONException {
         Object object = get(index);
-        if (object.equals(Boolean.FALSE)
-                || (object instanceof String && ((String) object)
-                .equalsIgnoreCase("false"))) {
+        if (object.equals(Boolean.FALSE) || (object instanceof String && ((String) object).equalsIgnoreCase("false"))) {
             return false;
-        } else if (object.equals(Boolean.TRUE)
-                || (object instanceof String && ((String) object)
-                .equalsIgnoreCase("true"))) {
+        } else if (object.equals(Boolean.TRUE) || (object instanceof String && ((String) object).equalsIgnoreCase("true"))) {
             return true;
         }
         throw new JSONException("JSONArray[" + index + "] is not a boolean.");
@@ -214,8 +210,7 @@ public final class JSONArray {
     public double getDouble(int index) throws JSONException {
         Object object = get(index);
         try {
-            return object instanceof Number ? ((Number) object).doubleValue()
-                    : Double.parseDouble((String) object);
+            return object instanceof Number ? ((Number) object).doubleValue() : Double.parseDouble((String) object);
         } catch (NumberFormatException e) {
             throw new JSONException("JSONArray[" + index + "] is not a number.");
         }
@@ -231,8 +226,7 @@ public final class JSONArray {
     public int getInt(int index) throws JSONException {
         Object object = get(index);
         try {
-            return object instanceof Number ? ((Number) object).intValue()
-                    : Integer.parseInt((String) object);
+            return object instanceof Number ? ((Number) object).intValue() : Integer.parseInt((String) object);
         } catch (NumberFormatException e) {
             throw new JSONException("JSONArray[" + index + "] is not a number.");
         }
@@ -278,8 +272,7 @@ public final class JSONArray {
     public long getLong(int index) throws JSONException {
         Object object = get(index);
         try {
-            return object instanceof Number ? ((Number) object).longValue()
-                    : Long.parseLong((String) object);
+            return object instanceof Number ? ((Number) object).longValue() : Long.parseLong((String) object);
         } catch (NumberFormatException e) {
             throw new JSONException("JSONArray[" + index + "] is not a number.");
         }
@@ -348,8 +341,7 @@ public final class JSONArray {
      * @return An object value, or null if there is no object at that index.
      */
     public Object opt(int index) {
-        return (index < 0 || index >= length()) ? null : myArrayList
-                .get(index);
+        return (index < 0 || index >= length()) ? null : myArrayList.get(index);
     }
 
     /**
@@ -503,8 +495,7 @@ public final class JSONArray {
      */
     public String optString(int index, String defaultValue) {
         Object object = opt(index);
-        return JSONObject.NULL.equals(object) ? defaultValue : object
-                .toString();
+        return JSONObject.NULL.equals(object) ? defaultValue : object.toString();
     }
 
     /**
@@ -752,7 +743,7 @@ public final class JSONArray {
      * @return a printable, displayable, transmittable representation of the object, beginning with
      * <code>[</code>&nbsp;<small>(left bracket)</small> and ending with <code>]</code> &nbsp;<small>(right
      * bracket)</small>.
-     * @throws JSONException
+     * @throws JSONException if there is a problem
      */
     public String toString(int indentFactor) throws JSONException {
         StringWriter sw = new StringWriter();
@@ -766,9 +757,9 @@ public final class JSONArray {
      * <p>
      * Warning: This method assumes that the data structure is acyclical.
      *
-     * @param writer
+     * @param writer A Writer.
      * @return The writer.
-     * @throws JSONException
+     * @throws JSONException if there is a problem.
      */
     public Writer write(Writer writer) throws JSONException {
         return write(writer, 0, 0);
@@ -784,16 +775,14 @@ public final class JSONArray {
      * @return The writer.
      * @throws JSONException
      */
-    Writer write(Writer writer, int indentFactor, int indent)
-            throws JSONException {
+    Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
         try {
             boolean commanate = false;
             int length = length();
             writer.write('[');
 
             if (length == 1) {
-                JSONObject.writeValue(writer, myArrayList.get(0),
-                        indentFactor, indent);
+                JSONObject.writeValue(writer, myArrayList.get(0), indentFactor, indent);
             } else if (length != 0) {
                 int newindent = indent + indentFactor;
 
@@ -805,8 +794,7 @@ public final class JSONArray {
                         writer.write('\n');
                     }
                     JSONObject.indent(writer, newindent);
-                    JSONObject.writeValue(writer, myArrayList.get(i),
-                            indentFactor, newindent);
+                    JSONObject.writeValue(writer, myArrayList.get(i), indentFactor, newindent);
                     commanate = true;
                 }
                 if (indentFactor > 0) {

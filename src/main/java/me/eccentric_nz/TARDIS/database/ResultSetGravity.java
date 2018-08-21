@@ -50,7 +50,7 @@ public class ResultSetGravity {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the gravity_well table.
      *
      * @param plugin   an instance of the main class.
-     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param multiple boolean determining whether to return multiple records
      */
     public ResultSetGravity(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {

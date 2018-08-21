@@ -41,7 +41,7 @@ class TARDISSQLCondenserUpdate implements Runnable {
      *
      * @param plugin an instance of the main plugin class
      * @param amount the amount of blocks to remove
-     * @param where  a HashMap<String, Object> of table fields and values to select the records to alter.
+     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      */
     public TARDISSQLCondenserUpdate(TARDIS plugin, int amount, HashMap<String, Object> where) {
         this.plugin = plugin;

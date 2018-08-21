@@ -161,7 +161,6 @@ public class JSONObject {
      *
      * @param jo    A JSONObject.
      * @param names An array of strings.
-     * @throws JSONException
      * @throws JSONException If a value is a non-finite number or if a name is duplicated.
      */
     public JSONObject(JSONObject jo, String[] names) {
@@ -228,7 +227,7 @@ public class JSONObject {
      * Construct a JSONObject from a Map.
      *
      * @param map A map object that can be used to initialize the contents of the JSONObject.
-     * @throws JSONException
+     * @throws JSONException if there is a problem
      */
     public JSONObject(Map map) {
         this.map = new HashMap();
@@ -538,7 +537,7 @@ public class JSONObject {
     /**
      * Get an array of field names from a JSONObject.
      *
-     * @param jo
+     * @param jo A JSONObject
      * @return An array of field names, or null if there are no names.
      */
     public static String[] getNames(JSONObject jo) {
@@ -559,7 +558,7 @@ public class JSONObject {
     /**
      * Get an array of field names from an Object.
      *
-     * @param object
+     * @param object An Object
      * @return An array of field names, or null if there are no names.
      */
     public static String[] getNames(Object object) {
@@ -931,7 +930,7 @@ public class JSONObject {
      * @param key   A key string.
      * @param value A Collection value.
      * @return this.
-     * @throws JSONException
+     * @throws JSONException if there is a problem
      */
     public JSONObject put(String key, Collection value) throws JSONException {
         put(key, new JSONArray(value));
@@ -983,7 +982,7 @@ public class JSONObject {
      * @param key   A key string.
      * @param value A Map value.
      * @return this.
-     * @throws JSONException
+     * @throws JSONException if there is a problem
      */
     public JSONObject put(String key, Map value) throws JSONException {
         put(key, new JSONObject(value));
@@ -1027,9 +1026,9 @@ public class JSONObject {
      * Put a key/value pair in the JSONObject, but only if the key and the value are both non-null, and only if there is
      * not already a member with that name.
      *
-     * @param key
-     * @param value
-     * @return his.
+     * @param key   the key to use
+     * @param value the value to save
+     * @return this
      * @throws JSONException if the key is a duplicate
      */
     public JSONObject putOnce(String key, Object value) throws JSONException {
@@ -1060,8 +1059,8 @@ public class JSONObject {
 
     /**
      * Produce a string in double quotes with backslash sequences in all the right places. A backslash will be inserted
-     * within </, producing <\/, allowing JSON text to be delivered in HTML. In JSON text, a string cannot contain a
-     * control character or an unescaped quote or backslash.
+     * within &lt;/, producing &lt;\/, allowing JSON text to be delivered in HTML. In JSON text, a string cannot contain
+     * a control character or an unescaped quote or backslash.
      *
      * @param string A String
      * @return A String correctly formatted for insertion in a JSON text.
@@ -1307,8 +1306,7 @@ public class JSONObject {
         if (value instanceof Number) {
             return numberToString((Number) value);
         }
-        if (value instanceof Boolean || value instanceof JSONObject
-                || value instanceof JSONArray) {
+        if (value instanceof Boolean || value instanceof JSONObject || value instanceof JSONArray) {
             return value.toString();
         }
         if (value instanceof Map) {
@@ -1337,13 +1335,7 @@ public class JSONObject {
             if (object == null) {
                 return NULL;
             }
-            if (object instanceof JSONObject || object instanceof JSONArray
-                    || NULL.equals(object) || object instanceof JSONString
-                    || object instanceof Byte || object instanceof Character
-                    || object instanceof Short || object instanceof Integer
-                    || object instanceof Long || object instanceof Boolean
-                    || object instanceof Float || object instanceof Double
-                    || object instanceof String) {
+            if (object instanceof JSONObject || object instanceof JSONArray || NULL.equals(object) || object instanceof JSONString || object instanceof Byte || object instanceof Character || object instanceof Short || object instanceof Integer || object instanceof Long || object instanceof Boolean || object instanceof Float || object instanceof Double || object instanceof String) {
                 return object;
             }
 
@@ -1358,9 +1350,7 @@ public class JSONObject {
             }
             Package objectPackage = object.getClass().getPackage();
             String objectPackageName = objectPackage != null ? objectPackage.getName() : "";
-            if (objectPackageName.startsWith("java.")
-                    || objectPackageName.startsWith("javax.")
-                    || object.getClass().getClassLoader() == null) {
+            if (objectPackageName.startsWith("java.") || objectPackageName.startsWith("javax.") || object.getClass().getClassLoader() == null) {
                 return object.toString();
             }
             return new JSONObject(object);
@@ -1374,9 +1364,9 @@ public class JSONObject {
      * <p>
      * Warning: This method assumes that the data structure is acyclical.
      *
-     * @param writer
+     * @param writer a Writer
      * @return The writer.
-     * @throws JSONException
+     * @throws JSONException if there is a problem
      */
     public Writer write(Writer writer) throws JSONException {
         return write(writer, 0, 0);
@@ -1427,8 +1417,7 @@ public class JSONObject {
      * @return The writer.
      * @throws JSONException
      */
-    Writer write(Writer writer, int indentFactor, int indent)
-            throws JSONException {
+    Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
         try {
             boolean commanate = false;
             int length = length();
@@ -1459,8 +1448,7 @@ public class JSONObject {
                     if (indentFactor > 0) {
                         writer.write(' ');
                     }
-                    writeValue(writer, map.get(key), indentFactor,
-                            newindent);
+                    writeValue(writer, map.get(key), indentFactor, newindent);
                     commanate = true;
                 }
                 if (indentFactor > 0) {

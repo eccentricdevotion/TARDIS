@@ -46,7 +46,7 @@ public class QueryFactory {
      * Inserts data into an SQLite database table. This method executes the SQL in a separate thread.
      *
      * @param table the database table name to insert the data into.
-     * @param data  a HashMap<String, Object> of table fields and values to insert.
+     * @param data  a HashMap&lt;String, Object&gt; of table fields and values to insert.
      */
     public void doInsert(String table, HashMap<String, Object> data) {
         TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
@@ -58,7 +58,7 @@ public class QueryFactory {
      * supplied and then executes the insert.
      *
      * @param table the database table name to insert the data into.
-     * @param data  a HashMap<String, Object> of table fields and values to insert.
+     * @param data  a HashMap&lt;String, Object&gt; of table fields and values to insert.
      * @return the primary key of the record that was inserted
      */
     public int doSyncInsert(String table, HashMap<String, Object> data) {
@@ -119,8 +119,8 @@ public class QueryFactory {
      * Updates data in an SQLite database table. This method executes the SQL in a separate thread.
      *
      * @param table the database table name to update.
-     * @param data  a HashMap<String, Object> of table fields and values update.
-     * @param where a HashMap<String, Object> of table fields and values to select the records to update.
+     * @param data  a HashMap&lt;String, Object&gt; of table fields and values update.
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to update.
      */
     public void doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
@@ -131,8 +131,8 @@ public class QueryFactory {
      * Updates data in an SQLite database table. This method executes the SQL on the main thread.
      *
      * @param table the database table name to update.
-     * @param data  a HashMap<String, Object> of table fields and values update.
-     * @param where a HashMap<String, Object> of table fields and values to select the records to update.
+     * @param data  a HashMap&lt;String, Object&gt; of table fields and values update.
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to update.
      */
     public void doSyncUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
@@ -143,7 +143,7 @@ public class QueryFactory {
      * Deletes rows from an SQLite database table. This method executes the SQL in a separate thread.
      *
      * @param table the database table name to insert the data into.
-     * @param where a HashMap<String, Object> of table fields and values to select the records to delete.
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to delete.
      */
     public void doDelete(String table, HashMap<String, Object> where) {
         TARDISSQLDelete delete = new TARDISSQLDelete(plugin, table, where);
@@ -154,7 +154,7 @@ public class QueryFactory {
      * Deletes rows from an SQLite database table. This method executes the SQL in a separate thread.
      *
      * @param table the database table name to insert the data into.
-     * @param where a HashMap<String, Object> of table fields and values to select the records to delete.
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to delete.
      * @return true or false depending on whether the data was deleted successfully
      */
     public boolean doSyncDelete(String table, HashMap<String, Object> where) {
@@ -195,7 +195,7 @@ public class QueryFactory {
      *
      * @param table  the database table name to insert the data into.
      * @param amount the amount of energy to add or remove (use a negative value)
-     * @param where  a HashMap<String, Object> of table fields and values to select the records to alter.
+     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      * @param p      the player who receives the success message.
      */
     public void alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
@@ -207,7 +207,7 @@ public class QueryFactory {
      * Removes condenser block counts from an SQLite database table. This method executes the SQL in a separate thread.
      *
      * @param amount the amount of blocks to remove
-     * @param where  a HashMap<String, Object> of table fields and values to select the records to alter.
+     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      */
     public void alterCondenserBlockCount(int amount, HashMap<String, Object> where) {
         TARDISSQLCondenserUpdate condense = new TARDISSQLCondenserUpdate(plugin, amount, where);
@@ -268,7 +268,7 @@ public class QueryFactory {
     /**
      * Inserts data into an SQLite database table. This method executes the SQL in a separate thread.
      *
-     * @param data  a HashMap<String, Object> of table fields and values to insert.
+     * @param data  a HashMap&lt;String, Object&gt; of table fields and values to insert.
      * @param biome the biome of the Police Box location
      * @param id    the tardis_id
      */

@@ -70,8 +70,8 @@ public class TARDISArea {
      * Checks if a location is contained within any TARDIS area.
      *
      * @param l a location object to check.
-     * @return a TARDISAreaCheck <Area, Boolean> with values dependent on whether the location is within an existing
-     * TARDIS area
+     * @return a TARDISAreaCheck &lt;Area, Boolean&gt; with values dependent on whether the location is within an
+     * existing TARDIS area
      */
     public TARDISAreaCheck areaCheckInExistingArea(Location l) {
         String w = l.getWorld().getName();

@@ -50,7 +50,7 @@ public class ResultSetTravellers {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
      *
      * @param plugin   an instance of the main class.
-     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param multiple a boolean setting whether to retrieve more than one record, it true returns an ArrayList that can
      *                 be looped through later.
      */

@@ -21,7 +21,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 /**
- * @param <String>
+ * @param <String> the filename
  * @author eccentric_nz
  */
 public class TARDISRandomCollection<String> {

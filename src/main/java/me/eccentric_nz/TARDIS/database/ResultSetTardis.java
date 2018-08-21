@@ -50,7 +50,7 @@ public class ResultSetTardis {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
      *
      * @param plugin    an instance of the main class.
-     * @param where     a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where     a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param limit     an SQL LIMIT statement
      * @param multiple  a boolean indicating whether multiple rows should be fetched
      * @param abandoned whether to select TARDISes that are abandoned (1) or not (0)
@@ -119,39 +119,39 @@ public class ResultSetTardis {
                         zero = "";
                     }
                     tardis = new Tardis(
-                            rs.getInt("tardis_id"),
-                            UUID.fromString(uuid),
-                            rs.getString("owner"),
-                            rs.getString("last_known_name"),
-                            rs.getString("chunk"),
-                            rs.getInt("tips"),
-                            CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH)),
-                            rs.getBoolean("abandoned"),
-                            companions,
-                            rs.getString("save_sign"),
-                            rs.getString("chameleon"),
-                            PRESET.valueOf(rs.getString("chameleon_preset")),
-                            PRESET.valueOf(rs.getString("chameleon_demat")),
-                            rs.getInt("adapti_on"),
-                            rs.getInt("artron_level"),
-                            rs.getString("creeper"),
-                            rs.getString("condenser"),
-                            rs.getString("beacon"),
-                            rs.getBoolean("handbrake_on"),
-                            rs.getBoolean("tardis_init"),
-                            rs.getBoolean("recharging"),
-                            rs.getString("scanner"),
-                            rs.getBoolean("hidden"),
-                            rs.getLong("lastuse"),
-                            rs.getBoolean("iso_on"),
-                            rs.getString("eps"),
-                            rs.getString("rail"),
-                            rs.getString("renderer"),
-                            zero,
-                            rs.getBoolean("powered_on"),
-                            rs.getBoolean("lights_on"),
-                            rs.getBoolean("siege_on"),
-                            rs.getInt("monsters")
+                        rs.getInt("tardis_id"),
+                        UUID.fromString(uuid),
+                        rs.getString("owner"),
+                        rs.getString("last_known_name"),
+                        rs.getString("chunk"),
+                        rs.getInt("tips"),
+                        CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH)),
+                        rs.getBoolean("abandoned"),
+                        companions,
+                        rs.getString("save_sign"),
+                        rs.getString("chameleon"),
+                        PRESET.valueOf(rs.getString("chameleon_preset")),
+                        PRESET.valueOf(rs.getString("chameleon_demat")),
+                        rs.getInt("adapti_on"),
+                        rs.getInt("artron_level"),
+                        rs.getString("creeper"),
+                        rs.getString("condenser"),
+                        rs.getString("beacon"),
+                        rs.getBoolean("handbrake_on"),
+                        rs.getBoolean("tardis_init"),
+                        rs.getBoolean("recharging"),
+                        rs.getString("scanner"),
+                        rs.getBoolean("hidden"),
+                        rs.getLong("lastuse"),
+                        rs.getBoolean("iso_on"),
+                        rs.getString("eps"),
+                        rs.getString("rail"),
+                        rs.getString("renderer"),
+                        zero,
+                        rs.getBoolean("powered_on"),
+                        rs.getBoolean("lights_on"),
+                        rs.getBoolean("siege_on"),
+                        rs.getInt("monsters")
                     );
                     if (multiple) {
                         data.add(tardis);

@@ -98,9 +98,9 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>3.0.0</version>
                         <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
                             <quiet/>
                         </configuration>
                         <executions>

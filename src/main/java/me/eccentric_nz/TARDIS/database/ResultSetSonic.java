@@ -49,7 +49,7 @@ public class ResultSetSonic {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
-     * @param where  a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
     public ResultSetSonic(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
@@ -94,16 +94,16 @@ public class ResultSetSonic {
                 String colour = rs.getString("sonic_type");
                 ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
-                        rs.getInt("sonic_id"),
-                        UUID.fromString(rs.getString("uuid")),
-                        rs.getBoolean("activated"),
-                        cc,
-                        rs.getBoolean("bio"),
-                        rs.getBoolean("diamond"),
-                        rs.getBoolean("emerald"),
-                        rs.getBoolean("redstone"),
-                        rs.getBoolean("painter"),
-                        rs.getBoolean("ignite")
+                    rs.getInt("sonic_id"),
+                    UUID.fromString(rs.getString("uuid")),
+                    rs.getBoolean("activated"),
+                    cc,
+                    rs.getBoolean("bio"),
+                    rs.getBoolean("diamond"),
+                    rs.getBoolean("emerald"),
+                    rs.getBoolean("redstone"),
+                    rs.getBoolean("painter"),
+                    rs.getBoolean("ignite")
                 );
             } else {
                 return false;

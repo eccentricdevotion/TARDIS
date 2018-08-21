@@ -324,14 +324,14 @@ public interface TardisAPI {
     /**
      * Get the TARDIS shaped recipes.
      *
-     * @return a HashMap<String, ShapedRecipe> containing the TARDIS shaped recipes
+     * @return a HashMap&lt;String, ShapedRecipe&gt; containing the TARDIS shaped recipes
      */
     HashMap<String, ShapedRecipe> getShapedRecipes();
 
     /**
      * Get the TARDIS shapeless recipes.
      *
-     * @return a HashMap<String, ShapedRecipe> containing the TARDIS shapeless recipes
+     * @return a HashMap&lt;String, ShapelessRecipe&gt; containing the TARDIS shapeless recipes
      */
     HashMap<String, ShapelessRecipe> getShapelessRecipes();
 

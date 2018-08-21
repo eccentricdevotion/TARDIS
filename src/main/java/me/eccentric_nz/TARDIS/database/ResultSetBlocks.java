@@ -49,7 +49,7 @@ public class ResultSetBlocks {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
      *
      * @param plugin   an instance of the main class.
-     * @param where    a HashMap<String, Object> of table fields and values to refine the search.
+     * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param multiple a boolean indicating whether multiple rows should be fetched
      */
     public ResultSetBlocks(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
@@ -95,12 +95,12 @@ public class ResultSetBlocks {
                 while (rs.next()) {
                     String str = rs.getString("location");
                     replacedBlock = new ReplacedBlock(
-                            rs.getInt("b_id"),
-                            rs.getInt("tardis_id"),
-                            plugin.getLocationUtils().getLocationFromBukkitString(str),
-                            str,
-                            plugin.getServer().createBlockData((rs.getString("data").equals("0")) ? "minecraft:air" : rs.getString("data")),
-                            rs.getInt("police_box")
+                        rs.getInt("b_id"),
+                        rs.getInt("tardis_id"),
+                        plugin.getLocationUtils().getLocationFromBukkitString(str),
+                        str,
+                        plugin.getServer().createBlockData((rs.getString("data").equals("0")) ? "minecraft:air" : rs.getString("data")),
+                        rs.getInt("police_box")
                     );
                     if (multiple) {
                         data.add(replacedBlock);
