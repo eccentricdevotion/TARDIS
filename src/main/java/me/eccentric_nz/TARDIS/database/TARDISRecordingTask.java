@@ -82,7 +82,7 @@ public class TARDISRecordingTask implements Runnable {
                         String loco = plugin.getLocationUtils().getLocationFromBukkitString(a).add(0.0d, -1.0d, 0.0d).toString();
                         s.setInt(1, rs.getReplacedBlock().getTardis_id());
                         s.setString(2, loco);
-                        s.setString(4, "minecraft:grass_path");
+                        s.setString(3, "minecraft:grass_path");
                         s.addBatch();
                     }
                     // Break out of the loop and just commit what we have
@@ -98,7 +98,7 @@ public class TARDISRecordingTask implements Runnable {
                 } else {
                     connection.commit();
                     connection.setAutoCommit(true);
-                    //plugin.debug("Batch insert was commited: " + System.currentTimeMillis());
+                    //plugin.debug("Batch insert was committed: " + System.currentTimeMillis());
                 }
             }
         } catch (SQLException e) {
@@ -120,7 +120,6 @@ public class TARDISRecordingTask implements Runnable {
     }
 
     private int getTickDelayForNextBatch() {
-
         // If we have too many rejected connections, increase the schedule
         if (TARDISRecordingManager.failedDbConnectionCount > 5) {
             return TARDISRecordingManager.failedDbConnectionCount * 20;
