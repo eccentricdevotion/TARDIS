@@ -224,51 +224,47 @@ public class TARDISBuilderInner {
                     if (Tag.WOOL.isTagged(type)) {
                         switch (type) {
                             case ORANGE_WOOL:
-                                switch (wall_type) {
-                                    case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Terracotta
-                                        switch (use_clay) {
-                                            case TERRACOTTA:
-                                                type = Material.ORANGE_TERRACOTTA;
-                                                break;
-                                            case CONCRETE:
-                                                type = Material.ORANGE_CONCRETE;
-                                                break;
-                                            default:
-                                                type = Material.ORANGE_WOOL;
-                                                break;
-                                        }
-                                        break;
-                                    default:
-                                        type = wall_type;
+                                if (wall_type == Material.ORANGE_WOOL) {
+                                    switch (use_clay) {
+                                        case TERRACOTTA:
+                                            data = Material.ORANGE_TERRACOTTA.createBlockData();
+                                            break;
+                                        case CONCRETE:
+                                            data = Material.ORANGE_CONCRETE.createBlockData();
+                                            break;
+                                        default:
+                                            data = Material.ORANGE_WOOL.createBlockData();
+                                            break;
+                                    }
+                                } else {
+                                    data = wall_type.createBlockData();
                                 }
                                 break;
                             case LIGHT_GRAY_WOOL:
                                 if (!schm.getPermission().equals("eleventh")) {
-                                    switch (floor_type) {
-                                        case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-                                            switch (use_clay) {
-                                                case TERRACOTTA:
-                                                    type = Material.LIGHT_GRAY_TERRACOTTA;
-                                                    break;
-                                                case CONCRETE:
-                                                    type = Material.LIGHT_GRAY_CONCRETE;
-                                                    break;
-                                                default:
-                                                    type = Material.LIGHT_GRAY_WOOL;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            type = floor_type;
+                                    if (floor_type == Material.LIGHT_GRAY_WOOL) {
+                                        switch (use_clay) {
+                                            case TERRACOTTA:
+                                                data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
+                                                break;
+                                            case CONCRETE:
+                                                data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                                                break;
+                                            default:
+                                                data = Material.LIGHT_GRAY_WOOL.createBlockData();
+                                                break;
+                                        }
+                                    } else {
+                                        data = floor_type.createBlockData();
                                     }
                                 } else {
                                     String[] split = type.toString().split("_");
-                                    type = Material.getMaterial(split[0] + "_" + use_clay.toString());
+                                    data = Material.getMaterial(split[0] + "_" + use_clay.toString()).createBlockData();
                                 }
                                 break;
                             default:
                                 String[] split = type.toString().split("_");
-                                type = Material.getMaterial(split[0] + "_" + use_clay.toString());
+                                data = Material.getMaterial(split[0] + "_" + use_clay.toString()).createBlockData();
                         }
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button
@@ -375,9 +371,10 @@ public class TARDISBuilderInner {
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
                         if (type.equals(Material.COMMAND_BLOCK)) {
-                            data = Material.STONE_BRICKS.createBlockData();
                             if (schm.getPermission().equals("ender")) {
                                 data = Material.END_STONE_BRICKS.createBlockData();
+                            } else {
+                                data = Material.STONE_BRICKS.createBlockData();
                             }
                         }
                     }
