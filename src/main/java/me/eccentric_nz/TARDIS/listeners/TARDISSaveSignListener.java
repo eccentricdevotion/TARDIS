@@ -202,12 +202,17 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                             set.put("submarine", 0);
                                         }
                                     }
-                                    if (l_size >= 6) {
-                                        set.put("chameleon_preset", lore.get(5));
+                                    QueryFactory qf = new QueryFactory(plugin);
+                                    if (l_size >= 7) {
+                                        HashMap<String, Object> sett = new HashMap<>();
+                                        sett.put("chameleon_preset", lore.get(6));
+                                        HashMap<String, Object> wheret = new HashMap<>();
+                                        wheret.put("tardis_id", id);
+                                        qf.doSyncUpdate("tardis", sett, wheret);
                                     }
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
-                                    new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
+                                    qf.doSyncUpdate("next", set, wheret);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
