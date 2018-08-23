@@ -455,7 +455,7 @@ public class TARDISRoomRunnable implements Runnable {
                 setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", tardis_id);
-                qf.doUpdate("tardis", setf, wheref);
+                qf.doUpdate("farming", setf, wheref);
                 // replace with floor material
                 data = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw.createBlockData() : floor_type.createBlockData();
                 // update player prefs - turn on mob farming

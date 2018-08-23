@@ -31,16 +31,16 @@ public class Farm {
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String aquarium, String farm, String stable, String village, String hutch, String igloo, String stall, String birdcage) {
+    public Farm(int tardis_id, String aquarium, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.aquarium = aquarium;
+        this.birdcage = birdcage;
         this.farm = farm;
-        this.stable = stable;
-        this.village = village;
         this.hutch = hutch;
         this.igloo = igloo;
+        this.stable = stable;
         this.stall = stall;
-        this.birdcage = birdcage;
+        this.village = village;
     }
 
     /**
