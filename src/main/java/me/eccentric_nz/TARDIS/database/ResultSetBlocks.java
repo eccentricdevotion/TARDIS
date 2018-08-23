@@ -94,14 +94,11 @@ public class ResultSetBlocks {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     String str = rs.getString("location");
-                    replacedBlock = new ReplacedBlock(
-                        rs.getInt("b_id"),
-                        rs.getInt("tardis_id"),
-                        plugin.getLocationUtils().getLocationFromBukkitString(str),
-                        str,
-                        plugin.getServer().createBlockData((rs.getString("data").equals("0")) ? "minecraft:air" : rs.getString("data")),
-                        rs.getInt("police_box")
-                    );
+                    String bd = rs.getString("data");
+                    if (rs.wasNull() || bd.equals("0")) {
+                        bd = "minecraft:air";
+                    }
+                    replacedBlock = new ReplacedBlock(rs.getInt("b_id"), rs.getInt("tardis_id"), plugin.getLocationUtils().getLocationFromBukkitString(str), str, plugin.getServer().createBlockData(bd), rs.getInt("police_box"));
                     if (multiple) {
                         data.add(replacedBlock);
                     }
