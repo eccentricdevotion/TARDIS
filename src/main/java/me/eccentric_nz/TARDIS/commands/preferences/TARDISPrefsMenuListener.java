@@ -60,7 +60,6 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Emergency Programme One", "eps_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
-//        lookup.put("Minecart Sounds", "minecart_on");
         lookup.put("Who Quotes", "quotes_on");
         lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Interior SFX", "sfx_on");
