@@ -54,7 +54,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("blaster", "Sonic Blaster");
         recipeItems.put("bow-tie", "Red Bow Tie");
         recipeItems.put("c-circuit", "TARDIS Chameleon Circuit");
-        recipeItems.put("cell", "Artron Energy Cell");
+        recipeItems.put("cell", "Artron Storage Cell");
         recipeItems.put("communicator", "TARDIS Communicator");
         recipeItems.put("custard", "Bowl of Custard");
         recipeItems.put("d-circuit", "Diamond Disruptor Circuit");
