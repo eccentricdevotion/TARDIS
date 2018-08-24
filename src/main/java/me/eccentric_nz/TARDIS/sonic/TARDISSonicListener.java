@@ -459,7 +459,7 @@ public class TARDISSonicListener implements Listener {
                                 if (plugin.getGeneralKeeper().getSonicPistons().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicPistons().remove(b.getLocation().toString());
                                     for (BlockFace f : faces) {
-                                        if (b.getRelative(f).getType().equals(TARDISConstants.AIR)) {
+                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
                                             b.getRelative(f).setBlockData(TARDISConstants.GLASS, true);
                                             b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                                             break;
@@ -473,19 +473,22 @@ public class TARDISSonicListener implements Listener {
                                 }
                                 break;
                             case REDSTONE_LAMP:
-                                if (blockType.equals(Material.REDSTONE_LAMP)) {
+                                Lightable lightable = (Lightable) b.getBlockData();
+                                if (!lightable.isLit()) {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
                                     for (BlockFace f : faces) {
-                                        if (b.getRelative(f).getType().equals(TARDISConstants.AIR)) {
+                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
                                             b.getRelative(f).setBlockData(TARDISConstants.POWER, true);
-                                            b.setBlockData(TARDISConstants.LAMP);
+                                            lightable.setLit(true);
+                                            b.setBlockData(lightable, true);
                                             b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                                             break;
                                         }
                                     }
                                 } else if (plugin.getGeneralKeeper().getSonicLamps().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicLamps().remove(b.getLocation().toString());
-                                    b.setBlockData(TARDISConstants.LAMP);
+                                    lightable.setLit(false);
+                                    b.setBlockData(lightable, true);
                                 }
                                 break;
                             case REDSTONE_WIRE:
@@ -495,7 +498,6 @@ public class TARDISSonicListener implements Listener {
                                     wire.setPower(0);
                                     faces.forEach((f) -> {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
-                                            // TODO check: should be b.getRelative(f).setPower(0)?
                                             wire.setPower(0);
                                         }
                                     });
@@ -505,7 +507,6 @@ public class TARDISSonicListener implements Listener {
                                     wire.setPower(15);
                                     faces.forEach((f) -> {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
-                                            // TODO check: should be b.getRelative(f).setPower(13)?
                                             wire.setPower(13);
                                         }
                                     });
@@ -1081,7 +1082,7 @@ public class TARDISSonicListener implements Listener {
                 plugin.getPM().callEvent(new BlockIgniteEvent(b, IgniteCause.FLINT_AND_STEEL, p));
                 return;
             }
-            if (above.getType().equals(TARDISConstants.AIR)) {
+            if (above.getType().equals(Material.AIR)) {
                 above.setBlockData(TARDISConstants.FIRE);
                 // call a block ignite event
                 plugin.getPM().callEvent(new BlockIgniteEvent(b, IgniteCause.FLINT_AND_STEEL, p));
