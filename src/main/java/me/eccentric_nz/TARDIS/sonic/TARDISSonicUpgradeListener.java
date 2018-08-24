@@ -28,6 +28,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 
     private final Material sonicMaterial;
     private final HashMap<String, String> upgrades = new HashMap<>();
+    private final HashMap<Integer, String> mapIds = new HashMap<>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
@@ -51,6 +53,13 @@ public class TARDISSonicUpgradeListener implements Listener {
         upgrades.put("Emerald Upgrade", "emerald");
         upgrades.put("Painter Upgrade", "paint");
         upgrades.put("Ignite Upgrade", "ignite");
+        mapIds.put(1968, "Admin Upgrade");
+        mapIds.put(1969, "Bio-scanner Upgrade");
+        mapIds.put(1970, "Redstone Upgrade");
+        mapIds.put(1971, "Diamond Upgrade");
+        mapIds.put(1972, "Emerald Upgrade");
+        mapIds.put(1979, "Painter Upgrade");
+        mapIds.put(1982, "Ignite Upgrade");
     }
 
     /**
@@ -71,9 +80,17 @@ public class TARDISSonicUpgradeListener implements Listener {
             if (is != null && is.getType().equals(sonicMaterial) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 // get the upgrade
+                boolean found = false;
                 String upgrade = im.getDisplayName();
+                for (ItemStack map : ci.getContents()) {
+                    if (map.getType().equals(Material.FILLED_MAP) && map.hasItemMeta()) {
+                        MapMeta mm = (MapMeta) map.getItemMeta();
+                        upgrade = mapIds.get(mm.getMapId());
+                        found = true;
+                    }
+                }
                 // is it a valid upgrade?
-                if (!upgrades.containsKey(upgrade)) {
+                if (!found || !upgrades.containsKey(upgrade)) {
                     ci.setResult(null);
                     return;
                 }
