@@ -34,11 +34,8 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.*;
 import org.bukkit.block.data.Bisected.Half;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Orientable;
-import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -297,7 +294,13 @@ class TARDISInstaPreset {
                         if (mat.equals(Material.TORCH)) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
                         } else {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
+                            if (light instanceof Lightable) {
+                                Lightable lit = (Lightable) light;
+                                lit.setLit(true);
+                                plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisID());
+                            } else {
+                                plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
+                            }
                         }
                         break;
                     case IRON_DOOR: // wood, iron & trap doors, rails

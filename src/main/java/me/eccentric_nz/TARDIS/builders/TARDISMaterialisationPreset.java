@@ -32,10 +32,7 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Orientable;
-import org.bukkit.block.data.Rotatable;
+import org.bukkit.block.data.*;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -625,7 +622,14 @@ class TARDISMaterialisationPreset implements Runnable {
                                 } else {
                                     light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? bd.getLamp() : mat;
                                 }
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
+                                BlockData lamp = light.createBlockData();
+                                if (lamp instanceof Lightable) {
+                                    Lightable lightable = (Lightable) lamp;
+                                    lightable.setLit(true);
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lightable);
+                                } else {
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lamp);
+                                }
                                 break;
                             case IRON_DOOR: // wood, iron & trap doors
                             case OAK_DOOR:
