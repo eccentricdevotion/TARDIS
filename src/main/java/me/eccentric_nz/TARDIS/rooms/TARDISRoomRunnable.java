@@ -470,15 +470,19 @@ public class TARDISRoomRunnable implements Runnable {
             if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE"))) {
                 HashMap<String, Object> sets = new HashMap<>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
-                if (rsf.resultSet()) {
-                    HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("tardis_id", tardis_id);
-                    // update
-                    qf.doUpdate("farming", sets, wheres);
+                HashMap<String, Object> wheres = new HashMap<>();
+                wheres.put("tardis_id", tardis_id);
+                if (room.equals("RENDERER")) {
+                    qf.doUpdate("tardis", sets, wheres);
                 } else {
-                    sets.put("tardis_id", tardis_id);
-                    qf.doInsert("farming", sets);
+                    ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
+                    if (rsf.resultSet()) {
+                        // update
+                        qf.doUpdate("farming", sets, wheres);
+                    } else {
+                        sets.put("tardis_id", tardis_id);
+                        qf.doInsert("farming", sets);
+                    }
                 }
                 // replace with correct block
                 switch (ROOM.valueOf(room)) {

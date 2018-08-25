@@ -26,10 +26,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -193,7 +190,10 @@ public class TARDISExteriorRenderer {
             // change the ceiling
             for (int cx = isx; cx < isx + 13; cx++) {
                 for (int cz = isz; cz < (isz + 13); cz++) {
-                    iw.getBlockAt(cx, topy, cz).setBlockData(sky);
+                    Block skyBlock = iw.getBlockAt(cx, topy, cz);
+                    if (Tag.WOOL.isTagged(skyBlock.getType())) {
+                        skyBlock.setBlockData(sky);
+                    }
                 }
             }
             // change the first and third walls
