@@ -66,11 +66,23 @@ class TARDISDematerialiseToVortex implements Runnable {
             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
             String resetw = "";
             Location l = null;
+            QueryFactory qf = new QueryFactory(plugin);
             if (!rscl.resultSet()) {
                 hidden = true;
             } else {
                 resetw = rscl.getWorld().getName();
                 l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                // set back to current location
+                HashMap<String, Object> bid = new HashMap<>();
+                bid.put("tardis_id", id);
+                HashMap<String, Object> bset = new HashMap<>();
+                bset.put("world", rscl.getWorld().getName());
+                bset.put("x", rscl.getX());
+                bset.put("y", rscl.getY());
+                bset.put("z", rscl.getZ());
+                bset.put("direction", rscl.getDirection().toString());
+                bset.put("submarine", rscl.isSubmarine());
+                qf.doUpdate("back", bset, bid);
             }
             COMPASS cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
@@ -118,7 +130,6 @@ class TARDISDematerialiseToVortex implements Runnable {
                 plugin.getPresetDestroyer().destroyPreset(dd);
             } else {
                 // set hidden false!
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("hidden", 0);
                 HashMap<String, Object> whereh = new HashMap<>();
