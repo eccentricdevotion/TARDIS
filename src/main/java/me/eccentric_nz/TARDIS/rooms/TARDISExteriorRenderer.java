@@ -199,60 +199,34 @@ public class TARDISExteriorRenderer {
             // change the first and third walls
             for (int x1 = isx - 1; x1 <= endx; x1++) {
                 for (int y1 = isy; y1 < topy; y1++) {
-                    switch (iw.getBlockAt(x1, y1, isz - 1).getType()) {
-                        case WHITE_WOOL:
-                        case ORANGE_WOOL:
-                        case MAGENTA_WOOL:
+                    Block first = iw.getBlockAt(x1, y1, isz - 1);
+                    switch (first.getType()) {
                         case LIGHT_BLUE_WOOL:
-                        case YELLOW_WOOL:
-                        case LIME_WOOL:
-                        case PINK_WOOL:
-                        case GRAY_WOOL:
-                        case LIGHT_GRAY_WOOL:
-                        case CYAN_WOOL:
-                        case PURPLE_WOOL:
-                        case BLUE_WOOL:
-                        case BROWN_WOOL:
-                        case GREEN_WOOL:
-                        case RED_WOOL:
                         case BLACK_WOOL:
-                            iw.getBlockAt(x1, y1, isz - 1).setBlockData(sky);
+                            first.setBlockData(sky);
                             break;
                         case DIRT:
                         case END_STONE:
                         case NETHERRACK:
-                            iw.getBlockAt(x1, y1, isz - 1).setBlockData(base);
+                            first.setBlockData(base);
                             break;
                         default:
-                            iw.getBlockAt(x1, y1, isz - 1).setBlockData(stone);
+                            first.setBlockData(stone);
                             break;
                     }
-                    switch (iw.getBlockAt(x1, y1, endz).getType()) {
-                        case WHITE_WOOL:
-                        case ORANGE_WOOL:
-                        case MAGENTA_WOOL:
+                    Block third = iw.getBlockAt(x1, y1, endz);
+                    switch (third.getType()) {
                         case LIGHT_BLUE_WOOL:
-                        case YELLOW_WOOL:
-                        case LIME_WOOL:
-                        case PINK_WOOL:
-                        case GRAY_WOOL:
-                        case LIGHT_GRAY_WOOL:
-                        case CYAN_WOOL:
-                        case PURPLE_WOOL:
-                        case BLUE_WOOL:
-                        case BROWN_WOOL:
-                        case GREEN_WOOL:
-                        case RED_WOOL:
                         case BLACK_WOOL:
-                            iw.getBlockAt(x1, y1, endz).setBlockData(sky);
+                            third.setBlockData(sky);
                             break;
                         case DIRT:
                         case END_STONE:
                         case NETHERRACK:
-                            iw.getBlockAt(x1, y1, endz).setBlockData(base);
+                            third.setBlockData(base);
                             break;
                         default:
-                            iw.getBlockAt(x1, y1, endz).setBlockData(stone);
+                            third.setBlockData(stone);
                             break;
                     }
                 }
@@ -260,60 +234,34 @@ public class TARDISExteriorRenderer {
             // build second and fourth walls
             for (int z2 = isz - 1; z2 <= endz; z2++) {
                 for (int y2 = isy; y2 < topy; y2++) {
-                    switch (iw.getBlockAt(isx - 1, y2, z2).getType()) {
-                        case WHITE_WOOL:
-                        case ORANGE_WOOL:
-                        case MAGENTA_WOOL:
+                    Block second = iw.getBlockAt(isx - 1, y2, z2);
+                    switch (second.getType()) {
                         case LIGHT_BLUE_WOOL:
-                        case YELLOW_WOOL:
-                        case LIME_WOOL:
-                        case PINK_WOOL:
-                        case GRAY_WOOL:
-                        case LIGHT_GRAY_WOOL:
-                        case CYAN_WOOL:
-                        case PURPLE_WOOL:
-                        case BLUE_WOOL:
-                        case BROWN_WOOL:
-                        case GREEN_WOOL:
-                        case RED_WOOL:
                         case BLACK_WOOL:
-                            iw.getBlockAt(isx - 1, y2, z2).setBlockData(sky);
+                            second.setBlockData(sky);
                             break;
                         case DIRT:
                         case END_STONE:
                         case NETHERRACK:
-                            iw.getBlockAt(isx - 1, y2, z2).setBlockData(base);
+                            second.setBlockData(base);
                             break;
                         default:
-                            iw.getBlockAt(isx - 1, y2, z2).setBlockData(stone);
+                            second.setBlockData(stone);
                             break;
                     }
-                    switch (iw.getBlockAt(endx, y2, z2).getType()) {
-                        case WHITE_WOOL:
-                        case ORANGE_WOOL:
-                        case MAGENTA_WOOL:
+                    Block fourth = iw.getBlockAt(endx, y2, z2);
+                    switch (fourth.getType()) {
                         case LIGHT_BLUE_WOOL:
-                        case YELLOW_WOOL:
-                        case LIME_WOOL:
-                        case PINK_WOOL:
-                        case GRAY_WOOL:
-                        case LIGHT_GRAY_WOOL:
-                        case CYAN_WOOL:
-                        case PURPLE_WOOL:
-                        case BLUE_WOOL:
-                        case BROWN_WOOL:
-                        case GREEN_WOOL:
-                        case RED_WOOL:
                         case BLACK_WOOL:
-                            iw.getBlockAt(endx, y2, z2).setBlockData(sky);
+                            fourth.setBlockData(sky);
                             break;
                         case DIRT:
                         case END_STONE:
                         case NETHERRACK:
-                            iw.getBlockAt(endx, y2, z2).setBlockData(base);
+                            fourth.setBlockData(base);
                             break;
                         default:
-                            iw.getBlockAt(endx, y2, z2).setBlockData(stone);
+                            fourth.setBlockData(stone);
                             break;
                     }
                 }
