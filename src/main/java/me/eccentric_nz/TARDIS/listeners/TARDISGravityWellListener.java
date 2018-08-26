@@ -176,6 +176,7 @@ public class TARDISGravityWellListener implements Listener {
                         if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
                             p.setHealth(0);
                         } else {
+                            e.setCancelled(true);
                             new TARDISVoidFall(plugin).teleport(p);
                         }
                     }
