@@ -816,6 +816,7 @@ public class TARDISFarmer {
                         Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                         Villager npc = (Villager) vill;
                         npc.setProfession(e.getProfession());
+                        npc.setCareer(e.getCareer());
                         npc.setAge(e.getAge());
                         if (e.isBaby()) {
                             npc.setBaby();
@@ -823,7 +824,6 @@ public class TARDISFarmer {
                         npc.setHealth(e.getHealth());
                         npc.setRecipes(e.getTrades());
                         npc.setRiches(e.getRiches());
-                        npc.setCareer(e.getCareer());
                         String name = e.getName();
                         if (name != null && !name.isEmpty()) {
                             npc.setCustomName(name);
