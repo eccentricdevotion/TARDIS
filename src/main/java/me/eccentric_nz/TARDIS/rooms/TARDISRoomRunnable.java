@@ -112,7 +112,7 @@ public class TARDISRoomRunnable implements Runnable {
         repeaterOrder.put(5, 4);
         notThese.add(Material.ACACIA_DOOR);
         notThese.add(Material.BIRCH_DOOR);
-        notThese.add(Material.CARROT);
+        notThese.add(Material.CARROTS);
         notThese.add(Material.COCOA);
         notThese.add(Material.DARK_OAK_DOOR);
         notThese.add(Material.JUNGLE_DOOR);
@@ -120,7 +120,7 @@ public class TARDISRoomRunnable implements Runnable {
         notThese.add(Material.MELON_STEM);
         notThese.add(Material.OAK_DOOR);
         notThese.add(Material.PISTON_HEAD);
-        notThese.add(Material.POTATO);
+        notThese.add(Material.POTATOES);
         notThese.add(Material.PUMPKIN_STEM);
         notThese.add(Material.REDSTONE_TORCH);
         notThese.add(Material.SPRUCE_DOOR);
@@ -315,10 +315,10 @@ public class TARDISRoomRunnable implements Runnable {
                     wheatblocks.forEach((wheat) -> wheat.setBlockData(Material.WHEAT.createBlockData()));
                     wheatblocks.clear();
                     // plant the carrot
-                    carrotblocks.forEach((carrot) -> carrot.setBlockData(Material.CARROT.createBlockData()));
+                    carrotblocks.forEach((carrot) -> carrot.setBlockData(Material.CARROTS.createBlockData()));
                     carrotblocks.clear();
                     // plant the potato
-                    potatoblocks.forEach((potato) -> potato.setBlockData(Material.POTATO.createBlockData()));
+                    potatoblocks.forEach((potato) -> potato.setBlockData(Material.POTATOES.createBlockData()));
                     potatoblocks.clear();
                 }, 5L);
             }
@@ -331,7 +331,8 @@ public class TARDISRoomRunnable implements Runnable {
             }
             // water farmland
             farmlandblocks.forEach((fl) -> {
-                Farmland farmland = (Farmland) fl.getBlockData();
+                BlockData farmData = Material.FARMLAND.createBlockData();
+                Farmland farmland = (Farmland) farmData;
                 farmland.setMoisture(farmland.getMaximumMoisture());
                 fl.setBlockData(farmland);
             });
@@ -607,13 +608,13 @@ public class TARDISRoomRunnable implements Runnable {
                     Block pumpkin = world.getBlockAt(startx, starty, startz);
                     pumpkinblocks.add(pumpkin);
                 }
-                // remember carrot
-                if (type.equals(Material.CARROT)) {
+                // remember carrots
+                if (type.equals(Material.CARROTS)) {
                     Block carrot = world.getBlockAt(startx, starty, startz);
                     carrotblocks.add(carrot);
                 }
-                // remember potato
-                if (type.equals(Material.POTATO)) {
+                // remember potatoes
+                if (type.equals(Material.POTATOES)) {
                     Block potato = world.getBlockAt(startx, starty, startz);
                     potatoblocks.add(potato);
                 }
