@@ -164,7 +164,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("My_Worlds", "1.67");
         versions.put("PerWorldInventory", "2.0.0");
         versions.put("ProtocolLib", "4.4.0");
-        versions.put("TARDISChunkGenerator", "4.0.2");
+        versions.put("TARDISChunkGenerator", "4.0.3");
         versions.put("OpenTerrainGenerator", "1.12.2");
         versions.put("TerrainControl", "2.9.0");
         versions.put("Towny", "0.91");
@@ -180,7 +180,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.13");
+        Version minversion = new Version("1.13.1");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // TARDISChunkGenerator needs to be enabled
@@ -702,7 +702,8 @@ public class TARDIS extends JavaPlugin {
      * Checks if the TARDISChunkGenerator plugin is available, and loads support if it is.
      */
     private boolean loadHelper() {
-        if (pm.getPlugin("TARDISChunkGenerator") != null) {
+        Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
+        if (tcg != null && tcg.isEnabled()) {
             debug("Hooking into TARDISChunkGenerator!");
             helperOnServer = true;
             tardisHelper = (TARDISHelper) plugin.getPM().getPlugin("TARDISChunkGenerator");

@@ -175,7 +175,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13-R0.1-SNAPSHOT</version>
+            <version>1.13.1-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -200,7 +200,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.3</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
