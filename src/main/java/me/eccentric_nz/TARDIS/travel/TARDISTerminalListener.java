@@ -463,7 +463,7 @@ public class TARDISTerminalListener implements Listener {
                     switch (e) {
                         case THE_END:
                             int endy = w.getHighestBlockYAt(slotx, slotz);
-                            if (endy > 40) {
+                            if (endy > 40 && Math.abs(slotx) > 9 && Math.abs(slotz) > 9) {
                                 Location loc = new Location(w, slotx, 0, slotz);
                                 int[] estart = TARDISTimeTravel.getStartLocation(loc, d);
                                 int esafe = TARDISTimeTravel.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
