@@ -305,7 +305,7 @@ public class TARDISSonicListener implements Listener {
                             int by = loc.getBlockY();
                             int bz = loc.getBlockZ();
                             if (Tag.DOORS.isTagged(b.getType())) {
-                                Bisected bisected = (Bisected) b;
+                                Bisected bisected = (Bisected) b.getBlockData();
                                 if (bisected.getHalf().equals(Half.TOP)) {
                                     by = (by - 1);
                                 }
