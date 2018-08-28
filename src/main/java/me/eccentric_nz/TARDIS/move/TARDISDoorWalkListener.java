@@ -165,12 +165,12 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             // must be the owner
                             ResultSetTardisID rs = new ResultSetTardisID(plugin);
                             if (rs.fromUUID(player.getUniqueId().toString())) {
-                                if (rs.getTardis_id() != id) {
-                                    TARDISMessage.send(player, "DOOR_LOCK_UNLOCK");
-                                    return;
-                                }
                                 // must use key to lock / unlock door
                                 if (material.equals(m)) {
+                                    if (rs.getTardis_id() != id) {
+                                        TARDISMessage.send(player, "DOOR_LOCK_UNLOCK");
+                                        return;
+                                    }
                                     int locked = (rsd.isLocked()) ? 0 : 1;
                                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                                     HashMap<String, Object> setl = new HashMap<>();
@@ -180,7 +180,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     // always lock / unlock both doors
                                     qf.doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, "DOOR_LOCK", message);
-                                } else if (material.equals(Material.AIR)) {  // knock with hand
+                                } else if (material.equals(Material.AIR) && rs.getTardis_id() != id) { // knock with hand if it's not their TARDIS
                                     // only outside the TARDIS
                                     if (doortype == 0) {
                                         // only if companion
@@ -188,6 +188,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         if (rsc.getCompanions().contains(playerUUID)) {
                                             // get Time Lord
                                             HashMap<String, Object> wherett = new HashMap<>();
+                                            wherett.put("tardis_id", id);
                                             ResultSetTardis rstt = new ResultSetTardis(plugin, wherett, "", false, 2);
                                             if (rstt.resultSet()) {
                                                 UUID tluuid = rstt.getTardis().getUuid();
