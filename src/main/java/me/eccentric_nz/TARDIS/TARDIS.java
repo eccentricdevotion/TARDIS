@@ -152,7 +152,7 @@ public class TARDIS extends JavaPlugin {
         worldGuardOnServer = false;
         helperOnServer = false;
         invManager = INVENTORY_MANAGER.NONE;
-        versions.put("Citizens", "2.0.22");
+        versions.put("Citizens", "2.0.24");
         versions.put("Factions", "2.8.19");
         versions.put("GriefPrevention", "14.8");
         versions.put("LibsDisguises", "9.6.0");
