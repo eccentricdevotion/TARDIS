@@ -62,6 +62,11 @@ public class TARDISMultiverseHelper {
     }
 
     public World getWorld(String w) {
-        return mvc.getMVWorldManager().getMVWorld(w).getCBWorld();
+        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
+        if (mvw != null) {
+            return mvw.getCBWorld();
+        } else {
+            return Bukkit.getServer().getWorld(w);
+        }
     }
 }
