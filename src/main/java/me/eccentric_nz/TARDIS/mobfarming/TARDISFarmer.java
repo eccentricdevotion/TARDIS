@@ -816,7 +816,7 @@ public class TARDISFarmer {
                         Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                         Villager npc = (Villager) vill;
                         npc.setProfession(e.getProfession());
-                        npc.setCareer(e.getCareer());
+                        npc.setCareer(e.getCareer(), false);
                         npc.setAge(e.getAge());
                         if (e.isBaby()) {
                             npc.setBaby();
