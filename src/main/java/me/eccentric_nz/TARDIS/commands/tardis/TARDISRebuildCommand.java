@@ -128,6 +128,7 @@ public class TARDISRebuildCommand {
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetBuilder().buildPreset(bd);
                 plugin.getTrackerKeeper().getInVortex().add(id);
             }, 10L);

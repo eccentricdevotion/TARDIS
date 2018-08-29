@@ -280,6 +280,7 @@ class TARDISListenerRegisterer {
         if (plugin.getPlanetsConfig().getBoolean("switch_resource_packs")) {
             plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISItemSpawnListener(plugin), plugin);
     }
 
     private boolean getNPCManager() {

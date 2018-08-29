@@ -67,7 +67,7 @@ public class TARDISDeinstaPreset {
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
-            // toggle the doors if neccessary
+            // toggle the doors if necessary
             new TARDISDoorCloser(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
         }
         World w = l.getWorld();
@@ -131,8 +131,6 @@ public class TARDISDeinstaPreset {
             default:
                 break;
         }
-        plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
-        plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);
         // remove torch
@@ -150,7 +148,7 @@ public class TARDISDeinstaPreset {
                 }
             }
         }
-
+        plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
         if (sub && plugin.isWorldGuardOnServer()) {
             // replace the block under the door if there is one
             HashMap<String, Object> where = new HashMap<>();
