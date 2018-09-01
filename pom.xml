@@ -3,14 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>4.0.3</version>
+    <version>4.0.4</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
-        <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <netbeans.hint.organisation>The Nose Fairy</netbeans.hint.organisation>
-        <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
-        <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
