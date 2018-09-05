@@ -44,61 +44,24 @@ public class TARDISStaticUtils {
      */
     public static String getPlayersDirection(Player p, boolean swap) {
         // get player direction
-        float pyaw = p.getLocation().getYaw();
-        if (pyaw >= 0) {
-            pyaw = (pyaw % 360);
-        } else {
-            pyaw = (360 + (pyaw % 360));
-        }
-        // determine direction player is facing
-        String d = "";
-        if (pyaw >= 315 || pyaw < 45) {
-            d = (swap) ? "NORTH" : "SOUTH";
-        }
-        if (pyaw >= 225 && pyaw < 315) {
-            d = (swap) ? "WEST" : "EAST";
-        }
-        if (pyaw >= 135 && pyaw < 225) {
-            d = (swap) ? "SOUTH" : "NORTH";
-        }
-        if (pyaw >= 45 && pyaw < 135) {
-            d = (swap) ? "EAST" : "WEST";
+        String d = p.getFacing().toString();
+        if (swap) {
+            switch (p.getFacing()) {
+                case EAST:
+                    d = "WEST";
+                    break;
+                case NORTH:
+                    d = "SOUTH";
+                    break;
+                case WEST:
+                    d = "EAST";
+                    break;
+                default:
+                    d = "NORTH";
+                    break;
+            }
         }
         return d;
-    }
-
-    /**
-     * Get the stone type from the data value.
-     *
-     * @param d the block's data value
-     * @return the block type
-     */
-    public static String getStoneType(byte d) {
-        String type;
-        switch (d) {
-            case 1:
-                type = "GRANITE";
-                break;
-            case 2:
-                type = "POLISHED GRANITE";
-                break;
-            case 3:
-                type = "DIORITE";
-                break;
-            case 4:
-                type = "POLISHED DIORITE";
-                break;
-            case 5:
-                type = "ANDESITE";
-                break;
-            case 6:
-                type = "POLISHED ANDESITE";
-                break;
-            default:
-                type = "STONE";
-                break;
-        }
-        return type;
     }
 
     /**
