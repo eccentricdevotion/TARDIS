@@ -41,7 +41,6 @@ public class TARDISDatabaseConnection {
     }
 
     public Connection connection = null;
-    private Statement statement = null;
 
     public void setConnection(String path) throws Exception {
         Class.forName("org.sqlite.JDBC");
@@ -91,7 +90,7 @@ public class TARDISDatabaseConnection {
     public void testConnection(Connection connection) {
         if (isMySQL) {
             try {
-                statement = connection.createStatement();
+                Statement statement = connection.createStatement();
                 statement.executeQuery("SELECT 1");
             } catch (SQLException e) {
                 try {

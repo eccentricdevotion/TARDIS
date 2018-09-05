@@ -54,8 +54,6 @@ class TARDISInstaPreset {
     private final BlockData cham_id;
     private final boolean rebuild;
     private final PRESET preset;
-    private TARDISChameleonColumn column;
-    private final Material[] colours;
     private final Random rand;
     private final Material random_colour;
     private final ChatColor sign_colour;
@@ -68,7 +66,7 @@ class TARDISInstaPreset {
         this.preset = preset;
         this.cham_id = cham_id;
         this.rebuild = rebuild;
-        colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
+        Material[] colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
         sign_colour = plugin.getUtils().getSignColour();
@@ -81,6 +79,7 @@ class TARDISInstaPreset {
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(rand.nextInt(2));
         }
+        TARDISChameleonColumn column;
         if (preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprint", bd.getDirection()).getColumn();
         } else {

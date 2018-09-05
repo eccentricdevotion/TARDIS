@@ -97,7 +97,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private boolean own_world;
     private Location wg1;
     private Location wg2;
-    private Chunk chunk;
     private Player player;
     private Location ender = null;
     private Archive archive;
@@ -167,7 +166,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
             id = tardis.getTardis_id();
-            chunk = getChunk(tardis.getChunk());
+            Chunk chunk = getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity end : chunk.getEntities()) {

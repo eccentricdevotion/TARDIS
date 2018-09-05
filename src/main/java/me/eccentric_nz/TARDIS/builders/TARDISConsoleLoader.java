@@ -34,11 +34,6 @@ import java.util.Locale;
 public class TARDISConsoleLoader {
 
     private final TARDIS plugin;
-    private String seed;
-    private String permission;
-    private String description;
-    private boolean beacon;
-    private boolean lanterns;
     private boolean save = false;
 
     public TARDISConsoleLoader(TARDIS plugin) {
@@ -90,13 +85,13 @@ public class TARDISConsoleLoader {
                     continue;
                 }
                 // check there is an Artron value
-                permission = console.toLowerCase(Locale.ENGLISH);
+                String permission = console.toLowerCase(Locale.ENGLISH);
                 if (plugin.getArtronConfig().get("upgrades." + permission) == null) {
                     plugin.debug(plugin.getPluginName() + "Could not find a corresponding config entry in artron.yml for " + permission + "!");
                     continue;
                 }
                 // check seed material
-                seed = plugin.getCustomConsolesConfig().getString(console + ".seed").toUpperCase(Locale.ENGLISH);
+                String seed = plugin.getCustomConsolesConfig().getString(console + ".seed").toUpperCase(Locale.ENGLISH);
                 try {
                     Material.valueOf(seed);
                 } catch (IllegalArgumentException e) {
@@ -110,9 +105,10 @@ public class TARDISConsoleLoader {
                 JSONObject dimensions = (JSONObject) obj.get("dimensions");
                 int h = dimensions.getInt("height");
                 int w = dimensions.getInt("width");
-                description = plugin.getCustomConsolesConfig().getString(console + ".description");
+                String description = plugin.getCustomConsolesConfig().getString(console + ".description");
                 ConsoleSize consoleSize = ConsoleSize.getByWidthAndHeight(w, h);
-                beacon = plugin.getCustomConsolesConfig().getBoolean(console + ".has_beacon");
+                boolean beacon = plugin.getCustomConsolesConfig().getBoolean(console + ".has_beacon");
+                boolean lanterns;
                 if (plugin.getCustomConsolesConfig().contains(console + ".has_lanterns")) {
                     lanterns = plugin.getCustomConsolesConfig().getBoolean(console + ".has_lanterns");
                 } else {

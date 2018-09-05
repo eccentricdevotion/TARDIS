@@ -36,9 +36,6 @@ class TARDISDelavafier {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    private int startx;
-    private final int starty = 64;
-    private int startz;
     public static final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
     public static final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
 
@@ -55,6 +52,8 @@ class TARDISDelavafier {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
+            int startx;
+            int startz;
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
@@ -71,6 +70,7 @@ class TARDISDelavafier {
                 for (int row = 0; row < 32; row++) {
                     for (int col = 0; col < 32; col++) {
                         int x = startx + row;
+                        int starty = 64;
                         int y = starty + level;
                         int z = startz + col;
                         Block b = world.getBlockAt(x, y, z);

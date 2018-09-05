@@ -45,12 +45,7 @@ public class TARDISUpgradeBlockScanner {
     private final TARDIS plugin;
     private final TARDISUpgradeData tud;
     private final UUID uuid;
-    private int startx;
-    private int starty;
-    private int startz;
     private int count = 0;
-    private Material type;
-    private BlockData data;
 
     public TARDISUpgradeBlockScanner(TARDIS plugin, TARDISUpgradeData tud, UUID uuid) {
         this.plugin = plugin;
@@ -81,6 +76,8 @@ public class TARDISUpgradeBlockScanner {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
+            int startz;
+            int startx;
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
@@ -91,7 +88,7 @@ public class TARDISUpgradeBlockScanner {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
+            int starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");
             World world = plugin.getServer().getWorld(split[0]);
             Material wall_type;
@@ -119,8 +116,8 @@ public class TARDISUpgradeBlockScanner {
                         int x = startx + row;
                         int y = starty + level;
                         int z = startz + col;
-                        data = plugin.getServer().createBlockData(c.getString("data"));
-                        type = data.getMaterial();
+                        BlockData data = plugin.getServer().createBlockData(c.getString("data"));
+                        Material type = data.getMaterial();
                         Block b = world.getBlockAt(x, y, z);
                         if (type.equals(Material.ORANGE_WOOL)) {
                             type = wall_type;

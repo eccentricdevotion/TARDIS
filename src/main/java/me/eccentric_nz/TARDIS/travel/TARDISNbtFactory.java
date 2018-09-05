@@ -83,7 +83,6 @@ public class TARDISNbtFactory {
 
     // The NBT base class
     private Class<?> BASE_CLASS;
-    private Class<?> COMPOUND_CLASS;
     private Class<?> STREAM_TOOLS;
     private Class<?> READ_LIMITER_CLASS;
     private Method NBT_CREATE_TAG;
@@ -98,7 +97,6 @@ public class TARDISNbtFactory {
 
     // Loading/saving compounds
     private LoadCompoundMethod LOAD_COMPOUND;
-    private Method SAVE_COMPOUND;
 
     // Shared instance
     private static TARDISNbtFactory INSTANCE;
@@ -327,7 +325,7 @@ public class TARDISNbtFactory {
                 Class<?> offlinePlayer = loader.loadClass(packageName + ".CraftOfflinePlayer");
 
                 // Prepare NBT
-                COMPOUND_CLASS = getMethod(0, Modifier.STATIC, offlinePlayer, "getData").getReturnType();
+                Class<?> COMPOUND_CLASS = getMethod(0, Modifier.STATIC, offlinePlayer, "getData").getReturnType();
                 BASE_CLASS = COMPOUND_CLASS.getSuperclass();
                 NBT_GET_TYPE = getMethod(0, Modifier.STATIC, BASE_CLASS, "getTypeId");
                 NBT_CREATE_TAG = getMethod(Modifier.STATIC, 0, BASE_CLASS, "createTag", byte.class);
@@ -341,10 +339,8 @@ public class TARDISNbtFactory {
                 String nmsPackage = BASE_CLASS.getPackage().getName();
                 initializeNMS(loader, nmsPackage);
 
-                LOAD_COMPOUND = READ_LIMITER_CLASS != null
-                        ? new LoadMethodSkinUpdate(STREAM_TOOLS, READ_LIMITER_CLASS)
-                        : new LoadMethodWorldUpdate(STREAM_TOOLS);
-                SAVE_COMPOUND = getMethod(Modifier.STATIC, 0, STREAM_TOOLS, null, BASE_CLASS, DataOutput.class);
+                LOAD_COMPOUND = READ_LIMITER_CLASS != null ? new LoadMethodSkinUpdate(STREAM_TOOLS, READ_LIMITER_CLASS) : new LoadMethodWorldUpdate(STREAM_TOOLS);
+                Method SAVE_COMPOUND = getMethod(Modifier.STATIC, 0, STREAM_TOOLS, null, BASE_CLASS, DataOutput.class);
             } catch (ClassNotFoundException e) {
                 throw new IllegalStateException("Unable to find offline player.", e);
             }
@@ -373,13 +369,11 @@ public class TARDISNbtFactory {
     }
 
     private Map<String, Object> getDataMap(Object handle) {
-        return (Map<String, Object>) getFieldValue(
-                getDataField(NbtType.TAG_COMPOUND, handle), handle);
+        return (Map<String, Object>) getFieldValue(getDataField(NbtType.TAG_COMPOUND, handle), handle);
     }
 
     private List<Object> getDataList(Object handle) {
-        return (List<Object>) getFieldValue(
-                getDataField(NbtType.TAG_LIST, handle), handle);
+        return (List<Object>) getFieldValue(getDataField(NbtType.TAG_LIST, handle), handle);
     }
 
     /**
@@ -439,9 +433,7 @@ public class TARDISNbtFactory {
         boolean suppress = true;
 
         try {
-            data = new DataInputStream(new BufferedInputStream(
-                    new GZIPInputStream(stream)
-            ));
+            data = new DataInputStream(new BufferedInputStream(new GZIPInputStream(stream)));
 
             NbtCompound result = fromCompound(get().LOAD_COMPOUND.loadNbt(data));
             suppress = false;
@@ -697,10 +689,7 @@ public class TARDISNbtFactory {
     private static Method getMethod(int requireMod, int bannedMod, Class<?> clazz, String methodName, Class<?>... params) {
         for (Method method : clazz.getDeclaredMethods()) {
             // Limitation: Doesn't handle overloads
-            if ((method.getModifiers() & requireMod) == requireMod
-                    && (method.getModifiers() & bannedMod) == 0
-                    && (methodName == null || method.getName().equals(methodName))
-                    && Arrays.equals(method.getParameterTypes(), params)) {
+            if ((method.getModifiers() & requireMod) == requireMod && (method.getModifiers() & bannedMod) == 0 && (methodName == null || method.getName().equals(methodName)) && Arrays.equals(method.getParameterTypes(), params)) {
 
                 method.setAccessible(true);
                 return method;
@@ -710,8 +699,7 @@ public class TARDISNbtFactory {
         if (clazz.getSuperclass() != null) {
             return getMethod(requireMod, bannedMod, clazz.getSuperclass(), methodName, params);
         }
-        throw new IllegalStateException(String.format(
-                "Unable to find method %s (%s).", methodName, Arrays.asList(params)));
+        throw new IllegalStateException(String.format("Unable to find method %s (%s).", methodName, Arrays.asList(params)));
     }
 
     /**
@@ -758,8 +746,7 @@ public class TARDISNbtFactory {
                 current = wrapNative(value);
 
                 // Only cache composite objects
-                if (current instanceof ConvertedMap
-                        || current instanceof ConvertedList) {
+                if (current instanceof ConvertedMap || current instanceof ConvertedList) {
                     cache.put(value, current);
                 }
             }
@@ -852,9 +839,7 @@ public class TARDISNbtFactory {
                 public Entry<String, Object> next() {
                     Entry<String, Object> entry = proxy.next();
 
-                    return new SimpleEntry<>(
-                            entry.getKey(), wrapOutgoing(entry.getValue())
-                    );
+                    return new SimpleEntry<>(entry.getKey(), wrapOutgoing(entry.getValue()));
                 }
 
                 @Override
@@ -910,9 +895,7 @@ public class TARDISNbtFactory {
 
         @Override
         public Object set(int index, Object element) {
-            return wrapOutgoing(
-                    original.set(index, unwrapIncoming(element))
-            );
+            return wrapOutgoing(original.set(index, unwrapIncoming(element)));
         }
 
         @Override

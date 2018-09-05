@@ -58,10 +58,7 @@ public class TARDISRoomRunnable implements Runnable {
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int tardis_id;
     private final Material wall_type, floor_type;
-    private Material type;
-    private BlockData data;
     private final String room;
-    private String grammar;
     private boolean running;
     private final Player p;
     private World world;
@@ -162,7 +159,7 @@ public class TARDISRoomRunnable implements Runnable {
             resetz = startz;
             world = l.getWorld();
             running = true;
-            grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
+            String grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
@@ -370,8 +367,8 @@ public class TARDISRoomRunnable implements Runnable {
         } else {
             // place one block
             JSONObject v = arr.getJSONArray(level).getJSONArray(row).getJSONObject(col);
-            data = plugin.getServer().createBlockData(v.getString("data"));
-            type = data.getMaterial();
+            BlockData data = plugin.getServer().createBlockData(v.getString("data"));
+            Material type = data.getMaterial();
             // determine 'use_clay' material
             USE_CLAY use_clay;
             try {

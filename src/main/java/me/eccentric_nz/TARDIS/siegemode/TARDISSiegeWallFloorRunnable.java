@@ -52,8 +52,6 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
     private final TARDISUpgradeData tud;
     private final boolean toSiege;
     private boolean running;
-    private int id;
-    private int slot;
     private int level = 0;
     private int row = 0;
     private int h;
@@ -136,8 +134,8 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
             Tardis tardis = rs.getTardis();
-            slot = tardis.getTIPS();
-            id = tardis.getTardis_id();
+            int slot = tardis.getTIPS();
+            int id = tardis.getTardis_id();
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
