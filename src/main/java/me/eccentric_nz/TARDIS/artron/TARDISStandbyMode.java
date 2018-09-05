@@ -113,7 +113,9 @@ public class TARDISStandbyMode implements Runnable {
         Location pb_loc = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
         // check location is within configured blocks of a recharger
         for (Location l : plugin.getGeneralKeeper().getRechargers()) {
-            return plugin.getUtils().compareLocations(pb_loc, l);
+            if (plugin.getUtils().compareLocations(pb_loc, l)) {
+                return true;
+            }
         }
         return false;
     }

@@ -88,9 +88,6 @@ public class TARDISSchematicListener implements Listener {
         if (!im.hasDisplayName()) {
             return false;
         }
-        if (im.getDisplayName().equals("TARDIS Schematic Wand")) {
-            return true;
-        }
-        return false;
+        return im.getDisplayName().equals("TARDIS Schematic Wand");
     }
 }

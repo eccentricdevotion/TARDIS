@@ -161,7 +161,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     // duplicate Item stack on cursor
                     ItemStack is = inv.getItem(slot);
                     ItemStack cursor = player.getItemOnCursor();
-                    if (cursor != null && ((is != null && cursor.isSimilar(is)) || is == null)) {
+                    if (cursor != null && (is == null || cursor.isSimilar(is))) {
                         player.setItemOnCursor(null);
                     } else {
                         player.setItemOnCursor(is.clone());

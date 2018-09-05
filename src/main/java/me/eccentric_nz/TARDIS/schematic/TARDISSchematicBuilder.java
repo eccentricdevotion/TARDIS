@@ -213,7 +213,7 @@ public class TARDISSchematicBuilder {
 
     private boolean isControlBlock(Location l, World w, int x, int y, int z) {
         Location n = new Location(w, x, y, z);
-        return (l != null && n.equals(l));
+        return (n.equals(l));
     }
 
     public static class ArchiveData {
