@@ -1,12 +1,12 @@
 # TODO
 
-## Next version `4.0.3`
+## Next version `4.0.4`
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-5. Fix Biome adaptive presets dropping flowers & seeds (properly)
-6. Test test test
+6. Compare `World#regenerateChunk()` method with [TARDIS](https://github.com/eccentricdevotion/TARDIS/blob/1a8996797ad2a856724e8fdbe743b89605857c54/src/main/java/me/eccentric_nz/TARDIS/builders/TARDISInteriorPostioning.java) `reclaimChunks(World w, int id)` to see which is quicker.
+7. Update documentation...
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -38,6 +38,7 @@
    * Clockwork Droid
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 5. Rename resource pack to 'TARDIS-Optifine'?
+6. Update for Optifine 1.13.x
 
 ## Waiting on Bukkit / SpigotAPI
 1. Get/set Villager career level and willingness
