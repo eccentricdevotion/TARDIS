@@ -28,6 +28,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -82,7 +83,8 @@ public class TARDISGlassesListener implements Listener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
                 } else if (is != null && g) {
                     // damage the glasses so they run out
-                    short d = (short) (is.getDurability() + 1);
+                    Damageable damageable = (Damageable) is.getItemMeta();
+                    int d = damageable.getDamage() + 1;
                     if (d >= 56) {
                         // if run out then remove them and the potion effect
                         pi.setHelmet(null);
@@ -91,7 +93,7 @@ public class TARDISGlassesListener implements Listener {
                         p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.PAPER, 1));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
                     } else {
-                        is.setDurability(d);
+                        damageable.setDamage(d);
                     }
                     p.updateInventory();
                 }

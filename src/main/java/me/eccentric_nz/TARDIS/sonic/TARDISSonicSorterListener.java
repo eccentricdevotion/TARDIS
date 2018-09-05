@@ -38,6 +38,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.yi.acru.bukkit.Lockette.Lockette;
 
@@ -120,18 +121,33 @@ public class TARDISSonicSorterListener implements Listener {
                     if (item2 == null || item2.getAmount() <= 0 || maxStackSize == 1) {
                         continue;
                     }
-                    if (item2.getType() == item1.getType()
-                            && item1.getDurability() == item2.getDurability()
-                            && item1.getEnchantments().equals(item2.getEnchantments())
-                            && item1.getItemMeta().equals(item2.getItemMeta())) {
-                        if (item2.getAmount() > needed) {
-                            item1.setAmount(maxStackSize);
-                            item2.setAmount(item2.getAmount() - needed);
-                            break;
+                    if (item2.getType() == item1.getType()) {
+                        if (item1.getItemMeta() instanceof Damageable) {
+                            Damageable d1 = (Damageable) item1.getItemMeta();
+                            Damageable d2 = (Damageable) item2.getItemMeta();
+                            if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
+                                if (item2.getAmount() > needed) {
+                                    item1.setAmount(maxStackSize);
+                                    item2.setAmount(item2.getAmount() - needed);
+                                    break;
+                                } else {
+                                    items[j] = null;
+                                    item1.setAmount(item1.getAmount() + item2.getAmount());
+                                    needed = maxStackSize - item1.getAmount();
+                                }
+                            }
                         } else {
-                            items[j] = null;
-                            item1.setAmount(item1.getAmount() + item2.getAmount());
-                            needed = maxStackSize - item1.getAmount();
+                            if (item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
+                                if (item2.getAmount() > needed) {
+                                    item1.setAmount(maxStackSize);
+                                    item2.setAmount(item2.getAmount() - needed);
+                                    break;
+                                } else {
+                                    items[j] = null;
+                                    item1.setAmount(item1.getAmount() + item2.getAmount());
+                                    needed = maxStackSize - item1.getAmount();
+                                }
+                            }
                         }
                     }
                 }

@@ -215,7 +215,7 @@ class TARDISPresetInventory {
         shroom.setDisplayName("Mushroom");
         mush.setItemMeta(shroom);
         // Random Fence
-        ItemStack fen = new ItemStack(Material.BRICK, 1, (short) 6);
+        ItemStack fen = new ItemStack(Material.BRICKS, 1);
         ItemMeta cer = fen.getItemMeta();
         cer.setDisplayName("Random Fence");
         // Gazebo
