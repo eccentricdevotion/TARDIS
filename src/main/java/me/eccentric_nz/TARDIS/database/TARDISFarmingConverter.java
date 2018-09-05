@@ -53,7 +53,7 @@ public class TARDISFarmingConverter {
                 }
                 // delete final comma
                 tardisFarms.delete(tardisFarms.length() - 2, tardisFarms.length());
-                tardisFarms.append(" FROM " + prefix + "tardis");
+                tardisFarms.append(" FROM ").append(prefix).append("tardis");
                 ResultSet rstf = statement.executeQuery(tardisFarms.toString());
                 String updateFarms = String.format("INSERT INTO %sfarming (tardis_id, birdcage, farm, hutch, igloo, stable, stall, village) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", prefix);
                 ps = connection.prepareStatement(updateFarms);

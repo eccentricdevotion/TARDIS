@@ -226,7 +226,7 @@ public class TARDISSiegeMode {
                 use_clay = USE_CLAY.WOOL;
             }
             if (!use_clay.equals(USE_CLAY.WOOL)) {
-                if (sw.equals("GRAY_CLAY") || sw.equals("GREY_CLAY") || sw.equals("GREY_CONCRETE") || sw.equals("GREY_CONCRETE")) {
+                if (sw.equals("GRAY_CLAY") || sw.equals("GREY_CONCRETE")) {
                     sw = "GRAY_WOOL";
                 }
             }

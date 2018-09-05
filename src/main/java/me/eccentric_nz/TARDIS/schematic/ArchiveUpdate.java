@@ -69,11 +69,9 @@ public class ArchiveUpdate {
                     ps.executeUpdate();
                 }
             } else {
-                return;
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for archive update! " + e.getMessage());
-            return;
         } finally {
             try {
                 if (rs != null) {

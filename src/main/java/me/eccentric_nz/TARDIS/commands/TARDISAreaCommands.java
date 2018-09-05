@@ -229,7 +229,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         return false;
                     }
                     String value = args[2].toUpperCase(Locale.ENGLISH);
-                    if (!value.equals("ALLOW") || !value.equals("DENY")) {
+                    if (!value.equals("ALLOW") && !value.equals("DENY")) {
                         try {
                             PRESET preset = PRESET.valueOf(value);
                         } catch (IllegalArgumentException e) {

@@ -1415,7 +1415,7 @@ public class JSONObject {
      * Warning: This method assumes that the data structure is acyclical.
      *
      * @return The writer.
-     * @throws JSONException
+     * @throws JSONException If something goes wrong...
      */
     Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
         try {

@@ -152,7 +152,6 @@ public class TARDISCondensables {
             condensables.put("CAULDRON", 154);
             condensables.put("CHARCOAL", 15);
             condensables.put("CHEST", 4);
-            condensables.put("CHEST_MINECART", 27);
             condensables.put("CHEST_MINECART", 30);
             condensables.put("CHICKEN", 5);
             condensables.put("CHIPPED_ANVIL", 180);
@@ -266,7 +265,6 @@ public class TARDISCondensables {
             condensables.put("END_PORTAL_FRAME", 1000);
             condensables.put("END_ROD", 200);
             condensables.put("END_STONE", 2);
-            condensables.put("END_STONE_BRICKS", 2);
             condensables.put("END_STONE_BRICKS", 21);
             condensables.put("ENDER_CHEST", 330);
             condensables.put("ENDER_EYE", 200);
@@ -464,7 +462,7 @@ public class TARDISCondensables {
             condensables.put("MAGMA_BLOCK", 600);
             condensables.put("MAGMA_CREAM", 150);
             condensables.put("MELON", 10);
-            condensables.put("MELON", 90);
+            condensables.put("MELON_BLOCK", 90);
             condensables.put("MELON_SEEDS", 2);
             condensables.put("MILK_BUCKET", 40);
             condensables.put("MINECART", 23);

@@ -72,7 +72,6 @@ public class ResultSetPortals {
                     }
                     data.add(row);
                 }
-            } else {
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for doors table! " + e.getMessage());

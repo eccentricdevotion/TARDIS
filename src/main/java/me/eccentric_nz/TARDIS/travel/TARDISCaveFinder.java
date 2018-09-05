@@ -43,7 +43,6 @@ public class TARDISCaveFinder {
     }
 
     public Location searchCave(Player p, int id) {
-        Location l = null;
         // get the current TARDIS location
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -121,7 +120,7 @@ public class TARDISCaveFinder {
         } else {
             TARDISMessage.send(p, "CURRENT_NOT_FOUND");
         }
-        return l;
+        return null;
     }
 
     private Check isThereRoom(World w, int x, int z, COMPASS d) {

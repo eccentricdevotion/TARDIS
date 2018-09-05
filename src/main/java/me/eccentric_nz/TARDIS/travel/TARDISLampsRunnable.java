@@ -50,7 +50,7 @@ class TARDISLampsRunnable implements Runnable {
         this.start = start;
         this.light = light.createBlockData();
         this.use_wool = use_wool;
-        lights_on = (lamps.get(0).getType().equals(this.light));
+        lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));
     }
 
     @Override
@@ -60,7 +60,7 @@ class TARDISLampsRunnable implements Runnable {
             handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
         lamps.forEach((b) -> {
-            if (b.getType().equals(light)) {
+            if (b.getType().equals(light.getMaterial())) {
                 if (use_wool) {
                     b.setBlockData(BLACK);
                 } else {
@@ -80,7 +80,7 @@ class TARDISLampsRunnable implements Runnable {
                 });
             } else {
                 lamps.forEach((b) -> {
-                    if (b.getType().equals(light)) {
+                    if (b.getType().equals(light.getMaterial())) {
                         if (use_wool) {
                             b.setBlockData(BLACK);
                         } else {

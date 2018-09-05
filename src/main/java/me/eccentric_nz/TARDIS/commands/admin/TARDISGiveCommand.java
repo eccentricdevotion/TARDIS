@@ -260,7 +260,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean giveItem(String item, Player player) {
+    private void giveItem(String item, Player player) {
         ItemStack result;
         if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
             ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item);
@@ -272,7 +272,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         result.setAmount(1);
         player.getInventory().addItem(result);
         player.updateInventory();
-        return true;
     }
 
     private boolean giveArtron(CommandSender sender, String player, int amount) {

@@ -62,11 +62,9 @@ public class ArchiveReset {
                     ps.executeUpdate();
                 }
             } else {
-                return;
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for archive reset! " + e.getMessage());
-            return;
         } finally {
             try {
                 if (rs != null) {

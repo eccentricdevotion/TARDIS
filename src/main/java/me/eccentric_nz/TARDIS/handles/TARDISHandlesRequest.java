@@ -174,7 +174,6 @@ public class TARDISHandlesRequest {
                         rsa.getNames().forEach((name) -> {
                             if (split.contains(name) && (player.hasPermission("tardis.area." + name) || player.hasPermission("tardis.area.*"))) {
                                 player.performCommand("tardistravel area " + name);
-                                return;
                             }
                         });
                         // don't understand
@@ -198,7 +197,6 @@ public class TARDISHandlesRequest {
                 } else if (split.contains("home")) {
                     // travel home
                     player.performCommand("tardistravel home");
-                    return;
                 } else {
                     // don't understand
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");

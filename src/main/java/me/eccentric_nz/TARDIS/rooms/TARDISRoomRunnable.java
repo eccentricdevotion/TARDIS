@@ -400,20 +400,18 @@ public class TARDISRoomRunnable implements Runnable {
                 data = gw.createBlockData();
             }
             if (type.equals(Material.ORANGE_WOOL)) {
-                if (wall_type.equals(Material.ORANGE_WOOL)) {
+                if (wall_type.equals(Material.ORANGE_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wall_type.equals(Material.LIME_WOOL) || wall_type.equals(Material.PINK_WOOL)))) {
                     data = ow.createBlockData();
                 } else {
                     data = wall_type.createBlockData();
                 }
-                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wall_type.equals(Material.LIME_WOOL) || wall_type.equals(Material.PINK_WOOL))) ? ow.createBlockData() : wall_type.createBlockData();
             }
             if (type.equals(Material.LIGHT_GRAY_WOOL)) {
-                if (floor_type.equals(Material.LIGHT_GRAY_WOOL)) {
+                if (floor_type.equals(Material.LIGHT_GRAY_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (floor_type.equals(Material.LIME_WOOL) || floor_type.equals(Material.PINK_WOOL)))) {
                     data = lgw.createBlockData();
                 } else {
                     data = floor_type.createBlockData();
                 }
-                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (floor_type.equals(Material.LIME_WOOL) || floor_type.equals(Material.PINK_WOOL))) ? lgw.createBlockData() : floor_type.createBlockData();
             }
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser

@@ -773,7 +773,7 @@ public final class JSONArray {
      * @param indentFactor The number of spaces to add to each level of indentation.
      * @param indent       The indention of the top level.
      * @return The writer.
-     * @throws JSONException
+     * @throws JSONException If something goes wrong...
      */
     Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
         try {

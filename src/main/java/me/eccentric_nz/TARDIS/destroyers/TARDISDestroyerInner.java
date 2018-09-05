@@ -90,7 +90,7 @@ public class TARDISDestroyerInner {
             starty = 14 + h;
             startz = gsl[2];
             resetz = gsl[3];
-            wgl = new Location(w, startx + (width / 2), starty, startz + (width / 2));
+            wgl = new Location(w, startx + (width / 2.0f), starty, startz + (width / 2.0f));
             for (level = 0; level < h; level++) {
                 for (row = 0; row < width; row++) {
                     for (col = 0; col < l; col++) {
