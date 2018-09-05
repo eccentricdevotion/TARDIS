@@ -384,11 +384,6 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public TARDISBlockSetters getBlockUtils() {
-        return TARDIS.plugin.getBlockUtils();
-    }
-
-    @Override
     public TARDISPluginRespect getRespect() {
         return TARDIS.plugin.getPluginRespect();
     }

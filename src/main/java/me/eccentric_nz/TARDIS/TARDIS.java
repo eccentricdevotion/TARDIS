@@ -119,7 +119,6 @@ public class TARDIS extends JavaPlugin {
     private TARDISShapelessRecipe incomposita;
     private TARDISUtils utils;
     private TARDISLocationGetters locationUtils;
-    private TARDISBlockSetters blockUtils;
     private TARDISWalls tardisWalls;
     private TARDISWorldGuardUtils worldGuardUtils;
     private boolean hasVersion = false;
@@ -230,7 +229,6 @@ public class TARDIS extends JavaPlugin {
             cleanUpWorlds();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
-            blockUtils = new TARDISBlockSetters(this);
             buildKeeper.setSeeds(getSeeds());
             tardisWalls = new TARDISWalls();
             new TARDISConsoleLoader(this).addSchematics();
@@ -1027,10 +1025,6 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISLocationGetters getLocationUtils() {
         return locationUtils;
-    }
-
-    public TARDISBlockSetters getBlockUtils() {
-        return blockUtils;
     }
 
     public TARDISPluginRespect getPluginRespect() {

@@ -171,16 +171,16 @@ public class TARDISJunkBuilder implements Runnable {
                                         TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                                         break;
                                     case CAKE:
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.CAKE, bd.getTardisID());
+                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, Material.CAKE, bd.getTardisID());
                                         break;
                                     case ORANGE_WOOL:
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, bd.getTardisID());
+                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, wall_type, bd.getTardisID());
                                         break;
                                     case LIGHT_GRAY_WOOL:
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
+                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
                                         break;
                                     default:
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
+                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                         break;
                                 }
                             }

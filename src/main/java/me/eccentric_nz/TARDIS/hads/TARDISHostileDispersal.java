@@ -160,7 +160,7 @@ class TARDISHostileDispersal {
                     if (yy == 0) {
                         Block under = b.getRelative(BlockFace.DOWN);
                         if (replace_with_barrier.contains(under.getType())) {
-                            plugin.getBlockUtils().setUnderDoorBlock(w, (sbx + xx), (sby + yy) - 1, (sbz + zz), id, false);
+                            TARDISBlockSetters.setUnderDoorBlock(w, (sbx + xx), (sby + yy) - 1, (sbz + zz), id, false);
                         }
                     }
                     if (!plugin.getUtils().isAir(b.getType())) {

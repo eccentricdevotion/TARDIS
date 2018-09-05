@@ -308,13 +308,6 @@ public interface TardisAPI {
     TARDISLocationGetters getLocationUtils();
 
     /**
-     * Get a handle for the TARDIS utilities.
-     *
-     * @return the TARDIS Utilities instance
-     */
-    TARDISBlockSetters getBlockUtils();
-
-    /**
      * Get a handle for the TARDIS Plugin Respect.
      *
      * @return the TARDIS Plugin Respect instance

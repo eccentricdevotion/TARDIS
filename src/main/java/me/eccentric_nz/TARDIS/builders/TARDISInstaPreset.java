@@ -122,7 +122,7 @@ class TARDISInstaPreset {
                     // TODO check re-adding umbrella if rebuilding
                     if (TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
                         // add an invisible roof
-                        plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, bd.getTardisID());
                     }
                     Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
                     if (!chunks.contains(tmp_chunk)) {
@@ -226,11 +226,11 @@ class TARDISInstaPreset {
                     Block rail = world.getBlockAt(xx, y, zz);
                     if (rail.getType().equals(Material.RAIL) || rail.getType().equals(Material.POWERED_RAIL)) {
                         change = false;
-                        plugin.getBlockUtils().setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisID());
                     }
                 }
                 if (yy == 0 && i == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
+                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
                 Material mat = colData[yy].getMaterial();
                 // update door location if invisible
@@ -238,20 +238,20 @@ class TARDISInstaPreset {
                     String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door, qf);
                     // if tardis is in the air add under door
-                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
+                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
                 switch (mat) {
                     case GRASS_BLOCK:
                     case DIRT:
                         BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
-                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
                         break;
                     case BEDROCK:
                         if (preset.equals(PRESET.THEEND)) {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                             world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         } else {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
                         break;
                     case WHITE_WOOL:
@@ -271,14 +271,14 @@ class TARDISInstaPreset {
                     case RED_WOOL:
                     case BLACK_WOOL:
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
                         }
                         if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                             // set a quartz pillar block instead
                             Orientable orientable = (Orientable) Material.QUARTZ_PILLAR.createBlockData();
                             Axis axis = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? Axis.X : Axis.Z;
                             orientable.setAxis(axis);
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, orientable, bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, orientable, bd.getTardisID());
                         }
                         break;
                     case TORCH: // lamps, glowstone and torches
@@ -296,9 +296,9 @@ class TARDISInstaPreset {
                             if (light instanceof Lightable) {
                                 Lightable lit = (Lightable) light;
                                 lit.setLit(true);
-                                plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisID());
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisID());
                             } else {
-                                plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
                             }
                         }
                         break;
@@ -334,11 +334,11 @@ class TARDISInstaPreset {
                             if (yy == 0) {
                                 if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
                                     int sy = y - 1;
-                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
+                                    TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
                                     Block sponge = world.getBlockAt(xx, sy, zz);
                                     plugin.getWorldGuardUtils().sponge(sponge, true);
                                 } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+                                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                 }
                             }
                         } else {
@@ -348,12 +348,12 @@ class TARDISInstaPreset {
                         if (mat.equals(Material.RAIL)) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
                         } else {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
                         break;
                     case SIGN:
                         if (preset.equals(PRESET.APPERTURE)) {
-                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+                            TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                         }
                         break;
                     case WALL_SIGN: // sign - if there is one
@@ -453,14 +453,14 @@ class TARDISInstaPreset {
                         }
                         break;
                     case NETHERRACK:
-                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         if (preset.equals(PRESET.TORCH)) {
                             world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         }
                         break;
                     case NETHER_PORTAL:
-                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
-                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         break;
                     case SKELETON_SKULL:
                         if (bd.isSubmarine()) {
@@ -468,14 +468,14 @@ class TARDISInstaPreset {
                         } else {
                             Rotatable rotatable = (Rotatable) colData[yy];
                             rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                         }
                         break;
                     case REDSTONE_BLOCK:
                         if (!bd.getLamp().equals(Material.REDSTONE_LAMP) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, Material.BLUE_WOOL, bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, Material.BLUE_WOOL, bd.getTardisID());
                         } else {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
                         break;
                     case WHITE_TERRACOTTA:
@@ -495,21 +495,21 @@ class TARDISInstaPreset {
                     case RED_TERRACOTTA:
                     case BLACK_TERRACOTTA:
                         BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colData[yy];
-                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
+                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
                         break;
                     default: // everything else
                         if (change) {
                             if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) || mat.equals(Material.OAK_BUTTON)) {
                                 do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
                             } else {
-                                plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                             }
                         }
                         break;
                 }
             }
         }
-        do_at_end.forEach((pb) -> plugin.getBlockUtils().setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getData(), bd.getTardisID()));
+        do_at_end.forEach((pb) -> TARDISBlockSetters.setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getData(), bd.getTardisID()));
         if (!rebuild) {
             // message travellers in tardis
             HashMap<String, Object> where = new HashMap<>();

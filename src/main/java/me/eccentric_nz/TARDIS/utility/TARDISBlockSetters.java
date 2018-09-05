@@ -263,18 +263,18 @@ public class TARDISBlockSetters {
      * @param data the block data to apply to the block.
      * @param id   the TARDIS this block belongs to.
      */
-    public void setBlockAndRemember(World w, int x, int y, int z, BlockData data, int id) {
+    public static void setBlockAndRemember(World w, int x, int y, int z, BlockData data, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
-        QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
-        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+        TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setBlockData(data);
     }
@@ -289,18 +289,18 @@ public class TARDISBlockSetters {
      * @param data the block data to apply to the block.
      * @param id   the TARDIS this block belongs to.
      */
-    public void setBlockAndRemember(World w, int x, int y, int z, String data, int id) {
+    public static void setBlockAndRemember(World w, int x, int y, int z, String data, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
-        QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
-        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+        TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         BlockData blockData = Bukkit.createBlockData(data);
         b.setBlockData(blockData);
@@ -316,18 +316,18 @@ public class TARDISBlockSetters {
      * @param material the material to set the block.
      * @param id       the TARDIS this block belongs to.
      */
-    public void setBlockAndRemember(World w, int x, int y, int z, Material material, int id) {
+    public static void setBlockAndRemember(World w, int x, int y, int z, Material material, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
-        QueryFactory qf = new QueryFactory(plugin);
+        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
-        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+        TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setBlockData(material.createBlockData());
     }
@@ -365,9 +365,9 @@ public class TARDISBlockSetters {
      * @param id     the TARDIS this block belongs to.
      * @param portal whether a chest can be in the portal block location
      */
-    public void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {
+    public static void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {
         // List of blocks that a door cannot be placed on
-        List<String> ids = plugin.getBlocksConfig().getStringList("under_door_blocks");
+        List<String> ids = TARDIS.plugin.getBlocksConfig().getStringList("under_door_blocks");
         if (portal) {
             ids.remove("CHEST");
         }
@@ -376,14 +376,14 @@ public class TARDISBlockSetters {
         if (ids.contains(b.getBlockData().getMaterial().toString())) {
             // remember replaced block location and BlockData so we can restore it later
             String l = b.getLocation().toString();
-            QueryFactory qf = new QueryFactory(plugin);
+            QueryFactory qf = new QueryFactory(TARDIS.plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             set.put("location", l);
             set.put("data", blockData);
             set.put("police_box", 1);
             qf.doInsert("blocks", set);
-            plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+            TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
             // set the block
             b.setBlockData(Material.BARRIER.createBlockData());
         }
