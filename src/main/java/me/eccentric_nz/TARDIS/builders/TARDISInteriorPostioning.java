@@ -16,17 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -167,11 +173,7 @@ public class TARDISInteriorPostioning {
             }
         }
     }
-    
-    /**
-     * Unneeded now that the CraftBukkit World#regenerateChunks() method has been fixed
-     */
-    /*
+
     public void reclaimChunks(World w, int id) {
         // get ARS data
         HashMap<String, Object> where = new HashMap<>();
@@ -221,5 +223,4 @@ public class TARDISInteriorPostioning {
             }
         }
     }
-    */
 }

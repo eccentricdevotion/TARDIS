@@ -198,19 +198,26 @@ class TARDISMySQLDatabaseUpdater {
                     statement.executeUpdate(h_alter);
                 }
             }
-            // update data type for lamp in player_prefs
+            // update data type for `lamp` in player_prefs
             String lamp_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "player_prefs' AND COLUMN_NAME = 'lamp'";
             ResultSet rslc = statement.executeQuery(lamp_check);
             if (rslc.next() && !rslc.getString("DATA_TYPE").equalsIgnoreCase("varchar")) {
                 String lamp_query = "ALTER TABLE " + prefix + "player_prefs CHANGE `lamp` `lamp` VARCHAR(64) NULL DEFAULT ''";
                 statement.executeUpdate(lamp_query);
             }
-            // update data type for data in blocks
+            // update data type for `data` in blocks
             String blockdata_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
             ResultSet rsbdc = statement.executeQuery(blockdata_check);
             if (rsbdc.next() && !rsbdc.getString("DATA_TYPE").equalsIgnoreCase("text")) {
                 String blockdata_query = "ALTER TABLE " + prefix + "blocks CHANGE `data` `data` TEXT";
                 statement.executeUpdate(blockdata_query);
+            }
+            // update data type for `time` in tag
+            String tagtime_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+            ResultSet rsttc = statement.executeQuery(tagtime_check);
+            if (rsttc.next() && !rsttc.getString("DATA_TYPE").equalsIgnoreCase("int")) {
+                String tagtime_query = "ALTER TABLE " + prefix + "tag CHANGE `time` `time` BIGINT NULL DEFAULT '0'";
+                statement.executeUpdate(tagtime_query);
             }
             // add biome to current location
             String bio_query = "SHOW COLUMNS FROM " + prefix + "current LIKE 'biome'";
