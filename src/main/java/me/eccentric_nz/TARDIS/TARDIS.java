@@ -431,12 +431,12 @@ public class TARDIS extends JavaPlugin {
             new TARDISVortexPersister(this).save();
             updateTagStats();
             debug("Updated Tag stats");
-            closeDatabase();
-            debug("Closing database");
-            resetTime();
-            debug("Reseting player time(s)");
             getServer().getScheduler().cancelTasks(this);
             debug("Cancelling all scheduled tasks");
+            resetTime();
+            debug("Reseting player time(s)");
+            closeDatabase();
+            debug("Closing database");
             plugin.debug("TARDIS disabled successfully!");
         }
     }
