@@ -27,7 +27,7 @@ import org.bukkit.block.data.Directional;
 public class TARDISLeverRecalculator {
 
     /**
-     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
+     * Recalculate the data for directional block (LEVER) when the TARDIS preset changes direction.
      *
      * @param b the block data stored in the preset data
      * @param d the new direction of the TARDIS

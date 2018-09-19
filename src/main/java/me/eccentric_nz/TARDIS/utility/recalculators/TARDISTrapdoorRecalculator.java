@@ -27,7 +27,7 @@ import org.bukkit.block.data.Directional;
 public class TARDISTrapdoorRecalculator {
 
     /**
-     * Recalculate the data for directional block (???_TRAPDOOR) when the TARDIS preset changes direction.
+     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
      *
      * @param b the block data to convert
      * @param d the new direction of the TARDIS // * @param torch whether this is the torch preset
@@ -98,5 +98,4 @@ public class TARDISTrapdoorRecalculator {
         }
         return trap;
     }
-
 }
