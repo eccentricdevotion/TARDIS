@@ -254,7 +254,7 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location, typeId and data.
+     * Sets a block to the specified type and data and remembers its location and block data.
      *
      * @param w    the world the block is in.
      * @param x    the x co-ordinate of the block.
@@ -280,7 +280,7 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location, typeId and data.
+     * Sets a block to the specified type and data and remembers its location and block data.
      *
      * @param w    the world the block is in.
      * @param x    the x co-ordinate of the block.
@@ -307,7 +307,7 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location, typeId and data.
+     * Sets a block to the specified type and data and remembers its location and block data.
      *
      * @param w        the world the block is in.
      * @param x        the x co-ordinate of the block.
@@ -333,7 +333,7 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified type and data and remembers its location, typeId and data.
+     * Sets a block to the specified type and data and remembers its location and block data.
      *
      * @param b    the block to set and remember
      * @param m    the typeId to set the block to
