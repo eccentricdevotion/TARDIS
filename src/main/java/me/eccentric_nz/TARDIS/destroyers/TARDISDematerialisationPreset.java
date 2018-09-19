@@ -148,6 +148,14 @@ class TARDISDematerialisationPreset implements Runnable {
                         plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
                         plugin.getPresetDestroyer().destroyHandbrake(dd.getLocation(), dd.getDirection());
                         break;
+                    case SWAMP:
+                        int swampYTop = (dd.getLocation().getBlockY() + 2);
+                        int swampYBottom = (dd.getLocation().getBlockY() + 1);
+                        int swampYUnder = (dd.getLocation().getBlockY());
+                        TARDISBlockSetters.setBlock(world, dd.getLocation().getBlockX(), swampYTop, dd.getLocation().getBlockZ(), Material.AIR);
+                        TARDISBlockSetters.setBlock(world, dd.getLocation().getBlockX(), swampYBottom, dd.getLocation().getBlockZ(), Material.AIR);
+                        TARDISBlockSetters.setBlock(world, dd.getLocation().getBlockX(), swampYUnder, dd.getLocation().getBlockZ(), Material.AIR);
+                        break;
                     default:
                         break;
                 }
@@ -281,6 +289,9 @@ class TARDISDematerialisationPreset implements Runnable {
                             case ACACIA_TRAPDOOR:
                             case DARK_OAK_TRAPDOOR:
                             case WALL_SIGN:
+                                if (preset.equals(PRESET.SWAMP)) {
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
+                                }
                                 break;
                             case WHITE_STAINED_GLASS:
                                 BlockData chaf = (preset.equals(PRESET.FLOWER)) ? stain_colour : coldatas[yy];

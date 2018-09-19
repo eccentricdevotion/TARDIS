@@ -61,6 +61,10 @@ class TARDISMaterialisationPreset implements Runnable {
     private final ChatColor sign_colour;
     private Block handbrake;
     private BlockData h_data;
+    private Block swampDoorBottom;
+    private BlockData sdb_data;
+    private Block swampDoorTop;
+    private BlockData sdt_data;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the transparency of materialisation by
@@ -250,7 +254,6 @@ class TARDISMaterialisationPreset implements Runnable {
                             }
                             Material mat = colData[yy].getMaterial();
                             switch (mat) {
-//                                case GRASS_BLOCK:
                                 case DIRT:
                                     BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
@@ -336,7 +339,18 @@ class TARDISMaterialisationPreset implements Runnable {
                                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                         }
                                     }
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                    if (preset.equals(PRESET.SWAMP)) {
+                                        // do it at the end
+                                        if (door) {
+                                            swampDoorBottom = world.getBlockAt(xx, (y + yy), zz);
+                                            sdb_data = colData[yy];
+                                        } else {
+                                            swampDoorTop = world.getBlockAt(xx, (y + yy), zz);
+                                            sdt_data = colData[yy];
+                                        }
+                                    } else {
+                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                    }
                                     break;
                                 case SIGN:
                                     if (preset.equals(PRESET.APPERTURE)) {
@@ -503,7 +517,8 @@ class TARDISMaterialisationPreset implements Runnable {
                 }
                 // just change the walls
                 int xx, zz;
-                for (int n = 0; n < 9; n++) {
+                int limit = (preset.equals(PRESET.SWAMP)) ? 10 : 9;
+                for (int n = 0; n < limit; n++) {
                     BlockData[] coldatas = datas[n];
                     switch (n) {
                         case 0:
@@ -538,9 +553,13 @@ class TARDISMaterialisationPreset implements Runnable {
                             xx = minusx;
                             zz = z;
                             break;
-                        default:
+                        case 8:
                             xx = x;
                             zz = z;
+                            break;
+                        default:
+                            xx = signx;
+                            zz = signz;
                             break;
                     }
                     for (int yy = 0; yy < 4; yy++) {
@@ -704,12 +723,16 @@ class TARDISMaterialisationPreset implements Runnable {
                     }
                 }
             } else {
+                if (preset.equals(PRESET.SWAMP) && swampDoorBottom != null) {
+                    TARDISBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisID());
+                    TARDISBlockSetters.setBlockAndRemember(world, swampDoorTop.getX(), swampDoorTop.getY(), swampDoorTop.getZ(), sdt_data, bd.getTardisID());
+                }
                 if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
                     handbrake.setBlockData(h_data);
                     // remember its location
                     String location = handbrake.getLocation().toString();
                     saveJunkControl(location, "handbrake");
-                    // set handbake to on ?
+                    // set handbrake to on ?
                 }
                 // just in case
                 setBiome(world, x, z, bd.useTexture(), false);
@@ -802,7 +825,6 @@ class TARDISMaterialisationPreset implements Runnable {
             }
             // refresh the chunks
             chunks.forEach((c) -> {
-                //world.refreshChunk(c.getX(), c.getZ());
                 plugin.getTardisHelper().refreshChunk(c);
             });
         }

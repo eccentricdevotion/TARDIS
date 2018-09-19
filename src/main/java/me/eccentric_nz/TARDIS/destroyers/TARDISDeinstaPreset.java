@@ -128,6 +128,14 @@ public class TARDISDeinstaPreset {
             case JUNK_MODE:
                 plugin.getPresetDestroyer().destroyHandbrake(l, d);
                 break;
+            case SWAMP:
+                int swampYTop = (dd.getLocation().getBlockY() + 2);
+                int swampYBottom = (dd.getLocation().getBlockY() + 1);
+                int swampYUnder = (dd.getLocation().getBlockY());
+                TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYTop, dd.getLocation().getBlockZ(), Material.AIR);
+                TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYBottom, dd.getLocation().getBlockZ(), Material.AIR);
+                TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYUnder, dd.getLocation().getBlockZ(), Material.AIR);
+                break;
             default:
                 break;
         }
