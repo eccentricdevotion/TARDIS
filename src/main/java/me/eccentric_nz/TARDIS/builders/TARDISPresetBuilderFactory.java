@@ -68,6 +68,7 @@ public class TARDISPresetBuilderFactory {
         no_block_under_door.add(PRESET.LIBRARY);
         no_block_under_door.add(PRESET.PANDORICA);
         no_block_under_door.add(PRESET.ROBOT);
+        no_block_under_door.add(PRESET.SWAMP);
         no_block_under_door.add(PRESET.TORCH);
         no_block_under_door.add(PRESET.WELL);
         notSubmarinePresets = new ArrayList<>();

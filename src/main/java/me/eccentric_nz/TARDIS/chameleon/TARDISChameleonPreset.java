@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class TARDISChameleonPreset {
 
-    private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.WALL_TORCH, Material.OAK_STAIRS, Material.SIGN, Material.OAK_DOOR, Material.RAIL, Material.COBBLESTONE_STAIRS, Material.WALL_SIGN, Material.LEVER, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.STONE_BUTTON, Material.JACK_O_LANTERN, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.BROWN_MUSHROOM_BLOCK, Material.VINE, Material.BRICK_STAIRS, Material.STONE_BRICK_STAIRS, Material.NETHER_BRICK_STAIRS, Material.SANDSTONE_STAIRS, Material.SPRUCE_STAIRS, Material.JUNGLE_STAIRS, Material.ACACIA_STAIRS, Material.BIRCH_STAIRS, Material.DARK_OAK_STAIRS, Material.OAK_BUTTON, Material.ANVIL, Material.CHIPPED_ANVIL, Material.DAMAGED_ANVIL, Material.QUARTZ_STAIRS, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR, Material.PURPUR_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.WHITE_BED, Material.ORANGE_BED, Material.MAGENTA_BED, Material.YELLOW_BED, Material.LIME_BED, Material.PINK_BED, Material.GRAY_BED, Material.LIGHT_GRAY_BED, Material.PURPLE_BED, Material.CYAN_BED, Material.BLUE_BED, Material.GREEN_BED, Material.BROWN_BED, Material.RED_BED, Material.BLACK_BED, Material.LIGHT_BLUE_BED);
+    private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.WALL_TORCH, Material.OAK_STAIRS, Material.SIGN, Material.OAK_DOOR, Material.RAIL, Material.COBBLESTONE_STAIRS, Material.WALL_SIGN, Material.LEVER, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.STONE_BUTTON, Material.JACK_O_LANTERN, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.OAK_FENCE, Material.BIRCH_FENCE, Material.SPRUCE_FENCE, Material.JUNGLE_FENCE, Material.ACACIA_FENCE, Material.DARK_OAK_FENCE, Material.BROWN_MUSHROOM_BLOCK, Material.VINE, Material.BRICK_STAIRS, Material.STONE_BRICK_STAIRS, Material.NETHER_BRICK_STAIRS, Material.SANDSTONE_STAIRS, Material.SPRUCE_STAIRS, Material.JUNGLE_STAIRS, Material.ACACIA_STAIRS, Material.BIRCH_STAIRS, Material.DARK_OAK_STAIRS, Material.OAK_BUTTON, Material.ANVIL, Material.CHIPPED_ANVIL, Material.DAMAGED_ANVIL, Material.QUARTZ_STAIRS, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR, Material.PURPUR_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.WHITE_BED, Material.ORANGE_BED, Material.MAGENTA_BED, Material.YELLOW_BED, Material.LIME_BED, Material.PINK_BED, Material.GRAY_BED, Material.LIGHT_GRAY_BED, Material.PURPLE_BED, Material.CYAN_BED, Material.BLUE_BED, Material.GREEN_BED, Material.BROWN_BED, Material.RED_BED, Material.BLACK_BED, Material.LIGHT_BLUE_BED);
     private final TARDISAndesitePreset andesite;
     private final TARDISAngelDownPreset angeld;
     private final TARDISAngelUpPreset angelu;
@@ -489,6 +489,14 @@ public class TARDISChameleonPreset {
                         case ACACIA_BUTTON:
                         case DARK_OAK_BUTTON:
                             data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
+                            break;
+                        case OAK_FENCE:
+                        case SPRUCE_FENCE:
+                        case BIRCH_FENCE:
+                        case JUNGLE_FENCE:
+                        case ACACIA_FENCE:
+                        case DARK_OAK_FENCE:
+                            data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
                             break;
                         case OAK_TRAPDOOR:
                         case BIRCH_TRAPDOOR:
