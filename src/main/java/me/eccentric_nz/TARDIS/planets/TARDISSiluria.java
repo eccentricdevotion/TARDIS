@@ -93,12 +93,6 @@ public class TARDISSiluria {
             // add world to config
             plugin.getConfig().set("worlds.Siluria", true);
             plugin.saveConfig();
-            // make sure TARDISWeepingAngels can re-disguise Silurians in the Siluria world
-            Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
-            if (twa != null) {
-                twa.getConfig().set("silurians.worlds.Siluria", 500);
-                twa.saveConfig();
-            }
         } catch (CommandException e) {
             plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Siluria files to " + which + " plugin data folder: {0}", e.getMessage());
         }

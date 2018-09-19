@@ -40,7 +40,7 @@ public final class TARDISSiluriaSpawnListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onDalekSpawn(CreatureSpawnEvent event) {
+    public void onSilurianSpawn(CreatureSpawnEvent event) {
         if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
             return;
         }
@@ -51,7 +51,7 @@ public final class TARDISSiluriaSpawnListener implements Listener {
             return;
         }
         LivingEntity le = event.getEntity();
-        // it's a Dalek - disguise it!
+        // it's a Silurian - disguise it!
         twaAPI.setSilurianEquipment(le, false);
     }
 }
