@@ -99,6 +99,10 @@ public class TARDISPresetDestroyerFactory {
                     runnable.setTask(taskID);
                 } else {
                     plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
+                    if (demat.equals(PRESET.SWAMP)) {
+                        // remove door
+                        destroyDoor(dd.getTardisID());
+                    }
                     TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, dd, demat, cham_id.createBlockData(), loops);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);

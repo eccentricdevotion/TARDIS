@@ -65,6 +65,8 @@ class TARDISMaterialisationPreset implements Runnable {
     private BlockData sdb_data;
     private Block swampDoorTop;
     private BlockData sdt_data;
+    private Block swampSlab;
+    private BlockData slab_data;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the transparency of materialisation by
@@ -247,6 +249,10 @@ class TARDISMaterialisationPreset implements Runnable {
                                     } else {
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisID());
                                     }
+                                } else if (preset.equals(PRESET.SWAMP)) {
+                                    swampSlab = rail;
+                                    slab_data = column.getBlockData()[n][yy];
+                                    change = false;
                                 }
                             }
                             if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
@@ -517,8 +523,7 @@ class TARDISMaterialisationPreset implements Runnable {
                 }
                 // just change the walls
                 int xx, zz;
-                int limit = (preset.equals(PRESET.SWAMP)) ? 10 : 9;
-                for (int n = 0; n < limit; n++) {
+                for (int n = 0; n < 9; n++) {
                     BlockData[] coldatas = datas[n];
                     switch (n) {
                         case 0:
@@ -726,6 +731,7 @@ class TARDISMaterialisationPreset implements Runnable {
                 if (preset.equals(PRESET.SWAMP) && swampDoorBottom != null) {
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisID());
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorTop.getX(), swampDoorTop.getY(), swampDoorTop.getZ(), sdt_data, bd.getTardisID());
+                    TARDISBlockSetters.setBlockAndRemember(world, swampSlab.getX(), swampSlab.getY(), swampSlab.getZ(), slab_data, bd.getTardisID());
                 }
                 if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
                     handbrake.setBlockData(h_data);

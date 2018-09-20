@@ -149,12 +149,7 @@ class TARDISDematerialisationPreset implements Runnable {
                         plugin.getPresetDestroyer().destroyHandbrake(dd.getLocation(), dd.getDirection());
                         break;
                     case SWAMP:
-                        int swampYTop = (dd.getLocation().getBlockY() + 2);
-                        int swampYBottom = (dd.getLocation().getBlockY() + 1);
-                        int swampYUnder = (dd.getLocation().getBlockY());
-                        TARDISBlockSetters.setBlock(world, dd.getLocation().getBlockX(), swampYTop, dd.getLocation().getBlockZ(), Material.AIR);
-                        TARDISBlockSetters.setBlock(world, dd.getLocation().getBlockX(), swampYBottom, dd.getLocation().getBlockZ(), Material.AIR);
-                        TARDISBlockSetters.setBlock(world, dd.getLocation().getBlockX(), swampYUnder, dd.getLocation().getBlockZ(), Material.AIR);
+                        plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
                         break;
                     default:
                         break;
