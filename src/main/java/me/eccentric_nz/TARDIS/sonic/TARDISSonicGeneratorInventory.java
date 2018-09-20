@@ -150,6 +150,12 @@ class TARDISSonicGeneratorInventory {
         capaldi.setDisplayName(ChatColor.UNDERLINE + "Sonic Screwdriver");
         capaldi.setLore(Collections.singletonList("Twelfth Doctor"));
         peter.setItemMeta(capaldi);
+        // thirteenth doctor (jodie whittaker)
+        ItemStack whittaker = new ItemStack(Material.BLAZE_ROD, 1);
+        ItemMeta jodie = whittaker.getItemMeta();
+        jodie.setDisplayName(ChatColor.BLACK + "Sonic Screwdriver");
+        jodie.setLore(Collections.singletonList("Thirteenth Doctor"));
+        whittaker.setItemMeta(jodie);
         // info 1/3
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
@@ -291,7 +297,7 @@ class TARDISSonicGeneratorInventory {
 
         return new ItemStack[]{
                 markone, marktwo, markthree, markfour, mcgann, eccelston, tennant, smith, hurt,
-                null, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
+                whittaker, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
                 null, null, null, null, null, null, null, null, null,
                 sta, null, bio, dis, eme, red, pai, ign, null,
                 null, null, info, info1, info2, null, null, save, generate,
