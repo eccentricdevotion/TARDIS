@@ -326,12 +326,12 @@ public class TARDISChameleonPreset {
                     BlockData[] four_w = arr[4];
                     BlockData[] five_w = arr[5];
                     BlockData[] six_w = arr[6];
+                    arr[0] = four_w;
                     arr[1] = five_w;
-                    arr[2] = zero_w;
-                    arr[0] = two_w;
-                    arr[4] = six_w;
+                    arr[2] = six_w;
+                    arr[4] = zero_w;
                     arr[5] = one_w;
-                    arr[6] = four_w;
+                    arr[6] = two_w;
                 }
                 BlockData[] three_w = arr[3];
                 arr[3] = arr[7];
@@ -380,9 +380,7 @@ public class TARDISChameleonPreset {
                         case RED_BED:
                         case WHITE_BED:
                         case YELLOW_BED:
-                            Directional bed = (Directional) data[col][block];
-                            bed.setFacing(BlockFace.valueOf(d.toString()));
-                            data[col][block] = bed;
+                            data[col][block] = new TARDISBedRecalculator().recalculate(data[col][block], d);
                             break;
                         case WALL_TORCH:
                             data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
