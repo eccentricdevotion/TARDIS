@@ -54,7 +54,7 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("transmat"); // type 6
         firstArgs.add("remove");
         firstArgs.add("update");
-        type_1 = Arrays.asList("hide", "rebuild", "home", "cave", "make_her_blue");
+        type_1 = Arrays.asList("hide", "rebuild", "home", "cave", "make_her_blue", "occupy");
         chameleon = Arrays.asList("off", "adapt", "invisible");
     }
 

@@ -816,7 +816,7 @@ commands:
       usage: /<command> save [save name]
     cmd:
       description: Bind the 'home', 'hide' or 'rebuild' commands to a button.
-      usage: /<command> cmd [home|hide|rebuild|cave|make_her_blue]
+      usage: /<command> cmd [home|hide|rebuild|cave|make_her_blue|occupy]
     player:
       description: Bind a player location to a button.
       usage: /<command> player [player]
@@ -829,6 +829,9 @@ commands:
     remove:
       description: Remove a 'bound' saved location, command, player or area from a button.
       usage: /<command> remove [save name|cmd|player|area]
+    transmat:
+      description: Bind a internal TARDIS transmat location to a button.
+      usage: /<command> transmat [name]
   tardisgravity:
     aliases: tgravity
     description: Add or remove gravity well blocks.

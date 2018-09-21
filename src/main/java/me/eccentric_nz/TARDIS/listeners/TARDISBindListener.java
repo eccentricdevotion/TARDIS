@@ -147,6 +147,10 @@ public class TARDISBindListener implements Listener {
                                             player.performCommand("tardis make_her_blue");
                                             plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis make_her_blue");
                                         }
+                                        if (dest_name.equals("occupy")) {
+                                            player.performCommand("tardis occupy");
+                                            plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis occupy");
+                                        }
                                         break;
                                     case 2: // player
                                         player.performCommand("tardistravel " + dest_name);
