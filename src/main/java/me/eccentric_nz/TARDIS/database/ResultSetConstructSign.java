@@ -39,6 +39,7 @@ public class ResultSetConstructSign {
     private String line2;
     private String line3;
     private String line4;
+    private boolean asymmetric;
     private final String prefix;
 
     /**
@@ -73,6 +74,7 @@ public class ResultSetConstructSign {
                     line2 = rs.getString("line2");
                     line3 = rs.getString("line3");
                     line4 = rs.getString("line4");
+                    asymmetric = rs.getBoolean("asymmetric");
                 }
             } else {
                 return false;
@@ -109,5 +111,9 @@ public class ResultSetConstructSign {
 
     public String getLine4() {
         return line4;
+    }
+
+    public boolean isAsymmetric() {
+        return asymmetric;
     }
 }

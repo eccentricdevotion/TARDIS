@@ -35,7 +35,7 @@ import java.util.List;
 class TARDISConstructCommand {
 
     private final TARDIS plugin;
-    private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4");
+    private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4", "asymmetric");
 
     public TARDISConstructCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -54,7 +54,8 @@ class TARDISConstructCommand {
             TARDISMessage.send(player, "NO_CONSTRUCT");
             return true;
         }
-        if (args.length < 3) {
+        boolean isAsym = args[1].equalsIgnoreCase("asymmetric");
+        if (!isAsym && args.length < 3) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
@@ -63,29 +64,34 @@ class TARDISConstructCommand {
             TARDISMessage.send(player, "CONSTRUCT_LINE_NUM");
             return true;
         }
-        int l = TARDISNumberParsers.parseInt(args[1]);
-        // concat line
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < args.length; i++) {
-            if (i != 2) {
-                sb.append(" ").append(args[i]);
-            } else {
-                sb.append(args[i]);
-            }
-        }
-        String raw = ChatColor.translateAlternateColorCodes('&', sb.toString());
-        // strip color codes and check length
-        if (ChatColor.stripColor(raw).length() > 16) {
-            TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
-            return true;
-        }
-        // save it
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("line" + l, raw);
+        if (isAsym) {
+            set.put("asymmetric", rscs.isAsymmetric() ? 0 : 1);
+        } else {
+            int l = TARDISNumberParsers.parseInt(args[1]);
+            // concat line
+            StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                if (i != 2) {
+                    sb.append(" ").append(args[i]);
+                } else {
+                    sb.append(args[i]);
+                }
+            }
+            String raw = ChatColor.translateAlternateColorCodes('&', sb.toString());
+            // strip color codes and check length
+            if (ChatColor.stripColor(raw).length() > 16) {
+                TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
+                return true;
+            }
+            set.put("line" + l, raw);
+        }
+        // save it
         new QueryFactory(plugin).doUpdate("chameleon", set, where);
-        TARDISMessage.send(player, "CONSTRUCT_LINE_SAVED");
+        String message = (isAsym) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
+        TARDISMessage.send(player, message);
         return true;
     }
 }

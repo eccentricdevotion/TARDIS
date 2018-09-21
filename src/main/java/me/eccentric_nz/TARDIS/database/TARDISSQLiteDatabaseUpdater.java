@@ -136,6 +136,7 @@ class TARDISSQLiteDatabaseUpdater {
         chameleonupdates.add("line2 TEXT DEFAULT ''");
         chameleonupdates.add("line3 TEXT DEFAULT ''");
         chameleonupdates.add("line4 TEXT DEFAULT ''");
+        chameleonupdates.add("asymmetric INTEGER DEFAULT 0");
     }
 
     /**

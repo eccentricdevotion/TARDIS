@@ -479,8 +479,8 @@ commands:
       usage: /<command> archive [scan|add|remove|update|description] [name]
       permission: tardis.archive
     construct:
-      description: Set the sign text for the TARDIS CONSTRUCT Chameleon preset.
-      usage: /<command> construct [line number] [text with optional colour code]
+      description: Set the sign text or asymmetry of the TARDIS CONSTRUCT Chameleon preset.
+      usage: /<command> construct [line number|asymmetric] [text with optional colour code]
     arch_time:
       description: Display the time that a player must remain Chameleon arched.
       usage: /<command> arch_time
