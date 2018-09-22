@@ -374,7 +374,7 @@ public class TARDISExterminator {
             TARDISTIPSData coords = tips.getTIPSData(slot);
             World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
             if (w != null) {
-                tips.reclaimChunks(w, coords);
+                tips.reclaimZeroChunk(w, coords);
             }
         }
     }

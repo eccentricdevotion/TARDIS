@@ -174,6 +174,7 @@ public class TARDISInteriorPostioning {
         }
     }
 
+    // won't remove manually grown rooms...
     public void reclaimChunks(World w, int id) {
         // get ARS data
         HashMap<String, Object> where = new HashMap<>();

@@ -5,10 +5,7 @@
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-6. Compare `World#regenerateChunk()` method with [TARDIS](https://github.com/eccentricdevotion/TARDIS/blob/1a8996797ad2a856724e8fdbe743b89605857c54/src/main/java/me/eccentric_nz/TARDIS/builders/TARDISInteriorPostioning.java) `reclaimChunks(World w, int id)` to see which is quicker.
-7. Update documentation...
-8. Check beds in Chameleon constructs (all placed directions, not just east / west).
-9. `RegionManager manager =  WorldGuard.getInstance().getPlatform().getRegionContainer().get(world);`
+6. Update documentation...
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
