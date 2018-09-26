@@ -33,11 +33,11 @@ class TARDISRepairCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRepairCommand(TARDIS plugin) {
+    TARDISRepairCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setFreeCount(CommandSender sender, String[] args) {
+    boolean setFreeCount(CommandSender sender, String[] args) {
         // Look up this player's UUID
         OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
         if (op == null) {

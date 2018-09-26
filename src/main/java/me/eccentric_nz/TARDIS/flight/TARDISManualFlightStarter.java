@@ -33,7 +33,7 @@ class TARDISManualFlightStarter implements Runnable {
     private final Player player;
     private final int id;
 
-    public TARDISManualFlightStarter(TARDIS plugin, Player player, int id) {
+    TARDISManualFlightStarter(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;

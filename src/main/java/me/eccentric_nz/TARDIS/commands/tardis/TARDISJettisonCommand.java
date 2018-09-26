@@ -33,11 +33,11 @@ class TARDISJettisonCommand {
 
     private final TARDIS plugin;
 
-    public TARDISJettisonCommand(TARDIS plugin) {
+    TARDISJettisonCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean startJettison(Player player, String[] args) {
+    boolean startJettison(Player player, String[] args) {
         if (player.hasPermission("tardis.jettison")) {
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");

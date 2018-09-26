@@ -35,11 +35,11 @@ class TARDISRescueCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRescueCommand(TARDIS plugin) {
+    TARDISRescueCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean startRescue(Player player, String[] args) {
+    boolean startRescue(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return true;

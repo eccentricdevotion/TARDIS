@@ -24,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.MapMeta;
 
@@ -103,12 +104,6 @@ public class TARDISShapedRecipe {
         } else {
             im.setDisplayName(s);
         }
-        if (s.endsWith("Bow Tie")) {
-            is.setDurability((short) 75);
-        }
-        if (s.equals("3-D Glasses")) {
-            is.setDurability((short) 50);
-        }
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
@@ -118,6 +113,11 @@ public class TARDISShapedRecipe {
             mapMeta.setMapId(map);
             is.setItemMeta(mapMeta);
         } else {
+            if (s.endsWith("Bow Tie") || s.equals("3-D Glasses")) {
+                Damageable damageable = (Damageable) im;
+                int damage = (s.endsWith("Bow Tie")) ? 75 : 50;
+                damageable.setDamage(damage);
+            }
             is.setItemMeta(im);
         }
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));

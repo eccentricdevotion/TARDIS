@@ -37,19 +37,19 @@ class TARDISMonster extends TARDISMob {
     private String displayName;
     private int size;
 
-    public boolean isAggressive() {
+    boolean isAggressive() {
         return aggressive;
     }
 
-    public void setAggressive(boolean aggressive) {
+    void setAggressive(boolean aggressive) {
         this.aggressive = aggressive;
     }
 
-    public int getAnger() {
+    int getAnger() {
         return anger;
     }
 
-    public void setAnger(int anger) {
+    void setAnger(int anger) {
         this.anger = anger;
     }
 
@@ -61,35 +61,35 @@ class TARDISMonster extends TARDISMob {
         this.charged = charged;
     }
 
-    public Profession getProfession() {
+    Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(Profession profession) {
+    void setProfession(Profession profession) {
         this.profession = profession;
     }
 
-    public EntityEquipment getEquipment() {
+    EntityEquipment getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(EntityEquipment equipment) {
+    void setEquipment(EntityEquipment equipment) {
         this.equipment = equipment;
     }
 
-    public BlockData getCarried() {
+    BlockData getCarried() {
         return carried;
     }
 
-    public void setCarried(BlockData carried) {
+    void setCarried(BlockData carried) {
         this.carried = carried;
     }
 
-    public EntityType getPassenger() {
+    EntityType getPassenger() {
         return passenger;
     }
 
-    public void setPassenger(EntityType passenger) {
+    void setPassenger(EntityType passenger) {
         this.passenger = passenger;
     }
 

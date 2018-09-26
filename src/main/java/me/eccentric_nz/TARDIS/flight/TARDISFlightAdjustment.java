@@ -41,7 +41,7 @@ class TARDISFlightAdjustment {
     private final TARDIS plugin;
     private final List<Integer> angles;
 
-    public TARDISFlightAdjustment(TARDIS plugin) {
+    TARDISFlightAdjustment(TARDIS plugin) {
         this.plugin = plugin;
         angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
     }

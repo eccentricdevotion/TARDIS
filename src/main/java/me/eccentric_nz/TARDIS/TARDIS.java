@@ -51,7 +51,6 @@ import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
@@ -119,7 +118,6 @@ public class TARDIS extends JavaPlugin {
     private TARDISShapelessRecipe incomposita;
     private TARDISUtils utils;
     private TARDISLocationGetters locationUtils;
-    private TARDISWalls tardisWalls;
     private TARDISWorldGuardUtils worldGuardUtils;
     private boolean hasVersion = false;
     private boolean tardisSpawn = false;
@@ -230,7 +228,6 @@ public class TARDIS extends JavaPlugin {
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setSeeds(getSeeds());
-            tardisWalls = new TARDISWalls();
             new TARDISConsoleLoader(this).addSchematics();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
@@ -562,7 +559,7 @@ public class TARDIS extends JavaPlugin {
         recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
         new TARDISRecipesUpdater(this, recipesConfig).addRecipes();
         condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
-        new TARDISCondensablesUpdater(this, condensablesConfig).checkCondensables();
+        new TARDISCondensablesUpdater(this).checkCondensables();
         customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
         kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
         achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
@@ -1057,10 +1054,6 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISChameleonPreset getPresets() {
         return presets;
-    }
-
-    public TARDISWalls getTardisWalls() {
-        return tardisWalls;
     }
 
     public TARDISShapedRecipe getFigura() {

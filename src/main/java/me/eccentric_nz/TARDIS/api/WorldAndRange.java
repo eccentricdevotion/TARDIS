@@ -29,7 +29,7 @@ public class WorldAndRange {
     private final int rangeX;
     private final int rangeZ;
 
-    public WorldAndRange(World w, int minX, int minZ, int rangeX, int rangeZ) {
+    WorldAndRange(World w, int minX, int minZ, int rangeX, int rangeZ) {
         this.w = w;
         this.minX = minX;
         this.minZ = minZ;
@@ -49,11 +49,11 @@ public class WorldAndRange {
         return minZ;
     }
 
-    public int getRangeX() {
+    int getRangeX() {
         return rangeX;
     }
 
-    public int getRangeZ() {
+    int getRangeZ() {
         return rangeZ;
     }
 }

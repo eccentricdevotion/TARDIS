@@ -33,11 +33,11 @@ class TARDISAssembleCommand {
 
     private final TARDIS plugin;
 
-    public TARDISAssembleCommand(TARDIS plugin) {
+    TARDISAssembleCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean assemble(CommandSender sender, String player) {
+    boolean assemble(CommandSender sender, String player) {
         if (player.equalsIgnoreCase("all")) {
             plugin.getTrackerKeeper().getDispersed().clear();
             plugin.getTrackerKeeper().getDispersedTARDII().clear();

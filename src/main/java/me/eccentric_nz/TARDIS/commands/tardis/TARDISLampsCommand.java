@@ -43,7 +43,7 @@ class TARDISLampsCommand {
 
     private final TARDIS plugin;
 
-    public TARDISLampsCommand(TARDIS plugin) {
+    TARDISLampsCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -54,7 +54,7 @@ class TARDISLampsCommand {
      * @return true if the TARDIS has not been updated, otherwise false
      */
 
-    public boolean addLampBlocks(Player owner) {
+    boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
             TARDISMessage.send(owner, "NO_PERMS");

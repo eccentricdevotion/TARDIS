@@ -79,10 +79,7 @@ class TARDISARSProcessor {
                         } else {
                             switch (end[l][x][z]) {
                                 case "SANDSTONE":
-                                    if (l == 0
-                                            || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE"))
-                                            || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE"))
-                                            || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
+                                    if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an anti-gravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
                                         slot.setChunk(c);
@@ -93,10 +90,7 @@ class TARDISARSProcessor {
                                     }
                                     break;
                                 case "MOSSY_COBBLESTONE":
-                                    if (l == 2
-                                            || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE"))
-                                            || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE"))
-                                            || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
+                                    if (l == 2 || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
                                         // only remember the top slot of a gravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
                                         slot.setChunk(c);
@@ -127,7 +121,7 @@ class TARDISARSProcessor {
         return jettison.size() > 0 || (changed.size() > 0 && !overlimit);
     }
 
-    public boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {
+    boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {
         if (changed.size() > 0) {
             int totalcost = 0;
             int recoveredcost = 0;

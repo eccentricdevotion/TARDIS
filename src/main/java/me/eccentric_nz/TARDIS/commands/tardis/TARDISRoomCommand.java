@@ -40,11 +40,11 @@ class TARDISRoomCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRoomCommand(TARDIS plugin) {
+    TARDISRoomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean startRoom(Player player, String[] args) {
+    boolean startRoom(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return false;

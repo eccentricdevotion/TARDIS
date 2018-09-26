@@ -32,11 +32,11 @@ class TARDISPruneCommand {
 
     private final TARDIS plugin;
 
-    public TARDISPruneCommand(TARDIS plugin) {
+    TARDISPruneCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean startPruning(CommandSender sender, String[] args) {
+    boolean startPruning(CommandSender sender, String[] args) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         if (args[1].equalsIgnoreCase("list") && args.length == 3) {
             TARDISMessage.send(sender, "PRUNE_INFO");
@@ -59,7 +59,7 @@ class TARDISPruneCommand {
         }
     }
 
-    public boolean listPrunes(CommandSender sender, String[] args) {
+    boolean listPrunes(CommandSender sender, String[] args) {
         int days = TARDISNumberParsers.parseInt(args[1]);
         TARDISPruner pruner = new TARDISPruner(plugin);
         pruner.list(sender, days);

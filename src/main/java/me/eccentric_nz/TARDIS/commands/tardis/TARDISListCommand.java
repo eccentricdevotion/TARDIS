@@ -31,11 +31,11 @@ class TARDISListCommand {
 
     private final TARDIS plugin;
 
-    public TARDISListCommand(TARDIS plugin) {
+    TARDISListCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doList(Player player, String[] args) {
+    boolean doList(Player player, String[] args) {
         if (player.hasPermission("tardis.list")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());

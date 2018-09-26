@@ -41,11 +41,11 @@ class TARDISHomeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHomeCommand(TARDIS plugin) {
+    TARDISHomeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setHome(Player player, String[] args) {
+    boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {

@@ -45,14 +45,14 @@ class TARDISCommandSetter {
 
     private final TARDIS plugin;
 
-    public TARDISCommandSetter(TARDIS plugin) {
+    TARDISCommandSetter(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     /**
      * Loads all the commands that the TARDIS uses.
      */
-    public void loadCommands() {
+    void loadCommands() {
         plugin.getCommand("tardis").setExecutor(new TARDISCommands(plugin));
         plugin.getCommand("tardis").setTabCompleter(new TARDISTabComplete(plugin));
         TARDISAdminCommands tardisAdminCommand = new TARDISAdminCommands(plugin);

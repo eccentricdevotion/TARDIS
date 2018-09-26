@@ -25,7 +25,6 @@ import java.util.UUID;
  */
 public class Sonic {
 
-    private final int sonicId;
     private final UUID uuid;
     private final boolean activated;
     private final ChatColor sonicType;
@@ -36,8 +35,7 @@ public class Sonic {
     private final boolean painter;
     private final boolean ignite;
 
-    public Sonic(int sonicId, UUID uuid, boolean activated, ChatColor sonicType, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite) {
-        this.sonicId = sonicId;
+    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite) {
         this.uuid = uuid;
         this.activated = activated;
         this.sonicType = sonicType;
@@ -47,10 +45,6 @@ public class Sonic {
         this.redstone = redstone;
         this.painter = painter;
         this.ignite = ignite;
-    }
-
-    public int getSonicId() {
-        return sonicId;
     }
 
     public UUID getUuid() {

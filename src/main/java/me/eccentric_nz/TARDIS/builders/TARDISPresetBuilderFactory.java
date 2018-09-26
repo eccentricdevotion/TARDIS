@@ -49,7 +49,7 @@ public class TARDISPresetBuilderFactory {
 
     private final TARDIS plugin;
     private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
-    public final List<PRESET> no_block_under_door;
+    final List<PRESET> no_block_under_door;
     private final List<PRESET> notSubmarinePresets;
     private final Random rand;
 
@@ -275,7 +275,7 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    public BlockFace getSkullDirection(COMPASS d) {
+    BlockFace getSkullDirection(COMPASS d) {
         BlockFace[] faces = face_map.get(d);
         return faces[rand.nextInt(5)];
     }

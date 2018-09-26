@@ -169,7 +169,7 @@ public class TARDISDoorListener {
      * @param d      the direction of the police box
      * @param enter  whether the pets are entering (true) or exiting (false)
      */
-    public void movePets(List<TARDISParrot> p, Location l, Player player, COMPASS d, boolean enter) {
+    void movePets(List<TARDISParrot> p, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -291,7 +291,7 @@ public class TARDISDoorListener {
      * @param d2 the direction the second door is facing
      * @return the angle needed to correct the yaw
      */
-    public float adjustYaw(COMPASS d1, COMPASS d2) {
+    float adjustYaw(COMPASS d1, COMPASS d2) {
         switch (d1) {
             case EAST:
                 return adjustYaw[0][d2.ordinal()];
@@ -443,7 +443,7 @@ public class TARDISDoorListener {
      *
      * @param u the UUID of the player to remove
      */
-    public void removeTraveller(UUID u) {
+    void removeTraveller(UUID u) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", u.toString());
         new QueryFactory(plugin).doSyncDelete("travellers", where);

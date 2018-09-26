@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISGazeboPreset extends TARDISPreset {
+class TARDISGazeboPreset extends TARDISPreset {
 
-    public TARDISGazeboPreset() {
+    TARDISGazeboPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:spruce_planks";

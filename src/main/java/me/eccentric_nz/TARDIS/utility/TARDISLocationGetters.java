@@ -171,17 +171,6 @@ public class TARDISLocationGetters {
     }
 
     /**
-     * Convert a pre TARDIS v2.3 location string to a v2.3 one.
-     *
-     * @param data an old location string retrieved from the database
-     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
-     */
-    public static String makeLocationStr(String data) {
-        String[] s = data.split(":");
-        return "Location{world=CraftWorld{name=" + s[0] + "},x=" + s[1] + ".0,y=" + s[2] + ".0,z=" + s[3] + ".0,pitch=0.0,yaw=0.0}";
-    }
-
-    /**
      * Create a TARDIS v2.3 location string from block coordinates.
      *
      * @param w the block's world

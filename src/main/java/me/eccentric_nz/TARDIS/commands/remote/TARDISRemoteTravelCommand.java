@@ -42,11 +42,11 @@ class TARDISRemoteTravelCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRemoteTravelCommand(TARDIS plugin) {
+    TARDISRemoteTravelCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
+    boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);

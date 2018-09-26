@@ -30,7 +30,7 @@ import java.util.Locale;
  */
 class TARDISFloorCommand {
 
-    public boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
+    boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
             TARDISMessage.send(player, "PREF_WALL", pref);

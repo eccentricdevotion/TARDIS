@@ -29,11 +29,11 @@ class TARDISHelpCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHelpCommand(TARDIS plugin) {
+    TARDISHelpCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean showHelp(CommandSender sender, String[] args) {
+    boolean showHelp(CommandSender sender, String[] args) {
         TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
         if (args.length == 1) {
             tch.getCommand("", sender);

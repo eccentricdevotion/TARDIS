@@ -43,13 +43,13 @@ class TARDISThemeProcessor {
     private Archive archive_next;
     private Archive archive_prev;
 
-    public TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
+    TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         qf = new QueryFactory(this.plugin);
     }
 
-    public void changeDesktop() {
+    void changeDesktop() {
         // get upgrade data
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         // get Archive if nescessary

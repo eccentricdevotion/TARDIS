@@ -53,11 +53,11 @@ class TARDISComehereCommand {
 
     private final TARDIS plugin;
 
-    public TARDISComehereCommand(TARDIS plugin) {
+    TARDISComehereCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doComeHere(Player player) {
+    boolean doComeHere(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
             // check they are a timelord
             UUID uuid = player.getUniqueId();

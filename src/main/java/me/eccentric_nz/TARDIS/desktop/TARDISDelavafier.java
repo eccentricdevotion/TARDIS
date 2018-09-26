@@ -36,15 +36,15 @@ class TARDISDelavafier {
 
     private final TARDIS plugin;
     private final UUID uuid;
+    private final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
     public static final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
-    public static final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
 
-    public TARDISDelavafier(TARDIS plugin, UUID uuid) {
+    TARDISDelavafier(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
     }
 
-    public void swap() {
+    void swap() {
         // calculate startx, starty, startz
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());

@@ -44,7 +44,7 @@ public class TARDISTakeoff {
         this.plugin = plugin;
     }
 
-    public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, int flight_mode) {
+    public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar) {
         Switch lever = (Switch) block.getBlockData();
         lever.setPowered(false);
         block.setBlockData(lever);

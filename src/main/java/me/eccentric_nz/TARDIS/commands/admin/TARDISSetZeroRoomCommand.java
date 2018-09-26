@@ -30,11 +30,11 @@ class TARDISSetZeroRoomCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetZeroRoomCommand(TARDIS plugin) {
+    TARDISSetZeroRoomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setConfigZero(CommandSender sender, String[] args) {
+    boolean setConfigZero(CommandSender sender, String[] args) {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {

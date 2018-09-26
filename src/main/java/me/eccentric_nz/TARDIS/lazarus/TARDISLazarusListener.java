@@ -41,7 +41,7 @@ import java.util.HashMap;
 public class TARDISLazarusListener implements Listener {
 
     private final TARDIS plugin;
-    public static final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
+    final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
 
     public TARDISLazarusListener(TARDIS plugin) {
         this.plugin = plugin;

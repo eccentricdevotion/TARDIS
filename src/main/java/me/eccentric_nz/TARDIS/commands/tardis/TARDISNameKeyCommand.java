@@ -33,11 +33,11 @@ class TARDISNameKeyCommand {
 
     private final TARDIS plugin;
 
-    public TARDISNameKeyCommand(TARDIS plugin) {
+    TARDISNameKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean nameKey(Player player, String[] args) {
+    boolean nameKey(Player player, String[] args) {
         // determine key item
         String key;
         HashMap<String, Object> where = new HashMap<>();

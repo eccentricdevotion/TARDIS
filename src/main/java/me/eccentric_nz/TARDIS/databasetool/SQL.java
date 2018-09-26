@@ -148,7 +148,7 @@ public class SQL {
 
     );
 
-    public static final List<String> INSERTS = Arrays.asList(
+    static final List<String> INSERTS = Arrays.asList(
             "INSERT INTO `%sachievements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES",
 
             "INSERT INTO `%sarched` (`uuid`, `arch_name`, `arch_time`) VALUES",
@@ -310,8 +310,8 @@ public class SQL {
 
     );
 
-    public static final String COMMENT = "--";
-    public static final String DUMP = "-- Dumping data for table ";
-    public static final String STRUCTURE = "-- Table structure for table ";
-    public static final String SEPARATOR = "-- --------------------------------------------------------";
+    static final String COMMENT = "--";
+    static final String DUMP = "-- Dumping data for table ";
+    static final String STRUCTURE = "-- Table structure for table ";
+    static final String SEPARATOR = "-- --------------------------------------------------------";
 }

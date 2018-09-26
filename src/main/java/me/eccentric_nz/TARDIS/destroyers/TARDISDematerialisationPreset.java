@@ -68,7 +68,7 @@ class TARDISDematerialisationPreset implements Runnable {
      * @param cham_id the chameleon block id for the police box
      * @param loops   the number of loops to run
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
+    TARDISDematerialisationPreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
         this.plugin = plugin;
         this.dd = dd;
         this.loops = loops;

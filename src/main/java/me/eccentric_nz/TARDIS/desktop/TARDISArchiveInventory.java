@@ -42,7 +42,7 @@ class TARDISArchiveInventory {
     private final TARDIS plugin;
     private final Player player;
 
-    public TARDISArchiveInventory(TARDIS plugin, Player player) {
+    TARDISArchiveInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         menu = getItemStack();
@@ -119,7 +119,7 @@ class TARDISArchiveInventory {
         return stack;
     }
 
-    public ItemStack[] getArchives() {
+    ItemStack[] getArchives() {
         return menu;
     }
 }

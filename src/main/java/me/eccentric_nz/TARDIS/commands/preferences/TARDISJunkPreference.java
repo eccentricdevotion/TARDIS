@@ -36,7 +36,7 @@ class TARDISJunkPreference {
 
     private final TARDIS plugin;
 
-    public TARDISJunkPreference(TARDIS plugin) {
+    TARDISJunkPreference(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -53,7 +53,7 @@ public class TARDISMob {
         return catType;
     }
 
-    public void setCatType(Type catType) {
+    void setCatType(Type catType) {
         this.catType = catType;
     }
 
@@ -77,7 +77,7 @@ public class TARDISMob {
         return sitting;
     }
 
-    public void setSitting(boolean sitting) {
+    void setSitting(boolean sitting) {
         this.sitting = sitting;
     }
 

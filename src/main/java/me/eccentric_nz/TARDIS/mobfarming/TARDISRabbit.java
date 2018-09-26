@@ -31,11 +31,11 @@ class TARDISRabbit extends TARDISMob {
 
     private Rabbit.Type bunnyType;
 
-    public Rabbit.Type getBunnyType() {
+    Rabbit.Type getBunnyType() {
         return bunnyType;
     }
 
-    public void setBunnyType(Rabbit.Type bunnyType) {
+    void setBunnyType(Rabbit.Type bunnyType) {
         this.bunnyType = bunnyType;
     }
 }

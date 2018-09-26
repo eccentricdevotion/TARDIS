@@ -35,7 +35,7 @@ class TARDISSetKeyCommand {
     private final TARDIS plugin;
     private final List<Material> keys = new ArrayList<>();
 
-    public TARDISSetKeyCommand(TARDIS plugin) {
+    TARDISSetKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
         plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
             try {
@@ -46,7 +46,7 @@ class TARDISSetKeyCommand {
         });
     }
 
-    public boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
+    boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
             TARDISMessage.send(player, "KEY_NEED");
             return false;

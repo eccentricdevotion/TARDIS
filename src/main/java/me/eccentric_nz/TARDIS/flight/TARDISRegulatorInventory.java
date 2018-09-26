@@ -31,7 +31,7 @@ class TARDISRegulatorInventory {
 
     private final ItemStack[] regulator;
 
-    public TARDISRegulatorInventory() {
+    TARDISRegulatorInventory() {
         regulator = getItemStack();
     }
 

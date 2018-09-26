@@ -47,11 +47,11 @@ class TARDISArchiveCommand {
     private final TARDIS plugin;
     private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update");
 
-    public TARDISArchiveCommand(TARDIS plugin) {
+    TARDISArchiveCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean zip(Player player, String[] args) {
+    boolean zip(Player player, String[] args) {
         if (!player.hasPermission("tardis.archive")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;

@@ -58,11 +58,11 @@ class TARDISBuildAbandoned {
     private final List<Block> lampblocks = new ArrayList<>();
     private Block postBedrock = null;
 
-    public TARDISBuildAbandoned(TARDIS plugin) {
+    TARDISBuildAbandoned(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void buildOuter(BuildData bd, PRESET preset) {
+    void buildOuter(BuildData bd, PRESET preset) {
         plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
         TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), ADAPTION.OFF, 3);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);

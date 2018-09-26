@@ -22,6 +22,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,9 +32,16 @@ public class TARDISRoomTabComplete extends TARDISCompleter implements TabComplet
 
     private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
+    private final ArrayList<String> ROOM_SUBS = new ArrayList<>();
 
     public TARDISRoomTabComplete(TARDIS plugin) {
         this.plugin = plugin;
+        // rooms - only add if enabled in the config
+        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
+                ROOM_SUBS.add(r);
+            }
+        });
     }
 
     @Override
@@ -46,7 +54,7 @@ public class TARDISRoomTabComplete extends TARDISCompleter implements TabComplet
         } else if (args.length == 2) {
             String sub = args[0];
             if (sub.equals("required")) {
-                return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
+                return partial(lastArg, ROOM_SUBS);
             }
         }
         return ImmutableList.of();

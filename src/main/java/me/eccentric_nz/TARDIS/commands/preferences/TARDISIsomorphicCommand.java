@@ -32,11 +32,11 @@ class TARDISIsomorphicCommand {
 
     private final TARDIS plugin;
 
-    public TARDISIsomorphicCommand(TARDIS plugin) {
+    TARDISIsomorphicCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean toggleIsomorphicControls(Player player, String[] args, QueryFactory qf) {
+    boolean toggleIsomorphicControls(Player player, QueryFactory qf) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

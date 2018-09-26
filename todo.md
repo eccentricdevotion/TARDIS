@@ -5,6 +5,7 @@
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
 
 ## TARDIS data pack

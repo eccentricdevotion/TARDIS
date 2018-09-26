@@ -32,11 +32,11 @@ class TARDISSignColourCommand {
     private final TARDIS plugin;
     private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-    public TARDISSignColourCommand(TARDIS plugin) {
+    TARDISSignColourCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setColour(CommandSender sender, String[] args) {
+    boolean setColour(CommandSender sender, String[] args) {
         String colour = args[1].toUpperCase(Locale.ENGLISH);
         if (!COLOURS.contains(colour)) {
             TARDISMessage.send(sender, "ARG_COLOUR");

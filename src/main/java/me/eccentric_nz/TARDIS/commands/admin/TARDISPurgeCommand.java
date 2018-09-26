@@ -32,11 +32,11 @@ class TARDISPurgeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISPurgeCommand(TARDIS plugin) {
+    TARDISPurgeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean clearAll(CommandSender sender, String[] args) {
+    boolean clearAll(CommandSender sender, String[] args) {
         // Look up this player's UUID
         UUID uuid;
         if (args[1].toLowerCase(Locale.ENGLISH).equals("junk")) {

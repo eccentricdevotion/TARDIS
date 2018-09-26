@@ -36,19 +36,17 @@ import java.util.List;
  */
 public class TARDISTownyChecker {
 
-    private Towny towny;
+    private final Towny towny;
     private TownyRegion tr;
 
-    public TARDISTownyChecker(TARDIS plugin, boolean onServer) {
-        if (onServer) {
-            towny = (Towny) plugin.getPM().getPlugin("Towny");
-            // get the respect_towny setting
-            try {
-                tr = TownyRegion.valueOf(plugin.getConfig().getString("preferences.respect_towny"));
-            } catch (IllegalArgumentException e) {
-                plugin.debug("Could not get TownyRegion from config!");
-                tr = TownyRegion.nation;
-            }
+    public TARDISTownyChecker(TARDIS plugin) {
+        towny = (Towny) plugin.getPM().getPlugin("Towny");
+        // get the respect_towny setting
+        try {
+            tr = TownyRegion.valueOf(plugin.getConfig().getString("preferences.respect_towny"));
+        } catch (IllegalArgumentException e) {
+            plugin.debug("Could not get TownyRegion from config!");
+            tr = TownyRegion.nation;
         }
     }
 

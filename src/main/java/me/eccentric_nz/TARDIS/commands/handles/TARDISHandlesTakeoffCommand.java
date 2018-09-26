@@ -94,13 +94,11 @@ class TARDISHandlesTakeoffCommand {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                         boolean beac_on = true;
                         boolean bar = false;
-                        int flight_mode = 1;
                         if (rsp.resultSet()) {
                             beac_on = rsp.isBeaconOn();
-                            flight_mode = rsp.getFlightMode();
                             bar = rsp.isTravelbarOn();
                         }
-                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, flight_mode);
+                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar);
                     } else {
                         TARDISMessage.handlesSend(player, "HANDBRAKE_OFF_ERR");
                     }

@@ -29,7 +29,7 @@ import java.util.Locale;
  */
 class TARDISHadsTypeCommand {
 
-    public boolean setHadsPref(Player player, String[] args, QueryFactory qf) {
+    boolean setHadsPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
             TARDISMessage.send(player, "HADS_NEED");
             return false;

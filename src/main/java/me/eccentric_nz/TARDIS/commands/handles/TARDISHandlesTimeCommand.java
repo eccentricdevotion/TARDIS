@@ -31,11 +31,11 @@ class TARDISHandlesTimeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHandlesTimeCommand(TARDIS plugin) {
+    TARDISHandlesTimeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean sayTime(Player player) {
+    boolean sayTime(Player player) {
         long minecraftTime = player.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(minecraftTime);
         // get current server time (in a nice format)
@@ -49,7 +49,7 @@ class TARDISHandlesTimeCommand {
         return true;
     }
 
-    private static String parseTime(long time) {
+    private String parseTime(long time) {
         long hours = time / 1000 + 6;
         long minutes = (time % 1000) * 60 / 1000;
         String ampm = "AM";

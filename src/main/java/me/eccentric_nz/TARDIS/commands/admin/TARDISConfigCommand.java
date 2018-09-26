@@ -34,7 +34,7 @@ class TARDISConfigCommand {
     private final TARDIS plugin;
     private final List<String> sections = new ArrayList<>();
 
-    public TARDISConfigCommand(TARDIS plugin) {
+    TARDISConfigCommand(TARDIS plugin) {
         this.plugin = plugin;
         sections.add("storage");
         sections.add("creation");
@@ -45,7 +45,7 @@ class TARDISConfigCommand {
         sections.add("growth");
     }
 
-    public boolean showConfigOptions(CommandSender sender, String[] args) {
+    boolean showConfigOptions(CommandSender sender, String[] args) {
         String section = args[1].toLowerCase(Locale.ENGLISH);
         TARDISMessage.send(sender, "CONFIG");
         if (sections.contains(section)) {

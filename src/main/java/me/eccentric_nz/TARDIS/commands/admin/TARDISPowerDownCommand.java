@@ -29,11 +29,11 @@ class TARDISPowerDownCommand {
 
     private final TARDIS plugin;
 
-    public TARDISPowerDownCommand(TARDIS plugin) {
+    TARDISPowerDownCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean togglePowerDown(CommandSender sender, String[] args) {
+    boolean togglePowerDown(CommandSender sender, String[] args) {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {

@@ -29,11 +29,11 @@ class TARDISPig extends TARDISMob {
 
     private boolean saddled;
 
-    public boolean isSaddled() {
+    boolean isSaddled() {
         return saddled;
     }
 
-    public void setSaddled(boolean saddled) {
+    void setSaddled(boolean saddled) {
         this.saddled = saddled;
     }
 }

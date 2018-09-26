@@ -37,54 +37,52 @@ class TARDISVillager extends TARDISMob {
     /**
      * Data storage class for TARDIS villagers.
      */
-    public TARDISVillager() {
-    }
 
-    public Profession getProfession() {
+    Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(Profession profession) {
+    void setProfession(Profession profession) {
         this.profession = profession;
     }
 
-    public List<MerchantRecipe> getTrades() {
+    List<MerchantRecipe> getTrades() {
         return trades;
     }
 
-    public void setTrades(List<MerchantRecipe> trades) {
+    void setTrades(List<MerchantRecipe> trades) {
         this.trades = trades;
     }
 
-    public Career getCareer() {
+    Career getCareer() {
         return career;
     }
 
-    public void setCareer(Career career) {
+    void setCareer(Career career) {
         this.career = career;
     }
 
-    public int getCareerLevel() {
+    int getCareerLevel() {
         return careerLevel;
     }
 
-    public void setCareerLevel(int careerLevel) {
+    void setCareerLevel(int careerLevel) {
         this.careerLevel = careerLevel;
     }
 
-    public boolean isWilling() {
+    boolean isWilling() {
         return willing;
     }
 
-    public void setWilling(boolean willing) {
+    void setWilling(boolean willing) {
         this.willing = willing;
     }
 
-    public int getRiches() {
+    int getRiches() {
         return riches;
     }
 
-    public void setRiches(int riches) {
+    void setRiches(int riches) {
         this.riches = riches;
     }
 }

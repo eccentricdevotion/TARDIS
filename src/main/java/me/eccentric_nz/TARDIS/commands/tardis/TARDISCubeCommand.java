@@ -31,11 +31,11 @@ class TARDISCubeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISCubeCommand(TARDIS plugin) {
+    TARDISCubeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean whoHasCube(Player player) {
+    boolean whoHasCube(Player player) {
         // check they have TARDIS
         if (player.hasPermission("tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);

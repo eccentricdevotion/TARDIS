@@ -33,7 +33,7 @@ class TARDISSetSizeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetSizeCommand(TARDIS plugin) {
+    TARDISSetSizeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

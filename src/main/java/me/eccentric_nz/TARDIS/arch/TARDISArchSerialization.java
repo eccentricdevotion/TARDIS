@@ -30,7 +30,7 @@ import java.io.IOException;
  */
 class TARDISArchSerialization {
 
-    public static String toDatabase(ItemStack[] inventory) {
+    static String toDatabase(ItemStack[] inventory) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             // Write the size of the inventory
@@ -49,7 +49,7 @@ class TARDISArchSerialization {
         }
     }
 
-    public static ItemStack[] fromDatabase(String data) throws IOException {
+    static ItemStack[] fromDatabase(String data) throws IOException {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             ItemStack[] inventory;

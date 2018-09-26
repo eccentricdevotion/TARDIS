@@ -28,11 +28,11 @@ class TARDISVersionCommand {
 
     private final TARDIS plugin;
 
-    public TARDISVersionCommand(TARDIS plugin) {
+    TARDISVersionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean displayVersion(CommandSender sender) {
+    boolean displayVersion(CommandSender sender) {
         String version = plugin.getPM().getPlugin("TARDIS").getDescription().getVersion();
         String cb = Bukkit.getVersion();
         sender.sendMessage(plugin.getPluginName() + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);

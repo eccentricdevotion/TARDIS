@@ -33,7 +33,7 @@ public class TARDISData {
     private final String abandoned;
     private final List<String> occupants;
 
-    public TARDISData(Location location, String console, String chameleon, String powered, String siege, String abandoned, List<String> occupants) {
+    TARDISData(Location location, String console, String chameleon, String powered, String siege, String abandoned, List<String> occupants) {
         this.location = location;
         this.console = console;
         this.chameleon = chameleon;

@@ -32,11 +32,11 @@ class TARDISSetLampCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetLampCommand(TARDIS plugin) {
+    TARDISSetLampCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setLampPref(Player player, String[] args, QueryFactory qf) {
+    boolean setLampPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
             TARDISMessage.send(player, "LAMP_NEED");
             return false;

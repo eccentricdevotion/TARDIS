@@ -43,11 +43,11 @@ public class TARDISBlockScannerData {
         this.count = count;
     }
 
-    public int getVolume() {
+    int getVolume() {
         return (int) volume;
     }
 
-    public void setVolume(float volume) {
+    void setVolume(float volume) {
         this.volume = volume;
     }
 

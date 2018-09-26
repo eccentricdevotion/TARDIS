@@ -16,11 +16,11 @@ public class TARDISFish extends TARDISMob {
         this.pattern = pattern;
     }
 
-    public DyeColor getPatternColour() {
+    DyeColor getPatternColour() {
         return patternColour;
     }
 
-    public void setPatternColour(DyeColor patternColour) {
+    void setPatternColour(DyeColor patternColour) {
         this.patternColour = patternColour;
     }
 }

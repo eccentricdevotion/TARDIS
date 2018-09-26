@@ -55,7 +55,7 @@ public class TARDISBiomeReaderListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        if (plugin.getGeneralKeeper().getInteractables().contains(event.getClickedBlock().getType())) {
+        if (event.getClickedBlock().getType().isInteractable()) {
             return;
         }
         Player player = event.getPlayer();

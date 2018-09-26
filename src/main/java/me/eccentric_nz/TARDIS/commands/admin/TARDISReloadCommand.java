@@ -28,11 +28,11 @@ class TARDISReloadCommand {
 
     private final TARDIS plugin;
 
-    public TARDISReloadCommand(TARDIS plugin) {
+    TARDISReloadCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean reloadConfig(CommandSender sender) {
+    boolean reloadConfig(CommandSender sender) {
         plugin.reloadConfig();
         // check worlds
         TARDISConfiguration tc = new TARDISConfiguration(plugin);

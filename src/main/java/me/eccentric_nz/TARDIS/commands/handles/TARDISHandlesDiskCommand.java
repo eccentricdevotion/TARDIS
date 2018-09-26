@@ -33,11 +33,11 @@ class TARDISHandlesDiskCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHandlesDiskCommand(TARDIS plugin) {
+    TARDISHandlesDiskCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean renameDisk(Player player, String[] args) {
+    boolean renameDisk(Player player, String[] args) {
         // check perms
         if (!player.hasPermission("tardis.handles.program")) {
             TARDISMessage.send(player, "NO_PERMS");

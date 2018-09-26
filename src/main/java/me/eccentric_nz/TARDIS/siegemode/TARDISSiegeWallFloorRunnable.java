@@ -65,13 +65,12 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
     private Material floor_type;
     private Material siege_wall_type;
     private Material siege_floor_type;
-    byte wall_data, floor_data, siege_wall_data, siege_floor_data;
     private final QueryFactory qf;
     private Player player;
     private int taskID;
     private Archive archive;
 
-    public TARDISSiegeWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean toSiege) {
+    TARDISSiegeWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean toSiege) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;

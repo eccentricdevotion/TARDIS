@@ -42,7 +42,7 @@ class TARDISAddRegionsCommand {
     private WorldGuardPlugin wg;
     private final String prefix;
 
-    public TARDISAddRegionsCommand(TARDIS plugin) {
+    TARDISAddRegionsCommand(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         if (plugin.isWorldGuardOnServer()) {
@@ -50,7 +50,7 @@ class TARDISAddRegionsCommand {
         }
     }
 
-    public boolean doCheck(CommandSender sender) {
+    boolean doCheck(CommandSender sender) {
         if (!plugin.isWorldGuardOnServer()) {
             sender.sendMessage(plugin.getPluginName() + "WorldGuard is not enabled on this server!");
             return true;

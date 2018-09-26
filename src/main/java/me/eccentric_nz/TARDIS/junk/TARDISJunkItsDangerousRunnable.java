@@ -41,7 +41,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
     private int c = 0;
     private final Lightable lightable = (Lightable) Material.REDSTONE_TORCH.createBlockData();
 
-    public TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
+    TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
         this.plugin = plugin;
         t = l.clone().add(0.0d, 2.0d, -1.0d).getBlock();
         minX = l.getBlockX() - 3;

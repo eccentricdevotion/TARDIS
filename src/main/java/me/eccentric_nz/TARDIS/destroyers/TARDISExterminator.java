@@ -54,7 +54,7 @@ public class TARDISExterminator {
         this.plugin = plugin;
     }
 
-    public boolean exterminate(int id) {
+    boolean exterminate(int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);

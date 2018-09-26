@@ -31,7 +31,7 @@ import java.util.List;
  */
 class TARDISEPSMessageCommand {
 
-    public boolean setMessage(Player player, String[] args, QueryFactory qf) {
+    boolean setMessage(Player player, String[] args, QueryFactory qf) {
         String message;
         int count = args.length;
         ItemStack bq = player.getInventory().getItemInMainHand();

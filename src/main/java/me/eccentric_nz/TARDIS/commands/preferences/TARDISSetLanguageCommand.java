@@ -31,7 +31,7 @@ import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.uc
  */
 class TARDISSetLanguageCommand {
 
-    public boolean setLanguagePref(Player player, String[] args, QueryFactory qf) {
+    boolean setLanguagePref(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
             TARDISMessage.send(player, "PREF_NEED", pref);

@@ -33,11 +33,11 @@ class TARDISSetRespectCommand {
     private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
 
-    public TARDISSetRespectCommand(TARDIS plugin) {
+    TARDISSetRespectCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setRegion(CommandSender sender, String[] args) {
+    boolean setRegion(CommandSender sender, String[] args) {
         String region = args[1].toLowerCase(Locale.ENGLISH);
         if (!regions.contains(region)) {
             TARDISMessage.send(sender, "ARG_TOWNY");

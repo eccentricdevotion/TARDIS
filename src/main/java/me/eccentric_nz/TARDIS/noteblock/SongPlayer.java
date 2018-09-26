@@ -24,22 +24,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SongPlayer {
+class SongPlayer {
 
     private final Song song;
     private boolean playing = false;
     private short tick = -1;
     private final ArrayList<UUID> playerList = new ArrayList<>();
     private boolean destroyed = false;
-    private Thread playerThread;
 
-    public SongPlayer(Song song) {
+    SongPlayer(Song song) {
         this.song = song;
         createThread();
     }
 
     private void createThread() {
-        playerThread = new Thread(() -> {
+        Thread playerThread = new Thread(() -> {
             while (!destroyed) {
                 long startTime = System.currentTimeMillis();
                 synchronized (SongPlayer.this) {
@@ -49,8 +48,6 @@ public class SongPlayer {
                         if (tick > song.getLength()) {
                             playing = false;
                             tick = -1;
-                            SongEndEvent event = new SongEndEvent(SongPlayer.this);
-                            Bukkit.getPluginManager().callEvent(event);
                             destroy();
                             return;
                         }
@@ -76,7 +73,7 @@ public class SongPlayer {
         playerThread.start();
     }
 
-    public void addPlayer(Player p) {
+    void addPlayer(Player p) {
         synchronized (this) {
             if (!playerList.contains(p.getUniqueId())) {
                 playerList.add(p.getUniqueId());
@@ -101,43 +98,17 @@ public class SongPlayer {
 
     private void destroy() {
         synchronized (this) {
-            SongDestroyingEvent event = new SongDestroyingEvent(this);
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled()) {
-                return;
-            }
             destroyed = true;
             playing = false;
             setTick((short) -1);
         }
     }
 
-    public void setPlaying(boolean playing) {
+    void setPlaying(boolean playing) {
         this.playing = playing;
-        if (!playing) {
-            SongStoppedEvent event = new SongStoppedEvent(this);
-            Bukkit.getPluginManager().callEvent(event);
-        }
     }
 
     private void setTick(short tick) {
         this.tick = tick;
-    }
-
-    public void removePlayer(Player p) {
-        synchronized (this) {
-            playerList.remove(p.getUniqueId());
-            if (NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()) == null) {
-                return;
-            }
-            List<SongPlayer> songs = new ArrayList<>(NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()));
-            songs.remove(this);
-            NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
-            if ((playerList.isEmpty())) {
-                SongEndEvent event = new SongEndEvent(this);
-                Bukkit.getPluginManager().callEvent(event);
-                destroy();
-            }
-        }
     }
 }

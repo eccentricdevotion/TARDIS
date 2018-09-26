@@ -28,58 +28,22 @@ import java.util.List;
  */
 public class TARDISChatPaginator {
 
-    public static final int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = 55; // Will never wrap, even with the largest characters
-    public static final int AVERAGE_CHAT_PAGE_WIDTH = 65; // Will typically not wrap using an average character distribution
-    public static final int UNBOUNDED_PAGE_WIDTH = Integer.MAX_VALUE;
-    public static final int OPEN_CHAT_PAGE_HEIGHT = 20; // The height of an expanded chat window
-    private static final int CLOSED_CHAT_PAGE_HEIGHT = 10; // The height of the default chat window
-    public static final int UNBOUNDED_PAGE_HEIGHT = Integer.MAX_VALUE;
-
-    /**
-     * Breaks a raw string up into pages using the default width and height.
-     *
-     * @param unpaginatedString The raw string to break.
-     * @param pageNumber        The page number to fetch.
-     * @return A single chat page.
-     */
-    public static ChatPage paginate(String unpaginatedString, int pageNumber) {
-        return paginate(unpaginatedString, pageNumber, GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH, CLOSED_CHAT_PAGE_HEIGHT);
-    }
-
-    /**
-     * Breaks a raw string up into pages using a provided width and height.
-     *
-     * @param unpaginatedString The raw string to break.
-     * @param pageNumber        The page number to fetch.
-     * @param lineLength        The desired width of a chat line.
-     * @param pageHeight        The desired number of lines in a page.
-     * @return A single chat page.
-     */
-    private static ChatPage paginate(String unpaginatedString, int pageNumber, int lineLength, int pageHeight) {
-        String[] lines = wordWrap(unpaginatedString, lineLength);
-        int totalPages = lines.length / pageHeight + (lines.length % pageHeight == 0 ? 0 : 1);
-        int actualPageNumber = pageNumber <= totalPages ? pageNumber : totalPages;
-        int from = (actualPageNumber - 1) * pageHeight;
-        int to = from + pageHeight <= lines.length ? from + pageHeight : lines.length;
-        String[] selectedLines = Arrays.copyOfRange(lines, from, to);
-        return new ChatPage(selectedLines, actualPageNumber, totalPages);
-    }
+    static final int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = 55; // Will never wrap, even with the largest characters
 
     /**
      * Breaks a raw string up into a series of lines. Words are wrapped using spaces as decimeters and the newline
      * character is respected.
      *
-     * @param rawString  The raw string to break.
-     * @param lineLength The length of a line of text.
+     * @param rawString The raw string to break.
      * @return An array of word-wrapped lines.
      */
-    public static String[] wordWrap(String rawString, int lineLength) {
+    static String[] wordWrap(String rawString) {
         // A null string is a single line
         if (rawString == null) {
             return new String[]{""};
         }
         // A string shorter than the lineWidth is a single line
-        if (rawString.length() <= lineLength && !rawString.contains("\n")) {
+        if (rawString.length() <= GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH && !rawString.contains("\n")) {
             return new String[]{rawString};
         }
         char[] rawChars = (rawString + ' ').toCharArray(); // add a trailing space to trigger pagination
@@ -97,10 +61,10 @@ public class TARDISChatPaginator {
                 continue;
             }
             if (c == ' ' || c == '\n') {
-                if (line.length() == 0 && word.length() - lineColorChars > lineLength) { // special case: extremely long word begins a line
-                    lines.addAll(Arrays.asList(word.toString().split("(?<=\\G.{" + lineLength + "})")));
-                } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > lineLength) { // Line too long...break the line
-                    for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
+                if (line.length() == 0 && word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // special case: extremely long word begins a line
+                    lines.addAll(Arrays.asList(word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")));
+                } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // Line too long...break the line
+                    for (String partialWord : word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")) {
                         lines.add(line.toString());
                         line = new StringBuilder(partialWord);
                     }

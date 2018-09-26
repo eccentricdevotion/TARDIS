@@ -37,7 +37,7 @@ public class TARDISArchInventory {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final String prefix = TARDIS.plugin.getPrefix();
 
-    public void switchInventories(Player p, int arch) {
+    void switchInventories(Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
         String inv = TARDISArchSerialization.toDatabase(p.getInventory().getContents());

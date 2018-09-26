@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISColdTaigaPreset extends TARDISPreset {
+class TARDISColdTaigaPreset extends TARDISPreset {
 
-    public TARDISColdTaigaPreset() {
+    TARDISColdTaigaPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:spruce_log[axis=y]";

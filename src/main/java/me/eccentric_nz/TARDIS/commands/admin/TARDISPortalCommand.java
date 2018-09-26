@@ -36,12 +36,12 @@ class TARDISPortalCommand {
     private Statement statement = null;
     private final String prefix;
 
-    public TARDISPortalCommand(TARDIS plugin) {
+    TARDISPortalCommand(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean clearAll(CommandSender sender) {
+    boolean clearAll(CommandSender sender) {
         // clear all portals on the server
         plugin.getTrackerKeeper().getPortals().clear();
         // stop tracking players

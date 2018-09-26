@@ -34,7 +34,7 @@ class TARDISDispersalUpdater {
     private final Connection connection = service.getConnection();
     private final String prefix;
 
-    public TARDISDispersalUpdater(TARDIS plugin) {
+    TARDISDispersalUpdater(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -42,7 +42,7 @@ class TARDISDispersalUpdater {
     /**
      * Convert pre-TARDIS v2.3 controls to the new system.
      */
-    public void updateTardis_ids() {
+    void updateTardis_ids() {
         int i = 0;
         Statement statement = null;
         ResultSet rs = null;

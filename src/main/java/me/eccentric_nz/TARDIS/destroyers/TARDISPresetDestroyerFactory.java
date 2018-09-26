@@ -35,7 +35,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,7 +50,6 @@ import java.util.HashMap;
 public class TARDISPresetDestroyerFactory {
 
     private final TARDIS plugin;
-    private final BlockData AIR = TARDISConstants.AIR;
 
     public TARDISPresetDestroyerFactory(TARDIS plugin) {
         this.plugin = plugin;

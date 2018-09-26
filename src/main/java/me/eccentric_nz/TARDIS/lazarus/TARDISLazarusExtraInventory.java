@@ -39,7 +39,7 @@ class TARDISLazarusExtraInventory {
     private final TARDIS plugin;
     private final List<Material> disguises = new ArrayList<>();
 
-    public TARDISLazarusExtraInventory(TARDIS plugin) {
+    TARDISLazarusExtraInventory(TARDIS plugin) {
         this.plugin = plugin;
         disguises.add(Material.COD_SPAWN_EGG);
         disguises.add(Material.PUFFERFISH_SPAWN_EGG);

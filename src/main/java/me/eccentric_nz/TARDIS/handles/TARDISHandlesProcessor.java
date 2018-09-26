@@ -109,7 +109,7 @@ public class TARDISHandlesProcessor {
         }
     }
 
-    public void processCommand(int pos) {
+    void processCommand(int pos) {
         for (int i = pos; i < 36; i++) {
             ItemStack is = program.getInventory()[i];
             if (is != null) {
@@ -568,7 +568,7 @@ public class TARDISHandlesProcessor {
         }
     }
 
-    public void processArtronCommand(int pos) {
+    void processArtronCommand(int pos) {
         boolean first = true;
         boolean process;
         TARDISHandlesBlock comparison = null;

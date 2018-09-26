@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISLighthousePreset extends TARDISPreset {
+class TARDISLighthousePreset extends TARDISPreset {
 
-    public TARDISLighthousePreset() {
+    TARDISLighthousePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:red_terracotta";

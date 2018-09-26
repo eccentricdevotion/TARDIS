@@ -48,7 +48,7 @@ public class TARDISDatabaseConnection {
         connection.setAutoCommit(true);
     }
 
-    public void setIsMySQL(boolean isMySQL) {
+    void setIsMySQL(boolean isMySQL) {
         this.isMySQL = isMySQL;
     }
 

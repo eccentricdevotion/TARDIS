@@ -31,7 +31,7 @@ class TARDISChameleonHelpGUI {
     private final TARDIS plugin;
     private final ItemStack[] help;
 
-    public TARDISChameleonHelpGUI(TARDIS plugin) {
+    TARDISChameleonHelpGUI(TARDIS plugin) {
         this.plugin = plugin;
         help = getItemStack();
     }
@@ -147,14 +147,7 @@ class TARDISChameleonHelpGUI {
         ou.setDisplayName("4");
         f.setItemMeta(ou);
 
-        return new ItemStack[]{
-                back, null, null, info, info2, null, null, null, null,
-                null, null, null, null, null, null, null, column, null,
-                null, grid, null, null, null, null, null, f, null,
-                three, four, five, null, null, null, null, t, null,
-                two, nine, six, null, example, null, null, w, null,
-                one, eight, seven, null, null, null, null, o, null
-        };
+        return new ItemStack[]{back, null, null, info, info2, null, null, null, null, null, null, null, null, null, null, null, column, null, null, grid, null, null, null, null, null, f, null, three, four, five, null, null, null, null, t, null, two, nine, six, null, example, null, null, w, null, one, eight, seven, null, null, null, null, o, null};
     }
 
     public ItemStack[] getHelp() {

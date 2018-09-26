@@ -35,11 +35,11 @@ class TARDISSetBooleanCommand {
     private final TARDIS plugin;
     private final List<String> require_restart = Arrays.asList("use_block_stack", "use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles", "switch_resource_packs", "handles");
 
-    public TARDISSetBooleanCommand(TARDIS plugin) {
+    TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setConfigBool(CommandSender sender, String[] args, String section) {
+    boolean setConfigBool(CommandSender sender, String[] args, String section) {
         String tolower = args[0].toLowerCase(Locale.ENGLISH);
         String first = (section.isEmpty()) ? tolower : section + "." + tolower;
         // check they typed true of false

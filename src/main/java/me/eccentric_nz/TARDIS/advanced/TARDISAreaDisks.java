@@ -41,7 +41,7 @@ class TARDISAreaDisks {
 
     private final TARDIS plugin;
 
-    public TARDISAreaDisks(TARDIS plugin) {
+    TARDISAreaDisks(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -52,7 +52,7 @@ class TARDISAreaDisks {
      * @param p the player to create the array for
      * @return an array of item stacks
      */
-    public ItemStack[] makeDisks(Player p) {
+    ItemStack[] makeDisks(Player p) {
 
         List<ItemStack> areas = new ArrayList<>();
         // get the areas this player has access to
@@ -96,7 +96,7 @@ class TARDISAreaDisks {
      * @param p the player to check for
      * @return a serialized String
      */
-    public String checkDisksForNewAreas(Player p) {
+    String checkDisksForNewAreas(Player p) {
         String serialized = "";
         // get the player's storage record
         HashMap<String, Object> where = new HashMap<>();
@@ -182,7 +182,7 @@ class TARDISAreaDisks {
      * @param inv the inventory to search
      * @return the empty slot number or -1 if not found
      */
-    public int getNextEmptySlot(Inventory inv) {
+    int getNextEmptySlot(Inventory inv) {
         for (int i = 27; i < 54; i++) {
             if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
                 return i;

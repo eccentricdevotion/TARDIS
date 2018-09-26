@@ -27,11 +27,11 @@ class TARDISAbortCommand {
 
     private final TARDIS plugin;
 
-    public TARDISAbortCommand(TARDIS plugin) {
+    TARDISAbortCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doAbort(Player player, String[] args) {
+    boolean doAbort(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "ROOM_ABORT");
             return false;

@@ -75,10 +75,6 @@ public class CONSOLES {
         return BY_NAMES;
     }
 
-    public static HashMap<String, SCHEMATIC> getBY_PERMS() {
-        return BY_PERMS;
-    }
-
     public static HashMap<String, SCHEMATIC> getBY_MATERIALS() {
         return BY_MATERIALS;
     }

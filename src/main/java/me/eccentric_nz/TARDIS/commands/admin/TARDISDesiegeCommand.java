@@ -37,7 +37,7 @@ class TARDISDesiegeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISDesiegeCommand(TARDIS plugin) {
+    TARDISDesiegeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

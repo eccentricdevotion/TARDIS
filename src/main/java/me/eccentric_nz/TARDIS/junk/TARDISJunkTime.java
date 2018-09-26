@@ -27,11 +27,11 @@ class TARDISJunkTime {
 
     private final TARDIS plugin;
 
-    public TARDISJunkTime(TARDIS plugin) {
+    TARDISJunkTime(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean elapsed(CommandSender sender) {
+    boolean elapsed(CommandSender sender) {
         // check the Junk TARDIS is not home already
         if (new TARDISJunkLocation(plugin).isNotHome()) {
             long conf = plugin.getConfig().getLong("junk.return");

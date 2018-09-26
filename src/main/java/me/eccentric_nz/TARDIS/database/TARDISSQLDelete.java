@@ -44,7 +44,7 @@ class TARDISSQLDelete implements Runnable {
      * @param table  the database table name to insert the data into.
      * @param where  a HashMap<String, Object> of table fields and values to select the records to delete.
      */
-    public TARDISSQLDelete(TARDIS plugin, String table, HashMap<String, Object> where) {
+    TARDISSQLDelete(TARDIS plugin, String table, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.table = table;
         this.where = where;

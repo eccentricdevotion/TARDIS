@@ -28,7 +28,7 @@ import java.util.Locale;
  */
 public class TARDISSetFlightCommand {
 
-    public boolean setMode(Player player, String[] args, QueryFactory qf) {
+    boolean setMode(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
             TARDISMessage.send(player, "FLIGHT_NEED");
             return false;
@@ -62,6 +62,8 @@ public class TARDISSetFlightCommand {
 
     public enum FlightMode {
 
-        NORMAL, REGULATOR, MANUAL
+        NORMAL,
+        REGULATOR,
+        MANUAL
     }
 }

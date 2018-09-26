@@ -17,12 +17,11 @@
  */
 package me.eccentric_nz.TARDIS.noteblock;
 
-import org.bukkit.Instrument;
 import org.bukkit.Sound;
 
 class NoteBlockInstrument {
 
-    public static Sound getInstrument(byte instrument) {
+    static Sound getInstrument(byte instrument) {
         switch (instrument) {
             case 0:
                 return Sound.BLOCK_NOTE_BLOCK_HARP;
@@ -36,21 +35,5 @@ class NoteBlockInstrument {
                 return Sound.BLOCK_NOTE_BLOCK_HAT;
         }
         return Sound.BLOCK_NOTE_BLOCK_HARP;
-    }
-
-    public static Instrument getBukkitInstrument(byte instrument) {
-        switch (instrument) {
-            case 0:
-                return Instrument.PIANO;
-            case 1:
-                return Instrument.BASS_GUITAR;
-            case 2:
-                return Instrument.BASS_DRUM;
-            case 3:
-                return Instrument.SNARE_DRUM;
-            case 4:
-                return Instrument.STICKS;
-        }
-        return org.bukkit.Instrument.PIANO;
     }
 }

@@ -28,7 +28,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -36,7 +35,6 @@ import java.util.Random;
 public class TARDISVillageTravel {
 
     private final TARDIS plugin;
-    private final Random rand = new Random();
 
     public TARDISVillageTravel(TARDIS plugin) {
         this.plugin = plugin;

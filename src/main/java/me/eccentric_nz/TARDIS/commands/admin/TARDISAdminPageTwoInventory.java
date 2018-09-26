@@ -33,7 +33,7 @@ class TARDISAdminPageTwoInventory {
     private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public TARDISAdminPageTwoInventory(TARDIS plugin) {
+    TARDISAdminPageTwoInventory(TARDIS plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }

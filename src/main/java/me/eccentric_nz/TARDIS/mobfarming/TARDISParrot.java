@@ -31,7 +31,7 @@ public class TARDISParrot extends TARDISMob {
         return variant;
     }
 
-    public void setVariant(Variant variant) {
+    void setVariant(Variant variant) {
         this.variant = variant;
     }
 
@@ -39,7 +39,7 @@ public class TARDISParrot extends TARDISMob {
         return onLeftShoulder;
     }
 
-    public void setOnLeftShoulder(boolean onLeftShoulder) {
+    void setOnLeftShoulder(boolean onLeftShoulder) {
         this.onLeftShoulder = onLeftShoulder;
     }
 
@@ -47,7 +47,7 @@ public class TARDISParrot extends TARDISMob {
         return onRightShoulder;
     }
 
-    public void setOnRightShoulder(boolean onRightShoulder) {
+    void setOnRightShoulder(boolean onRightShoulder) {
         this.onRightShoulder = onRightShoulder;
     }
 }

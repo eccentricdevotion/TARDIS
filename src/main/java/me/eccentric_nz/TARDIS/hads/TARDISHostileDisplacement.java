@@ -51,12 +51,12 @@ class TARDISHostileDisplacement {
     private final List<Integer> angles;
     private int count = 0;
 
-    public TARDISHostileDisplacement(TARDIS plugin) {
+    TARDISHostileDisplacement(TARDIS plugin) {
         angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
         this.plugin = plugin;
     }
 
-    public void moveTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
+    void moveTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
 
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");

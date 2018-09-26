@@ -41,9 +41,6 @@ public class TARDISRoomData {
     private Material middleType;
     private Material floorType;
 
-    public TARDISRoomData() {
-    }
-
     public COMPASS getDirection() {
         return direction;
     }
@@ -84,7 +81,7 @@ public class TARDISRoomData {
         this.schematic = schematic;
     }
 
-    public Material getMiddleType() {
+    Material getMiddleType() {
         return middleType;
     }
 
@@ -92,7 +89,7 @@ public class TARDISRoomData {
         this.middleType = middleType;
     }
 
-    public Material getFloorType() {
+    Material getFloorType() {
         return floorType;
     }
 

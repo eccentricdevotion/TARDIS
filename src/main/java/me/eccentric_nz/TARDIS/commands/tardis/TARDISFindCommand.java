@@ -34,11 +34,11 @@ class TARDISFindCommand {
 
     private final TARDIS plugin;
 
-    public TARDISFindCommand(TARDIS plugin) {
+    TARDISFindCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean findTARDIS(Player player, String[] args) {
+    boolean findTARDIS(Player player, String[] args) {
         if (player.hasPermission("tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {

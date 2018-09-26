@@ -29,11 +29,11 @@ class TARDISExciteCommand {
 
     private final TARDIS plugin;
 
-    public TARDISExciteCommand(TARDIS plugin) {
+    TARDISExciteCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean excite(Player player) {
+    boolean excite(Player player) {
         if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
             TARDISMessage.send(player, "CMD_EXCITE");
             return true;

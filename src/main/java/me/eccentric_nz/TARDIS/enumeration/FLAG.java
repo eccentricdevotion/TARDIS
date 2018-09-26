@@ -35,8 +35,7 @@ public enum FLAG {
     RESPECT_TOWNY,
     RESPECT_WORLDBORDER,
     RESPECT_WORLDGUARD,
-    SPACE_TARDIS,
-    LIMIT;
+    SPACE_TARDIS;
 
     public static List<FLAG> getNoMessageFlags() {
         List<FLAG> flags = new ArrayList<>(Arrays.asList(FLAG.values()));
@@ -48,7 +47,6 @@ public enum FLAG {
         List<FLAG> flags = new ArrayList<>(Arrays.asList(FLAG.values()));
         flags.remove(FLAG.MESSAGE_PLAYER);
         flags.remove(FLAG.SPACE_TARDIS);
-        flags.remove(FLAG.LIMIT);
         return flags;
     }
 

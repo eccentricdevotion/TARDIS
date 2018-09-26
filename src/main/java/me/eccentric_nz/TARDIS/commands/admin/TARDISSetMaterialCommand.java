@@ -33,11 +33,11 @@ class TARDISSetMaterialCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetMaterialCommand(TARDIS plugin) {
+    TARDISSetMaterialCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
+    boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
         String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {

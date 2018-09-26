@@ -32,11 +32,11 @@ class TARDISRemoveSavedLocationCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRemoveSavedLocationCommand(TARDIS plugin) {
+    TARDISRemoveSavedLocationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doRemoveSave(Player player, String[] args) {
+    boolean doRemoveSave(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");

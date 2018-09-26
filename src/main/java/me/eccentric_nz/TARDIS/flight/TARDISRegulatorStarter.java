@@ -33,7 +33,7 @@ class TARDISRegulatorStarter implements Runnable {
     private final Player player;
     private final int id;
 
-    public TARDISRegulatorStarter(TARDIS plugin, Player player, int id) {
+    TARDISRegulatorStarter(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;

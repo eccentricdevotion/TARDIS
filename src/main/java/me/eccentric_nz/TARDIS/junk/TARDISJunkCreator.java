@@ -39,12 +39,12 @@ class TARDISJunkCreator {
     private final TARDIS plugin;
     private final Player p;
 
-    public TARDISJunkCreator(TARDIS plugin, Player p) {
+    TARDISJunkCreator(TARDIS plugin, Player p) {
         this.plugin = plugin;
         this.p = p;
     }
 
-    public boolean createJunkTARDIS() {
+    boolean createJunkTARDIS() {
         if (!p.hasPermission("tardis.admin")) {
             TARDISMessage.send(p, "CMD_ADMIN");
             return true;

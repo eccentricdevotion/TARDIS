@@ -90,7 +90,7 @@ public class TARDISSonicSorterListener implements Listener {
                             }
                         }
                         if (plugin.getPM().isPluginEnabled("Towny")) {
-                            allow = new TARDISTownyChecker(plugin, true).checkTowny(player, block.getLocation());
+                            allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
                         }
                         if (allow) {
                             Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
@@ -103,7 +103,7 @@ public class TARDISSonicSorterListener implements Listener {
         }
     }
 
-    public static ItemStack[] sortInventory(ItemStack[] items) {
+    private static ItemStack[] sortInventory(ItemStack[] items) {
         int endIndex = items.length;
         for (int i = 0; i < endIndex; i++) {
             ItemStack item1 = items[i];

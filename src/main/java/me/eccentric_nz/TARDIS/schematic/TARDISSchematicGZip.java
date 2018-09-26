@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -28,7 +29,7 @@ import java.util.zip.GZIPOutputStream;
  */
 public class TARDISSchematicGZip {
 
-    public static void zip(String instr, String outstr) {
+    static void zip(String instr, String outstr) {
         try {
             FileInputStream fis = new FileInputStream(instr);
             FileOutputStream fos = new FileOutputStream(outstr);
@@ -52,7 +53,7 @@ public class TARDISSchematicGZip {
         String s = "";
         try {
             GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(instr));
-            isr = new InputStreamReader(gzis, "UTF-8");
+            isr = new InputStreamReader(gzis, StandardCharsets.UTF_8);
             sw = new StringWriter();
             char[] buffer = new char[1024 * 16];
             int len;

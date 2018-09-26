@@ -151,7 +151,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         case "hum":
                             return new TARDISHumCommand().setHumPref(player, args, qf);
                         case "isomorphic":
-                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, args, qf);
+                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, qf);
                         case "key":
                             return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
                         case "lamp":

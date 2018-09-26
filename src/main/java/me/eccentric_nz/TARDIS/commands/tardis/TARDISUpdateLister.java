@@ -32,7 +32,7 @@ class TARDISUpdateLister {
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
 
-    public TARDISUpdateLister(Player player) {
+    TARDISUpdateLister(Player player) {
         this.player = player;
         options = createUpdateOptions();
     }

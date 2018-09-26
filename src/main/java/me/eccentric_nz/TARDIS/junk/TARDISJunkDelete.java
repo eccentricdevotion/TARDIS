@@ -39,7 +39,7 @@ class TARDISJunkDelete {
 
     private final TARDIS plugin;
 
-    public TARDISJunkDelete(TARDIS plugin) {
+    TARDISJunkDelete(TARDIS plugin) {
         this.plugin = plugin;
     }
 

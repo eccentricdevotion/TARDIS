@@ -36,11 +36,11 @@ class TARDISARSRemoveCommand {
 
     private final TARDIS plugin;
 
-    public TARDISARSRemoveCommand(TARDIS plugin) {
+    TARDISARSRemoveCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean resetARS(Player player) {
+    boolean resetARS(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {

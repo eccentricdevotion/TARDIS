@@ -46,7 +46,7 @@ public class TARDISTIPSData {
         return minX;
     }
 
-    public void setMinX(int minX) {
+    void setMinX(int minX) {
         this.minX = minX;
     }
 
@@ -54,7 +54,7 @@ public class TARDISTIPSData {
         return centreX;
     }
 
-    public void setCentreX(int centreX) {
+    void setCentreX(int centreX) {
         this.centreX = centreX;
     }
 
@@ -62,7 +62,7 @@ public class TARDISTIPSData {
         return maxX;
     }
 
-    public void setMaxX(int maxX) {
+    void setMaxX(int maxX) {
         this.maxX = maxX;
     }
 
@@ -70,7 +70,7 @@ public class TARDISTIPSData {
         return minZ;
     }
 
-    public void setMinZ(int minZ) {
+    void setMinZ(int minZ) {
         this.minZ = minZ;
     }
 
@@ -78,7 +78,7 @@ public class TARDISTIPSData {
         return centreZ;
     }
 
-    public void setCentreZ(int centreZ) {
+    void setCentreZ(int centreZ) {
         this.centreZ = centreZ;
     }
 
@@ -86,7 +86,7 @@ public class TARDISTIPSData {
         return maxZ;
     }
 
-    public void setMaxZ(int maxZ) {
+    void setMaxZ(int maxZ) {
         this.maxZ = maxZ;
     }
 }

@@ -32,7 +32,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -46,16 +49,9 @@ import java.util.regex.Pattern;
 public class TARDISRoomCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> roomArgs = new ArrayList<>();
 
     public TARDISRoomCommands(TARDIS plugin) {
         this.plugin = plugin;
-        // rooms - only add if enabled in the config
-        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
-            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-                roomArgs.add(r);
-            }
-        });
     }
 
     @Override

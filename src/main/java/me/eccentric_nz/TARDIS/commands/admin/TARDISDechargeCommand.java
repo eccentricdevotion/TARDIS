@@ -28,11 +28,11 @@ class TARDISDechargeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISDechargeCommand(TARDIS plugin) {
+    TARDISDechargeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean removeChragerStatus(CommandSender sender, String[] args) {
+    boolean removeChragerStatus(CommandSender sender, String[] args) {
         if (!plugin.getConfig().contains("rechargers." + args[1])) {
             TARDISMessage.send(sender, "CHARGER_NOT_FOUND", ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
             return true;

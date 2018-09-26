@@ -37,11 +37,11 @@ class TARDISEmergencyProgrammeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISEmergencyProgrammeCommand(TARDIS plugin) {
+    TARDISEmergencyProgrammeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean showEP1(Player p) {
+    boolean showEP1(Player p) {
         if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 TARDISMessage.send(p, "CMD_IN_WORLD");

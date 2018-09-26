@@ -55,7 +55,7 @@ class TARDISMaterialseFromVortex implements Runnable {
     private final Player player;
     private final Location handbrake;
 
-    public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+    TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;

@@ -29,7 +29,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMessage {
 
-    private static final int LINE_LENGTH = TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
     private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
 
     /**
@@ -40,8 +39,8 @@ public class TARDISMessage {
      */
     public static void message(Player p, String message) {
         if (p != null) {
-            if (message.length() > LINE_LENGTH) {
-                String[] multiline = TARDISChatPaginator.wordWrap(message, LINE_LENGTH);
+            if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+                String[] multiline = TARDISChatPaginator.wordWrap(message);
                 p.sendMessage(multiline);
             } else {
                 p.sendMessage(message);
@@ -50,8 +49,8 @@ public class TARDISMessage {
     }
 
     public static void message(CommandSender cs, String message) {
-        if (message.length() > LINE_LENGTH) {
-            String[] multiline = TARDISChatPaginator.wordWrap(message, LINE_LENGTH);
+        if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+            String[] multiline = TARDISChatPaginator.wordWrap(message);
             cs.sendMessage(multiline);
         } else {
             cs.sendMessage(message);

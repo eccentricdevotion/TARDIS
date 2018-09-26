@@ -37,7 +37,7 @@ class TARDISConstructCommand {
     private final TARDIS plugin;
     private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4", "asymmetric");
 
-    public TARDISConstructCommand(TARDIS plugin) {
+    TARDISConstructCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

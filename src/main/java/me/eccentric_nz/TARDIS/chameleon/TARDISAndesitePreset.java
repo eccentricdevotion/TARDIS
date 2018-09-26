@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISAndesitePreset extends TARDISPreset {
+class TARDISAndesitePreset extends TARDISPreset {
 
-    public TARDISAndesitePreset() {
+    TARDISAndesitePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:andesite";

@@ -73,14 +73,14 @@ class TARDISListenerRegisterer {
 
     private final TARDIS plugin;
 
-    public TARDISListenerRegisterer(TARDIS plugin) {
+    TARDISListenerRegisterer(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     /**
      * Registers all the listeners for the various events required to use the TARDIS.
      */
-    public void registerListeners() {
+    void registerListeners() {
         if (plugin.getConfig().getBoolean("creation.use_block_stack")) {
             plugin.getPM().registerEvents(new TARDISBlockStackListener(plugin), plugin);
         }
@@ -105,7 +105,6 @@ class TARDISListenerRegisterer {
         plugin.getGeneralKeeper().setRendererListener(rendererListener);
         TARDISButtonListener buttonListener = new TARDISButtonListener(plugin);
         plugin.getPM().registerEvents(buttonListener, plugin);
-        plugin.getGeneralKeeper().setButtonListener(buttonListener);
         TARDISScannerListener scannerListener = new TARDISScannerListener(plugin);
         plugin.getPM().registerEvents(scannerListener, plugin);
         plugin.getGeneralKeeper().setScannerListener(scannerListener);

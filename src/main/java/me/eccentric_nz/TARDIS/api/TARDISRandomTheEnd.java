@@ -36,8 +36,8 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
     private final Random random = new Random();
     private Location dest;
 
-    public TARDISRandomTheEnd(TARDIS plugin, List<String> list, Parameters param) {
-        super(plugin, list, param);
+    TARDISRandomTheEnd(TARDIS plugin, List<String> list, Parameters param) {
+        super(plugin);
         worlds = getWorlds(list);
         this.plugin = plugin;
         this.param = param;

@@ -151,7 +151,7 @@ public class TARDISPluginRespect {
     public void loadTowny() {
         if (plugin.getPM().getPlugin("Towny") != null) {
             townyOnServer = true;
-            tychk = new TARDISTownyChecker(plugin, townyOnServer);
+            tychk = new TARDISTownyChecker(plugin);
         }
     }
 
@@ -161,7 +161,7 @@ public class TARDISPluginRespect {
     public void loadWorldBorder() {
         if (plugin.getPM().getPlugin("WorldBorder") != null) {
             borderOnServer = true;
-            borderchk = new TARDISWorldBorderChecker(plugin, borderOnServer);
+            borderchk = new TARDISWorldBorderChecker(plugin);
         }
     }
 
@@ -171,7 +171,7 @@ public class TARDISPluginRespect {
     public void loadFactions() {
         if (plugin.getPM().getPlugin("Factions") != null) {
             factionsOnServer = true;
-            factionschk = new TARDISFactionsChecker(plugin);
+            factionschk = new TARDISFactionsChecker();
         }
     }
 
@@ -182,7 +182,7 @@ public class TARDISPluginRespect {
         if (plugin.getPM().getPlugin("GriefPrevention") != null) {
             plugin.debug("Hooking into GriefPrevention!");
             griefPreventionOnServer = true;
-            griefchk = new TARDISGriefPreventionChecker(plugin, griefPreventionOnServer);
+            griefchk = new TARDISGriefPreventionChecker(plugin);
         }
     }
 
@@ -190,35 +190,35 @@ public class TARDISPluginRespect {
         return plugin;
     }
 
-    public TARDISTownyChecker getTychk() {
+    TARDISTownyChecker getTychk() {
         return tychk;
     }
 
-    public TARDISWorldBorderChecker getBorderchk() {
+    TARDISWorldBorderChecker getBorderchk() {
         return borderchk;
     }
 
-    public TARDISFactionsChecker getFactionschk() {
+    TARDISFactionsChecker getFactionschk() {
         return factionschk;
     }
 
-    public TARDISGriefPreventionChecker getGriefchk() {
+    TARDISGriefPreventionChecker getGriefchk() {
         return griefchk;
     }
 
-    public boolean isTownyOnServer() {
+    boolean isTownyOnServer() {
         return townyOnServer;
     }
 
-    public boolean isBorderOnServer() {
+    boolean isBorderOnServer() {
         return borderOnServer;
     }
 
-    public boolean isFactionsOnServer() {
+    boolean isFactionsOnServer() {
         return factionsOnServer;
     }
 
-    public boolean isGriefPreventionOnServer() {
+    boolean isGriefPreventionOnServer() {
         return griefPreventionOnServer;
     }
 }

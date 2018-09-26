@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISPortalPreset extends TARDISPreset {
+class TARDISPortalPreset extends TARDISPreset {
 
-    public TARDISPortalPreset() {
+    TARDISPortalPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:nether_quartz_ore";

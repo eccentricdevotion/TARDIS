@@ -49,11 +49,11 @@ public class TARDISDeleteCommand {
 
     private final TARDIS plugin;
 
-    public TARDISDeleteCommand(TARDIS plugin) {
+    TARDISDeleteCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean deleteTARDIS(CommandSender sender, String[] args) {
+    boolean deleteTARDIS(CommandSender sender, String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
         int abandoned = (args.length > 2 && args[2].equals("abandoned")) ? 1 : 0;

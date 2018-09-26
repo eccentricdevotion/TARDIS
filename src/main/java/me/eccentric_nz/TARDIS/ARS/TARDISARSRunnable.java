@@ -51,7 +51,7 @@ class TARDISARSRunnable implements Runnable {
     private final Player p;
     private final int tardis_id;
 
-    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id) {
+    TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;

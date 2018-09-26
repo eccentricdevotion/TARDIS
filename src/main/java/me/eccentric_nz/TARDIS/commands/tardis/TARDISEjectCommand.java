@@ -31,11 +31,11 @@ class TARDISEjectCommand {
 
     private final TARDIS plugin;
 
-    public TARDISEjectCommand(TARDIS plugin) {
+    TARDISEjectCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean eject(Player player) {
+    boolean eject(Player player) {
         if (!player.hasPermission("tardis.eject")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;

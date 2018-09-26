@@ -33,11 +33,11 @@ class TARDISOccupyCommand {
 
     private final TARDIS plugin;
 
-    public TARDISOccupyCommand(TARDIS plugin) {
+    TARDISOccupyCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean toggleOccupancy(Player player) {
+    boolean toggleOccupancy(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());

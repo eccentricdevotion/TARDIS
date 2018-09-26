@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISSavannaPreset extends TARDISPreset {
+class TARDISSavannaPreset extends TARDISPreset {
 
-    public TARDISSavannaPreset() {
+    TARDISSavannaPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:acacia_log[axis=y]";

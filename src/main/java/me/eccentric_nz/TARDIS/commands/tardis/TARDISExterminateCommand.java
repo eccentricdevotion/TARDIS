@@ -28,11 +28,11 @@ class TARDISExterminateCommand {
 
     private final TARDIS plugin;
 
-    public TARDISExterminateCommand(TARDIS plugin) {
+    TARDISExterminateCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doExterminate(Player player) {
+    boolean doExterminate(Player player) {
 
         if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
             TARDISMessage.send(player, "TARDIS_BREAK_SIGN");

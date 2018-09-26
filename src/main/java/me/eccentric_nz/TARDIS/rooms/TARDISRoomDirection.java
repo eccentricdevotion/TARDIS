@@ -31,7 +31,7 @@ class TARDISRoomDirection {
     private BlockFace face;
     private COMPASS compass;
 
-    public TARDISRoomDirection(Block b) {
+    TARDISRoomDirection(Block b) {
         this.b = b;
         found = false;
     }

@@ -49,7 +49,7 @@ class TARDISRepair {
     private final TARDIS plugin;
     private final Player player;
 
-    public TARDISRepair(TARDIS plugin, Player player) {
+    TARDISRepair(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }
@@ -95,7 +95,7 @@ class TARDISRepair {
         }
     }
 
-    public boolean hasCondensedMissingBlocks() {
+    boolean hasCondensedMissingBlocks() {
         String uuid = player.getUniqueId().toString();
         HashMap<String, Integer> blockIDs = new HashMap<>();
         JSONObject obj = getConsole();

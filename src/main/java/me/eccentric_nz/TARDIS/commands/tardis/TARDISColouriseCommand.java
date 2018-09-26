@@ -37,11 +37,11 @@ class TARDISColouriseCommand {
 
     private final TARDIS plugin;
 
-    public TARDISColouriseCommand(TARDIS plugin) {
+    TARDISColouriseCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void updateBeaconGlass(Player player) {
+    void updateBeaconGlass(Player player) {
         if (!player.hasPermission("tardis.upgrade")) {
             TARDISMessage.send(player, "NO_PERMS");
             return;
@@ -85,6 +85,5 @@ class TARDISColouriseCommand {
         }
         // track the player
         plugin.getTrackerKeeper().getBeaconColouring().add(player.getUniqueId());
-        return;
     }
 }

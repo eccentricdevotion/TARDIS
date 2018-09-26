@@ -45,7 +45,7 @@ class TARDISJunkVortexRunnable implements Runnable {
     private int task;
     private int fryTask;
 
-    public TARDISJunkVortexRunnable(TARDIS plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
+    TARDISJunkVortexRunnable(TARDIS plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
         this.plugin = plugin;
         this.vortexJunkLoc = vortexJunkLoc;
         effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);

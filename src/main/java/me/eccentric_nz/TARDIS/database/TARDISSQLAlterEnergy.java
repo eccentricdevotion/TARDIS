@@ -53,7 +53,7 @@ class TARDISSQLAlterEnergy implements Runnable {
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      * @param p      the player who receives the success message.
      */
-    public TARDISSQLAlterEnergy(TARDIS plugin, String table, int amount, HashMap<String, Object> where, Player p) {
+    TARDISSQLAlterEnergy(TARDIS plugin, String table, int amount, HashMap<String, Object> where, Player p) {
         this.plugin = plugin;
         this.table = table;
         this.amount = amount;

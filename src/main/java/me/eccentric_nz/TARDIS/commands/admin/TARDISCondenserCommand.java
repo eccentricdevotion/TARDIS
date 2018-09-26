@@ -33,7 +33,7 @@ class TARDISCondenserCommand {
 
     private final TARDIS plugin;
 
-    public TARDISCondenserCommand(TARDIS plugin) {
+    TARDISCondenserCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

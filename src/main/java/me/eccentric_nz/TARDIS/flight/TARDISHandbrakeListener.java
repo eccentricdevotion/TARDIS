@@ -152,10 +152,8 @@ public class TARDISHandbrakeListener implements Listener {
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             boolean beac_on = true;
                             boolean bar = false;
-                            int flight_mode = 1;
                             if (rsp.resultSet()) {
                                 beac_on = rsp.isBeaconOn();
-                                flight_mode = rsp.getFlightMode();
                                 bar = rsp.isTravelbarOn();
                             }
                             QueryFactory qf = new QueryFactory(plugin);
@@ -179,7 +177,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
-                                    new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, flight_mode);
+                                    new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar);
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_OFF_ERR");
                                 }

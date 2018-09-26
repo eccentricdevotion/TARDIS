@@ -40,11 +40,11 @@ class TARDISEnterCommand {
 
     private final TARDIS plugin;
 
-    public TARDISEnterCommand(TARDIS plugin) {
+    TARDISEnterCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean enterTARDIS(CommandSender sender, String[] args) {
+    boolean enterTARDIS(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;

@@ -24,7 +24,7 @@ public class TARDISWatchData {
     private final String name;
     private final long time;
 
-    public TARDISWatchData(String name, long time) {
+    TARDISWatchData(String name, long time) {
         this.name = name;
         this.time = time;
     }

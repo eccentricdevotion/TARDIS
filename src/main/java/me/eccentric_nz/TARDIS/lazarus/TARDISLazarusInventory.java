@@ -40,7 +40,7 @@ class TARDISLazarusInventory {
     private final TARDIS plugin;
     private final List<Material> disguises = new ArrayList<>();
 
-    public TARDISLazarusInventory(TARDIS plugin) {
+    TARDISLazarusInventory(TARDIS plugin) {
         this.plugin = plugin;
         // maximum number of eggs is 45
         disguises.add(Material.BAT_SPAWN_EGG);

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,11 +29,9 @@ import java.util.Map;
 public class TARDISCondensablesUpdater {
 
     private final TARDIS plugin;
-    private final FileConfiguration condensables_config;
 
-    public TARDISCondensablesUpdater(TARDIS plugin, FileConfiguration condensables_config) {
+    public TARDISCondensablesUpdater(TARDIS plugin) {
         this.plugin = plugin;
-        this.condensables_config = condensables_config;
     }
 
     public void checkCondensables() {

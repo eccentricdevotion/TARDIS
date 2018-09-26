@@ -36,7 +36,7 @@ public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runn
     private int taskId;
     private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
 
-    public TARDISRegulatorRunnable(Inventory inv) {
+    TARDISRegulatorRunnable(Inventory inv) {
         this.inv = inv;
         slot = 20;
     }
@@ -91,11 +91,11 @@ public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runn
         this.slot = slot;
     }
 
-    public int getTaskId() {
+    int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    void setTaskId(int taskId) {
         this.taskId = taskId;
     }
 }

@@ -390,7 +390,7 @@ class TARDISRandomArchiveName {
         NAMES.add("Zygon");
     }
 
-    public static String getRandomName() {
+    static String getRandomName() {
         return NAMES.get(RANDOM.nextInt(NAMES.size())).replace(' ', '_');
     }
 }

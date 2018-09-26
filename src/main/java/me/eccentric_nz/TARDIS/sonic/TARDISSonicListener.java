@@ -397,7 +397,7 @@ public class TARDISSonicListener implements Listener {
                             }
                         }
                     }
-                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !plugin.getGeneralKeeper().getInteractables().contains(b.getType())) {
+                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !b.getType().isInteractable()) {
                         playSonicSound(player, now, 3050L, "sonic_screwdriver");
                         // scan environment
                         scan(b.getLocation(), player);
@@ -805,7 +805,7 @@ public class TARDISSonicListener implements Listener {
         block.setBlockData(data, true);
     }
 
-    public void playSonicSound(Player player, long now, long cooldown, String sound) {
+    void playSonicSound(Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -1099,7 +1099,7 @@ public class TARDISSonicListener implements Listener {
         boolean tny = false;
         // GriefPrevention
         if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
-            gpr = new TARDISGriefPreventionChecker(plugin, true).isInClaim(p, b.getLocation());
+            gpr = new TARDISGriefPreventionChecker(plugin).isInClaim(p, b.getLocation());
         }
         // WorldGuard
         if (plugin.isWorldGuardOnServer()) {
@@ -1112,14 +1112,15 @@ public class TARDISSonicListener implements Listener {
         if (plugin.getPM().isPluginEnabled("LockettePro")) {
             pro = LocketteProAPI.isProtected(b);
         }
+        // BlockLocker
         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-            pro = BlockLockerAPI.isProtected(b);
+            bll = BlockLockerAPI.isProtected(b);
         }
         // Towny
         if (plugin.getPM().isPluginEnabled("Towny")) {
-            tny = new TARDISTownyChecker(plugin, true).checkTowny(p, b.getLocation());
+            tny = new TARDISTownyChecker(plugin).checkTowny(p, b.getLocation());
         }
-        return (gpr || wgu || lke || pro || tny);
+        return (gpr || wgu || lke || pro || bll || tny);
     }
 
     private boolean isPresetSign(String l0, String l1, String l2) {

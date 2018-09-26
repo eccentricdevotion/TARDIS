@@ -51,11 +51,11 @@ class TARDISRemoteComehereCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRemoteComehereCommand(TARDIS plugin) {
+    TARDISRemoteComehereCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doRemoteComeHere(Player player, UUID uuid) {
+    boolean doRemoteComeHere(Player player, UUID uuid) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");

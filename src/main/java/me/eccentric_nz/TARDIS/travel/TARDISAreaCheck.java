@@ -7,7 +7,7 @@ public class TARDISAreaCheck {
     private final Area area;
     private final boolean inArea;
 
-    public TARDISAreaCheck(Area area, boolean inArea) {
+    TARDISAreaCheck(Area area, boolean inArea) {
         this.area = area;
         this.inArea = inArea;
     }

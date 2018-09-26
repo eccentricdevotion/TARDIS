@@ -30,11 +30,11 @@ class TARDISSetDifficultyCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetDifficultyCommand(TARDIS plugin) {
+    TARDISSetDifficultyCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setDiff(Player player, String[] args, QueryFactory qf) {
+    boolean setDiff(Player player, String[] args, QueryFactory qf) {
         if (!plugin.getConfig().getBoolean("allow.player_difficulty")) {
             TARDISMessage.send(player, "CMD_DISABLED");
             return true;

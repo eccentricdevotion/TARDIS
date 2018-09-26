@@ -37,11 +37,11 @@ class TARDISListTardisesCommand {
 
     private final TARDIS plugin;
 
-    public TARDISListTardisesCommand(TARDIS plugin) {
+    TARDISListTardisesCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean listTardises(CommandSender sender, String[] args) {
+    boolean listTardises(CommandSender sender, String[] args) {
         if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned"))) {
             if (args[1].equalsIgnoreCase("save")) {
                 ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), "", true, 1);

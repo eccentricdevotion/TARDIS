@@ -41,7 +41,7 @@ public class TARDISTeleportLocation {
         return tardisId;
     }
 
-    public void setTardisId(int tardisId) {
+    void setTardisId(int tardisId) {
         this.tardisId = tardisId;
     }
 

@@ -37,7 +37,7 @@ class TARDISArtronRunnable implements Runnable {
     private int task;
     private final QueryFactory qf;
 
-    public TARDISArtronRunnable(TARDIS plugin, int id) {
+    TARDISArtronRunnable(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         qf = new QueryFactory(plugin);

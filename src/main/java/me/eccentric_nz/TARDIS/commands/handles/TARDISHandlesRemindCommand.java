@@ -32,11 +32,11 @@ class TARDISHandlesRemindCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHandlesRemindCommand(TARDIS plugin) {
+    TARDISHandlesRemindCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doReminder(Player player, String[] args) {
+    boolean doReminder(Player player, String[] args) {
         StringBuilder sb = new StringBuilder();
         for (int i = 2; i < args.length - 1; i++) {
             sb.append(args[i]).append(" ");

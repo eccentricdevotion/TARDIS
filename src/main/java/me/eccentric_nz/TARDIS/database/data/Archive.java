@@ -26,7 +26,6 @@ import java.util.UUID;
  */
 public class Archive {
 
-    private final int archive_id;
     private final UUID uuid;
     private final String name;
     private final ConsoleSize consoleSize;
@@ -36,8 +35,7 @@ public class Archive {
     private final JSONObject JSON;
     private final String description;
 
-    public Archive(int archive_id, UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, JSONObject JSON, String description) {
-        this.archive_id = archive_id;
+    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, JSONObject JSON, String description) {
         this.uuid = uuid;
         this.name = name;
         this.consoleSize = ConsoleSize.valueOf(consoleSize);
@@ -46,10 +44,6 @@ public class Archive {
         this.use = use;
         this.JSON = JSON;
         this.description = description;
-    }
-
-    public int getArchive_id() {
-        return archive_id;
     }
 
     public UUID getUuid() {

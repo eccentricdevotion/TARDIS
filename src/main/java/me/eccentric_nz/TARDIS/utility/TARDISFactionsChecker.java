@@ -20,7 +20,6 @@ import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
 import com.massivecraft.massivecore.ps.PS;
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -32,9 +31,6 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISFactionsChecker {
-
-    public TARDISFactionsChecker(TARDIS plugin) {
-    }
 
     /**
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this

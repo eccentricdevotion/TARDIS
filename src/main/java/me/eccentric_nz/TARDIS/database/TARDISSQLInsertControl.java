@@ -47,7 +47,7 @@ class TARDISSQLInsertControl implements Runnable {
      * @param l      the location of the control
      * @param s      whether the control is a secondary control
      */
-    public TARDISSQLInsertControl(TARDIS plugin, int id, int type, String l, int s) {
+    TARDISSQLInsertControl(TARDIS plugin, int id, int type, String l, int s) {
         this.plugin = plugin;
         this.id = id;
         this.type = type;

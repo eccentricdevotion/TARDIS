@@ -377,7 +377,7 @@ public class QueryFactory {
             String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, lastuse = ? WHERE tardis_id = ?";
             try {
                 service.testConnection(connection);
-                Long now;
+                long now;
                 if (player.hasPermission("tardis.prune.bypass")) {
                     now = Long.MAX_VALUE - new Random().nextInt(1000);
                 } else {

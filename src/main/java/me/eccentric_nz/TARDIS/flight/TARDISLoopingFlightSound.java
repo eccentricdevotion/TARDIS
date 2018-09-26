@@ -29,7 +29,7 @@ class TARDISLoopingFlightSound implements Runnable {
     private final Location location;
     private final int id;
 
-    public TARDISLoopingFlightSound(TARDIS plugin, Location location, int id) {
+    TARDISLoopingFlightSound(TARDIS plugin, Location location, int id) {
         this.plugin = plugin;
         this.location = location;
         this.id = id;

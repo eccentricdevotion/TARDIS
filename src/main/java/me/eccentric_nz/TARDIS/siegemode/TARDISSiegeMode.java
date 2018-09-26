@@ -209,7 +209,7 @@ public class TARDISSiegeMode {
         new QueryFactory(plugin).doUpdate("tardis", set, wheres);
     }
 
-    public void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
+    void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
         HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);

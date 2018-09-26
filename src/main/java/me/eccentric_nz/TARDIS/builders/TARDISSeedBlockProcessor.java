@@ -138,7 +138,7 @@ public class TARDISSeedBlockProcessor {
                 HashMap<String, Object> setpp = new HashMap<>();
                 Material wall_type = seed.getWallType();
                 Material floor_type = seed.getFloorType();
-                Long now;
+                long now;
                 if (player.hasPermission("tardis.prune.bypass")) {
                     now = Long.MAX_VALUE;
                 } else {

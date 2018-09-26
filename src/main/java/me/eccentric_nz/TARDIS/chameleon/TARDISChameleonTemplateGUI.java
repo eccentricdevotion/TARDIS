@@ -33,7 +33,7 @@ class TARDISChameleonTemplateGUI {
     private final TARDIS plugin;
     private final ItemStack[] template;
 
-    public TARDISChameleonTemplateGUI(TARDIS plugin) {
+    TARDISChameleonTemplateGUI(TARDIS plugin) {
         this.plugin = plugin;
         template = getItemStack();
     }
@@ -140,14 +140,7 @@ class TARDISChameleonTemplateGUI {
         dr.setLore(Arrays.asList(doorList.get(1), doorList.get(2)));
         door.setItemMeta(dr);
 
-        return new ItemStack[]{
-                back, null, null, null, info, null, null, null, next,
-                one, two, three, four, five, six, seven, eight, nine,
-                slab, slab, slab, slab, slab, slab, slab, slab, lamp,
-                blue, blue, blue, blue, blue, blue, blue, blue, power,
-                blue, blue, blue, blue, blue, blue, blue, door, null,
-                blue, blue, blue, blue, blue, blue, blue, door, null
-        };
+        return new ItemStack[]{back, null, null, null, info, null, null, null, next, one, two, three, four, five, six, seven, eight, nine, slab, slab, slab, slab, slab, slab, slab, slab, lamp, blue, blue, blue, blue, blue, blue, blue, blue, power, blue, blue, blue, blue, blue, blue, blue, door, null, blue, blue, blue, blue, blue, blue, blue, door, null};
     }
 
     public ItemStack[] getTemplate() {

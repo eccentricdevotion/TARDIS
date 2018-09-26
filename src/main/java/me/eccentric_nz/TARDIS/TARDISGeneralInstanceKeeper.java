@@ -20,10 +20,8 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
@@ -56,7 +54,6 @@ public class TARDISGeneralInstanceKeeper {
     private List<String> quotes = new ArrayList<>();
     private final HashMap<String, String> sign_lookup;
     private TARDISAdminCommands tardisAdminCommand;
-    private TARDISButtonListener buttonListener;
     private TARDISDoorListener doorListener;
     private TARDISRenderRoomListener rendererListener;
     private TARDISScannerListener scannerListener;
@@ -79,7 +76,6 @@ public class TARDISGeneralInstanceKeeper {
     private final List<Material> doors = Arrays.asList(Material.IRON_DOOR, Material.OAK_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAIL, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
-    private final List<Material> interactables;
     private final List<String> gravityDownList = new ArrayList<>();
     private final List<String> roomArgs;
     private final List<String> sonicLamps = new ArrayList<>();
@@ -93,12 +89,11 @@ public class TARDISGeneralInstanceKeeper {
     private Location junkDestination = null;
     private final List<UUID> junkTravellers = new ArrayList<>();
 
-    public TARDISGeneralInstanceKeeper(TARDIS plugin) {
+    TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
         roomArgs = buildRoomArgs();
         transparent = buildTransparent();
         doorListener = new TARDISDoorListener(plugin);
-        interactables = buildInteractables();
         sign_lookup = buildSignLookup();
         setRechargers();
         InputStream is = plugin.getResource("plugin.yml");
@@ -195,47 +190,27 @@ public class TARDISGeneralInstanceKeeper {
         return npcIDs;
     }
 
-    public void setNpcIDs(List<Integer> npcIDs) {
-        this.npcIDs = npcIDs;
-    }
-
     public List<Block> getDoorPistons() {
         return doorPistons;
-    }
-
-    public void setDoorPistons(List<Block> doorPistons) {
-        this.doorPistons = doorPistons;
     }
 
     public TARDISAdminCommands getTardisAdminCommand() {
         return tardisAdminCommand;
     }
 
-    public void setTardisAdminCommand(TARDISAdminCommands tardisAdminCommand) {
+    void setTardisAdminCommand(TARDISAdminCommands tardisAdminCommand) {
         this.tardisAdminCommand = tardisAdminCommand;
-    }
-
-    public TARDISButtonListener getButtonListener() {
-        return buttonListener;
-    }
-
-    public void setButtonListener(TARDISButtonListener buttonListener) {
-        this.buttonListener = buttonListener;
     }
 
     public TARDISDoorListener getDoorListener() {
         return doorListener;
     }
 
-    public void setDoorListener(TARDISDoorClickListener doorListener) {
-        this.doorListener = doorListener;
-    }
-
     public TARDISRenderRoomListener getRendererListener() {
         return rendererListener;
     }
 
-    public void setRendererListener(TARDISRenderRoomListener rendererListener) {
+    void setRendererListener(TARDISRenderRoomListener rendererListener) {
         this.rendererListener = rendererListener;
     }
 
@@ -243,7 +218,7 @@ public class TARDISGeneralInstanceKeeper {
         return scannerListener;
     }
 
-    public void setScannerListener(TARDISScannerListener scannerListener) {
+    void setScannerListener(TARDISScannerListener scannerListener) {
         this.scannerListener = scannerListener;
     }
 
@@ -251,7 +226,7 @@ public class TARDISGeneralInstanceKeeper {
         return sonicListener;
     }
 
-    public void setSonicListener(TARDISSonicListener sonicListener) {
+    void setSonicListener(TARDISSonicListener sonicListener) {
         this.sonicListener = sonicListener;
     }
 
@@ -259,7 +234,7 @@ public class TARDISGeneralInstanceKeeper {
         return tardisTravelCommand;
     }
 
-    public void setTardisTravelCommand(TARDISTravelCommands tardisTravelCommand) {
+    void setTardisTravelCommand(TARDISTravelCommands tardisTravelCommand) {
         this.tardisTravelCommand = tardisTravelCommand;
     }
 
@@ -321,10 +296,6 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<UUID> getJunkTravellers() {
         return junkTravellers;
-    }
-
-    public List<Material> getInteractables() {
-        return interactables;
     }
 
     private void setRechargers() {
@@ -389,97 +360,6 @@ public class TARDISGeneralInstanceKeeper {
             }
         });
         return rooms;
-    }
-
-    private List<Material> buildInteractables() {
-        List<Material> list = new ArrayList<>();
-        list.add(Material.ACACIA_BUTTON);
-        list.add(Material.ACACIA_DOOR);
-        list.add(Material.ACACIA_FENCE_GATE);
-        list.add(Material.ACACIA_PRESSURE_PLATE);
-        list.add(Material.ACACIA_TRAPDOOR);
-        list.add(Material.ANVIL);
-        list.add(Material.BEACON);
-        list.add(Material.BIRCH_BUTTON);
-        list.add(Material.BIRCH_DOOR);
-        list.add(Material.BIRCH_FENCE_GATE);
-        list.add(Material.BIRCH_PRESSURE_PLATE);
-        list.add(Material.BIRCH_TRAPDOOR);
-        list.add(Material.BLACK_BED);
-        list.add(Material.BLACK_SHULKER_BOX);
-        list.add(Material.BLUE_BED);
-        list.add(Material.BLUE_SHULKER_BOX);
-        list.add(Material.BROWN_BED);
-        list.add(Material.BROWN_SHULKER_BOX);
-        list.add(Material.CHEST);
-        list.add(Material.COMPARATOR);
-        list.add(Material.CRAFTING_TABLE);
-        list.add(Material.CYAN_BED);
-        list.add(Material.CYAN_SHULKER_BOX);
-        list.add(Material.DARK_OAK_BUTTON);
-        list.add(Material.DARK_OAK_DOOR);
-        list.add(Material.DARK_OAK_FENCE_GATE);
-        list.add(Material.DARK_OAK_PRESSURE_PLATE);
-        list.add(Material.DARK_OAK_TRAPDOOR);
-        list.add(Material.DISPENSER);
-        list.add(Material.DROPPER);
-        list.add(Material.ENDER_CHEST);
-        list.add(Material.FURNACE);
-        list.add(Material.GRAY_BED);
-        list.add(Material.GRAY_SHULKER_BOX);
-        list.add(Material.GREEN_BED);
-        list.add(Material.GREEN_SHULKER_BOX);
-        list.add(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
-        list.add(Material.HOPPER);
-        list.add(Material.IRON_DOOR);
-        list.add(Material.IRON_TRAPDOOR);
-        list.add(Material.JUKEBOX);
-        list.add(Material.JUNGLE_BUTTON);
-        list.add(Material.JUNGLE_DOOR);
-        list.add(Material.JUNGLE_FENCE_GATE);
-        list.add(Material.JUNGLE_PRESSURE_PLATE);
-        list.add(Material.JUNGLE_TRAPDOOR);
-        list.add(Material.LEVER);
-        list.add(Material.LIGHT_BLUE_BED);
-        list.add(Material.LIGHT_BLUE_SHULKER_BOX);
-        list.add(Material.LIGHT_GRAY_BED);
-        list.add(Material.LIGHT_GRAY_SHULKER_BOX);
-        list.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
-        list.add(Material.LIME_BED);
-        list.add(Material.LIME_SHULKER_BOX);
-        list.add(Material.MAGENTA_BED);
-        list.add(Material.MAGENTA_SHULKER_BOX);
-        list.add(Material.NOTE_BLOCK);
-        list.add(Material.OAK_BUTTON);
-        list.add(Material.OAK_DOOR);
-        list.add(Material.OAK_FENCE_GATE);
-        list.add(Material.OAK_PRESSURE_PLATE);
-        list.add(Material.OAK_TRAPDOOR);
-        list.add(Material.ORANGE_BED);
-        list.add(Material.ORANGE_SHULKER_BOX);
-        list.add(Material.PINK_BED);
-        list.add(Material.PINK_SHULKER_BOX);
-        list.add(Material.PURPLE_BED);
-        list.add(Material.PURPLE_SHULKER_BOX);
-        list.add(Material.RED_BED);
-        list.add(Material.RED_SHULKER_BOX);
-        list.add(Material.REPEATER);
-        list.add(Material.SHULKER_BOX);
-        list.add(Material.SIGN);
-        list.add(Material.SPRUCE_BUTTON);
-        list.add(Material.SPRUCE_DOOR);
-        list.add(Material.SPRUCE_FENCE_GATE);
-        list.add(Material.SPRUCE_PRESSURE_PLATE);
-        list.add(Material.SPRUCE_TRAPDOOR);
-        list.add(Material.STONE_BUTTON);
-        list.add(Material.STONE_PRESSURE_PLATE);
-        list.add(Material.TRAPPED_CHEST);
-        list.add(Material.WALL_SIGN);
-        list.add(Material.WHITE_BED);
-        list.add(Material.WHITE_SHULKER_BOX);
-        list.add(Material.YELLOW_BED);
-        list.add(Material.YELLOW_SHULKER_BOX);
-        return list;
     }
 
     private HashMap<String, String> buildSignLookup() {

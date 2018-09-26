@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISPunkedPreset extends TARDISPreset {
+class TARDISPunkedPreset extends TARDISPreset {
 
-    public TARDISPunkedPreset() {
+    TARDISPunkedPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:stone_slab[type=bottom]";

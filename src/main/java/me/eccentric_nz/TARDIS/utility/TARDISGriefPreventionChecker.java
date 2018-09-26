@@ -30,12 +30,10 @@ import org.bukkit.entity.Player;
  */
 public class TARDISGriefPreventionChecker {
 
-    private GriefPrevention griefprevention;
+    private final GriefPrevention griefprevention;
 
-    public TARDISGriefPreventionChecker(TARDIS plugin, boolean onServer) {
-        if (onServer) {
-            griefprevention = (GriefPrevention) plugin.getPM().getPlugin("GriefPrevention");
-        }
+    public TARDISGriefPreventionChecker(TARDIS plugin) {
+        griefprevention = (GriefPrevention) plugin.getPM().getPlugin("GriefPrevention");
     }
 
     /**

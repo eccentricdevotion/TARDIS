@@ -34,11 +34,11 @@ class TARDISRechargerCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRechargerCommand(TARDIS plugin) {
+    TARDISRechargerCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setRecharger(CommandSender sender, String[] args) {
+    boolean setRecharger(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;

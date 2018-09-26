@@ -34,7 +34,7 @@ class TARDISSonicActivatorInventory {
     private final TARDIS plugin;
     private final ItemStack[] activator;
 
-    public TARDISSonicActivatorInventory(TARDIS plugin) {
+    TARDISSonicActivatorInventory(TARDIS plugin) {
         this.plugin = plugin;
         activator = getItemStack();
     }
@@ -67,9 +67,7 @@ class TARDISSonicActivatorInventory {
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
 
-        return new ItemStack[]{
-                null, null, null, null, null, null, null, info, close
-        };
+        return new ItemStack[]{null, null, null, null, null, null, null, info, close};
     }
 
     public ItemStack[] getActivator() {

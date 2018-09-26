@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISCreepyPreset extends TARDISPreset {
+class TARDISCreepyPreset extends TARDISPreset {
 
-    public TARDISCreepyPreset() {
+    TARDISCreepyPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:gray_terracotta";

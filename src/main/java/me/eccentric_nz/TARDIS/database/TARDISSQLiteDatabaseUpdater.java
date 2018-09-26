@@ -50,7 +50,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final TARDIS plugin;
     private final String prefix;
 
-    public TARDISSQLiteDatabaseUpdater(TARDIS plugin, Statement statement) {
+    TARDISSQLiteDatabaseUpdater(TARDIS plugin, Statement statement) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         this.statement = statement;
@@ -142,7 +142,7 @@ class TARDISSQLiteDatabaseUpdater {
     /**
      * Adds new fields to tables in the database.
      */
-    public void updateTables() {
+    void updateTables() {
         int i = 0;
         try {
             for (String u : uuidUpdates) {

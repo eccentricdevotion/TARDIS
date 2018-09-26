@@ -30,7 +30,7 @@ public class TARDISARSJettison {
     private int x;
     private int z;
 
-    public TARDISARSJettison() {
+    TARDISARSJettison() {
     }
 
     public TARDISARSJettison(Chunk chunk, int y, int x, int z) {

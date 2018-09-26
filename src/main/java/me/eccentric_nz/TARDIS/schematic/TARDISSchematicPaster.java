@@ -41,12 +41,12 @@ class TARDISSchematicPaster {
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
 
-    public TARDISSchematicPaster(TARDIS plugin, Player player) {
+    TARDISSchematicPaster(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }
 
-    public boolean paste() {
+    boolean paste() {
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
             player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");

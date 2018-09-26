@@ -37,8 +37,8 @@ public class TARDISRandomNether extends TARDISRandomLocation {
     private final List<World> worlds;
     private final Random random = new Random();
 
-    public TARDISRandomNether(TARDIS plugin, List<String> list, Parameters param) {
-        super(plugin, list, param);
+    TARDISRandomNether(TARDIS plugin, List<String> list, Parameters param) {
+        super(plugin);
         worlds = getWorlds(list);
         this.plugin = plugin;
         this.param = param;

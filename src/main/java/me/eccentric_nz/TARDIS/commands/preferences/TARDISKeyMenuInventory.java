@@ -34,7 +34,7 @@ class TARDISKeyMenuInventory {
 
     private final ItemStack[] menu;
 
-    public TARDISKeyMenuInventory() {
+    TARDISKeyMenuInventory() {
         menu = getItemStack();
     }
 
@@ -136,9 +136,7 @@ class TARDISKeyMenuInventory {
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
 
-        return new ItemStack[]{brass, plain, spade, silver, seal, variant, s_plain, clara, perception,
-                null, susan, null, era, null, sally, null, bromley, null,
-                null, null, null, null, info, null, null, null, close};
+        return new ItemStack[]{brass, plain, spade, silver, seal, variant, s_plain, clara, perception, null, susan, null, era, null, sally, null, bromley, null, null, null, null, null, info, null, null, null, close};
     }
 
     public ItemStack[] getMenu() {

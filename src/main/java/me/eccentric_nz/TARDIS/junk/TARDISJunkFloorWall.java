@@ -35,11 +35,11 @@ class TARDISJunkFloorWall {
 
     private final TARDIS plugin;
 
-    public TARDISJunkFloorWall(TARDIS plugin) {
+    TARDISJunkFloorWall(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setJunkWallOrFloor(CommandSender sender, String[] args) {
+    boolean setJunkWallOrFloor(CommandSender sender, String[] args) {
         String pref = args[0].toLowerCase(Locale.ENGLISH);
         // check args
         if (args.length < 2) {

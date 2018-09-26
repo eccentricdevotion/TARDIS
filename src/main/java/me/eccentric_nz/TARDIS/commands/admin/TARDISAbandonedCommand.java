@@ -39,7 +39,7 @@ class TARDISAbandonedCommand {
 
     private final TARDIS plugin;
 
-    public TARDISAbandonedCommand(TARDIS plugin) {
+    TARDISAbandonedCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

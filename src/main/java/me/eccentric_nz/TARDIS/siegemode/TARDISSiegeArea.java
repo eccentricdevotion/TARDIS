@@ -64,7 +64,7 @@ public class TARDISSiegeArea {
         }
     }
 
-    public boolean isInSiegeArea(Location l) {
+    boolean isInSiegeArea(Location l) {
         int x = l.getBlockX();
         int y = l.getBlockY();
         int z = l.getBlockZ();

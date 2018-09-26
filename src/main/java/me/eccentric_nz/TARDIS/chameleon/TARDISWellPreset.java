@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISWellPreset extends TARDISPreset {
+class TARDISWellPreset extends TARDISPreset {
 
-    public TARDISWellPreset() {
+    TARDISWellPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:mossy_stone_bricks";

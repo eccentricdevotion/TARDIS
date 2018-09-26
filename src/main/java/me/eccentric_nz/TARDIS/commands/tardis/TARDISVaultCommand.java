@@ -35,11 +35,11 @@ class TARDISVaultCommand {
 
     private final TARDIS plugin;
 
-    public TARDISVaultCommand(TARDIS plugin) {
+    TARDISVaultCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean addDropChest(Player player) {
+    boolean addDropChest(Player player) {
         // check permission
         if (!player.hasPermission("tardis.vault")) {
             TARDISMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");

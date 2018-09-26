@@ -37,11 +37,11 @@ class TARDISRemoteBackCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRemoteBackCommand(TARDIS plugin) {
+    TARDISRemoteBackCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean sendBack(CommandSender sender, int id, OfflinePlayer player) {
+    boolean sendBack(CommandSender sender, int id, OfflinePlayer player) {
 
         // get fast return location
         HashMap<String, Object> wherebl = new HashMap<>();

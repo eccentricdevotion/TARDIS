@@ -15,7 +15,7 @@ class TARDISTransmatCommand {
 
     private final TARDIS plugin;
 
-    public TARDISTransmatCommand(TARDIS plugin) {
+    TARDISTransmatCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

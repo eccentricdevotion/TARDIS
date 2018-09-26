@@ -44,8 +44,8 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
     private final Random random = new Random();
     private Location dest;
 
-    public TARDISRandomOverworld(TARDIS plugin, List<String> list, Parameters param) {
-        super(plugin, list, param);
+    TARDISRandomOverworld(TARDIS plugin, List<String> list, Parameters param) {
+        super(plugin);
         worlds = getWorlds(list);
         this.plugin = plugin;
         this.param = param;
@@ -69,7 +69,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             }
             // get the y coord
             if (param.spaceTardis()) {
-                if (safeOverworld(war.getW(), x, z, param.getCompass(), param.getPlayer())) {
+                if (safeOverworld(war.getW(), x, z, param.getCompass())) {
                     if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TARDISStaticUtils.isOceanBiome(dest.getBlock().getBiome())) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
@@ -89,7 +89,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         return dest;
     }
 
-    private boolean safeOverworld(World world, int wherex, int wherez, COMPASS d, Player p) {
+    private boolean safeOverworld(World world, int wherex, int wherez, COMPASS d) {
         boolean safe = false;
         int count;
         int highest = world.getHighestBlockYAt(wherex, wherez);

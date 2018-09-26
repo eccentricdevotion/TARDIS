@@ -17,21 +17,15 @@
  */
 package me.eccentric_nz.TARDIS.noteblock;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 class NBSDecoder {
 
-    public static Song parse(File decodeFile) {
-        try {
-            return parse(new FileInputStream(decodeFile), decodeFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Song parse(InputStream inputStream) {
+    static Song parse(InputStream inputStream) {
         return parse(inputStream, null); // Source is unknown -> no file
     }
 
@@ -41,10 +35,7 @@ class NBSDecoder {
             DataInputStream dis = new DataInputStream(inputStream);
             short length = readShort(dis);
             short songHeight = readShort(dis);
-            String title = readString(dis);
-            String author = readString(dis);
             readString(dis);
-            String description = readString(dis);
             float speed = readShort(dis) / 100f;
             dis.readBoolean(); // auto-save
             dis.readByte(); // auto-save duration
@@ -79,7 +70,7 @@ class NBSDecoder {
                     l.setVolume(dis.readByte());
                 }
             }
-            return new Song(speed, layerHashMap, songHeight, length, title, author, description, decodeFile);
+            return new Song(speed, layerHashMap, length);
         } catch (IOException e) {
             e.printStackTrace();
         }

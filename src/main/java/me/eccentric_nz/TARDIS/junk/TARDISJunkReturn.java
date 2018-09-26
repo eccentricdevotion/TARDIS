@@ -30,11 +30,11 @@ class TARDISJunkReturn {
 
     private final TARDIS plugin;
 
-    public TARDISJunkReturn(TARDIS plugin) {
+    TARDISJunkReturn(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean recall(CommandSender sender) {
+    boolean recall(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
             return true;

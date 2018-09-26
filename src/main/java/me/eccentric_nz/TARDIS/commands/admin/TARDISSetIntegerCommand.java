@@ -34,11 +34,11 @@ class TARDISSetIntegerCommand {
     private final TARDIS plugin;
     private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
 
-    public TARDISSetIntegerCommand(TARDIS plugin) {
+    TARDISSetIntegerCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setConfigInt(CommandSender sender, String[] args, String section) {
+    boolean setConfigInt(CommandSender sender, String[] args, String section) {
         String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
         String a = args[1];
         if (args[0].toLowerCase(Locale.ENGLISH).equals("tips_limit") && !TIPS_SUBS.contains(a)) {

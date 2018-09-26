@@ -33,11 +33,11 @@ class TARDISSiegeCommand {
     private final List<String> siegeArgs = Arrays.asList("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
     private final List<String> siegeBool = Arrays.asList("enabled", "butcher", "creeper", "healing", "texture");
 
-    public TARDISSiegeCommand(TARDIS plugin) {
+    TARDISSiegeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setOption(CommandSender sender, String[] args) {
+    boolean setOption(CommandSender sender, String[] args) {
         if (args.length == 2 && args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("false")) {
             plugin.getConfig().set("siege.enabled", Boolean.valueOf(args[1].toLowerCase(Locale.ENGLISH)));
             plugin.saveConfig();

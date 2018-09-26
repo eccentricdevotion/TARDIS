@@ -58,9 +58,8 @@ class TARDISInstaPreset {
     private final Material random_colour;
     private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<>();
-    private final List<Material> doors = Arrays.asList(Material.IRON_DOOR, Material.OAK_DOOR, Material.BIRCH_DOOR, Material.SPRUCE_DOOR, Material.JUNGLE_DOOR, Material.ACACIA_DOOR, Material.DARK_OAK_DOOR);
 
-    public TARDISInstaPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData cham_id, boolean rebuild) {
+    TARDISInstaPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData cham_id, boolean rebuild) {
         this.plugin = plugin;
         this.bd = bd;
         this.preset = preset;

@@ -38,7 +38,7 @@ class TARDISLazarusRunnable implements Runnable {
     private final MultipleFacing MOSSY = (MultipleFacing) Material.MOSSY_COBBLESTONE_WALL.createBlockData();
     private final MultipleFacing PLAIN = (MultipleFacing) Material.COBBLESTONE_WALL.createBlockData();
 
-    public TARDISLazarusRunnable(TARDIS plugin, Block b) {
+    TARDISLazarusRunnable(TARDIS plugin, Block b) {
         this.plugin = plugin;
         this.b = b;
         MOSSY.setFace(BlockFace.UP, true);

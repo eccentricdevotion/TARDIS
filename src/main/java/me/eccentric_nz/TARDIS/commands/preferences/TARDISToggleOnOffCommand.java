@@ -36,7 +36,7 @@ class TARDISToggleOnOffCommand {
     private final TARDIS plugin;
     private final List<String> was;
 
-    public TARDISToggleOnOffCommand(TARDIS plugin) {
+    TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
         was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "ctm", "difficulty", "dnd", "eps", "farm", "hads", "minecart", "renderer", "submarine", "travelbar", "telepathy");
     }

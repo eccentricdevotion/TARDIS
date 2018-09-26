@@ -45,7 +45,7 @@ class TARDISSQLInsert implements Runnable {
      * @param table  the database table name to insert the data into.
      * @param data   a HashMap<String, Object> of table fields and values to insert.
      */
-    public TARDISSQLInsert(TARDIS plugin, String table, HashMap<String, Object> data) {
+    TARDISSQLInsert(TARDIS plugin, String table, HashMap<String, Object> data) {
         this.plugin = plugin;
         this.table = table;
         this.data = data;

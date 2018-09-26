@@ -348,7 +348,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }, 1200L);
                         return true;
                     }
-                    if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
+                    if (args[0].equalsIgnoreCase("biome")) {
                         // we're thinking this is a biome search
                         if (!player.hasPermission("tardis.timetravel.biome")) {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_BIOME");
@@ -623,8 +623,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (player.hasPermission("tardis.timetravel.location")) {
                         switch (args.length) {
-                            case 0:
-                            case 1:
                             case 2:
                                 TARDISMessage.send(player, "ARG_COORDS");
                                 return false;
@@ -871,7 +869,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             int limitn = startz - 30000;
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                 // get the border limit for this world
-                TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin, plugin.getPluginRespect().isBorderOnServer());
+                TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin);
                 int[] data = wb.getBorderDistance(w.getName());
                 limite = data[0];
                 limits = data[1];

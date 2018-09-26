@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
  */
 class TARDISHandlesSayCommand {
 
-    public boolean say(Player player, String[] args) {
+    boolean say(Player player, String[] args) {
         StringBuilder sb = new StringBuilder();
         for (int i = 2; i < args.length; i++) {
             sb.append(args[i]).append(" ");

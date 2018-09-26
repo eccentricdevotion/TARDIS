@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISRubberDuckPreset extends TARDISPreset {
+class TARDISRubberDuckPreset extends TARDISPreset {
 
-    public TARDISRubberDuckPreset() {
+    TARDISRubberDuckPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:acacia_stairs[half=bottom,facing=east,shape=straight]";

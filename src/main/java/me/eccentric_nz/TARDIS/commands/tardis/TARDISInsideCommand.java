@@ -33,11 +33,11 @@ class TARDISInsideCommand {
 
     private final TARDIS plugin;
 
-    public TARDISInsideCommand(TARDIS plugin) {
+    TARDISInsideCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean whosInside(Player player, String[] args) {
+    boolean whosInside(Player player, String[] args) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {

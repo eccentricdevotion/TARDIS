@@ -34,7 +34,7 @@ class TARDISHumInventory {
 
     private final ItemStack[] sounds;
 
-    public TARDISHumInventory() {
+    TARDISHumInventory() {
         sounds = getItemStack();
     }
 

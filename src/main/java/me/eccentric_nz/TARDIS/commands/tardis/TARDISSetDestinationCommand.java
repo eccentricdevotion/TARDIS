@@ -39,11 +39,11 @@ class TARDISSetDestinationCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetDestinationCommand(TARDIS plugin) {
+    TARDISSetDestinationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doSetDestination(Player player, String[] args) {
+    boolean doSetDestination(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {

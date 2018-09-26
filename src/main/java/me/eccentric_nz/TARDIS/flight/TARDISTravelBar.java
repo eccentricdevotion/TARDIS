@@ -33,11 +33,11 @@ class TARDISTravelBar {
     private int taskID;
     private static final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
 
-    public TARDISTravelBar(TARDIS plugin) {
+    TARDISTravelBar(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void showTravelRemaining(Player player, long duration, boolean takeoff) {
+    void showTravelRemaining(Player player, long duration, boolean takeoff) {
 
         String title = (takeoff) ? plugin.getLanguage().getString("TRAVEL_BAR_TAKEOFF") : plugin.getLanguage().getString("TRAVEL_BAR_LAND");
         BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);

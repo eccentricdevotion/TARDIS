@@ -51,68 +51,9 @@ class TARDISBuildGallifreyanStructure {
     private final TARDIS plugin;
     private final TARDISRandomCollection<String> nbtFiles = new TARDISRandomCollection<>();
 
-    public TARDISBuildGallifreyanStructure(TARDIS plugin) {
+    TARDISBuildGallifreyanStructure(TARDIS plugin) {
         this.plugin = plugin;
-        nbtFiles.add(1, "RareE-1.nbt")
-                .add(1, "RareE-2.nbt")
-                .add(1, "RareE-3.nbt")
-                .add(2, "RareE-4.nbt")
-                .add(2, "RareE-5.nbt")
-                .add(2, "RareE-6.nbt")
-                .add(3, "RareE-7.nbt")
-                .add(3, "RareE-8.nbt")
-                .add(3, "RareE-9.nbt")
-                .add(4, "RareE-10.nbt")
-                .add(4, "RareE-11.nbt")
-                .add(4, "RareE-12.nbt")
-                .add(5, "RareE-13.nbt")
-                .add(5, "RareE-14.nbt")
-                .add(5, "RareE-15.nbt")
-                .add(6, "Rare-1.nbt")
-                .add(6, "Rare-2.nbt")
-                .add(6, "Rare-3.nbt")
-                .add(7, "Rare-4.nbt")
-                .add(7, "Rare-5.nbt")
-                .add(7, "Rare-6.nbt")
-                .add(8, "Rare-7.nbt")
-                .add(8, "Rare-8.nbt")
-                .add(8, "Rare-9.nbt")
-                .add(9, "Rare-10.nbt")
-                .add(9, "Rare-11.nbt")
-                .add(9, "Rare-12.nbt")
-                .add(10, "Rare-13.nbt")
-                .add(10, "Rare-14.nbt")
-                .add(10, "Rare-15.nbt")
-                .add(20, "BasicE-1.nbt")
-                .add(20, "BasicE-2.nbt")
-                .add(21, "BasicE-3.nbt")
-                .add(22, "BasicE-4.nbt")
-                .add(23, "BasicE-5.nbt")
-                .add(24, "BasicE-6.nbt")
-                .add(25, "BasicE-7.nbt")
-                .add(25, "BasicE-8.nbt")
-                .add(26, "BasicE-9.nbt")
-                .add(26, "BasicE-10.nbt")
-                .add(27, "BasicE-11.nbt")
-                .add(28, "BasicE-12.nbt")
-                .add(28, "BasicE-13.nbt")
-                .add(29, "BasicE-14.nbt")
-                .add(30, "BasicE-15.nbt")
-                .add(33, "Basic-1.nbt")
-                .add(38, "Basic-2.nbt")
-                .add(43, "Basic-3.nbt")
-                .add(48, "Basic-4.nbt")
-                .add(53, "Basic-5.nbt")
-                .add(58, "Basic-6.nbt")
-                .add(63, "Basic-7.nbt")
-                .add(68, "Basic-8.nbt")
-                .add(73, "Basic-9.nbt")
-                .add(78, "Basic-10.nbt")
-                .add(83, "Basic-11.nbt")
-                .add(88, "Basic-12.nbt")
-                .add(93, "Basic-13.nbt")
-                .add(98, "Basic-14.nbt")
-                .add(100, "Basic-15.nbt");
+        nbtFiles.add(1, "RareE-1.nbt").add(1, "RareE-2.nbt").add(1, "RareE-3.nbt").add(2, "RareE-4.nbt").add(2, "RareE-5.nbt").add(2, "RareE-6.nbt").add(3, "RareE-7.nbt").add(3, "RareE-8.nbt").add(3, "RareE-9.nbt").add(4, "RareE-10.nbt").add(4, "RareE-11.nbt").add(4, "RareE-12.nbt").add(5, "RareE-13.nbt").add(5, "RareE-14.nbt").add(5, "RareE-15.nbt").add(6, "Rare-1.nbt").add(6, "Rare-2.nbt").add(6, "Rare-3.nbt").add(7, "Rare-4.nbt").add(7, "Rare-5.nbt").add(7, "Rare-6.nbt").add(8, "Rare-7.nbt").add(8, "Rare-8.nbt").add(8, "Rare-9.nbt").add(9, "Rare-10.nbt").add(9, "Rare-11.nbt").add(9, "Rare-12.nbt").add(10, "Rare-13.nbt").add(10, "Rare-14.nbt").add(10, "Rare-15.nbt").add(20, "BasicE-1.nbt").add(20, "BasicE-2.nbt").add(21, "BasicE-3.nbt").add(22, "BasicE-4.nbt").add(23, "BasicE-5.nbt").add(24, "BasicE-6.nbt").add(25, "BasicE-7.nbt").add(25, "BasicE-8.nbt").add(26, "BasicE-9.nbt").add(26, "BasicE-10.nbt").add(27, "BasicE-11.nbt").add(28, "BasicE-12.nbt").add(28, "BasicE-13.nbt").add(29, "BasicE-14.nbt").add(30, "BasicE-15.nbt").add(33, "Basic-1.nbt").add(38, "Basic-2.nbt").add(43, "Basic-3.nbt").add(48, "Basic-4.nbt").add(53, "Basic-5.nbt").add(58, "Basic-6.nbt").add(63, "Basic-7.nbt").add(68, "Basic-8.nbt").add(73, "Basic-9.nbt").add(78, "Basic-10.nbt").add(83, "Basic-11.nbt").add(88, "Basic-12.nbt").add(93, "Basic-13.nbt").add(98, "Basic-14.nbt").add(100, "Basic-15.nbt");
     }
 
     /**
@@ -122,7 +63,7 @@ class TARDISBuildGallifreyanStructure {
      * @param starty the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
      */
-    public void buildCity(int startx, int starty, int startz) {
+    void buildCity(int startx, int starty, int startz) {
         World world = plugin.getServer().getWorld("Gallifrey");
         String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "gallifrey.tschm";
         File file = new File(path);

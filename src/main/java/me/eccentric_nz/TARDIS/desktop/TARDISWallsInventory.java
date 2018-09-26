@@ -35,7 +35,7 @@ class TARDISWallsInventory {
     private final ItemStack[] menu;
     private final TARDIS plugin;
 
-    public TARDISWallsInventory(TARDIS plugin) {
+    TARDISWallsInventory(TARDIS plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }

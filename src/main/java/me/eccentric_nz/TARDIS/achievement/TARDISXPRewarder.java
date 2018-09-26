@@ -39,7 +39,7 @@ import java.util.Arrays;
  */
 class TARDISXPRewarder {
 
-    private static int hardMaxLevel = 100000;
+    private static final int hardMaxLevel = 100000;
     private static int xpTotalToReachLevel[];
     private final WeakReference<Player> player;
     private final String playerName;
@@ -56,28 +56,10 @@ class TARDISXPRewarder {
      * @param player the player for this XPKCalculator object
      * @throws IllegalArgumentException if the player is null
      */
-    public TARDISXPRewarder(Player player) {
+    TARDISXPRewarder(Player player) {
         Validate.notNull(player, "Player cannot be null");
         this.player = new WeakReference<>(player);
         playerName = player.getName();
-    }
-
-    /**
-     * Get the current hard max level for which calculations will be done.
-     *
-     * @return the current hard max level
-     */
-    public static int getHardMaxLevel() {
-        return hardMaxLevel;
-    }
-
-    /**
-     * Set the current hard max level for which calculations will be done.
-     *
-     * @param hardMaxLevel the new hard max level
-     */
-    public static void setHardMaxLevel(int hardMaxLevel) {
-        TARDISXPRewarder.hardMaxLevel = hardMaxLevel;
     }
 
     /**
@@ -89,10 +71,7 @@ class TARDISXPRewarder {
         xpTotalToReachLevel = new int[maxLevel];
 
         for (int i = 0; i < xpTotalToReachLevel.length; i++) {
-            xpTotalToReachLevel[i]
-                    = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220)
-                    : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360)
-                    : 17 * i;
+            xpTotalToReachLevel[i] = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220) : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360) : 17 * i;
         }
     }
 
@@ -136,7 +115,7 @@ class TARDISXPRewarder {
      *
      * @param amt Amount of XP, may be negative
      */
-    public void changeExp(int amt) {
+    void changeExp(int amt) {
         changeExp((double) amt);
     }
 
@@ -148,24 +127,6 @@ class TARDISXPRewarder {
      */
     private void changeExp(double amt) {
         setExp(getCurrentFractionalXP(), amt);
-    }
-
-    /**
-     * Set the player's experience
-     *
-     * @param amt Amount of XP, should not be negative
-     */
-    public void setExp(int amt) {
-        setExp(0, amt);
-    }
-
-    /**
-     * Set the player's fractional experience.
-     *
-     * @param amt Amount of XP, should not be negative
-     */
-    public void setExp(double amt) {
-        setExp(0, amt);
     }
 
     private void setExp(double base, double amt) {
@@ -189,18 +150,6 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Get the player's current XP total.
-     *
-     * @return the player's total XP
-     */
-    private int getCurrentExp() {
-        Player p = getPlayer();
-
-        int lvl = p.getLevel();
-        return getXpForLevel(lvl) + Math.round(getXpNeededToLevelUp(lvl) * p.getExp());
-    }
-
-    /**
      * Get the player's current fractional XP.
      *
      * @return The player's total XP with fractions.
@@ -210,26 +159,6 @@ class TARDISXPRewarder {
 
         int lvl = p.getLevel();
         return getXpForLevel(lvl) + (double) (getXpNeededToLevelUp(lvl) * p.getExp());
-    }
-
-    /**
-     * Checks if the player has the given amount of XP.
-     *
-     * @param amt The amount to check for.
-     * @return true if the player has enough XP, false otherwise
-     */
-    public boolean hasExp(int amt) {
-        return getCurrentExp() >= amt;
-    }
-
-    /**
-     * Checks if the player has the given amount of fractional XP.
-     *
-     * @param amt The amount to check for.
-     * @return true if the player has enough XP, false otherwise
-     */
-    public boolean hasExp(double amt) {
-        return getCurrentFractionalXP() >= amt;
     }
 
     /**

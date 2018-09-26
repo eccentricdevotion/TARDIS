@@ -35,11 +35,11 @@ class TARDISRemoveCompanionCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRemoveCompanionCommand(TARDIS plugin) {
+    TARDISRemoveCompanionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doRemoveCompanion(Player player, String[] args) {
+    boolean doRemoveCompanion(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());

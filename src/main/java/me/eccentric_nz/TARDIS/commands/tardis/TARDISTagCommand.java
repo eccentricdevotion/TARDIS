@@ -33,11 +33,11 @@ class TARDISTagCommand {
 
     private final TARDIS plugin;
 
-    public TARDISTagCommand(TARDIS plugin) {
+    TARDISTagCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean getStats(Player player) {
+    boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
         player.sendMessage(plugin.getPluginName() + "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
@@ -60,10 +60,6 @@ class TARDISTagCommand {
     }
 
     private String getHoursMinutesSeconds(long millis) {
-        return String.format(
-                "%02dh:%02dm:%02ds",
-                TimeUnit.MILLISECONDS.toHours(millis),
-                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+        return String.format("%02dh:%02dm:%02ds", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 }

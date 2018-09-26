@@ -83,7 +83,7 @@ public class TARDISSeedData {
         maxz = z + 4;
     }
 
-    public boolean hasARS() {
+    boolean hasARS() {
         return ARS;
     }
 

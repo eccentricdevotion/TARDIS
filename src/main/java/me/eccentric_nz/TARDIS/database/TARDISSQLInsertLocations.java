@@ -46,7 +46,7 @@ class TARDISSQLInsertLocations implements Runnable {
      * @param biome  the Police Box biome type
      * @param id     the tardis_id
      */
-    public TARDISSQLInsertLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
+    TARDISSQLInsertLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
         this.plugin = plugin;
         this.data = data;
         this.biome = biome;

@@ -35,11 +35,11 @@ class TARDISBuildCommand {
 
     private final TARDIS plugin;
 
-    public TARDISBuildCommand(TARDIS plugin) {
+    TARDISBuildCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean toggleCompanionBuilding(Player player, String[] args) {
+    boolean toggleCompanionBuilding(Player player, String[] args) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
             TARDISMessage.send(player, "CMD_DISABLED");
             return true;

@@ -29,7 +29,7 @@ class TARDISChameleonConstructorGUI {
     private final TARDIS plugin;
     private final ItemStack[] construct;
 
-    public TARDISChameleonConstructorGUI(TARDIS plugin) {
+    TARDISChameleonConstructorGUI(TARDIS plugin) {
         this.plugin = plugin;
         construct = getItemStack();
     }

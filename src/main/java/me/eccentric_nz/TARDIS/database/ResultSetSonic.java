@@ -94,7 +94,6 @@ public class ResultSetSonic {
                 String colour = rs.getString("sonic_type");
                 ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
-                    rs.getInt("sonic_id"),
                     UUID.fromString(rs.getString("uuid")),
                     rs.getBoolean("activated"),
                     cc,

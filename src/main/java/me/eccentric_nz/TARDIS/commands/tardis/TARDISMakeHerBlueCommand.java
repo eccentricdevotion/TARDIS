@@ -39,7 +39,7 @@ class TARDISMakeHerBlueCommand {
 
     private final TARDIS plugin;
 
-    public TARDISMakeHerBlueCommand(TARDIS plugin) {
+    TARDISMakeHerBlueCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -32,7 +32,7 @@ class TARDISJunkFind {
 
     private final TARDIS plugin;
 
-    public TARDISJunkFind(TARDIS plugin) {
+    TARDISJunkFind(TARDIS plugin) {
         this.plugin = plugin;
     }
 

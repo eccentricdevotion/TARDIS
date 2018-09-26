@@ -102,7 +102,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private Archive archive;
     private final boolean clean;
 
-    public TARDISThemeRepairRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean clean) {
+    TARDISThemeRepairRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean clean) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;

@@ -34,7 +34,7 @@ class TARDISRecipeLister {
     private final CommandSender sender;
     private final LinkedHashMap<String, List<String>> options;
 
-    public TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
+    TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;
         this.sender = sender;
         options = createRecipeOptions();

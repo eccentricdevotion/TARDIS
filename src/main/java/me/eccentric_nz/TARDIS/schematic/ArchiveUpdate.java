@@ -68,7 +68,6 @@ public class ArchiveUpdate {
                     ps.setInt(2, rs.getInt("archive_id"));
                     ps.executeUpdate();
                 }
-            } else {
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for archive update! " + e.getMessage());

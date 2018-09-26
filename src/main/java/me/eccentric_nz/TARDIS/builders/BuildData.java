@@ -41,11 +41,11 @@ public final class BuildData extends MaterialisationData {
         setPlayerDefaults(uuid);
     }
 
-    public boolean shouldUseCTM() {
+    boolean shouldUseCTM() {
         return CTM;
     }
 
-    public boolean shouldAddSign() {
+    boolean shouldAddSign() {
         return addSign;
     }
 
@@ -57,7 +57,7 @@ public final class BuildData extends MaterialisationData {
         this.malfunction = malfunction;
     }
 
-    public boolean useMinecartSounds() {
+    boolean useMinecartSounds() {
         return minecartSounds;
     }
 
@@ -69,7 +69,7 @@ public final class BuildData extends MaterialisationData {
         this.rebuild = rebuild;
     }
 
-    public boolean useTexture() {
+    boolean useTexture() {
         return texture;
     }
 

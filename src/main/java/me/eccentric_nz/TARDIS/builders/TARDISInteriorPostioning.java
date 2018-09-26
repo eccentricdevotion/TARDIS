@@ -55,7 +55,7 @@ public class TARDISInteriorPostioning {
      *
      * @return the first vacant slot
      */
-    public int getFreeSlot() {
+    int getFreeSlot() {
         int limit = plugin.getConfig().getInt("creation.tips_limit");
         List<Integer> usedSlots = makeUsedSlotList();
         int slot = -1;

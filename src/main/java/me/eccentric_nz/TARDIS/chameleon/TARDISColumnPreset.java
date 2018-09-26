@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISColumnPreset extends TARDISPreset {
+class TARDISColumnPreset extends TARDISPreset {
 
-    public TARDISColumnPreset() {
+    TARDISColumnPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:stone_brick_stairs[half=bottom,facing=south,shape=straight]";

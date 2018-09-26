@@ -24,9 +24,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISPandoricaPreset extends TARDISPreset {
+class TARDISPandoricaPreset extends TARDISPreset {
 
-    public TARDISPandoricaPreset() {
+    TARDISPandoricaPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:bedrock";

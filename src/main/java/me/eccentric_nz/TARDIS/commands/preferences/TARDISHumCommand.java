@@ -29,7 +29,7 @@ import java.util.Locale;
  */
 class TARDISHumCommand {
 
-    public boolean setHumPref(Player player, String[] args, QueryFactory qf) {
+    boolean setHumPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
             TARDISMessage.send(player, "HUM_NEED");
             return false;

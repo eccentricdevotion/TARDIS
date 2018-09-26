@@ -36,11 +36,11 @@ class TARDISRemoteRebuildCommand {
 
     private final TARDIS plugin;
 
-    public TARDISRemoteRebuildCommand(TARDIS plugin) {
+    TARDISRemoteRebuildCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean cham, boolean hidden) {
+    boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean cham, boolean hidden) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

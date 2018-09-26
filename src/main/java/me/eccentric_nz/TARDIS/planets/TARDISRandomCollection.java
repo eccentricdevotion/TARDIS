@@ -30,7 +30,7 @@ public class TARDISRandomCollection<String> {
     private final Random random;
     private double total = 0;
 
-    public TARDISRandomCollection() {
+    TARDISRandomCollection() {
         this(new Random());
     }
 

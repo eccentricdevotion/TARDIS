@@ -41,11 +41,11 @@ class TARDISAddCompanionCommand {
 
     private final TARDIS plugin;
 
-    public TARDISAddCompanionCommand(TARDIS plugin) {
+    TARDISAddCompanionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doAddGUI(Player player) {
+    boolean doAddGUI(Player player) {
         if (player.hasPermission("tardis.add")) {
             ItemStack[] items = new TARDISCompanionAddInventory(plugin, player.getUniqueId()).getPlayers();
             Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
@@ -57,7 +57,7 @@ class TARDISAddCompanionCommand {
         return true;
     }
 
-    public boolean doAdd(Player player, String[] args) {
+    boolean doAdd(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());

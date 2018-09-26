@@ -44,7 +44,7 @@ class TARDISManualFlightRunnable implements Runnable {
     private final Player player;
     private final UUID uuid;
 
-    public TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
+    TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         target = getRepeaterList(id);

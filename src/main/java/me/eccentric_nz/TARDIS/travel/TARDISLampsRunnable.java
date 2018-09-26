@@ -44,7 +44,7 @@ class TARDISLampsRunnable implements Runnable {
     private int task;
     private Location handbrake_loc;
 
-    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start, Material light, boolean use_wool) {
+    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start, Material light, boolean use_wool) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.start = start;

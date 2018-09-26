@@ -56,7 +56,7 @@ class TARDISHandlesScanCommand {
     private final int id;
     private final boolean inTARDIS;
 
-    public TARDISHandlesScanCommand(TARDIS plugin, Player player, int id) {
+    TARDISHandlesScanCommand(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;

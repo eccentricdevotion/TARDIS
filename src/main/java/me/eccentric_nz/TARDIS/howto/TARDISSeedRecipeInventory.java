@@ -35,7 +35,7 @@ class TARDISSeedRecipeInventory {
     private final ItemStack[] menu;
     private final Material block;
 
-    public TARDISSeedRecipeInventory(Material block) {
+    TARDISSeedRecipeInventory(Material block) {
         this.block = block;
         menu = getItemStack();
     }

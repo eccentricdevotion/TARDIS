@@ -48,7 +48,7 @@ class TARDISMySQLDatabaseUpdater {
     private final TARDIS plugin;
     private final String prefix;
 
-    public TARDISMySQLDatabaseUpdater(TARDIS plugin, Statement statement) {
+    TARDISMySQLDatabaseUpdater(TARDIS plugin, Statement statement) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         this.statement = statement;
@@ -107,7 +107,7 @@ class TARDISMySQLDatabaseUpdater {
     /**
      * Adds new fields to tables in the database.
      */
-    public void updateTables() {
+    void updateTables() {
         int i = 0;
         try {
             for (Map.Entry<String, String> u : uuidUpdates.entrySet()) {

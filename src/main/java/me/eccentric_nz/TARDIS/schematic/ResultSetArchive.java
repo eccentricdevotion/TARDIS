@@ -76,7 +76,6 @@ public class ResultSetArchive {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     archive = new Archive(
-                            rs.getInt("archive_id"),
                             UUID.fromString(rs.getString("uuid")),
                             rs.getString("name"),
                             rs.getString("console_size"),

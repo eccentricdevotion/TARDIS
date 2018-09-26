@@ -46,7 +46,7 @@ class TARDISRoomRemover {
     private final COMPASS d;
     private final int id;
 
-    public TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d, int id) {
+    TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d, int id) {
         this.plugin = plugin;
         this.r = r;
         this.l = l;

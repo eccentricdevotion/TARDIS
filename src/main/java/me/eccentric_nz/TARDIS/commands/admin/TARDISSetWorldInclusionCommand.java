@@ -28,11 +28,11 @@ class TARDISSetWorldInclusionCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSetWorldInclusionCommand(TARDIS plugin) {
+    TARDISSetWorldInclusionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setWorldStatus(CommandSender sender, String[] args) {
+    boolean setWorldStatus(CommandSender sender, String[] args) {
         String first = args[0];
         // get world name
         int count = args.length;

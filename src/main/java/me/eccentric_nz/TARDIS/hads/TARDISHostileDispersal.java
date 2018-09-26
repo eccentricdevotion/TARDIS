@@ -55,12 +55,12 @@ class TARDISHostileDispersal {
     private final TARDIS plugin;
     private final List<Material> replace_with_barrier;
 
-    public TARDISHostileDispersal(TARDIS plugin) {
+    TARDISHostileDispersal(TARDIS plugin) {
         this.plugin = plugin;
         replace_with_barrier = buildList();
     }
 
-    public void disperseTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
+    void disperseTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

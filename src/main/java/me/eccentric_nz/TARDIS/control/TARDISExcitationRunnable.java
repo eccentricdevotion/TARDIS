@@ -47,7 +47,7 @@ class TARDISExcitationRunnable implements Runnable {
     private final Random RAND = new Random();
     private final List<Block> snow = new ArrayList<>();
 
-    public TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
+    TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
         this.plugin = plugin;
         location = l;
         this.player = player;

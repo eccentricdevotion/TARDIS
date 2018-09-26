@@ -61,9 +61,6 @@ public class Parameters {
                 case SPACE_TARDIS:
                     spaceTardis = true;
                     break;
-                case LIMIT:
-                    limit = true;
-                    break;
                 default:
                     break;
             }
@@ -80,11 +77,9 @@ public class Parameters {
     private boolean respectTowny = false;
     private boolean respectWorldguard = false;
     private boolean spaceTardis = false;
-    private boolean limit = false;
+    private final boolean limit = false;
     private COMPASS compass;
     private final Player player;
-    private int range;
-    private int[] centre = null;
 
     public boolean messagePlayer() {
         return messagePlayer;
@@ -122,7 +117,7 @@ public class Parameters {
         return respectWorldguard;
     }
 
-    public boolean spaceTardis() {
+    boolean spaceTardis() {
         return spaceTardis;
     }
 
@@ -140,23 +135,5 @@ public class Parameters {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public int getRange() {
-        return range;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
-    }
-
-    public int[] getCentre() {
-        return centre;
-    }
-
-    public void setCentre(int x, int z) {
-        centre = new int[2];
-        centre[0] = x;
-        centre[1] = z;
     }
 }

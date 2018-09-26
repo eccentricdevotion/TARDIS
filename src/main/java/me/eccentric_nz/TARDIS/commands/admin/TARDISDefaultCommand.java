@@ -29,11 +29,11 @@ class TARDISDefaultCommand {
 
     private final TARDIS plugin;
 
-    public TARDISDefaultCommand(TARDIS plugin) {
+    TARDISDefaultCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setDefaultItem(CommandSender sender, String[] args) {
+    boolean setDefaultItem(CommandSender sender, String[] args) {
         String which = args[0].toLowerCase(Locale.ENGLISH);
         int count = args.length;
         StringBuilder buf = new StringBuilder();

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.noteblock;
 
 public class Note {
 
-    private byte instrument;
+    private final byte instrument;
     private byte key;
 
     public Note(byte instrument, byte key) {
@@ -27,12 +27,8 @@ public class Note {
         this.key = key;
     }
 
-    public byte getInstrument() {
+    byte getInstrument() {
         return instrument;
-    }
-
-    public void setInstrument(byte instrument) {
-        this.instrument = instrument;
     }
 
     public byte getKey() {

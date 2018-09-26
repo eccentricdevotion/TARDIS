@@ -34,11 +34,11 @@ class TARDISHandlesLockUnlockCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHandlesLockUnlockCommand(TARDIS plugin) {
+    TARDISHandlesLockUnlockCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean toggleLock(Player player, int id, boolean lock) {
+    boolean toggleLock(Player player, int id, boolean lock) {
         // get the TARDIS current location
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);

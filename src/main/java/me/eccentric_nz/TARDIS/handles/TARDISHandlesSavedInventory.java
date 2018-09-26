@@ -36,7 +36,7 @@ class TARDISHandlesSavedInventory {
     private final String uuid;
     private final ItemStack[] programs;
 
-    public TARDISHandlesSavedInventory(TARDIS plugin, String uuid) {
+    TARDISHandlesSavedInventory(TARDIS plugin, String uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         programs = getItemStack();

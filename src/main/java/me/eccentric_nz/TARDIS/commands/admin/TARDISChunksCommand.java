@@ -27,11 +27,11 @@ class TARDISChunksCommand {
 
     private final TARDIS plugin;
 
-    public TARDISChunksCommand(TARDIS plugin) {
+    TARDISChunksCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean listChunks(CommandSender sender) {
+    boolean listChunks(CommandSender sender) {
         if (plugin.getGeneralKeeper().getTardisChunkList().size() > 0) {
             plugin.getGeneralKeeper().getTardisChunkList().forEach((c) -> sender.sendMessage(plugin.getPluginName() + c.getWorld().getName() + ": " + c));
         } else {

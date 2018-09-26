@@ -43,7 +43,7 @@ public final class DestroyData extends MaterialisationData {
         this.hide = hide;
     }
 
-    public Location getFromToLocation() {
+    Location getFromToLocation() {
         return fromToLocation;
     }
 

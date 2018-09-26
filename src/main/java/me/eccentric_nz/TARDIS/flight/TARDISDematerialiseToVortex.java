@@ -43,7 +43,7 @@ class TARDISDematerialiseToVortex implements Runnable {
     private final Player player;
     private final Location handbrake;
 
-    public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+    TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;

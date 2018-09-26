@@ -34,7 +34,7 @@ class TARDISRoomLister {
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
 
-    public TARDISRoomLister(TARDIS plugin, Player player) {
+    TARDISRoomLister(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         options = createRoomOptions(this.player);

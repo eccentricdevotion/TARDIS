@@ -25,15 +25,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-import java.util.Random;
-
 /**
  * @author eccentric_nz
  */
 public final class TARDISSiluriaSpawnListener implements Listener {
 
     private final TARDISWeepingAngelsAPI twaAPI;
-    private final Random r = new Random();
 
     public TARDISSiluriaSpawnListener(TARDIS plugin) {
         twaAPI = TARDISAngelsAPI.getAPI(plugin);

@@ -31,11 +31,11 @@ class TARDISMakePresetCommand {
 
     private final TARDIS plugin;
 
-    public TARDISMakePresetCommand(TARDIS plugin) {
+    TARDISMakePresetCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean scanBlocks(CommandSender sender, String[] args) {
+    boolean scanBlocks(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;

@@ -28,7 +28,7 @@ class TARDISDefaultWorldNameCommand {
 
     private final TARDIS plugin;
 
-    public TARDISDefaultWorldNameCommand(TARDIS plugin) {
+    TARDISDefaultWorldNameCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

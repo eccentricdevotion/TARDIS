@@ -30,12 +30,10 @@ import org.bukkit.Location;
  */
 public class TARDISWorldBorderChecker {
 
-    private WorldBorder border;
+    private final WorldBorder border;
 
-    public TARDISWorldBorderChecker(TARDIS plugin, boolean onServer) {
-        if (onServer) {
-            border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
-        }
+    public TARDISWorldBorderChecker(TARDIS plugin) {
+        border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
     }
 
     /**

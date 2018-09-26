@@ -23,9 +23,9 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISPineTreePreset extends TARDISPreset {
+class TARDISPineTreePreset extends TARDISPreset {
 
-    public TARDISPineTreePreset() {
+    TARDISPineTreePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:snow[layers=1]";

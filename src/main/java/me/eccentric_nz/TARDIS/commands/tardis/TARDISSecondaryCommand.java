@@ -33,11 +33,11 @@ class TARDISSecondaryCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSecondaryCommand(TARDIS plugin) {
+    TARDISSecondaryCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean startSecondary(Player player, String[] args) {
+    boolean startSecondary(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back"};
             if (args.length < 2) {

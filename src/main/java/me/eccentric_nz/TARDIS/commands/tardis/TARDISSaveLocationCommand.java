@@ -33,11 +33,11 @@ class TARDISSaveLocationCommand {
 
     private final TARDIS plugin;
 
-    public TARDISSaveLocationCommand(TARDIS plugin) {
+    TARDISSaveLocationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean doSave(Player player, String[] args) {
+    boolean doSave(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());

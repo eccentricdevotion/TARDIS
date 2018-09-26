@@ -40,11 +40,11 @@ class TARDISUpgradeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISUpgradeCommand(TARDIS plugin) {
+    TARDISUpgradeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean openUpgradeGUI(Player player) {
+    boolean openUpgradeGUI(Player player) {
         if (!player.hasPermission("tardis.upgrade")) {
             TARDISMessage.send(player, "NO_PERM_UPGRADE");
             return true;

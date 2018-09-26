@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Bukkit;
