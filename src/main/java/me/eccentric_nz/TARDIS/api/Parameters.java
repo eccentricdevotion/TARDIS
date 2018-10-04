@@ -77,7 +77,6 @@ public class Parameters {
     private boolean respectTowny = false;
     private boolean respectWorldguard = false;
     private boolean spaceTardis = false;
-    private final boolean limit = false;
     private COMPASS compass;
     private final Player player;
 
@@ -119,10 +118,6 @@ public class Parameters {
 
     boolean spaceTardis() {
         return spaceTardis;
-    }
-
-    public boolean limit() {
-        return limit;
     }
 
     public COMPASS getCompass() {
