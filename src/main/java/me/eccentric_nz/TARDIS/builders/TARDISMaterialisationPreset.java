@@ -24,13 +24,13 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.*;
 import org.bukkit.entity.Player;
@@ -622,11 +622,10 @@ class TARDISMaterialisationPreset implements Runnable {
                                 break;
                             case BLUE_WOOL:
                                 if (adapt.equals(ADAPTION.OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.shouldUseCTM() && n == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && plugin.getConfig().getBoolean("police_box.set_biome")) {
-                                    // set a quartz pillar block instead
-                                    Orientable orientable = (Orientable) Material.QUARTZ_PILLAR.createBlockData();
-                                    Axis axis = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? Axis.X : Axis.Z;
-                                    orientable.setAxis(axis);
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, orientable);
+                                    // set an observer block instead
+                                    Directional directional = (Directional) Material.OBSERVER.createBlockData();
+                                    directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, directional);
                                 } else if (adapt.equals(ADAPTION.BLOCK) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham_id);
                                 } else {

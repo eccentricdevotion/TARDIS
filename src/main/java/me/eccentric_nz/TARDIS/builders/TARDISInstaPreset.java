@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -33,6 +32,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.Bisected.Half;
@@ -273,11 +273,10 @@ class TARDISInstaPreset {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
                         }
                         if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
-                            // set a quartz pillar block instead
-                            Orientable orientable = (Orientable) Material.QUARTZ_PILLAR.createBlockData();
-                            Axis axis = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? Axis.X : Axis.Z;
-                            orientable.setAxis(axis);
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, orientable, bd.getTardisID());
+                            // set an observer block instead
+                            Directional directional = (Directional) Material.OBSERVER.createBlockData();
+                            directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisID());
                         }
                         break;
                     case TORCH: // lamps, glowstone and torches
