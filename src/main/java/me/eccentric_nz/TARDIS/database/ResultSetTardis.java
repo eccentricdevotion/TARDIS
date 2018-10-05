@@ -118,6 +118,18 @@ public class ResultSetTardis {
                     if (rs.wasNull()) {
                         zero = "";
                     }
+                    PRESET preset;
+                    PRESET demat;
+                    try {
+                        preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    } catch (IllegalArgumentException e) {
+                        preset = PRESET.FACTORY;
+                    }
+                    try {
+                        demat = PRESET.valueOf(rs.getString("chameleon_demat"));
+                    } catch (IllegalArgumentException e) {
+                        demat = PRESET.FACTORY;
+                    }
                     tardis = new Tardis(
                         rs.getInt("tardis_id"),
                         UUID.fromString(uuid),
@@ -130,8 +142,8 @@ public class ResultSetTardis {
                         companions,
                         rs.getString("save_sign"),
                         rs.getString("chameleon"),
-                        PRESET.valueOf(rs.getString("chameleon_preset")),
-                        PRESET.valueOf(rs.getString("chameleon_demat")),
+                        preset,
+                        demat,
                         rs.getInt("adapti_on"),
                         rs.getInt("artron_level"),
                         rs.getString("creeper"),

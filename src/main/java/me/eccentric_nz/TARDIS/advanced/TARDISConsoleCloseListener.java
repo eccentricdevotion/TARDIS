@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
-import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
@@ -261,7 +258,12 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("direction", lore.get(6));
                                                 boolean sub = Boolean.valueOf(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
-                                                set_tardis.put("chameleon_preset", lore.get(5));
+                                                try {
+                                                    PRESET.valueOf(lore.get(5));
+                                                    set_tardis.put("chameleon_preset", lore.get(5));
+                                                } catch (IllegalArgumentException e) {
+                                                    plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                }
                                                 TARDISMessage.send(p, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                             } else {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_SAVE");

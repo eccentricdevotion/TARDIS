@@ -203,7 +203,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                         }
                                     }
                                     QueryFactory qf = new QueryFactory(plugin);
-                                    if (l_size >= 7) {
+                                    if (l_size >= 7 && !lore.get(6).equals(ChatColor.GOLD + "Current location")) {
                                         HashMap<String, Object> sett = new HashMap<>();
                                         sett.put("chameleon_preset", lore.get(6));
                                         HashMap<String, Object> wheret = new HashMap<>();
