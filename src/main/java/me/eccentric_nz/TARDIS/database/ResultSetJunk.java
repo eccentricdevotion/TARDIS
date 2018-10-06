@@ -103,7 +103,11 @@ public class ResultSetJunk {
                     handbrake = rs.getString("handbrake");
                     wall = rs.getString("wall");
                     floor = rs.getString("floor");
-                    preset = PRESET.valueOf(rs.getString("preset"));
+                    try {
+                        preset = PRESET.valueOf(rs.getString("preset"));
+                    } catch (IllegalArgumentException e) {
+                        preset = PRESET.FACTORY;
+                    }
                 }
             } else {
                 return false;

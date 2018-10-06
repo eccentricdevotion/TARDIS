@@ -68,7 +68,11 @@ public class ResultSetTardisPreset {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                try {
+                    preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                } catch (IllegalArgumentException e) {
+                    preset = PRESET.FACTORY;
+                }
                 return true;
             }
             return false;

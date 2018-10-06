@@ -79,7 +79,11 @@ public class ResultSetTardisAbandoned {
                 tardis_id = rs.getInt("tardis_id");
                 artron_level = rs.getInt("artron_level");
                 schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
-                preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                try {
+                    preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                } catch (IllegalArgumentException e) {
+                    preset = PRESET.FACTORY;
+                }
                 handbrake_on = rs.getBoolean("handbrake_on");
                 hidden = rs.getBoolean("hidden");
                 tardis_init = rs.getBoolean("tardis_init");

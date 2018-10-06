@@ -57,6 +57,12 @@ public class ResultSetStandby {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     StandbyData sd;
+                    PRESET preset;
+                    try {
+                        preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    } catch (IllegalArgumentException e) {
+                        preset = PRESET.FACTORY;
+                    }
                     switch (rs.getString("size")) {
                         case "JUNK":
                             sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
@@ -70,10 +76,10 @@ public class ResultSetStandby {
                             if (rsa.resultSet()) {
                                 lanterns = rsa.getArchive().isLanterns();
                             }
-                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), lanterns);
+                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
                             break;
                         default:
-                            sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getBY_NAMES().get(rs.getString("size")).hasLanterns());
+                            sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, CONSOLES.getBY_NAMES().get(rs.getString("size")).hasLanterns());
                             break;
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
