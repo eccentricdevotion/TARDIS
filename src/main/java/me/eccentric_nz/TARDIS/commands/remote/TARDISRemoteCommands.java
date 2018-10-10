@@ -24,7 +24,10 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.REMOTE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -73,7 +76,6 @@ public class TARDISRemoteCommands implements CommandExecutor {
                     }
                     // we're good to go
                     int id = tardis.getTardis_id();
-                    boolean chameleon = tardis.getAdaption().equals(ADAPTION.BLOCK);
                     boolean hidden = tardis.isHidden();
                     boolean handbrake = tardis.isHandbrake_on();
                     int level = tardis.getArtron_level();
@@ -129,7 +131,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                     return new TARDISRebuildCommand(plugin).rebuildPreset(p);
                                 } else {
-                                    return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, chameleon, hidden);
+                                    return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
                                 }
                             case COMEHERE:
                                 // NOT non-admin players, command blocks or the console
@@ -250,9 +252,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                                 return true;
                                             }
                                         }
-                                        int x,
-                                                y,
-                                                z;
+                                        int x, y, z;
                                         World w = plugin.getServer().getWorld(args[2]);
                                         if (w == null) {
                                             TARDISMessage.send(sender, "WORLD_NOT_FOUND");

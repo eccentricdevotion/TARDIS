@@ -237,6 +237,7 @@ public class TARDISStattenheimListener implements Listener {
                             bset.put("direction", d.toString());
                             bset.put("submarine", rsc.isSubmarine());
                         } else {
+                            hidden = true;
                             // set fast return location
                             bset.put("world", remoteLocation.getWorld().getName());
                             bset.put("x", remoteLocation.getX());

@@ -162,6 +162,7 @@ class TARDISRemoteComehereCommand {
             bset.put("direction", d.toString());
             bset.put("submarine", rsc.isSubmarine());
         } else {
+            hidden = true;
             // set fast return location
             bset.put("world", eyeLocation.getWorld().getName());
             bset.put("x", eyeLocation.getX());
