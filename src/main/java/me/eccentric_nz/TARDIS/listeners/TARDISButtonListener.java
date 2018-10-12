@@ -357,7 +357,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NO_PERMS");
                                         return;
                                     }
-                                    TARDISSounds.playTARDISSound(player, "Handles");
+                                    TARDISSounds.playTARDISSound(player, "handles");
                                     if (!player.hasPermission("tardis.handles.program")) {
                                         TARDISMessage.send(player, "NO_PERMS");
                                         return;
