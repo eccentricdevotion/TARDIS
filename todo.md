@@ -6,7 +6,8 @@
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
-6. Update documentation...
+6. Try to re-enable Skaro and Gallifrey worlds using cutom level.dat NBT files
+7. Update documentation...
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
