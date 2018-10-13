@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
@@ -218,6 +219,10 @@ public class TARDIS extends JavaPlugin {
             if (!getConfig().getBoolean("conversions.ars_materials")) {
                 new ARSConverter(this).convertARS();
                 getConfig().set("conversions.ars_materials", true);
+            }
+            if (!getConfig().getBoolean("conversions.constructs")) {
+                new ConstructsConverter(this).convertConstructs();
+                getConfig().set("conversions.constructs", true);
             }
             loadMultiverse();
             loadInventoryManager();

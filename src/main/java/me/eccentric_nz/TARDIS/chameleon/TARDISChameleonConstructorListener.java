@@ -174,8 +174,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     inv.clear(s + c);
                                                     return;
                                                 }
-                                                Material tid = d.getType();
-                                                blue[first][second] = tid.createBlockData().getAsString();
+                                                Material mat = d.getType();
+                                                blue[first][second] = mat.createBlockData().getAsString();
                                                 if (doors.contains(d.getType())) {
                                                     // doors
                                                     BlockData did = d.getType().createBlockData();
@@ -192,7 +192,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     blue[first][second] = dataStr;
                                                     stain[first][second] = dataStr;
                                                     glass[first][second] = dataStr;
-                                                } else if (tid.equals(Material.TORCH) || tid.equals(Material.REDSTONE_TORCH)) {
+                                                } else if (mat.equals(Material.TORCH) || mat.equals(Material.REDSTONE_TORCH)) {
                                                     // check block under torch
                                                     if (inv.getItem(35) == null) {
                                                         blue[first][second] = air;
@@ -200,14 +200,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                         stain[first][second] = air;
                                                     } else {
                                                         // torches
-                                                        blue[first][second] = tid.createBlockData().getAsString();
+                                                        blue[first][second] = mat.createBlockData().getAsString();
                                                         glass[first][second] = TARDISConstants.GLASS.getAsString();
-                                                        stain[first][second] = (tid.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getAsString() : Material.RED_STAINED_GLASS.createBlockData().getAsString();
+                                                        stain[first][second] = (mat.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getAsString() : Material.RED_STAINED_GLASS.createBlockData().getAsString();
                                                     }
                                                 } else {
-                                                    blue[first][second] = tid.createBlockData().getAsString();
+                                                    blue[first][second] = mat.createBlockData().getAsString();
                                                     glass[first][second] = TARDISConstants.GLASS.getAsString();
-                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(tid).createBlockData().getAsString();
+                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(mat).createBlockData().getAsString();
                                                 }
                                             } else {
                                                 blue[first][second] = air;
