@@ -5,6 +5,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Door;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,16 +89,33 @@ public class ConstructsConverter {
                                     stGrid[y][x] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).createBlockData().getAsString();
                                     break;
                                 case ACACIA_DOOR:
-                                case AIR:
                                 case BIRCH_DOOR:
                                 case DARK_OAK_DOOR:
                                 case IRON_DOOR:
                                 case JUNGLE_DOOR:
                                 case OAK_DOOR:
+                                case SPRUCE_DOOR:
+                                    BlockData dbd = material.createBlockData();
+                                    Door door = (Door) dbd;
+                                    // set facing / hinge
+                                    door.setFacing(BlockFace.EAST);
+                                    door.setHinge(Door.Hinge.RIGHT);
+                                    if (x == 0) {
+                                        // bottom door
+                                        door.setHalf(Bisected.Half.BOTTOM);
+                                    }
+                                    if (x == 1) {
+                                        // top door
+                                        door.setHalf(Bisected.Half.TOP);
+                                    }
+                                    String doorData = door.getAsString();
+                                    bpGrid[y][x] = doorData;
+                                    stGrid[y][x] = doorData;
+                                    break;
+                                case AIR:
                                 case REDSTONE_TORCH:
                                 case REDSTONE_WALL_TORCH:
                                 case SIGN:
-                                case SPRUCE_DOOR:
                                 case TORCH:
                                 case WALL_SIGN:
                                 case WALL_TORCH:

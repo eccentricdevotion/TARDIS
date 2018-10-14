@@ -180,6 +180,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     // doors
                                                     BlockData did = d.getType().createBlockData();
                                                     Door door = (Door) did;
+                                                    // set facing / hinge
                                                     door.setFacing(BlockFace.EAST);
                                                     door.setHinge(Door.Hinge.RIGHT);
                                                     if ((s + c) == 52) {
@@ -187,7 +188,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     } else {
                                                         door.setHalf(Bisected.Half.TOP);
                                                     }
-                                                    // set facing / hinge
                                                     String dataStr = door.getAsString();
                                                     blue[first][second] = dataStr;
                                                     stain[first][second] = dataStr;
