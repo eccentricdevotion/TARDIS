@@ -217,12 +217,24 @@ class TARDISBuildAbandoned {
                                     }
                                 } else {
                                     String[] split = type.toString().split("_");
-                                    type = Material.getMaterial(split[0] + "_" + use_clay.toString());
+                                    String m;
+                                    if (split.length > 2) {
+                                        m = split[0] + "_" + split[1] + "_" + use_clay.toString();
+                                    } else {
+                                        m = split[0] + "_" + use_clay.toString();
+                                    }
+                                    type = Material.getMaterial(m);
                                 }
                                 break;
                             default:
                                 String[] split = type.toString().split("_");
-                                type = Material.getMaterial(split[0] + "_" + use_clay.toString());
+                                String m;
+                                if (split.length > 2) {
+                                    m = split[0] + "_" + split[1] + "_" + use_clay.toString();
+                                } else {
+                                    m = split[0] + "_" + use_clay.toString();
+                                }
+                                type = Material.getMaterial(m);
                         }
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button

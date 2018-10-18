@@ -196,12 +196,24 @@ public class TARDISUpgradeBlockScanner {
                                         }
                                     } else {
                                         String[] tsplit = type.toString().split("_");
-                                        type = Material.getMaterial(tsplit[0] + "_" + use_clay.toString());
+                                        String m;
+                                        if (tsplit.length > 2) {
+                                            m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay.toString();
+                                        } else {
+                                            m = tsplit[0] + "_" + use_clay.toString();
+                                        }
+                                        type = Material.getMaterial(m);
                                     }
                                     break;
                                 default:
                                     String[] tsplit = type.toString().split("_");
-                                    type = Material.getMaterial(tsplit[0] + "_" + use_clay.toString());
+                                    String m;
+                                    if (tsplit.length > 2) {
+                                        m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay.toString();
+                                    } else {
+                                        m = tsplit[0] + "_" + use_clay.toString();
+                                    }
+                                    type = Material.getMaterial(m);
                             }
                         }
                         if (plugin.getUtils().isAir(type)) {

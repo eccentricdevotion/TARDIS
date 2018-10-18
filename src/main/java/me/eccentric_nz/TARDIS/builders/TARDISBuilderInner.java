@@ -259,12 +259,24 @@ public class TARDISBuilderInner {
                                     }
                                 } else {
                                     String[] split = type.toString().split("_");
-                                    data = Material.getMaterial(split[0] + "_" + use_clay.toString()).createBlockData();
+                                    String m;
+                                    if (split.length > 2) {
+                                        m = split[0] + "_" + split[1] + "_" + use_clay.toString();
+                                    } else {
+                                        m = split[0] + "_" + use_clay.toString();
+                                    }
+                                    data = Material.getMaterial(m).createBlockData();
                                 }
                                 break;
                             default:
                                 String[] split = type.toString().split("_");
-                                data = Material.getMaterial(split[0] + "_" + use_clay.toString()).createBlockData();
+                                String m;
+                                if (split.length > 2) {
+                                    m = split[0] + "_" + split[1] + "_" + use_clay.toString();
+                                } else {
+                                    m = split[0] + "_" + use_clay.toString();
+                                }
+                                data = Material.getMaterial(m).createBlockData();
                         }
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button
