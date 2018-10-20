@@ -83,7 +83,7 @@ public class TARDISCraftListener implements Listener {
                     Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
                     t.put(cmat, console.toUpperCase(Locale.ENGLISH));
                 } else {
-                    plugin.getLogger().log(Level.WARNING, "The custom console {0} does not have a corresponding upgrade value in artron.", console);
+                    plugin.getLogger().log(Level.WARNING, "The custom console {0} does not have a corresponding upgrade value in artron.yml", console);
                 }
             }
         });
