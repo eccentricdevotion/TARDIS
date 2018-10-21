@@ -55,7 +55,13 @@ public class TARDISHandlesCommand implements CommandExecutor {
             TARDISMessage.send(sender, "HANDLES_INTERNAL");
             return true;
         }
-        UUID uuid = UUID.fromString(args[1]);
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(args[1]);
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(sender, "HANDLES_INTERNAL");
+            return true;
+        }
         player = plugin.getServer().getPlayer(uuid);
         switch (args[0]) {
             case "land":
