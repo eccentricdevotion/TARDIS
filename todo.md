@@ -1,12 +1,12 @@
 # TODO
 
-## Next version `4.0.4`
+## Next version `4.0.5`
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
-6. Try to re-enable Skaro and Gallifrey worlds using cutom level.dat NBT files
+6. Try to re-enable Skaro and Gallifrey worlds using custom level.dat NBT files
 7. Update documentation...
 
 ## TARDIS data pack
@@ -39,7 +39,6 @@
    * Clockwork Droid
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 5. Rename resource pack to 'TARDIS-Optifine'?
-6. Update for Optifine 1.13.x
 
 ## Waiting on Bukkit / SpigotAPI
 1. Get/set Villager career level and willingness
