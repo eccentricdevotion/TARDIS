@@ -933,7 +933,7 @@ commands:
   handles:
     aliases: [tardishandles, th]
     description: These commands are used by the console to enable the Handles companion.
-    usage: /<command> [takeoff|land|scan|lock|unlock|remind|say|name|time|disk]
+    usage: /<command> disk [disk name]
     takeoff:
       description: Make the TARDIS enter the Time Vortex
       permission: tardis.admin

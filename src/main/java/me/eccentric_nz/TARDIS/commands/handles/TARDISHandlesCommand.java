@@ -39,6 +39,9 @@ public class TARDISHandlesCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (args.length < 1) {
+            return false;
+        }
         Player player;
         if (args[0].equals("disk")) {
             player = (Player) sender;
@@ -46,6 +49,10 @@ public class TARDISHandlesCommand implements CommandExecutor {
         }
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
+            return true;
+        }
+        if (args.length < 2) {
+            TARDISMessage.send(sender, "HANDLES_INTERNAL");
             return true;
         }
         UUID uuid = UUID.fromString(args[1]);

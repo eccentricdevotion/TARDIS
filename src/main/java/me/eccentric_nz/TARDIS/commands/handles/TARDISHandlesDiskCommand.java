@@ -56,11 +56,11 @@ class TARDISHandlesDiskCommand {
                     sb.append(args[s]).append(" ");
                 }
                 String name = sb.toString().trim();
-                if (name.length() > 32) {
+                if (name.length() < 3 || name.length() > 32) {
                     TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return true;
                 }
-                // rename in the disk
+                // rename the disk
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("name", name);
                 HashMap<String, Object> wherep = new HashMap<>();
