@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 load: POSTWORLD
-softdepend: [Citizens,GriefPrevention,LibsDisguises,MultiInv,Multiverse-Adventure,Multiverse-Core,Multiverse-Inventories,MultiWorld,My Worlds,PerWorldInventory,ProtocolLib,Towny,WorldBorder,WorldGuard,TARDISWeepingAngels]
+softdepend: [Citizens,GriefPrevention,LibsDisguises,MultiInv,Multiverse-Adventure,Multiverse-Core,Multiverse-Inventories,MultiWorld,My Worlds,PerWorldInventory,ProtocolLib,Towny,WorldBorder,WorldGuard,TARDISWeepingAngels,WorldGeneratorApi]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
