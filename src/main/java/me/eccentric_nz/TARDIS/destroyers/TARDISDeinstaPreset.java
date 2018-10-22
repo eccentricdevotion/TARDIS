@@ -161,7 +161,7 @@ public class TARDISDeinstaPreset {
             // replace the block under the door if there is one
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            where.put("block", 19);
+            where.put("data", "minecraft:sponge");
             ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
             Block b;
             if (rs.resultSet()) {
