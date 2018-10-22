@@ -24,11 +24,11 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -518,9 +518,11 @@ public class TARDISTimeTravel {
 
     public Location submarine(Block b, COMPASS d) {
         Block block = b;
+        Material type;
         do {
             block = block.getRelative(BlockFace.DOWN);
-        } while (block.getType().equals(Material.WATER) || Tag.ICE.isTagged(block.getType()));
+            type = block.getType();
+        } while (TARDISMaterials.submarine_blocks.contains(type));
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < attempts; n++) {
             if (isSafeSubmarine(loc, d)) {
