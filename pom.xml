@@ -171,7 +171,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13.1-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -196,7 +196,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.0.4</version>
+            <version>4.0.5</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -216,7 +216,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>7.0.0-beta1</version>
+            <version>7.0.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldGuard.jar</systemPath>
@@ -224,7 +224,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>7.0.0-beta1</version>
+            <version>7.0.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
