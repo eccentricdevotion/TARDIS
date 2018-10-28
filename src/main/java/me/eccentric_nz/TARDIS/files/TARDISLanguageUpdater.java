@@ -56,18 +56,6 @@ public class TARDISLanguageUpdater {
             if (!plugin.getLanguage().contains(key)) {
                 plugin.getLanguage().set(key, en.getString(key));
                 i++;
-            } else if (key.equals("ARG_COLOUR")
-                    || key.equals("BIND_NOT_VALID")
-                    || key.equals("CONDENSE_REQUIRE")
-                    || key.equals("MATERIAL_NOT_VALID")
-                    || key.equals("REQUEST_TRAVEL")
-                    || key.equals("RESCUE_REQUEST")
-                    || key.equals("SAVE_NAME_NOT_VALID")
-                    || key.equals("TARDIS_LOCS_INFO")
-                    || key.equals("UPDATE_INTERFACE")
-                    || key.equals("UPDATE_LOCATION")
-                    || key.equals("UPGRADE_PERCENT_EXPLAIN")) {
-                plugin.getLanguage().set(key, en.getString(key));
             }
         }
         try {
@@ -106,9 +94,7 @@ public class TARDISLanguageUpdater {
                         lineList.add(inputLine);
                     }
                 }
-
                 Collections.sort(lineList);
-
                 try (FileWriter fileWriter = new FileWriter(lang_path); PrintWriter out = new PrintWriter(fileWriter, false)) {
                     lineList.forEach((outputLine) -> out.println(outputLine));
                     out.flush();
