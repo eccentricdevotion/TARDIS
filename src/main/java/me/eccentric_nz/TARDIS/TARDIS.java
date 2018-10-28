@@ -327,8 +327,8 @@ public class TARDIS extends JavaPlugin {
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200L, 200L);
             getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
                 if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_RELOAD"));
-                    getServer().dispatchCommand(TARDIS.plugin.getConsole(), "minecraft:reload");
+                    getConsole().sendMessage(getPluginName() + getLanguage().getString("ADVANCEMENT_RELOAD"));
+                    getServer().dispatchCommand(getConsole(), "minecraft:reload");
                 }
             }, 199L);
         } else {
@@ -439,7 +439,7 @@ public class TARDIS extends JavaPlugin {
             debug("Reseting player time(s)");
             closeDatabase();
             debug("Closing database");
-            plugin.debug("TARDIS disabled successfully!");
+            debug("TARDIS disabled successfully!");
         }
     }
 
@@ -503,6 +503,7 @@ public class TARDIS extends JavaPlugin {
         if (!file.isFile()) {
             // load English
             file = new File(getDataFolder() + File.separator + "language" + File.separator + "en.yml");
+            lang = "en";
         }
         // load the language
         console.sendMessage(pluginName + "Loading language: " + LANGUAGE.valueOf(lang).getLang());
@@ -706,7 +707,7 @@ public class TARDIS extends JavaPlugin {
         if (tcg != null && tcg.isEnabled()) {
             debug("Hooking into TARDISChunkGenerator!");
             helperOnServer = true;
-            tardisHelper = (TARDISHelper) plugin.getPM().getPlugin("TARDISChunkGenerator");
+            tardisHelper = (TARDISHelper) getPM().getPlugin("TARDISChunkGenerator");
             return true;
         }
         return false;
@@ -796,9 +797,9 @@ public class TARDIS extends JavaPlugin {
         }
         if (r > 0) {
             try {
-                getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                getRoomsConfig().save(new File(getDataFolder(), "rooms.yml"));
             } catch (IOException io) {
-                plugin.debug("Could not save rooms.yml, " + io.getMessage());
+                debug("Could not save rooms.yml, " + io.getMessage());
             }
         }
         return map;
@@ -946,7 +947,7 @@ public class TARDIS extends JavaPlugin {
      */
     public boolean checkTWA() {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
-            Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+            Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
             Version version = new Version(twa.getDescription().getVersion());
             return (version.compareTo(new Version("3.0")) >= 0);
         } else {
