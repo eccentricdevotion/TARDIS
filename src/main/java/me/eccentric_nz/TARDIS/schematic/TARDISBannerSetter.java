@@ -37,22 +37,22 @@ public class TARDISBannerSetter {
     public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
         banners.forEach((key, tbd) -> {
             JSONObject state = tbd.getState();
-            Block pbb = key.getLocation().getBlock();
-            pbb.setBlockData(tbd.getData(), true);
-            Banner banner = (Banner) pbb.getState();
-            DyeColor dye = DyeColor.valueOf(state.getString("colour"));
-            banner.setBaseColor(dye);
-            List<Pattern> plist = new ArrayList<>();
-            JSONArray patterns = state.getJSONArray("patterns");
-            for (int j = 0; j < patterns.length(); j++) {
-                JSONObject jo = patterns.getJSONObject(j);
-                PatternType pt = PatternType.valueOf(jo.getString("pattern"));
-                DyeColor dc = DyeColor.valueOf(jo.getString("pattern_colour"));
-                Pattern p = new Pattern(dc, pt);
-                plist.add(p);
+            if (state != null) {
+                Block pbb = key.getLocation().getBlock();
+                pbb.setBlockData(tbd.getData(), true);
+                Banner banner = (Banner) pbb.getState();
+                List<Pattern> plist = new ArrayList<>();
+                JSONArray patterns = state.getJSONArray("patterns");
+                for (int j = 0; j < patterns.length(); j++) {
+                    JSONObject jo = patterns.getJSONObject(j);
+                    PatternType pt = PatternType.valueOf(jo.getString("pattern"));
+                    DyeColor dc = DyeColor.valueOf(jo.getString("pattern_colour"));
+                    Pattern p = new Pattern(dc, pt);
+                    plist.add(p);
+                }
+                banner.setPatterns(plist);
+                banner.update();
             }
-            banner.setPatterns(plist);
-            banner.update();
         });
     }
 }
