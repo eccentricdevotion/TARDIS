@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.bukkit.listener.SpongeUtil;
@@ -74,7 +73,7 @@ public class TARDISWorldGuardUtils {
      * @return true of false depending on whether the player has permission to build at this location
      */
     public boolean canBuild(Player p, Location l) {
-        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
@@ -95,7 +94,7 @@ public class TARDISWorldGuardUtils {
         }
         // WorldGuard will throw an IllegalArgumentException if the build flag is given to allows()
         if (f.toLowerCase(Locale.ENGLISH).equals("build")) {
-            Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+            BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
             RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
             ApplicableRegionSet rs = rm.getApplicableRegions(vector);
             return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
@@ -106,7 +105,7 @@ public class TARDISWorldGuardUtils {
             return true;
         }
         // get the regions for this location
-        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(null, flag);
@@ -122,13 +121,13 @@ public class TARDISWorldGuardUtils {
      */
     public void addWGProtection(Player p, Location one, Location two) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(one.getWorld().getName()));
-        BlockVector b1;
-        BlockVector b2;
+        BlockVector3 b1;
+        BlockVector3 b2;
         int cube = plugin.getConfig().getInt("creation.border_radius") * 16;
         if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // make a big cuboid region
-            b1 = new BlockVector(cube, 256, cube);
-            b2 = new BlockVector(-cube, 0, -cube);
+            b1 = BlockVector3.at(cube, 256, cube);
+            b2 = BlockVector3.at(-cube, 0, -cube);
         } else {
             // just get the TARDIS size
             b1 = makeBlockVector(one);
@@ -165,8 +164,8 @@ public class TARDISWorldGuardUtils {
      */
     public void addWGProtection(String p, TARDISTIPSData data, World w) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(w.getName()));
-        BlockVector b1 = new BlockVector(data.getMinX(), 0, data.getMinZ());
-        BlockVector b2 = new BlockVector(data.getMaxX(), 256, data.getMaxZ());
+        BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
+        BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
         String region_id = "tardis_" + p;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
         DefaultDomain dd = new DefaultDomain();
@@ -208,8 +207,8 @@ public class TARDISWorldGuardUtils {
      */
     public void addRechargerProtection(Player p, String name, Location one, Location two) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(one.getWorld().getName()));
-        BlockVector b1;
-        BlockVector b2;
+        BlockVector3 b1;
+        BlockVector3 b2;
         b1 = makeBlockVector(one);
         b2 = makeBlockVector(two);
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_recharger_" + name, b1, b2);
@@ -241,8 +240,8 @@ public class TARDISWorldGuardUtils {
      */
     public void addRendererProtection(String name, Location one, Location two) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(one.getWorld().getName()));
-        BlockVector b1;
-        BlockVector b2;
+        BlockVector3 b1;
+        BlockVector3 b2;
         b1 = makeBlockVector(one);
         b2 = makeBlockVector(two);
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("renderer_" + name, b1, b2);
@@ -286,7 +285,7 @@ public class TARDISWorldGuardUtils {
      */
     public void removeRegion(Location l) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
-        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
@@ -407,7 +406,7 @@ public class TARDISWorldGuardUtils {
      */
     public void updateRegionForClaim(Location location, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(location.getWorld().getName()));
-        Vector vector = new Vector(location.getX(), location.getY(), location.getZ());
+        BlockVector3 vector = BlockVector3.at(location.getX(), location.getY(), location.getZ());
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
@@ -441,8 +440,8 @@ public class TARDISWorldGuardUtils {
      * @param location the Location to convert to BlockVector
      * @return a BlockVector
      */
-    private BlockVector makeBlockVector(Location location) {
-        return new BlockVector(location.getX(), location.getY(), location.getZ());
+    private BlockVector3 makeBlockVector(Location location) {
+        return BlockVector3.at(location.getX(), location.getY(), location.getZ());
     }
 
     /**
@@ -469,7 +468,7 @@ public class TARDISWorldGuardUtils {
      * @return whether the block can be broken
      */
     public boolean canBreakBlock(Player p, Block b) {
-        Vector vector = new Vector(b.getX(), b.getY(), b.getZ());
+        BlockVector3 vector = BlockVector3.at(b.getX(), b.getY(), b.getZ());
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(b.getWorld().getName()));
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
@@ -533,7 +532,7 @@ public class TARDISWorldGuardUtils {
      */
     public boolean mobsCanSpawnAtLocation(Location l) {
         RegionManager rm = wg.getRegionContainer().get(wg.getWorldByName(l.getWorld().getName()));
-        Vector vector = new Vector(l.getX(), l.getY(), l.getZ());
+        BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         return ars.testState(null, Flags.MOB_SPAWNING);
     }
