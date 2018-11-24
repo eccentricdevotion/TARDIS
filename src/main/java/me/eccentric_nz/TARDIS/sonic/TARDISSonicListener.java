@@ -972,6 +972,10 @@ public class TARDISSonicListener implements Listener {
 
     private void standardSonic(Player player) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
+        if (checkBlockRespect(player, targetBlock)) {
+            TARDISMessage.send(player, "SONIC_PROTECT");
+            return;
+        }
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
             switch (blockType) {
