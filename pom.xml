@@ -232,7 +232,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.92.0.0</version>
+            <version>0.93.0.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Towny.jar</systemPath>
