@@ -95,7 +95,9 @@ public class TARDISHandlesRequest {
                 if (split.contains("tardis")) {
                     for (String seed : TARDISRecipeTabComplete.TARDIS_TYPES) {
                         if (split.contains(seed)) {
-                            player.performCommand("tardisrecipe tardis " + seed);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.performCommand("tardisrecipe tardis " + seed);
+                            }, 1L);
                             return;
                         }
                     }
@@ -104,7 +106,9 @@ public class TARDISHandlesRequest {
                 } else {
                     for (String item : TARDISRecipeTabComplete.ROOT_SUBS) {
                         if (split.contains(item)) {
-                            player.performCommand("tardisrecipe " + item);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.performCommand("tardisrecipe " + item);
+                            }, 1L);
                             return;
                         }
                     }
@@ -116,29 +120,51 @@ public class TARDISHandlesRequest {
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                     return;
                 }
-                // remove 'remind me to '
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid.toString() + " " + StringUtils.normalizeSpace(removed.replaceAll("(?i)" + Pattern.quote("remind"), "").replaceAll("(?i)" + Pattern.quote("me to"), "")));
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // remove 'remind me to '
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid.toString() + " " + StringUtils.normalizeSpace(removed.replaceAll("(?i)" + Pattern.quote("remind"), "").replaceAll("(?i)" + Pattern.quote("me to"), "")));
+                }, 1L);
             } else if (split.contains("say")) {
-                // remove 'say '
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid.toString() + " " + StringUtils.normalizeSpace(removed.replaceAll("(?i)" + Pattern.quote("say"), "")));
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // remove 'say '
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid.toString() + " " + StringUtils.normalizeSpace(removed.replaceAll("(?i)" + Pattern.quote("say"), "")));
+                }, 1L);
             } else if (split.contains("name") || split.contains("name?")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid.toString());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid.toString());
+                }, 1L);
             } else if (split.contains("time") || split.contains("time?")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid.toString());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid.toString());
+                }, 1L);
             } else if (split.contains("call")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid.toString() + " " + id);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid.toString() + " " + id);
+                }, 1L);
             } else if (split.contains("takeoff")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid.toString() + " " + id);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid.toString() + " " + id);
+                }, 1L);
             } else if (split.contains("land")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid.toString() + " " + id);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid.toString() + " " + id);
+                }, 1L);
             } else if (split.contains("lock")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid.toString() + " " + id + " true");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid.toString() + " " + id + " true");
+                }, 1L);
             } else if (split.contains("unlock")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid.toString() + " " + id + " false");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid.toString() + " " + id + " false");
+                }, 1L);
             } else if (split.contains("hide")) {
-                player.performCommand("tardis hide");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    player.performCommand("tardis hide");
+                }, 1L);
             } else if (split.contains("rebuild")) {
-                player.performCommand("tardis rebuild");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    player.performCommand("tardis rebuild");
+                }, 1L);
             } else if (split.contains("travel")) {
                 if (split.contains("save")) {
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -148,7 +174,9 @@ public class TARDISHandlesRequest {
                         for (HashMap<String, String> map : rsd.getData()) {
                             String dest = map.get("dest_name");
                             if (split.contains(dest) && player.hasPermission("tardis.timetravel")) {
-                                player.performCommand("tardistravel dest " + dest);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    player.performCommand("tardistravel dest " + dest);
+                                }, 1L);
                                 return;
                             }
                         }
@@ -161,7 +189,9 @@ public class TARDISHandlesRequest {
                     for (Player p : plugin.getServer().getOnlinePlayers()) {
                         String name = p.getName();
                         if (split.contains(name)) {
-                            player.performCommand("tardistravel " + name);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.performCommand("tardistravel " + name);
+                            }, 1L);
                             return;
                         }
                         // don't understand
@@ -173,7 +203,9 @@ public class TARDISHandlesRequest {
                         // cycle through areas
                         rsa.getNames().forEach((name) -> {
                             if (split.contains(name) && (player.hasPermission("tardis.area." + name) || player.hasPermission("tardis.area.*"))) {
-                                player.performCommand("tardistravel area " + name);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    player.performCommand("tardistravel area " + name);
+                                }, 1L);
                             }
                         });
                         // don't understand
@@ -188,23 +220,31 @@ public class TARDISHandlesRequest {
                     for (Biome biome : Biome.values()) {
                         String b = biome.toString();
                         if (split.contains(b)) {
-                            player.performCommand("tardistravel biome " + b);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.performCommand("tardistravel biome " + b);
+                            }, 1L);
                             return;
                         }
                     }
                     // don't understand
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                 } else if (split.contains("home")) {
-                    // travel home
-                    player.performCommand("tardistravel home");
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // travel home
+                        player.performCommand("tardistravel home");
+                    }, 1L);
                 } else {
                     // don't understand
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                 }
             } else if (split.contains("scan")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id);
+                }, 1L);
             } else if (split.contains("teleport")) {
-                new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
+                }, 1L);
             } else if (split.contains("transmat")) {
                 if (!player.hasPermission("tardis.transmat")) {
                     TARDISMessage.handlesSend(player, "NO_PERMS");
