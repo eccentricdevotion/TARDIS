@@ -326,14 +326,14 @@ public class TARDISEjectListener implements Listener {
                 Villager v = (Villager) ent;
                 Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
                 villager.setProfession(v.getProfession());
+                villager.setCareer(v.getCareer());
                 villager.setAge(v.getTicksLived());
+                if (!v.isAdult()) {
+                    villager.setBaby();
+                }
                 villager.setHealth(v.getHealth());
                 villager.setRecipes(v.getRecipes());
                 villager.setRiches(v.getRiches());
-                villager.setCareer(v.getCareer());
-                if ((!((Villager) ent).isAdult())) {
-                    villager.setBaby();
-                }
                 String vilname = ent.getCustomName();
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
