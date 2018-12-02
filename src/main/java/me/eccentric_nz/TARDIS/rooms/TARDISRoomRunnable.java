@@ -468,7 +468,7 @@ public class TARDISRoomRunnable implements Runnable {
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("tardis_id", tardis_id);
-                if (room.equals("RENDERER")) {
+                if (room.equals("RENDERER") || room.equals("ZERO")) {
                     qf.doUpdate("tardis", sets, wheres);
                 } else {
                     ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
