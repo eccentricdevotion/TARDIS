@@ -457,8 +457,10 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.TARDIS Schematic Wand.recipe", "BONE,REDSTONE");
             recipes_config.set("shapeless.TARDIS Schematic Wand.result", "BONE");
             recipes_config.set("shapeless.TARDIS Schematic Wand.amount", 1);
-            recipes_config.set("shapeless.TARDIS Schematic Wand.lore", "Right-click start\nLeft-click end");
+            recipes_config.set("shapeless.TARDIS Schematic Wand.lore", "Right-click start~Left-click end");
             i++;
+        } else {
+            recipes_config.set("shapeless.TARDIS Schematic Wand.lore", "Right-click start~Left-click end");
         }
         if (!recipes_config.contains("shapeless.Bowl of Custard") || recipes_config.getString("shapeless.Bowl of Custard.result").contains("SOUP")) {
             recipes_config.set("shapeless.Bowl of Custard.recipe", "BOWL,MILK_BUCKET,EGG");

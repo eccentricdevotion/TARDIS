@@ -859,7 +859,7 @@ shapeless:
     recipe: BONE,REDSTONE
     result: BONE
     amount: 1
-    lore: "Right-click start\nLeft-click end"
+    lore: "Right-click start~Left-click end"
   Save Storage Disk:
     recipe: MUSIC_DISC_STRAD,REDSTONE
     result: MUSIC_DISC_CHIRP
@@ -969,7 +969,7 @@ shapeless:
     recipe: SUGAR,SLIME_BALL,CYAN_DYE
     result: MELON_SLICE
     amount: 4
-    lore: 'Orange'
+    lore: ''
   Grape Jelly Baby:
     recipe: SUGAR,SLIME_BALL,PURPLE_DYE
     result: MELON_SLICE
