@@ -238,13 +238,11 @@ public class TARDISDoorListener {
                         parrot.setBaby();
                     }
                     parrot.setVariant(pet.getVariant());
-                    if (pet.isOnLeftShoulder() || pet.isOnRightShoulder()) {
-                        if (pet.isOnLeftShoulder()) {
-                            player.setShoulderEntityLeft(parrot);
-                        }
-                        if (pet.isOnRightShoulder()) {
-                            player.setShoulderEntityRight(parrot);
-                        }
+                    if (pet.isOnLeftShoulder()) {
+                        player.setShoulderEntityLeft(parrot);
+                    }
+                    if (pet.isOnRightShoulder()) {
+                        player.setShoulderEntityRight(parrot);
                     }
                     break;
                 default:
