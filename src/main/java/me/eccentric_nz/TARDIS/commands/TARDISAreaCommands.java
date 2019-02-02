@@ -172,7 +172,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                     // set some basic defaults
                     BlockData fill = Material.COBBLESTONE.createBlockData();
-                    BlockData dock = Material.BRICK.createBlockData();
+                    BlockData dock = Material.STONE_BRICKS.createBlockData();
                     if (args.length > 2) {
                         try {
                             fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH)).createBlockData();
