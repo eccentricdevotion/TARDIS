@@ -64,15 +64,15 @@ public class TARDISTownyChecker {
             switch (tr) {
                 case wilderness:
                     // allow if wilderness, deny if a claimed town
-                    bool = !TownyUniverse.isWilderness(l.getBlock());
+                    bool = TownyUniverse.isWilderness(l.getBlock());
                     break;
                 case town:
                     // allow wilderness and the player's own town
-                    bool = !playerIsResident(p, l).canTravel();
+                    bool = playerIsResident(p, l).canTravel();
                     break;
                 case nation:
                     // allow wilderness, the player's own town and any town in the player's nation
-                    bool = !playerIsCompatriot(p, l);
+                    bool = playerIsCompatriot(p, l);
                     break;
                 default:
                     break;
@@ -161,8 +161,7 @@ public class TARDISTownyChecker {
 
         wilderness,
         town,
-        nation
-    }
+        nation}
 
     /**
      * Data class to store check results so we can reuse them again if needed.
