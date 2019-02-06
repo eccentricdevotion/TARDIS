@@ -77,11 +77,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                         // determine burn time
                         int burnTime = (int) (percentage * burnFactor);
                         event.setBurnTime(burnTime);
-                        if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setCookTimeTotal(event.getBlock(), cookTime);
-                        } else {
-                            furnace.setCookTime(cookTime);
-                        }
+                        furnace.setCookTimeTotal(cookTime);
                         // return an empty cell
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             lore.set(1, "0");
@@ -103,11 +99,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         // Setting cookTime after cooking an item (and the fuel is still burning)
         Furnace furnace = (Furnace) event.getBlock().getState();
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace") && plugin.getTrackerKeeper().getArtronFurnaces().contains(furnace.getLocation().toString())) {
-            if (plugin.isHelperOnServer()) {
-                plugin.getTardisHelper().setCookTimeTotal(event.getBlock(), cookTime);
-            } else {
-                furnace.setCookTime(cookTime);
-            }
+            furnace.setCookTimeTotal(cookTime);
         }
     }
 
@@ -121,11 +113,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace") && plugin.getTrackerKeeper().getArtronFurnaces().contains(furnace.getLocation().toString()) && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
                 && event.getCursor().getType() != Material.AIR // With an item
                 && furnace.getCookTime() > cookTime) {         // The furnace is not already burning something
-            if (plugin.isHelperOnServer()) {
-                plugin.getTardisHelper().setCookTimeTotal(furnace.getBlock(), cookTime);
-            } else {
-                furnace.setCookTime(cookTime);
-            }
+            furnace.setCookTimeTotal(cookTime);
         }
     }
 
