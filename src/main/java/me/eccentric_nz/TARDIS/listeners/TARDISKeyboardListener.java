@@ -78,7 +78,7 @@ public class TARDISKeyboardListener implements Listener {
                 }
                 Sign sign = (Sign) b.getState();
                 plugin.getTrackerKeeper().getSign().put(loc, sign);
-                plugin.getTardisHelper().openSignGUI(player, b);
+                plugin.getTardisHelper().openSignGUI(player, sign);
             }
         }
     }
