@@ -23,6 +23,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,32 +51,27 @@ public class TARDISBlockPhysicsListener implements Listener {
         }
         if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {
             if (block != null) {
-                BlockData state;
-                try {
-                    state = block.getBlockData();
-                    if (state != null) {
-                        if (state instanceof TrapDoor) {
-                            Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
-                            if (blockBehind != null) {
-                                if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
-                                    event.setCancelled(true);
-                                }
+                BlockData state = block.getBlockData();
+                if (state != null) {
+                    if (state instanceof TrapDoor) {
+                        Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
+                        if (blockBehind != null) {
+                            if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
+                                event.setCancelled(true);
                             }
                         }
                     }
-                } catch (NullPointerException e) {
-                    plugin.debug("Invalid Tile Entity detected at " + block.getLocation());
+                    if (state instanceof Door) {
+                        Block blockBelow = getBlockBelow(block);
+                        if (blockBelow != null) {
+                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                                event.setCancelled(true);
+                            }
+                        }
+                    }
                 }
                 if (block.getType().equals(Material.VINE)) {
                     event.setCancelled(true);
-                }
-                if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
-                    Block blockBelow = getBlockBelow(block);
-                    if (blockBelow != null) {
-                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
-                            event.setCancelled(true);
-                        }
-                    }
                 }
             }
         }

@@ -859,7 +859,6 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(p, "CURRENT_NOT_FOUND");
             return null;
         }
-        Location l = null;
         // get a world
         // Assume all non-nether/non-end world environments are NORMAL
         if (w != null && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
@@ -925,7 +924,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 }
             }
         }
-        return l;
+        return null;
     }
 
     private int checkLocation(Location location, Player player, int id, TARDISTimeTravel tt) {

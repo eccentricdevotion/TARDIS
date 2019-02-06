@@ -345,15 +345,15 @@ public class TARDISBlockSetters {
             ids.remove("CHEST");
         }
         Block b = w.getBlockAt(x, y, z);
-        String blockData = b.getBlockData().getAsString();
-        if (ids.contains(b.getBlockData().getMaterial().toString())) {
+        BlockData blockData = b.getBlockData();
+        if (ids.contains(blockData.getMaterial().toString())) {
             // remember replaced block location and BlockData so we can restore it later
             String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(TARDIS.plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             set.put("location", l);
-            set.put("data", blockData);
+            set.put("data", blockData.getAsString());
             set.put("police_box", 1);
             qf.doInsert("blocks", set);
             TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);

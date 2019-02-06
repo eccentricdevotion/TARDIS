@@ -345,7 +345,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                         }
                                     }
-                                    if (preset.equals(PRESET.SWAMP)) {
+                                    if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
                                         // do it at the end
                                         if (door) {
                                             swampDoorBottom = world.getBlockAt(xx, (y + yy), zz);
@@ -727,10 +727,12 @@ class TARDISMaterialisationPreset implements Runnable {
                     }
                 }
             } else {
-                if (preset.equals(PRESET.SWAMP) && swampDoorBottom != null) {
+                if ((preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) && swampDoorBottom != null) {
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisID());
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorTop.getX(), swampDoorTop.getY(), swampDoorTop.getZ(), sdt_data, bd.getTardisID());
-                    TARDISBlockSetters.setBlockAndRemember(world, swampSlab.getX(), swampSlab.getY(), swampSlab.getZ(), slab_data, bd.getTardisID());
+                    if (preset.equals(PRESET.SWAMP)) {
+                        TARDISBlockSetters.setBlockAndRemember(world, swampSlab.getX(), swampSlab.getY(), swampSlab.getZ(), slab_data, bd.getTardisID());
+                    }
                 }
                 if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
                     handbrake.setBlockData(h_data);

@@ -151,6 +151,10 @@ class TARDISDematerialisationPreset implements Runnable {
                     case SWAMP:
                         plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
                         break;
+                    case JAIL:
+                    case TOPSYTURVEY:
+                        // destroy door
+                        plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
                     default:
                         break;
                 }
@@ -284,7 +288,7 @@ class TARDISDematerialisationPreset implements Runnable {
                             case ACACIA_TRAPDOOR:
                             case DARK_OAK_TRAPDOOR:
                             case WALL_SIGN:
-                                if (preset.equals(PRESET.SWAMP)) {
+                                if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
                                 break;
