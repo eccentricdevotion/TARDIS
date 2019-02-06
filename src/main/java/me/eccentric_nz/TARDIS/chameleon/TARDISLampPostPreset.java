@@ -55,7 +55,7 @@ class TARDISLampPostPreset extends TARDISPreset {
         blueprintData[6][0] = "minecraft:air";
         blueprintData[6][1] = "minecraft:air";
         blueprintData[6][2] = "minecraft:air";
-        blueprintData[6][3] = "minecraft:oak_trapdoor[half=top,facing=east,open=true]";
+        blueprintData[6][3] = "minecraft:oak_trapdoor[half=top,facing=south,open=true]";
         blueprintData[7][0] = "minecraft:nether_brick_fence";
         blueprintData[7][1] = "minecraft:nether_brick_fence";
         blueprintData[7][2] = "minecraft:hopper[facing=down]";
@@ -63,7 +63,7 @@ class TARDISLampPostPreset extends TARDISPreset {
         blueprintData[8][0] = "minecraft:air";
         blueprintData[8][1] = "minecraft:air";
         blueprintData[8][2] = "minecraft:air";
-        blueprintData[8][3] = "minecraft:oak_trapdoor[half=top,facing=south,open=true]";
+        blueprintData[8][3] = "minecraft:oak_trapdoor[half=top,facing=east,open=true]";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
         blueprintData[9][2] = "minecraft:air";
@@ -98,7 +98,7 @@ class TARDISLampPostPreset extends TARDISPreset {
         stainedData[6][0] = "minecraft:air";
         stainedData[6][1] = "minecraft:air";
         stainedData[6][2] = "minecraft:air";
-        stainedData[6][3] = "minecraft:oak_trapdoor[half=top,facing=east,open=true]";
+        stainedData[6][3] = "minecraft:oak_trapdoor[half=top,facing=south,open=true]";
         stainedData[7][0] = "minecraft:red_stained_glass";
         stainedData[7][1] = "minecraft:red_stained_glass";
         stainedData[7][2] = "minecraft:gray_stained_glass";
@@ -106,7 +106,7 @@ class TARDISLampPostPreset extends TARDISPreset {
         stainedData[8][0] = "minecraft:air";
         stainedData[8][1] = "minecraft:air";
         stainedData[8][2] = "minecraft:air";
-        stainedData[8][3] = "minecraft:oak_trapdoor[half=top,facing=south,open=true]";
+        stainedData[8][3] = "minecraft:oak_trapdoor[half=top,facing=east,open=true]";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
         stainedData[9][2] = "minecraft:air";
@@ -141,7 +141,7 @@ class TARDISLampPostPreset extends TARDISPreset {
         glassData[6][0] = "minecraft:air";
         glassData[6][1] = "minecraft:air";
         glassData[6][2] = "minecraft:air";
-        glassData[6][3] = "minecraft:oak_trapdoor[half=top,facing=east,open=true]";
+        glassData[6][3] = "minecraft:oak_trapdoor[half=top,facing=south,open=true]";
         glassData[7][0] = "minecraft:glass";
         glassData[7][1] = "minecraft:glass";
         glassData[7][2] = "minecraft:glass";
@@ -149,7 +149,7 @@ class TARDISLampPostPreset extends TARDISPreset {
         glassData[8][0] = "minecraft:air";
         glassData[8][1] = "minecraft:air";
         glassData[8][2] = "minecraft:air";
-        glassData[8][3] = "minecraft:oak_trapdoor[half=top,facing=south,open=true]";
+        glassData[8][3] = "minecraft:oak_trapdoor[half=top,facing=east,open=true]";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
         glassData[9][2] = "minecraft:air";

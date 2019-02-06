@@ -30,10 +30,9 @@ public class TARDISTrapdoorRecalculator {
      * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
      *
      * @param b the block data to convert
-     * @param d the new direction of the TARDIS // * @param torch whether this is the torch preset
+     * @param d the new direction of the TARDIS
      * @return the recalculated byte
      */
-//    public BlockData recalculate(BlockData b, COMPASS d, boolean torch) {
     public BlockData recalculate(BlockData b, COMPASS d) {
         Directional trap = (Directional) b;
         switch (d) {
@@ -53,18 +52,6 @@ public class TARDISTrapdoorRecalculator {
                 }
                 break;
             case WEST:
-//                if (torch) {
-//                    switch (b) {
-//                        case 14:
-//                            recalc = 15;
-//                            break;
-//                        case 15:
-//                            recalc = 14;
-//                            break;
-//                        default:
-//                            recalc = b;
-//                    }
-//                } else {
                 switch (trap.getFacing()) {
                     case SOUTH:
                         trap.setFacing(BlockFace.NORTH);
@@ -78,7 +65,6 @@ public class TARDISTrapdoorRecalculator {
                     default: // WEST
                         trap.setFacing(BlockFace.EAST);
                 }
-//                }
                 break;
             default:
                 switch (trap.getFacing()) {
