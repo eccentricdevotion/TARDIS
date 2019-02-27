@@ -250,14 +250,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
                                             pu = qf.claimTARDIS(player, id);
-                                            // make sure player is added as owner of interiorWorldGuard region
+                                            // make sure player is added as owner of interior WorldGuard region
                                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                                 plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());
                                             }
                                             HashMap<String, Object> wherec = new HashMap<>();
                                             wherec.put("tardis_id", id);
                                             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                                            if (rsc.resultSet()) {
+                                            if (rscl.resultSet()) {
                                                 Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                                 if (pu) {
                                                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
