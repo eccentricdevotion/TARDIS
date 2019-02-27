@@ -156,8 +156,8 @@ public class TARDIS extends JavaPlugin {
         versions.put("LibsDisguises", "9.7.0");
         versions.put("MultiWorld", "5.2");
         versions.put("Multiverse-Adventure", "2.5");
-        versions.put("Multiverse-Core", "2.6");
-        versions.put("Multiverse-Inventories", "2.5");
+        versions.put("Multiverse-Core", "3.0");
+        versions.put("Multiverse-Inventories", "3.0");
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.13.1");
         versions.put("PerWorldInventory", "2.0.0");
@@ -167,7 +167,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("TerrainControl", "2.9.0");
         versions.put("Towny", "0.91");
         versions.put("WorldBorder", "1.8.1");
-//        versions.put("WorldEdit", "7.0.0");
+        versions.put("WorldEdit", "7.0.0");
         versions.put("WorldGuard", "7.0.0");
     }
 
