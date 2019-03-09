@@ -29,6 +29,7 @@ import org.bukkit.World;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -53,6 +54,7 @@ public class TARDISAbandoned {
         String chun = cw + ":" + cx + ":" + cz;
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
+        set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
         set.put("chunk", chun);
         set.put("size", s.getPermission().toUpperCase(Locale.ENGLISH));
