@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
+import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -136,11 +137,20 @@ public class TARDII implements TardisAPI {
             Location current = getTARDISCurrentLocation(id);
             String console = tardis.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
             String chameleon = tardis.getPreset().toString();
+            String door = "Closed";
+            for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
+                if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+                    if (id == map.getValue().getTardisId()) {
+                        door = "Open";
+                        break;
+                    }
+                }
+            }
             String powered = (tardis.isPowered_on()) ? "Yes" : "No";
             String siege = (tardis.isSiege_on()) ? "Yes" : "No";
             String abandoned = (tardis.isAbandoned()) ? "Yes" : "No";
             List<String> occupants = getPlayersInTARDIS(id);
-            data = new TARDISData(current, console, chameleon, powered, siege, abandoned, occupants);
+            data = new TARDISData(current, console, chameleon, door, powered, siege, abandoned, occupants);
         }
         return data;
     }

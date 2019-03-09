@@ -28,15 +28,17 @@ public class TARDISData {
     private final Location location;
     private final String console;
     private final String chameleon;
+    private final String door;
     private final String powered;
     private final String siege;
     private final String abandoned;
     private final List<String> occupants;
 
-    TARDISData(Location location, String console, String chameleon, String powered, String siege, String abandoned, List<String> occupants) {
+    TARDISData(Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
         this.location = location;
         this.console = console;
         this.chameleon = chameleon;
+        this.door = door;
         this.powered = powered;
         this.siege = siege;
         this.abandoned = abandoned;
@@ -53,6 +55,10 @@ public class TARDISData {
 
     public String getChameleon() {
         return chameleon;
+    }
+
+    public String getDoor() {
+        return door;
     }
 
     public String getPowered() {
