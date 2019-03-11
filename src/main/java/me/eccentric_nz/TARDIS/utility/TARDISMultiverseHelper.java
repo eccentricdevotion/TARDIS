@@ -43,7 +43,7 @@ public class TARDISMultiverseHelper {
     public String getAlias(String world) {
         if (Bukkit.getWorld(world) != null) {
             MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-            return mvw.getAlias();
+            return (mvw != null) ? mvw.getAlias() : world;
         } else {
             return world;
         }
