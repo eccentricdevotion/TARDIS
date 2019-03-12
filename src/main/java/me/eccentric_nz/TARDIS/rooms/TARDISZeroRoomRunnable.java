@@ -44,7 +44,7 @@ public class TARDISZeroRoomRunnable implements Runnable {
         }
         inZeroRoom.forEach((p) -> {
             // setHealth() method max is 20.0
-            if (p.isOnline() && p.getHealth() < 19.5) {
+            if (p.isOnline() && p.getHealth() < 19.5 && p.getLocation().getBlockY() > 16) {
                 p.setHealth(p.getHealth() + 0.5);
             }
         });

@@ -92,7 +92,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
