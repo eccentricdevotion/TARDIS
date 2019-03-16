@@ -23,10 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
-import me.eccentric_nz.TARDIS.enumeration.CHAMELEON_OPTION;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -86,6 +83,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
+                            TARDISChameleonFrame tcf = new TARDISChameleonFrame(plugin);
                             switch (slot) {
                                 case 0:
                                     player.performCommand("tardis rebuild");
@@ -109,10 +107,12 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         set.put("chameleon_preset", "FACTORY");
                                         toggleOthers(CHAMELEON_OPTION.FACTORY, inv);
                                         TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FACTORY", player);
+                                        tcf.updateChameleonFrame(id, PRESET.FACTORY);
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
                                     } else {
                                         set.put("chameleon_preset", "NEW");
                                         toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        tcf.updateChameleonFrame(id, PRESET.NEW);
                                         setDefault(inv, player, tardis.getChameleon());
                                     }
                                     break;
@@ -127,9 +127,11 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
                                         toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        tcf.updateChameleonFrame(id, PRESET.NEW);
                                         setDefault(inv, player, tardis.getChameleon());
                                     } else {
                                         toggleOthers(CHAMELEON_OPTION.ADAPTIVE, inv);
+                                        tcf.updateChameleonFrame(id, PRESET.FACTORY);
                                         set.put("chameleon_preset", "FACTORY");
                                     }
                                     set.put("adapti_on", ca);
@@ -163,11 +165,13 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         toggleOthers(CHAMELEON_OPTION.INVISIBLE, inv);
                                         set.put("chameleon_preset", "INVISIBLE");
                                         TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "INVISIBLE", player);
+                                        tcf.updateChameleonFrame(id, PRESET.INVISIBLE);
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
                                     } else {
                                         toggleOthers(CHAMELEON_OPTION.PRESET, inv);
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
+                                        tcf.updateChameleonFrame(id, PRESET.NEW);
                                         setDefault(inv, player, tardis.getChameleon());
                                     }
                                     break;

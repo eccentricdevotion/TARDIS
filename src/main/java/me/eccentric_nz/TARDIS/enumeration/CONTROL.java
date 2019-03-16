@@ -49,7 +49,8 @@ public enum CONTROL {
     TELEPATHIC_CIRCUIT(23, "telepathic"),
     SONIC_GENERATOR(24, "generator"),
     SHELL(25, ""),
-    HANDLES(26, "handles");
+    HANDLES(26, "handles"),
+    FRAME(27, "");
 
     private final int id;
     private final String update;
@@ -68,7 +69,10 @@ public enum CONTROL {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
     public static HashMap<String, Integer> getUPDATE_CONTROLS() {
         return UPDATE_CONTROLS;
-    }
-}
+    }}

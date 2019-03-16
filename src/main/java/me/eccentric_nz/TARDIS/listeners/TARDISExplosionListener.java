@@ -17,18 +17,23 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCreeper;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
+
+import java.util.HashMap;
 
 /**
  * Distronic explosives are powerful but unstable weapons, used on many worlds as components of explosive warheads
@@ -83,6 +88,18 @@ public class TARDISExplosionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof ItemFrame && e.getDamager() instanceof Player) {
+            ItemFrame frame = (ItemFrame) e.getEntity();
+            // check if it is a TARDIS Chameleon item frame
+            String l = frame.getLocation().toString();
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("location", l);
+            where.put("type", 27);
+            ResultSetControls rs = new ResultSetControls(plugin, where, false);
+            if (rs.resultSet()) {
+                e.setCancelled(true);
+            }
+        }
         if (e.getCause() != DamageCause.ENTITY_EXPLOSION) {
             return;
         }

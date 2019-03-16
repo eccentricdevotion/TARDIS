@@ -40,7 +40,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update");
     private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
-    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "generator", "handbrake", "igloo", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "stall", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "frame", "generator", "handbrake", "igloo", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "stall", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
     private final List<String> RECHARGER_SUBS;
 
     public TARDISTabComplete(TARDIS plugin) {

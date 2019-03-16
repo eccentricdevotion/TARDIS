@@ -47,35 +47,38 @@ public class TARDISItemFrameListener implements Listener {
         if (event.getRightClicked() instanceof ItemFrame) {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction` command?
-            if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid) && plugin.getTrackerKeeper().getPlayers().get(uuid).equals("direction")) {
-                // check they have a TARDIS
-                ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                if (!rst.fromUUID(uuid.toString())) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+            if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
+                String control = plugin.getTrackerKeeper().getPlayers().get(uuid);
+                if (control.equals("direction") || control.equals("frame")) {
+                    // check they have a TARDIS
+                    ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                    if (!rst.fromUUID(uuid.toString())) {
+                        TARDISMessage.send(player, "NO_TARDIS");
+                        return;
+                    }
+                    int id = rst.getTardis_id();
+                    String l = event.getRightClicked().getLocation().toString();
+                    // check whether they have a direction item frame already
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("location", l);
+                    where.put("type", control.equals("direction") ? 18 : 27);
+                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                    HashMap<String, Object> set = new HashMap<>();
+                    if (rsc.resultSet()) {
+                        // update location
+                        set.put("location", l);
+                        HashMap<String, Object> whereu = new HashMap<>();
+                        whereu.put("tardis_id", id);
+                        whereu.put("type", control.equals("direction") ? 18 : 27);
+                        new QueryFactory(plugin).doUpdate("controls", set, whereu);
+                    } else {
+                        // add control
+                        new QueryFactory(plugin).insertControl(id, control.equals("direction") ? 18 : 27, l, 0);
+                    }
+                    plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                    TARDISMessage.send(player, control.equals("direction") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");
                     return;
                 }
-                int id = rst.getTardis_id();
-                String l = event.getRightClicked().getLocation().toString();
-                // check whether they have a direction item frame already
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("location", l);
-                where.put("type", 18);
-                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                HashMap<String, Object> set = new HashMap<>();
-                if (rsc.resultSet()) {
-                    // update location
-                    set.put("location", l);
-                    HashMap<String, Object> whereu = new HashMap<>();
-                    whereu.put("tardis_id", id);
-                    whereu.put("type", 18);
-                    new QueryFactory(plugin).doUpdate("controls", set, whereu);
-                } else {
-                    // add control
-                    new QueryFactory(plugin).insertControl(id, 18, l, 0);
-                }
-                plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                TARDISMessage.send(player, "DIRECTION_UPDATE");
-                return;
             }
             ItemFrame frame = (ItemFrame) event.getRightClicked();
             // if the item frame has a tripwire hook in it

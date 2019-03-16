@@ -326,6 +326,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         qf.doUpdate("tardis", sett, wheret);
         // update chameleon sign
         TARDISStaticUtils.setSign(location, 3, "CONSTRUCT", player);
+        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT);
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild
         player.performCommand("tardis rebuild");
