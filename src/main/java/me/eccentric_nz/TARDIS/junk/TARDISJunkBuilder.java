@@ -33,6 +33,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -171,7 +172,11 @@ public class TARDISJunkBuilder implements Runnable {
                                         TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                                         break;
                                     case CAKE:
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, Material.CAKE, bd.getTardisID());
+                                        BlockData handbrake = Material.LEVER.createBlockData();
+                                        Switch lever = (Switch) handbrake;
+                                        lever.setFace(Switch.Face.FLOOR);
+                                        lever.setFacing(BlockFace.SOUTH);
+                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
                                         break;
                                     case ORANGE_WOOL:
                                         TARDISBlockSetters.setBlockAndRemember(world, x, y, z, wall_type, bd.getTardisID());

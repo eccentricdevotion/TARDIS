@@ -93,7 +93,7 @@ class TARDISJunkCreator {
             setpp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             setpp.put("player", "junk");
             setpp.put("wall", "ORANGE_WOOL");
-            setpp.put("floor", "GREY_WOOL");
+            setpp.put("floor", "LIGHT_GRAY_WOOL");
             setpp.put("lamp", "REDSTONE_LAMP");
             qf.doInsert("player_prefs", setpp);
         }

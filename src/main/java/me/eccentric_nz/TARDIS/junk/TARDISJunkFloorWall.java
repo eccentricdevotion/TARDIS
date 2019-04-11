@@ -73,7 +73,7 @@ class TARDISJunkFloorWall {
         HashMap<String, Object> setpp = new HashMap<>();
         if (!rsp.resultSet()) {
             String otherpref = (pref.equals("floor")) ? "wall" : "floor";
-            String otherset = (pref.equals("floor")) ? "ORANGE_WOOL" : "GREY_WOOL";
+            String otherset = (pref.equals("floor")) ? "ORANGE_WOOL" : "LIGHT_GRAY_WOOL";
             // create a player_prefs record
             setpp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             setpp.put("player", "junk");
