@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
@@ -113,6 +114,16 @@ public class TARDISAnyoneMoveListener implements Listener {
                 set.put("tardis_id", id);
                 set.put("uuid", uuid.toString());
                 qf.doSyncInsert("travellers", set);
+                // if WorldGuard is on the server check for TARDIS region protection and add player as member
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    // get owner of TARDIS
+                    HashMap<String, Object> whereo = new HashMap<>();
+                    whereo.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, whereo, "", false, 2);
+                    if (rs.resultSet()) {
+                        plugin.getWorldGuardUtils().addMemberToRegion(to.getWorld(), rs.getTardis().getOwner(), p.getName());
+                    }
+                }
             }
             // tp player
             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
@@ -121,6 +132,16 @@ public class TARDISAnyoneMoveListener implements Listener {
             }
             if (userQuotes) {
                 TARDISMessage.send(p, "DOOR_REMIND");
+            }
+            // if WorldGuard is on the server check for TARDIS region protection and remove player as member
+            if (exit && plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                // get owner of TARDIS
+                HashMap<String, Object> whereo = new HashMap<>();
+                whereo.put("tardis_id", id);
+                ResultSetTardis rs = new ResultSetTardis(plugin, whereo, "", false, 2);
+                if (rs.resultSet()) {
+                    plugin.getWorldGuardUtils().removeMemberFromRegion(l.getWorld(), rs.getTardis().getOwner(), p.getName());
+                }
             }
         }
     }
