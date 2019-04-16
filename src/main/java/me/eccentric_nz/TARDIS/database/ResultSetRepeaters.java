@@ -70,7 +70,7 @@ public class ResultSetRepeaters {
         int i = 0;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT DISTINCT location FROM " + prefix + "controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
+        String query = "SELECT DISTINCT location, type FROM " + prefix + "controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
