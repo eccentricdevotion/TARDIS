@@ -1,6 +1,12 @@
 # TODO
 
-## Next version `4.0.5`
+## Next version `4.1`
+0. Update to Spigot 1.14
+   * Add new mob types to farming and genetic manipulator
+   * Test villager farming - biome specific?
+   * Check Artron furnace (how do you get the furnace title?)
+   * Check TARDIS translator
+   * Add all wood signs for use
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
