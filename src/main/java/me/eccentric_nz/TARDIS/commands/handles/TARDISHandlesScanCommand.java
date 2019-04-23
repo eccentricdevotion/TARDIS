@@ -116,7 +116,7 @@ class TARDISHandlesScanCommand {
                         switch (ee.getHelmet().getType()) {
                             case VINE:
                                 // dalek
-                                et = EntityType.COMPLEX_PART;
+                                et = EntityType.LLAMA_SPIT;
                                 break;
                             case IRON_HELMET:
                             case GOLDEN_HELMET:
@@ -242,7 +242,7 @@ class TARDISHandlesScanCommand {
                             case AREA_EFFECT_CLOUD:
                                 player.sendMessage("    Cyberman: " + entry.getValue());
                                 break;
-                            case COMPLEX_PART:
+                            case LLAMA_SPIT:
                                 player.sendMessage("    Dalek: " + entry.getValue());
                                 break;
                             case ARMOR_STAND:
