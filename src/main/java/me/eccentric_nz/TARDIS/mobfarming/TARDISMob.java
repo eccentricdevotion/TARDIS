@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Cat.Type;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ocelot.Type;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or

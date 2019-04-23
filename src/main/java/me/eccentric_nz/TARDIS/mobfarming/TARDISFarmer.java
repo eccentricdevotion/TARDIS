@@ -56,7 +56,7 @@ public class TARDISFarmer {
      * 'farm' room (if present), otherwise a spawn egg for the mob type is placed in the player's inventory. Only cows,
      * sheep, pigs, chickens and mooshrooms will be processed.
      * <p>
-     * Also allows players to teleport their pets (tamed wolves and ocelots) with them.
+     * Also allows players to teleport their pets (tamed wolves and Cats) with them.
      *
      * @param l    The location to check for animals. This will be the current location of the TARDIS Police Box.
      * @param d    the direction the Police Box is facing
@@ -399,8 +399,8 @@ public class TARDISFarmer {
                             tv.setBaby(!v.isAdult());
                             tv.setName(v.getCustomName());
                             tv.setTrades(v.getRecipes());
-                            tv.setRiches(v.getRiches());
-                            tv.setCareer(v.getCareer());
+//                            tv.setRiches(v.getRiches());
+//                            tv.setCareer(v.getCareer());
                             if (plugin.isHelperOnServer()) {
                                 tv.setCareerLevel(plugin.getTardisHelper().getVillagerCareerLevel(v));
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
@@ -412,7 +412,7 @@ public class TARDISFarmer {
                             villagertotal++;
                             break;
                         case WOLF:
-                        case OCELOT:
+                        case CAT:
                             Tameable tamed = (Tameable) e;
                             if (tamed.isTamed() && tamed.getOwner().getUniqueId().equals(p.getUniqueId())) {
                                 TARDISParrot pet = new TARDISParrot();
@@ -427,12 +427,12 @@ public class TARDISFarmer {
                                     pet.setHealth(health);
                                     pet.setBaby(!((Wolf) e).isAdult());
                                 } else {
-                                    pet.setAge(((Ocelot) e).getAge());
+                                    pet.setAge(((Cat) e).getAge());
                                     pet.setSitting(((Sittable) e).isSitting());
-                                    pet.setCatType(((Ocelot) e).getCatType());
-                                    health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
+                                    pet.setCatType(((Cat) e).getCatType());
+                                    health = (((Cat) e).getHealth() > 8D) ? 8D : ((Cat) e).getHealth();
                                     pet.setHealth(health);
-                                    pet.setBaby(!((Ocelot) e).isAdult());
+                                    pet.setBaby(!((Cat) e).isAdult());
                                 }
                                 old_macd_had_a_pet.add(pet);
                                 e.remove();
@@ -816,14 +816,14 @@ public class TARDISFarmer {
                         Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                         Villager npc = (Villager) vill;
                         npc.setProfession(e.getProfession());
-                        npc.setCareer(e.getCareer(), false);
+//                        npc.setCareer(e.getCareer(), false);
                         npc.setAge(e.getAge());
                         if (e.isBaby()) {
                             npc.setBaby();
                         }
                         npc.setHealth(e.getHealth());
                         npc.setRecipes(e.getTrades());
-                        npc.setRiches(e.getRiches());
+//                        npc.setRiches(e.getRiches());
                         String name = e.getName();
                         if (name != null && !name.isEmpty()) {
                             npc.setCustomName(name);
@@ -920,7 +920,7 @@ public class TARDISFarmer {
         List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
         List<Entity> mobs = p.getNearbyEntities(3.5D, 3.5D, 3.5D);
         for (Entity e : mobs) {
-            if (e.getType().equals(EntityType.OCELOT) || e.getType().equals(EntityType.WOLF) || e.getType().equals(EntityType.PARROT)) {
+            if (e.getType().equals(EntityType.CAT) || e.getType().equals(EntityType.WOLF) || e.getType().equals(EntityType.PARROT)) {
                 Tameable tamed = (Tameable) e;
                 if (tamed.isTamed() && tamed.getOwner().getUniqueId().equals(p.getUniqueId())) {
                     TARDISParrot pet = new TARDISParrot();
@@ -939,13 +939,13 @@ public class TARDISFarmer {
                             pet.setHealth(health);
                             pet.setBaby(!((Wolf) e).isAdult());
                             break;
-                        case OCELOT:
-                            pet.setAge(((Ocelot) e).getAge());
-                            pet.setSitting(((Ocelot) e).isSitting());
-                            pet.setCatType(((Ocelot) e).getCatType());
-                            health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
+                        case CAT:
+                            pet.setAge(((Cat) e).getAge());
+                            pet.setSitting(((Cat) e).isSitting());
+                            pet.setCatType(((Cat) e).getCatType());
+                            health = (((Cat) e).getHealth() > 8D) ? 8D : ((Cat) e).getHealth();
                             pet.setHealth(health);
-                            pet.setBaby(!((Ocelot) e).isAdult());
+                            pet.setBaby(!((Cat) e).isAdult());
                             break;
                         case PARROT:
                             pet.setAge(((Parrot) e).getAge());

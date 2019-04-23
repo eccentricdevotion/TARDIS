@@ -301,11 +301,11 @@ public class TARDISEjectListener implements Listener {
                     ent.remove();
                 }
                 break;
-            case OCELOT:
+            case CAT:
                 Tameable otamed = (Tameable) ent;
                 if (otamed.isTamed() && otamed.getOwner().getUniqueId().equals(player.getUniqueId())) {
-                    Ocelot o = (Ocelot) ent;
-                    Ocelot cat = (Ocelot) l.getWorld().spawnEntity(l, EntityType.OCELOT);
+                    Cat o = (Cat) ent;
+                    Cat cat = (Cat) l.getWorld().spawnEntity(l, EntityType.CAT);
                     cat.setTicksLived(o.getTicksLived());
                     if ((!o.isAdult())) {
                         cat.setBaby();
@@ -326,14 +326,14 @@ public class TARDISEjectListener implements Listener {
                 Villager v = (Villager) ent;
                 Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
                 villager.setProfession(v.getProfession());
-                villager.setCareer(v.getCareer());
+//                villager.setCareer(v.getCareer());
                 villager.setAge(v.getTicksLived());
                 if (!v.isAdult()) {
                     villager.setBaby();
                 }
                 villager.setHealth(v.getHealth());
                 villager.setRecipes(v.getRecipes());
-                villager.setRiches(v.getRiches());
+//                villager.setRiches(v.getRiches());
                 String vilname = ent.getCustomName();
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);

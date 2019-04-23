@@ -221,8 +221,8 @@ public class TARDISDoorListener {
                         wolf.setBaby();
                     }
                     break;
-                case OCELOT:
-                    Ocelot cat = (Ocelot) ent;
+                case CAT:
+                    Cat cat = (Cat) ent;
                     cat.setCatType(pet.getCatType());
                     cat.setSitting(pet.getSitting());
                     cat.setAge(pet.getAge());
