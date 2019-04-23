@@ -15,9 +15,9 @@
  */
 package com.rmtheis.yandtran.translate;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -101,7 +101,7 @@ public abstract class YandexTranslatorAPI {
      */
     protected static String retrievePropString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
-        JSONObject jsonObj = (JSONObject) JSONValue.parse(response);
+        JsonObject jsonObj = (JsonObject) new JsonParser().parse(response);
         return jsonObj.get(jsonValProperty).toString();
     }
 
@@ -124,24 +124,24 @@ public abstract class YandexTranslatorAPI {
         return combinedTranslations.toString().trim();
     }
 
-    // Helper method to parse a JSONObject containing an array of Strings with the given label.
+    // Helper method to parse a JsonObject containing an array of Strings with the given label.
     private static String[] jsonObjValToStringArr(String inputString, String subObjPropertyName) throws Exception {
-        JSONObject jsonObj = (JSONObject) JSONValue.parse(inputString);
-        JSONArray jsonArr = (JSONArray) jsonObj.get(subObjPropertyName);
-        return jsonArrToStringArr(jsonArr.toJSONString(), null);
+        JsonObject jsonObj = (JsonObject) new JsonParser().parse(inputString);
+        JsonArray jsonArr = (JsonArray) jsonObj.get(subObjPropertyName);
+        return jsonArrToStringArr(jsonArr.getAsString(), null);
     }
 
-    // Helper method to parse a JSONArray. Reads an array of JSONObjects and returns a String Array
+    // Helper method to parse a JsonArray. Reads an array of JsonObjects and returns a String Array
     // containing the toString() of the desired property. If propertyName is null, just return the String value.
     private static String[] jsonArrToStringArr(String inputString, String propertyName) throws Exception {
-        JSONArray jsonArr = (JSONArray) JSONValue.parse(inputString);
+        JsonArray jsonArr = (JsonArray) new JsonParser().parse(inputString);
         String[] values = new String[jsonArr.size()];
 
         int i = 0;
         for (Object obj : jsonArr) {
             if (propertyName != null && propertyName.length() != 0) {
-                JSONObject json = (JSONObject) obj;
-                if (json.containsKey(propertyName)) {
+                JsonObject json = (JsonObject) obj;
+                if (json.has(propertyName)) {
                     values[i] = json.get(propertyName).toString();
                 }
             } else {
