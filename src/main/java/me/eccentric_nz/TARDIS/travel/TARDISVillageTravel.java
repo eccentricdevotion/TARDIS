@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.StructureType;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -47,6 +48,7 @@ public class TARDISVillageTravel {
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (rs.resultSet()) {
             World world = rs.getWorld();
+            Location location = new Location(world, rs.getX(), rs.getY(), rs.getZ());
             Environment env = world.getEnvironment();
             if (env.equals(Environment.NETHER)) {
                 TARDISMessage.send(p, "VILLAGE_NO_NETHER");
@@ -56,7 +58,7 @@ public class TARDISVillageTravel {
                 TARDISMessage.send(p, "VILLAGE_NO_END");
                 return null;
             }
-            Location loc = plugin.getTardisHelper().getRandomVillage(world);
+            Location loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
             if (loc == null) {
                 return null;
             }
