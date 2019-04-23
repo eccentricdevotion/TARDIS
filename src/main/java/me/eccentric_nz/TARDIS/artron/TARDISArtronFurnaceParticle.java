@@ -60,8 +60,7 @@ public class TARDISArtronFurnaceParticle {
             if (furnace != null) {
                 Inventory inv = furnace.getInventory();
                 if (inv != null) {
-                    String title = inv.getTitle();
-                    return (title != null && title.equals("TARDIS Artron Furnace"));
+                    return (plugin.getTardisHelper().isArtronFurnace(b));
                 }
             }
         } catch (NullPointerException e) {
