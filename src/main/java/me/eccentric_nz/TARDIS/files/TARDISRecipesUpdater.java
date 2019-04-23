@@ -40,8 +40,8 @@ public class TARDISRecipesUpdater {
         this.plugin = plugin;
         this.recipes_config = recipes_config;
         flavours.put("Licorice", "INK_SAC");
-        flavours.put("Raspberry", "ROSE_RED");
-        flavours.put("Apple", "CACTUS_GREEN");
+        flavours.put("Raspberry", "RED_DYE");
+        flavours.put("Apple", "GREEN_DYE");
         flavours.put("Cappuccino", "COCOA_BEANS");
         flavours.put("Blueberry", "LAPIS_LAZULI");
         flavours.put("Grape", "PURPLE_DYE");
@@ -50,7 +50,7 @@ public class TARDISRecipesUpdater {
         flavours.put("Earl Grey", "GRAY_DYE");
         flavours.put("Strawberry", "PINK_DYE");
         flavours.put("Lime", "LIME_DYE");
-        flavours.put("Lemon", "DANDELION_YELLOW");
+        flavours.put("Lemon", "YELLOW_DYE");
         flavours.put("Bubblegum", "LIGHT_BLUE_DYE");
         flavours.put("Watermelon", "MAGENTA_DYE");
         flavours.put("Orange", "ORANGE_DYE");
@@ -207,7 +207,7 @@ public class TARDISRecipesUpdater {
                 recipes_config.set("shapeless.Island Punch Jelly Baby.lore", "");
             }
             if (recipes_config.getString("shapeless.Raspberry Jelly Baby.recipe").contains("RED_ROSE")) {
-                recipes_config.set("shapeless.Raspberry Jelly Baby.recipe", "SUGAR,SLIME_BALL,ROSE_RED");
+                recipes_config.set("shapeless.Raspberry Jelly Baby.recipe", "SUGAR,SLIME_BALL,RED_DYE");
             }
             recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
             recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
@@ -223,8 +223,8 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SAC");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
-            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "ROSE_RED");
-            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "ROSE_RED");
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "RED_DYE");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "RED_DYE");
             recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
             recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
             i++;
@@ -432,10 +432,10 @@ public class TARDISRecipesUpdater {
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
-            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "ROSE_RED");
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "RED_DYE");
             recipes_config.set("shaped.Jammy Dodger.hard_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.hard_ingredients.W", "WHEAT");
-            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "ROSE_RED");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "RED_DYE");
             recipes_config.set("shaped.Jammy Dodger.result", "COOKIE");
             recipes_config.set("shaped.Jammy Dodger.amount", 8);
             recipes_config.set("shaped.Jammy Dodger.lore", "");

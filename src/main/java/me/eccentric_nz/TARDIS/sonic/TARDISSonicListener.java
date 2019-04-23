@@ -353,7 +353,7 @@ public class TARDISSonicListener implements Listener {
                             }
                         }, 60L);
                     }
-                    if (b.getType().equals(Material.WALL_SIGN) && player.hasPermission("tardis.atmospheric")) {
+                    if (b.getType().equals(Material.OAK_WALL_SIGN) && player.hasPermission("tardis.atmospheric")) {
                         // check the text on the sign
                         Sign sign = (Sign) b.getState();
                         String line0 = ChatColor.stripColor(sign.getLine(0));
@@ -633,7 +633,7 @@ public class TARDISSonicListener implements Listener {
                             case GREEN_STAINED_GLASS_PANE:
                             case GREEN_TERRACOTTA:
                             case GREEN_WOOL:
-                                if (!dye.getType().equals(Material.CACTUS_GREEN)) {
+                                if (!dye.getType().equals(Material.GREEN_DYE)) {
                                     changeColour(b, dye, inv, player);
                                 }
                                 break;
@@ -705,7 +705,7 @@ public class TARDISSonicListener implements Listener {
                             case RED_STAINED_GLASS_PANE:
                             case RED_TERRACOTTA:
                             case RED_WOOL:
-                                if (!dye.getType().equals(Material.ROSE_RED)) {
+                                if (!dye.getType().equals(Material.RED_DYE)) {
                                     changeColour(b, dye, inv, player);
                                 }
                                 break;
@@ -723,7 +723,7 @@ public class TARDISSonicListener implements Listener {
                             case YELLOW_STAINED_GLASS_PANE:
                             case YELLOW_TERRACOTTA:
                             case YELLOW_WOOL:
-                                if (!dye.getType().equals(Material.DANDELION_YELLOW)) {
+                                if (!dye.getType().equals(Material.YELLOW_DYE)) {
                                     changeColour(b, dye, inv, player);
                                 }
                                 break;
@@ -752,7 +752,7 @@ public class TARDISSonicListener implements Listener {
             case BONE_MEAL:
                 split[0] = "WHITE";
                 break;
-            case CACTUS_GREEN:
+            case GREEN_DYE:
                 split[0] = "GREEN";
                 break;
             case COCOA_BEANS:
@@ -761,7 +761,7 @@ public class TARDISSonicListener implements Listener {
             case CYAN_DYE:
                 split[0] = "CYAN";
                 break;
-            case DANDELION_YELLOW:
+            case YELLOW_DYE:
                 split[0] = "YELLOW";
                 break;
             case GRAY_DYE:
@@ -794,7 +794,7 @@ public class TARDISSonicListener implements Listener {
             case PURPLE_DYE:
                 split[0] = "PURPLE";
                 break;
-            case ROSE_RED:
+            case RED_DYE:
                 split[0] = "RED";
                 break;
             default:

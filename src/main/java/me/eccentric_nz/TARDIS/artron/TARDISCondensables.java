@@ -143,7 +143,7 @@ public class TARDISCondensables {
             condensables.put("BUBBLE_CORAL_FAN", 2);
             condensables.put("BUCKET", 22);
             condensables.put("CACTUS", 10);
-            condensables.put("CACTUS_GREEN", 10);
+            condensables.put("GREEN_DYE", 10);
             condensables.put("CAKE", 180);
             condensables.put("CARROT", 9);
             condensables.put("CARROT_ON_A_STICK", 19);
@@ -207,7 +207,7 @@ public class TARDISCondensables {
             condensables.put("CYAN_WOOL", 20);
             condensables.put("DAMAGED_ANVIL", 160);
             condensables.put("DANDELION", 2);
-            condensables.put("DANDELION_YELLOW", 10);
+            condensables.put("YELLOW_DYE", 10);
             condensables.put("DARK_OAK_BOAT", 3);
             condensables.put("DARK_OAK_BUTTON", 1);
             condensables.put("DARK_OAK_DOOR", 3);
@@ -612,7 +612,7 @@ public class TARDISCondensables {
             condensables.put("REDSTONE_WIRE", 32);
             condensables.put("REPEATER", 110);
             condensables.put("ROSE_BUSH", 2);
-            condensables.put("ROSE_RED", 10);
+            condensables.put("RED_DYE", 10);
             condensables.put("ROTTEN_FLESH", 1);
             condensables.put("SADDLE", 100);
             condensables.put("SALMON", 5);
@@ -627,7 +627,7 @@ public class TARDISCondensables {
             condensables.put("SHEARS", 44);
             condensables.put("SHIELD", 28);
             condensables.put("SHULKER_SHELL", 50);
-            condensables.put("SIGN", 2);
+            condensables.put("OAK_SIGN", 2);
             condensables.put("SKELETON_SKULL", 200);
             condensables.put("SLIME_BALL", 50);
             condensables.put("SLIME_BLOCK", 450);
@@ -696,7 +696,7 @@ public class TARDISCondensables {
             condensables.put("TUBE_CORAL_FAN", 2);
             condensables.put("TURTLE_HELMET", 100);
             condensables.put("VINE", 1);
-            condensables.put("WALL_SIGN", 1);
+            condensables.put("OAK_WALL_SIGN", 1);
             condensables.put("WATER_BUCKET", 40);
             condensables.put("WET_SPONGE", 80);
             condensables.put("WHEAT", 9);

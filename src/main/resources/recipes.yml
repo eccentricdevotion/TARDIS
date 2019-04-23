@@ -165,11 +165,11 @@ shaped:
     easy_shape: -R-,-S-,-R-
     easy_ingredients:
       R: REDSTONE
-      S: SIGN
+      S: OAK_SIGN
     hard_shape: -R-,-S-,-R-
     hard_ingredients:
       R: REDSTONE
-      S: SIGN
+      S: OAK_SIGN
     result: 'FILLED_MAP:1976'
     amount: 1
     lore: "Uses left~50"
@@ -460,11 +460,11 @@ shaped:
     easy_shape: ---,WRW,---
     easy_ingredients:
       W: WHEAT
-      R: ROSE_RED
+      R: RED_DYE
     hard_shape: ---,WRW,---
     hard_ingredients:
       W: WHEAT
-      R: ROSE_RED
+      R: RED_DYE
     result: COOKIE
     amount: 8
     lore: ""
@@ -941,7 +941,7 @@ shapeless:
     amount: 4
     lore: ''
   Lemon Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,DANDELION_YELLOW
+    recipe: SUGAR,SLIME_BALL,YELLOW_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''
@@ -986,12 +986,12 @@ shapeless:
     amount: 4
     lore: ''
   Apple Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,CACTUS_GREEN
+    recipe: SUGAR,SLIME_BALL,GREEN_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''
   Raspberry Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,ROSE_RED
+    recipe: SUGAR,SLIME_BALL,RED_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''

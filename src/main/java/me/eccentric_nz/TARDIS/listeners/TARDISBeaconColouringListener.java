@@ -122,7 +122,7 @@ public class TARDISBeaconColouringListener implements Listener {
                 break;
             case GREEN_STAINED_GLASS:
             case GREEN_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.CACTUS_GREEN)) {
+                if (dye.getType().equals(Material.GREEN_DYE)) {
                     return;
                 }
                 break;
@@ -170,7 +170,7 @@ public class TARDISBeaconColouringListener implements Listener {
                 break;
             case RED_STAINED_GLASS:
             case RED_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.ROSE_RED)) {
+                if (dye.getType().equals(Material.RED_DYE)) {
                     return;
                 }
                 break;
@@ -182,7 +182,7 @@ public class TARDISBeaconColouringListener implements Listener {
                 break;
             case YELLOW_STAINED_GLASS:
             case YELLOW_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.DANDELION_YELLOW)) {
+                if (dye.getType().equals(Material.YELLOW_DYE)) {
                     return;
                 }
                 break;
@@ -229,7 +229,7 @@ public class TARDISBeaconColouringListener implements Listener {
             case BONE_MEAL:
                 split[0] = "WHITE";
                 break;
-            case CACTUS_GREEN:
+            case GREEN_DYE:
                 split[0] = "GREEN";
                 break;
             case COCOA_BEANS:
@@ -238,7 +238,7 @@ public class TARDISBeaconColouringListener implements Listener {
             case CYAN_DYE:
                 split[0] = "CYAN";
                 break;
-            case DANDELION_YELLOW:
+            case YELLOW_DYE:
                 split[0] = "YELLOW";
                 break;
             case GRAY_DYE:
@@ -271,7 +271,7 @@ public class TARDISBeaconColouringListener implements Listener {
             case PURPLE_DYE:
                 split[0] = "PURPLE";
                 break;
-            case ROSE_RED:
+            case RED_DYE:
                 split[0] = "RED";
                 break;
             default:
