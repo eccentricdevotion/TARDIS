@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -57,8 +57,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onARSMapClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Map")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
@@ -76,11 +76,11 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                     case 11:
                     case 19:
                         // up
-                        moveMap(uuid, inv, slot);
+                        moveMap(uuid, view, slot);
                         break;
                     case 10:
                         // load map
-                        loadMap(inv, uuid);
+                        loadMap(view, uuid);
                         break;
                     case 45:
                         // close
@@ -88,19 +88,19 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         break;
                     case 47:
                         // where am I?
-                        findPlayer(player, inv);
+                        findPlayer(player, view);
                         break;
                     case 27:
                     case 28:
                     case 29:
                         // change levels
                         if (map_data.containsKey(uuid)) {
-                            switchLevel(inv, slot, uuid);
+                            switchLevel(view, slot, uuid);
                             TARDISARSMapData md = map_data.get(uuid);
-                            setMap(md.getY(), md.getE(), md.getS(), uuid, inv);
-                            setLore(inv, slot, null);
+                            setMap(md.getY(), md.getE(), md.getS(), uuid, view);
+                            setLore(view, slot, null);
                         } else {
-                            setLore(inv, slot, plugin.getLanguage().getString("ARS_LOAD"));
+                            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
                         break;
                     default:
@@ -110,7 +110,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         }
     }
 
-    private void findPlayer(Player p, Inventory inv) {
+    private void findPlayer(Player p, InventoryView view) {
         UUID uuid = p.getUniqueId();
         int id = ids.get(uuid);
         // need to get the console location - will be different for non-TIPS TARDISes
@@ -136,7 +136,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
             if (col < 0 || col > 8 || row < 0 || row > 8) {
                 // outside ARS grid
-                setLore(inv, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
+                setLore(view, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
                 return;
             }
             int east = getOffset(col);
@@ -150,19 +150,19 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 level = 29;
             }
             // set map
-            switchLevel(inv, level, uuid);
+            switchLevel(view, level, uuid);
             TARDISARSMapData md = map_data.get(uuid);
             md.setY(level - 27);
             md.setE(east);
             md.setS(south);
-            setMap(level - 27, east, south, uuid, inv);
-            setLore(inv, level, null);
+            setMap(level - 27, east, south, uuid, view);
+            setLore(view, level, null);
             map_data.put(uuid, md);
             // get itemstack to enchant and change lore
             int slot = ((row - south) * 9) + 4 + (col - east);
-            ItemStack is = inv.getItem(slot);
+            ItemStack is = view.getItem(slot);
             is.setType(Material.ARROW);
-            setLore(inv, slot, plugin.getLanguage().getString("ARS_MAP_HERE"));
+            setLore(view, slot, plugin.getLanguage().getString("ARS_MAP_HERE"));
         }
     }
 

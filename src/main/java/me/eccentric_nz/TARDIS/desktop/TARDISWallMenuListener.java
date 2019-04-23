@@ -28,6 +28,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
 
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
-        String name = event.getInventory().getTitle();
+        String name = event.getView().getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Wall Menu") || name.equals(ChatColor.DARK_RED + "TARDIS Floor Menu")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
@@ -67,8 +68,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
 
     @EventHandler(ignoreCancelled = true)
     public void onWallMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Wall Menu") || name.equals(ChatColor.DARK_RED + "TARDIS Floor Menu")) {
             boolean isWall = (name.equals(ChatColor.DARK_RED + "TARDIS Wall Menu"));
             Player p = (Player) event.getWhoClicked();
@@ -86,7 +87,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
                         event.setCancelled(true);
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
-                            scroll(inv, scroll.get(uuid) + 1, true, uuid);
+                            scroll(view, scroll.get(uuid) + 1, true, uuid);
                         }
                         break;
                     case 35:
@@ -94,7 +95,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
                         event.setCancelled(true);
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
-                            scroll(inv, scroll.get(uuid) - 1, false, uuid);
+                            scroll(view, scroll.get(uuid) - 1, false, uuid);
                         }
                         break;
                     case 53:
@@ -105,7 +106,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
                     default:
                         event.setCancelled(true);
                         // get block type and data
-                        ItemStack choice = inv.getItem(slot);
+                        ItemStack choice = view.getItem(slot);
                         // set the tardis wall/floor block
                         String str = choice.getType().toString();
                         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
@@ -159,20 +160,20 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
         }, 1L);
     }
 
-    private void scroll(Inventory inv, int row, boolean up, UUID uuid) {
+    private void scroll(InventoryView view, int row, boolean up, UUID uuid) {
         if ((up && row < (rows - 5)) || (!up && row >= 0)) {
             scroll.put(uuid, row);
-            setSlots(inv, row, uuid);
+            setSlots(view, row, uuid);
         } else {
             scrolling.remove(uuid);
         }
     }
 
-    private void setSlots(Inventory inv, int row, UUID uuid) {
+    private void setSlots(InventoryView view, int row, UUID uuid) {
         int slot = 0;
         for (int r = row; r < row + 6; r++) {
             for (int c = 0; c < 8; c++) {
-                inv.setItem(slot, blocks[r][c]);
+                view.setItem(slot, blocks[r][c]);
                 if (slot % 9 == 7) {
                     slot += 2;
                 } else {

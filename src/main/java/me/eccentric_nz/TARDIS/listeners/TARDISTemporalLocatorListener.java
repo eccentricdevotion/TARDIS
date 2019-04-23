@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -54,14 +54,14 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
      */
     @EventHandler(ignoreCancelled = true)
     public void onTemporalTerminalClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Temporal Locator")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();

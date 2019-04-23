@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -63,13 +63,13 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Interior Sounds")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 18) {
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
@@ -86,10 +86,10 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                             break;
                         case 15:
                             // toggle play save
-                            if (isPlay(inv)) {
-                                setPlay(inv, "SAVE");
+                            if (isPlay(view)) {
+                                setPlay(view, "SAVE");
                             } else {
-                                setPlay(inv, "PLAY");
+                                setPlay(view, "PLAY");
                             }
                             break;
                         case 17:
@@ -97,7 +97,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                             close(p);
                             break;
                         default:
-                            if (isPlay(inv)) {
+                            if (isPlay(view)) {
                                 long now = System.currentTimeMillis();
                                 if (cooldown.containsKey(uuid) && now < cooldown.get(uuid) + sounds.get(last.get(uuid))) {
                                     close(p);
@@ -123,15 +123,15 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
         }
     }
 
-    private void setPlay(Inventory inv, String str) {
-        ItemStack play = inv.getItem(15);
+    private void setPlay(InventoryView view, String str) {
+        ItemStack play = view.getItem(15);
         ItemMeta save = play.getItemMeta();
         save.setLore(Collections.singletonList(str));
         play.setItemMeta(save);
     }
 
-    private boolean isPlay(Inventory inv) {
-        ItemStack play = inv.getItem(15);
+    private boolean isPlay(InventoryView view) {
+        ItemStack play = view.getItem(15);
         ItemMeta save = play.getItemMeta();
         return (save.getLore().get(0).endsWith("PLAY"));
     }

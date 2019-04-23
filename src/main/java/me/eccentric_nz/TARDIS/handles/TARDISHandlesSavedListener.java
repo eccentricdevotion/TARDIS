@@ -28,6 +28,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -56,8 +57,8 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
      */
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Saved Programs")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
@@ -69,7 +70,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 ItemStack record = player.getItemOnCursor();
                 if (record != null && !record.getType().equals(Material.AIR)) {
                     if (record.getType().equals(Material.MUSIC_DISC_WARD)) {
-                        ItemStack disk = inv.getItem(slot);
+                        ItemStack disk = view.getItem(slot);
                         if (disk != null && record.isSimilar(disk)) {
                             ItemMeta im = disk.getItemMeta();
                             List<String> lore = im.getLore();
@@ -89,7 +90,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 } else {
                     selectedSlot.put(uuid, slot);
                     // add / remove "Selected"
-                    setSlots(inv, slot);
+                    setSlots(view, slot);
                 }
             }
             if (slot == 45) {
@@ -106,7 +107,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             if (slot == 47) {
                 // load program
                 if (selectedSlot.containsKey(uuid)) {
-                    ItemStack is = inv.getItem(selectedSlot.get(uuid));
+                    ItemStack is = view.getItem(selectedSlot.get(uuid));
                     int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
                     selectedSlot.put(uuid, null);
                     close(player);
@@ -124,7 +125,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             if (slot == 48) {
                 // deactivate program
                 if (selectedSlot.containsKey(uuid)) {
-                    ItemStack is = inv.getItem(selectedSlot.get(uuid));
+                    ItemStack is = view.getItem(selectedSlot.get(uuid));
                     int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
@@ -145,14 +146,14 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             if (slot == 49) {
                 // delete program
                 if (selectedSlot.containsKey(uuid)) {
-                    ItemStack is = inv.getItem(selectedSlot.get(uuid));
+                    ItemStack is = view.getItem(selectedSlot.get(uuid));
                     int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     new QueryFactory(plugin).doDelete("programs", where);
                     // remove item stack
-                    inv.clear(selectedSlot.get(uuid));
-                    setSlots(inv, -1);
+                    event.getClickedInventory().clear(selectedSlot.get(uuid));
+                    setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                 } else {
                     TARDISMessage.send(player, "HANDLES_SELECT");
@@ -161,7 +162,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             if (slot == 51) {
                 // check out program
                 if (selectedSlot.containsKey(uuid)) {
-                    ItemStack is = inv.getItem(selectedSlot.get(uuid));
+                    ItemStack is = view.getItem(selectedSlot.get(uuid));
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     if (lore.get(2).equals("Checked OUT")) {
@@ -171,7 +172,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     lore.set(2, "Checked OUT");
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    setSlots(inv, -1);
+                    setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                     ItemStack clone = is.clone();
                     player.getWorld().dropItemNaturally(player.getLocation(), clone);
@@ -197,12 +198,12 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
     /**
      * Sets an ItemStack to the specified inventory slot updating the display name and setting any lore.
      *
-     * @param inv  the inventory to update
+     * @param view the inventory to update
      * @param slot the slot number to add a line of lore to
      */
-    private void setSlots(Inventory inv, int slot) {
+    private void setSlots(InventoryView view, int slot) {
         for (int s = 0; s < 45; s++) {
-            ItemStack is = inv.getItem(s);
+            ItemStack is = view.getItem(s);
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();

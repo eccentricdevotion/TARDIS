@@ -27,7 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,8 +45,8 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
 
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -71,12 +71,12 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
                     case 17:
                         event.setCancelled(true);
                         // set display name of sonic in slot 18
-                        ItemStack sonic = inv.getItem(18);
+                        ItemStack sonic = view.getItem(18);
                         if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
                             return;
                         }
                         // get Display name of selected sonic
-                        ItemStack choice = inv.getItem(slot);
+                        ItemStack choice = view.getItem(slot);
                         ItemMeta choice_im = choice.getItemMeta();
                         String choice_name = choice_im.getDisplayName();
                         ItemMeta sonic_im = sonic.getItemMeta();
@@ -105,17 +105,17 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
 
     @EventHandler(ignoreCancelled = true)
     public void onSonicMenuClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
+        InventoryView view = event.getView();
+        String title = view.getTitle();
         if (!title.equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
             return;
         }
-        ItemStack sonic = inv.getItem(18);
+        ItemStack sonic = view.getItem(18);
         if (sonic != null) {
             Player p = (Player) event.getPlayer();
             Location loc = p.getLocation();
             loc.getWorld().dropItemNaturally(loc, sonic);
-            inv.setItem(18, new ItemStack(Material.AIR));
+            view.setItem(18, new ItemStack(Material.AIR));
         }
     }
 }

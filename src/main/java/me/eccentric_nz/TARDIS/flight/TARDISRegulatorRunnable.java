@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,20 +31,20 @@ import java.util.List;
  */
 public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runnable {
 
-    private final Inventory inv;
+    private final InventoryView view;
     private int slot;
     private int taskId;
     private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
 
-    TARDISRegulatorRunnable(Inventory inv) {
-        this.inv = inv;
+    TARDISRegulatorRunnable(InventoryView view) {
+        this.view = view;
         slot = 20;
     }
 
     @Override
     public void run() {
         // clear slot
-        inv.setItem(getSlot(), vortex);
+        view.setItem(getSlot(), vortex);
         Collections.shuffle(directions);
         found:
         for (int i = 0; i < 4; i++) {
@@ -80,7 +80,7 @@ public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runn
             }
         }
         // set the slot
-        inv.setItem(getSlot(), box);
+        view.setItem(getSlot(), box);
     }
 
     public int getSlot() {

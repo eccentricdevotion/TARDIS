@@ -33,7 +33,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -56,8 +56,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Archive")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -77,7 +77,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         break;
                     case 18:
                         // size
-                        ItemStack iss = inv.getItem(18);
+                        ItemStack iss = view.getItem(18);
                         ItemMeta ims = iss.getItemMeta();
                         List<String> lores = ims.getLore();
                         String t;
@@ -94,16 +94,16 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         break;
                     case 19:
                         // scan
-                        scan(p, inv);
+                        scan(p, view);
                         break;
                     case 20:
                         // archive
-                        archive(p, inv);
+                        archive(p, view);
                         break;
                     case 22:
                     case 23:
                     case 24:
-                        ItemStack template = inv.getItem(slot);
+                        ItemStack template = view.getItem(slot);
                         if (template != null) {
                             UUID uuid = p.getUniqueId();
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
@@ -130,7 +130,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         break;
                     default:
                         // get Display name of selected archive
-                        ItemStack choice = inv.getItem(slot);
+                        ItemStack choice = view.getItem(slot);
                         if (choice != null) {
                             // remember the upgrade choice
                             SCHEMATIC schm = CONSOLES.SCHEMATICFor("archive");
@@ -188,9 +188,9 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      *
      * @param p the player using the GUI
      */
-    private void scan(Player p, Inventory inv) {
+    private void scan(Player p, InventoryView view) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            List<String> lore = getSizeLore(inv);
+            List<String> lore = getSizeLore(view);
             String size = lore.get(0);
             p.closeInventory();
             p.performCommand("tardis archive scan " + size);
@@ -202,9 +202,9 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      *
      * @param p the player using the GUI
      */
-    private void archive(Player p, Inventory inv) {
+    private void archive(Player p, InventoryView view) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            List<String> lore = getSizeLore(inv);
+            List<String> lore = getSizeLore(view);
             String size = lore.get(0);
             p.closeInventory();
             // generate random name
@@ -213,8 +213,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
         }, 1L);
     }
 
-    private List<String> getSizeLore(Inventory inv) {
-        ItemStack is = inv.getItem(18);
+    private List<String> getSizeLore(InventoryView view) {
+        ItemStack is = view.getItem(18);
         ItemMeta im = is.getItemMeta();
         return im.getLore();
     }

@@ -30,6 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -51,8 +52,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -81,7 +82,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         break;
                     default:
                         // get Display name of selected console
-                        ItemStack choice = inv.getItem(slot);
+                        ItemStack choice = view.getItem(slot);
                         if (choice != null) {
                             String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
                             if (p.hasPermission("tardis." + perm)) {

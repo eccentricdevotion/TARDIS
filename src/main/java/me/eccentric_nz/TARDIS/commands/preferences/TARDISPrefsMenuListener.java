@@ -34,6 +34,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -77,13 +78,13 @@ public class TARDISPrefsMenuListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();

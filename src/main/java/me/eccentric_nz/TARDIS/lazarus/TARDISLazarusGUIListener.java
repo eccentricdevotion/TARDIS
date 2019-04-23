@@ -41,7 +41,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -85,8 +85,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
      */
     @EventHandler(ignoreCancelled = true)
     public void onLazarusClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator")) {
             event.setCancelled(true);
             if (plugin.checkTWA()) {
@@ -101,7 +101,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             }
             if (slot >= 0 && slot < max_slot) {
                 // get selection
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     ItemMeta im = is.getItemMeta();
                     // remember selection
@@ -111,14 +111,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         is.setItemMeta(im);
                     } else {
                         disguises.put(uuid, display);
-                        setSlotFourtyEight(inv, display, uuid);
+                        setSlotFourtyEight(view, display, uuid);
                     }
                 } else {
                     disguises.put(uuid, "PLAYER");
                 }
             }
             if (slot == 45) { // The Master Switch : ON | OFF
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 if (player.hasPermission("tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
@@ -133,7 +133,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 is.setItemMeta(im);
             }
             if (slot == 47) { // adult / baby
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
                 im.setLore(Collections.singletonList(onoff));
@@ -141,11 +141,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             }
             if (slot == 48) { // type / colour
                 if (disguises.containsKey(uuid)) {
-                    setSlotFourtyEight(inv, disguises.get(uuid), uuid);
+                    setSlotFourtyEight(view, disguises.get(uuid), uuid);
                 }
             }
             if (slot == 49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
                 int pos = lore.size() - 1;
@@ -192,7 +192,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     if (DisguiseAPI.isDisguised(player)) {
                         DisguiseAPI.undisguiseToAll(player);
                     }
-                    if (isReversedPolarity(inv)) {
+                    if (isReversedPolarity(view)) {
                         plugin.getTrackerKeeper().setImmortalityGate(player.getName());
                         PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
                         plugin.getServer().getOnlinePlayers().forEach((p) -> {
@@ -263,96 +263,96 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     case DONKEY:
                                     case MULE:
                                         ChestedHorseWatcher hcw = (ChestedHorseWatcher) livingWatcher;
-                                        hcw.setCarryingChest(getBoolean(inv));
+                                        hcw.setCarryingChest(getBoolean(view));
                                         break;
                                     case SHEEP:
                                         SheepWatcher sw = (SheepWatcher) livingWatcher;
-                                        sw.setColor(getColor(inv));
-                                        sw.setBaby(getBaby(inv));
-                                        if (getBoolean(inv)) {
+                                        sw.setColor(getColor(view));
+                                        sw.setBaby(getBaby(view));
+                                        if (getBoolean(view)) {
                                             sw.setCustomName("jeb_");
                                             sw.setCustomNameVisible(true);
                                         }
                                         break;
                                     case HORSE:
                                         HorseWatcher hw = (HorseWatcher) livingWatcher;
-                                        hw.setColor(getHorseColor(inv));
-                                        hw.setBaby(getBaby(inv));
+                                        hw.setColor(getHorseColor(view));
+                                        hw.setBaby(getBaby(view));
                                         break;
                                     case LLAMA:
                                         LlamaWatcher llw = (LlamaWatcher) livingWatcher;
-                                        llw.setColor(getLlamaColor(inv));
-                                        if (getBoolean(inv)) {
+                                        llw.setColor(getLlamaColor(view));
+                                        if (getBoolean(view)) {
                                             Random rand = new Random();
                                             llw.setCarpet(AnimalColor.values()[rand.nextInt(16)]);
                                         }
                                         break;
                                     case OCELOT:
                                         OcelotWatcher ow = (OcelotWatcher) livingWatcher;
-                                        ow.setType(getCatType(inv));
-                                        ow.setBaby(getBaby(inv));
+                                        ow.setType(getCatType(view));
+                                        ow.setBaby(getBaby(view));
                                         break;
                                     case PARROT:
                                         ParrotWatcher tw = (ParrotWatcher) livingWatcher;
-                                        tw.setVariant(getParrotVariant(inv));
-                                        tw.setBaby(getBaby(inv));
+                                        tw.setVariant(getParrotVariant(view));
+                                        tw.setBaby(getBaby(view));
                                         break;
                                     case PIG:
                                         PigWatcher pw = (PigWatcher) livingWatcher;
-                                        pw.setSaddled(getBoolean(inv));
-                                        pw.setBaby(getBaby(inv));
+                                        pw.setSaddled(getBoolean(view));
+                                        pw.setBaby(getBaby(view));
                                         break;
                                     case RABBIT:
                                         RabbitWatcher rw = (RabbitWatcher) livingWatcher;
-                                        rw.setType(getRabbitType(inv));
-                                        rw.setBaby(getBaby(inv));
+                                        rw.setType(getRabbitType(view));
+                                        rw.setBaby(getBaby(view));
                                         break;
                                     case VILLAGER:
                                         VillagerWatcher vw = (VillagerWatcher) livingWatcher;
-                                        vw.setProfession(getProfession(inv));
-                                        vw.setBaby(getBaby(inv));
+                                        vw.setProfession(getProfession(view));
+                                        vw.setBaby(getBaby(view));
                                         break;
                                     case WOLF:
                                         WolfWatcher ww = (WolfWatcher) livingWatcher;
-                                        if (getBoolean(inv)) {
+                                        if (getBoolean(view)) {
                                             ww.setTamed(true);
-                                            ww.setCollarColor(getColor(inv));
+                                            ww.setCollarColor(getColor(view));
                                         }
-                                        ww.setBaby(getBaby(inv));
+                                        ww.setBaby(getBaby(view));
                                         break;
                                     case SLIME:
                                     case MAGMA_CUBE:
                                         SlimeWatcher slw = (SlimeWatcher) livingWatcher;
-                                        slw.setSize(getSlimeSize(inv));
+                                        slw.setSize(getSlimeSize(view));
                                         break;
                                     case BAT:
                                         BatWatcher bw = (BatWatcher) livingWatcher;
-                                        bw.setHanging(!getBoolean(inv));
+                                        bw.setHanging(!getBoolean(view));
                                         break;
                                     case BLAZE:
                                         BlazeWatcher bbw = (BlazeWatcher) livingWatcher;
-                                        bbw.setBlazing(getBoolean(inv));
+                                        bbw.setBlazing(getBoolean(view));
                                         break;
                                     case CREEPER:
                                         CreeperWatcher cw = (CreeperWatcher) livingWatcher;
-                                        cw.setPowered(getBoolean(inv));
+                                        cw.setPowered(getBoolean(view));
                                         break;
                                     case ENDERMAN:
                                         EndermanWatcher ew = (EndermanWatcher) livingWatcher;
-                                        ew.setAggressive(getBoolean(inv));
+                                        ew.setAggressive(getBoolean(view));
                                         break;
                                     case COW:
                                         AgeableWatcher aw = (AgeableWatcher) livingWatcher;
-                                        aw.setBaby(getBaby(inv));
+                                        aw.setBaby(getBaby(view));
                                         break;
                                     case ZOMBIE:
                                         ZombieWatcher zw = (ZombieWatcher) livingWatcher;
-                                        zw.setBaby(getBaby(inv));
+                                        zw.setBaby(getBaby(view));
                                         break;
                                     case ZOMBIE_VILLAGER:
                                         ZombieVillagerWatcher zvw = (ZombieVillagerWatcher) livingWatcher;
-                                        zvw.setBaby(getBaby(inv));
-                                        zvw.setProfession(getProfession(inv));
+                                        zvw.setBaby(getBaby(view));
+                                        zvw.setProfession(getProfession(view));
                                         break;
                                     case SNOWMAN:
                                         SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
@@ -360,7 +360,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         break;
                                     case TURTLE:
                                         TurtleWatcher tur = (TurtleWatcher) livingWatcher;
-                                        tur.setBaby(getBaby(inv));
+                                        tur.setBaby(getBaby(view));
                                         break;
                                     case PUFFERFISH:
                                         PufferFishWatcher puf = (PufferFishWatcher) livingWatcher;
@@ -399,7 +399,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
     @EventHandler(ignoreCancelled = true)
     public void onLazarusClose(InventoryCloseEvent event) {
-        String name = event.getInventory().getTitle();
+        String name = event.getView().getTitle();
         UUID uuid = event.getPlayer().getUniqueId();
         if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
@@ -428,7 +428,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
     }
 
-    private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {
+    private void setSlotFourtyEight(InventoryView i, String d, UUID uuid) {
         String t = null;
         int o;
         switch (d) {
@@ -547,13 +547,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private boolean isReversedPolarity(Inventory i) {
+    private boolean isReversedPolarity(InventoryView i) {
         ItemStack is = i.getItem(45);
         ItemMeta im = is.getItemMeta();
         return im.getLore().get(0).equals(plugin.getLanguage().getString("SET_ON"));
     }
 
-    private AnimalColor getColor(Inventory i) {
+    private AnimalColor getColor(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -563,7 +563,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private org.bukkit.entity.Horse.Color getHorseColor(Inventory i) {
+    private org.bukkit.entity.Horse.Color getHorseColor(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -573,7 +573,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private Llama.Color getLlamaColor(Inventory i) {
+    private Llama.Color getLlamaColor(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -583,7 +583,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private Type getCatType(Inventory i) {
+    private Type getCatType(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -593,7 +593,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private Parrot.Variant getParrotVariant(Inventory i) {
+    private Parrot.Variant getParrotVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -603,7 +603,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private RabbitType getRabbitType(Inventory i) {
+    private RabbitType getRabbitType(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -613,7 +613,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private Profession getProfession(Inventory i) {
+    private Profession getProfession(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -623,20 +623,20 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private int getSlimeSize(Inventory i) {
+    private int getSlimeSize(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         int size = TARDISNumberParsers.parseInt(im.getLore().get(0));
         return (size == 0) ? 2 : size;
     }
 
-    private boolean getBaby(Inventory i) {
+    private boolean getBaby(InventoryView i) {
         ItemStack is = i.getItem(47);
         ItemMeta im = is.getItemMeta();
         return im.getLore().get(0).equals("BABY");
     }
 
-    private boolean getBoolean(Inventory i) {
+    private boolean getBoolean(InventoryView i) {
         ItemStack is = i.getItem(49);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();

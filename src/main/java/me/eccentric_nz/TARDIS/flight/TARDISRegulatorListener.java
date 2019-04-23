@@ -25,7 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,8 +49,8 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
 
     @EventHandler(ignoreCancelled = true)
     public void onHelmicRegulatorClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        if (inv.getTitle().equals("Helmic Regulator")) {
+        InventoryView view = event.getView();
+        if (view.getTitle().equals("Helmic Regulator")) {
             Player player = (Player) event.getPlayer();
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getRegulating().containsKey(uuid)) {
@@ -66,12 +66,12 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
 
     @EventHandler(ignoreCancelled = true)
     public void onHelmicRegulatorOpen(InventoryOpenEvent event) {
-        Inventory inv = event.getInventory();
-        if (inv.getTitle().equals("Helmic Regulator")) {
+        InventoryView view = event.getView();
+        if (view.getTitle().equals("Helmic Regulator")) {
             Player player = (Player) event.getPlayer();
             UUID uuid = player.getUniqueId();
             // start the runnable
-            TARDISRegulatorRunnable wr = new TARDISRegulatorRunnable(inv);
+            TARDISRegulatorRunnable wr = new TARDISRegulatorRunnable(view);
             int id = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, wr, 5L, 20L);
             wr.setTaskId(id);
             plugin.getTrackerKeeper().getRegulating().put(uuid, wr);
@@ -130,9 +130,9 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
 
     @EventHandler(ignoreCancelled = true)
     public void onHelmicRegulatorClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
+        InventoryView view = event.getView();
         UUID uuid = event.getWhoClicked().getUniqueId();
-        if (inv.getTitle().equals("Helmic Regulator") && plugin.getTrackerKeeper().getRegulating().containsKey(uuid)) {
+        if (view.getTitle().equals("Helmic Regulator") && plugin.getTrackerKeeper().getRegulating().containsKey(uuid)) {
             int slot = event.getRawSlot();
             int old_slot = plugin.getTrackerKeeper().getRegulating().get(uuid).getSlot();
             if (directions.contains(slot)) {
@@ -140,32 +140,32 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
                     case 16: // up
                         int up = upSlot(old_slot);
                         if (bounds.contains(up)) {
-                            inv.setItem(old_slot, vortex);
-                            inv.setItem(up, box);
+                            view.setItem(old_slot, vortex);
+                            view.setItem(up, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(up);
                         }
                         break;
                     case 24: // left
                         int left = leftSlot(old_slot);
                         if (bounds.contains(left)) {
-                            inv.setItem(old_slot, vortex);
-                            inv.setItem(left, box);
+                            view.setItem(old_slot, vortex);
+                            view.setItem(left, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(left);
                         }
                         break;
                     case 26: // right
                         int right = rightSlot(old_slot);
                         if (bounds.contains(right)) {
-                            inv.setItem(old_slot, vortex);
-                            inv.setItem(right, box);
+                            view.setItem(old_slot, vortex);
+                            view.setItem(right, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(right);
                         }
                         break;
                     case 34: // down
                         int down = downSlot(old_slot);
                         if (bounds.contains(down)) {
-                            inv.setItem(old_slot, vortex);
-                            inv.setItem(down, box);
+                            view.setItem(old_slot, vortex);
+                            view.setItem(down, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(down);
                         }
                         break;

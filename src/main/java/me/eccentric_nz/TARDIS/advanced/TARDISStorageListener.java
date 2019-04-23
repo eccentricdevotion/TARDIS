@@ -34,6 +34,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -71,8 +72,8 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
 
     @EventHandler(ignoreCancelled = true)
     public void onDiskStorageClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
+        InventoryView view = event.getView();
+        String title = view.getTitle();
         if (inv_titles.contains(title)) {
             // which inventory screen is it?
             String[] split = title.split(" ");
@@ -81,24 +82,24 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                 tmp = tmp + "_" + split[2];
             }
             STORAGE store = STORAGE.valueOf(tmp);
-            saveCurrentStorage(inv, store.getTable(), (Player) event.getPlayer());
+            saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
         } else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console")) {
             /*
              * Fix incorrect Bukkit behaviour
              *
              * https://bukkit.atlassian.net/browse/BUKKIT-2788
              */
-            int isze = (inv.getType().equals(InventoryType.ANVIL)) ? 2 : inv.getSize();
+            int isze = (view.getType().equals(InventoryType.ANVIL)) ? 2 : event.getInventory().getSize();
             // scan the inventory for area disks and spit them out
             for (int i = 0; i < isze; i++) {
-                ItemStack stack = inv.getItem(i);
+                ItemStack stack = view.getItem(i);
                 if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
                     ItemMeta ims = stack.getItemMeta();
                     if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                         Player p = (Player) event.getPlayer();
                         Location loc = p.getLocation();
                         loc.getWorld().dropItemNaturally(loc, stack);
-                        inv.setItem(i, new ItemStack(Material.AIR));
+                        view.setItem(i, new ItemStack(Material.AIR));
                         TARDISMessage.send(p, "ADV_NO_STORE");
                     }
                 }
@@ -108,8 +109,8 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
 
     @EventHandler(ignoreCancelled = true)
     public void onDiskStorageInteract(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
+        InventoryView view = event.getView();
+        String title = view.getTitle();
         if (!inv_titles.contains(title)) {
             return;
         }
@@ -131,7 +132,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             }
             STORAGE store = STORAGE.valueOf(tmp);
             if (slot < 6 || slot == 18 || slot == 26) {
-                saveCurrentStorage(inv, store.getTable(), player);
+                saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
             }
             switch (slot) {
                 case 0:

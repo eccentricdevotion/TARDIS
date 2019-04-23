@@ -30,7 +30,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
@@ -66,8 +66,8 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
 
     @EventHandler(ignoreCancelled = true)
     public void onActivatorMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Sonic Activator")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -79,7 +79,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
                     case 8:
                         event.setCancelled(true);
                         // close
-                        save(p, inv);
+                        save(p, view);
                         break;
                     default:
                         break;
@@ -93,11 +93,11 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
         }
     }
 
-    private void save(Player p, Inventory inv) {
+    private void save(Player p, InventoryView view) {
         Material m = Material.AIR;
         int count = 0;
         for (int i = 0; i < 7; i++) {
-            ItemStack is = inv.getItem(i);
+            ItemStack is = view.getItem(i);
             if (is != null) {
                 if (!is.getType().equals(m) && stacks.contains(is)) {
                     m = is.getType();
@@ -130,7 +130,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
             Location l = p.getLocation();
             World w = l.getWorld();
             for (int i = 0; i < 7; i++) {
-                ItemStack is = inv.getItem(i);
+                ItemStack is = view.getItem(i);
                 if (is != null) {
                     w.dropItemNaturally(l, is);
                 }

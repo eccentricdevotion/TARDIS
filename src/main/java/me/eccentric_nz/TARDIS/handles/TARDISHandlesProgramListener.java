@@ -28,6 +28,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -60,8 +61,8 @@ public class TARDISHandlesProgramListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Handles Program")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
@@ -84,43 +85,43 @@ public class TARDISHandlesProgramListener implements Listener {
                 case 36:
                     // set control blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getControls());
-                    setList(uuid, TARDISHandlesCategory.CONTROL, inv);
+                    setList(uuid, TARDISHandlesCategory.CONTROL, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 37:
                     // set operator blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getOperators());
-                    setList(uuid, TARDISHandlesCategory.OPERATOR, inv);
+                    setList(uuid, TARDISHandlesCategory.OPERATOR, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 38:
                     // set variable blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getVariables());
-                    setList(uuid, TARDISHandlesCategory.VARIABLE, inv);
+                    setList(uuid, TARDISHandlesCategory.VARIABLE, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 39:
                     // set number blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getNumbers());
-                    setList(uuid, TARDISHandlesCategory.NUMBER, inv);
+                    setList(uuid, TARDISHandlesCategory.NUMBER, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 40:
                     // set event blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getEvents());
-                    setList(uuid, TARDISHandlesCategory.EVENT, inv);
+                    setList(uuid, TARDISHandlesCategory.EVENT, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 41:
                     // set command blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getCommands());
-                    setList(uuid, TARDISHandlesCategory.COMMAND, inv);
+                    setList(uuid, TARDISHandlesCategory.COMMAND, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 42:
                     // set selector blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getSelectors());
-                    setList(uuid, TARDISHandlesCategory.SELECTOR, inv);
+                    setList(uuid, TARDISHandlesCategory.SELECTOR, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 43:
@@ -136,7 +137,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     break;
                 case 44:
                     // save program
-                    int pid = saveDisk(inv, uuid.toString(), player);
+                    int pid = saveDisk(view, uuid.toString(), player);
                     if (pid != -1) {
                         close(player);
                         ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
@@ -159,7 +160,7 @@ public class TARDISHandlesProgramListener implements Listener {
                 case 50:
                 case 51:
                     // duplicate Item stack on cursor
-                    ItemStack is = inv.getItem(slot);
+                    ItemStack is = view.getItem(slot);
                     ItemStack cursor = player.getItemOnCursor();
                     if (cursor != null && (is == null || cursor.isSimilar(is))) {
                         player.setItemOnCursor(null);
@@ -186,7 +187,7 @@ public class TARDISHandlesProgramListener implements Listener {
                         scroll_start.put(uuid, startl);
                         for (int i = 0; i < 7; i++) {
                             // setSlot(Inventory inv, int slot, TARDISHandlesBlock block)
-                            setSlot(inv, (45 + i), scroll_list.get(uuid).get(startl + i));
+                            setSlot(view, (45 + i), scroll_list.get(uuid).get(startl + i));
                         }
                     }
                     break;
@@ -205,7 +206,7 @@ public class TARDISHandlesProgramListener implements Listener {
                         scroll_start.put(uuid, startr);
                         for (int i = 0; i < 7; i++) {
                             // setSlot(Inventory inv, int slot, TARDISHandlesBlock block)
-                            setSlot(inv, (45 + i), scroll_list.get(uuid).get(startr + i));
+                            setSlot(view, (45 + i), scroll_list.get(uuid).get(startr + i));
                         }
                     }
                     break;
@@ -222,8 +223,8 @@ public class TARDISHandlesProgramListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onHandlesProgramClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
+        InventoryView view = event.getView();
+        String title = view.getTitle();
         if (!title.equals(ChatColor.DARK_RED + "Handles Program")) {
             return;
         }
@@ -237,11 +238,11 @@ public class TARDISHandlesProgramListener implements Listener {
     /**
      * Sets an ItemStack to the specified inventory slot updating the display name and setting any lore.
      *
-     * @param inv   the inventory to update
+     * @param view  the inventory to update
      * @param slot  the slot number to update
      * @param block the program block
      */
-    private void setSlot(Inventory inv, int slot, TARDISHandlesBlock block) {
+    private void setSlot(InventoryView view, int slot, TARDISHandlesBlock block) {
         ItemStack is = new ItemStack(Material.BOWL, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(block.getDisplayName());
@@ -249,26 +250,26 @@ public class TARDISHandlesProgramListener implements Listener {
             im.setLore(block.getLore());
         }
         is.setItemMeta(im);
-        inv.setItem(slot, is);
+        view.setItem(slot, is);
     }
 
-    private void setList(UUID uuid, TARDISHandlesCategory category, Inventory inv) {
+    private void setList(UUID uuid, TARDISHandlesCategory category, InventoryView view) {
         scroll_category.put(uuid, category);
         for (int i = 0; i < 7; i++) {
             if (i < category.getSize()) {
-                setSlot(inv, (45 + i), scroll_list.get(uuid).get(i));
+                setSlot(view, (45 + i), scroll_list.get(uuid).get(i));
             } else {
-                inv.setItem(45 + i, null);
+                view.setItem(45 + i, null);
             }
         }
     }
 
-    private int saveDisk(Inventory inv, String uuid, Player player) {
+    private int saveDisk(InventoryView view, String uuid, Player player) {
         int pid = -1;
         ItemStack[] stack = new ItemStack[36];
         for (int i = 0; i < 36; i++) {
-            if (inv.getItem(i) != null) {
-                stack[i] = inv.getItem(i);
+            if (view.getItem(i) != null) {
+                stack[i] = view.getItem(i);
                 pid++;
             }
         }

@@ -25,6 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -49,13 +50,13 @@ public class TARDISAdminMenuListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onAdminMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Admin Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot < 54) {
-                String option = getDisplay(inv, slot);
+                String option = getDisplay(view, slot);
                 if (slot == 52) {
                     Player p = (Player) event.getWhoClicked();
                     // close this gui and load the previous / next page
@@ -93,15 +94,15 @@ public class TARDISAdminMenuListener implements Listener {
                     }
                     plugin.getConfig().set(option, !bool);
                     String lore = (bool) ? "false" : "true";
-                    setLore(inv, slot, lore);
+                    setLore(view, slot, lore);
                     plugin.saveConfig();
                 }
             }
         }
     }
 
-    private String getDisplay(Inventory inv, int slot) {
-        ItemStack is = inv.getItem(slot);
+    private String getDisplay(InventoryView view, int slot) {
+        ItemStack is = view.getItem(slot);
         if (is != null) {
             ItemMeta im = is.getItemMeta();
             return im.getDisplayName();
@@ -110,9 +111,9 @@ public class TARDISAdminMenuListener implements Listener {
         }
     }
 
-    private void setLore(Inventory inv, int slot, String str) {
+    private void setLore(InventoryView view, int slot, String str) {
         List<String> lore = (str != null) ? Collections.singletonList(str) : null;
-        ItemStack is = inv.getItem(slot);
+        ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
         is.setItemMeta(im);

@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -140,14 +140,14 @@ public class TARDISARSMethods {
     /**
      * Sets an ItemStack to the specified inventory slot updating the display name and removing any lore.
      *
-     * @param inv      the inventory to update
+     * @param view     the inventory to update
      * @param slot     the slot number to update
      * @param material the item id to set the item stack to
      * @param room     the room type associated with the id
      * @param uuid     the player using the GUI
      * @param update   whether to update the grid display
      */
-    void setSlot(Inventory inv, int slot, Material material, String room, UUID uuid, boolean update) {
+    void setSlot(InventoryView view, int slot, Material material, String room, UUID uuid, boolean update) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
@@ -159,7 +159,7 @@ public class TARDISARSMethods {
             im.setLore(null);
         }
         is.setItemMeta(im);
-        inv.setItem(slot, is);
+        view.setItem(slot, is);
         if (update) {
             updateGrid(uuid, slot, material.toString());
         }
@@ -168,14 +168,14 @@ public class TARDISARSMethods {
     /**
      * Sets an ItemStack to the specified inventory slot.
      *
-     * @param inv    the inventory to update
+     * @param view   the inventory to update
      * @param slot   the slot number to update
      * @param is     the item stack to set
      * @param uuid   the player using the GUI
      * @param update whether to update the grid display
      */
-    void setSlot(Inventory inv, int slot, ItemStack is, UUID uuid, boolean update) {
-        inv.setItem(slot, is);
+    void setSlot(InventoryView view, int slot, ItemStack is, UUID uuid, boolean update) {
+        view.setItem(slot, is);
         String material = is.getType().toString();
         if (update) {
             updateGrid(uuid, slot, material);
@@ -245,13 +245,13 @@ public class TARDISARSMethods {
     /**
      * Sets the lore of the ItemStack in the specified slot.
      *
-     * @param inv  the inventory to update
+     * @param view the inventory to update
      * @param slot the slot to update
      * @param str  the lore to set
      */
-    void setLore(Inventory inv, int slot, String str) {
+    void setLore(InventoryView view, int slot, String str) {
         List<String> lore = (str != null) ? Collections.singletonList(str) : null;
-        ItemStack is = inv.getItem(slot);
+        ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
         is.setItemMeta(im);
@@ -260,11 +260,11 @@ public class TARDISARSMethods {
     /**
      * Switches the indicator block for the map level.
      *
-     * @param inv  the inventory to update
+     * @param view the inventory to update
      * @param slot the slot to update
      * @param uuid the UUID of the player using the GUI
      */
-    void switchLevel(Inventory inv, int slot, UUID uuid) {
+    void switchLevel(InventoryView view, int slot, UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
         for (int i = 27; i < 30; i++) {
             Material material = Material.WHITE_WOOL;
@@ -277,7 +277,7 @@ public class TARDISARSMethods {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
             is.setItemMeta(im);
-            setSlot(inv, i, is, uuid, false);
+            setSlot(view, i, is, uuid, false);
         }
     }
 
@@ -360,15 +360,15 @@ public class TARDISARSMethods {
     /**
      * Loads the map from the database ready for use in the GUI.
      *
-     * @param inv  the inventory to load the map into
+     * @param view the inventory to load the map into
      * @param uuid the UUID of the player using the GUI
      */
-    void loadMap(Inventory inv, UUID uuid) {
-        if (inv.getItem(10).getItemMeta().hasLore()) {
-            setLore(inv, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
+    void loadMap(InventoryView view, UUID uuid) {
+        if (view.getItem(10).getItemMeta().hasLore()) {
+            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
             return;
         }
-        setLore(inv, 10, "Loading...");
+        setLore(view, 10, "Loading...");
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", ids.get(uuid));
         ResultSetARS rs = new ResultSetARS(plugin, where);
@@ -386,15 +386,15 @@ public class TARDISARSMethods {
             md.setId(rs.getId());
             save_map_data.put(uuid, sd);
             map_data.put(uuid, md);
-            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), uuid, inv);
+            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), uuid, view);
             saveAll(uuid);
             hasLoadedMap.add(uuid);
-            setLore(inv, 10, plugin.getLanguage().getString("ARS_MAP_LOADED"));
-            switchLevel(inv, (27 + rs.getLayer()), uuid);
+            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_LOADED"));
+            switchLevel(view, (27 + rs.getLayer()), uuid);
         }
     }
 
-    void setMap(int ul, int ue, int us, UUID uuid, Inventory inv) {
+    void setMap(int ul, int ue, int us, UUID uuid, InventoryView view) {
         TARDISARSMapData data = map_data.get(uuid);
         String[][][] grid = data.getData();
         String[][] layer = grid[ul];
@@ -405,7 +405,7 @@ public class TARDISARSMethods {
                 int slot = i + (j * 9);
                 Material material = Material.valueOf(map[indexx][indexz]);
                 String name = TARDISARS.ARSFor(map[indexx][indexz]).getDescriptiveName();
-                setSlot(inv, slot, material, name, uuid, false);
+                setSlot(view, slot, material, name, uuid, false);
                 indexz++;
             }
             indexz = 0;
@@ -417,10 +417,10 @@ public class TARDISARSMethods {
      * Move the map to a new position.
      *
      * @param uuid the UUID of the player using the GUI
-     * @param inv  the inventory to update
+     * @param view the inventory to update
      * @param slot the slot number to update
      */
-    void moveMap(UUID uuid, Inventory inv, int slot) {
+    void moveMap(UUID uuid, InventoryView view, int slot) {
         if (map_data.containsKey(uuid)) {
             TARDISARSMapData md = map_data.get(uuid);
             int ue, us;
@@ -442,13 +442,13 @@ public class TARDISARSMethods {
                     us = ((md.getS() - 1) >= 0) ? md.getS() - 1 : md.getS();
                     break;
             }
-            setMap(md.getY(), ue, us, uuid, inv);
-            setLore(inv, slot, null);
+            setMap(md.getY(), ue, us, uuid, view);
+            setLore(view, slot, null);
             md.setE(ue);
             md.setS(us);
             map_data.put(uuid, md);
         } else {
-            setLore(inv, slot, plugin.getLanguage().getString("ARS_LOAD"));
+            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
         }
     }
 
@@ -530,8 +530,8 @@ public class TARDISARSMethods {
         return false;
     }
 
-    boolean checkSlotForConsole(Inventory inv, int slot, String uuid) {
-        Material m = inv.getItem(slot).getType();
+    boolean checkSlotForConsole(InventoryView view, int slot, String uuid) {
+        Material m = view.getItem(slot).getType();
         if (m.equals(Material.NETHER_BRICKS)) {
             // allow only if console is not MASTER
             HashMap<String, Object> where = new HashMap<>();

@@ -22,7 +22,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -51,8 +51,8 @@ public class TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onMenuDrag(InventoryDragEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
+        InventoryView view = event.getView();
+        String title = view.getTitle();
         if (!titles.containsKey(title)) {
             return;
         }

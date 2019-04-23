@@ -28,6 +28,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
 
     @EventHandler
     public void onWallFloorMenuOpen(InventoryOpenEvent event) {
-        if (event.getInventory().getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
+        if (event.getView().getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -66,8 +67,8 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
 
     @EventHandler(ignoreCancelled = true)
     public void onWallFloorMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
             Player p = (Player) event.getWhoClicked();
             UUID uuid = p.getUniqueId();
@@ -79,14 +80,14 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
                         // scroll up
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
-                            scroll(inv, scroll.get(uuid) + 1, true, uuid);
+                            scroll(view, scroll.get(uuid) + 1, true, uuid);
                         }
                         break;
                     case 26:
                         // scroll down
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
-                            scroll(inv, scroll.get(uuid) - 1, false, uuid);
+                            scroll(view, scroll.get(uuid) - 1, false, uuid);
                         }
                         break;
                     case 44:
@@ -135,20 +136,20 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
         }, 2L);
     }
 
-    private void scroll(Inventory inv, int row, boolean up, UUID uuid) {
+    private void scroll(InventoryView view, int row, boolean up, UUID uuid) {
         if ((up && row < (rows - 5)) || (!up && row >= 0)) {
             scroll.put(uuid, row);
-            setSlots(inv, row, uuid);
+            setSlots(view, row, uuid);
         } else {
             scrolling.remove(uuid);
         }
     }
 
-    private void setSlots(Inventory inv, int row, UUID uuid) {
+    private void setSlots(InventoryView view, int row, UUID uuid) {
         int slot = 0;
         for (int r = row; r < row + 6; r++) {
             for (int c = 0; c < 8; c++) {
-                inv.setItem(slot, blocks[r][c]);
+                view.setItem(slot, blocks[r][c]);
                 if (slot % 9 == 7) {
                     slot += 2;
                 } else {

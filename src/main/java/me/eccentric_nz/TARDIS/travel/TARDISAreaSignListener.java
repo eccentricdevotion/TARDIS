@@ -28,6 +28,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -53,8 +54,8 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
      */
     @EventHandler(ignoreCancelled = true)
     public void onAreaTerminalClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS areas")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
@@ -65,7 +66,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                 wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
-                    ItemStack is = inv.getItem(slot);
+                    ItemStack is = view.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
                         String area = im.getDisplayName();

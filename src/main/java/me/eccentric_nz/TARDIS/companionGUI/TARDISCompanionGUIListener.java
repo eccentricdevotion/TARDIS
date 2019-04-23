@@ -29,6 +29,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -51,15 +52,15 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionGUIClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Companions")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             if (slot >= 0 && slot < 54) {
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     switch (slot) {
                         case 45: // info
@@ -82,7 +83,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                                     Tardis tardis = rs.getTardis();
                                     int id = tardis.getTardis_id();
                                     String comps = tardis.getCompanions();
-                                    ItemStack h = inv.getItem(selected_head.get(uuid));
+                                    ItemStack h = view.getItem(selected_head.get(uuid));
                                     ItemMeta m = h.getItemMeta();
                                     List<String> l = m.getLore();
                                     String u = l.get(0);

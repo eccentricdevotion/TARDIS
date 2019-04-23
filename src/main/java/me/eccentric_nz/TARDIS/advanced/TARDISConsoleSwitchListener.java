@@ -34,6 +34,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 
@@ -58,8 +59,8 @@ public class TARDISConsoleSwitchListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onConsoleInventoryClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        if (inv.getTitle().equals(ChatColor.DARK_RED + "TARDIS Console")) {
+        InventoryView view = event.getView();
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Console")) {
             Player p = (Player) event.getWhoClicked();
             // check they're in the TARDIS
             HashMap<String, Object> wheret = new HashMap<>();
@@ -73,7 +74,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                 event.setCancelled(true);
                 int slot = event.getRawSlot();
                 if (slot >= 0 && slot < 9) {
-                    ItemStack item = inv.getItem(slot);
+                    ItemStack item = view.getItem(slot);
                     if (item != null && item.getType().equals(Material.FILLED_MAP) && item.hasItemMeta()) {
                         MapMeta mapMeta = (MapMeta) item.getItemMeta();
                         int map = (mapMeta.hasMapId()) ? mapMeta.getMapId() : 1963;

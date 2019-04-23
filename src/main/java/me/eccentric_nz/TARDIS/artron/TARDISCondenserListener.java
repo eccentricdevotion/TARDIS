@@ -36,10 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,9 +65,9 @@ public class TARDISCondenserListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onChestClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        InventoryHolder holder = inv.getHolder();
-        String title = inv.getName();
+        InventoryView view = event.getView();
+        InventoryHolder holder = event.getInventory().getHolder();
+        String title = view.getTitle();
         if (holder instanceof Chest) {
             if (title.equals(ChatColor.DARK_RED + "Artron Condenser") || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
                 Player player = (Player) event.getPlayer();
@@ -115,6 +112,7 @@ public class TARDISCondenserListener implements Listener {
                     int amount = 0;
                     // get the stacks in the inventory
                     HashMap<String, Integer> item_counts = new HashMap<>();
+                    Inventory inv = event.getInventory();
                     for (ItemStack is : inv.getContents()) {
                         if (is != null) {
                             String item = is.getType().toString();

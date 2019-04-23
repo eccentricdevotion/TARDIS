@@ -31,7 +31,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
@@ -86,8 +86,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
 
     @EventHandler(ignoreCancelled = true)
     public void onGeneratorMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Sonic Generator")) {
             Player p = (Player) event.getWhoClicked();
             location = plugin.getTrackerKeeper().getSonicGenerators().get(p.getUniqueId());
@@ -116,27 +116,27 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                     case 16:
                     case 17:
                         // set display name of sonic in slot 49
-                        sonic = inv.getItem(49);
+                        sonic = view.getItem(49);
                         if (sonic == null) {
                             sonic = new ItemStack(Material.BLAZE_ROD, 1);
                             slotWasNull = true;
                         }
                         // get Display name of selected sonic
-                        ItemStack choice = inv.getItem(slot);
+                        ItemStack choice = view.getItem(slot);
                         ItemMeta choice_im = choice.getItemMeta();
                         String choice_name = choice_im.getDisplayName();
                         sonic_im = sonic.getItemMeta();
                         sonic_im.setDisplayName(choice_name);
                         sonic.setItemMeta(sonic_im);
                         if (slotWasNull) {
-                            inv.setItem(49, sonic);
-                            setCost(inv, costs.get("Standard Sonic"));
+                            view.setItem(49, sonic);
+                            setCost(view, costs.get("Standard Sonic"));
                         }
 
                         break;
                     case 27:
                         // reset to standard
-                        sonic = inv.getItem(49);
+                        sonic = view.getItem(49);
                         if (sonic == null) {
                             sonic = new ItemStack(Material.BLAZE_ROD, 1);
                             slotWasNull = true;
@@ -144,13 +144,13 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         sonic_im = sonic.getItemMeta();
                         if (slotWasNull) {
                             sonic_im.setDisplayName("Sonic Screwdriver");
-                            inv.setItem(49, sonic);
+                            view.setItem(49, sonic);
                         } else {
                             // remove lore
                             sonic_im.setLore(null);
                             sonic.setItemMeta(sonic_im);
                         }
-                        setCost(inv, costs.get("Standard Sonic"));
+                        setCost(view, costs.get("Standard Sonic"));
                         break;
                     case 29:
                     case 30:
@@ -158,10 +158,10 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                     case 32:
                     case 33:
                     case 34:
-                        ItemStack upgrade = inv.getItem(slot);
+                        ItemStack upgrade = view.getItem(slot);
                         ItemMeta upgrade_im = upgrade.getItemMeta();
                         String upgrade_name = upgrade_im.getDisplayName();
-                        sonic = inv.getItem(49);
+                        sonic = view.getItem(49);
                         if (sonic == null) {
                             sonic = new ItemStack(Material.BLAZE_ROD, 1);
                             slotWasNull = true;
@@ -180,26 +180,26 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         if (!lore.contains(upgrade_name)) {
                             lore.add(upgrade_name);
                             sonic_im.setLore(lore);
-                            setCost(inv, getCost(inv) + costs.get(upgrade_name));
+                            setCost(view, getCost(view) + costs.get(upgrade_name));
                         }
                         sonic.setItemMeta(sonic_im);
                         if (slotWasNull) {
-                            inv.setItem(49, sonic);
+                            view.setItem(49, sonic);
                         }
                         break;
                     case 43:
                         // save
-                        sonic = inv.getItem(49);
+                        sonic = view.getItem(49);
                         if (sonic != null) {
                             save(p, sonic, true);
                         }
                         break;
                     case 44:
                         // save & generate
-                        sonic = inv.getItem(49);
+                        sonic = view.getItem(49);
                         if (sonic != null) {
                             save(p, sonic, false);
-                            generate(p, sonic, getCost(inv));
+                            generate(p, sonic, getCost(view));
                         }
                         break;
                     case 53:
@@ -264,15 +264,15 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         close(p);
     }
 
-    private int getCost(Inventory inv) {
-        ItemStack is = inv.getItem(45);
+    private int getCost(InventoryView view) {
+        ItemStack is = view.getItem(45);
         ItemMeta im = is.getItemMeta();
         String c = im.getLore().get(0);
         return TARDISNumberParsers.parseInt(c);
     }
 
-    private void setCost(Inventory inv, int cost) {
-        ItemStack is = inv.getItem(45);
+    private void setCost(InventoryView view, int cost) {
+        ItemStack is = view.getItem(45);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
         lore.set(0, "" + cost);

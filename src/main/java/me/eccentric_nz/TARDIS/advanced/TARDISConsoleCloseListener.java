@@ -38,6 +38,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -64,8 +65,8 @@ public class TARDISConsoleCloseListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInventoryClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String inv_name = inv.getTitle();
+        InventoryView view = event.getView();
+        String inv_name = view.getTitle();
         if (inv_name.equals(ChatColor.DARK_RED + "TARDIS Console")) {
             Player p = ((Player) event.getPlayer());
             // get the TARDIS the player is in
@@ -76,15 +77,16 @@ public class TARDISConsoleCloseListener implements Listener {
                 int id = rst.getTardis_id();
                 // loop through inventory contents and remove any items that are not disks or circuits
                 for (int i = 0; i < 9; i++) {
-                    ItemStack is = inv.getItem(i);
+                    ItemStack is = view.getItem(i);
                     if (is != null) {
                         Material mat = is.getType();
                         if (!onlythese.contains(mat)) {
                             p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
-                            inv.setItem(i, new ItemStack(Material.AIR));
+                            view.setItem(i, new ItemStack(Material.AIR));
                         }
                     }
                 }
+                Inventory inv = event.getInventory();
                 // remember what was placed in the console
                 saveCurrentConsole(inv, p.getUniqueId().toString());
                 if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
@@ -108,7 +110,7 @@ public class TARDISConsoleCloseListener implements Listener {
                 Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 // loop through remaining inventory items and process the disks
                 for (int i = 0; i < 9; i++) {
-                    ItemStack is = inv.getItem(i);
+                    ItemStack is = view.getItem(i);
                     if (is != null) {
                         Material mat = is.getType();
                         if (!mat.equals(Material.FILLED_MAP) && is.hasItemMeta()) {

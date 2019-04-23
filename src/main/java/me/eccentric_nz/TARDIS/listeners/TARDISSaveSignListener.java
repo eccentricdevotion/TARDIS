@@ -37,6 +37,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -64,8 +65,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
      */
     @EventHandler(ignoreCancelled = true)
     public void onSaveTerminalClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS saves")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
@@ -122,7 +123,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         if (rsc.resultSet()) {
                             current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         }
-                        ItemStack is = inv.getItem(slot);
+                        ItemStack is = view.getItem(slot);
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
@@ -265,8 +266,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 
     @EventHandler(ignoreCancelled = true)
     public void onSaveSignClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String inv_name = inv.getTitle();
+        String inv_name = event.getView().getTitle();
         if (inv_name.equals(ChatColor.DARK_RED + "TARDIS saves")) {
             UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
@@ -276,7 +276,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
                 QueryFactory qf = new QueryFactory(plugin);
-                ItemStack[] stack = inv.getContents();
+                ItemStack[] stack = event.getInventory().getContents();
                 for (int i = 1; i < 45; i++) {
                     if (stack[i] != null) {
                         ItemMeta im = stack[i].getItemMeta();

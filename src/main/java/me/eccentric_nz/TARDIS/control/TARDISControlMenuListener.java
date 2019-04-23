@@ -50,6 +50,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -70,14 +71,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 
     @EventHandler(ignoreCancelled = true)
     public void onControlMenuInteract(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Control Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 54) {
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -390,7 +391,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     String[] args = new String[]{"direction", direction};
                                     new TARDISDirectionCommand(plugin).changeDirection(player, args);
                                     // update the lore
-                                    ItemStack d = inv.getItem(40);
+                                    ItemStack d = view.getItem(40);
                                     ItemMeta im = d.getItemMeta();
                                     im.setLore(Collections.singletonList(direction));
                                     d.setItemMeta(im);

@@ -42,6 +42,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -74,8 +75,8 @@ public class TARDISTerminalListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onDestTerminalClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Destination Terminal")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
@@ -101,41 +102,41 @@ public class TARDISTerminalListener implements Listener {
                             terminalStep.put(uuid, 100);
                             break;
                         case 9:
-                            setSlots(inv, 10, 16, false, "X", true, uuid);
+                            setSlots(view, 10, 16, false, "X", true, uuid);
                             break;
                         case 17:
-                            setSlots(inv, 10, 16, true, "X", true, uuid);
+                            setSlots(view, 10, 16, true, "X", true, uuid);
                             break;
                         case 18:
-                            setSlots(inv, 19, 25, false, "Z", true, uuid);
+                            setSlots(view, 19, 25, false, "Z", true, uuid);
                             break;
                         case 26:
-                            setSlots(inv, 19, 25, true, "Z", true, uuid);
+                            setSlots(view, 19, 25, true, "Z", true, uuid);
                             break;
                         case 27:
-                            setSlots(inv, 28, 34, false, "Multiplier", false, uuid);
+                            setSlots(view, 28, 34, false, "Multiplier", false, uuid);
                             break;
                         case 35:
-                            setSlots(inv, 28, 34, true, "Multiplier", false, uuid);
+                            setSlots(view, 28, 34, true, "Multiplier", false, uuid);
                             break;
                         case 36:
-                            setCurrent(inv, player, 36);
+                            setCurrent(view, player, 36);
                             break;
                         case 38:
-                            setCurrent(inv, player, 38);
+                            setCurrent(view, player, 38);
                             break;
                         case 40:
-                            setCurrent(inv, player, 40);
+                            setCurrent(view, player, 40);
                             break;
                         case 42:
-                            setCurrent(inv, player, 42);
+                            setCurrent(view, player, 42);
                             break;
                         case 44:
                             // submarine
-                            toggleSubmarine(inv, player);
+                            toggleSubmarine(view, player);
                             break;
                         case 46:
-                            checkSettings(inv, player);
+                            checkSettings(view, player);
                             break;
                         case 49:
                             // set destination
@@ -169,7 +170,7 @@ public class TARDISTerminalListener implements Listener {
                                 }
                             } else {
                                 // set lore
-                                ItemStack is = inv.getItem(49);
+                                ItemStack is = view.getItem(49);
                                 ItemMeta im = is.getItemMeta();
                                 List<String> lore = Collections.singletonList("No valid destination has been set!");
                                 im.setLore(lore);
@@ -190,8 +191,9 @@ public class TARDISTerminalListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onOpenTerminal(InventoryOpenEvent event) {
         Inventory inv = event.getInventory();
+        InventoryView view = event.getView();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Player && inv.getName().equals(ChatColor.DARK_RED + "Destination Terminal")) {
+        if (holder instanceof Player && view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
             UUID uuid = ((Player) holder).getUniqueId();
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -225,9 +227,9 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    private int getSlot(Inventory inv, int min, int max) {
+    private int getSlot(InventoryView view, int min, int max) {
         for (int i = min; i <= max; i++) {
-            if (inv.getItem(i) != null) {
+            if (view.getItem(i) != null) {
                 return i;
             }
         }
@@ -302,10 +304,10 @@ public class TARDISTerminalListener implements Listener {
         return intval;
     }
 
-    private void setSlots(Inventory inv, int min, int max, boolean pos, String row, boolean signed, UUID uuid) {
-        int affected_slot = getSlot(inv, min, max);
+    private void setSlots(InventoryView view, int min, int max, boolean pos, String row, boolean signed, UUID uuid) {
+        int affected_slot = getSlot(view, min, max);
         int new_slot = getNewSlot(affected_slot, min, max, pos);
-        inv.setItem(affected_slot, null);
+        view.setItem(affected_slot, null);
         ItemStack is;
         switch (row) {
             case "X":
@@ -323,10 +325,10 @@ public class TARDISTerminalListener implements Listener {
         List<String> lore = getLoreValue(max, new_slot, signed, uuid);
         im.setLore(lore);
         is.setItemMeta(im);
-        inv.setItem(new_slot, is);
+        view.setItem(new_slot, is);
     }
 
-    private void setCurrent(Inventory inv, Player p, int slot) {
+    private void setCurrent(InventoryView view, Player p, int slot) {
         String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
         if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
@@ -334,7 +336,7 @@ public class TARDISTerminalListener implements Listener {
         int[] slots = new int[]{36, 38, 40, 42};
         for (int i : slots) {
             List<String> lore = null;
-            ItemStack is = inv.getItem(i);
+            ItemStack is = view.getItem(i);
             ItemMeta im = is.getItemMeta();
             if (i == slot) {
                 switch (slot) {
@@ -368,13 +370,13 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    private void toggleSubmarine(Inventory inv, Player p) {
+    private void toggleSubmarine(InventoryView view, Player p) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
-            ItemStack is = inv.getItem(44);
+            ItemStack is = view.getItem(44);
             ItemMeta im = is.getItemMeta();
             im.setLore(Collections.singletonList(bool));
             is.setItemMeta(im);
@@ -434,12 +436,12 @@ public class TARDISTerminalListener implements Listener {
         return (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : world;
     }
 
-    private void checkSettings(Inventory inv, Player p) {
+    private void checkSettings(InventoryView view, Player p) {
         UUID uuid = p.getUniqueId();
         // get x, z, m settings
-        int slotm = getValue(34, getSlot(inv, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
-        int slotx = getValue(16, getSlot(inv, 10, 16), true, uuid) * slotm;
-        int slotz = getValue(25, getSlot(inv, 19, 25), true, uuid) * slotm;
+        int slotm = getValue(34, getSlot(view, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
+        int slotx = getValue(16, getSlot(view, 10, 16), true, uuid) * slotm;
+        int slotz = getValue(25, getSlot(view, 19, 25), true, uuid) * slotm;
         List<String> lore = new ArrayList<>();
         COMPASS d = terminalUsers.get(uuid).getDirection();
         // what kind of world is it?
@@ -447,8 +449,8 @@ public class TARDISTerminalListener implements Listener {
         int[] slots = new int[]{36, 38, 40, 42};
         boolean found = false;
         for (int i : slots) {
-            if (inv.getItem(i).getItemMeta().hasLore()) {
-                String world = inv.getItem(i).getItemMeta().getLore().get(0);
+            if (view.getItem(i).getItemMeta().hasLore()) {
+                String world = view.getItem(i).getItemMeta().getLore().get(0);
                 if (!world.equals("No permission")) {
                     found = true;
                     World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
@@ -508,7 +510,7 @@ public class TARDISTerminalListener implements Listener {
                             }
                             int safe;
                             // check submarine
-                            ItemMeta subim = inv.getItem(44).getItemMeta();
+                            ItemMeta subim = view.getItem(44).getItemMeta();
                             loc.setY(starty);
                             if (subim.hasLore() && subim.getLore().get(0).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
@@ -545,7 +547,7 @@ public class TARDISTerminalListener implements Listener {
         if (!found) {
             lore.add("You need to select a world!");
         }
-        ItemStack is = inv.getItem(46);
+        ItemStack is = view.getItem(46);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
         is.setItemMeta(im);

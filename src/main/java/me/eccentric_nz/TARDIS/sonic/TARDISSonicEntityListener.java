@@ -108,7 +108,7 @@ public class TARDISSonicEntityListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInventoryViewClick(InventoryClickEvent event) {
-        String title = event.getInventory().getTitle();
+        String title = event.getView().getTitle();
         if (title.startsWith(ChatColor.DARK_RED + "") && title.endsWith("'s Inventory")) {
             event.setCancelled(true);
         }

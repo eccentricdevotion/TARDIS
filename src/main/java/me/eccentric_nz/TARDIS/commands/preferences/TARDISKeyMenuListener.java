@@ -27,7 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,8 +45,8 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
 
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -67,12 +67,12 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
                     case 16:
                         event.setCancelled(true);
                         // set display name of key in slot 18
-                        ItemStack key = inv.getItem(18);
+                        ItemStack key = view.getItem(18);
                         if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
                             return;
                         }
                         // get Display name of selected key
-                        ItemStack choice = inv.getItem(slot);
+                        ItemStack choice = view.getItem(slot);
                         ItemMeta choice_im = choice.getItemMeta();
                         String choice_name = choice_im.getDisplayName();
                         ItemMeta sonic_im = key.getItemMeta();
@@ -101,17 +101,17 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
 
     @EventHandler(ignoreCancelled = true)
     public void onKeyMenuClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
+        InventoryView view = event.getView();
+        String title = view.getTitle();
         if (!title.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             return;
         }
-        ItemStack key = inv.getItem(18);
+        ItemStack key = view.getItem(18);
         if (key != null) {
             Player p = (Player) event.getPlayer();
             Location loc = p.getLocation();
             loc.getWorld().dropItemNaturally(loc, key);
-            inv.setItem(18, new ItemStack(Material.AIR));
+            view.setItem(18, new ItemStack(Material.AIR));
         }
     }
 }
