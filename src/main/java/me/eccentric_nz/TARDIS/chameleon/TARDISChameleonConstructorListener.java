@@ -48,6 +48,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -92,14 +93,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
     @EventHandler(ignoreCancelled = true)
 
     public void onChameleonConstructorClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && (slot < 18 || slot == 26 || slot == 43 || slot == 52)) {
                 event.setCancelled(true);
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -164,14 +165,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     for (int s = 18; s < 27; s++) {
                                         second = 0;
                                         for (int c = 27; c >= 0; c -= 9) {
-                                            ItemStack d = inv.getItem(s + c);
+                                            ItemStack d = view.getItem(s + c);
                                             if (d != null) {
                                                 Material type = d.getType();
                                                 if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TARDISMaterials.precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
                                                     TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
                                                     // return items
                                                     player.getWorld().dropItemNaturally(player.getLocation(), d);
-                                                    inv.clear(s + c);
+                                                    event.getClickedInventory().clear(s + c);
                                                     return;
                                                 }
                                                 Material mat = d.getType();
@@ -195,7 +196,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     glass[first][second] = dataStr;
                                                 } else if (mat.equals(Material.TORCH) || mat.equals(Material.REDSTONE_TORCH)) {
                                                     // check block under torch
-                                                    if (inv.getItem(35) == null) {
+                                                    if (view.getItem(35) == null) {
                                                         blue[first][second] = air;
                                                         glass[first][second] = air;
                                                         stain[first][second] = air;
@@ -231,7 +232,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         return;
                                     }
                                     // add sign
-                                    BlockData sign = Material.WALL_SIGN.createBlockData();
+                                    BlockData sign = Material.OAK_WALL_SIGN.createBlockData();
                                     Directional directional = (Directional) sign;
                                     directional.setFacing(BlockFace.WEST);
                                     String[] signData = new String[]{air, air, directional.getAsString(), air};
@@ -268,7 +269,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     if (!currentLamp.containsKey(uuid)) {
                                         currentLamp.put(uuid, 0);
                                     }
-                                    nextLamp(uuid, inv);
+                                    nextLamp(uuid, view);
                                     break;
                                 case 43:
                                 case 52:
@@ -276,7 +277,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     if (!currentDoor.containsKey(uuid)) {
                                         currentDoor.put(uuid, 0);
                                     }
-                                    nextDoor(uuid, inv);
+                                    nextDoor(uuid, view);
                                     break;
                                 default:
                                     break;
@@ -293,26 +294,26 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         }
     }
 
-    private void nextLamp(UUID uuid, Inventory inv) {
+    private void nextLamp(UUID uuid, InventoryView view) {
         int l = currentLamp.get(uuid);
         if (l < ln - 1) {
             l++;
         } else {
             l = 0;
         }
-        inv.setItem(26, new ItemStack(lamps.get(l)));
+        view.setItem(26, new ItemStack(lamps.get(l)));
         currentLamp.put(uuid, l);
     }
 
-    private void nextDoor(UUID uuid, Inventory inv) {
+    private void nextDoor(UUID uuid, InventoryView view) {
         int d = currentDoor.get(uuid);
         if (d < dn - 1) {
             d++;
         } else {
             d = 0;
         }
-        inv.setItem(43, new ItemStack(doors.get(d)));
-        inv.setItem(52, new ItemStack(doors.get(d)));
+        view.setItem(43, new ItemStack(doors.get(d)));
+        view.setItem(52, new ItemStack(doors.get(d)));
         currentDoor.put(uuid, d);
     }
 

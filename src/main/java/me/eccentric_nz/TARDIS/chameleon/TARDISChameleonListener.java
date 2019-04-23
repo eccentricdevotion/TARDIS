@@ -34,6 +34,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -59,14 +60,14 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
      */
     @EventHandler(ignoreCancelled = true)
     public void onChameleonMenuClick(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
-        String name = inv.getTitle();
+        InventoryView view = event.getView();
+        String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Chameleon Circuit")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 27) {
-                ItemStack is = inv.getItem(slot);
+                ItemStack is = view.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -100,20 +101,20 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                 case 11:
                                     // factory
                                     set.put("adapti_on", 0);
-                                    ItemStack frb = inv.getItem(20);
+                                    ItemStack frb = view.getItem(20);
                                     ItemMeta fact = frb.getItemMeta();
                                     String ory = fact.getDisplayName();
                                     if (ory.equals(ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"))) {
                                         set.put("chameleon_preset", "FACTORY");
-                                        toggleOthers(CHAMELEON_OPTION.FACTORY, inv);
+                                        toggleOthers(CHAMELEON_OPTION.FACTORY, view);
                                         TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FACTORY", player);
                                         tcf.updateChameleonFrame(id, PRESET.FACTORY);
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
                                     } else {
                                         set.put("chameleon_preset", "NEW");
-                                        toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        toggleOthers(CHAMELEON_OPTION.PRESET, view);
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
-                                        setDefault(inv, player, tardis.getChameleon());
+                                        setDefault(view, player, tardis.getChameleon());
                                     }
                                     break;
                                 case 12:
@@ -126,16 +127,16 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     if (a.equals(ADAPTION.OFF)) {
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
-                                        toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        toggleOthers(CHAMELEON_OPTION.PRESET, view);
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
-                                        setDefault(inv, player, tardis.getChameleon());
+                                        setDefault(view, player, tardis.getChameleon());
                                     } else {
-                                        toggleOthers(CHAMELEON_OPTION.ADAPTIVE, inv);
+                                        toggleOthers(CHAMELEON_OPTION.ADAPTIVE, view);
                                         tcf.updateChameleonFrame(id, PRESET.FACTORY);
                                         set.put("chameleon_preset", "FACTORY");
                                     }
                                     set.put("adapti_on", ca);
-                                    ItemStack arb = inv.getItem(21);
+                                    ItemStack arb = view.getItem(21);
                                     ItemMeta bio = arb.getItemMeta();
                                     bio.setDisplayName(a.getColour() + a.toString());
                                     arb.setItemMeta(bio);
@@ -143,7 +144,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                 case 13:
                                     // Invisibility
                                     set.put("adapti_on", 0);
-                                    ItemStack irb = inv.getItem(22);
+                                    ItemStack irb = view.getItem(22);
                                     ItemMeta invis = irb.getItemMeta();
                                     String ible = invis.getDisplayName();
                                     if (ible.equals(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"))) {
@@ -162,17 +163,17 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                             int uses_left = tcc.getInvisibilityUses();
                                             new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
                                         }
-                                        toggleOthers(CHAMELEON_OPTION.INVISIBLE, inv);
+                                        toggleOthers(CHAMELEON_OPTION.INVISIBLE, view);
                                         set.put("chameleon_preset", "INVISIBLE");
                                         TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "INVISIBLE", player);
                                         tcf.updateChameleonFrame(id, PRESET.INVISIBLE);
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
                                     } else {
-                                        toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        toggleOthers(CHAMELEON_OPTION.PRESET, view);
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
-                                        setDefault(inv, player, tardis.getChameleon());
+                                        setDefault(view, player, tardis.getChameleon());
                                     }
                                     break;
                                 case 14:
@@ -217,10 +218,10 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         }
     }
 
-    private void setDefault(Inventory inv, Player player, String chameleon) {
+    private void setDefault(InventoryView view, Player player, String chameleon) {
         // default to Blue Police Box
         // set preset lore
-        ItemStack p = inv.getItem(23);
+        ItemStack p = view.getItem(23);
         ItemMeta pim = p.getItemMeta();
         pim.setDisplayName(ChatColor.GREEN + "NEW");
         p.setItemMeta(pim);
@@ -228,9 +229,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "New Police Box");
     }
 
-    private void toggleOthers(CHAMELEON_OPTION c, Inventory inv) {
+    private void toggleOthers(CHAMELEON_OPTION c, InventoryView view) {
         for (CHAMELEON_OPTION co : CHAMELEON_OPTION.values()) {
-            ItemStack is = inv.getItem(co.getSlot());
+            ItemStack is = view.getItem(co.getSlot());
             ItemMeta im = is.getItemMeta();
             String onoff;
             Material m;

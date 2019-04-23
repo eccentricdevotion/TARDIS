@@ -24,7 +24,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -40,8 +40,8 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorOpen(InventoryOpenEvent event) {
-        Inventory inv = event.getInventory();
-        String inv_name = inv.getTitle();
+        InventoryView view = event.getView();
+        String inv_name = view.getTitle();
         if (inv_name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             Player player = ((Player) event.getPlayer());
             plugin.getTrackerKeeper().getConstructors().add(player.getUniqueId());
@@ -50,8 +50,8 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        String inv_name = inv.getTitle();
+        InventoryView view = event.getView();
+        String inv_name = view.getTitle();
         if (inv_name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             Player player = ((Player) event.getPlayer());
             if (plugin.getTrackerKeeper().getConstructors().contains(player.getUniqueId())) {
@@ -59,7 +59,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
                 // drop any user placed items in the inventory
                 for (int s = 18; s < 54; s++) {
                     if (s != 26 && s != 43 && s != 52) {
-                        ItemStack userStack = inv.getItem(s);
+                        ItemStack userStack = view.getItem(s);
                         if (userStack != null) {
                             player.getWorld().dropItemNaturally(player.getLocation(), userStack);
                         }
