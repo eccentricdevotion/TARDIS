@@ -62,7 +62,7 @@ class TARDISGravestonePreset extends TARDISPreset {
         blueprintData[7][3] = "minecraft:air";
         blueprintData[8][0] = "minecraft:dirt";
         blueprintData[8][1] = "minecraft:oak_trapdoor[half=bottom,facing=west,open=false]";
-        blueprintData[8][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
+        blueprintData[8][2] = "minecraft:oak_wall_sign[facing=west]";
         blueprintData[8][3] = "minecraft:air";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
@@ -105,7 +105,7 @@ class TARDISGravestonePreset extends TARDISPreset {
         stainedData[7][3] = "minecraft:air";
         stainedData[8][0] = "minecraft:brown_stained_glass";
         stainedData[8][1] = "minecraft:oak_trapdoor[half=bottom,facing=west,open=false]";
-        stainedData[8][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
+        stainedData[8][2] = "minecraft:oak_wall_sign[facing=west]";
         stainedData[8][3] = "minecraft:air";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
@@ -148,7 +148,7 @@ class TARDISGravestonePreset extends TARDISPreset {
         glassData[7][3] = "minecraft:air";
         glassData[8][0] = "minecraft:glass";
         glassData[8][1] = "minecraft:oak_trapdoor[half=bottom,facing=west,open=false]";
-        glassData[8][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
+        glassData[8][2] = "minecraft:oak_wall_sign[facing=west]";
         glassData[8][3] = "minecraft:air";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";

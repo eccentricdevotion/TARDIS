@@ -40,7 +40,7 @@ class TARDISAppertureSciencePreset extends TARDISPreset {
         blueprintData[2][1] = "minecraft:orange_wool";
         blueprintData[2][2] = "minecraft:orange_wool";
         blueprintData[2][3] = "minecraft:air";
-        blueprintData[3][0] = "minecraft:sign[rotation=4]";
+        blueprintData[3][0] = "minecraft:oak_sign[rotation=4]";
         blueprintData[3][1] = "minecraft:air";
         blueprintData[3][2] = "minecraft:air";
         blueprintData[3][3] = "minecraft:air";
@@ -83,7 +83,7 @@ class TARDISAppertureSciencePreset extends TARDISPreset {
         stainedData[2][1] = "minecraft:orange_stained_glass";
         stainedData[2][2] = "minecraft:orange_stained_glass";
         stainedData[2][3] = "minecraft:air";
-        stainedData[3][0] = "minecraft:sign[rotation=4]";
+        stainedData[3][0] = "minecraft:oak_sign[rotation=4]";
         stainedData[3][1] = "minecraft:air";
         stainedData[3][2] = "minecraft:air";
         stainedData[3][3] = "minecraft:air";
@@ -126,7 +126,7 @@ class TARDISAppertureSciencePreset extends TARDISPreset {
         glassData[2][1] = "minecraft:glass";
         glassData[2][2] = "minecraft:glass";
         glassData[2][3] = "minecraft:air";
-        glassData[3][0] = "minecraft:sign[rotation=4]";
+        glassData[3][0] = "minecraft:oak_sign[rotation=4]";
         glassData[3][1] = "minecraft:air";
         glassData[3][2] = "minecraft:air";
         glassData[3][3] = "minecraft:air";

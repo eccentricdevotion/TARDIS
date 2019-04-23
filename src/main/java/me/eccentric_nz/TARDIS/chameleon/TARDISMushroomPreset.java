@@ -67,7 +67,7 @@ class TARDISMushroomPreset extends TARDISPreset {
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
         blueprintData[9][2] = "minecraft:air";
-        blueprintData[9][3] = "minecraft:OAK_WALL_SIGN[facing=west]";
+        blueprintData[9][3] = "minecraft:oak_wall_sign[facing=west]";
         setBlueprintData(blueprintData);
         // set stained data strings
         String[][] stainedData = new String[10][4];
@@ -110,7 +110,7 @@ class TARDISMushroomPreset extends TARDISPreset {
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
         stainedData[9][2] = "minecraft:air";
-        stainedData[9][3] = "minecraft:OAK_WALL_SIGN[facing=west]";
+        stainedData[9][3] = "minecraft:oak_wall_sign[facing=west]";
         setStainedData(stainedData);
         // set glass data strings
         String[][] glassData = new String[10][4];
@@ -153,7 +153,7 @@ class TARDISMushroomPreset extends TARDISPreset {
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
         glassData[9][2] = "minecraft:air";
-        glassData[9][3] = "minecraft:OAK_WALL_SIGN[facing=west]";
+        glassData[9][3] = "minecraft:oak_wall_sign[facing=west]";
         setGlassData(glassData);
     }
 }
