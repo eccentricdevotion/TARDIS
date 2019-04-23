@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.Villager.Career;
+//import org.bukkit.entity.Villager.Career;
+
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.MerchantRecipe;
 
@@ -29,7 +30,7 @@ class TARDISVillager extends TARDISMob {
 
     private Profession profession;
     private List<MerchantRecipe> trades;
-    private Career career;
+    //    private Career career;
     private int careerLevel;
     private boolean willing;
     private int riches;
@@ -54,13 +55,13 @@ class TARDISVillager extends TARDISMob {
         this.trades = trades;
     }
 
-    Career getCareer() {
-        return career;
-    }
-
-    void setCareer(Career career) {
-        this.career = career;
-    }
+//    Career getCareer() {
+//        return career;
+//    }
+//
+//    void setCareer(Career career) {
+//        this.career = career;
+//    }
 
     int getCareerLevel() {
         return careerLevel;
