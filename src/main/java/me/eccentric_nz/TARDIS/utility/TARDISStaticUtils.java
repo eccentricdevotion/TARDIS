@@ -185,7 +185,7 @@ public class TARDISStaticUtils {
                 chunk.load();
             }
             Block cc = l.getBlock();
-            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN) {
+            if (cc.getType() == Material.OAK_WALL_SIGN || cc.getType() == Material.OAK_SIGN) {
                 Sign sign = (Sign) cc.getState();
                 sign.setLine(line, text);
                 sign.update();
@@ -207,7 +207,7 @@ public class TARDISStaticUtils {
         Location l = TARDISLocationGetters.getLocationFromDB(loc, 0, 0);
         if (l != null) {
             Block cc = l.getBlock();
-            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN) {
+            if (cc.getType() == Material.OAK_WALL_SIGN || cc.getType() == Material.OAK_SIGN) {
                 Sign sign = (Sign) cc.getState();
                 str = sign.getLine(3);
             }

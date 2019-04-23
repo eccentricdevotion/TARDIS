@@ -102,7 +102,7 @@ public class TARDISShellRoomConstructor {
                     Material material = b.getType();
                     BlockData data = b.getBlockData();
                     String dataStr = addQuotes(data.getAsString());
-                    if (material.equals(Material.WALL_SIGN)) {
+                    if (material.equals(Material.OAK_WALL_SIGN)) {
                         sign = b;
                     }
                     if (y == (fy + 3)) {

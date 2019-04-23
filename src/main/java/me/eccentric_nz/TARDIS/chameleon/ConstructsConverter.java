@@ -115,9 +115,9 @@ public class ConstructsConverter {
                                 case AIR:
                                 case REDSTONE_TORCH:
                                 case REDSTONE_WALL_TORCH:
-                                case SIGN:
+                                case OAK_SIGN:
                                 case TORCH:
-                                case WALL_SIGN:
+                                case OAK_WALL_SIGN:
                                 case WALL_TORCH:
                                     stGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(bpIDX.getInt(x)).createBlockData().getAsString();
                                     break;

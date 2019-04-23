@@ -60,7 +60,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         blueprintData[4][3] = "minecraft:orange_wool";
         blueprintData[5][0] = "minecraft:stone_slab[type=bottom]";
         blueprintData[5][1] = "minecraft:air";
-        blueprintData[5][2] = "minecraft:wall_sign[facing=west]";
+        blueprintData[5][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
         blueprintData[5][3] = "minecraft:cobblestone_wall";
         blueprintData[6][0] = "minecraft:red_terracotta";
         blueprintData[6][1] = "minecraft:stone_slab[type=top]";
@@ -102,7 +102,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         stainedData[4][3] = "minecraft:orange_stained_glass";
         stainedData[5][0] = "minecraft:light_gray_stained_glass";
         stainedData[5][1] = "minecraft:air";
-        stainedData[5][2] = "minecraft:wall_sign[facing=west]";
+        stainedData[5][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
         stainedData[5][3] = "minecraft:light_gray_stained_glass";
         stainedData[6][0] = "minecraft:red_stained_glass";
         stainedData[6][1] = "minecraft:light_gray_stained_glass";
@@ -144,7 +144,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         glassData[4][3] = "minecraft:glass";
         glassData[5][0] = "minecraft:glass";
         glassData[5][1] = "minecraft:air";
-        glassData[5][2] = "minecraft:wall_sign[facing=west]";
+        glassData[5][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
         glassData[5][3] = "minecraft:glass";
         glassData[6][0] = "minecraft:glass";
         glassData[6][1] = "minecraft:glass";
@@ -170,7 +170,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         blueprintWest[0][3] = "minecraft:orange_wool";
         blueprintWest[1][0] = "minecraft:stone_slab[type=bottom]";
         blueprintWest[1][1] = "minecraft:air";
-        blueprintWest[1][2] = "minecraft:wall_sign[facing=east]";
+        blueprintWest[1][2] = "minecraft:OAK_WALL_SIGN[facing=east]";
         blueprintWest[1][3] = "minecraft:cobblestone_wall";
         blueprintWest[2][0] = "minecraft:red_terracotta";
         blueprintWest[2][1] = "minecraft:stone_slab[type=top]";
@@ -211,7 +211,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         stainedWest[0][3] = "minecraft:orange_stained_glass";
         stainedWest[1][0] = "minecraft:light_gray_stained_glass";
         stainedWest[1][1] = "minecraft:air";
-        stainedWest[1][2] = "minecraft:wall_sign[facing=east]";
+        stainedWest[1][2] = "minecraft:OAK_WALL_SIGN[facing=east]";
         stainedWest[1][3] = "minecraft:light_gray_stained_glass";
         stainedWest[2][0] = "minecraft:red_stained_glass";
         stainedWest[2][1] = "minecraft:light_gray_stained_glass";
@@ -252,7 +252,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         glassWest[0][3] = "minecraft:glass";
         glassWest[1][0] = "minecraft:glass";
         glassWest[1][1] = "minecraft:air";
-        glassWest[1][2] = "minecraft:wall_sign[facing=east]";
+        glassWest[1][2] = "minecraft:OAK_WALL_SIGN[facing=east]";
         glassWest[1][3] = "minecraft:glass";
         glassWest[2][0] = "minecraft:glass";
         glassWest[2][1] = "minecraft:glass";

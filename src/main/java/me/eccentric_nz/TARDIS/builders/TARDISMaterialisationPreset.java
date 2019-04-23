@@ -358,12 +358,12 @@ class TARDISMaterialisationPreset implements Runnable {
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                                     }
                                     break;
-                                case SIGN:
+                                case OAK_SIGN:
                                     if (preset.equals(PRESET.APPERTURE)) {
                                         TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                     }
                                     break;
-                                case WALL_SIGN: // sign - if there is one
+                                case OAK_WALL_SIGN: // sign - if there is one
                                     if (preset.equals(PRESET.JUNK_MODE)) {
                                         // add a sign
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
@@ -373,7 +373,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                         saveJunkControl(location, "save_sign");
                                         // make it a save_sign
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
-                                        if (sign.getType().equals(Material.WALL_SIGN)) {
+                                        if (sign.getType().equals(Material.OAK_WALL_SIGN)) {
                                             Sign s = (Sign) sign.getState();
                                             s.setLine(0, "TARDIS");
                                             s.setLine(1, plugin.getSigns().getStringList("saves").get(0));
@@ -384,7 +384,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     } else if (bd.shouldAddSign()) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
-                                        if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN)) {
+                                        if (sign.getType().equals(Material.OAK_WALL_SIGN) || sign.getType().equals(Material.OAK_SIGN)) {
                                             Sign s = (Sign) sign.getState();
                                             plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
                                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {

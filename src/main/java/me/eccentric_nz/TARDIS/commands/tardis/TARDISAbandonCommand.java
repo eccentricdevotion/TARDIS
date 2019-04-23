@@ -279,7 +279,7 @@ public class TARDISAbandonCommand {
                 break;
         }
         Block b = new Location(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz).getBlock();
-        if (b.getType().equals(Material.WALL_SIGN)) {
+        if (b.getType().equals(Material.OAK_WALL_SIGN)) {
             sign = (Sign) b.getState();
         }
         return sign;

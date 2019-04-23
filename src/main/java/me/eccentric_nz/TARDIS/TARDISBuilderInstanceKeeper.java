@@ -67,7 +67,7 @@ public class TARDISBuilderInstanceKeeper {
         BLOCK_CONVERSION.put("SPRUCE_LEAVES", "SPRUCE_SAPLING");
         BLOCK_CONVERSION.put("STONE", "COBBLESTONE");
         BLOCK_CONVERSION.put("TALL_GRASS", "SEEDS");
-        BLOCK_CONVERSION.put("WALL_SIGN", "SIGN");
+        BLOCK_CONVERSION.put("OAK_WALL_SIGN", "OAK_SIGN");
         BLOCK_CONVERSION.put("WHEAT", "WHEAT_SEEDS");
         PRECIOUS.add(Material.BEACON);
         PRECIOUS.add(Material.DIAMOND_BLOCK);

@@ -59,8 +59,8 @@ public class TARDISSignListener implements Listener {
     public TARDISSignListener(TARDIS plugin) {
         this.plugin = plugin;
         validSigns.add(Material.COMPARATOR);
-        validSigns.add(Material.WALL_SIGN);
-        validSigns.add(Material.SIGN);
+        validSigns.add(Material.OAK_WALL_SIGN);
+        validSigns.add(Material.OAK_SIGN);
     }
 
     /**
@@ -135,7 +135,7 @@ public class TARDISSignListener implements Listener {
                         return;
                     }
                     String line1;
-                    if (blockType == Material.WALL_SIGN || blockType == Material.SIGN) {
+                    if (blockType == Material.OAK_WALL_SIGN || blockType == Material.OAK_SIGN) {
                         Sign s = (Sign) block.getState();
                         line1 = s.getLine(0);
                     } else {

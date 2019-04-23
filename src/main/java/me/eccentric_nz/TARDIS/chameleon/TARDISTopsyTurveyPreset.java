@@ -65,7 +65,7 @@ class TARDISTopsyTurveyPreset extends TARDISPreset {
         blueprintData[8][2] = "minecraft:blue_wool";
         blueprintData[8][3] = "minecraft:blue_wool";
         blueprintData[9][0] = "minecraft:air";
-        blueprintData[9][1] = "minecraft:wall_sign[facing=west]";
+        blueprintData[9][1] = "minecraft:OAK_WALL_SIGN[facing=west]";
         blueprintData[9][2] = "minecraft:air";
         blueprintData[9][3] = "minecraft:air";
         setBlueprintData(blueprintData);
@@ -108,7 +108,7 @@ class TARDISTopsyTurveyPreset extends TARDISPreset {
         stainedData[8][2] = "minecraft:blue_stained_glass";
         stainedData[8][3] = "minecraft:blue_stained_glass";
         stainedData[9][0] = "minecraft:air";
-        stainedData[9][1] = "minecraft:wall_sign[facing=west]";
+        stainedData[9][1] = "minecraft:OAK_WALL_SIGN[facing=west]";
         stainedData[9][2] = "minecraft:air";
         stainedData[9][3] = "minecraft:air";
         setStainedData(stainedData);
@@ -151,7 +151,7 @@ class TARDISTopsyTurveyPreset extends TARDISPreset {
         glassData[8][2] = "minecraft:glass";
         glassData[8][3] = "minecraft:glass";
         glassData[9][0] = "minecraft:air";
-        glassData[9][1] = "minecraft:wall_sign[facing=west]";
+        glassData[9][1] = "minecraft:OAK_WALL_SIGN[facing=west]";
         glassData[9][2] = "minecraft:air";
         glassData[9][3] = "minecraft:air";
         setGlassData(glassData);

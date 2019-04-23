@@ -48,7 +48,7 @@ public class TARDISControlRunnable implements Runnable {
                     case 0:
                         // get the location data
                         if (rsc.locationData()) {
-                            if (rsc.getSign().getType().equals(Material.WALL_SIGN) || rsc.getSign().getType().equals(Material.SIGN)) {
+                            if (rsc.getSign().getType().equals(Material.OAK_WALL_SIGN) || rsc.getSign().getType().equals(Material.OAK_SIGN)) {
                                 // get the sign
                                 Sign sign = (Sign) rsc.getSign().getState();
                                 // update the data
@@ -76,7 +76,7 @@ public class TARDISControlRunnable implements Runnable {
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             int current_level = rsc.getArtronLevel();
                             int percent = Math.round((current_level * 100F) / fc);
-                            if (rsc.getSign().getType().equals(Material.WALL_SIGN) || rsc.getSign().getType().equals(Material.SIGN)) {
+                            if (rsc.getSign().getType().equals(Material.OAK_WALL_SIGN) || rsc.getSign().getType().equals(Material.OAK_SIGN)) {
                                 // get the sign
                                 Sign sign = (Sign) rsc.getSign().getState();
                                 // update the data

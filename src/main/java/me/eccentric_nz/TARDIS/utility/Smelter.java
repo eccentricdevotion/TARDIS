@@ -260,7 +260,7 @@ public class Smelter {
             case RED_CARPET:
             case RED_MUSHROOM_BLOCK:
             case RED_WOOL:
-            case SIGN:
+            case OAK_SIGN:
             case SPRUCE_BOAT:
             case SPRUCE_BUTTON:
             case SPRUCE_DOOR:

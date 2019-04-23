@@ -311,7 +311,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if (s == 0) {
                     Block psb = entry.getKey();
                     psb.setBlockData(entry.getValue());
-                    if (psb.getType().equals(Material.WALL_SIGN)) {
+                    if (psb.getType().equals(Material.OAK_WALL_SIGN)) {
                         Sign cs = (Sign) psb.getState();
                         cs.setLine(0, "");
                         cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
@@ -598,7 +598,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (type.equals(Material.WALL_SIGN)) {
+                } else if (type.equals(Material.OAK_WALL_SIGN)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls

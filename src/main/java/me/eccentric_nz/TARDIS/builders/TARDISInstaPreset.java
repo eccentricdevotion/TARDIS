@@ -349,17 +349,17 @@ class TARDISInstaPreset {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
                         break;
-                    case SIGN:
+                    case OAK_SIGN:
                         if (preset.equals(PRESET.APPERTURE)) {
                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                         }
                         break;
-                    case WALL_SIGN: // sign - if there is one
+                    case OAK_WALL_SIGN: // sign - if there is one
                         if (bd.shouldAddSign()) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                             Block sign = world.getBlockAt(xx, (y + yy), zz);
                             plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
-                            if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN)) {
+                            if (sign.getType().equals(Material.OAK_WALL_SIGN) || sign.getType().equals(Material.OAK_SIGN)) {
                                 Sign s = (Sign) sign.getState();
                                 if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                     HashMap<String, Object> wheret = new HashMap<>();

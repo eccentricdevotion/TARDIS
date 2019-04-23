@@ -287,7 +287,7 @@ class TARDISDematerialisationPreset implements Runnable {
                             case JUNGLE_TRAPDOOR:
                             case ACACIA_TRAPDOOR:
                             case DARK_OAK_TRAPDOOR:
-                            case WALL_SIGN:
+                            case OAK_WALL_SIGN:
                                 if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }

@@ -283,7 +283,7 @@ public class TARDISJunkControlListener implements Listener {
     private Sign getDestinationSign(int id) {
         Sign sign = null;
         Block b = getControlBlock(id, 9);
-        if (b != null && b.getType().equals(Material.WALL_SIGN)) {
+        if (b != null && b.getType().equals(Material.OAK_WALL_SIGN)) {
             sign = (Sign) b.getState();
         }
         return sign;

@@ -192,10 +192,10 @@ public class TARDISJunkBuilder implements Runnable {
                         }
                     }
                     if (postTerminalBlock != null) {
-                        Directional sign = (Directional) Material.WALL_SIGN.createBlockData();
+                        Directional sign = (Directional) Material.OAK_WALL_SIGN.createBlockData();
                         sign.setFacing(BlockFace.EAST);
                         postTerminalBlock.setBlockData(sign);
-                        if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
+                        if (postTerminalBlock.getType().equals(Material.OAK_WALL_SIGN)) {
                             Sign ts = (Sign) postTerminalBlock.getState();
                             ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));
                             ts.update();

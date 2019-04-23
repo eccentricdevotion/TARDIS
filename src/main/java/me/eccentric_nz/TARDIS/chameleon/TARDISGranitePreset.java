@@ -70,7 +70,7 @@ public class TARDISGranitePreset extends TARDISPreset {
         blueprintData[8][3] = "minecraft:redstone_lamp[lit=true]";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
-        blueprintData[9][2] = "minecraft:wall_sign[facing=west]";
+        blueprintData[9][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
         blueprintData[9][3] = "minecraft:air";
         setBlueprintData(blueprintData);
         // set stained data strings
@@ -113,7 +113,7 @@ public class TARDISGranitePreset extends TARDISPreset {
         stainedData[8][3] = "minecraft:redstone_lamp[lit=false]";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
-        stainedData[9][2] = "minecraft:wall_sign[facing=west]";
+        stainedData[9][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
         stainedData[9][3] = "minecraft:air";
         setStainedData(stainedData);
         // set glass data strings
@@ -156,7 +156,7 @@ public class TARDISGranitePreset extends TARDISPreset {
         glassData[8][3] = "minecraft:redstone_lamp[lit=false]";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
-        glassData[9][2] = "minecraft:wall_sign[facing=west]";
+        glassData[9][2] = "minecraft:OAK_WALL_SIGN[facing=west]";
         glassData[9][3] = "minecraft:air";
         setGlassData(glassData);
     }

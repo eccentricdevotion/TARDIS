@@ -59,7 +59,7 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         Block b = event.getClickedBlock();
-        if (b != null && (b.getType().equals(Material.SIGN) || b.getType().equals(Material.WALL_SIGN))) {
+        if (b != null && (b.getType().equals(Material.OAK_SIGN) || b.getType().equals(Material.OAK_WALL_SIGN))) {
             Player player = event.getPlayer();
             String loc = event.getClickedBlock().getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();
@@ -105,7 +105,7 @@ public class TARDISKeyboardListener implements Listener {
             if (p.getGameMode() != GameMode.CREATIVE) {
                 ItemStack itemInHand = p.getInventory().getItemInMainHand();
                 if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
-                    p.getInventory().setItemInMainHand(new ItemStack(Material.SIGN, 1));
+                    p.getInventory().setItemInMainHand(new ItemStack(Material.OAK_SIGN, 1));
                 } else {
                     itemInHand.setAmount(itemInHand.getAmount() + 1);
                 }

@@ -384,7 +384,7 @@ class TARDISBuildAbandoned {
                         postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.LEVER)) {
                         postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.WALL_SIGN)) {
+                    } else if (type.equals(Material.OAK_WALL_SIGN)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (TARDISStaticUtils.isBanner(type)) {
                         JSONObject state = c.optJSONObject("banner");
@@ -474,7 +474,7 @@ class TARDISBuildAbandoned {
                 // always make the control centre the first sign
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                if (entry.getValue().getMaterial().equals(Material.WALL_SIGN)) {
+                if (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));

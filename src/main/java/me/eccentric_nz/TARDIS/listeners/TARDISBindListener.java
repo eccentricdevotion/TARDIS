@@ -51,8 +51,8 @@ public class TARDISBindListener implements Listener {
 
     public TARDISBindListener(TARDIS plugin) {
         this.plugin = plugin;
-        validBlocks.add(Material.WALL_SIGN);
-        validBlocks.add(Material.SIGN);
+        validBlocks.add(Material.OAK_WALL_SIGN);
+        validBlocks.add(Material.OAK_SIGN);
         validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.add(Material.LEVER);
     }

@@ -71,8 +71,8 @@ public class TARDISUpdateListener implements Listener {
         validBlocks.add(Material.SPRUCE_BUTTON);
         validBlocks.add(Material.STONE_BUTTON);
         validSigns.add(Material.COMPARATOR);
-        validSigns.add(Material.SIGN);
-        validSigns.add(Material.WALL_SIGN);
+        validSigns.add(Material.OAK_SIGN);
+        validSigns.add(Material.OAK_WALL_SIGN);
         plates.add(Material.ACACIA_PRESSURE_PLATE);
         plates.add(Material.BIRCH_PRESSURE_PLATE);
         plates.add(Material.DARK_OAK_PRESSURE_PLATE);
@@ -340,7 +340,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("chameleon") && validSigns.contains(blockType)) {
                 set.put("chameleon", blockLocStr);
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
@@ -352,7 +352,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("save-sign") && validSigns.contains(blockType)) {
                 set.put("save_sign", blockLocStr);
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
@@ -362,7 +362,7 @@ public class TARDISUpdateListener implements Listener {
                     s.update();
                 }
             }
-            if (blockName.equalsIgnoreCase("keyboard") && (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN))) {
+            if (blockName.equalsIgnoreCase("keyboard") && (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN))) {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 7);
@@ -422,7 +422,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
@@ -444,7 +444,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
@@ -502,7 +502,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
@@ -524,7 +524,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
@@ -545,7 +545,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                if (blockType.equals(Material.WALL_SIGN) || blockType.equals(Material.SIGN)) {
+                if (blockType.equals(Material.OAK_WALL_SIGN) || blockType.equals(Material.OAK_SIGN)) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "-----");

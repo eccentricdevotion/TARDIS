@@ -104,12 +104,12 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(60, Material.FARMLAND);
         LEGACY_ID_LOOKUP.put(61, Material.FURNACE);
         LEGACY_ID_LOOKUP.put(62, Material.FURNACE);
-        LEGACY_ID_LOOKUP.put(63, Material.SIGN);
+        LEGACY_ID_LOOKUP.put(63, Material.OAK_SIGN);
         LEGACY_ID_LOOKUP.put(64, Material.OAK_DOOR);
         LEGACY_ID_LOOKUP.put(65, Material.LADDER);
         LEGACY_ID_LOOKUP.put(66, Material.RAIL);
         LEGACY_ID_LOOKUP.put(67, Material.COBBLESTONE_STAIRS);
-        LEGACY_ID_LOOKUP.put(68, Material.WALL_SIGN);
+        LEGACY_ID_LOOKUP.put(68, Material.OAK_WALL_SIGN);
         LEGACY_ID_LOOKUP.put(69, Material.LEVER);
         LEGACY_ID_LOOKUP.put(70, Material.STONE_PRESSURE_PLATE);
         LEGACY_ID_LOOKUP.put(71, Material.IRON_DOOR);
@@ -362,7 +362,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_ID_LOOKUP.put(320, Material.COOKED_PORKCHOP);
         LEGACY_ID_LOOKUP.put(321, Material.PAINTING);
         LEGACY_ID_LOOKUP.put(322, Material.GOLDEN_APPLE);
-        LEGACY_ID_LOOKUP.put(323, Material.SIGN);
+        LEGACY_ID_LOOKUP.put(323, Material.OAK_SIGN);
         LEGACY_ID_LOOKUP.put(324, Material.OAK_DOOR);
         LEGACY_ID_LOOKUP.put(325, Material.BUCKET);
         LEGACY_ID_LOOKUP.put(326, Material.WATER_BUCKET);
@@ -638,7 +638,7 @@ public class TARDISMaterialIDConverter {
         LEGACY_TYPE_LOOKUP.put("RED_ROSE", "POPPY");
         LEGACY_TYPE_LOOKUP.put("SAPLING", "OAK_SAPLING");
         LEGACY_TYPE_LOOKUP.put("SEEDS", "WHEAT_SEEDS");
-        LEGACY_TYPE_LOOKUP.put("SIGN_POST", "SIGN");
+        LEGACY_TYPE_LOOKUP.put("SIGN_POST", "OAK_SIGN");
         LEGACY_TYPE_LOOKUP.put("SILVER_SHULKER_BOX", "LIGHT_GRAY_SHULKER_BOX");
         LEGACY_TYPE_LOOKUP.put("SKULL", "PLAYER_HEAD");
         LEGACY_TYPE_LOOKUP.put("SKULL_ITEM", "PLAYER_HEAD");

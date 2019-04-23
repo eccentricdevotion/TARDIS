@@ -81,7 +81,7 @@ public class TARDISBlockBreakListener implements Listener {
             }
             return;
         }
-        if (blockType == Material.WALL_SIGN) {
+        if (blockType == Material.OAK_WALL_SIGN) {
             // check the text on the sign
             Sign sign = (Sign) block.getState();
             String line0 = ChatColor.stripColor(sign.getLine(0));
