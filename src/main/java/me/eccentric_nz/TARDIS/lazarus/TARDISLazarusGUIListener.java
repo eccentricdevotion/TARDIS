@@ -260,6 +260,20 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     return;
                                 }
                                 switch (dt) {
+//                                    case CAT:
+//                                        CatWatcher cw = (CatWatcher) livingWatcher;
+//                                        cw.setType(getCatType(view));
+//                                        if (getBoolean(view)) {
+//                                            cw.setTamed(true);
+//                                            cw.setCollarColor(getColor(view));
+//                                        }
+//                                        cw.setBaby(getBaby(view));
+//                                        break;
+//                                    case PANDA:
+//                                        PandaWatcher pw = (PandaWatcher) livingWatcher;
+//                                        pw.setMainGene();
+//                                        pw.setHidden();
+//                                        break;
                                     case DONKEY:
                                     case MULE:
                                         ChestedHorseWatcher hcw = (ChestedHorseWatcher) livingWatcher;
@@ -289,7 +303,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         break;
                                     case OCELOT:
                                         OcelotWatcher ow = (OcelotWatcher) livingWatcher;
-                                        ow.setType(getCatType(view));
                                         ow.setBaby(getBaby(view));
                                         break;
                                     case PARROT:
@@ -372,7 +385,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         tro.setBodyColor(DyeColor.values()[random.nextInt(16)]);
                                         tro.setPatternColor(DyeColor.values()[random.nextInt(16)]);
                                         break;
-
                                     default:
                                         break;
                                 }

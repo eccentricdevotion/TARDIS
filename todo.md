@@ -3,11 +3,17 @@
 ## Next version `4.1`
 0. Update to Spigot 1.14
    * Add new mob types to farming and genetic manipulator
+   * Add cat collar colour to mob farming (once it's added to the API)
    * Test villager farming - biome specific?
-   * Check Artron furnace
    * Check TARDIS translator
-   * Add all wood signs for use
+   * Add new blocks
+   * Add new biomes
    * Update recipes.yml updater
+   * Use new bell sound?
+   * Remove/alter the Artron furnace now that there is a Smoker / Blast Furnace?
+   * Make the TARDIS Condenser a composter?
+   * Check Sonic Painter upgrade and anything else that uses dyes
+   * 
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests

@@ -47,6 +47,13 @@ class TARDISLazarusExtraInventory {
         disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
         disguises.add(Material.GHAST_SPAWN_EGG);
         disguises.add(Material.PHANTOM_SPAWN_EGG);
+        disguises.add(Material.VINDICATOR_SPAWN_EGG);
+        disguises.add(Material.PILLAGER_SPAWN_EGG);
+        disguises.add(Material.RAVAGER_SPAWN_EGG);
+        disguises.add(Material.TRADER_LLAMA_SPAWN_EGG);
+        disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
+        disguises.add(Material.SKELETON_HORSE_SPAWN_EGG);
         terminal = getItemStack();
     }
 
@@ -87,7 +94,7 @@ class TARDISLazarusExtraInventory {
         ill.setItemMeta(usi);
         eggs[i] = ill;
         i++;
-        // fish / ghast / phantom
+        // fish / ghast / phantom / illagers / dead horses / traders
         for (Material m : disguises) {
             ItemStack egg = new ItemStack(m, 1);
             ItemMeta me = egg.getItemMeta();

@@ -45,6 +45,7 @@ class TARDISLazarusInventory {
         // maximum number of eggs is 45
         disguises.add(Material.BAT_SPAWN_EGG);
         disguises.add(Material.BLAZE_SPAWN_EGG);
+        disguises.add(Material.CAT_SPAWN_EGG);
         disguises.add(Material.CAVE_SPIDER_SPAWN_EGG);
         disguises.add(Material.CHICKEN_SPAWN_EGG);
         disguises.add(Material.COW_SPAWN_EGG);
@@ -56,6 +57,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.ENDERMAN_SPAWN_EGG);
         disguises.add(Material.ENDERMITE_SPAWN_EGG);
         disguises.add(Material.EVOKER_SPAWN_EGG);
+        disguises.add(Material.FOX_SPAWN_EGG);
         disguises.add(Material.GUARDIAN_SPAWN_EGG);
         disguises.add(Material.HORSE_SPAWN_EGG);
         disguises.add(Material.HUSK_SPAWN_EGG);
@@ -64,6 +66,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.MOOSHROOM_SPAWN_EGG);
         disguises.add(Material.MULE_SPAWN_EGG);
         disguises.add(Material.OCELOT_SPAWN_EGG);
+        disguises.add(Material.PANDA_SPAWN_EGG);
         disguises.add(Material.PARROT_SPAWN_EGG);
         disguises.add(Material.PIG_SPAWN_EGG);
         disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
@@ -71,7 +74,6 @@ class TARDISLazarusInventory {
         disguises.add(Material.SHEEP_SPAWN_EGG);
         disguises.add(Material.SHULKER_SPAWN_EGG);
         disguises.add(Material.SILVERFISH_SPAWN_EGG);
-        disguises.add(Material.SKELETON_HORSE_SPAWN_EGG);
         disguises.add(Material.SKELETON_SPAWN_EGG);
         disguises.add(Material.SLIME_SPAWN_EGG);
         disguises.add(Material.SPIDER_SPAWN_EGG);
@@ -80,11 +82,9 @@ class TARDISLazarusInventory {
         disguises.add(Material.TURTLE_SPAWN_EGG);
         disguises.add(Material.VEX_SPAWN_EGG);
         disguises.add(Material.VILLAGER_SPAWN_EGG);
-        disguises.add(Material.VINDICATOR_SPAWN_EGG);
         disguises.add(Material.WITCH_SPAWN_EGG);
         disguises.add(Material.WITHER_SKELETON_SPAWN_EGG);
         disguises.add(Material.WOLF_SPAWN_EGG);
-        disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_PIGMAN_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
