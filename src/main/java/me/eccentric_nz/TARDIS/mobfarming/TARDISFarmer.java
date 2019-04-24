@@ -430,6 +430,7 @@ public class TARDISFarmer {
                                     pet.setAge(((Cat) e).getAge());
                                     pet.setSitting(((Sittable) e).isSitting());
                                     pet.setCatType(((Cat) e).getCatType());
+//                                    pet.setColour(((Cat) e).getCollarColor());
                                     health = (((Cat) e).getHealth() > 8D) ? 8D : ((Cat) e).getHealth();
                                     pet.setHealth(health);
                                     pet.setBaby(!((Cat) e).isAdult());
@@ -943,6 +944,7 @@ public class TARDISFarmer {
                             pet.setAge(((Cat) e).getAge());
                             pet.setSitting(((Cat) e).isSitting());
                             pet.setCatType(((Cat) e).getCatType());
+//                            pet.setColour(((Cat) e).getCollarColor());
                             health = (((Cat) e).getHealth() > 8D) ? 8D : ((Cat) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Cat) e).isAdult());

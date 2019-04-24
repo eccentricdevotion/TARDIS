@@ -316,6 +316,7 @@ public class TARDISEjectListener implements Listener {
                     }
                     cat.setSitting(o.isSitting());
                     cat.setCatType(o.getCatType());
+//                    cat.setCollarColor(o.getCollarColor());
                     double health = (o.getHealth() > 8D) ? 8D : o.getHealth();
                     cat.setHealth(health);
                     ent.remove();
