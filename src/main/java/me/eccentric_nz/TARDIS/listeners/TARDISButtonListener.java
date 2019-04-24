@@ -78,7 +78,7 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.JUKEBOX);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.NOTE_BLOCK);
-        validBlocks.add(Material.OAK_WALL_SIGN);
+        validBlocks.addAll(Tag.WALL_SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.addAll(TARDISMaterials.pressure_plates);
     }
@@ -320,7 +320,7 @@ public class TARDISButtonListener implements Listener {
                                 case 22:
                                     if (player.isSneaking()) {
                                         // keyboard
-                                        if (block.getType().equals(Material.OAK_SIGN) || block.getType().equals(Material.OAK_WALL_SIGN)) {
+                                        if (Tag.SIGNS.isTagged(block.getType())) {
                                             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                                                 tcc = new TARDISCircuitChecker(plugin, id);
                                                 tcc.getCircuits();

@@ -112,12 +112,22 @@ public class ConstructsConverter {
                                     bpGrid[y][x] = doorData;
                                     stGrid[y][x] = doorData;
                                     break;
+                                case ACACIA_SIGN:
+                                case ACACIA_WALL_SIGN:
                                 case AIR:
+                                case BIRCH_SIGN:
+                                case BIRCH_WALL_SIGN:
+                                case DARK_OAK_SIGN:
+                                case DARK_OAK_WALL_SIGN:
+                                case JUNGLE_SIGN:
+                                case JUNGLE_WALL_SIGN:
+                                case OAK_SIGN:
+                                case OAK_WALL_SIGN:
                                 case REDSTONE_TORCH:
                                 case REDSTONE_WALL_TORCH:
-                                case OAK_SIGN:
+                                case SPRUCE_SIGN:
+                                case SPRUCE_WALL_SIGN:
                                 case TORCH:
-                                case OAK_WALL_SIGN:
                                 case WALL_TORCH:
                                     stGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(bpIDX.getInt(x)).createBlockData().getAsString();
                                     break;

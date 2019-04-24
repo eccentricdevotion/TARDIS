@@ -49,9 +49,11 @@ public class TARDISCondensables {
             condensables.put("ACACIA_PLANKS", 2);
             condensables.put("ACACIA_PRESSURE_PLATE", 1);
             condensables.put("ACACIA_SAPLING", 2);
+            condensables.put("ACACIA_SIGN", 2);
             condensables.put("ACACIA_SLAB", 2);
             condensables.put("ACACIA_STAIRS", 1);
             condensables.put("ACACIA_TRAPDOOR", 6);
+            condensables.put("ACACIA_WALL_SIGN", 2);
             condensables.put("ACACIA_WOOD", 2);
             condensables.put("ACTIVATOR_RAIL", 650);
             condensables.put("ALLIUM", 2);
@@ -78,9 +80,11 @@ public class TARDISCondensables {
             condensables.put("BIRCH_PLANKS", 2);
             condensables.put("BIRCH_PRESSURE_PLATE", 1);
             condensables.put("BIRCH_SAPLING", 2);
+            condensables.put("BIRCH_SIGN", 2);
             condensables.put("BIRCH_SLAB", 2);
             condensables.put("BIRCH_STAIRS", 1);
             condensables.put("BIRCH_TRAPDOOR", 6);
+            condensables.put("BIRCH_WALL_SIGN", 2);
             condensables.put("BIRCH_WOOD", 2);
             condensables.put("BLACK_BANNER", 120);
             condensables.put("BLACK_BED", 68);
@@ -143,7 +147,6 @@ public class TARDISCondensables {
             condensables.put("BUBBLE_CORAL_FAN", 2);
             condensables.put("BUCKET", 22);
             condensables.put("CACTUS", 10);
-            condensables.put("GREEN_DYE", 10);
             condensables.put("CAKE", 180);
             condensables.put("CARROT", 9);
             condensables.put("CARROT_ON_A_STICK", 19);
@@ -207,7 +210,6 @@ public class TARDISCondensables {
             condensables.put("CYAN_WOOL", 20);
             condensables.put("DAMAGED_ANVIL", 160);
             condensables.put("DANDELION", 2);
-            condensables.put("YELLOW_DYE", 10);
             condensables.put("DARK_OAK_BOAT", 3);
             condensables.put("DARK_OAK_BUTTON", 1);
             condensables.put("DARK_OAK_DOOR", 3);
@@ -218,9 +220,11 @@ public class TARDISCondensables {
             condensables.put("DARK_OAK_PLANKS", 2);
             condensables.put("DARK_OAK_PRESSURE_PLATE", 1);
             condensables.put("DARK_OAK_SAPLING", 2);
+            condensables.put("DARK_OAK_SIGN", 2);
             condensables.put("DARK_OAK_SLAB", 2);
             condensables.put("DARK_OAK_STAIRS", 1);
             condensables.put("DARK_OAK_TRAPDOOR", 6);
+            condensables.put("DARK_OAK_WALL_SIGN", 2);
             condensables.put("DARK_OAK_WOOD", 2);
             condensables.put("DARK_PRISMARINE", 32);
             condensables.put("DAYLIGHT_DETECTOR", 130);
@@ -331,6 +335,7 @@ public class TARDISCondensables {
             condensables.put("GREEN_CARPET", 13);
             condensables.put("GREEN_CONCRETE", 2);
             condensables.put("GREEN_CONCRETE_POWDER", 2);
+            condensables.put("GREEN_DYE", 10);
             condensables.put("GREEN_GLAZED_TERRACOTTA", 20);
             condensables.put("GREEN_SHULKER_BOX", 120);
             condensables.put("GREEN_STAINED_GLASS", 32);
@@ -385,9 +390,11 @@ public class TARDISCondensables {
             condensables.put("JUNGLE_PLANKS", 2);
             condensables.put("JUNGLE_PRESSURE_PLATE", 1);
             condensables.put("JUNGLE_SAPLING", 2);
+            condensables.put("JUNGLE_SIGN", 2);
             condensables.put("JUNGLE_SLAB", 2);
             condensables.put("JUNGLE_STAIRS", 1);
             condensables.put("JUNGLE_TRAPDOOR", 6);
+            condensables.put("JUNGLE_WALL_SIGN", 2);
             condensables.put("JUNGLE_WOOD", 2);
             condensables.put("KELP", 2);
             condensables.put("LADDER", 1);
@@ -496,9 +503,11 @@ public class TARDISCondensables {
             condensables.put("OAK_PLANKS", 2);
             condensables.put("OAK_PRESSURE_PLATE", 1);
             condensables.put("OAK_SAPLING", 2);
+            condensables.put("OAK_SIGN", 2);
             condensables.put("OAK_SLAB", 2);
             condensables.put("OAK_STAIRS", 1);
             condensables.put("OAK_TRAPDOOR", 6);
+            condensables.put("OAK_WALL_SIGN", 2);
             condensables.put("OAK_WOOD", 2);
             condensables.put("OBSERVER", 75);
             condensables.put("OBSIDIAN", 130);
@@ -590,6 +599,7 @@ public class TARDISCondensables {
             condensables.put("RED_CARPET", 13);
             condensables.put("RED_CONCRETE", 2);
             condensables.put("RED_CONCRETE_POWDER", 2);
+            condensables.put("RED_DYE", 10);
             condensables.put("RED_GLAZED_TERRACOTTA", 20);
             condensables.put("RED_MUSHROOM", 2);
             condensables.put("RED_NETHER_BRICKS", 12);
@@ -612,7 +622,6 @@ public class TARDISCondensables {
             condensables.put("REDSTONE_WIRE", 32);
             condensables.put("REPEATER", 110);
             condensables.put("ROSE_BUSH", 2);
-            condensables.put("RED_DYE", 10);
             condensables.put("ROTTEN_FLESH", 1);
             condensables.put("SADDLE", 100);
             condensables.put("SALMON", 5);
@@ -627,7 +636,6 @@ public class TARDISCondensables {
             condensables.put("SHEARS", 44);
             condensables.put("SHIELD", 28);
             condensables.put("SHULKER_SHELL", 50);
-            condensables.put("OAK_SIGN", 2);
             condensables.put("SKELETON_SKULL", 200);
             condensables.put("SLIME_BALL", 50);
             condensables.put("SLIME_BLOCK", 450);
@@ -653,9 +661,11 @@ public class TARDISCondensables {
             condensables.put("SPRUCE_PLANKS", 2);
             condensables.put("SPRUCE_PRESSURE_PLATE", 1);
             condensables.put("SPRUCE_SAPLING", 2);
+            condensables.put("SPRUCE_SIGN", 2);
             condensables.put("SPRUCE_SLAB", 2);
             condensables.put("SPRUCE_STAIRS", 1);
             condensables.put("SPRUCE_TRAPDOOR", 6);
+            condensables.put("SPRUCE_WALL_SIGN", 2);
             condensables.put("STICK", 1);
             condensables.put("STICKY_PISTON", 110);
             condensables.put("STONE", 30);
@@ -696,7 +706,6 @@ public class TARDISCondensables {
             condensables.put("TUBE_CORAL_FAN", 2);
             condensables.put("TURTLE_HELMET", 100);
             condensables.put("VINE", 1);
-            condensables.put("OAK_WALL_SIGN", 1);
             condensables.put("WATER_BUCKET", 40);
             condensables.put("WET_SPONGE", 80);
             condensables.put("WHEAT", 9);
@@ -727,6 +736,7 @@ public class TARDISCondensables {
             condensables.put("YELLOW_CARPET", 13);
             condensables.put("YELLOW_CONCRETE", 2);
             condensables.put("YELLOW_CONCRETE_POWDER", 2);
+            condensables.put("YELLOW_DYE", 10);
             condensables.put("YELLOW_GLAZED_TERRACOTTA", 20);
             condensables.put("YELLOW_SHULKER_BOX", 120);
             condensables.put("YELLOW_STAINED_GLASS", 32);

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -59,8 +60,7 @@ public class TARDISSignListener implements Listener {
     public TARDISSignListener(TARDIS plugin) {
         this.plugin = plugin;
         validSigns.add(Material.COMPARATOR);
-        validSigns.add(Material.OAK_WALL_SIGN);
-        validSigns.add(Material.OAK_SIGN);
+        validSigns.addAll(Tag.SIGNS.getValues());
     }
 
     /**
@@ -135,7 +135,7 @@ public class TARDISSignListener implements Listener {
                         return;
                     }
                     String line1;
-                    if (blockType == Material.OAK_WALL_SIGN || blockType == Material.OAK_SIGN) {
+                    if (Tag.SIGNS.isTagged(blockType)) {
                         Sign s = (Sign) block.getState();
                         line1 = s.getLine(0);
                     } else {

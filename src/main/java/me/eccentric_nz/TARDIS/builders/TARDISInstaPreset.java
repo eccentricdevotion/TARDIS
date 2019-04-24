@@ -359,7 +359,7 @@ class TARDISInstaPreset {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                             Block sign = world.getBlockAt(xx, (y + yy), zz);
                             plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
-                            if (sign.getType().equals(Material.OAK_WALL_SIGN) || sign.getType().equals(Material.OAK_SIGN)) {
+                            if (Tag.SIGNS.isTagged(sign.getType())) {
                                 Sign s = (Sign) sign.getState();
                                 if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                     HashMap<String, Object> wheret = new HashMap<>();

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -59,7 +60,7 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         Block b = event.getClickedBlock();
-        if (b != null && (b.getType().equals(Material.OAK_SIGN) || b.getType().equals(Material.OAK_WALL_SIGN))) {
+        if (b != null && Tag.SIGNS.isTagged(b.getType())) {
             Player player = event.getPlayer();
             String loc = event.getClickedBlock().getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();

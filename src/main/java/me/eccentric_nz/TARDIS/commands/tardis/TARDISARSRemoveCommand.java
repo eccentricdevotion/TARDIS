@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -57,7 +57,7 @@ class TARDISARSRemoveCommand {
             Location l = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
             if (l != null) {
                 Block b = l.getBlock();
-                if (b.getType().equals(Material.OAK_WALL_SIGN) || b.getType().equals(Material.OAK_SIGN)) {
+                if (Tag.SIGNS.isTagged(b.getType())) {
                     Sign sign = (Sign) b.getState();
                     for (int i = 0; i < 4; i++) {
                         sign.setLine(i, "");

@@ -144,6 +144,7 @@ public class Smelter {
             case ACACIA_PLANKS:
             case ACACIA_PRESSURE_PLATE:
             case ACACIA_SAPLING:
+            case ACACIA_SIGN:
             case ACACIA_SLAB:
             case ACACIA_STAIRS:
             case ACACIA_TRAPDOOR:
@@ -157,6 +158,7 @@ public class Smelter {
             case BIRCH_PLANKS:
             case BIRCH_PRESSURE_PLATE:
             case BIRCH_SAPLING:
+            case BIRCH_SIGN:
             case BIRCH_SLAB:
             case BIRCH_STAIRS:
             case BIRCH_TRAPDOOR:
@@ -192,6 +194,7 @@ public class Smelter {
             case DARK_OAK_PLANKS:
             case DARK_OAK_PRESSURE_PLATE:
             case DARK_OAK_SAPLING:
+            case DARK_OAK_SIGN:
             case DARK_OAK_SLAB:
             case DARK_OAK_STAIRS:
             case DARK_OAK_TRAPDOOR:
@@ -214,6 +217,7 @@ public class Smelter {
             case JUNGLE_PLANKS:
             case JUNGLE_PRESSURE_PLATE:
             case JUNGLE_SAPLING:
+            case JUNGLE_SIGN:
             case JUNGLE_SLAB:
             case JUNGLE_STAIRS:
             case JUNGLE_TRAPDOOR:
@@ -243,6 +247,7 @@ public class Smelter {
             case OAK_PLANKS:
             case OAK_PRESSURE_PLATE:
             case OAK_SAPLING:
+            case OAK_SIGN:
             case OAK_SLAB:
             case OAK_STAIRS:
             case OAK_TRAPDOOR:
@@ -260,7 +265,6 @@ public class Smelter {
             case RED_CARPET:
             case RED_MUSHROOM_BLOCK:
             case RED_WOOL:
-            case OAK_SIGN:
             case SPRUCE_BOAT:
             case SPRUCE_BUTTON:
             case SPRUCE_DOOR:
@@ -270,6 +274,7 @@ public class Smelter {
             case SPRUCE_PLANKS:
             case SPRUCE_PRESSURE_PLATE:
             case SPRUCE_SAPLING:
+            case SPRUCE_SIGN:
             case SPRUCE_SLAB:
             case SPRUCE_STAIRS:
             case SPRUCE_TRAPDOOR:

@@ -384,7 +384,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     } else if (bd.shouldAddSign()) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
-                                        if (sign.getType().equals(Material.OAK_WALL_SIGN) || sign.getType().equals(Material.OAK_SIGN)) {
+                                        if (Tag.SIGNS.isTagged(sign.getType())) {
                                             Sign s = (Sign) sign.getState();
                                             plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
                                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {

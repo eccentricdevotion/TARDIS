@@ -437,7 +437,7 @@ public class TARDISBuilderInner {
                         postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.LEVER)) {
                         postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-                    } else if (type.equals(Material.OAK_WALL_SIGN) || type.equals(Material.OAK_SIGN)) {
+                    } else if (Tag.SIGNS.isTagged(type)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (TARDISStaticUtils.isBanner(type)) {
                         JSONObject state = c.optJSONObject("banner");
