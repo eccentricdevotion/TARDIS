@@ -8,7 +8,7 @@ website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
 version: maven-version-number
-api-version: 1.13
+api-version: 1.14
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
