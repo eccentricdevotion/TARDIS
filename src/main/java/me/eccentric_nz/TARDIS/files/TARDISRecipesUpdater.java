@@ -39,11 +39,11 @@ public class TARDISRecipesUpdater {
     public TARDISRecipesUpdater(TARDIS plugin, FileConfiguration recipes_config) {
         this.plugin = plugin;
         this.recipes_config = recipes_config;
-        flavours.put("Licorice", "INK_SAC");
+        flavours.put("Licorice", "BLACK_DYE");
         flavours.put("Raspberry", "RED_DYE");
         flavours.put("Apple", "GREEN_DYE");
-        flavours.put("Cappuccino", "COCOA_BEANS");
-        flavours.put("Blueberry", "LAPIS_LAZULI");
+        flavours.put("Cappuccino", "BROWN_DYE");
+        flavours.put("Blueberry", "BLUE_DYE");
         flavours.put("Grape", "PURPLE_DYE");
         flavours.put("Island Punch", "CYAN_DYE");
         flavours.put("Vodka", "LIGHT_GRAY_DYE");
@@ -54,7 +54,7 @@ public class TARDISRecipesUpdater {
         flavours.put("Bubblegum", "LIGHT_BLUE_DYE");
         flavours.put("Watermelon", "MAGENTA_DYE");
         flavours.put("Orange", "ORANGE_DYE");
-        flavours.put("Vanilla", "BONE_MEAL");
+        flavours.put("Vanilla", "WHITE_DYE");
         colours.put("White", "WHITE_WOOL");
         colours.put("Orange", "ORANGE_WOOL");
         colours.put("Magenta", "MAGENTA_WOOL");
@@ -206,21 +206,37 @@ public class TARDISRecipesUpdater {
             if (recipes_config.getString("shapeless.Island Punch Jelly Baby.lore").equals("Orange")) {
                 recipes_config.set("shapeless.Island Punch Jelly Baby.lore", "");
             }
-            if (recipes_config.getString("shapeless.Raspberry Jelly Baby.recipe").contains("RED_ROSE")) {
+            if (recipes_config.getString("shapeless.Raspberry Jelly Baby.recipe").contains("ROSE_RED")) {
                 recipes_config.set("shapeless.Raspberry Jelly Baby.recipe", "SUGAR,SLIME_BALL,RED_DYE");
+            }
+            if (recipes_config.getString("shapeless.Cappuccino Jelly Baby.recipe").contains("COCOA_BEANS")) {
+                recipes_config.set("shapeless.Cappuccino Jelly Baby.recipe", "SUGAR,SLIME_BALL,BROWN_DYE");
+            }
+            if (recipes_config.getString("shapeless.Apple Jelly Baby.recipe").contains("CACTUS_GREEN")) {
+                recipes_config.set("shapeless.Apple Jelly Baby.recipe", "SUGAR,SLIME_BALL,GREEN_DYE");
+            }
+            if (recipes_config.getString("shapeless.Blueberry Jelly Baby.recipe").contains("LAPIS_LAZULI")) {
+                recipes_config.set("shapeless.Blueberry Jelly Baby.recipe", "SUGAR,SLIME_BALL,BLUE_DYE");
+            }
+            if (recipes_config.getString("shapeless.Licorice Jelly Baby.recipe").contains("INK_SAC")) {
+                recipes_config.set("shapeless.Licorice Jelly Baby.recipe", "SUGAR,SLIME_BALL,BLACK_DYE");
+            }
+            if (recipes_config.getString("shaped.TARDIS Input Circuit.easy_ingredients.S").equals("SIGN")) {
+                recipes_config.set("shaped.TARDIS Input Circuit.easy_ingredients.S", "OAK_SIGN");
+                recipes_config.set("shaped.TARDIS Input Circuit.hard_ingredients.S", "OAK_SIGN");
             }
             recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
             recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
         }
-        if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":")) {
-            recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "LAPIS_LAZULI");
-            recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "LAPIS_LAZULI");
-            recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.L", "LAPIS_LAZULI");
-            recipes_config.set("shaped.TARDIS Materialisation Circuit.easy_ingredients.L", "LAPIS_LAZULI");
-            recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.L", "LAPIS_LAZULI");
-            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SAC");
-            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SAC");
+        if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.I").contains("INK_SAC") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.I").contains("LAPIS_LAZULI")) {
+            recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "BLUE_DYE");
+            recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "BLUE_DYE");
+            recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.L", "BLUE_DYE");
+            recipes_config.set("shaped.TARDIS Materialisation Circuit.easy_ingredients.L", "BLUE_DYE");
+            recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.L", "BLUE_DYE");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "BLACK_DYE");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "BLACK_DYE");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "RED_DYE");
@@ -536,11 +552,11 @@ public class TARDISRecipesUpdater {
         }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
-            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SAC");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "BLACK_DYE");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.G", "GOLD_NUGGET");
             recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
-            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SAC");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "BLACK_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.G", "GOLD_BLOCK");
             recipes_config.set("shaped.Painter Circuit.result", "FILLED_MAP:1979");

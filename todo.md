@@ -7,13 +7,8 @@
    * Test villager farming - biome specific?
    * Check TARDIS translator
    * Add new blocks
-   * Add new biomes
-   * Update recipes.yml updater
-   * Use new bell sound?
    * Remove/alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Make the TARDIS Condenser a composter?
-   * Check Sonic Painter upgrade and anything else that uses dyes
-   * 
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests

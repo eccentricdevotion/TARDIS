@@ -92,19 +92,19 @@ public class TARDISBeaconColouringListener implements Listener {
         switch (original) {
             case BLACK_STAINED_GLASS:
             case BLACK_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.INK_SAC)) {
+                if (dye.getType().equals(Material.BLACK_DYE)) {
                     return;
                 }
                 break;
             case BLUE_STAINED_GLASS:
             case BLUE_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.LAPIS_LAZULI)) {
+                if (dye.getType().equals(Material.BLUE_DYE)) {
                     return;
                 }
                 break;
             case BROWN_STAINED_GLASS:
             case BROWN_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.COCOA_BEANS)) {
+                if (dye.getType().equals(Material.BROWN_DYE)) {
                     return;
                 }
                 break;
@@ -176,7 +176,7 @@ public class TARDISBeaconColouringListener implements Listener {
                 break;
             case WHITE_STAINED_GLASS:
             case WHITE_STAINED_GLASS_PANE:
-                if (dye.getType().equals(Material.BONE_MEAL)) {
+                if (dye.getType().equals(Material.WHITE_DYE)) {
                     return;
                 }
                 break;
@@ -219,65 +219,15 @@ public class TARDISBeaconColouringListener implements Listener {
 
     private void changeColour(Block block, ItemStack dye) {
         // determine colour
-        String[] split = block.getType().toString().split("_");
-        if (split.length == 1) {
-            split = new String[]{"", "STAINED", "GLASS"};
-        } else if (split.length == 2) {
-            split = new String[]{"", "STAINED", "GLASS", "PANE"};
+        String[] b = block.getType().toString().split("_");
+        String[] d = dye.getType().toString().split("_");
+        if (b.length == 1) {
+            b = new String[]{"", "STAINED", "GLASS"};
+        } else if (b.length == 2) {
+            b = new String[]{"", "STAINED", "GLASS", "PANE"};
         }
-        switch (dye.getType()) {
-            case BONE_MEAL:
-                split[0] = "WHITE";
-                break;
-            case GREEN_DYE:
-                split[0] = "GREEN";
-                break;
-            case COCOA_BEANS:
-                split[0] = "BROWN";
-                break;
-            case CYAN_DYE:
-                split[0] = "CYAN";
-                break;
-            case YELLOW_DYE:
-                split[0] = "YELLOW";
-                break;
-            case GRAY_DYE:
-                split[0] = "GRAY";
-                break;
-            case INK_SAC:
-                split[0] = "BLACK";
-                break;
-            case LAPIS_LAZULI:
-                split[0] = "BLUE";
-                break;
-            case LIGHT_BLUE_DYE:
-                split[0] = "LIGHT_BLUE";
-                break;
-            case LIGHT_GRAY_DYE:
-                split[0] = "LIGHT_GRAY";
-                break;
-            case LIME_DYE:
-                split[0] = "LIME";
-                break;
-            case MAGENTA_DYE:
-                split[0] = "MAGENTA";
-                break;
-            case ORANGE_DYE:
-                split[0] = "ORANGE";
-                break;
-            case PINK_DYE:
-                split[0] = "PINK";
-                break;
-            case PURPLE_DYE:
-                split[0] = "PURPLE";
-                break;
-            case RED_DYE:
-                split[0] = "RED";
-                break;
-            default:
-                break;
-        }
-        String joined = String.join("_", split);
+        b[0] = d[0];
+        String joined = String.join("_", b);
         BlockData data = Material.valueOf(joined).createBlockData();
         block.setBlockData(data, true);
     }

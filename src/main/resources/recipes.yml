@@ -23,7 +23,7 @@ shaped:
     easy_ingredients:
       O: OBSIDIAN
       B: STONE_BUTTON
-      L: LAPIS_LAZULI
+      L: BLUE_DYE
       R: REDSTONE
     hard_shape: OBO,OLO,RRR
     hard_ingredients:
@@ -57,14 +57,14 @@ shaped:
       Q: QUARTZ
       I: IRON_INGOT
       D: REPEATER
-      L: LAPIS_LAZULI
+      L: BLUE_DYE
     hard_shape: RQR,RIR,DRL
     hard_ingredients:
       R: REDSTONE
       Q: QUARTZ
       I: IRON_INGOT
       D: REPEATER
-      L: LAPIS_LAZULI
+      L: BLUE_DYE
     result: 'FILLED_MAP:1965'
     amount: 1
     lore: ""
@@ -73,14 +73,14 @@ shaped:
     easy_ingredients:
       I: IRON_INGOT
       R: REDSTONE
-      L: LAPIS_LAZULI
+      L: BLUE_DYE
       Q: QUARTZ
     hard_shape: IDI,DLD,QRQ
     hard_ingredients:
       I: ENDER_EYE
       D: REPEATER
       R: REDSTONE
-      L: LAPIS_LAZULI
+      L: BLUE_DYE
       Q: QUARTZ
     result: 'FILLED_MAP:1964'
     amount: 1
@@ -404,12 +404,12 @@ shaped:
   Painter Circuit:
     easy_shape: -I-,DGD,-I-
     easy_ingredients:
-      I: INK_SAC
+      I: BLACK_DYE
       D: PURPLE_DYE
       G: GOLD_NUGGET
     hard_shape: -I-,DGD,-I-
     hard_ingredients:
-      I: INK_SAC
+      I: BLACK_DYE
       D: PURPLE_DYE
       G: GOLD_BLOCK
     result: 'FILLED_MAP:1979'
@@ -921,7 +921,7 @@ shapeless:
     amount: 1
     lore: ""
   Vanilla Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,BONE_MEAL
+    recipe: SUGAR,SLIME_BALL,WHITE_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''
@@ -976,12 +976,12 @@ shapeless:
     amount: 4
     lore: ''
   Blueberry Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,LAPIS_LAZULI
+    recipe: SUGAR,SLIME_BALL,BLUE_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''
   Cappuccino Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,COCOA_BEANS
+    recipe: SUGAR,SLIME_BALL,BROWN_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''
@@ -996,7 +996,7 @@ shapeless:
     amount: 4
     lore: ''
   Licorice Jelly Baby:
-    recipe: SUGAR,SLIME_BALL,INK_SAC
+    recipe: SUGAR,SLIME_BALL,BLACK_DYE
     result: MELON_SLICE
     amount: 4
     lore: ''
