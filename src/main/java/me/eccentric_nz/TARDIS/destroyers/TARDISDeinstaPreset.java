@@ -156,7 +156,7 @@ public class TARDISDeinstaPreset {
                 }
             }
         }
-        plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
+        l.getChunk().setForceLoaded(false);
         if (sub && plugin.isWorldGuardOnServer()) {
             // replace the block under the door if there is one
             HashMap<String, Object> where = new HashMap<>();

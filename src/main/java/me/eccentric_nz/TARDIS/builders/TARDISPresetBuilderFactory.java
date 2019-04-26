@@ -135,7 +135,7 @@ public class TARDISPresetBuilderFactory {
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
-            plugin.getGeneralKeeper().getTardisChunkList().add(thisChunk);
+            thisChunk.setForceLoaded(true);
             if (bd.isRebuild()) {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {

@@ -49,12 +49,12 @@ import java.util.logging.Logger;
 public class TARDISGeneralInstanceKeeper {
 
     private final HashSet<Material> transparent;
-    private List<Block> doorPistons = new ArrayList<>();
-    private List<Integer> npcIDs = new ArrayList<>();
+    private final List<Block> doorPistons = new ArrayList<>();
+    private final List<Integer> npcIDs = new ArrayList<>();
     private List<String> quotes = new ArrayList<>();
     private final HashMap<String, String> sign_lookup;
     private TARDISAdminCommands tardisAdminCommand;
-    private TARDISDoorListener doorListener;
+    private final TARDISDoorListener doorListener;
     private TARDISRenderRoomListener rendererListener;
     private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
@@ -126,17 +126,17 @@ public class TARDISGeneralInstanceKeeper {
         return surrounding;
     }
 
-    public List<Chunk> getTardisChunkList() {
-        return tardisChunkList;
-    }
+//    public List<Chunk> getTardisChunkList() {
+//        return tardisChunkList;
+//    }
 
-    public List<Chunk> getRoomChunkList() {
-        return roomChunkList;
-    }
+//    public List<Chunk> getRoomChunkList() {
+//        return roomChunkList;
+//    }
 
-    public List<Chunk> getRailChunkList() {
-        return railChunkList;
-    }
+//    public List<Chunk> getRailChunkList() {
+//        return railChunkList;
+//    }
 
     public List<Material> getDoors() {
         return doors;

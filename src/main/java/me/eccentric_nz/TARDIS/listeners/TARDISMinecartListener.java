@@ -146,9 +146,9 @@ public class TARDISMinecartListener implements Listener {
                             Location in_out = new Location(w, x, y, z);
                             if (plugin.getGeneralKeeper().getDoors().contains(mat)) {
                                 d = getDirection(in_out);
-                                plugin.getGeneralKeeper().getTardisChunkList().add(w.getChunkAt(in_out));
+                                w.getChunkAt(in_out).setForceLoaded(true);
                             } else {
-                                plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
+                                w.getChunkAt(in_out).setForceLoaded(false);
                             }
                             Inventory inventory = ((InventoryHolder) minecart).getInventory();
                             ItemStack[] inv = Arrays.copyOf(inventory.getContents(), inventory.getSize());
@@ -181,7 +181,7 @@ public class TARDISMinecartListener implements Listener {
             thisChunk.load();
         }
         // keep the chunk loaded until the cart has finished unloading
-        plugin.getGeneralKeeper().getRailChunkList().add(thisChunk);
+        thisChunk.setForceLoaded(true);
         // determine how long to keep it loaded (at a rate of approx 1 item per 8 ticks)
         long delay = 200L; // add an initial 10 second buffer
         for (ItemStack is : inv) {
@@ -190,7 +190,7 @@ public class TARDISMinecartListener implements Listener {
             }
         }
         // start a delayed task to remove the chunk
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk), delay);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> thisChunk.setForceLoaded(false), delay);
         minecart.remove();
         Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);
         InventoryHolder smc = (InventoryHolder) e;

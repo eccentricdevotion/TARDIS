@@ -356,7 +356,7 @@ public class TARDISRoomRunnable implements Runnable {
                         //world.refreshChunk(ch.getX(), ch.getZ());
                         plugin.getTardisHelper().refreshChunk(ch);
                     }
-                    plugin.getGeneralKeeper().getRoomChunkList().remove(ch);
+                    ch.setForceLoaded(false);
                 });
             }
             // cancel the task
@@ -681,10 +681,8 @@ public class TARDISRoomRunnable implements Runnable {
             }
 
             Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
-            if (!plugin.getGeneralKeeper().getRoomChunkList().contains(thisChunk)) {
-                plugin.getGeneralKeeper().getRoomChunkList().add(thisChunk);
-                chunkList.add(thisChunk);
-            }
+            thisChunk.setForceLoaded(true);
+            chunkList.add(thisChunk);
             // if we're setting the biome to sky, do it now
             if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
                 world.setBiome(startx, startz, Biome.THE_VOID);

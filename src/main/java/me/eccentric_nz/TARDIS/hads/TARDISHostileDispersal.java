@@ -140,7 +140,7 @@ class TARDISHostileDispersal {
                 break;
         }
         plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
-        plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
+        l.getChunk().setForceLoaded(false);
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);
         // remove torch

@@ -129,7 +129,6 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISChameleonHelpListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonTemplateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChatListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISChunkListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getPM().registerEvents(new TARDISCircuitRepairListener(plugin), plugin);
         }

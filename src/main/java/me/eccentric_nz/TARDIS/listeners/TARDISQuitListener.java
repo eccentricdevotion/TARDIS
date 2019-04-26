@@ -64,7 +64,7 @@ public class TARDISQuitListener implements Listener {
                 World w = rsc.getWorld();
                 if (w != null) {
                     Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-                    plugin.getGeneralKeeper().getTardisChunkList().remove(chunk);
+                    chunk.setForceLoaded(false);
                 }
             }
             // power down TARDIS
