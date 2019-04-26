@@ -229,8 +229,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
         }
-        if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.I").contains("INK_SAC") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.I").contains("LAPIS_LAZULI")) {
-            recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "BLUE_DYE");
+        if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":") || recipes_config.getString("shaped.Painter Circuit.easy_ingredients.I").contains("INK_SAC") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains("LAPIS_LAZULI")) {
             recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "BLUE_DYE");
             recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.L", "BLUE_DYE");
             recipes_config.set("shaped.TARDIS Materialisation Circuit.easy_ingredients.L", "BLUE_DYE");
@@ -241,6 +240,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "RED_DYE");
             recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "RED_DYE");
+            recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "BLUE_DYE");
             recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
             recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
             i++;
