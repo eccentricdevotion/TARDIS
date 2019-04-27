@@ -31,8 +31,8 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Cat.Type;
 import org.bukkit.entity.Llama;
-import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TropicalFish;
@@ -483,9 +483,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 t = org.bukkit.entity.Llama.Color.values()[o].toString();
                 llamas.put(uuid, o);
                 break;
-            case "OCELOT":
+            case "CAT":
                 if (cats.containsKey(uuid)) {
-                    o = (cats.get(uuid) + 1 < 4) ? cats.get(uuid) + 1 : 0;
+                    o = (cats.get(uuid) + 1 < 11) ? cats.get(uuid) + 1 : 0;
                 } else {
                     o = 0;
                 }
@@ -601,7 +601,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         try {
             return Type.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return Type.WILD_OCELOT;
+            return Type.TABBY;
         }
     }
 
