@@ -163,8 +163,8 @@ public class TARDIS extends JavaPlugin {
         versions.put("PerWorldInventory", "2.0.0");
         versions.put("ProtocolLib", "4.4.0");
         versions.put("TARDISChunkGenerator", "4.1.0");
-        versions.put("OpenTerrainGenerator", "1.13.2");
-        versions.put("TerrainControl", "2.9.0");
+//        versions.put("OpenTerrainGenerator", "1.13.2");
+//        versions.put("TerrainControl", "2.9.0");
         versions.put("Towny", "0.91");
         versions.put("WorldBorder", "1.8.1");
         versions.put("WorldEdit", "7.0.0");
@@ -195,14 +195,6 @@ public class TARDIS extends JavaPlugin {
                     hasVersion = false;
                     pm.disablePlugin(this);
                     return;
-                }
-                if (plg.getKey().equals("Multiverse-Inventories")) {
-                    if (!checkMVI()) {
-                        console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Multiverse-Inventories to be v2.5-b431 or higher, disabling...");
-                        hasVersion = false;
-                        pm.disablePlugin(this);
-                        return;
-                    }
                 }
             }
             worldManager = WORLD_MANAGER.getWorldManager();
@@ -384,28 +376,6 @@ public class TARDIS extends JavaPlugin {
                 getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
                 getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
                 getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", preSplit);
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    private boolean checkMVI() {
-        if (pm.isPluginEnabled("Multiverse-Inventories")) {
-            Plugin check = pm.getPlugin("Multiverse-Inventories");
-            Version minver = new Version("431");
-            String preSplit = check.getDescription().getVersion();
-            String[] split = preSplit.split("-");
-            String build = (preSplit.contains("SNAPSHOT")) ? split[2].substring(1) : split[1].substring(1);
-            try {
-                Version ver = new Version(build);
-                return (ver.compareTo(minver) >= 0);
-            } catch (IllegalArgumentException e) {
-                getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the build number for Multiverse-Inventories");
-                getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
-                getServer().getLogger().log(Level.WARNING, "Please check you have at least build 431");
-                getServer().getLogger().log(Level.WARNING, "The invalid build format was {0}", preSplit);
                 return true;
             }
         } else {
