@@ -365,6 +365,7 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/LibsDisguises.jar</systemPath>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.pg85.otg</groupId>
             <artifactId>OpenTerrainGenerator</artifactId>
@@ -381,6 +382,7 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/TerrainControl.jar</systemPath>
         </dependency>
+        -->
         <dependency>
             <groupId>net.pekkit</groupId>
             <artifactId>Project-Rassilon</artifactId>
@@ -396,6 +398,11 @@
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/EssentialsX.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.18</version>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>
