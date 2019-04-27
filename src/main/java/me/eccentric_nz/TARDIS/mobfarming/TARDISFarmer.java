@@ -66,8 +66,8 @@ public class TARDISFarmer {
      * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
-    public List<TARDISParrot> farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
-        List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
+    public List<TARDISPet> farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
+        List<TARDISPet> old_macd_had_a_pet = new ArrayList<>();
         switch (d) {
             case NORTH:
                 l.setZ(l.getZ() - 1);
@@ -95,7 +95,7 @@ public class TARDISFarmer {
             TARDISFish old_macd_had_a_fish = null;
             List<TARDISMooshroom> old_macd_had_a_mooshroom = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<>();
-            List<TARDISParrot> old_macd_had_a_parrot = new ArrayList<>();
+            List<TARDISPet> old_macd_had_a_parrot = new ArrayList<>();
             List<TARDISPig> old_macd_had_a_pig = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_polarbear = new ArrayList<>();
             List<TARDISRabbit> old_macd_had_a_rabbit = new ArrayList<>();
@@ -282,29 +282,29 @@ public class TARDISFarmer {
                             Tameable polly = (Tameable) e;
                             AnimalTamer tamer = polly.getOwner();
                             boolean timeLordIsOwner = (tamer != null && tamer.getUniqueId().equals(p.getUniqueId()));
-                            TARDISParrot tmparrot = new TARDISParrot();
+                            TARDISPet tmpet = new TARDISPet();
                             if (polly.isTamed()) {
                                 if (timeLordIsOwner) {
                                     // only move tamed parrots that the time lord owns!
-                                    tmparrot.setTamed(true);
-                                    tmparrot.setOnLeftShoulder(p.getShoulderEntityLeft() != null);
-                                    tmparrot.setOnRightShoulder(p.getShoulderEntityRight() != null);
+                                    tmpet.setTamed(true);
+                                    tmpet.setOnLeftShoulder(p.getShoulderEntityLeft() != null);
+                                    tmpet.setOnRightShoulder(p.getShoulderEntityRight() != null);
                                 } else {
                                     break;
                                 }
                             }
-                            tmparrot.setType(EntityType.PARROT);
-                            tmparrot.setVariant(((Parrot) e).getVariant());
-                            tmparrot.setAge(((Parrot) e).getAge());
-                            tmparrot.setBaby(!((Parrot) e).isAdult());
-                            tmparrot.setName(e.getCustomName());
-                            tmparrot.setSitting(((Sittable) e).isSitting());
+                            tmpet.setType(EntityType.PARROT);
+                            tmpet.setVariant(((Parrot) e).getVariant());
+                            tmpet.setAge(((Parrot) e).getAge());
+                            tmpet.setBaby(!((Parrot) e).isAdult());
+                            tmpet.setName(e.getCustomName());
+                            tmpet.setSitting(((Sittable) e).isSitting());
                             double phealth = (((Parrot) e).getHealth() > 8D) ? 8D : ((Parrot) e).getHealth();
-                            tmparrot.setHealth(phealth);
+                            tmpet.setHealth(phealth);
                             if (timeLordIsOwner || polly.isTamed()) {
-                                old_macd_had_a_pet.add(tmparrot);
+                                old_macd_had_a_pet.add(tmpet);
                             } else {
-                                old_macd_had_a_parrot.add(tmparrot);
+                                old_macd_had_a_parrot.add(tmpet);
                             }
                             if (timeLordIsOwner || !birdcage.isEmpty() || (birdcage.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -416,7 +416,7 @@ public class TARDISFarmer {
                         case CAT:
                             Tameable tamed = (Tameable) e;
                             if (tamed.isTamed() && tamed.getOwner().getUniqueId().equals(p.getUniqueId())) {
-                                TARDISParrot pet = new TARDISParrot();
+                                TARDISPet pet = new TARDISPet();
                                 pet.setType(e.getType());
                                 pet.setName(e.getCustomName());
                                 double health;
@@ -431,7 +431,7 @@ public class TARDISFarmer {
                                     pet.setAge(((Cat) e).getAge());
                                     pet.setSitting(((Sittable) e).isSitting());
                                     pet.setCatType(((Cat) e).getCatType());
-//                                    pet.setColour(((Cat) e).getCollarColor());
+                                    pet.setColour(((Cat) e).getCollarColor());
                                     health = (((Cat) e).getHealth() > 8D) ? 8D : ((Cat) e).getHealth();
                                     pet.setHealth(health);
                                     pet.setBaby(!((Cat) e).isAdult());
@@ -819,7 +819,6 @@ public class TARDISFarmer {
                         Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                         Villager npc = (Villager) vill;
                         npc.setProfession(e.getProfession());
-//                        npc.setCareer(e.getCareer(), false);
                         npc.setAge(e.getAge());
                         if (e.isBaby()) {
                             npc.setBaby();
@@ -919,14 +918,14 @@ public class TARDISFarmer {
         return old_macd_had_a_pet;
     }
 
-    public List<TARDISParrot> exitPets(Player p) {
-        List<TARDISParrot> old_macd_had_a_pet = new ArrayList<>();
+    public List<TARDISPet> exitPets(Player p) {
+        List<TARDISPet> old_macd_had_a_pet = new ArrayList<>();
         List<Entity> mobs = p.getNearbyEntities(3.5D, 3.5D, 3.5D);
         for (Entity e : mobs) {
             if (e.getType().equals(EntityType.CAT) || e.getType().equals(EntityType.WOLF) || e.getType().equals(EntityType.PARROT)) {
                 Tameable tamed = (Tameable) e;
                 if (tamed.isTamed() && tamed.getOwner().getUniqueId().equals(p.getUniqueId())) {
-                    TARDISParrot pet = new TARDISParrot();
+                    TARDISPet pet = new TARDISPet();
                     pet.setType(e.getType());
                     String pet_name = e.getCustomName();
                     if (pet_name != null) {
@@ -946,7 +945,7 @@ public class TARDISFarmer {
                             pet.setAge(((Cat) e).getAge());
                             pet.setSitting(((Cat) e).isSitting());
                             pet.setCatType(((Cat) e).getCatType());
-//                            pet.setColour(((Cat) e).getCollarColor());
+                            pet.setColour(((Cat) e).getCollarColor());
                             health = (((Cat) e).getHealth() > 8D) ? 8D : ((Cat) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Cat) e).isAdult());

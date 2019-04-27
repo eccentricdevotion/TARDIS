@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -169,7 +169,7 @@ public class TARDISDoorListener {
      * @param d      the direction of the police box
      * @param enter  whether the pets are entering (true) or exiting (false)
      */
-    void movePets(List<TARDISParrot> p, Location l, Player player, COMPASS d, boolean enter) {
+    void movePets(List<TARDISPet> p, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -195,7 +195,7 @@ public class TARDISDoorListener {
                     break;
             }
         }
-        for (TARDISParrot pet : p) {
+        for (TARDISPet pet : p) {
             plugin.setTardisSpawn(true);
             LivingEntity ent;
             ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
@@ -223,6 +223,7 @@ public class TARDISDoorListener {
                     break;
                 case CAT:
                     Cat cat = (Cat) ent;
+                    cat.setCollarColor(pet.getColour());
                     cat.setCatType(pet.getCatType());
                     cat.setSitting(pet.getSitting());
                     cat.setAge(pet.getAge());

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -96,7 +96,7 @@ public class TARDISAnyoneMoveListener implements Listener {
             boolean userQuotes = (hasPrefs) && rsp.isQuotesOn();
             boolean willFarm = (hasPrefs) && rsp.isFarmOn();
             // check for entities near the police box
-            List<TARDISParrot> pets = null;
+            List<TARDISPet> pets = null;
             if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
                 TARDISFarmer tf = new TARDISFarmer(plugin);

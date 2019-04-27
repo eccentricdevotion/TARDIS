@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISParrot;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
@@ -383,7 +383,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                List<TARDISParrot> pets = tf.exitPets(player);
+                                                List<TARDISPet> pets = tf.exitPets(player);
                                                 if (pets != null && pets.size() > 0) {
                                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> movePets(pets, exitLoc, player, d, false), 10L);
                                                 }
@@ -423,7 +423,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             World cw = idl.getW();
                                             COMPASS innerD = idl.getD();
                                             // check for entities near the police box
-                                            List<TARDISParrot> pets = null;
+                                            List<TARDISPet> pets = null;
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
                                                 plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);

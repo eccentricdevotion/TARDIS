@@ -21,7 +21,7 @@ import org.bukkit.entity.Parrot.Variant;
 /**
  * @author eccentric_nz
  */
-public class TARDISParrot extends TARDISMob {
+public class TARDISPet extends TARDISMob {
 
     private Variant variant;
     private boolean onLeftShoulder;

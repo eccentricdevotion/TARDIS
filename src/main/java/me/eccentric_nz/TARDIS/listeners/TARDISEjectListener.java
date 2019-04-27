@@ -317,7 +317,7 @@ public class TARDISEjectListener implements Listener {
                     }
                     cat.setSitting(o.isSitting());
                     cat.setCatType(o.getCatType());
-//                    cat.setCollarColor(o.getCollarColor());
+                    cat.setCollarColor(o.getCollarColor());
                     double health = (o.getHealth() > 8D) ? 8D : o.getHealth();
                     cat.setHealth(health);
                     ent.remove();
@@ -328,7 +328,6 @@ public class TARDISEjectListener implements Listener {
                 Villager v = (Villager) ent;
                 Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
                 villager.setProfession(v.getProfession());
-//                villager.setCareer(v.getCareer());
                 villager.setAge(v.getTicksLived());
                 if (!v.isAdult()) {
                     villager.setBaby();
