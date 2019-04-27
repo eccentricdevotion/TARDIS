@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import me.eccentric_nz.TARDIS.TARDISConstants;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -30,9 +31,8 @@ class TARDISRandomName {
 
     public static String name() {
         String name = "12345678901234567";
-        Random rand = new Random();
         while (name.length() > 16) {
-            name = FIRSTNAMES.get(rand.nextInt(FIRSTNAMES.size())) + "_" + LASTNAMES.get(rand.nextInt(LASTNAMES.size()));
+            name = FIRSTNAMES.get(TARDISConstants.RANDOM.nextInt(FIRSTNAMES.size())) + "_" + LASTNAMES.get(TARDISConstants.RANDOM.nextInt(LASTNAMES.size()));
         }
         return name;
     }

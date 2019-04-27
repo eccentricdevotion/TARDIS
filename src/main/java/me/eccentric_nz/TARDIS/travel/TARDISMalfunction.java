@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -26,7 +27,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The Dalek Asylum was a snowy and mountainous planet used by the Daleks as a prison and "dumping ground" for those
@@ -38,18 +42,16 @@ import java.util.*;
 public class TARDISMalfunction {
 
     private final TARDIS plugin;
-    private final Random rand;
 
     public TARDISMalfunction(TARDIS plugin) {
         this.plugin = plugin;
-        rand = new Random();
     }
 
     public boolean isMalfunction() {
         boolean mal = false;
         if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
             int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
-            if (rand.nextInt(100) > chance) {
+            if (TARDISConstants.RANDOM.nextInt(100) > chance) {
                 mal = true;
             }
         }
@@ -66,11 +68,11 @@ public class TARDISMalfunction {
             Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
             int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
-            int r = rand.nextInt(100);
+            int r = TARDISConstants.RANDOM.nextInt(100);
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-            int x = rand.nextInt(4) + 1;
-            int z = rand.nextInt(4) + 1;
-            int y = rand.nextInt(4) + 1;
+            int x = TARDISConstants.RANDOM.nextInt(4) + 1;
+            int z = TARDISConstants.RANDOM.nextInt(4) + 1;
+            int y = TARDISConstants.RANDOM.nextInt(4) + 1;
             if (r > end) {
                 // get random the_end location
                 l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, cl);

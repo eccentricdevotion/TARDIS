@@ -84,7 +84,6 @@ public class TARDISRoomRunnable implements Runnable {
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private JSONArray arr;
-    private final Random random;
     private Location aqua_spawn;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
@@ -133,7 +132,6 @@ public class TARDISRoomRunnable implements Runnable {
         flora.add(Material.SEAGRASS.createBlockData());
         flora.add(Material.TALL_SEAGRASS.createBlockData());
         flora.add(Material.TUBE_CORAL.createBlockData());
-        random = new Random();
     }
 
     /**
@@ -183,8 +181,8 @@ public class TARDISRoomRunnable implements Runnable {
                 int minusy = aqua_spawn.getBlockY() - 1;
                 for (int ax = plusx; ax < plusx + 5; ax++) {
                     for (int az = plusz; az < plusz + 5; az++) {
-                        if (world.getBlockAt(ax, minusy, az).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
-                            BlockData f = flora.get(random.nextInt(flora.size()));
+                        if (world.getBlockAt(ax, minusy, az).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+                            BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                             switch (f.getMaterial()) {
                                 case KELP:
                                     world.getBlockAt(ax, y + 1, az).setBlockData(f);
@@ -197,7 +195,7 @@ public class TARDISRoomRunnable implements Runnable {
                                     world.getBlockAt(ax, y + 1, az).setBlockData(f);
                                     break;
                                 case SEA_PICKLE:
-                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                     world.getBlockAt(ax, y, az).setBlockData(f);
                                     break;
                                 default:
@@ -208,8 +206,8 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 for (int bx = minusx; bx > minusx - 5; bx--) {
                     for (int bz = plusz; bz < plusz + 5; bz++) {
-                        if (world.getBlockAt(bx, minusy, bz).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
-                            BlockData f = flora.get(random.nextInt(flora.size()));
+                        if (world.getBlockAt(bx, minusy, bz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+                            BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                             switch (f.getMaterial()) {
                                 case KELP:
                                     world.getBlockAt(bx, y + 1, bz).setBlockData(f);
@@ -222,7 +220,7 @@ public class TARDISRoomRunnable implements Runnable {
                                     world.getBlockAt(bx, y + 1, bz).setBlockData(f);
                                     break;
                                 case SEA_PICKLE:
-                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                     world.getBlockAt(bx, y, bz).setBlockData(f);
                                     break;
                                 default:
@@ -233,8 +231,8 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 for (int cx = minusx; cx > minusx - 5; cx--) {
                     for (int cz = minusz; cz > minusz - 5; cz--) {
-                        if (world.getBlockAt(cx, minusy, cz).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
-                            BlockData f = flora.get(random.nextInt(flora.size()));
+                        if (world.getBlockAt(cx, minusy, cz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+                            BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                             switch (f.getMaterial()) {
                                 case KELP:
                                     world.getBlockAt(cx, y + 1, cz).setBlockData(f);
@@ -247,7 +245,7 @@ public class TARDISRoomRunnable implements Runnable {
                                     world.getBlockAt(cx, y + 1, cz).setBlockData(f);
                                     break;
                                 case SEA_PICKLE:
-                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                     world.getBlockAt(cx, y, cz).setBlockData(f);
                                     break;
                                 default:
@@ -258,8 +256,8 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 for (int dx = plusx; dx < plusx + 5; dx++) {
                     for (int dz = minusz; dz > minusz - 5; dz--) {
-                        if (world.getBlockAt(dx, minusy, dz).getType().equals(Material.SAND) && random.nextInt(100) < 66) {
-                            BlockData f = flora.get(random.nextInt(flora.size()));
+                        if (world.getBlockAt(dx, minusy, dz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+                            BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                             switch (f.getMaterial()) {
                                 case KELP:
                                     world.getBlockAt(dx, y + 1, dz).setBlockData(f);
@@ -272,7 +270,7 @@ public class TARDISRoomRunnable implements Runnable {
                                     world.getBlockAt(dx, y + 1, dz).setBlockData(f);
                                     break;
                                 case SEA_PICKLE:
-                                    ((SeaPickle) f).setPickles(random.nextInt(4) + 1);
+                                    ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                     world.getBlockAt(dx, y, dz).setBlockData(f);
                                     break;
                                 default:
@@ -741,7 +739,7 @@ public class TARDISRoomRunnable implements Runnable {
                 List<Material> controls = Arrays.asList(Material.CAKE, Material.STONE_BUTTON, Material.MUSHROOM_STEM, Material.OAK_BUTTON);
                 if (controls.contains(type)) {
                     switch (type) {
-                        case STONE_BUTTON: // stone button - random
+                        case STONE_BUTTON: // stone button - TARDISConstants.RANDOM
                             control_type = 1;
                             loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;

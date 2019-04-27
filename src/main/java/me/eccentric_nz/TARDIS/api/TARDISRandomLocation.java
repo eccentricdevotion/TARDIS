@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.api;
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -26,7 +27,6 @@ import org.bukkit.WorldBorder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -34,7 +34,6 @@ import java.util.Random;
 class TARDISRandomLocation {
 
     private final TARDIS plugin;
-    private final Random random = new Random();
 
     TARDISRandomLocation(TARDIS plugin) {
         this.plugin = plugin;
@@ -65,7 +64,7 @@ class TARDISRandomLocation {
         int rangeX;
         int rangeZ;
         // random world
-        w = worlds.get(random.nextInt(listlen));
+        w = worlds.get(TARDISConstants.RANDOM.nextInt(listlen));
         World.Environment env = w.getEnvironment();
         // set default by using config values
         int cx = plugin.getConfig().getInt("travel.random_circuit.x");

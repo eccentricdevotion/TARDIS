@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.*;
@@ -191,20 +192,19 @@ public class TARDISMonsterRunnable implements Runnable {
                     }
                     if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
                         // spawn a random mob inside TARDIS?
-                        Random r = new Random();
                         // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                        if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
+                        if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", map.getValue().getTardisId());
                             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                             if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
                                 TARDISMonster rtm = new TARDISMonster();
                                 // choose a random monster
-                                EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
+                                EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
                                 rtm.setType(type);
                                 String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
                                 if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
-                                    Profession prof = Profession.values()[r.nextInt(7)];
+                                    Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
                                     rtm.setProfession(prof);
                                     dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
                                 }

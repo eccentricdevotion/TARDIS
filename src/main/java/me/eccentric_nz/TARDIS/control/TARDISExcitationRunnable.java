@@ -26,7 +26,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -44,7 +43,6 @@ class TARDISExcitationRunnable implements Runnable {
     private final Player player;
     public int task;
     private int i = 0;
-    private final Random RAND = new Random();
     private final List<Block> snow = new ArrayList<>();
 
     TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
@@ -82,8 +80,8 @@ class TARDISExcitationRunnable implements Runnable {
     }
 
     private Location calculateLocationInCircle(Location location) {
-        double angle = RAND.nextDouble() * Math.PI * 2;
-        double radius = RAND.nextDouble() * 6;
+        double angle = TARDISConstants.RANDOM.nextDouble() * Math.PI * 2;
+        double radius = TARDISConstants.RANDOM.nextDouble() * 6;
         double x = radius * Math.cos(angle);
         double z = radius * Math.sin(angle);
         return location.clone().add(x, 0, z);

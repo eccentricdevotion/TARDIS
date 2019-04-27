@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -420,8 +421,7 @@ public class TARDISTerminalListener implements Listener {
         });
         // random world
         if (allowedWorlds.size() > 0) {
-            Random rand = new Random();
-            int rw = rand.nextInt(allowedWorlds.size());
+            int rw = TARDISConstants.RANDOM.nextInt(allowedWorlds.size());
             int i = 0;
             for (String w : allowedWorlds) {
                 if (i == rw) {

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -24,7 +25,10 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * After materialization, the Astrosextant Rectifier will attempt to confirm that a TARDIS has arrived at the correct
@@ -40,7 +44,6 @@ class TARDISManualFlightRunnable implements Runnable {
     private int taskID;
     private static final int LOOPS = 10;
     private int i = 0;
-    private final Random random = new Random();
     private final Player player;
     private final UUID uuid;
 
@@ -62,7 +65,7 @@ class TARDISManualFlightRunnable implements Runnable {
                 TARDISMessage.send(player, "FLIGHT_BAD");
                 return;
             }
-            int r = random.nextInt(4);
+            int r = TARDISConstants.RANDOM.nextInt(4);
             Location loc = target.get(r);
             TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
             loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);

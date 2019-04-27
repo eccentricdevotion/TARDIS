@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -70,7 +71,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
     private int max_slot = 36;
-    private final Random random = new Random();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -297,8 +297,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         LlamaWatcher llw = (LlamaWatcher) livingWatcher;
                                         llw.setColor(getLlamaColor(view));
                                         if (getBoolean(view)) {
-                                            Random rand = new Random();
-                                            llw.setCarpet(AnimalColor.values()[rand.nextInt(16)]);
+                                            llw.setCarpet(AnimalColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
                                         }
                                         break;
                                     case OCELOT:
@@ -382,8 +381,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     case TROPICAL_FISH:
                                         TropicalFishWatcher tro = (TropicalFishWatcher) livingWatcher;
                                         tro.setPattern(TropicalFish.Pattern.values()[tropics.get(uuid)]);
-                                        tro.setBodyColor(DyeColor.values()[random.nextInt(16)]);
-                                        tro.setPatternColor(DyeColor.values()[random.nextInt(16)]);
+                                        tro.setBodyColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                                        tro.setPatternColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
                                         break;
                                     default:
                                         break;

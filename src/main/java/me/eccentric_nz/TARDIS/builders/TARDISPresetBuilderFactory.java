@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -37,7 +38,6 @@ import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /**
  * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
@@ -51,11 +51,9 @@ public class TARDISPresetBuilderFactory {
     private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
     final List<PRESET> no_block_under_door;
     private final List<PRESET> notSubmarinePresets;
-    private final Random rand;
 
     public TARDISPresetBuilderFactory(TARDIS plugin) {
         this.plugin = plugin;
-        rand = new Random();
         face_map.put(COMPASS.SOUTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
         face_map.put(COMPASS.EAST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
         face_map.put(COMPASS.NORTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
@@ -277,7 +275,7 @@ public class TARDISPresetBuilderFactory {
 
     BlockFace getSkullDirection(COMPASS d) {
         BlockFace[] faces = face_map.get(d);
-        return faces[rand.nextInt(5)];
+        return faces[TARDISConstants.RANDOM.nextInt(5)];
     }
 
     public BlockFace getOppositeFace(COMPASS d) {

@@ -36,7 +36,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * All things related to time travel.
@@ -78,7 +81,6 @@ public class TARDISTimeTravel {
         int startx, starty, startz, resetx, resetz, listlen;
         World randworld;
         int count;
-        Random rand = new Random();
         // get max_radius from config
         int max = plugin.getConfig().getInt("travel.tp_radius");
         int quarter = (max + 4 - 1) / 4;
@@ -125,11 +127,11 @@ public class TARDISTimeTravel {
         }
         listlen = allowedWorlds.size();
         // random world
-        randworld = allowedWorlds.get(rand.nextInt(listlen));
+        randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
         if (randworld.getEnvironment().equals(Environment.NETHER)) {
             for (int n = 0; n < attempts; n++) {
-                wherex = randomX(rand, range, quarter, rx, ry, e, current);
-                wherez = randomZ(rand, range, quarter, rz, ry, e, current);
+                wherex = randomX(range, quarter, rx, ry, e, current);
+                wherez = randomZ(range, quarter, rz, ry, e, current);
                 if (safeNether(randworld, wherex, wherez, d, p)) {
                     break;
                 }
@@ -138,14 +140,14 @@ public class TARDISTimeTravel {
         if (randworld.getEnvironment().equals(Environment.THE_END)) {
             if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
                 // any location will do!
-                int voidx = randomX(rand, range, quarter, rx, ry, e, current);
-                int voidy = rand.nextInt(240) + 5;
-                int voidz = randomZ(rand, range, quarter, rz, ry, e, current);
+                int voidx = randomX(range, quarter, rx, ry, e, current);
+                int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
+                int voidz = randomZ(range, quarter, rz, ry, e, current);
                 return new Location(randworld, voidx, voidy, voidz);
             }
             for (int n = 0; n < attempts; n++) {
-                wherex = rand.nextInt(240);
-                wherez = rand.nextInt(240);
+                wherex = TARDISConstants.RANDOM.nextInt(240);
+                wherez = TARDISConstants.RANDOM.nextInt(240);
                 wherex -= 120;
                 wherez -= 120;
                 // get the spawn point
@@ -182,9 +184,9 @@ public class TARDISTimeTravel {
         if (!randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
                 // any location will do!
-                int voidx = randomX(rand, range, quarter, rx, ry, e, current);
-                int voidy = rand.nextInt(240) + 5;
-                int voidz = randomZ(rand, range, quarter, rz, ry, e, current);
+                int voidx = randomX(range, quarter, rx, ry, e, current);
+                int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
+                int voidz = randomZ(range, quarter, rz, ry, e, current);
                 return new Location(randworld, voidx, voidy, voidz);
             }
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
@@ -192,9 +194,9 @@ public class TARDISTimeTravel {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
                     count = 0;
-                    // randomX(Random rand, int range, int quarter, int rx, int ry, int max)
-                    wherex = randomX(rand, range, quarter, rx, ry, e, current);
-                    wherez = randomZ(rand, range, quarter, rz, ry, e, current);
+                    // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
+                    wherex = randomX(range, quarter, rx, ry, e, current);
+                    wherez = randomZ(range, quarter, rz, ry, e, current);
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
@@ -467,7 +469,6 @@ public class TARDISTimeTravel {
     /**
      * Returns a random positive or negative x integer.
      *
-     * @param rand    an object of type Random.
      * @param range   the maximum the random number can be.
      * @param quarter one fourth of the max_distance config option.
      * @param rx      the delay of the x-repeater setting.
@@ -475,14 +476,14 @@ public class TARDISTimeTravel {
      * @param e       a string to determine where to start the random search from
      * @param l       the current TARDIS location
      */
-    private int randomX(Random rand, int range, int quarter, int rx, int ry, String e, Location l) {
+    private int randomX(int range, int quarter, int rx, int ry, String e, Location l) {
         int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
         int wherex;
-        wherex = rand.nextInt(range);
+        wherex = TARDISConstants.RANDOM.nextInt(range);
         // add the distance from the x and z repeaters
         wherex += (quarter * rx);
         // add chance of negative values
-        if (rand.nextInt(2) == 1) {
+        if (TARDISConstants.RANDOM.nextInt(2) == 1) {
             wherex = 0 - wherex;
         }
         // use multiplier based on position of third (y) repeater
@@ -493,7 +494,6 @@ public class TARDISTimeTravel {
     /**
      * Returns a random positive or negative z integer.
      *
-     * @param rand    an object of type Random.
      * @param range   the maximum the random number can be.
      * @param quarter one fourth of the max_distance config option.
      * @param rz      the delay of the x-repeater setting.
@@ -501,14 +501,14 @@ public class TARDISTimeTravel {
      * @param e       a string to determine where to start the random search from
      * @param l       the current TARDIS location
      */
-    private int randomZ(Random rand, int range, int quarter, int rz, int ry, String e, Location l) {
+    private int randomZ(int range, int quarter, int rz, int ry, String e, Location l) {
         int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
         int wherez;
-        wherez = rand.nextInt(range);
+        wherez = TARDISConstants.RANDOM.nextInt(range);
         // add the distance from the x and z repeaters
         wherez += (quarter * rz);
         // add chance of negative values
-        if (rand.nextInt(2) == 1) {
+        if (TARDISConstants.RANDOM.nextInt(2) == 1) {
             wherez = 0 - wherez;
         }
         // use multiplier based on position of third (y) repeater

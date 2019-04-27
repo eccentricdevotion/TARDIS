@@ -21,10 +21,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
+import org.bukkit.loot.LootTable;
+import org.bukkit.loot.LootTables;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a dimension different from the exterior. The main
@@ -62,6 +65,8 @@ public class TARDISConstants {
     public static final BlockData LANTERN = Material.SEA_LANTERN.createBlockData();
     public static final BlockData BLACK = Material.BLACK_WOOL.createBlockData();
     public static final BlockData DAYLIGHT = Material.DAYLIGHT_DETECTOR.createBlockData();
+    public static final List<LootTable> LOOT = Arrays.asList(LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(), LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(), LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(), LootTables.VILLAGE_BLACKSMITH.getLootTable(), LootTables.WOODLAND_MANSION.getLootTable());
+    public static final Random RANDOM = new Random();
 
     /**
      * Creates a HashMap from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks

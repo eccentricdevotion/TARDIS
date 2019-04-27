@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import me.eccentric_nz.TARDIS.TARDISConstants;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -26,7 +27,6 @@ import java.util.Random;
 class TARDISRandomArchiveName {
 
     private static final List<String> NAMES = new ArrayList<>();
-    private static final Random RANDOM = new Random();
 
     static {
         NAMES.add("Abaddon");
@@ -391,6 +391,6 @@ class TARDISRandomArchiveName {
     }
 
     static String getRandomName() {
-        return NAMES.get(RANDOM.nextInt(NAMES.size())).replace(' ', '_');
+        return NAMES.get(TARDISConstants.RANDOM.nextInt(NAMES.size())).replace(' ', '_');
     }
 }

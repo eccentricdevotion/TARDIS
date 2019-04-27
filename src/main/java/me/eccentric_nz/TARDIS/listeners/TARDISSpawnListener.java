@@ -32,7 +32,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -42,7 +41,6 @@ public class TARDISSpawnListener implements Listener {
     private final TARDIS plugin;
     private final List<SpawnReason> good_spawns = new ArrayList<>();
     private final List<Biome> biomes = new ArrayList<>();
-    private final Random rand;
 
     public TARDISSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,7 +68,6 @@ public class TARDISSpawnListener implements Listener {
         biomes.add(Biome.NETHER);
         biomes.add(Biome.SMALL_END_ISLANDS);
         biomes.add(Biome.THE_END);
-        rand = new Random();
     }
 
     /**
@@ -97,7 +94,7 @@ public class TARDISSpawnListener implements Listener {
                 event.setCancelled(true);
             }
             if (event.getSpawnReason().equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                if (rand.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
                     TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le);

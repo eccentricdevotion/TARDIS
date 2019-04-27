@@ -31,7 +31,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -41,7 +40,6 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
     private final TARDIS plugin;
     private final Parameters param;
     private final List<World> worlds;
-    private final Random random = new Random();
     private Location dest;
 
     TARDISRandomOverworld(TARDIS plugin, List<String> list, Parameters param) {
@@ -57,8 +55,8 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         // loop till random attempts limit reached
         for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
             // get random values in range
-            int randX = random.nextInt(war.getRangeX());
-            int randZ = random.nextInt(war.getRangeZ());
+            int randX = TARDISConstants.RANDOM.nextInt(war.getRangeX());
+            int randZ = TARDISConstants.RANDOM.nextInt(war.getRangeZ());
             // get the x coord
             int x = war.getMinX() + randX;
             // get the z coord

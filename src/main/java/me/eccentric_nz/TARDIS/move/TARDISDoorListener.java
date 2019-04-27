@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISExitEvent;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
@@ -42,7 +43,6 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -52,7 +52,6 @@ public class TARDISDoorListener {
 
     final TARDIS plugin;
     public final float[][] adjustYaw = new float[4][4];
-    private final Random r = new Random();
 
     public TARDISDoorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -87,7 +86,7 @@ public class TARDISDoorListener {
      * @param m      whether to play the resource pack sound
      */
     public void movePlayer(Player p, Location l, boolean exit, World from, boolean quotes, int sound, boolean m) {
-        int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
+        int i = TARDISConstants.RANDOM.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         World to = l.getWorld();
         boolean allowFlight = p.getAllowFlight();
         boolean crossWorlds = (from != to);
@@ -103,7 +102,7 @@ public class TARDISDoorListener {
                 p.setAllowFlight(true);
             }
             if (quotes) {
-                if (r.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
                     TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
                 } else {
                     p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -29,8 +30,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
-
 /**
  * @author eccentric_nz
  */
@@ -38,7 +37,6 @@ public class TARDISSkaroSpawnListener implements Listener {
 
     private final TARDIS plugin;
     private final TARDISWeepingAngelsAPI twaAPI;
-    private final Random r = new Random();
 
     public TARDISSkaroSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -59,7 +57,7 @@ public class TARDISSkaroSpawnListener implements Listener {
         LivingEntity le = event.getEntity();
         // it's a Dalek - disguise it!
         twaAPI.setDalekEquipment(le);
-        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && r.nextInt(100) < 10) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
             // make the Dalek fly
             EntityEquipment ee = le.getEquipment();
             ee.setChestplate(new ItemStack(Material.ELYTRA, 1));

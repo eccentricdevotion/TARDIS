@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.api;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,7 +26,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author eccentric_nz
@@ -35,7 +35,6 @@ public class TARDISRandomNether extends TARDISRandomLocation {
     private final TARDIS plugin;
     private final Parameters param;
     private final List<World> worlds;
-    private final Random random = new Random();
 
     TARDISRandomNether(TARDIS plugin, List<String> list, Parameters param) {
         super(plugin);
@@ -50,8 +49,8 @@ public class TARDISRandomNether extends TARDISRandomLocation {
         // loop till random attempts limit reached
         for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
             // get random values in range
-            int randX = random.nextInt(war.getRangeX());
-            int randZ = random.nextInt(war.getRangeZ());
+            int randX = TARDISConstants.RANDOM.nextInt(war.getRangeX());
+            int randZ = TARDISConstants.RANDOM.nextInt(war.getRangeZ());
             // get the x coord
             int x = war.getMinX() + randX;
             // get the z coord

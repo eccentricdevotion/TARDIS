@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -29,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
@@ -87,10 +87,9 @@ public class TARDISBlockPlaceListener implements Listener {
             }
             // add recharger to to config
             Location l = event.getBlockPlaced().getLocation();
-            Random rand = new Random();
-            String name = "rift_" + player.getName() + "_" + rand.nextInt(Integer.MAX_VALUE);
+            String name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             while (plugin.getConfig().contains("rechargers." + name)) {
-                name = "rift_" + player.getName() + "_" + rand.nextInt(Integer.MAX_VALUE);
+                name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             }
             plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
             plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());

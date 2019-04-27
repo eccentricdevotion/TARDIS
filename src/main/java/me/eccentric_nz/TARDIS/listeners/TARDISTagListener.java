@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,7 +29,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,7 +41,6 @@ import java.util.concurrent.TimeUnit;
 public class TARDISTagListener implements Listener {
 
     private final TARDIS plugin;
-    private final Random rand = new Random();
 
     public TARDISTagListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -120,7 +123,7 @@ public class TARDISTagListener implements Listener {
     private Player getRandomPlayer() {
         List<Player> players = new ArrayList<>(plugin.getServer().getOnlinePlayers());
         int num = players.size();
-        return players.get(rand.nextInt(num));
+        return players.get(TARDISConstants.RANDOM.nextInt(num));
     }
 
     /**
@@ -169,11 +172,7 @@ public class TARDISTagListener implements Listener {
      * @return a string in the form of '00h:00m:00s'
      */
     private String getHoursMinutesSeconds(long millis) {
-        return String.format(
-                "%02dh:%02dm:%02ds",
-                TimeUnit.MILLISECONDS.toHours(millis),
-                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+        return String.format("%02dh:%02dm:%02ds", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 
     /**

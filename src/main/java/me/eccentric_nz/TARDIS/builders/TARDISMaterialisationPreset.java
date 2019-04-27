@@ -87,9 +87,8 @@ class TARDISMaterialisationPreset implements Runnable {
         this.preset = preset;
         this.cham_id = cham_id;
         this.adapt = adapt;
-        Random rand = new Random();
         if (preset.equals(PRESET.ANGEL)) {
-            plugin.getPresets().setR(rand.nextInt(2));
+            plugin.getPresets().setR(TARDISConstants.RANDOM.nextInt(2));
         }
         if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
@@ -102,7 +101,7 @@ class TARDISMaterialisationPreset implements Runnable {
         }
         Material[] colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         Material[] glassColours = new Material[]{Material.WHITE_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.MAGENTA_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS, Material.LIME_STAINED_GLASS, Material.PINK_STAINED_GLASS, Material.CYAN_STAINED_GLASS, Material.PURPLE_STAINED_GLASS, Material.BLUE_STAINED_GLASS, Material.BROWN_STAINED_GLASS, Material.GREEN_STAINED_GLASS, Material.RED_STAINED_GLASS};
-        int r = rand.nextInt(13);
+        int r = TARDISConstants.RANDOM.nextInt(13);
         random_colour = colours[r];
         random_glass = glassColours[r];
         sign_colour = plugin.getUtils().getSignColour();

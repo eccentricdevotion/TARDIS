@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -379,7 +379,7 @@ public class QueryFactory {
                 service.testConnection(connection);
                 long now;
                 if (player.hasPermission("tardis.prune.bypass")) {
-                    now = Long.MAX_VALUE - new Random().nextInt(1000);
+                    now = Long.MAX_VALUE - TARDISConstants.RANDOM.nextInt(1000);
                 } else {
                     now = System.currentTimeMillis();
                 }
