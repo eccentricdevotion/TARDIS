@@ -216,6 +216,7 @@ public class TARDISEjectListener implements Listener {
                 if ((!m.isAdult())) {
                     mush.setBaby();
                 }
+                mush.setVariant(m.getVariant());
                 String mushname = ent.getCustomName();
                 if (mushname != null && !mushname.isEmpty()) {
                     mush.setCustomName(mushname);

@@ -93,7 +93,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<>();
             TARDISFish old_macd_had_a_fish = null;
-            List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<>();
+            List<TARDISMooshroom> old_macd_had_a_mooshroom = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<>();
             List<TARDISParrot> old_macd_had_a_parrot = new ArrayList<>();
             List<TARDISPig> old_macd_had_a_pig = new ArrayList<>();
@@ -377,9 +377,10 @@ public class TARDISFarmer {
                             farmtotal++;
                             break;
                         case MUSHROOM_COW:
-                            TARDISMob tmshr = new TARDISMob();
+                            TARDISMooshroom tmshr = new TARDISMooshroom();
                             tmshr.setAge(((MushroomCow) e).getAge());
                             tmshr.setBaby(!((MushroomCow) e).isAdult());
+                            tmshr.setVariant(((MushroomCow) e).getVariant());
                             tmshr.setName(e.getCustomName());
                             old_macd_had_a_mooshroom.add(tmshr);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
@@ -615,6 +616,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 fungi.setBaby();
                             }
+                            fungi.setVariant(e.getVariant());
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 fungi.setCustomName(name);
