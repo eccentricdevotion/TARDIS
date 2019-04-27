@@ -40,7 +40,7 @@ import java.util.Locale;
 public class TARDISSayCommand implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET;
+    private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
 
     public TARDISSayCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -81,13 +81,14 @@ public class TARDISSayCommand implements CommandExecutor {
                 try {
                     String translatedText = Translate.execute(whatToTranslate, from, to);
                     if (sender instanceof Player) {
-                        ((Player) sender).chat(UT + " " + translatedText);
+                        ((Player) sender).chat(UT + translatedText);
                     } else {
-                        plugin.getServer().dispatchCommand(sender, "say " + UT + " " + translatedText);
+                        plugin.getServer().dispatchCommand(sender, "say " + UT + translatedText);
                     }
                     return true;
                 } catch (Exception ex) {
                     plugin.debug("Could not get translation! " + ex);
+                    ex.printStackTrace();
                     TARDISMessage.send(sender, "YT_UNAVAILABLE");
                 }
             } catch (IllegalArgumentException e) {

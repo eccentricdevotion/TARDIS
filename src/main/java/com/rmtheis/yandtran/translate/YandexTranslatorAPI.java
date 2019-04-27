@@ -116,40 +116,15 @@ public abstract class YandexTranslatorAPI {
      */
     static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
-        String[] translationArr = jsonObjValToStringArr(response, jsonValProperty);
-        StringBuilder combinedTranslations = new StringBuilder();
-        for (String s : translationArr) {
-            combinedTranslations.append(s);
-        }
-        return combinedTranslations.toString().trim();
+        String translationArr = jsonObjValToStringArr(response, jsonValProperty);
+        return translationArr;
     }
 
     // Helper method to parse a JsonObject containing an array of Strings with the given label.
-    private static String[] jsonObjValToStringArr(String inputString, String subObjPropertyName) throws Exception {
+    private static String jsonObjValToStringArr(String inputString, String subObjPropertyName) throws Exception {
         JsonObject jsonObj = (JsonObject) new JsonParser().parse(inputString);
         JsonArray jsonArr = (JsonArray) jsonObj.get(subObjPropertyName);
-        return jsonArrToStringArr(jsonArr.getAsString(), null);
-    }
-
-    // Helper method to parse a JsonArray. Reads an array of JsonObjects and returns a String Array
-    // containing the toString() of the desired property. If propertyName is null, just return the String value.
-    private static String[] jsonArrToStringArr(String inputString, String propertyName) throws Exception {
-        JsonArray jsonArr = (JsonArray) new JsonParser().parse(inputString);
-        String[] values = new String[jsonArr.size()];
-
-        int i = 0;
-        for (Object obj : jsonArr) {
-            if (propertyName != null && propertyName.length() != 0) {
-                JsonObject json = (JsonObject) obj;
-                if (json.has(propertyName)) {
-                    values[i] = json.get(propertyName).toString();
-                }
-            } else {
-                values[i] = obj.toString();
-            }
-            i++;
-        }
-        return values;
+        return jsonArr.getAsString();
     }
 
     /**
