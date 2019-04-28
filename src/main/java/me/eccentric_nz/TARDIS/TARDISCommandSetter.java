@@ -79,6 +79,9 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisroom").setExecutor(new TARDISRoomCommands(plugin));
         plugin.getCommand("tardisroom").setTabCompleter(new TARDISRoomTabComplete(plugin));
         plugin.getCommand("tardisschematic").setExecutor(new TARDISSchematicCommand(plugin));
+        TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
+        plugin.getCommand("tardisteleport").setExecutor(tardisTP);
+        plugin.getCommand("tardisteleport").setTabCompleter(tardisTP);
         plugin.getCommand("tardistexture").setExecutor(new TARDISTextureCommands(plugin));
         plugin.getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
         TARDISTravelCommands tardisTravelCommand = new TARDISTravelCommands(plugin);

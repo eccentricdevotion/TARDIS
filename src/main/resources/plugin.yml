@@ -845,7 +845,7 @@ commands:
     permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
   tardistexture:
-    aliases: [tardisresource, tresource, ttexture, trp, ttp]
+    aliases: [tardisresource, tresource, ttexture, trp]
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
@@ -965,3 +965,8 @@ commands:
       description: Name a Handles Program Disk
       usage: /<command> disk [new name]
       permission: tardis.handles.program
+  tardisteleport:
+    aliases: [tardistp, ttp]
+    description: Teleport to a world's spawn point
+    usage: /<command> [world]
+    permission: tardis.admin
