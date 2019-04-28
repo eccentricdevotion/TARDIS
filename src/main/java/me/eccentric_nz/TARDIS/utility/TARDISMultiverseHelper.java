@@ -20,7 +20,6 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
@@ -37,7 +36,7 @@ public class TARDISMultiverseHelper {
 
     public String getAlias(World world) {
         MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        return mvw.getAlias();
+        return (mvw != null) ? mvw.getAlias() : world.getName();
     }
 
     public String getAlias(String world) {
@@ -49,24 +48,14 @@ public class TARDISMultiverseHelper {
         }
     }
 
-    public void setSpawnLocation(World world, int x, int y, int z) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world.getName());
-        Location spawn = new Location(world, (x + 0.5), y, (z + 1.5), 0, 0);
-        mvw.setSpawnLocation(spawn);
-    }
-
     public boolean isWorldSurvival(World world) {
         MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        GameMode gm = mvw.getGameMode();
+        GameMode gm = (mvw != null) ? mvw.getGameMode() : GameMode.SURVIVAL;
         return (gm.equals(GameMode.SURVIVAL));
     }
 
     public World getWorld(String w) {
         MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
-        if (mvw != null) {
-            return mvw.getCBWorld();
-        } else {
-            return Bukkit.getServer().getWorld(w);
-        }
+        return (mvw != null) ? mvw.getCBWorld() : Bukkit.getServer().getWorld(w);
     }
 }

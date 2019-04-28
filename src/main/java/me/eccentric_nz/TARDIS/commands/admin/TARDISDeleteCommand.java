@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
@@ -41,6 +40,8 @@ import java.io.File;
 import java.util.*;
 
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+
+//import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 
 /**
  * @author eccentric_nz
@@ -152,12 +153,12 @@ public class TARDISDeleteCommand {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
-                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
-                    }
-                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
-                    }
+//                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+//                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
+//                    }
+//                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
+//                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
+//                    }
                     if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                         // wb <world> clear
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
