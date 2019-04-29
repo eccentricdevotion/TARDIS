@@ -202,6 +202,7 @@ public class TARDIS extends JavaPlugin {
                 console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld [load|unload] [world] <WorldType> <Environment>");
                 console.sendMessage(pluginName + ChatColor.BLUE + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
                 console.sendMessage(pluginName + ChatColor.BLUE + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
+                console.sendMessage(pluginName + ChatColor.RED + "Probably a good idea to open existing worlds up in 1.14 first before trying to load them on the server.");
                 pm.disablePlugin(this);
                 return;
             }

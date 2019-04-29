@@ -65,7 +65,7 @@ public class TARDISHadsPersister {
                 ps.setInt(6, rst.getTardis_id());
                 count += ps.executeUpdate();
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " 'dispersed' TARDISes.");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " dispersed TARDISes.");
         } catch (SQLException ex) {
             plugin.debug("Insert error for dispersed table: " + ex.getMessage());
         } finally {
