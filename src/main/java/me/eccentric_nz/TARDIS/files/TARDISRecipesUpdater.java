@@ -206,6 +206,12 @@ public class TARDISRecipesUpdater {
             if (recipes_config.getString("shapeless.Island Punch Jelly Baby.lore").equals("Orange")) {
                 recipes_config.set("shapeless.Island Punch Jelly Baby.lore", "");
             }
+            recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
+            recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
+        }
+        if (recipes_config.getString("shapeless.Lemon Jelly Baby.recipe").contains("DANDELION_YELLOW")) {
+            recipes_config.set("shapeless.Lemon Jelly Baby.recipe", "SUGAR,SLIME_BALL,YELLOW_DYE");
             if (recipes_config.getString("shapeless.Raspberry Jelly Baby.recipe").contains("ROSE_RED")) {
                 recipes_config.set("shapeless.Raspberry Jelly Baby.recipe", "SUGAR,SLIME_BALL,RED_DYE");
             }
@@ -225,9 +231,6 @@ public class TARDISRecipesUpdater {
                 recipes_config.set("shaped.TARDIS Input Circuit.easy_ingredients.S", "OAK_SIGN");
                 recipes_config.set("shaped.TARDIS Input Circuit.hard_ingredients.S", "OAK_SIGN");
             }
-            recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
-            recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
         }
         if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":") || recipes_config.getString("shaped.Painter Circuit.easy_ingredients.I").contains("INK_SAC") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains("LAPIS_LAZULI")) {
             recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "BLUE_DYE");
