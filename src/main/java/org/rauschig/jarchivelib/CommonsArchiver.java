@@ -1,30 +1,24 @@
 /**
- *    Copyright 2013 Thomas Rausch
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2013 Thomas Rausch
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.rauschig.jarchivelib;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import org.apache.commons.compress.archivers.ArchiveEntry;
-import org.apache.commons.compress.archivers.ArchiveException;
-import org.apache.commons.compress.archivers.ArchiveInputStream;
-import org.apache.commons.compress.archivers.ArchiveOutputStream;
-import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
 /**
  * Implementation of an {@link Archiver} that uses {@link ArchiveStreamFactory} to generate archive streams by a given
@@ -85,7 +79,6 @@ class CommonsArchiver implements Archiver {
 
                 FileModeMapper.map(entry, file);
             }
-
         } finally {
             IOUtils.closeQuietly(input);
         }
@@ -104,7 +97,7 @@ class CommonsArchiver implements Archiver {
     /**
      * Returns a new ArchiveInputStream for reading archives. Subclasses can override this to return their own custom
      * implementation.
-     * 
+     *
      * @param archive the archive file to stream from
      * @return a new ArchiveInputStream for the given archive file
      * @throws IOException propagated IO exceptions
@@ -120,7 +113,7 @@ class CommonsArchiver implements Archiver {
     /**
      * Returns a new ArchiveOutputStream for creating archives. Subclasses can override this to return their own custom
      * implementation.
-     * 
+     *
      * @param archiveFile the archive file to stream to
      * @return a new ArchiveOutputStream for the given archive file.
      * @throws IOException propagated IO exceptions
@@ -135,9 +128,9 @@ class CommonsArchiver implements Archiver {
 
     /**
      * Asserts that the given File object is a readable file that can be used to extract from.
-     * 
+     *
      * @param archive the file to check
-     * @throws FileNotFoundException if the file does not exist
+     * @throws FileNotFoundException    if the file does not exist
      * @throws IllegalArgumentException if the file is a directory or not readable
      */
     protected void assertExtractSource(File archive) throws FileNotFoundException, IllegalArgumentException {
@@ -153,9 +146,9 @@ class CommonsArchiver implements Archiver {
     /**
      * Creates a new File in the given destination. The resulting name will always be "archive"."fileExtension". If the
      * archive name parameter already ends with the given file name extension, it is not additionally appended.
-     * 
-     * @param archive the name of the archive
-     * @param extension the file extension (e.g. ".tar")
+     *
+     * @param archive     the name of the archive
+     * @param extension   the file extension (e.g. ".tar")
      * @param destination the parent path
      * @return the newly created file
      * @throws IOException if an I/O error occurred while creating the file
@@ -173,9 +166,9 @@ class CommonsArchiver implements Archiver {
 
     /**
      * Recursion entry point for {@link #writeToArchive(File, File[], ArchiveOutputStream)}.
-     * <p/>
+     * <p>
      * Recursively writes all given source {@link File}s into the given {@link ArchiveOutputStream}.
-     * 
+     *
      * @param sources the files to write in to the archive
      * @param archive the archive to write into
      * @throws IOException when an I/O error occurs
@@ -189,7 +182,7 @@ class CommonsArchiver implements Archiver {
             }
 
             if (source.isFile()) {
-                writeToArchive(source.getParentFile(), new File[]{ source }, archive);
+                writeToArchive(source.getParentFile(), new File[]{source}, archive);
             } else {
                 writeToArchive(source, source.listFiles(), archive);
             }
@@ -199,8 +192,8 @@ class CommonsArchiver implements Archiver {
     /**
      * Recursively writes all given source {@link File}s into the given {@link ArchiveOutputStream}. The paths of the
      * sources in the archive will be relative to the given parent {@code File}.
-     * 
-     * @param parent the parent file node for computing a relative path (see {@link IOUtils#relativePath(File, File)})
+     *
+     * @param parent  the parent file node for computing a relative path (see {@link IOUtils#relativePath(File, File)})
      * @param sources the files to write in to the archive
      * @param archive the archive to write into
      * @throws IOException when an I/O error occurs
@@ -220,10 +213,10 @@ class CommonsArchiver implements Archiver {
     /**
      * Creates a new {@link ArchiveEntry} in the given {@link ArchiveOutputStream}, and copies the given {@link File}
      * into the new entry.
-     * 
-     * @param file the file to add to the archive
+     *
+     * @param file      the file to add to the archive
      * @param entryName the name of the archive entry
-     * @param archive the archive to write to
+     * @param archive   the archive to write to
      * @throws IOException when an I/O error occurs during FileInputStream creation or during copying
      */
     protected void createArchiveEntry(File file, String entryName, ArchiveOutputStream archive) throws IOException {
