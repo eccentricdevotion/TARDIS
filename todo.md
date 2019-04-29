@@ -14,11 +14,8 @@
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Re-enable Siluria, Skaro and Gallifrey worlds
-   * Use custom level.dat NBT files with Buffet style worlds of a single biome (Desert Lakes / Badlands Plateau)
-   * Use TARDIS schematics to add structures
    * For TARDIS worlds, use PlayerChangedWorldEvent to switch GameModes depending on config setting
    * Make sure spawners work
-   * Add `/tardisworld [load|unload|tp] [world] <type> <environment>` command
 7. Update documentation...
 
 ## TARDIS data pack

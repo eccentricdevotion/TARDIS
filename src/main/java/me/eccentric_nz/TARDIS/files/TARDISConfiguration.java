@@ -299,15 +299,12 @@ public class TARDISConfiguration {
     }
 
     private void loadWorld(String world) {
-        String which = (plugin.getPM().isPluginEnabled("TerrainControl")) ? "TerrainControl" : "OpenTerrainGenerator";
         if ((world.equals(plugin.getConfig().getString("creation.default_world_name")) || world.equals("TARDIS_Zero_Room"))) {
             WorldCreator.name(world).type(WorldType.FLAT).environment(Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
-        } else if (world.equals("Gallifrey") || world.equals("Skaro")) {
-            WorldCreator.name(world).type(WorldType.NORMAL).environment(Environment.NORMAL).generator(which).createWorld();
-        } else if (world.equals("Siluria")) {
-            WorldCreator.name(world).type(WorldType.NORMAL).environment(Environment.NETHER).generator(which).createWorld();
+        } else if (world.equals("Gallifrey") || world.equals("Skaro") || world.equals("Siluria")) {
+            WorldCreator.name(world).type(WorldType.BUFFET).environment(Environment.NORMAL).createWorld();
         } else {
-            WorldCreator.name(world).createWorld();
+            WorldCreator.name(world).type(WorldType.NORMAL).environment(Environment.NORMAL).createWorld();
         }
     }
 }
