@@ -3,6 +3,7 @@
 ## Next version `4.1`
 0. Update to Spigot 1.14
    * Add new mob types to farming and genetic manipulator (waiting for ProtocolLib/LibsDisguises update)
+   * Foxes?
    * Test villager farming - biome specific / professions not persistent?
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Make the TARDIS Condenser a composter?
@@ -12,7 +13,12 @@
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
-6. Try to re-enable Skaro and Gallifrey worlds using custom level.dat NBT files
+6. Re-enable Siluria, Skaro and Gallifrey worlds
+   * Use custom level.dat NBT files with Buffet style worlds of a single biome (Desert Lakes / Badlands Plateau)
+   * Use TARDIS schematics to add structures
+   * For TARDIS worlds, use PlayerChangedWorldEvent to switch GameModes depending on config setting
+   * Make sure spawners work
+   * Add `/tardisworld [load|unload|tp] [world] <type> <environment>` command
 7. Update documentation...
 
 ## TARDIS data pack

@@ -970,3 +970,8 @@ commands:
     description: Teleport to a world's spawn point
     usage: /<command> [world]
     permission: tardis.admin
+  tardisworld:
+    aliases: [tardisw, tw]
+    description: Load or unload TARDIS worlds
+    usage: /<command> [load|unload] [world] <WorldType> <Environment>
+    permission: tardis.admin
