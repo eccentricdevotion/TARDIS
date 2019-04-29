@@ -178,7 +178,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.13.2");
+        Version minversion = new Version("1.14");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // TARDISChunkGenerator needs to be enabled
@@ -198,6 +198,16 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             worldManager = WORLD_MANAGER.getWorldManager();
+            // disable plugin if another world manager is in use (hopefully a temporary measure)
+            if (worldManager != WORLD_MANAGER.NONE) {
+                console.sendMessage(pluginName + ChatColor.RED + "This plugin is currently incompatible with other multi-world plugins, disabling...");
+                console.sendMessage(pluginName + ChatColor.RED + "You can use a TARDIS command to load and unload worlds:");
+                console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld load [world] <WorldType> <Environment>");
+                console.sendMessage(pluginName + ChatColor.BLACK + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
+                console.sendMessage(pluginName + ChatColor.BLACK + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
+                pm.disablePlugin(this);
+                return;
+            }
             saveDefaultConfig();
             reloadConfig();
             loadCustomConfigs();
