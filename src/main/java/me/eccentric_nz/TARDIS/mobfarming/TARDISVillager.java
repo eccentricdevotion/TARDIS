@@ -30,10 +30,9 @@ class TARDISVillager extends TARDISMob {
 
     private Profession profession;
     private List<MerchantRecipe> trades;
-    //    private Career career;
-    private int careerLevel;
+    //    private int careerLevel;
     private boolean willing;
-    private int riches;
+//    private int riches;
 
     /**
      * Data storage class for TARDIS villagers.
@@ -55,21 +54,13 @@ class TARDISVillager extends TARDISMob {
         this.trades = trades;
     }
 
-//    Career getCareer() {
-//        return career;
+//    int getCareerLevel() {
+//        return careerLevel;
 //    }
 //
-//    void setCareer(Career career) {
-//        this.career = career;
+//    void setCareerLevel(int careerLevel) {
+//        this.careerLevel = careerLevel;
 //    }
-
-    int getCareerLevel() {
-        return careerLevel;
-    }
-
-    void setCareerLevel(int careerLevel) {
-        this.careerLevel = careerLevel;
-    }
 
     boolean isWilling() {
         return willing;
@@ -79,11 +70,11 @@ class TARDISVillager extends TARDISMob {
         this.willing = willing;
     }
 
-    int getRiches() {
-        return riches;
-    }
-
-    void setRiches(int riches) {
-        this.riches = riches;
-    }
+//    int getRiches() {
+//        return riches;
+//    }
+//
+//    void setRiches(int riches) {
+//        this.riches = riches;
+//    }
 }
