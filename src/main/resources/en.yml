@@ -836,6 +836,7 @@ TARDIS_LOCS_INFO: "To see more locations, type /tardisadmin list 2, /tardisadmin
 TARDIS_LOCS_NONE: "There are no more records to display."
 TARDIS_NO_DELETE: "You cannot delete this TARDIS as it is occupied!"
 TARDIS_NO_HIDE: "You cannot hide the TARDIS right now! Try travelling first."
+TARDIS_NO_HOME: "You cannot set the home location here because another TARDIS lives here!"
 TARDIS_NO_INSIDE: "You cannot set the home location here because you are inside a TARDIS!"
 TARDIS_NO_REBUILD: "You cannot rebuild the TARDIS right now! Try travelling first."
 TARDIS_NOT_FOUND: "You already have a TARDIS, but we couldn't find it! Try calling it to you."

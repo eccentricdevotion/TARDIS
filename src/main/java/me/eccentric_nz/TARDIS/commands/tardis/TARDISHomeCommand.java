@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -93,6 +94,17 @@ class TARDISHomeCommand {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
             if (rst.resultSet()) {
                 TARDISMessage.send(player, "TARDIS_NO_INSIDE");
+                return true;
+            }
+            // check it is not another Time Lords home location
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("world", eyeLocation.getWorld().getName());
+            where.put("x", eyeLocation.getBlockX());
+            where.put("y", eyeLocation.getBlockY());
+            where.put("z", eyeLocation.getBlockZ());
+            ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
+            if (rsh.resultSet()) {
+                TARDISMessage.send(player, "TARDIS_NO_HOME");
                 return true;
             }
             QueryFactory qf = new QueryFactory(plugin);

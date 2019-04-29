@@ -126,6 +126,18 @@ public class TARDISBlockStackListener implements Listener {
                         return;
                     }
                 }
+                Location block_loc = blockBottom.getLocation();
+                // check it is not another Time Lords home location
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("world", block_loc.getWorld().getName());
+                where.put("x", block_loc.getBlockX());
+                where.put("y", block_loc.getBlockY());
+                where.put("z", block_loc.getBlockZ());
+                ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
+                if (rsh.resultSet()) {
+                    TARDISMessage.send(player, "TARDIS_NO_HOME");
+                    return;
+                }
                 schm = CONSOLES.SCHEMATICFor(blockBottom.getType());
                 if (schm == null) {
                     schm = CONSOLES.getBY_NAMES().get("BUDGET");
@@ -182,7 +194,6 @@ public class TARDISBlockStackListener implements Listener {
                         // get player direction
                         String d = TARDISStaticUtils.getPlayersDirection(player, false);
                         // save data to database (tardis table)
-                        Location block_loc = blockBottom.getLocation();
                         String biome = block_loc.getBlock().getBiome().toString();
                         String chun = cw + ":" + cx + ":" + cz;
                         QueryFactory qf = new QueryFactory(plugin);
