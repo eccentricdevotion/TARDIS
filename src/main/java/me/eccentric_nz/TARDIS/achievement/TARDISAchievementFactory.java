@@ -57,72 +57,74 @@ public class TARDISAchievementFactory {
     }
 
     public void doAchievement(Object obj) {
-        QueryFactory qf = new QueryFactory(plugin);
-        // have they started the achievement?
-        HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("uuid", player.getUniqueId().toString());
-        wherea.put("name", advancement.getConfigName());
-        wherea.put("completed", 0);
-        ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
-        HashMap<String, Object> seta = new HashMap<>();
-        if (rsa.resultSet()) {
-            HashMap<String, Object> wherem = new HashMap<>();
-            wherem.put("a_id", rsa.getA_id());
-            boolean achieved = false;
-            // check if the achievement has been reached
-            List<String> data = null;
-            String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
-            if (obj.getClass().equals(String.class)) {
-                // farm mobs & rooms - have they got this type before?
-                data = Arrays.asList(amount.split(":"));
-                if ((data.size() + 1) == size) {
-                    achieved = true;
-                }
-            } else {
-                int req = plugin.getAchievementConfig().getInt(advancement + ".required");
-                int have = TARDISNumberParsers.parseInt(amount);
-                int sum = have + (Integer) obj;
-                if (sum >= req) {
-                    achieved = true;
-                }
-            }
-            if (achieved) {
-                // award achievement!
-                int reward_amount = plugin.getAchievementConfig().getInt(advancement.getConfigName() + ".reward_amount");
-                String reward_type = plugin.getAchievementConfig().getString(advancement.getConfigName() + ".reward_type");
-                // display a proper advancement if possible
-                grantAdvancement(advancement, player);
-                if (reward_type.equalsIgnoreCase("XP")) {
-                    new TARDISXPRewarder(player).changeExp(reward_amount);
-                } else {
-                    ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
-                    Inventory inv = player.getInventory();
-                    HashMap<Integer, ItemStack> excess = inv.addItem(is);
-                    excess.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
-                }
-                // set achievement as done
-                seta.put("completed", 1);
-                qf.doUpdate("achievements", seta, wherem);
-            } else {
+        if (plugin.getConfig().getBoolean("allow.achievements")) {
+            QueryFactory qf = new QueryFactory(plugin);
+            // have they started the achievement?
+            HashMap<String, Object> wherea = new HashMap<>();
+            wherea.put("uuid", player.getUniqueId().toString());
+            wherea.put("name", advancement.getConfigName());
+            wherea.put("completed", 0);
+            ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
+            HashMap<String, Object> seta = new HashMap<>();
+            if (rsa.resultSet()) {
+                HashMap<String, Object> wherem = new HashMap<>();
+                wherem.put("a_id", rsa.getA_id());
+                boolean achieved = false;
+                // check if the achievement has been reached
+                List<String> data = null;
+                String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
                 if (obj.getClass().equals(String.class)) {
-                    if (data != null && !data.contains(obj)) {
-                        seta.put("amount", amount + ":" + obj);
-                        qf.doUpdate("achievements", seta, wherem);
+                    // farm mobs & rooms - have they got this type before?
+                    data = Arrays.asList(amount.split(":"));
+                    if ((data.size() + 1) == size) {
+                        achieved = true;
                     }
                 } else {
-                    seta.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
-                    qf.doUpdate("achievements", seta, wherem);
+                    int req = plugin.getAchievementConfig().getInt(advancement + ".required");
+                    int have = TARDISNumberParsers.parseInt(amount);
+                    int sum = have + (Integer) obj;
+                    if (sum >= req) {
+                        achieved = true;
+                    }
                 }
-            }
-        } else {
-            // is it an auto achievement?
-            if (plugin.getAchievementConfig().getBoolean(advancement.getConfigName() + ".auto")) {
-                // insert a new record
-                seta.put("uuid", player.getUniqueId().toString());
-                seta.put("name", advancement.getConfigName());
-                seta.put("amount", obj);
-                seta.put("completed", 0);
-                qf.doInsert("achievements", seta);
+                if (achieved) {
+                    // award achievement!
+                    int reward_amount = plugin.getAchievementConfig().getInt(advancement.getConfigName() + ".reward_amount");
+                    String reward_type = plugin.getAchievementConfig().getString(advancement.getConfigName() + ".reward_type");
+                    // display a proper advancement if possible
+                    grantAdvancement(advancement, player);
+                    if (reward_type.equalsIgnoreCase("XP")) {
+                        new TARDISXPRewarder(player).changeExp(reward_amount);
+                    } else {
+                        ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
+                        Inventory inv = player.getInventory();
+                        HashMap<Integer, ItemStack> excess = inv.addItem(is);
+                        excess.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
+                    }
+                    // set achievement as done
+                    seta.put("completed", 1);
+                    qf.doUpdate("achievements", seta, wherem);
+                } else {
+                    if (obj.getClass().equals(String.class)) {
+                        if (data != null && !data.contains(obj)) {
+                            seta.put("amount", amount + ":" + obj);
+                            qf.doUpdate("achievements", seta, wherem);
+                        }
+                    } else {
+                        seta.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
+                        qf.doUpdate("achievements", seta, wherem);
+                    }
+                }
+            } else {
+                // is it an auto achievement?
+                if (plugin.getAchievementConfig().getBoolean(advancement.getConfigName() + ".auto")) {
+                    // insert a new record
+                    seta.put("uuid", player.getUniqueId().toString());
+                    seta.put("name", advancement.getConfigName());
+                    seta.put("amount", obj);
+                    seta.put("completed", 0);
+                    qf.doInsert("achievements", seta);
+                }
             }
         }
     }

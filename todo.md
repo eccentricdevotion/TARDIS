@@ -17,6 +17,8 @@
    * For TARDIS worlds, use PlayerChangedWorldEvent to switch GameModes depending on config setting
    * Make sure spawners work
 7. Update documentation...
+8. Add a check to make sure a TARDIS can't be created in someone elses home location
+
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
