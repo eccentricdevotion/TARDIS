@@ -77,7 +77,7 @@ public class TARDISBlockStackListener implements Listener {
                     custom = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
                     blocks.add(custom); // custom
                 } catch (IllegalArgumentException e) {
-                    plugin.debug(plugin.getPluginName() + "Invalid custom seed block material for " + console + "!");
+                    plugin.debug("Invalid custom seed block material for " + console + "!");
                 }
             }
         });

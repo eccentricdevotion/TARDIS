@@ -132,7 +132,7 @@ class TARDISArchiveCommand {
                         String path = plugin.getDataFolder() + File.separator + directory + File.separator + current.getPermission() + ".tschm";
                         File file = new File(path);
                         if (!file.exists()) {
-                            plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+                            plugin.debug("Could not find a schematic with that name!");
                             return true;
                         }
                         // get JSON

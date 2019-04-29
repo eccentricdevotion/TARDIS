@@ -81,13 +81,13 @@ public class TARDISConsoleLoader {
                 String path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + filename;
                 File file = new File(path);
                 if (!file.exists()) {
-                    plugin.debug(plugin.getPluginName() + "Could not find a custom schematic with the name" + filename + "!");
+                    plugin.debug("Could not find a custom schematic with the name" + filename + "!");
                     continue;
                 }
                 // check there is an Artron value
                 String permission = console.toLowerCase(Locale.ENGLISH);
                 if (plugin.getArtronConfig().get("upgrades." + permission) == null) {
-                    plugin.debug(plugin.getPluginName() + "Could not find a corresponding config entry in artron.yml for " + permission + "!");
+                    plugin.debug("Could not find a corresponding config entry in artron.yml for " + permission + "!");
                     continue;
                 }
                 // check seed material
@@ -95,7 +95,7 @@ public class TARDISConsoleLoader {
                 try {
                     Material.valueOf(seed);
                 } catch (IllegalArgumentException e) {
-                    plugin.debug(plugin.getPluginName() + "Invalid custom seed block material for " + console + "!");
+                    plugin.debug("Invalid custom seed block material for " + console + "!");
                     continue;
                 }
                 plugin.debug("Adding custom console schematic: " + console);
