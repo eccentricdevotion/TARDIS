@@ -202,9 +202,9 @@ public class TARDIS extends JavaPlugin {
             if (worldManager != WORLD_MANAGER.NONE) {
                 console.sendMessage(pluginName + ChatColor.RED + "This plugin is currently incompatible with other multi-world plugins, disabling...");
                 console.sendMessage(pluginName + ChatColor.RED + "You can use a TARDIS command to load and unload worlds:");
-                console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld load [world] <WorldType> <Environment>");
-                console.sendMessage(pluginName + ChatColor.BLACK + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
-                console.sendMessage(pluginName + ChatColor.BLACK + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
+                console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld [load|unload] [world] <WorldType> <Environment>");
+                console.sendMessage(pluginName + ChatColor.BLUE + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
+                console.sendMessage(pluginName + ChatColor.BLUE + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
                 pm.disablePlugin(this);
                 return;
             }
