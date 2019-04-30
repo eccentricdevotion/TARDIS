@@ -973,5 +973,5 @@ commands:
   tardisworld:
     aliases: [tardisw, tw]
     description: Load or unload TARDIS worlds
-    usage: /<command> [load|unload] [world] <WorldType> <Environment>
+    usage: /<command> [load|unload|gm] [world] <WorldType> <Environment>
     permission: tardis.admin
