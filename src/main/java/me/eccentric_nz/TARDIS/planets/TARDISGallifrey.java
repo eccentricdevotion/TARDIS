@@ -60,8 +60,8 @@ public class TARDISGallifrey {
             // load world
             WorldCreator.name("Gallifrey").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
             // add world to config
-            plugin.getConfig().set("worlds.Gallifrey", true);
-            plugin.saveConfig();
+            plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
+            plugin.savePlanetsConfig();
         } catch (IOException | CommandException e) {
             plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Gallifrey world files to " + container + " {0}", e.getMessage());
         }

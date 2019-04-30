@@ -1153,4 +1153,13 @@ public class TARDIS extends JavaPlugin {
     public void setRecordingTask(BukkitTask recordingTask) {
         this.recordingTask = recordingTask;
     }
+
+    public void savePlanetsConfig() {
+        try {
+            String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
+            planetsConfig.save(new File(planetsPath));
+        } catch (IOException io) {
+            plugin.debug("Could not save planets.yml, " + io.getMessage());
+        }
+    }
 }

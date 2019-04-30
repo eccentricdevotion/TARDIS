@@ -17,11 +17,14 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
@@ -38,6 +41,50 @@ public class TARDISPlanetsUpdater {
 
     public void checkPlanetsConfig() {
         boolean save = false;
+        if (plugin.getConfig().contains("worlds")) {
+            Set<String> worlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
+            for (String w : worlds) {
+                if (!planets_config.contains("planets." + w)) {
+                    // get level data
+                    TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w);
+                    planets_config.set("planets." + w + ".enabled", true);
+                    planets_config.set("planets." + w + ".time_travel", plugin.getConfig().getBoolean("worlds." + w));
+                    planets_config.set("planets." + w + ".resource_pack", "default");
+                    planets_config.set("planets." + w + ".gamemode", data.getGameMode().toString());
+                    planets_config.set("planets." + w + ".world_type", data.getWorldType().toString());
+                    planets_config.set("planets." + w + ".environment", data.getEnvironment().toString());
+                }
+            }
+            plugin.getConfig().set("worlds", null);
+            plugin.saveConfig();
+            planets_config.set("planets.Skaro.gamemode", "SURVIVAL");
+            planets_config.set("planets.Skaro.time_travel", true);
+            planets_config.set("planets.Skaro.world_type", "BUFFET");
+            planets_config.set("planets.Skaro.environment", "NORMAL");
+            planets_config.set("planets.Siluria.gamemode", "SURVIVAL");
+            planets_config.set("planets.Siluria.time_travel", true);
+            planets_config.set("planets.Siluria.world_type", "BUFFET");
+            planets_config.set("planets.Siluria.environment", "NORMAL");
+            planets_config.set("planets.Gallifrey.gamemode", "SURVIVAL");
+            planets_config.set("planets.Gallifrey.time_travel", true);
+            planets_config.set("planets.Gallifrey.world_type", "BUFFET");
+            planets_config.set("planets.Gallifrey.environment", "NORMAL");
+            if (planets_config.contains("planets.TARDIS_Zero_Room")) {
+                planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
+                planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
+                planets_config.set("planets.TARDIS_Zero_Room.resource_pack", "default");
+                planets_config.set("planets.TARDIS_Zero_Room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
+                planets_config.set("planets.TARDIS_Zero_Room.world_type", "FLAT");
+                planets_config.set("planets.TARDIS_Zero_Room.environment", "NORMAL");
+                planets_config.set("planets.TARDIS_Zero_Room.void", true);
+            }
+            planets_config.set("planets.TARDIS_TimeVortex.enabled", true);
+            planets_config.set("planets.TARDIS_TimeVortex.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
+            planets_config.set("planets.TARDIS_TimeVortex.time_travel", false);
+            planets_config.set("planets.TARDIS_TimeVortex.world_type", "FLAT");
+            planets_config.set("planets.TARDIS_TimeVortex.environment", "NORMAL");
+            save = true;
+        }
         if (!planets_config.contains("planets.Skaro.flying_daleks")) {
             planets_config.set("planets.Skaro.flying_daleks", true);
             save = true;

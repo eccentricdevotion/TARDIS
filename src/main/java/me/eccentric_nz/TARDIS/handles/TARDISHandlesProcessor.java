@@ -411,7 +411,7 @@ public class TARDISHandlesProcessor {
                                                     if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, FLAG.getDefaultFlags()))) {
                                                         continue;
                                                     }
-                                                    if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
+                                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
                                                         TARDISMessage.handlesSend(player, "NO_WORLD_TRAVEL");
                                                         continue;
                                                     }

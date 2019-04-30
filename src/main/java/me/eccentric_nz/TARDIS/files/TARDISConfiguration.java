@@ -257,29 +257,28 @@ public class TARDISConfiguration {
         List<World> worlds = plugin.getServer().getWorlds();
         String defWorld = config.getString("creation.default_world_name");
         worlds.forEach((w) -> {
-            String worldname = "worlds." + w.getName();
-            if (!config.contains(worldname) && !worldname.equals(defWorld)) {
-                plugin.getConfig().set(worldname, true);
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
+            String worldname = "planets." + w.getName();
+            if (!plugin.getPlanetsConfig().contains(worldname) && !worldname.equals(defWorld)) {
+                plugin.getPlanetsConfig().set(worldname + ".timetravel", true);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + w.getName() + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + w.getName());
             }
         });
-        plugin.saveConfig();
         // now remove worlds that may have been deleted
-        Set<String> cWorlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(true);
+        Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
             if (plugin.getServer().getWorld(cw) == null) {
-                if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && worldFolderExists(cw)) {
+                if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 } else {
-                    plugin.getConfig().set("worlds." + cw, null);
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from config.yml");
-                    // remove records from database that may contain
-                    // the removed world
+                    plugin.getPlanetsConfig().set("planets." + cw, null);
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
+                    // remove records from database that may contain the removed world
                     plugin.getCleanUpWorlds().add(cw);
                 }
             }
         });
+        plugin.savePlanetsConfig();
     }
 
     private boolean worldFolderExists(String world) {
@@ -299,12 +298,18 @@ public class TARDISConfiguration {
     }
 
     private void loadWorld(String world) {
-        if ((world.equals(plugin.getConfig().getString("creation.default_world_name")) || world.equals("TARDIS_Zero_Room"))) {
-            WorldCreator.name(world).type(WorldType.FLAT).environment(Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
-        } else if (world.equals("Gallifrey") || world.equals("Skaro") || world.equals("Siluria")) {
-            WorldCreator.name(world).type(WorldType.BUFFET).environment(Environment.NORMAL).createWorld();
-        } else {
-            WorldCreator.name(world).type(WorldType.NORMAL).environment(Environment.NORMAL).createWorld();
+        try {
+            String wt = plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
+            WorldType worldType = WorldType.valueOf(wt);
+            String e = plugin.getPlanetsConfig().getString("planets." + world + ".environment");
+            Environment environment = Environment.valueOf(e);
+            WorldCreator worldCreator = WorldCreator.name(world).type(worldType).environment(environment);
+            if (plugin.getPlanetsConfig().getBoolean("planets." + world + ".void")) {
+                worldCreator.generator(new TARDISChunkGenerator());
+            }
+            worldCreator.createWorld();
+        } catch (IllegalArgumentException e) {
+            return;
         }
     }
 }

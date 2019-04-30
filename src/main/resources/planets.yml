@@ -2,23 +2,47 @@ switch_resource_packs: false
 set_pack_on_join: true
 default_resource_pack: https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1
 planets:
-    Skaro:
-        enabled: false
-        resource_pack: https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1
-        acid: true
-        acid_damage: 5
-        acid_potions:
-            - WEAKNESS
-            - POISON
-        rust: true
-        flying_daleks: true
-    Siluria:
-        enabled: false
-        resource_pack: default
-        false_nether: true
-    Gallifrey:
-        enabled: false
-        resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
-    TARDIS_TimeVortex:
-        resource_pack: default
-        void: true
+  Skaro:
+    enabled: false
+    resource_pack: https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1
+    acid: true
+    acid_damage: 5
+    acid_potions:
+      - WEAKNESS
+      - POISON
+    rust: true
+    flying_daleks: true
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: BUFFET
+    environment: NORMAL
+  Siluria:
+    enabled: false
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: BUFFET
+    environment: NORMAL
+  Gallifrey:
+    enabled: false
+    resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: BUFFET
+    environment: NORMAL
+  TARDIS_TimeVortex:
+    enabled: true
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: false
+    world_type: FLAT
+    environment: NORMAL
+    void: true
+  TARDIS_Zero_Room:
+    enabled: false
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: false
+    world_type: FLAT
+    environment: NORMAL
+    void: true

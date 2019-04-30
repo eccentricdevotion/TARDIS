@@ -103,12 +103,12 @@ public class TARDISTimeTravel {
                     }
                     if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
-                            if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
+                            if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") || malfunction) {
                                 allowedWorlds.add(ww);
                             }
                         } else {
                             if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                                if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
+                                if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") || malfunction) {
                                     allowedWorlds.add(ww);
                                 }
                             }

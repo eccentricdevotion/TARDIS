@@ -50,12 +50,12 @@ public class TARDISRandomiserCircuit {
             World ww = plugin.getServer().getWorld(o);
             if (ww != null) {
                 if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
-                    if (plugin.getConfig().getBoolean("worlds." + o)) {
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                         allowedWorlds.add(o);
                     }
                 } else {
                     if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                        if (plugin.getConfig().getBoolean("worlds." + o)) {
+                        if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }
                     }

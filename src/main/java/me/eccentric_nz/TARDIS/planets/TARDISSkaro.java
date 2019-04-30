@@ -60,8 +60,8 @@ public class TARDISSkaro {
             // load world
             WorldCreator.name("Skaro").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
             // add world to config
-            plugin.getConfig().set("worlds.Skaro", true);
-            plugin.saveConfig();
+            plugin.getPlanetsConfig().set("planets.Skaro.time_travel", true);
+            plugin.savePlanetsConfig();
             // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
             Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
             if (twa != null) {

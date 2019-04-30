@@ -50,11 +50,11 @@ class TARDISSetWorldInclusionCommand {
             return false;
         }
         if (first.equals("include")) {
-            plugin.getConfig().set("worlds." + nodots, true);
+            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", true);
         } else {
-            plugin.getConfig().set("worlds." + nodots, false);
+            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", false);
         }
-        plugin.saveConfig();
+        plugin.savePlanetsConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }

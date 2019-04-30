@@ -67,7 +67,7 @@ class TARDISConfigCommand {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> worldNames = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
             worldNames.forEach((wname) -> {
-                String enabled = plugin.getConfig().getString("worlds." + wname);
+                String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
                 sender.sendMessage("    " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
             });
             return true;

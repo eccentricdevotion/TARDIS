@@ -144,7 +144,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         // check the world is not excluded
                         String world = remoteLocation.getWorld().getName();
-                        if (!plugin.getConfig().getBoolean("worlds." + world)) {
+                        if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                             TARDISMessage.send(player, "NO_PB_IN_WORLD");
                             return;
                         }

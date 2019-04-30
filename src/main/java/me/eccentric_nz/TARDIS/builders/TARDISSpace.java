@@ -78,8 +78,13 @@ public class TARDISSpace {
             // set the time to night
             tardisWorld.setTime(14000L);
             // add world to config, but disabled by default
-            plugin.getConfig().set("worlds." + name, false);
-            plugin.saveConfig();
+            plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
+            plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
+            plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
+            plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
+            plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
+            plugin.getPlanetsConfig().set("planets." + name + ".void", true);
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
 //            if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
 //                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
@@ -177,9 +182,15 @@ public class TARDISSpace {
         WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
 //        }
         // add world to config, but disabled by default
-        plugin.getConfig().set("worlds." + name, false);
-        plugin.saveConfig();
-//        if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
+        plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
+        plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
+        plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
+        plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
+        plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
+        plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
+        plugin.getPlanetsConfig().set("planets." + name + ".void", true);
+        plugin.savePlanetsConfig();
+        //        if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
 //            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
 //            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
 //            if (plugin.getConfig().getBoolean("creation.keep_night")) {

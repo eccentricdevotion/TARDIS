@@ -74,7 +74,7 @@ public class TARDISRescue {
         if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, FLAG.getDefaultFlags()))) {
             return false;
         }
-        if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return false;
         }

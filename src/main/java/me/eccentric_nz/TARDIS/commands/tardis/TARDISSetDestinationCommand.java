@@ -93,7 +93,7 @@ class TARDISSetDestinationCommand {
                     return true;
                 }
                 // check the world is not excluded
-                if (!plugin.getConfig().getBoolean("worlds." + world)) {
+                if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                     TARDISMessage.send(player, "NO_PB_IN_WORLD");
                     return true;
                 }

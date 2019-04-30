@@ -172,7 +172,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         String w = p.getLocation().getWorld().getName();
-        if (!plugin.getConfig().getBoolean("worlds." + w)) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_WORLD");
             return;
@@ -238,7 +238,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         String w = p.getLocation().getWorld().getName();
-        if (!plugin.getConfig().getBoolean("worlds." + w)) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_WORLD");
             return;

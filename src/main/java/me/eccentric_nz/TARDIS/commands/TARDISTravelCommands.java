@@ -815,7 +815,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "WORLD_NOT_FOUND");
             return null;
         }
-        if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return null;
         }
