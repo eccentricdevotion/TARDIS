@@ -182,7 +182,8 @@ public class TARDISDeleteCommand {
     }
 
     private Material getRestore(World w) {
-        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
+        String dn = plugin.getConfig().getString("creation.default_world_name");
+        if (w.getWorldType() == WorldType.FLAT || w.getName().equals(dn) || w.getGenerator() instanceof TARDISChunkGenerator) {
             return Material.AIR;
         }
         switch (w.getEnvironment()) {

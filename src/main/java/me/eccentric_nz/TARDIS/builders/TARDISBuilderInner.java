@@ -479,7 +479,8 @@ public class TARDISBuilderInner {
                         }
                     } else if (type.equals(Material.SPONGE)) {
                         Material swap;
-                        if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex") || world.getGenerator() instanceof TARDISChunkGenerator) {
+                        String dn = plugin.getConfig().getString("creation.default_world_name");
+                        if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals(dn) || world.getGenerator() instanceof TARDISChunkGenerator) {
                             swap = Material.AIR;
                         } else {
                             swap = Material.STONE;

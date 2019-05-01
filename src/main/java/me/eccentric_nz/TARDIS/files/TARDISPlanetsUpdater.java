@@ -78,11 +78,12 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.environment", "NORMAL");
                 planets_config.set("planets.TARDIS_Zero_Room.void", true);
             }
-            planets_config.set("planets.TARDIS_TimeVortex.enabled", true);
-            planets_config.set("planets.TARDIS_TimeVortex.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
-            planets_config.set("planets.TARDIS_TimeVortex.time_travel", false);
-            planets_config.set("planets.TARDIS_TimeVortex.world_type", "FLAT");
-            planets_config.set("planets.TARDIS_TimeVortex.environment", "NORMAL");
+            String dn = plugin.getConfig().getString("creation.default_world_name");
+            planets_config.set("planets." + dn + ".enabled", true);
+            planets_config.set("planets." + dn + ".gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
+            planets_config.set("planets." + dn + ".time_travel", false);
+            planets_config.set("planets." + dn + ".world_type", "FLAT");
+            planets_config.set("planets." + dn + ".environment", "NORMAL");
             save = true;
         }
         if (!planets_config.contains("planets.Skaro.flying_daleks")) {
