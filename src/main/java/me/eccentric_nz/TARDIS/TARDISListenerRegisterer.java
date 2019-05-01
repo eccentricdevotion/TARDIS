@@ -149,6 +149,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISFarmBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFireListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGlassesListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISGameModeSwitcher(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGravityWellListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandbrakeListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.handles")) {

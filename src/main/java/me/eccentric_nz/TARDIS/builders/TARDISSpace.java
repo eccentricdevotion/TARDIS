@@ -29,7 +29,6 @@ import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
@@ -54,7 +53,7 @@ public class TARDISSpace {
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
-            String gm = plugin.getConfig().getString("creation.gamemode").toLowerCase(Locale.ENGLISH);
+//            String gm = plugin.getConfig().getString("creation.gamemode").toLowerCase(Locale.ENGLISH);
 //            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
 //                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
 //                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);

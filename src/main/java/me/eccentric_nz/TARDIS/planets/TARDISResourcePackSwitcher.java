@@ -36,7 +36,7 @@ public class TARDISResourcePackSwitcher implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerWorldChange(PlayerChangedWorldEvent event) {
+    public void onResourcePackWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
         String from = plugin.getPlanetsConfig().getString("planets." + event.getFrom().getName() + ".resource_pack");

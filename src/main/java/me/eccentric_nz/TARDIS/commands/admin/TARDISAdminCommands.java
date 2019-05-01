@@ -386,7 +386,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                         TARDISMessage.send(sender, "ARG_GAMEMODE");
                         return true;
                     }
-                    plugin.getConfig().set("creation.gamemode", args[1].toLowerCase(Locale.ENGLISH));
+                    // get default world name
+                    String defWorld = plugin.getConfig().getString("creation.default_world_name");
+                    plugin.getPlanetsConfig().set("planets." + defWorld + ".gamemode", args[1].toUpperCase(Locale.ENGLISH));
+                    plugin.getPlanetsConfig().set("planets.TARDIS_Zero_Room.gamemode", args[1].toUpperCase(Locale.ENGLISH));
+                    plugin.savePlanetsConfig();
+                    return true;
                 }
                 if (first.equals("inventory_group")) {
                     plugin.getConfig().set("creation.inventory_group", args[1]);
