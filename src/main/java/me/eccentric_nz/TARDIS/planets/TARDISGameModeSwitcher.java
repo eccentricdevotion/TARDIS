@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * @author eccentric_nz
@@ -46,7 +47,21 @@ public class TARDISGameModeSwitcher implements Listener {
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
                 player.setGameMode(gm);
             } catch (IllegalArgumentException e) {
-                plugin.debug("Could not get GameMode for world '" + world + "'");
+                plugin.debug("Could not get GameMode for world change: '" + world + "'");
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onGameModeJoin(PlayerJoinEvent event) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE)) {
+            Player player = event.getPlayer();
+            String world = player.getWorld().getName();
+            try {
+                GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
+                player.setGameMode(gm);
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Could not get GameMode for world join: '" + world + "'");
             }
         }
     }

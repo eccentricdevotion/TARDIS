@@ -2,7 +2,7 @@
 
 ## Next version `4.1`
 0. Update to Spigot 1.14
-   * Add new mob types to farming and genetic manipulator (waiting for ProtocolLib/LibsDisguises update)
+   * Add new mob types to farming and genetic manipulator (waiting for ProtocolLib / LibsDisguises updates)
    * Foxes?
    * Test villager farming - biome specific / professions not persistent?
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
@@ -14,7 +14,6 @@
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Re-enable Siluria, Skaro and Gallifrey worlds
-   * For TARDIS worlds, use PlayerChangedWorldEvent to switch GameModes depending on config setting
    * Make sure spawners work
 7. Update documentation...
 
