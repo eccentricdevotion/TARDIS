@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.commands.utils.TARDISGameModeCommand;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
@@ -66,6 +67,9 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisbind").setExecutor(new TARDISBindCommands(plugin));
         plugin.getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
         plugin.getCommand("tardisbook").setExecutor(new TARDISBookCommands(plugin));
+        TARDISGameModeCommand tardisGM = new TARDISGameModeCommand(plugin);
+        plugin.getCommand("tardisgamemode").setExecutor(tardisGM);
+        plugin.getCommand("tardisgamemode").setTabCompleter(tardisGM);
         plugin.getCommand("tardisgive").setExecutor(new TARDISGiveCommand(plugin));
         plugin.getCommand("tardisgive").setTabCompleter(new TARDISGiveTabComplete(plugin));
         plugin.getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(plugin));

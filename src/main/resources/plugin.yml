@@ -975,3 +975,8 @@ commands:
     description: Load or unload TARDIS worlds
     usage: /<command> [load|unload|gm] [world] <WorldType> <Environment>
     permission: tardis.admin
+  tardisgamemode:
+    aliases: [tgm, tgms, tgmc, tgma, tgmsp]
+    description: Set a player's gamemode
+    usage: /<command> [GameMode] <player>
+    permission: tardis.admin
