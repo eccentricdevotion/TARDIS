@@ -41,7 +41,7 @@ class TARDISMakePresetCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CMD_ONLY_PLAYER");
+            TARDISMessage.send(sender, "CMD_PLAYER");
             return true;
         }
         // check they are facing east

@@ -39,7 +39,7 @@ class TARDISCondenserCommand {
 
     public boolean set(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            TARDISMessage.send(sender, "CMD_ONLY_PLAYER");
+            TARDISMessage.send(sender, "CMD_PLAYER");
             return true;
         }
         Player player = (Player) sender;
