@@ -275,7 +275,10 @@ class TARDISListenerRegisterer {
         if (plugin.getPlanetsConfig().getBoolean("planets.Siluria.enabled") && plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
             plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
         }
-        if (plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") || plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled")) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.enabled")) {
+            plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
+        }
+        if (plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") || plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled") || plugin.getPlanetsConfig().getBoolean("planets.Siluria.enabled")) {
             plugin.getPM().registerEvents(new TARDISChunkPopulateListener(plugin), plugin);
         }
         if (plugin.getPlanetsConfig().getBoolean("switch_resource_packs")) {
