@@ -401,9 +401,9 @@ public class TARDISFarmer {
                             tv.setName(v.getCustomName());
                             tv.setTrades(v.getRecipes());
 //                            tv.setRiches(v.getRiches());
-//                            tv.setCareer(v.getCareer());
                             if (plugin.isHelperOnServer()) {
-//                                tv.setCareerLevel(plugin.getTardisHelper().getVillagerCareerLevel(v));
+                                tv.setLevel(plugin.getTardisHelper().getVillagerLevel(v));
+                                tv.setOutfit(plugin.getTardisHelper().getVillagerOutfit(v));
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
                             old_macd_had_a_villager.add(tv);
@@ -831,7 +831,8 @@ public class TARDISFarmer {
                             npc.setCustomName(name);
                         }
                         if (plugin.isHelperOnServer()) {
-//                            plugin.getTardisHelper().setVillagerCareerLevel(npc, e.getCareerLevel());
+                            plugin.getTardisHelper().setVillagerLevel(npc, e.getLevel());
+                            plugin.getTardisHelper().setVillagerOutfit(npc, e.getOutfit());
                             plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         }
                         npc.setRemoveWhenFarAway(false);
