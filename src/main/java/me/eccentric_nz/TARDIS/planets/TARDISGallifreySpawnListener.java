@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.tardischunkgenerator.Outfit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Villager;
@@ -54,6 +53,6 @@ public final class TARDISGallifreySpawnListener implements Listener {
         Villager villager = (Villager) le;
         villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
         plugin.getTardisHelper().setVillagerLevel(villager, 1);
-        plugin.getTardisHelper().setVillagerOutfit(villager, Outfit.values()[TARDISConstants.RANDOM.nextInt(Outfit.values().length)]);
+        villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
     }
 }

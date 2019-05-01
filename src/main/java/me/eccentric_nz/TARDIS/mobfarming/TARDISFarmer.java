@@ -403,7 +403,7 @@ public class TARDISFarmer {
 //                            tv.setRiches(v.getRiches());
                             if (plugin.isHelperOnServer()) {
                                 tv.setLevel(plugin.getTardisHelper().getVillagerLevel(v));
-                                tv.setOutfit(plugin.getTardisHelper().getVillagerOutfit(v));
+                                tv.setVillagerType(v.getVillagerType());
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
                             old_macd_had_a_villager.add(tv);
@@ -832,7 +832,7 @@ public class TARDISFarmer {
                         }
                         if (plugin.isHelperOnServer()) {
                             plugin.getTardisHelper().setVillagerLevel(npc, e.getLevel());
-                            plugin.getTardisHelper().setVillagerOutfit(npc, e.getOutfit());
+                            npc.setVillagerType(e.getVillagerType());
                             plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         }
                         npc.setRemoveWhenFarAway(false);
