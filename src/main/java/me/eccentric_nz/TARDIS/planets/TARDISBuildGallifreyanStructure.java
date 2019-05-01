@@ -64,6 +64,7 @@ class TARDISBuildGallifreyanStructure {
             plugin.debug("Could not find the Gallifrey schematic!");
             return false;
         }
+        plugin.debug("Building Gallifreyan structure @ " + startx + ", " + starty + ", " + startz);
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
@@ -124,9 +125,11 @@ class TARDISBuildGallifreyanStructure {
                         case SPAWNER:
                             Block spawner = world.getBlockAt(x, y, z);
                             spawner.setBlockData(data);
-                            CreatureSpawner cs = (CreatureSpawner) spawner.getState();
-                            cs.setSpawnedType(EntityType.VILLAGER);
-                            cs.update();
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                CreatureSpawner cs = (CreatureSpawner) spawner.getState();
+                                cs.setSpawnedType(EntityType.VILLAGER);
+                                cs.update();
+                            }, 2L);
                             break;
                         default:
                             TARDISBlockSetters.setBlock(world, x, y, z, data);

@@ -65,6 +65,7 @@ class TARDISBuildSkaroStructure {
             plugin.debug("Could not find the Skaro schematic!");
             return false;
         }
+        plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
@@ -123,9 +124,11 @@ class TARDISBuildSkaroStructure {
                         case SPAWNER:
                             Block spawner = world.getBlockAt(x, y, z);
                             spawner.setBlockData(data);
-                            CreatureSpawner cs = (CreatureSpawner) spawner.getState();
-                            cs.setSpawnedType(EntityType.SKELETON);
-                            cs.update();
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                CreatureSpawner cs = (CreatureSpawner) spawner.getState();
+                                cs.setSpawnedType(EntityType.SKELETON);
+                                cs.update();
+                            }, 2l);
                             break;
                         default:
                             TARDISBlockSetters.setBlock(world, x, y, z, data);

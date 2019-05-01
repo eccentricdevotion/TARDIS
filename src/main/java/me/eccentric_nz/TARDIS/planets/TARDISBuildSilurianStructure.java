@@ -65,6 +65,7 @@ class TARDISBuildSilurianStructure {
             plugin.debug("Could not find the Silurian schematics!");
             return false;
         }
+        plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
         World world = plugin.getServer().getWorld("Siluria");
         structure(paths[0], world, startx, starty, startz);
         // choose a random direction
@@ -149,9 +150,11 @@ class TARDISBuildSilurianStructure {
                         case SPAWNER:
                             Block spawner = world.getBlockAt(x, y, z);
                             spawner.setBlockData(data);
-                            CreatureSpawner cs = (CreatureSpawner) spawner.getState();
-                            cs.setSpawnedType(EntityType.SKELETON);
-                            cs.update();
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                CreatureSpawner cs = (CreatureSpawner) spawner.getState();
+                                cs.setSpawnedType(EntityType.SKELETON);
+                                cs.update();
+                            }, 2L);
                             break;
                         default:
                             TARDISBlockSetters.setBlock(world, x, y, z, data);

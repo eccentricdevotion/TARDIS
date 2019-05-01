@@ -112,6 +112,8 @@ public class TARDISChunkPopulateListener implements Listener {
                 case GALLIFREY:
                     if (TARDISConstants.RANDOM.nextBoolean()) {
                         isBuilding = new TARDISBuildGallifreyanStructure(plugin).buildCity(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+                    } else {
+                        isBuilding = false;
                     }
                     break;
                 case SILURIA:
@@ -123,6 +125,6 @@ public class TARDISChunkPopulateListener implements Listener {
                 default:
                     break;
             }
-        }, 1L);
+        }, 2L);
     }
 }
