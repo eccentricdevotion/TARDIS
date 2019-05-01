@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
+import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
+import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -270,6 +273,17 @@ public class TARDISConfiguration {
                 if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
+                } else if ((cw.equals("Gallifrey") || cw.equals("Siluria") || cw.equals("Skaro")) && !worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+                    // create world
+                    if (cw.equals("Skaro")) {
+                        new TARDISSkaro(plugin).createDalekWorld();
+                    }
+                    if (cw.equals("Siluria")) {
+                        new TARDISSiluria(plugin).createSilurianUnderworld();
+                    }
+                    if (cw.equals("Gallifrey")) {
+                        new TARDISGallifrey(plugin).createTimeLordWorld();
+                    }
                 } else {
                     plugin.getPlanetsConfig().set("planets." + cw, null);
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
