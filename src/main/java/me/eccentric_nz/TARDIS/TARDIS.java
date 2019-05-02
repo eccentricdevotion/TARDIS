@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
-import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
@@ -50,6 +49,7 @@ import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
 import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
 import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
+import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
@@ -195,17 +195,17 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             worldManager = WORLD_MANAGER.getWorldManager();
-            // disable plugin if another world manager is in use (hopefully a temporary measure)
-            if (worldManager != WORLD_MANAGER.NONE) {
-                console.sendMessage(pluginName + ChatColor.RED + "This plugin is currently incompatible with other multi-world plugins, disabling...");
-                console.sendMessage(pluginName + ChatColor.RED + "You can use a TARDIS command to load and unload worlds:");
-                console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld [load|unload] [world] <WorldType> <Environment>");
-                console.sendMessage(pluginName + ChatColor.BLUE + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
-                console.sendMessage(pluginName + ChatColor.BLUE + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
-                console.sendMessage(pluginName + ChatColor.RED + "Probably a good idea to open existing worlds up in 1.14 first before trying to load them on the server.");
-                pm.disablePlugin(this);
-                return;
-            }
+//            // disable plugin if another world manager is in use (hopefully a temporary measure)
+//            if (worldManager != WORLD_MANAGER.NONE) {
+//                console.sendMessage(pluginName + ChatColor.RED + "This plugin is currently incompatible with other multi-world plugins, disabling...");
+//                console.sendMessage(pluginName + ChatColor.RED + "You can use a TARDIS command to load and unload worlds:");
+//                console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld [load|unload] [world] <WorldType> <Environment>");
+//                console.sendMessage(pluginName + ChatColor.BLUE + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
+//                console.sendMessage(pluginName + ChatColor.BLUE + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
+//                console.sendMessage(pluginName + ChatColor.RED + "Probably a good idea to open existing worlds up in 1.14 first before trying to load them on the server.");
+//                pm.disablePlugin(this);
+//                return;
+//            }
             saveDefaultConfig();
             reloadConfig();
             loadCustomConfigs();

@@ -23,11 +23,13 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
@@ -79,16 +81,26 @@ public class TARDISCondenserListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
-                        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE) && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
-                            TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
-                            return;
-                        }
-                        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
-                            MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-                            if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
-                                TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
-                                return;
-                            }
+                        switch (plugin.getWorldManager()) {
+                            case MULTIVERSE:
+                                if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
+                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    return;
+                                }
+                                break;
+                            case MULTIWORLD:
+                                MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
+                                if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
+                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    return;
+                                }
+                                break;
+                            case NONE:
+                                if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    return;
+                                }
+                                break;
                         }
                     }
                     chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
@@ -102,12 +114,7 @@ public class TARDISCondenserListener implements Listener {
                     isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
                 }
                 if (isCondenser) {
-                    try {
-                        Class.forName("org.bukkit.Sound");
-                        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
-                    } catch (ClassNotFoundException e) {
-                        loc.getWorld().playEffect(loc, Effect.CLICK2, 0);
-                    }
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     QueryFactory qf = new QueryFactory(plugin);
                     int amount = 0;
                     // get the stacks in the inventory
@@ -222,12 +229,7 @@ public class TARDISCondenserListener implements Listener {
         Inventory aec = plugin.getServer().createInventory(holder, inv_size, ChatColor.DARK_RED + "" + title);
         // set the contents to what was in the chest
         aec.setContents(is);
-        try {
-            Class.forName("org.bukkit.Sound");
-            p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
-        } catch (ClassNotFoundException e) {
-            b.getLocation().getWorld().playEffect(b.getLocation(), Effect.CLICK1, 0);
-        }
+        p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
         p.openInventory(aec);
     }
 }

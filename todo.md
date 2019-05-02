@@ -14,6 +14,8 @@
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
+7. Add pickup arrow functionality to Sonic Screwdriver?
+8. Custom time rotor model
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -45,6 +47,7 @@
    * Clockwork Droid
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 5. Rename resource pack to 'TARDIS-Optifine'?
+6. Custom time rotor model
 
 ## Waiting on Bukkit / SpigotAPI
 1. Get/set Villager career level and willingness

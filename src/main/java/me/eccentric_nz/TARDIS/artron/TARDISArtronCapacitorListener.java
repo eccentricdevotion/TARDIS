@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -149,16 +148,26 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 int amount = 0;
                                 if (item.equals(full)) {
                                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
-                                        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE) && !plugin.getMVHelper().isWorldSurvival(block.getLocation().getWorld())) {
-                                            TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
-                                            return;
-                                        }
-                                        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
-                                            MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-                                            if (multiworld.isCreativeWorld(block.getLocation().getWorld().getName())) {
-                                                TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
-                                                return;
-                                            }
+                                        switch (plugin.getWorldManager()) {
+                                            case MULTIVERSE:
+                                                if (!plugin.getMVHelper().isWorldSurvival(block.getLocation().getWorld())) {
+                                                    TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
+                                                    return;
+                                                }
+                                                break;
+                                            case MULTIWORLD:
+                                                MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
+                                                if (multiworld.isCreativeWorld(block.getLocation().getWorld().getName())) {
+                                                    TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
+                                                    return;
+                                                }
+                                                break;
+                                            case NONE:
+                                                if (plugin.getPlanetsConfig().getString("planets." + block.getLocation().getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                                                    TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
+                                                    return;
+                                                }
+                                                break;
                                         }
                                     }
                                     // remove the NETHER_STAR! (if appropriate)
