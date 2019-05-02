@@ -16,6 +16,7 @@ planets:
     time_travel: true
     world_type: BUFFET
     environment: NORMAL
+    generator: DEFAULT
   Siluria:
     enabled: false
     resource_pack: default
@@ -23,6 +24,7 @@ planets:
     time_travel: true
     world_type: BUFFET
     environment: NORMAL
+    generator: DEFAULT
   Gallifrey:
     enabled: false
     resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
@@ -30,6 +32,7 @@ planets:
     time_travel: true
     world_type: BUFFET
     environment: NORMAL
+    generator: DEFAULT
   TARDIS_TimeVortex:
     enabled: true
     resource_pack: default
@@ -38,6 +41,7 @@ planets:
     world_type: FLAT
     environment: NORMAL
     void: true
+    generator: TARDISChunkGenerator
   TARDIS_Zero_Room:
     enabled: false
     resource_pack: default
@@ -46,3 +50,4 @@ planets:
     world_type: FLAT
     environment: NORMAL
     void: true
+    generator: TARDISChunkGenerator

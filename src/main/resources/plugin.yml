@@ -973,7 +973,7 @@ commands:
   tardisworld:
     aliases: [tardisw, tw]
     description: Load or unload TARDIS worlds
-    usage: /<command> [load|unload|gm] [world] <WorldType> <Environment>
+    usage: /<command> [load|unload|gm] [world] <WorldType> <Environment> <generator>
     permission: tardis.admin
   tardisgamemode:
     aliases: [tgm, tgms, tgmc, tgma, tgmsp]

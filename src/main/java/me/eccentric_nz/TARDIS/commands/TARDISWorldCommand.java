@@ -28,6 +28,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +53,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
         this.plugin = plugin;
         WORLD_SUBS.addAll(plugin.getTardisAPI().getWorlds());
         for (WorldType wt : WorldType.values()) {
-            TYPE_SUBS.add(wt.getName());
+            TYPE_SUBS.add(wt.toString());
         }
         for (World.Environment e : World.Environment.values()) {
             ENV_SUBS.add(e.toString());
@@ -115,6 +116,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     // try to load the world
                     WorldType worldType = WorldType.NORMAL;
                     World.Environment environment = World.Environment.NORMAL;
+                    WorldCreator creator = new WorldCreator(args[1]);
                     if (args.length > 2) {
                         try {
                             worldType = WorldType.valueOf(args[2].toUpperCase(Locale.ENGLISH));
@@ -123,6 +125,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             return true;
                         }
                     }
+                    creator.type(worldType);
                     if (args.length > 3) {
                         try {
                             environment = World.Environment.valueOf(args[3].toUpperCase(Locale.ENGLISH));
@@ -131,7 +134,18 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             return true;
                         }
                     }
-                    if (WorldCreator.name(args[1]).type(worldType).environment(environment).createWorld() == null) {
+                    creator.environment(environment);
+                    if (args.length > 4) {
+                        // Check generator exists
+                        String[] split = args[4].split(":", 2);
+                        Plugin gen = plugin.getPM().getPlugin(split[0]);
+                        if (gen == null) {
+                            TARDISMessage.send(sender, "WORLD_GEN", args[4]);
+                            return true;
+                        }
+                        creator.generator(args[4]);
+                    }
+                    if (creator.createWorld() == null) {
                         TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                         return true;
                     }
@@ -141,6 +155,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".gamemode", "SURVIVAL");
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".world_type", worldType.toString());
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".environment", environment.toString());
+                    plugin.getPlanetsConfig().set("planets." + args[1] + ".generator", args.length > 4 ? args[4] : "DEFAULT");
                     plugin.savePlanetsConfig();
                     return true;
                 } else {
