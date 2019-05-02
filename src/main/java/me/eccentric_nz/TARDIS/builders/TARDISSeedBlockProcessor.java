@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;

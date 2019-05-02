@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.planets;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
@@ -53,30 +53,10 @@ public class TARDISSpace {
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
-//            String gm = plugin.getConfig().getString("creation.gamemode").toLowerCase(Locale.ENGLISH);
-//            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
-//                if (gm.equalsIgnoreCase("creative")) {
-//                    plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " CreativeWorld true");
-//                }
-//                tardisWorld = plugin.getServer().getWorld(name);
-//            } else if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create " + name + " NORMAL -g TARDISChunkGenerator -t FLAT");
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set adjustspawn false " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set pvp false " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set mode " + gm + " " + name);
-//                tardisWorld = plugin.getServer().getWorld(name);
-//            } else {
             tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
-//            }
             // set the time to night
             tardisWorld.setTime(14000L);
-            // add world to config, but disabled by default
+            // add world to config, but time travel disabled by default
             plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
             plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
             plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
@@ -84,19 +64,9 @@ public class TARDISSpace {
             plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
             plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
             plugin.getPlanetsConfig().set("planets." + name + ".void", true);
+            plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
+            plugin.savePlanetsConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-//            if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds gamemode " + gm + " " + name);
-//                if (plugin.getConfig().getBoolean("creation.keep_night")) {
-//                    plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds time always night " + name);
-//                }
-//                if (!inventory_group.equals("0")) {
-//                    plugin.getServer().dispatchCommand(plugin.getConsole(), "world inventory merge " + name + " " + inventory_group);
-//                }
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
-//            }
             if (!inventory_group.equals("0")) {
                 switch (plugin.getInvManager()) {
 //                    case MULTI:
@@ -166,20 +136,7 @@ public class TARDISSpace {
     }
 
     public void createDefaultWorld(String name) {
-//        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
-//        } else if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create " + name + " NORMAL -g TARDISChunkGenerator -t FLAT");
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none " + name);
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set adjustspawn false " + name);
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set pvp false " + name);
-//        } else {
-        WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
-//        }
+        WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDISChunkGenerator").generateStructures(false).createWorld();
         // add world to config, but disabled by default
         plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
         plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
@@ -188,14 +145,7 @@ public class TARDISSpace {
         plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
         plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
         plugin.getPlanetsConfig().set("planets." + name + ".void", true);
+        plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
         plugin.savePlanetsConfig();
-        //        if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
-//            if (plugin.getConfig().getBoolean("creation.keep_night")) {
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds time always night " + name);
-//            }
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
-//        }
     }
 }
