@@ -4,10 +4,12 @@
 0. Update to Spigot 1.14
    * Add new mob types to farming and genetic manipulator (waiting for ProtocolLib / LibsDisguises updates)
    * Foxes?
-   * Test villager farming - biome specific / professions not persistent?
+   * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
-   * Make the TARDIS Condenser a composter?
    * Bamboo room to farm Pandas?
+   * Add Siluria and Gallifrey to TIS
+   * Test TIS for Pickup Arrows, Siluria and Gallifrey
+   * Test Pickup Arrows sonic upgrade
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
@@ -48,6 +50,7 @@
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 5. Rename resource pack to 'TARDIS-Optifine'?
 6. Custom time rotor model
+7. Use `entity.getPersistentDataContainer().set(...);` for TARDISWeepingAngel monsters
 
 ## Waiting on Bukkit / SpigotAPI
 1. Get/set Villager career level and willingness

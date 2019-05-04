@@ -304,6 +304,9 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("P")) {
                             processKey(p, TARDISInfoMenu.PAINTER_CIRCUIT);
                         }
+                        if (chat.equalsIgnoreCase("c")) {
+                            processKey(p, TARDISInfoMenu.ARROW_CIRCUIT);
+                        }
                         break;
                     case MANUAL:
                         if (chat.equalsIgnoreCase("T")) {
@@ -526,6 +529,12 @@ public class TARDISInformationSystemListener implements Listener {
                     case PLANETS:
                         if (chat.equalsIgnoreCase("S")) {
                             processKey(p, TARDISInfoMenu.SKARO);
+                        }
+                        if (chat.equalsIgnoreCase("i")) {
+                            processKey(p, TARDISInfoMenu.SILURIA);
+                        }
+                        if (chat.equalsIgnoreCase("G")) {
+                            processKey(p, TARDISInfoMenu.GALLIFREY);
                         }
                         break;
                     // THIRD level menus
@@ -1077,6 +1086,22 @@ public class TARDISInformationSystemListener implements Listener {
                         }
                         if (chat.equalsIgnoreCase("t")) {
                             processKey(p, TARDISInfoMenu.SKARO_ITEMS);
+                        }
+                        break;
+                    case SILURIA:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.SILURIA_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("M")) {
+                            showInfo(p, TARDISInfoMenu.SILURIA_MONSTERS);
+                        }
+                        break;
+                    case GALLIFREY:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.GALLIFREY_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("M")) {
+                            showInfo(p, TARDISInfoMenu.GALLIFREY_MONSTERS);
                         }
                         break;
                     // FOURTH level menus

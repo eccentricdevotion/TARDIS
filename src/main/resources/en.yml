@@ -561,8 +561,6 @@ LOST_IN_VORTEX: "The TARDIS is still travelling... you would get lost in the tim
 MALFUNCTION: "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!"
 MAP_COPYING: "Attempting to copy map file (%s) to the correct directory..."
 MAP_NOT_FOUND: "Could not find the %s TARDIS map file..."
-MAP_WORLD: "Please move the new map file to the main world's [%s] data folder."
-MAPS_NOT_FOUND: "Could not find TARDIS map files, some recipes will not work!"
 MAT_MISSING: "The Materialisation Circuit is missing from the console! No destination will be set."
 MATERIAL_NOT_VALID: "That is not a valid Material! Try checking https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java"
 MONSTER: "A %s entered the TARDIS!"
