@@ -90,10 +90,6 @@ public class TARDISSonicEntityListener implements Listener {
                             TARDISMessage.send(player, "SONIC_HUNGER", String.format("%.2f", hunger));
                         }, 40L);
                     }
-                } else if (ent instanceof Arrow && player.hasPermission("tardis.sonic.arrow") && lore.contains("Pickup Arrow Upgrade")) {
-                    // pick up arrow
-                    Arrow arrow = (Arrow) ent;
-                    arrow.setPickupStatus(AbstractArrow.PickupStatus.ALLOWED);
                 }
             }
         }

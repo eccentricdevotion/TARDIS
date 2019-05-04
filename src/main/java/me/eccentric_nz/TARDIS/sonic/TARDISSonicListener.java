@@ -38,8 +38,7 @@ import org.bukkit.block.data.type.RedstoneRail;
 import org.bukkit.block.data.type.RedstoneWire;
 import org.bukkit.block.data.type.Snow;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -353,7 +352,7 @@ public class TARDISSonicListener implements Listener {
                             }
                         }, 60L);
                     }
-                    if (b.getType().equals(Material.OAK_WALL_SIGN) && player.hasPermission("tardis.atmospheric")) {
+                    if (Tag.WALL_SIGNS.isTagged(b.getType()) && player.hasPermission("tardis.atmospheric")) {
                         // check the text on the sign
                         Sign sign = (Sign) b.getState();
                         String line0 = ChatColor.stripColor(sign.getLine(0));
@@ -394,6 +393,18 @@ public class TARDISSonicListener implements Listener {
                                         return;
                                     }
                                 }
+                            }
+                        }
+                    }
+                    if (player.hasPermission("tardis.sonic.arrow") && lore.contains("Pickup Arrows Upgrade")) {
+                        playSonicSound(player, now, 600L, "sonic_short");
+                        // scan area around block for an arrow
+                        List<Entity> nearbyEntites = new ArrayList(b.getWorld().getNearbyEntities(b.getLocation(), 2, 2, 2));
+                        for (Entity e : nearbyEntites) {
+                            if (e instanceof Arrow) {
+                                // pick up arrow
+                                Arrow arrow = (Arrow) e;
+                                arrow.setPickupStatus(AbstractArrow.PickupStatus.ALLOWED);
                             }
                         }
                     }
