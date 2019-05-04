@@ -53,6 +53,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         upgrades.put("Emerald Upgrade", "emerald");
         upgrades.put("Painter Upgrade", "paint");
         upgrades.put("Ignite Upgrade", "ignite");
+        upgrades.put("Pickup Arrows Upgrade", "arrow");
         mapIds.put(1968, "Admin Upgrade");
         mapIds.put(1969, "Bio-scanner Upgrade");
         mapIds.put(1970, "Redstone Upgrade");
@@ -60,6 +61,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         mapIds.put(1972, "Emerald Upgrade");
         mapIds.put(1979, "Painter Upgrade");
         mapIds.put(1982, "Ignite Upgrade");
+        mapIds.put(1984, "Pickup Arrows Upgrade");
     }
 
     /**
