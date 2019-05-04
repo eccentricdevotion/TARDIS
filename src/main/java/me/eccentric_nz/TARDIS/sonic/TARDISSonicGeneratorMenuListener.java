@@ -70,6 +70,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         map.put("Emerald Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full));
         map.put("Painter Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full));
         map.put("Ignite Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full));
+        map.put("Pickup Arrows Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full));
         return map;
     }
 
@@ -81,6 +82,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         map.put("Emerald Upgrade", "emerald");
         map.put("Painter Upgrade", "painter");
         map.put("Ignite Upgrade", "ignite");
+        map.put("Pickup Arrows Upgrade", "arrow");
         return map;
     }
 
@@ -158,6 +160,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                     case 32:
                     case 33:
                     case 34:
+                    case 35:
                         ItemStack upgrade = view.getItem(slot);
                         ItemMeta upgrade_im = upgrade.getItemMeta();
                         String upgrade_name = upgrade_im.getDisplayName();

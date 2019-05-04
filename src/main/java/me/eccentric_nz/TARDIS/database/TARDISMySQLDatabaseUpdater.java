@@ -246,6 +246,14 @@ class TARDISMySQLDatabaseUpdater {
                 String rep_alter = "ALTER TABLE " + prefix + "t_count ADD repair int(3) DEFAULT '0'";
                 statement.executeUpdate(rep_alter);
             }
+            // add arrow to sonic
+            String arrow_query = "SHOW COLUMNS FROM " + prefix + "sonic LIKE 'arrow'";
+            ResultSet rsarrow = statement.executeQuery(arrow_query);
+            if (!rsarrow.next()) {
+                i++;
+                String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD arrow int(1) DEFAULT '0'";
+                statement.executeUpdate(arrow_alter);
+            }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
             ResultSet rsvoid = statement.executeQuery(voidQuery);

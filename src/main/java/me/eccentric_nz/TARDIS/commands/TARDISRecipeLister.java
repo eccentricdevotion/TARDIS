@@ -80,6 +80,7 @@ class TARDISRecipeLister {
         sonic_circuits.add(ChatColor.BLUE + "r-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Redstone Circuit");
         sonic_circuits.add(ChatColor.BLUE + "painter" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Painter Circuit");
         sonic_circuits.add(ChatColor.BLUE + "ignite-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Ignite Circuit");
+        sonic_circuits.add(ChatColor.BLUE + "arrow-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Pickup Arrows Circuit");
         recipe_options.put("Sonic Circuits", sonic_circuits);
         List<String> console_circuits = new ArrayList<>();
         console_circuits.add(ChatColor.LIGHT_PURPLE + "ars-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "ARS Circuit");

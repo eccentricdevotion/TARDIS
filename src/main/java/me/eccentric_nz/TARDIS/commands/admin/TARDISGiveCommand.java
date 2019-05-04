@@ -55,6 +55,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         full = this.plugin.getArtronConfig().getInt("full_charge");
         items.put("a-circuit", "Server Admin Circuit");
         items.put("acid-battery", "Acid Battery");
+        items.put("arrow-circuit", "Pickup Arrows Circuit");
         items.put("ars-circuit", "TARDIS ARS Circuit");
         items.put("artron", "");
         items.put("battery", "Blaster Battery");

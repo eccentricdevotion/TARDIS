@@ -94,15 +94,16 @@ public class ResultSetSonic {
                 String colour = rs.getString("sonic_type");
                 ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
-                    UUID.fromString(rs.getString("uuid")),
-                    rs.getBoolean("activated"),
-                    cc,
-                    rs.getBoolean("bio"),
-                    rs.getBoolean("diamond"),
-                    rs.getBoolean("emerald"),
-                    rs.getBoolean("redstone"),
-                    rs.getBoolean("painter"),
-                    rs.getBoolean("ignite")
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getBoolean("activated"),
+                        cc,
+                        rs.getBoolean("bio"),
+                        rs.getBoolean("diamond"),
+                        rs.getBoolean("emerald"),
+                        rs.getBoolean("redstone"),
+                        rs.getBoolean("painter"),
+                        rs.getBoolean("ignite"),
+                        rs.getBoolean("arrow")
                 );
             } else {
                 return false;

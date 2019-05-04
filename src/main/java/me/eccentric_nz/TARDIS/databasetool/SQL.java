@@ -126,7 +126,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %ssiege (siege_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', PRIMARY KEY (siege_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %ssonic (sonic_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', activated int(1) DEFAULT '0', sonic_type varchar(16) DEFAULT '', bio int(1) DEFAULT '0', diamond int(1) DEFAULT '0', emerald int(1) DEFAULT '0', redstone int(1) DEFAULT '0', painter int(1) DEFAULT '0', ignite int(1) DEFAULT '0', PRIMARY KEY (sonic_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %ssonic (sonic_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', activated int(1) DEFAULT '0', sonic_type varchar(16) DEFAULT '', bio int(1) DEFAULT '0', diamond int(1) DEFAULT '0', emerald int(1) DEFAULT '0', redstone int(1) DEFAULT '0', painter int(1) DEFAULT '0', ignite int(1) DEFAULT '0', arrow int(1) DEFAULT '0', PRIMARY KEY (sonic_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sstorage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, console text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -207,7 +207,7 @@ public class SQL {
 
             "INSERT INTO `%ssiege` (`siege_id`, `uuid`, `tardis_id`) VALUES",
 
-            "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `sonic_type`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`) VALUES",
+            "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `sonic_type`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`) VALUES",
 
             "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`) VALUES",
 
@@ -288,7 +288,7 @@ public class SQL {
 
             "(%s, '%s', %s)",
 
-            "(%s, '%s', %s, '%s', %s, %s, %s, %s, %s, %s)",
+            "(%s, '%s', %s, '%s', %s, %s, %s, %s, %s, %s, %s)",
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
 

@@ -428,6 +428,18 @@ shaped:
     result: 'FILLED_MAP:1982'
     amount: 1
     lore: ""
+  Pickup Arrows Circuit:
+    easy_shape: -A-,ARA,-A-
+    easy_ingredients:
+      A: ARROW
+      R: REDSTONE
+    hard_shape: -S-,SRS,-S-
+    hard_ingredients:
+      S: SPECTRAL_ARROW
+      R: REDSTONE_BLOCK
+    result: 'FILLED_MAP:1984'
+    amount: 1
+    lore: ""
   Artron Storage Cell:
     easy_shape: -B-,-R-,-L-
     easy_ingredients:

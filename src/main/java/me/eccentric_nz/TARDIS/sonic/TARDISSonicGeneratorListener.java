@@ -137,7 +137,11 @@ public class TARDISSonicGeneratorListener implements Listener {
             }
             if (s.hasIgnite()) {
                 upgrades.add("Ignite Upgrade");
-                cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignit") * full);
+                cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
+            }
+            if (s.hasArrow()) {
+                upgrades.add("Pickup Arrows Upgrade");
+                cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
             }
             if (upgrades.size() > 0) {
                 List<String> finalUps = new ArrayList<>();

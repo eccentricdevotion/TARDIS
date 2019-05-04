@@ -230,6 +230,14 @@ class TARDISSonicGeneratorInventory {
             ite.setDisplayName("Ignite Upgrade");
             ign.setItemMeta(ite);
         }
+        // arrow upgrade
+        ItemStack arr = null;
+        if (player.hasPermission("tardis.sonic.arrow")) {
+            arr = new ItemStack(Material.BOWL, 1);
+            ItemMeta ita = ign.getItemMeta();
+            ita.setDisplayName("Pickup Arrows Upgrade");
+            arr.setItemMeta(ita);
+        }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
@@ -299,7 +307,7 @@ class TARDISSonicGeneratorInventory {
                 markone, marktwo, markthree, markfour, mcgann, eccelston, tennant, smith, hurt,
                 whittaker, master, sarahjane, song, null, eccelston_open, tennant_open, smith_open, peter,
                 null, null, null, null, null, null, null, null, null,
-                sta, null, bio, dis, eme, red, pai, ign, null,
+                sta, null, bio, dis, eme, red, pai, ign, arr,
                 null, null, info, info1, info2, null, null, save, generate,
                 cost, null, null, null, sonic, null, null, null, close
         };

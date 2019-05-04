@@ -46,6 +46,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         this.plugin = plugin;
         recipeItems.put("a-circuit", "Server Admin Circuit");
         recipeItems.put("acid-battery", "Acid Battery");
+        recipeItems.put("arrow-circuit", "Pickup Arrows Circuit");
         recipeItems.put("ars-circuit", "TARDIS ARS Circuit");
         recipeItems.put("battery", "Blaster Battery");
         recipeItems.put("bio-circuit", "Bio-scanner Circuit");
@@ -169,6 +170,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             switch (which) {
                 case "a-circuit":
                 case "acid-battery":
+                case "arrow-circuit":
                 case "ars-circuit":
                 case "bio-circuit":
                 case "blank":

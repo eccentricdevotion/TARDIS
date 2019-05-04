@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -88,6 +90,10 @@ public class TARDISSonicEntityListener implements Listener {
                             TARDISMessage.send(player, "SONIC_HUNGER", String.format("%.2f", hunger));
                         }, 40L);
                     }
+                } else if (ent instanceof Arrow && player.hasPermission("tardis.sonic.arrow") && lore.contains("Pickup Arrow Upgrade")) {
+                    // pick up arrow
+                    Arrow arrow = (Arrow) ent;
+                    arrow.setPickupStatus(AbstractArrow.PickupStatus.ALLOWED);
                 }
             }
         }

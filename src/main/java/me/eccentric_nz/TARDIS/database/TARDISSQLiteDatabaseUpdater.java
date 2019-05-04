@@ -300,6 +300,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String rep_alter = "ALTER TABLE " + prefix + "t_count ADD repair INTEGER DEFAULT 0";
                 statement.executeUpdate(rep_alter);
             }
+            // add arrow to sonic
+            String arrow_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "sonic' AND sql LIKE '%arrow%'";
+            ResultSet rsarrow = statement.executeQuery(arrow_query);
+            if (!rsarrow.next()) {
+                i++;
+                String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD arrow INTEGER DEFAULT 0";
+                statement.executeUpdate(arrow_alter);
+            }
             // add tardis_id to dispersed
             String dispersed_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "dispersed' AND sql LIKE '%tardis_id%'";
             ResultSet rsdispersed = statement.executeQuery(dispersed_query);

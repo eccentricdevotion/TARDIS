@@ -34,8 +34,9 @@ public class Sonic {
     private final boolean redstone;
     private final boolean painter;
     private final boolean ignite;
+    private final boolean arrow;
 
-    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite) {
+    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow) {
         this.uuid = uuid;
         this.activated = activated;
         this.sonicType = sonicType;
@@ -45,6 +46,7 @@ public class Sonic {
         this.redstone = redstone;
         this.painter = painter;
         this.ignite = ignite;
+        this.arrow = arrow;
     }
 
     public UUID getUuid() {
@@ -81,5 +83,9 @@ public class Sonic {
 
     public boolean hasIgnite() {
         return ignite;
+    }
+
+    public boolean hasArrow() {
+        return arrow;
     }
 }

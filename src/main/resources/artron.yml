@@ -27,50 +27,51 @@ render: 250
 zero: 250
 # upgrades
 upgrades:
-    ars: 5000
-    bigger: 7500
-    budget: 5000
-    coral: 8000
-    deluxe: 10000
-    eleventh: 10000
-    ender: 5000
-    legacy_bigger: 7500
-    legacy_budget: 5000
-    legacy_deluxe: 10000
-    legacy_eleventh: 10000
-    legacy_redstone: 8000
-    master: 10000
-    plank: 5000
-    pyramid: 5000
-    redstone: 7500
-    steampunk: 5000
-    tom: 5000
-    twelfth: 7500
-    war: 5000
-    custom: 10000
-    archive:
-        small: 5000
-        medium: 7500
-        tall: 10000
-    template:
-        small: 1666
-        medium: 2500
-        tall: 3333
+  ars: 5000
+  bigger: 7500
+  budget: 5000
+  coral: 8000
+  deluxe: 10000
+  eleventh: 10000
+  ender: 5000
+  legacy_bigger: 7500
+  legacy_budget: 5000
+  legacy_deluxe: 10000
+  legacy_eleventh: 10000
+  legacy_redstone: 8000
+  master: 10000
+  plank: 5000
+  pyramid: 5000
+  redstone: 7500
+  steampunk: 5000
+  tom: 5000
+  twelfth: 7500
+  war: 5000
+  custom: 10000
+  archive:
+    small: 5000
+    medium: 7500
+    tall: 10000
+  template:
+    small: 1666
+    medium: 2500
+    tall: 3333
 just_wall_floor: 50
 # artron furnace
 artron_furnace:
-    burn_limit: 100000
-    burn_time: 0.5
-    cook_time: 0.5
-    set_biome: true
-    particles: true
+  burn_limit: 100000
+  burn_time: 0.5
+  cook_time: 0.5
+  set_biome: true
+  particles: true
 # Sonic Generator costs (as a percentage of full charge)
 sonic_generator:
-    standard: 10
-    bio: 10
-    diamond: 10
-    emerald: 10
-    redstone: 10
-    painter: 10
-    ignite: 10
+  standard: 10
+  bio: 10
+  diamond: 10
+  emerald: 10
+  redstone: 10
+  painter: 10
+  ignite: 10
+  arrow: 10
 shell: 500
