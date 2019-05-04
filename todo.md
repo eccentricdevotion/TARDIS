@@ -7,16 +7,13 @@
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
-   * Add Siluria and Gallifrey to TIS
-   * Test TIS for Pickup Arrows, Siluria and Gallifrey
-   * Test Pickup Arrows sonic upgrade
+   * Test TIS for Siluria and Gallifrey
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
-7. Add pickup arrow functionality to Sonic Screwdriver?
 8. Custom time rotor model
 
 ## TARDIS data pack
@@ -50,7 +47,6 @@
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 5. Rename resource pack to 'TARDIS-Optifine'?
 6. Custom time rotor model
-7. Use `entity.getPersistentDataContainer().set(...);` for TARDISWeepingAngel monsters
 
 ## Waiting on Bukkit / SpigotAPI
 1. Get/set Villager career level and willingness

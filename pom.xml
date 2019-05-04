@@ -341,7 +341,7 @@
         <dependency>
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizensapi</artifactId>
-            <version>2.0.24-SNAPSHOT</version>
+            <version>2.0.25-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/CitizensAPI.jar</systemPath>
@@ -373,7 +373,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
