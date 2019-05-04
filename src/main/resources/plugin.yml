@@ -293,6 +293,9 @@ permissions:
   tardis.sonic.ignite:
     description: Allows a player to use the ignite function of the sonic screwdriver.
     default: op
+  tardis.sonic.arrow:
+    description: Allows a player to use the pickup arrows function of the sonic screwdriver.
+    default: op
   tardis.store:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
@@ -345,6 +348,9 @@ permissions:
   tardis.paper_bag:
     description: Allows a player to store and dispense Jelly Babies from a paper bag.
     default: op
+  tardis.gamemode.bypass:
+    description: Allows a player to bypass gamemode switching when changing worlds.
+    default: false
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
