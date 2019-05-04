@@ -30,10 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
@@ -102,7 +99,7 @@ public class TARDISShellRoomConstructor {
                     Material material = b.getType();
                     BlockData data = b.getBlockData();
                     String dataStr = addQuotes(data.getAsString());
-                    if (material.equals(Material.OAK_WALL_SIGN)) {
+                    if (Tag.WALL_SIGNS.isTagged(material)) {
                         sign = b;
                     }
                     if (y == (fy + 3)) {

@@ -38,10 +38,7 @@ import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -310,7 +307,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if (s == 0) {
                     Block psb = entry.getKey();
                     psb.setBlockData(entry.getValue());
-                    if (psb.getType().equals(Material.OAK_WALL_SIGN)) {
+                    if (Tag.WALL_SIGNS.isTagged(psb.getType())) {
                         Sign cs = (Sign) psb.getState();
                         cs.setLine(0, "");
                         cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
@@ -593,7 +590,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (type.equals(Material.OAK_WALL_SIGN)) {
+                } else if (Tag.WALL_SIGNS.isTagged(type)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls

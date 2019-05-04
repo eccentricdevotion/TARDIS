@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -279,7 +279,7 @@ public class TARDISAbandonCommand {
                 break;
         }
         Block b = new Location(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz).getBlock();
-        if (b.getType().equals(Material.OAK_WALL_SIGN)) {
+        if (Tag.WALL_SIGNS.isTagged(b.getType())) {
             sign = (Sign) b.getState();
         }
         return sign;

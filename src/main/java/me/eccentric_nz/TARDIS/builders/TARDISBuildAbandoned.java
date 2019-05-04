@@ -474,7 +474,7 @@ class TARDISBuildAbandoned {
                 // always make the control centre the first sign
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                if (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN)) {
+                if (Tag.WALL_SIGNS.isTagged(entry.getValue().getMaterial())) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));

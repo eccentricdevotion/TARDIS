@@ -29,10 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -283,7 +280,7 @@ public class TARDISJunkControlListener implements Listener {
     private Sign getDestinationSign(int id) {
         Sign sign = null;
         Block b = getControlBlock(id, 9);
-        if (b != null && b.getType().equals(Material.OAK_WALL_SIGN)) {
+        if (b != null && Tag.WALL_SIGNS.isTagged(b.getType())) {
             sign = (Sign) b.getState();
         }
         return sign;

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -195,7 +196,7 @@ public class TARDISJunkBuilder implements Runnable {
                         Directional sign = (Directional) Material.OAK_WALL_SIGN.createBlockData();
                         sign.setFacing(BlockFace.EAST);
                         postTerminalBlock.setBlockData(sign);
-                        if (postTerminalBlock.getType().equals(Material.OAK_WALL_SIGN)) {
+                        if (Tag.WALL_SIGNS.isTagged(postTerminalBlock.getType())) {
                             Sign ts = (Sign) postTerminalBlock.getState();
                             ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));
                             ts.update();

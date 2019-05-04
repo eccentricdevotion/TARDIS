@@ -274,20 +274,25 @@ class TARDISDematerialisationPreset implements Runnable {
                                 BlockData light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? dd.getLamp().createBlockData() : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                                 break;
-                            case IRON_DOOR: // wood, iron & trap doors
-                            case OAK_DOOR:
+                            case ACACIA_DOOR: // wood, iron & trap doors
                             case BIRCH_DOOR:
-                            case SPRUCE_DOOR:
-                            case JUNGLE_DOOR:
-                            case ACACIA_DOOR:
                             case DARK_OAK_DOOR:
-                            case OAK_TRAPDOOR:
-                            case BIRCH_TRAPDOOR:
-                            case SPRUCE_TRAPDOOR:
-                            case JUNGLE_TRAPDOOR:
+                            case IRON_DOOR:
+                            case JUNGLE_DOOR:
+                            case OAK_DOOR:
+                            case SPRUCE_DOOR:
                             case ACACIA_TRAPDOOR:
+                            case BIRCH_TRAPDOOR:
                             case DARK_OAK_TRAPDOOR:
+                            case JUNGLE_TRAPDOOR:
+                            case OAK_TRAPDOOR:
+                            case SPRUCE_TRAPDOOR:
+                            case ACACIA_WALL_SIGN:
+                            case BIRCH_WALL_SIGN:
+                            case DARK_OAK_WALL_SIGN:
+                            case JUNGLE_WALL_SIGN:
                             case OAK_WALL_SIGN:
+                            case SPRUCE_WALL_SIGN:
                                 if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
