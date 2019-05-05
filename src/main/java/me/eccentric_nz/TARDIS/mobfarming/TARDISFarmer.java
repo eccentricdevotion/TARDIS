@@ -400,10 +400,10 @@ public class TARDISFarmer {
                             tv.setBaby(!v.isAdult());
                             tv.setName(v.getCustomName());
                             tv.setTrades(v.getRecipes());
-//                            tv.setRiches(v.getRiches());
+                            tv.setLevel(v.getVillagerLevel());
+                            tv.setVillagerType(v.getVillagerType());
+                            tv.setExperience(v.getVillagerExperience());
                             if (plugin.isHelperOnServer()) {
-                                tv.setLevel(plugin.getTardisHelper().getVillagerLevel(v));
-                                tv.setVillagerType(v.getVillagerType());
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
                             old_macd_had_a_villager.add(tv);
@@ -825,14 +825,14 @@ public class TARDISFarmer {
                         }
                         npc.setHealth(e.getHealth());
                         npc.setRecipes(e.getTrades());
-//                        npc.setRiches(e.getRiches());
+                        npc.setVillagerExperience(e.getExperience());
+                        npc.setVillagerLevel(e.getLevel());
+                        npc.setVillagerType(e.getVillagerType());
                         String name = e.getName();
                         if (name != null && !name.isEmpty()) {
                             npc.setCustomName(name);
                         }
                         if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setVillagerLevel(npc, e.getLevel());
-                            npc.setVillagerType(e.getVillagerType());
                             plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         }
                         npc.setRemoveWhenFarAway(false);

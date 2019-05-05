@@ -34,7 +34,7 @@ class TARDISVillager extends TARDISMob {
     private int level;
     private Villager.Type villagerType;
     private boolean willing;
-//    private int riches;
+    private int experience;
 
     /**
      * Data storage class for TARDIS villagers.
@@ -80,11 +80,11 @@ class TARDISVillager extends TARDISMob {
         this.willing = willing;
     }
 
-//    int getRiches() {
-//        return riches;
-//    }
-//
-//    void setRiches(int riches) {
-//        this.riches = riches;
-//    }
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
 }

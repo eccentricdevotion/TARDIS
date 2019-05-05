@@ -335,13 +335,13 @@ public class TARDISEjectListener implements Listener {
                 villager.setHealth(v.getHealth());
                 villager.setRecipes(v.getRecipes());
                 villager.setVillagerType(v.getVillagerType());
-//                villager.setRiches(v.getRiches());
+                villager.setVillagerExperience(v.getVillagerExperience());
+                villager.setVillagerLevel(v.getVillagerLevel());
                 String vilname = ent.getCustomName();
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
                 }
                 if (plugin.isHelperOnServer()) {
-                    plugin.getTardisHelper().setVillagerLevel(villager, plugin.getTardisHelper().getVillagerLevel(v));
                     plugin.getTardisHelper().setVillagerWilling(villager, plugin.getTardisHelper().getVillagerWilling(v));
                 }
                 ent.remove();
