@@ -158,6 +158,7 @@ public class TARDISInteriorPostioning {
         return usedSlots;
     }
 
+    @Deprecated
     public void reclaimChunks(World w, TARDISTIPSData data) {
         // get starting chunk
         Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
