@@ -49,9 +49,6 @@
 5. Rename resource pack to 'TARDIS-Optifine'?
 6. Custom time rotor model
 
-## Waiting on Bukkit / SpigotAPI
-1. Get/set Villager career level and willingness
-
 ## Minecraft API if ever available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console

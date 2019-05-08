@@ -53,7 +53,8 @@ public final class TARDISGallifreySpawnListener implements Listener {
         Villager villager = (Villager) le;
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
-            villager.setVillagerLevel(1);
+            villager.setVillagerLevel(1); // minimum level is 1
+            villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
             villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
         }, 2L);
     }
