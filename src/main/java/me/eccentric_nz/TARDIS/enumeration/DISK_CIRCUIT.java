@@ -47,6 +47,7 @@ public enum DISK_CIRCUIT {
     String name;
     Material material;
     static final List<String> circuitNames = new ArrayList<>();
+    static final List<DISK_CIRCUIT> tardisCircuits = new ArrayList<>();
 
     DISK_CIRCUIT(String name, Material material) {
         this.name = name;
@@ -79,10 +80,17 @@ public enum DISK_CIRCUIT {
             if (circuit.getName().endsWith("Circuit")) {
                 circuitNames.add(circuit.getName());
             }
+            if (circuit.getMaterial() == Material.FILLED_MAP) {
+                tardisCircuits.add(circuit);
+            }
         }
     }
 
     public static List<String> getCircuitNames() {
         return circuitNames;
+    }
+
+    public static List<DISK_CIRCUIT> getTardisCircuits() {
+        return tardisCircuits;
     }
 }

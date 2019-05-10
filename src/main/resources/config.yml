@@ -104,6 +104,7 @@ desktop:
 # circuits
 circuits:
   damage: false
+  malfunction_damage: 50
   uses:
     ars: 20
     chameleon: 25

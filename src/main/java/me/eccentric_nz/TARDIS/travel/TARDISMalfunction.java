@@ -18,11 +18,15 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -97,6 +101,83 @@ public class TARDISMalfunction {
         where.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
         if (rsl.resultSet()) {
+            // should we damage circuits?
+            int malfunctionDamage = plugin.getConfig().getInt("circuits.malfunction_damage");
+            if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+                // choose a random circuit
+                DISK_CIRCUIT circuit = DISK_CIRCUIT.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DISK_CIRCUIT.getTardisCircuits().size()));
+                // is the circuit in the advanced console?
+                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+                int damage;
+                int usesLeft;
+                double percent = malfunctionDamage / 100.0d;
+                switch (circuit) {
+                    case ARS:
+                        if (tcc.hasARS()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.ars") * percent);
+                            usesLeft = tcc.getArsUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case CHAMELEON:
+                        if (tcc.hasChameleon()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.chameleon") * percent);
+                            usesLeft = tcc.getChameleonUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case INPUT:
+                        if (tcc.hasInput()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.input") * percent);
+                            usesLeft = tcc.getInputUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case INVISIBILITY:
+                        if (tcc.hasInvisibility()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.invisibility") * percent);
+                            usesLeft = tcc.getInvisibilityUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case MATERIALISATION:
+                        if (tcc.hasMaterialisation()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.materialisation") * percent);
+                            usesLeft = tcc.getMaterialisationUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case MEMORY:
+                        if (tcc.hasMemory()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.memory") * percent);
+                            usesLeft = tcc.getMemoryUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case RANDOMISER:
+                        if (tcc.hasRandomiser()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.randomiser") * percent);
+                            usesLeft = tcc.getRandomiserUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case SCANNER:
+                        if (tcc.hasScanner()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.scanner") * percent);
+                            usesLeft = tcc.getScannerUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                    case TEMPORAL:
+                        if (tcc.hasTemporal()) {
+                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.temporal") * percent);
+                            usesLeft = tcc.getTemporalUses() - damage;
+                            damage(circuit, usesLeft, id, p);
+                        }
+                        break;
+                }
+            }
             // get player prefs
             HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("uuid", p.getUniqueId().toString());
@@ -127,5 +208,10 @@ public class TARDISMalfunction {
                 runnable.setTask(taskID);
             }
         }
+    }
+
+    private void damage(DISK_CIRCUIT circuit, int uses_left, int id, Player p) {
+        TARDISCircuitDamager tcd = new TARDISCircuitDamager(plugin, circuit, uses_left, id, p);
+        tcd.damage();
     }
 }

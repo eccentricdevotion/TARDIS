@@ -55,7 +55,7 @@ public class TARDISCircuitDamager {
         if (uses_left == 0) {
             uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
         }
-        if ((uses_left - 1) == 0) {
+        if ((uses_left - 1) <= 0) {
             // destroy
             setCircuitDamage(circuit.getName(), 0, true);
             TARDISMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
