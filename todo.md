@@ -2,7 +2,7 @@
 
 ## Next version `4.1`
 0. Update to Spigot 1.14
-   * Add new mob types to farming and genetic manipulator (waiting for ProtocolLib / LibsDisguises updates)
+   * Add new mob types to farming and genetic manipulator (waiting for LibsDisguises update)
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
