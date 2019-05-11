@@ -472,6 +472,18 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Fish Finger.lore", "Best eaten with custard!");
             i++;
         }
+        if (!recipes_config.contains("shaped.Custard Cream")) {
+            recipes_config.set("shaped.Custard Cream.easy_shape", "---,WYW,---");
+            recipes_config.set("shaped.Custard Cream.easy_ingredients.W", "WHEAT");
+            recipes_config.set("shaped.Custard Cream.easy_ingredients.Y", "YELLOW_DYE");
+            recipes_config.set("shaped.Custard Cream.hard_shape", "---,WYW,---");
+            recipes_config.set("shaped.Custard Cream.hard_ingredients.W", "WHEAT");
+            recipes_config.set("shaped.Custard Cream.hard_ingredients.Y", "YELLOW_DYE");
+            recipes_config.set("shaped.Custard Cream.result", "COOKIE");
+            recipes_config.set("shaped.Custard Cream.amount", 8);
+            recipes_config.set("shaped.Custard Cream.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shapeless.TARDIS Schematic Wand")) {
             recipes_config.set("shapeless.TARDIS Schematic Wand.recipe", "BONE,REDSTONE");
             recipes_config.set("shapeless.TARDIS Schematic Wand.result", "BONE");

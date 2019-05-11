@@ -492,6 +492,18 @@ shaped:
     result: COOKED_COD
     amount: 3
     lore: "Best eaten with custard!"
+  Custard Cream:
+    easy_shape: ---,WYW,---
+    easy_ingredients:
+      W: WHEAT
+      Y: YELLOW_DYE
+    hard_shape: ---,WYW,---
+    hard_ingredients:
+      W: WHEAT
+      Y: YELLOW_DYE
+    result: COOKIE
+    amount: 8
+    lore: ""
   White Bow Tie:
     easy_shape: '---,SWS,---'
     easy_ingredients:
