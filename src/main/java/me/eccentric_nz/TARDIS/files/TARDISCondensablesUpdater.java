@@ -37,6 +37,7 @@ public class TARDISCondensablesUpdater {
     public void checkCondensables() {
         if (!plugin.getConfig().getBoolean("preferences.use_default_condensables")) {
             HashMap<String, Object> list = new HashMap<>();
+            // 1.13
             list.put("ACACIA_BARK", null);
             list.put("ACACIA_WOOD", 2);
             list.put("BANNER", null);
@@ -86,6 +87,80 @@ public class TARDISCondensablesUpdater {
             list.put("STRIPPED_SPRUCE_WOOD", 2);
             list.put("SULPHUR", null);
             list.put("TROPICAL_FISH", 5);
+            // 1.14
+            list.put("ACACIA_SIGN", 2);
+            list.put("ACACIA_WALL_SIGN", 2);
+            list.put("ANDESITE_SLAB", 2);
+            list.put("ANDESITE_STAIRS", 2);
+            list.put("ANDESITE_WALL", 2);
+            list.put("BARREL", 16);
+            list.put("BELL", 100);
+            list.put("BIRCH_SIGN", 2);
+            list.put("BIRCH_WALL_SIGN", 2);
+            list.put("BLACK_DYE", 10);
+            list.put("BLAST_FURNACE", 110);
+            list.put("BLUE_DYE", 10);
+            list.put("BRICK_WALL", 2);
+            list.put("CARTOGRAPHY_TABLE", 28);
+            list.put("CORNFLOWER", 2);
+            list.put("CUT_RED_SANDSTONE_SLAB", 3);
+            list.put("CUT_SANDSTONE_SLAB", 3);
+            list.put("DARK_OAK_SIGN", 2);
+            list.put("DARK_OAK_WALL_SIGN", 2);
+            list.put("DIORITE_SLAB", 2);
+            list.put("DIORITE_STAIRS", 2);
+            list.put("DIORITE_WALL", 2);
+            list.put("END_STONE_BRICK_SLAB", 21);
+            list.put("END_STONE_BRICK_WALL", 21);
+            list.put("GRANITE_SLAB", 2);
+            list.put("GRANITE_STAIRS", 2);
+            list.put("GRANITE_WALL", 2);
+            list.put("GRINDSTONE", 30);
+            list.put("JUNGLE_SIGN", 2);
+            list.put("JUNGLE_WALL_SIGN", 2);
+            list.put("LANTERN", 28);
+            list.put("LEATHER_HORSE_ARMOR", 100);
+            list.put("LECTERN", 148);
+            list.put("LILY_OF_THE_VALLEY", 2);
+            list.put("LOOM", 14);
+            list.put("MOSSY_COBBLESTONE_SLAB", 2);
+            list.put("MOSSY_COBBLESTONE_STAIRS", 2);
+            list.put("MOSSY_STONE_BRICK_SLAB", 2);
+            list.put("MOSSY_STONE_BRICK_STAIRS", 2);
+            list.put("MOSSY_STONE_BRICK_WALL", 2);
+            list.put("NETHER_BRICK_WALL", 2);
+            list.put("OAK_SIGN", 2);
+            list.put("OAK_WALL_SIGN", 2);
+            list.put("POLISHED_ANDESITE_SLAB", 1);
+            list.put("POLISHED_ANDESITE_STAIRS", 1);
+            list.put("POLISHED_DIORITE_SLAB", 1);
+            list.put("POLISHED_DIORITE_STAIRS", 1);
+            list.put("POLISHED_GRANITE_SLAB", 1);
+            list.put("POLISHED_GRANITE_STAIRS", 1);
+            list.put("PRISMARINE_STAIRS", 2);
+            list.put("PRISMARINE_WALL", 2);
+            list.put("RED_NETHER_BRICK_SLAB", 12);
+            list.put("RED_NETHER_BRICK_STAIRS", 12);
+            list.put("RED_NETHER_BRICK_WALL", 12);
+            list.put("RED_SANDSTONE_WALL", 2);
+            list.put("SANDSTONE_WALL", 2);
+            list.put("SMITHING_TABLE", 52);
+            list.put("SMOKER", 18);
+            list.put("SMOOTH_QUARTZ_SLAB", 60);
+            list.put("SMOOTH_QUARTZ_STAIRS", 60);
+            list.put("SMOOTH_RED_SANDSTONE_SLAB", 4);
+            list.put("SMOOTH_RED_SANDSTONE_STAIRS", 4);
+            list.put("SMOOTH_SANDSTONE_SLAB", 4);
+            list.put("SMOOTH_SANDSTONE_STAIRS", 4);
+            list.put("SMOOTH_STONE_SLAB", 4);
+            list.put("SPRUCE_SIGN", 2);
+            list.put("SPRUCE_WALL_SIGN", 2);
+            list.put("STONE_BRICK_WALL", 2);
+            list.put("STONE_STAIRS", 23);
+            list.put("STONECUTTER", 112);
+            list.put("SWEET_BERRIES", 10);
+            list.put("WHITE_DYE", 10);
+            list.put("WITHER_ROSE", 2);
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
             }
