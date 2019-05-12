@@ -18,12 +18,15 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 class TARDISSonicReplant implements Runnable {
 
@@ -32,10 +35,8 @@ class TARDISSonicReplant implements Runnable {
     private final Block under;
     private final Material type;
     private final Material air = Material.AIR;
-    private final Material dirt = Material.DIRT;
-    private final Material grass = Material.GRASS_BLOCK;
+    private final List<Material> dirt = Arrays.asList(Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.GRASS_BLOCK);
     private final Material log = Material.JUNGLE_LOG;
-    private final Material sand = Material.SAND;
     private final Material soil = Material.FARMLAND;
     private final Material soul = Material.SOUL_SAND;
     private final HashMap<BlockFace, BlockFace> c_data = new HashMap<>();
@@ -112,7 +113,7 @@ class TARDISSonicReplant implements Runnable {
                 }
                 break;
             case SUGAR_CANE:
-                if ((under.getType().equals(grass) || under.getType().equals(dirt) || under.getType().equals(sand)) && block.getType().equals(air)) {
+                if (dirt.contains(under.getType()) || Tag.SAND.isTagged(under.getType()) && block.getType().equals(air)) {
                     block.setBlockData(Material.SUGAR_CANE.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SUGAR_CANE));
@@ -123,6 +124,13 @@ class TARDISSonicReplant implements Runnable {
                     block.setBlockData(Material.WHEAT.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.WHEAT_SEEDS));
+                }
+                break;
+            case SWEET_BERRIES:
+                if (dirt.contains(under.getType()) && block.getType().equals(air)) {
+                    block.setBlockData(Material.SWEET_BERRY_BUSH.createBlockData());
+                } else {
+                    block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SWEET_BERRIES));
                 }
                 break;
             default:

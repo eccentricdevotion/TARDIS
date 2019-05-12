@@ -44,6 +44,7 @@ public class TARDISFarmBlockListener implements Listener {
     private final Material ps = Material.PUMPKIN_SEEDS;
     private final Material sc = Material.SUGAR_CANE;
     private final Material ss = Material.WHEAT_SEEDS;
+    private final Material sb = Material.SWEET_BERRIES;
     private final Material sonic;
 
     public TARDISFarmBlockListener(TARDIS plugin) {
@@ -112,6 +113,10 @@ public class TARDISFarmBlockListener implements Listener {
                                     processHarvest(player, ps, block);
                                 }
                                 break;
+                            case SWEET_BERRY_BUSH:
+                                if (player.getInventory().contains(sb)) {
+                                    processHarvest(player, sb, block);
+                                }
                             default:
                                 break;
                         }

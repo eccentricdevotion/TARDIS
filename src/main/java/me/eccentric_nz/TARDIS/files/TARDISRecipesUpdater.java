@@ -451,13 +451,18 @@ public class TARDISRecipesUpdater {
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
-            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "RED_DYE");
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "SWEET_BERRIES");
             recipes_config.set("shaped.Jammy Dodger.hard_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.hard_ingredients.W", "WHEAT");
-            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "RED_DYE");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "SWEET_BERRIES");
             recipes_config.set("shaped.Jammy Dodger.result", "COOKIE");
             recipes_config.set("shaped.Jammy Dodger.amount", 8);
             recipes_config.set("shaped.Jammy Dodger.lore", "");
+            i++;
+        }
+        if (recipes_config.getString("shaped.Jammy Dodger.easy_ingredients.R").equals("RED_DYE")) {
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "SWEET_BERRIES");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "SWEET_BERRIES");
             i++;
         }
         if (!recipes_config.contains("shaped.Fish Finger")) {
