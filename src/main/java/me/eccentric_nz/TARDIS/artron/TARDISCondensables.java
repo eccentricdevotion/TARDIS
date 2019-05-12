@@ -748,6 +748,7 @@ public class TARDISCondensables {
             condensables.put("SUGAR", 10);
             condensables.put("SUGAR_CANE", 10);
             condensables.put("SUNFLOWER", 2);
+            condensables.put("SWEET_BERRIES", 10);
             condensables.put("TALL_GRASS", 2);
             condensables.put("TERRACOTTA", 12);
             condensables.put("TIPPED_ARROW", 10);
