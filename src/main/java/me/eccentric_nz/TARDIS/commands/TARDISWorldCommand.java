@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * Teleport to the spawn point of worlds on the server
@@ -79,7 +80,12 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             if (world != null) {
                 if (args[0].toLowerCase().equals("rename")) {
                     if (args.length < 3) {
-                        TARDISMessage.send(sender, "ARGS_WORLD_RENAME");
+                        TARDISMessage.send(sender, "ARG_WORLD_RENAME");
+                        return true;
+                    }
+                    // new world names must be lowercase
+                    if (hasUpperCase.apply(args[2])) {
+                        TARDISMessage.send(sender, "ARG_WORLD_LOWER");
                         return true;
                     }
                     // remove players from world
@@ -139,7 +145,12 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             } else {
                 if (args[0].toLowerCase().equals("rename")) {
                     if (args.length < 3) {
-                        TARDISMessage.send(sender, "ARGS_WORLD_RENAME");
+                        TARDISMessage.send(sender, "ARG_WORLD_RENAME");
+                        return true;
+                    }
+                    // new world names must be lowercase
+                    if (hasUpperCase.apply(args[2])) {
+                        TARDISMessage.send(sender, "ARG_WORLD_LOWER");
                         return true;
                     }
                     plugin.getTardisHelper().setLevelName(args[1], args[2]);
@@ -204,6 +215,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
         }
         return false;
     }
+
+    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
