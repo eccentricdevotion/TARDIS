@@ -471,7 +471,8 @@ public class TARDISSonicListener implements Listener {
                                     plugin.getGeneralKeeper().getSonicPistons().remove(b.getLocation().toString());
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
-                                            b.getRelative(f).setBlockData(TARDISConstants.GLASS, true);
+                                            // force a block update
+                                            b.getRelative(f).setBlockData(TARDISConstants.VOID_AIR, true);
                                             b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                                             break;
                                         }
@@ -489,6 +490,7 @@ public class TARDISSonicListener implements Listener {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
+                                            // force a block update
                                             b.getRelative(f).setBlockData(TARDISConstants.POWER, true);
                                             lightable.setLit(true);
                                             b.setBlockData(lightable, true);

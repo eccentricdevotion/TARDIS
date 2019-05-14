@@ -62,6 +62,7 @@ public class TARDISConstants {
     public static final List<Material> GOOD_WATER = Arrays.asList(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE);
     public static final List<String> CIRCUITS = Arrays.asList("Bio-scanner Circuit", "Diamond Disruptor Circuit", "Emerald Environment Circuit", "Ignite Circuit", "Painter Circuit", "Perception Circuit", "Pickup Arrows Circuit", "Redstone Activator Circuit", "Rift Circuit", "Server Admin Circuit", "Sonic Oscillator", "TARDIS ARS Circuit", "TARDIS Chameleon Circuit", "TARDIS Input Circuit", "TARDIS Invisibility Circuit", "TARDIS Locator Circuit", "TARDIS Materialisation Circuit", "TARDIS Memory Circuit", "TARDIS Randomiser Circuit", "TARDIS Scanner Circuit", "TARDIS Stattenheim Circuit", "TARDIS Telepathic Circuit", "TARDIS Temporal Circuit");
     public static final BlockData AIR = Material.AIR.createBlockData();
+    public static final BlockData VOID_AIR = Material.VOID_AIR.createBlockData();
     public static final BlockData FIRE = Material.FIRE.createBlockData();
     public static final BlockData LAMP = Bukkit.createBlockData("minecraft:redstone_lamp[lit=true]");
     public static final BlockData SNOW = Material.SNOW.createBlockData();
