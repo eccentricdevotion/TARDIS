@@ -175,7 +175,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.14");
+        Version minversion = new Version("1.14.1");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // TARDISChunkGenerator needs to be enabled
