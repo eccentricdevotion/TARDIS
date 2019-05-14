@@ -87,7 +87,7 @@ public class TARDISTimeTravel {
         int range = quarter + 1;
         int wherex = 0, highest = 252, wherez = 0;
         // get worlds
-        Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
+        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<World> allowedWorlds = new ArrayList<>();
 
         if (e.equals("THIS")) {

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class ResultSetTransmat {
 
@@ -61,7 +62,7 @@ public class ResultSetTransmat {
                     transmat_id = rs.getInt("transmat_id");
                     tardis_id = rs.getInt("tardis_id");
                     transmat_name = rs.getString("name");
-                    world = rs.getString("world");
+                    world = (rs.getString("world").equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rs.getString("world").toLowerCase(Locale.ENGLISH));
                     x = rs.getFloat("x");
                     y = rs.getFloat("y");
                     z = rs.getFloat("z");

@@ -49,6 +49,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -430,7 +431,7 @@ public class TARDISHandlesProcessor {
                                                 break;
                                             case SAVE_DISK:
                                                 if (player.hasPermission("tardis.save")) {
-                                                    String world = lore.get(1);
+                                                    String world = (lore.get(1).equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : lore.get(1).toLowerCase(Locale.ENGLISH));
                                                     int sx = TARDISNumberParsers.parseInt(lore.get(2));
                                                     int sy = TARDISNumberParsers.parseInt(lore.get(3));
                                                     int sz = TARDISNumberParsers.parseInt(lore.get(4));

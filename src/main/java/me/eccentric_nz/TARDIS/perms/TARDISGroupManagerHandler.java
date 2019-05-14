@@ -71,7 +71,7 @@ public class TARDISGroupManagerHandler {
                 }
             }
         }
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect TARDIS_WORLD_" + player);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect tardis_world_" + player);
         int i = 0;
         for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
             String grpstr = entry.getKey();

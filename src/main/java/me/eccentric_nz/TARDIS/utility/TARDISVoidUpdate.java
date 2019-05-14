@@ -24,6 +24,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import static me.eccentric_nz.TARDIS.utility.TARDISSpiral.SPIRAL;
 
@@ -50,7 +51,8 @@ public class TARDISVoidUpdate {
             Tardis tardis = rs.getTardis();
             // get start chunk for this TARDIS
             String[] cstr = tardis.getChunk().split(":");
-            World w = plugin.getServer().getWorld(cstr[0]);
+            String world = (cstr[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : cstr[0].toLowerCase(Locale.ENGLISH));
+            World w = plugin.getServer().getWorld(world);
             int cx = TARDISNumberParsers.parseInt(cstr[1]);
             int cz = TARDISNumberParsers.parseInt(cstr[2]);
             taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Updater(w, cx, cz), 1L, 20L);

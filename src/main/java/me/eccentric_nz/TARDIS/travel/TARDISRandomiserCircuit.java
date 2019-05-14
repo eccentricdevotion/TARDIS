@@ -44,7 +44,7 @@ public class TARDISRandomiserCircuit {
 
     public Location getRandomlocation(Player p, COMPASS d) {
         // get a random world
-        Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
+        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<String> allowedWorlds = new ArrayList<>();
         worldlist.forEach((o) -> {
             World ww = plugin.getServer().getWorld(o);

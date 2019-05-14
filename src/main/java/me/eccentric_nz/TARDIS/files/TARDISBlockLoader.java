@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
@@ -121,7 +122,9 @@ public class TARDISBlockLoader {
                     String tl = rs.getString("owner");
                     TARDISAntiBuild tab = new TARDISAntiBuild();
                     // get region vectors
-                    ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(rs.getString("chunk").split(":")[0], tl);
+                    String[] split = rs.getString("chunk").split(":");
+                    String w = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+                    ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(w, tl);
                     if (pr != null) {
                         Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
                         Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());

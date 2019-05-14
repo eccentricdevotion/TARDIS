@@ -27,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -65,7 +66,8 @@ class TARDISDelavafier {
                 startz = gsl[2];
             }
             String[] split = tardis.getChunk().split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            String w = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+            World world = plugin.getServer().getWorld(w);
             for (int level = 2; level < 6; level++) {
                 for (int row = 0; row < 32; row++) {
                     for (int col = 0; col < 32; col++) {

@@ -35,6 +35,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -55,7 +56,8 @@ public class TARDISExteriorRenderer {
         int epbz = exterior.getBlockZ();
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
-        World iw = plugin.getServer().getWorld(idata[0]);
+        String w = (idata[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : idata[0].toLowerCase(Locale.ENGLISH));
+        World iw = plugin.getServer().getWorld(w);
         int ipbx = TARDISNumberParsers.parseInt(idata[1]);
         int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
         int ipbz = TARDISNumberParsers.parseInt(idata[3]);

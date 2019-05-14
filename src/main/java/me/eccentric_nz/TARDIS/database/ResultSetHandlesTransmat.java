@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 
 public class ResultSetHandlesTransmat {
 
@@ -36,7 +37,8 @@ public class ResultSetHandlesTransmat {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (chat.contains(rs.getString("name"))) {
-                        location = new Location(plugin.getServer().getWorld(rs.getString("world")), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"));
+                        String world = (rs.getString("world").equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rs.getString("world").toLowerCase(Locale.ENGLISH));
+                        location = new Location(plugin.getServer().getWorld(world), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"));
                         location.setYaw(rs.getFloat("yaw"));
                         return true;
                     }

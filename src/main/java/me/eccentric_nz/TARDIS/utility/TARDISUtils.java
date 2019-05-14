@@ -35,6 +35,7 @@ import org.bukkit.generator.ChunkGenerator;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Various utility methods.
@@ -67,7 +68,8 @@ public class TARDISUtils {
 
     public boolean canGrowRooms(String chunk) {
         String[] data = chunk.split(":");
-        World room_world = plugin.getServer().getWorld(data[0]);
+        String world = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+        World room_world = plugin.getServer().getWorld(world);
         ChunkGenerator gen = room_world.getGenerator();
         WorldType wt = room_world.getWorldType();
         String dn = "tardis_time_vortex";
@@ -75,7 +77,7 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = (data[0].equals(dn) && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return (data[0].contains("TARDIS_WORLD_") || special);
+        return (data[0].toLowerCase(Locale.ENGLISH).contains("tardis_world_") || special);
     }
 
     public boolean inTARDISWorld(Player player) {
@@ -93,7 +95,7 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = ((name.equals(dn) || name.equals("tardis_zero_room")) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
+        return name.equals("tardis_world_" + player.getName()) || special;
     }
 
     public boolean inTARDISWorld(Location loc) {
@@ -107,7 +109,7 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return name.startsWith("TARDIS_WORLD_") || special;
+        return name.startsWith("tardis_world_") || special;
     }
 
     /**

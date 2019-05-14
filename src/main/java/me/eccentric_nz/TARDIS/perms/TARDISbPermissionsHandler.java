@@ -71,7 +71,7 @@ public class TARDISbPermissionsHandler {
                 }
             }
         }
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "world TARDIS_WORLD_" + player);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "world tardis_world_" + player);
         int i = 0;
         for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
             String grpstr = entry.getKey();

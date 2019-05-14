@@ -104,7 +104,8 @@ class TARDISRemoveCompanionCommand {
                 qf.doUpdate("tardis", set, tid);
                 // if using WorldGuard, remove them from the region membership
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World w = plugin.getServer().getWorld(data[0]);
+                    String world = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World w = plugin.getServer().getWorld(world);
                     if (w != null) {
                         plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
                     }

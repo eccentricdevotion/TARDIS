@@ -32,6 +32,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -68,7 +69,7 @@ class TARDISUpgradeCommand {
         Location pl = player.getLocation();
         String current_world = pl.getWorld().getName();
         String[] split = tardis.getChunk().split(":");
-        String db_world = split[0];
+        String db_world = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
                 own = (current_world.equals(db_world));

@@ -1,7 +1,7 @@
 # TODO
 
 ## Next version `4.1`
-0. Update to Spigot 1.14
+0. Update to Spigot 1.14.1
    * Add new mob types to farming and genetic manipulator (waiting for LibsDisguises update)
    * Foxes?
    * Test villager farming

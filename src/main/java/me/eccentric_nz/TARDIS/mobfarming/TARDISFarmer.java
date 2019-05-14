@@ -37,6 +37,7 @@ import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold has an identifying number.
@@ -480,7 +481,8 @@ public class TARDISFarmer {
                 if (!aquarium.isEmpty() && old_macd_had_a_fish != null) {
                     // get location of farm room
                     String[] data = aquarium.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String name = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(name);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -517,7 +519,8 @@ public class TARDISFarmer {
                 if (!farm.isEmpty()) {
                     // get location of farm room
                     String[] data = farm.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -654,7 +657,8 @@ public class TARDISFarmer {
                 if (!stable.isEmpty() && old_macd_had_a_horse.size() > 0) {
                     // get location of stable room
                     String[] data = stable.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -714,7 +718,8 @@ public class TARDISFarmer {
                 if (!stall.isEmpty() && old_macd_had_a_llama.size() > 0) {
                     // get location of stable room
                     String[] data = stall.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -772,7 +777,8 @@ public class TARDISFarmer {
                 if (!hutch.isEmpty() && old_macd_had_a_rabbit.size() > 0) {
                     // get location of hutch room
                     String[] data = hutch.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -806,7 +812,8 @@ public class TARDISFarmer {
                 if (!village.isEmpty() && old_macd_had_a_villager.size() > 0) {
                     // get location of village room
                     String[] data = village.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -848,7 +855,8 @@ public class TARDISFarmer {
                 if (!igloo.isEmpty() && old_macd_had_a_polarbear.size() > 0) {
                     // get location of igloo room
                     String[] data = igloo.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);
@@ -881,7 +889,8 @@ public class TARDISFarmer {
                 if (!birdcage.isEmpty() && old_macd_had_a_parrot.size() > 0) {
                     // get location of igloo room
                     String[] data = birdcage.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
+                    String wn = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
+                    World world = plugin.getServer().getWorld(wn);
                     int x = TARDISNumberParsers.parseInt(data[1]);
                     int y = TARDISNumberParsers.parseInt(data[2]) + 1;
                     int z = TARDISNumberParsers.parseInt(data[3]);

@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -97,7 +98,8 @@ public class ResultSetHomeLocation {
                 while (rs.next()) {
                     home_id = rs.getInt("home_id");
                     tardis_id = rs.getInt("tardis_id");
-                    world = plugin.getServer().getWorld(rs.getString("world"));
+                    String w = (rs.getString("world").equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rs.getString("world").toLowerCase(Locale.ENGLISH));
+                    world = plugin.getServer().getWorld(w);
                     x = rs.getInt("x");
                     y = rs.getInt("y");
                     z = rs.getInt("z");

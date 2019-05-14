@@ -43,6 +43,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -304,7 +305,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
      * @return a Location
      */
     private Location getLocation(List<String> lore) {
-        World w = plugin.getServer().getWorld(lore.get(0));
+        String world = (lore.get(0).equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : lore.get(0).toLowerCase(Locale.ENGLISH));
+        World w = plugin.getServer().getWorld(world);
         if (w == null) {
             return null;
         }

@@ -38,6 +38,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -127,7 +128,8 @@ class TARDISRepair {
                 }
                 int starty = (tardis.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
                 String[] split = tardis.getChunk().split(":");
-                World world = plugin.getServer().getWorld(split[0]);
+                String name = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+                World world = plugin.getServer().getWorld(name);
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";
                 Material wall_type = Material.ORANGE_WOOL;

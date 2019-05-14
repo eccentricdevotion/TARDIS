@@ -493,7 +493,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "SAVE_NOT_FOUND");
                                 return true;
                             }
-                            World w = plugin.getServer().getWorld(rsd.getWorld());
+                            String world = (rsd.getWorld().equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rsd.getWorld().toLowerCase(Locale.ENGLISH));
+                            World w = plugin.getServer().getWorld(world);
                             if (w != null) {
                                 if (w.getName().startsWith("TARDIS_")) {
                                     TARDISMessage.send(player, "SAVE_NO_TARDIS");

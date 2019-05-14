@@ -35,6 +35,7 @@ import org.bukkit.block.data.BlockData;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -90,7 +91,8 @@ public class TARDISUpgradeBlockScanner {
             }
             int starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            String name = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+            World world = plugin.getServer().getWorld(name);
             Material wall_type;
             Material floor_type;
             // get wall/floor block prefs from database...

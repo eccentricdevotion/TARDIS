@@ -89,13 +89,14 @@ public class TARDISExterminator {
                 }
                 cleanHashMaps(id);
                 String[] chunkworld = chunkLoc.split(":");
-                World cw = plugin.getServer().getWorld(chunkworld[0]);
+                String world = (chunkworld[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chunkworld[0].toLowerCase(Locale.ENGLISH));
+                World cw = plugin.getServer().getWorld(world);
                 if (cw == null) {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
                 }
                 Material restore = getRestore(cw);
-                if (!cw.getName().contains("TARDIS_WORLD_")) {
+                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("tardis_world_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanWorlds(cw, owner);
@@ -224,13 +225,14 @@ public class TARDISExterminator {
                     plugin.getUtils().restoreBiome(bb_loc, rsc.getBiome());
                 }
                 String[] chunkworld = chunkLoc.split(":");
-                World cw = plugin.getServer().getWorld(chunkworld[0]);
+                String world = (chunkworld[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chunkworld[0].toLowerCase(Locale.ENGLISH));
+                World cw = plugin.getServer().getWorld(world);
                 if (cw == null) {
                     TARDISMessage.send(player, "WORLD_DELETED");
                     return true;
                 }
                 Material restore = getRestore(cw);
-                if (!cw.getName().contains("TARDIS_WORLD_")) {
+                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("tardis_world_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanWorlds(cw, owner);
@@ -323,8 +325,8 @@ public class TARDISExterminator {
             plugin.getWorldGuardUtils().removeRegion(w, owner);
             plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "renderer");
         }
-        // unload and remove the world if it's a TARDIS_WORLD_ world
-        if (w.getName().contains("TARDIS_WORLD_")) {
+        // unload and remove the world if it's a `tardis_world_` world
+        if (w.getName().toLowerCase(Locale.ENGLISH).contains("tardis_world_")) {
             String name = w.getName();
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();

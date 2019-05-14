@@ -75,7 +75,7 @@ public class TARDISPermissionsExHandler {
         // get the default world
         String w = plugin.getServer().getWorlds().get(0).getName();
         // pex world <world> inherit <parentWorld> - make the TARDIS world inherit the main worlds permissions
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + "tardis_world_" + player + " inherit " + w);
         plugin.getServer().dispatchCommand(plugin.getConsole(), "pex reload");
     }
 }

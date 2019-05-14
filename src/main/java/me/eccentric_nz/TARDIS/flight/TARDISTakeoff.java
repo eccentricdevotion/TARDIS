@@ -32,6 +32,7 @@ import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -133,7 +134,8 @@ public class TARDISTakeoff {
 
     private void toggleBeacon(String str) {
         String[] beaconData = str.split(":");
-        World w = plugin.getServer().getWorld(beaconData[0]);
+        String world = (beaconData[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : beaconData[0].toLowerCase(Locale.ENGLISH));
+        World w = plugin.getServer().getWorld(world);
         int bx = TARDISNumberParsers.parseInt(beaconData[1]);
         int by = TARDISNumberParsers.parseInt(beaconData[2]);
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);

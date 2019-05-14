@@ -195,7 +195,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");
-            world = plugin.getServer().getWorld(split[0]);
+            String name = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+            world = plugin.getServer().getWorld(name);
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
@@ -570,7 +571,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 
     private Chunk getChunk(String str) {
         String[] split = str.split(":");
-        World cw = plugin.getServer().getWorld(split[0]);
+        String world = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+        World cw = plugin.getServer().getWorld(world);
         int cx = TARDISNumberParsers.parseInt(split[1]);
         int cz = TARDISNumberParsers.parseInt(split[2]);
         return cw.getChunkAt(cx, cz);
@@ -589,7 +591,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 
     private Location getCreeperLocation(String str) {
         String[] creeperData = str.split(":");
-        World cw = plugin.getServer().getWorld(creeperData[0]);
+        String world = (creeperData[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : creeperData[0].toLowerCase(Locale.ENGLISH));
+        World cw = plugin.getServer().getWorld(world);
         float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
         float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
         float cz = TARDISNumberParsers.parseFloat(creeperData[3]);

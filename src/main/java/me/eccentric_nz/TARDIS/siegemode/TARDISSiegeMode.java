@@ -43,6 +43,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
@@ -109,7 +110,7 @@ public class TARDISSiegeMode {
             }
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                 String[] chu = tardis.getChunk().split(":");
-                String w = chu[0];
+                String w = (chu[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chu[0].toLowerCase(Locale.ENGLISH));
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
                     List<TARDISSiegeArea> breeding = new ArrayList<>();
                     plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((breeding_area) -> {

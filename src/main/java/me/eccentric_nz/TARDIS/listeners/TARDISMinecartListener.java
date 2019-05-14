@@ -43,6 +43,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -127,19 +128,20 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null && data.length > 3) {
+                    String world = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
                     boolean shouldPrevent;
                     switch (plugin.getInvManager()) {
                         case MULTIVERSE:
-                            shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                            shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, world));
                             break;
                         case MULTI:
-                            shouldPrevent = (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0]));
+                            shouldPrevent = (!TARDISMultiInvChecker.checkWorldsCanShare(bw, world));
                             break;
                         case PER_WORLD:
-                            shouldPrevent = (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
+                            shouldPrevent = (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, world));
                             break;
                         default:
-                            World w = plugin.getServer().getWorld(data[0]);
+                            World w = plugin.getServer().getWorld(world);
                             int x = TARDISNumberParsers.parseInt(data[1]);
                             int y = TARDISNumberParsers.parseInt(data[2]);
                             int z = TARDISNumberParsers.parseInt(data[3]);

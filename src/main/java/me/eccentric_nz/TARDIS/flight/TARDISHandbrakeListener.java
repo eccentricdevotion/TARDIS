@@ -43,6 +43,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -237,7 +238,8 @@ public class TARDISHandbrakeListener implements Listener {
 
     public static void toggleBeacon(String str, boolean on) {
         String[] beaconData = str.split(":");
-        World w = Bukkit.getServer().getWorld(beaconData[0]);
+        String world = (beaconData[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : beaconData[0].toLowerCase(Locale.ENGLISH));
+        World w = Bukkit.getServer().getWorld(world);
         int bx = TARDISNumberParsers.parseInt(beaconData[1]);
         int by = TARDISNumberParsers.parseInt(beaconData[2]);
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);

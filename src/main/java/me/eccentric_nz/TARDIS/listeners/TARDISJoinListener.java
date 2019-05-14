@@ -33,6 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked to join them, Tylos challenged him to
@@ -160,7 +161,8 @@ public class TARDISJoinListener implements Listener {
                 // update the player's name WG region as it may have changed
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     String[] chunkworld = tardis.getChunk().split(":");
-                    World cw = plugin.getServer().getWorld(chunkworld[0]);
+                    String world = (chunkworld[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chunkworld[0].toLowerCase(Locale.ENGLISH));
+                    World cw = plugin.getServer().getWorld(world);
                     // tardis region
                     plugin.getWorldGuardUtils().updateRegionForNameChange(cw, owner, player.getUniqueId(), "tardis");
                 }

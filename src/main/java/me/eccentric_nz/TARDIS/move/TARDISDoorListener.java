@@ -42,6 +42,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -325,7 +326,8 @@ public class TARDISDoorListener {
             tdl.setD(d);
             String doorLocStr = rsd.getDoor_location();
             String[] split = doorLocStr.split(":");
-            World cw = plugin.getServer().getWorld(split[0]);
+            String w = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
+            World cw = plugin.getServer().getWorld(w);
             tdl.setW(cw);
             int cx = TARDISNumberParsers.parseInt(split[1]);
             int cy = TARDISNumberParsers.parseInt(split[2]);

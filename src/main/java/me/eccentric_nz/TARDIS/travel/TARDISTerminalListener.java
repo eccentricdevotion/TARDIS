@@ -393,7 +393,7 @@ public class TARDISTerminalListener implements Listener {
     private String getWorld(String e, String this_world, Player p) {
         List<String> allowedWorlds = new ArrayList<>();
         String world = "";
-        Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
+        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
             World ww = plugin.getServer().getWorld(o);
             if (ww != null) {

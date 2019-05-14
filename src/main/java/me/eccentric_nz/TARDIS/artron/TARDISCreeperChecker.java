@@ -27,6 +27,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The Doctor's favorite food - jelly babies have been considered a delicacy by the Doctor ever since his second
@@ -62,7 +63,8 @@ public class TARDISCreeperChecker {
                     // only if the TARDIS has been initialised
                     if (t.isTardis_init()) {
                         String[] creeperData = t.getCreeper().split(":");
-                        World w = plugin.getServer().getWorld(creeperData[0]);
+                        String world = (creeperData[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : creeperData[0].toLowerCase(Locale.ENGLISH));
+                        World w = plugin.getServer().getWorld(world);
                         if (w != null) {
                             float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
                             float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;

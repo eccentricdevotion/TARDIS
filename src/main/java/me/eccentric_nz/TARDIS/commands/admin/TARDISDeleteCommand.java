@@ -104,7 +104,7 @@ public class TARDISDeleteCommand {
             } else {
                 wname = cdata[0];
             }
-            String name = wname;
+            String name = wname.toLowerCase(Locale.ENGLISH);
             World cw = plugin.getServer().getWorld(name);
             if (cw == null) {
                 TARDISMessage.send(sender, "WORLD_DELETED");
@@ -148,7 +148,7 @@ public class TARDISDeleteCommand {
             // destroy the inner TARDIS
             // give the TARDIS time to remove itself as it's not hidden
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("TARDIS_WORLD_")) {
+                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("tardis_world_")) {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
