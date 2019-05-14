@@ -195,17 +195,6 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             worldManager = WORLD_MANAGER.getWorldManager();
-//            // disable plugin if another world manager is in use (hopefully a temporary measure)
-//            if (worldManager != WORLD_MANAGER.NONE) {
-//                console.sendMessage(pluginName + ChatColor.RED + "This plugin is currently incompatible with other multi-world plugins, disabling...");
-//                console.sendMessage(pluginName + ChatColor.RED + "You can use a TARDIS command to load and unload worlds:");
-//                console.sendMessage(pluginName + ChatColor.GREEN + "/tardisworld [load|unload] [world] <WorldType> <Environment>");
-//                console.sendMessage(pluginName + ChatColor.BLUE + "WorldTypes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/WorldType.html");
-//                console.sendMessage(pluginName + ChatColor.BLUE + "Environments: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/World.Environment.html");
-//                console.sendMessage(pluginName + ChatColor.RED + "Probably a good idea to open existing worlds up in 1.14 first before trying to load them on the server.");
-//                pm.disablePlugin(this);
-//                return;
-//            }
             saveDefaultConfig();
             reloadConfig();
             loadCustomConfigs();
@@ -900,13 +889,13 @@ public class TARDIS extends JavaPlugin {
 
     private void setupPlanets() {
         // Skaro
-        if (getPlanetsConfig().getBoolean("planets.Skaro.enabled") && getServer().getWorld("Skaro") == null) {
+        if (getPlanetsConfig().getBoolean("planets.skaro.enabled") && getServer().getWorld("skaro") == null) {
             new TARDISSkaro(this).createDalekWorld();
         }
-        if (getPlanetsConfig().getBoolean("planets.Siluria.enabled") && getServer().getWorld("Siluria") == null) {
+        if (getPlanetsConfig().getBoolean("planets.siluria.enabled") && getServer().getWorld("siluria") == null) {
             new TARDISSiluria(this).createSilurianUnderworld();
         }
-        if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") && getServer().getWorld("Gallifrey") == null) {
+        if (getPlanetsConfig().getBoolean("planets.gallifrey.enabled") && getServer().getWorld("gallifrey") == null) {
             new TARDISGallifrey(this).createTimeLordWorld();
         }
     }

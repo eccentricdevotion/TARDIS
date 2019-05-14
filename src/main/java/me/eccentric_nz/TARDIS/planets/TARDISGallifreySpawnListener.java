@@ -42,7 +42,7 @@ public final class TARDISGallifreySpawnListener implements Listener {
         if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
             return;
         }
-        if (!event.getLocation().getWorld().getName().equals("Gallifrey")) {
+        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("gallifrey")) {
             return;
         }
         if (!event.getEntity().getType().equals(EntityType.VILLAGER)) {

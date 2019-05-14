@@ -48,7 +48,7 @@ public class TARDISSkaroSpawnListener implements Listener {
         if (!event.getSpawnReason().equals(SpawnReason.SPAWNER)) {
             return;
         }
-        if (!event.getLocation().getWorld().getName().equals("Skaro")) {
+        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("skaro")) {
             return;
         }
         if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
@@ -57,7 +57,7 @@ public class TARDISSkaroSpawnListener implements Listener {
         LivingEntity le = event.getEntity();
         // it's a Dalek - disguise it!
         twaAPI.setDalekEquipment(le);
-        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
             // make the Dalek fly
             EntityEquipment ee = le.getEquipment();
             ee.setChestplate(new ItemStack(Material.ELYTRA, 1));

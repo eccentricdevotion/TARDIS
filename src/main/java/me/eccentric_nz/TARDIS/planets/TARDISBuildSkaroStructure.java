@@ -57,7 +57,7 @@ class TARDISBuildSkaroStructure {
      * @return false when the build task has finished
      */
     boolean buildCity(int startx, int starty, int startz) {
-        World world = plugin.getServer().getWorld("Skaro");
+        World world = plugin.getServer().getWorld("skaro");
         String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         path += (TARDISConstants.RANDOM.nextInt(100) > 25) ? "dalek_small.tschm" : "dalek_large.tschm";
         File file = new File(path);

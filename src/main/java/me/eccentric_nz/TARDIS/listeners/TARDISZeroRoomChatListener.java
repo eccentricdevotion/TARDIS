@@ -55,8 +55,8 @@ public class TARDISZeroRoomChatListener implements Listener {
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(zero, "NOT_IN_ZERO");
-        } else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
-            List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
+        } else if (plugin.getServer().getWorld("tardis_zero_room") != null) {
+            List<Player> inZeroRoom = plugin.getServer().getWorld("tardis_zero_room").getPlayers();
             inZeroRoom.forEach((p) -> event.getRecipients().remove(p));
         }
     }

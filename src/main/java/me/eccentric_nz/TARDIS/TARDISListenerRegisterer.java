@@ -264,22 +264,22 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
-        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled")) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.getPM().registerEvents(new TARDISSkaroChunkPopulateListener(plugin), plugin);
-            if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.acid")) {
+            if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
                 plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
             }
             if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
                 plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
             }
         }
-        if (plugin.getPlanetsConfig().getBoolean("planets.Siluria.enabled")) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.siluria.enabled")) {
             plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
             if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
                 plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
             }
         }
-        if (plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.enabled")) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
             plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISGallifreyChunkPopulateListener(plugin), plugin);
         }

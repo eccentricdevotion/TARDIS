@@ -48,19 +48,19 @@ public class TARDISGallifrey {
     public void createTimeLordWorld() {
         String container = plugin.getServer().getWorldContainer().getAbsolutePath() + File.separator;
         try {
-            TARDISFileCopier.copy(container + "Gallifrey.tar.gz", plugin.getResource("Gallifrey.tar.gz"), true);
+            TARDISFileCopier.copy(container + "gallifrey.tar.gz", plugin.getResource("gallifrey.tar.gz"), true);
             // decompress the archive
-            File archive = new File(container + "Gallifrey.tar.gz");
+            File archive = new File(container + "gallifrey.tar.gz");
             File destination = new File(container);
             Archiver archiver = ArchiverFactory.createArchiver(archive);
             archiver.extract(archive, destination);
             // set a random seed
-            plugin.getTardisHelper().setRandomSeed("Gallifrey");
+            plugin.getTardisHelper().setRandomSeed("gallifrey");
             archive.delete();
             // load world
-            WorldCreator.name("Gallifrey").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+            WorldCreator.name("gallifrey").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
             // add world to config
-            plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
+            plugin.getPlanetsConfig().set("planets.gallifrey.time_travel", true);
             plugin.savePlanetsConfig();
         } catch (IOException | CommandException e) {
             plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Gallifrey world files to " + container + " {0}", e.getMessage());

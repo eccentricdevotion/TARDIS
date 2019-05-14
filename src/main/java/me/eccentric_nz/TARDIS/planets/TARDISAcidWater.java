@@ -81,7 +81,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Check that they are in the Skaro world
-        if (!player.getWorld().getName().equalsIgnoreCase("Skaro")) {
+        if (!player.getWorld().getName().equalsIgnoreCase("skaro")) {
             return;
         }
         // Return if players are immune
@@ -132,10 +132,10 @@ public class TARDISAcidWater implements Listener {
                     if (player.isDead()) {
                         burningPlayers.remove(player);
                         cancel();
-                    } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
+                    } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("skaro")) {
                         // Apply additional potion effects
-                        if (!plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions").isEmpty()) {
-                            plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions").forEach((t) -> {
+                        if (!plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").isEmpty()) {
+                            plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").forEach((t) -> {
                                 PotionEffectType pet = PotionEffectType.getByName(t);
                                 if (pet != null) {
                                     if (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.CONFUSION) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOW) || pet.equals(PotionEffectType.SLOW_DIGGING) || pet.equals(PotionEffectType.WEAKNESS)) {
@@ -148,7 +148,7 @@ public class TARDISAcidWater implements Listener {
                             });
                         }
                         // Apply damage if there is any
-                        double ad = plugin.getPlanetsConfig().getDouble("planets.Skaro.acid_damage");
+                        double ad = plugin.getPlanetsConfig().getDouble("planets.skaro.acid_damage");
                         if (ad > 0d) {
                             double health = player.getHealth() - (ad - ad * getDamageReduced(player));
                             if (health < 0D) {
@@ -272,7 +272,7 @@ public class TARDISAcidWater implements Listener {
     @EventHandler
     public void onFillAcidBucket(PlayerBucketFillEvent event) {
         Player p = event.getPlayer();
-        if (!p.getWorld().getName().equals("Skaro")) {
+        if (!p.getWorld().getName().equalsIgnoreCase("skaro")) {
             return;
         }
         Material type = event.getBlockClicked().getType();

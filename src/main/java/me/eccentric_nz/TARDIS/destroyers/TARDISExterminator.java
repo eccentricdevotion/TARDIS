@@ -373,7 +373,7 @@ public class TARDISExterminator {
         if (slot != -1 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
             TARDISTIPSData coords = tips.getTIPSData(slot);
-            World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
+            World w = plugin.getServer().getWorld("tardis_zero_room");
             if (w != null) {
                 tips.reclaimZeroChunk(w, coords);
             }

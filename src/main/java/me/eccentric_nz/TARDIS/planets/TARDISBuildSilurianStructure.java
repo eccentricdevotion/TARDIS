@@ -66,7 +66,7 @@ class TARDISBuildSilurianStructure {
             return false;
         }
         plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
-        World world = plugin.getServer().getWorld("Siluria");
+        World world = plugin.getServer().getWorld("siluria");
         structure(paths[0], world, startx, starty, startz);
         // choose a random direction
         COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];

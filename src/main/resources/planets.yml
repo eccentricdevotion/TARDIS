@@ -2,7 +2,7 @@ switch_resource_packs: false
 set_pack_on_join: true
 default_resource_pack: https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1
 planets:
-  Skaro:
+  skaro:
     enabled: false
     resource_pack: https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1
     acid: true
@@ -17,7 +17,7 @@ planets:
     world_type: BUFFET
     environment: NORMAL
     generator: DEFAULT
-  Siluria:
+  siluria:
     enabled: false
     resource_pack: default
     gamemode: SURVIVAL
@@ -25,7 +25,7 @@ planets:
     world_type: BUFFET
     environment: NORMAL
     generator: DEFAULT
-  Gallifrey:
+  gallifrey:
     enabled: false
     resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
     gamemode: SURVIVAL
@@ -33,7 +33,7 @@ planets:
     world_type: BUFFET
     environment: NORMAL
     generator: DEFAULT
-  TARDIS_TimeVortex:
+  tardis_time_vortex:
     enabled: true
     resource_pack: default
     gamemode: SURVIVAL
@@ -42,7 +42,7 @@ planets:
     environment: NORMAL
     void: true
     generator: TARDISChunkGenerator
-  TARDIS_Zero_Room:
+  tardis_zero_room:
     enabled: false
     resource_pack: default
     gamemode: SURVIVAL

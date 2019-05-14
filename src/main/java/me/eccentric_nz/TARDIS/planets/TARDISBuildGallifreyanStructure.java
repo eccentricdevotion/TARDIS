@@ -57,7 +57,7 @@ class TARDISBuildGallifreyanStructure {
      * @return false when the build task has finished
      */
     boolean buildCity(int startx, int starty, int startz) {
-        World world = plugin.getServer().getWorld("Gallifrey");
+        World world = plugin.getServer().getWorld("gallifrey");
         String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "gallifrey.tschm";
         File file = new File(path);
         if (!file.exists()) {

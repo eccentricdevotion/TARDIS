@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
-import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -232,15 +231,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1) {
-                    if (first.equals("skaro")) {
-                        if (plugin.getServer().getWorld("Skaro") == null) {
-                            new TARDISSkaro(plugin).createDalekWorld();
-                            plugin.getPlanetsConfig().set("planets.Skaro.enabled", true);
-                        } else {
-                            TARDISMessage.send(sender, "WORLD_EXISTS", "Skaro");
-                        }
-                        return true;
-                    }
                     if (first.equals("condenser")) {
                         return new TARDISCondenserCommand(plugin).set(sender);
                     }
@@ -389,7 +379,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     // get default world name
                     String defWorld = plugin.getConfig().getString("creation.default_world_name");
                     plugin.getPlanetsConfig().set("planets." + defWorld + ".gamemode", args[1].toUpperCase(Locale.ENGLISH));
-                    plugin.getPlanetsConfig().set("planets.TARDIS_Zero_Room.gamemode", args[1].toUpperCase(Locale.ENGLISH));
+                    plugin.getPlanetsConfig().set("planets.tardis_zero_room.gamemode", args[1].toUpperCase(Locale.ENGLISH));
                     plugin.savePlanetsConfig();
                     return true;
                 }

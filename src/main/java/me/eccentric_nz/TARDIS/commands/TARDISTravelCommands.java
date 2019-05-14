@@ -414,8 +414,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "BIOME_FROM_VORTEX");
                                         return true;
                                     }
-                                    if (args[2].equalsIgnoreCase("Skaro")) {
-                                        TARDISMessage.send(player, "BIOME_NOT_SKARO");
+                                    if (args[2].equalsIgnoreCase("gallifrey") || args[2].equalsIgnoreCase("siluria") || args[2].equalsIgnoreCase("skaro")) {
+                                        TARDISMessage.send(player, "BIOME_NOT_PLANET", args[2]);
                                         return true;
                                     }
                                     // get the world
@@ -427,7 +427,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     x = 0;
                                     z = 0;
                                 } else {
-                                    if (rsc.getWorld().getName().equals("Skaro")) {
+                                    if (rsc.getWorld().getName().equalsIgnoreCase("skaro")) {
                                         TARDISMessage.send(player, "BIOME_NOT_SKARO");
                                         return true;
                                     }

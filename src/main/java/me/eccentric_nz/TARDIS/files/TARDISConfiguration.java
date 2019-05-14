@@ -25,11 +25,13 @@ import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * The Alpha Centauran Table Tennis Club is a club established by the Alpha Centaurans for the play of table tennis. The
@@ -181,7 +183,7 @@ public class TARDISConfiguration {
         // string
         stringOptions.put("creation.area", "none");
         stringOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
-        stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
+        stringOptions.put("creation.default_world_name", "tardis_time_vortex");
         stringOptions.put("creation.gamemode", "survival");
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("handles.prefix", "Hey Handles");
@@ -212,6 +214,10 @@ public class TARDISConfiguration {
      */
     public void checkConfig() {
         int i = 0;
+        if (config.getString("creation.default_world_name").equals("TARDIS_TimeVortex")) {
+            plugin.getConfig().set("creation.default_world_name", "tardis_time_vortex");
+            i++;
+        }
         if (!config.contains("rechargers")) {
             plugin.getConfig().createSection("rechargers");
             i++;
@@ -268,34 +274,56 @@ public class TARDISConfiguration {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldname + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldname);
             }
         });
-        // now remove worlds that may have been deleted
+        // check for uppercase TARDIS world names
+        if (!plugin.getConfig().getBoolean("conversions.level_names")) {
+            for (Map.Entry<String, String> level : TARDISConstants.RENAME_LEVELS.entrySet()) {
+                // set the LevelName in level.dat
+                plugin.getTardisHelper().setLevelName(level.getKey(), level.getValue());
+                // rename the planet in planets.yml
+                ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + level.getKey());
+                if (section != null) {
+                    Map<String, Object> map = section.getValues(true);
+                    plugin.getPlanetsConfig().set("planets." + level.getValue(), map);
+                    plugin.getPlanetsConfig().set("planets." + level.getKey(), null);
+                }
+            }
+            plugin.getConfig().set("conversions.level_names", true);
+            plugin.saveConfig();
+        }
+        // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
             if (plugin.getServer().getWorld(cw) == null) {
                 if ((plugin.getWorldManager().equals(WORLD_MANAGER.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
-                } else if (TARDISConstants.PLANETS.contains(cw) && !worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
-                    // create world
-                    if (cw.equals("Skaro")) {
-                        new TARDISSkaro(plugin).createDalekWorld();
-                    }
-                    if (cw.equals("Siluria")) {
-                        new TARDISSiluria(plugin).createSilurianUnderworld();
-                    }
-                    if (cw.equals("Gallifrey")) {
-                        new TARDISGallifrey(plugin).createTimeLordWorld();
+                } else if (TARDISConstants.PLANETS.contains(cw)) {
+                    if (!worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+                        // create world
+                        if (cw.equalsIgnoreCase("skaro")) {
+                            new TARDISSkaro(plugin).createDalekWorld();
+                        }
+                        if (cw.equalsIgnoreCase("siluria")) {
+                            new TARDISSiluria(plugin).createSilurianUnderworld();
+                        }
+                        if (cw.equalsIgnoreCase("gallifrey")) {
+                            new TARDISGallifrey(plugin).createTimeLordWorld();
+                        }
                     }
                 } else {
-                    plugin.getPlanetsConfig().set("planets." + cw, null);
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
-                    // remove records from database that may contain the removed world
-                    plugin.getCleanUpWorlds().add(cw);
+                    if (!TARDISConstants.PLANETS.contains(cw)) {
+                        plugin.getPlanetsConfig().set("planets." + cw, null);
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
+                        // remove records from database that may contain the removed world
+                        plugin.getCleanUpWorlds().add(cw);
+                    }
                 }
             }
         });
         plugin.savePlanetsConfig();
     }
+
+    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
 
     private boolean worldFolderExists(String world) {
         File container = plugin.getServer().getWorldContainer();
@@ -313,21 +341,21 @@ public class TARDISConfiguration {
         return false;
     }
 
-    private void loadWorld(String world) {
+    public static void loadWorld(String world) {
         try {
-            String wt = plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
+            String wt = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
             WorldType worldType = WorldType.valueOf(wt);
-            String e = plugin.getPlanetsConfig().getString("planets." + world + ".environment");
+            String e = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
             Environment environment = Environment.valueOf(e);
             WorldCreator worldCreator = WorldCreator.name(world).type(worldType).environment(environment);
-            String g = plugin.getPlanetsConfig().getString("planets." + world + ".generator");
+            String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             if (!g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
             }
             worldCreator.createWorld();
-            String gm = plugin.getPlanetsConfig().getString("planets." + world + ".gamemode").toUpperCase(Locale.ENGLISH);
+            String gm = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode").toUpperCase(Locale.ENGLISH);
             if (gm.equals("CREATIVE")) {
-                plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
+                TARDIS.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
             }
         } catch (IllegalArgumentException e) {
             return;
