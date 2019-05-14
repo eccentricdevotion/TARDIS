@@ -18,22 +18,19 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
-import org.bukkit.GameMode;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Teleport to the spawn point of worlds on the server
@@ -43,7 +40,7 @@ import java.util.Locale;
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "gm");
+    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "gm", "rename");
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
@@ -80,6 +77,34 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             }
             World world = plugin.getServer().getWorld(args[1]);
             if (world != null) {
+                if (args[0].toLowerCase().equals("rename")) {
+                    if (args.length < 3) {
+                        TARDISMessage.send(sender, "ARGS_WORLD_RENAME");
+                        return true;
+                    }
+                    // remove players from world
+                    List<Player> players = world.getPlayers();
+                    Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+                    players.forEach((p) -> {
+                        TARDISMessage.send(p, "WORLD_RENAME");
+                        p.teleport(spawn);
+                    });
+                    // unload world
+                    plugin.getServer().unloadWorld(world, true);
+                    plugin.getTardisHelper().setLevelName(args[1], args[2]);
+                    // rename the planet in planets.yml
+                    ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + args[1]);
+                    if (section != null) {
+                        Map<String, Object> map = section.getValues(true);
+                        plugin.getPlanetsConfig().set("planets." + args[2], map);
+                        plugin.getPlanetsConfig().set("planets." + args[1], null);
+                        plugin.savePlanetsConfig();
+                    }
+                    // load world
+                    TARDISConfiguration.loadWorld(args[2]);
+                    TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS");
+                    return true;
+                }
                 if (args[0].toLowerCase().equals("gm")) {
                     if (args.length == 3) {
                         try {
