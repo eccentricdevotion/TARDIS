@@ -102,7 +102,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     }
                     // load world
                     TARDISConfiguration.loadWorld(args[2]);
-                    TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS");
+                    TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS", args[2]);
                     return true;
                 }
                 if (args[0].toLowerCase().equals("gm")) {
@@ -110,6 +110,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         try {
                             GameMode gm = GameMode.valueOf(args[2]);
                             plugin.getTardisHelper().setWorldGameMode(args[1], gm);
+                            plugin.getPlanetsConfig().set("planets." + args[1] + ".gamemode", gm.toString());
+                            plugin.savePlanetsConfig();
+                            TARDISMessage.send(sender, "WORLD_GM_SET", args[1], args[2]);
+                            return true;
                         } catch (IllegalArgumentException e) {
                             TARDISMessage.send(sender, "ARG_GM", args[2]);
                             return true;
@@ -117,8 +121,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     } else {
                         TARDISPlanetData data = plugin.getTardisHelper().getLevelData(args[1]);
                         TARDISMessage.send(sender, "WORLD_GM", data.getGameMode().toString());
+                        return true;
                     }
-                    return true;
                 }
                 if (args[0].toLowerCase().equals("load")) {
                     TARDISMessage.send(sender, "WORLD_LOADED", args[1]);
@@ -133,6 +137,15 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     return true;
                 }
             } else {
+                if (args[0].toLowerCase().equals("rename")) {
+                    if (args.length < 3) {
+                        TARDISMessage.send(sender, "ARGS_WORLD_RENAME");
+                        return true;
+                    }
+                    plugin.getTardisHelper().setLevelName(args[1], args[2]);
+                    TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS", args[2]);
+                    return true;
+                }
                 if (args[0].toLowerCase().equals("gm")) {
                     TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                     return true;
