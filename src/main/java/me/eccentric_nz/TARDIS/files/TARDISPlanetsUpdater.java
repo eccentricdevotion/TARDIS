@@ -54,7 +54,7 @@ public class TARDISPlanetsUpdater {
                     planets_config.set("planets." + w + ".gamemode", data.getGameMode().toString());
                     planets_config.set("planets." + w + ".world_type", data.getWorldType().toString());
                     planets_config.set("planets." + w + ".environment", data.getEnvironment().toString());
-                    if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    if (w.startsWith("tardis_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         planets_config.set("planets." + w + ".generator", "TARDISChunkGenerator");
                     } else {
                         planets_config.set("planets." + w + ".generator", "DEFAULT");
@@ -98,7 +98,7 @@ public class TARDISPlanetsUpdater {
         }
         if (!planets_config.contains("planets.skaro.generator")) {
             for (String w : planets_config.getConfigurationSection("planets").getKeys(false)) {
-                if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                if (w.startsWith("tardis_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     planets_config.set("planets." + w + ".generator", "TARDISChunkGenerator");
                 } else {
                     planets_config.set("planets." + w + ".generator", "DEFAULT");

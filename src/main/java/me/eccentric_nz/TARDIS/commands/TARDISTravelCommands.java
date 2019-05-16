@@ -496,7 +496,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             String world = (rsd.getWorld().equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rsd.getWorld().toLowerCase(Locale.ENGLISH));
                             World w = plugin.getServer().getWorld(world);
                             if (w != null) {
-                                if (w.getName().startsWith("TARDIS_")) {
+                                if (w.getName().startsWith("tardis_")) {
                                     TARDISMessage.send(player, "SAVE_NO_TARDIS");
                                     return true;
                                 }

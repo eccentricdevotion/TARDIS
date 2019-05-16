@@ -270,7 +270,7 @@ public class TARDISConfiguration {
                 plugin.getPlanetsConfig().set("planets." + worldname + ".gamemode", data.getGameMode().toString());
                 plugin.getPlanetsConfig().set("planets." + worldname + ".world_type", data.getWorldType().toString());
                 plugin.getPlanetsConfig().set("planets." + worldname + ".environment", data.getEnvironment().toString());
-                plugin.getPlanetsConfig().set("planets." + worldname + ".generator", (worldname.startsWith("TARDIS_") || worldname.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
+                plugin.getPlanetsConfig().set("planets." + worldname + ".generator", (worldname.startsWith("tardis_") || worldname.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldname + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldname);
             }
         });

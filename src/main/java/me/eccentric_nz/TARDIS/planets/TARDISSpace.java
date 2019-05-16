@@ -123,7 +123,7 @@ public class TARDISSpace {
     private void timechk() {
         List<World> serverWorlds = plugin.getServer().getWorlds();
         serverWorlds.forEach((w) -> {
-            if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
+            if (w.getName().contains("tardis_") && w.getEnvironment().equals(Environment.NORMAL)) {
                 Long now = w.getTime();
                 Long dawn = 14000L;
                 Long dusk = 21000L;

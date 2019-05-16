@@ -74,7 +74,7 @@ class TARDISSaveLocationCommand {
                     return true;
                 }
                 String w = rsc.getWorld().getName();
-                if (w.startsWith("TARDIS_")) {
+                if (w.startsWith("tardis_")) {
                     TARDISMessage.send(player, "SAVE_NO_TARDIS");
                     return true;
                 }
