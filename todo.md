@@ -16,6 +16,7 @@
 6. Update documentation...
 8. Custom time rotor model
 9. 13th Doctor's TARDIS console & Custard Cream dispenser
+10. Add more to the effects during a malfunction, like random fires, or "sparks" using particle effects
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
