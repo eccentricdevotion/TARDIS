@@ -25,7 +25,10 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.*;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.disguisetypes.RabbitType;
 import me.libraryaddict.disguise.disguisetypes.watchers.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -33,10 +36,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Cat.Type;
-import org.bukkit.entity.Llama;
-import org.bukkit.entity.Parrot;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TropicalFish;
+import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,8 +56,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final TARDIS plugin;
     private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
     private final HashMap<UUID, Integer> cats = new HashMap<>();
+    private final HashMap<UUID, Integer> foxes = new HashMap<>();
+    private final HashMap<UUID, Integer> genes = new HashMap<>();
     private final HashMap<UUID, Integer> horses = new HashMap<>();
     private final HashMap<UUID, Integer> llamas = new HashMap<>();
+    private final HashMap<UUID, Integer> moos = new HashMap<>();
     private final HashMap<UUID, Integer> parrots = new HashMap<>();
     private final HashMap<UUID, Integer> professions = new HashMap<>();
     private final HashMap<UUID, Integer> puffers = new HashMap<>();
@@ -260,129 +263,142 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     return;
                                 }
                                 switch (dt) {
-//                                    case CAT:
-//                                        CatWatcher cw = (CatWatcher) livingWatcher;
-//                                        cw.setType(getCatType(view));
-//                                        if (getBoolean(view)) {
-//                                            cw.setTamed(true);
-//                                            cw.setCollarColor(getColor(view));
-//                                        }
-//                                        cw.setBaby(getBaby(view));
-//                                        break;
-//                                    case PANDA:
-//                                        PandaWatcher pw = (PandaWatcher) livingWatcher;
-//                                        pw.setMainGene();
-//                                        pw.setHidden();
-//                                        break;
+                                    case CAT:
+                                        CatWatcher catWatcher = (CatWatcher) livingWatcher;
+                                        catWatcher.setType(getCatType(view));
+                                        if (getBoolean(view)) {
+                                            catWatcher.setTamed(true);
+                                            catWatcher.setCollarColor(getColor(view));
+                                        }
+                                        catWatcher.setBaby(getBaby(view));
+                                        break;
+                                    case PANDA:
+                                        PandaWatcher pandaWatcher = (PandaWatcher) livingWatcher;
+                                        pandaWatcher.setMainGene(getGene(view));
+                                        pandaWatcher.setHiddenGene(Panda.Gene.NORMAL);
+                                        break;
                                     case DONKEY:
                                     case MULE:
-                                        ChestedHorseWatcher hcw = (ChestedHorseWatcher) livingWatcher;
-                                        hcw.setCarryingChest(getBoolean(view));
+                                        ChestedHorseWatcher chestedHorseWatcher = (ChestedHorseWatcher) livingWatcher;
+                                        chestedHorseWatcher.setCarryingChest(getBoolean(view));
+                                        break;
+                                    case PILLAGER:
+                                        PillagerWatcher pillagerWatcher = (PillagerWatcher) livingWatcher;
+                                        pillagerWatcher.setAimimgBow(getBoolean(view));
                                         break;
                                     case SHEEP:
-                                        SheepWatcher sw = (SheepWatcher) livingWatcher;
-                                        sw.setColor(getColor(view));
-                                        sw.setBaby(getBaby(view));
+                                        SheepWatcher sheepWatcher = (SheepWatcher) livingWatcher;
+                                        sheepWatcher.setColor(getColor(view));
+                                        sheepWatcher.setBaby(getBaby(view));
                                         if (getBoolean(view)) {
-                                            sw.setCustomName("jeb_");
-                                            sw.setCustomNameVisible(true);
+                                            sheepWatcher.setCustomName("jeb_");
+                                            sheepWatcher.setCustomNameVisible(true);
                                         }
                                         break;
                                     case HORSE:
-                                        HorseWatcher hw = (HorseWatcher) livingWatcher;
-                                        hw.setColor(getHorseColor(view));
-                                        hw.setBaby(getBaby(view));
+                                        HorseWatcher horseWatcher = (HorseWatcher) livingWatcher;
+                                        horseWatcher.setColor(getHorseColor(view));
+                                        horseWatcher.setBaby(getBaby(view));
                                         break;
                                     case LLAMA:
-                                        LlamaWatcher llw = (LlamaWatcher) livingWatcher;
-                                        llw.setColor(getLlamaColor(view));
+                                        LlamaWatcher llamaWatcher = (LlamaWatcher) livingWatcher;
+                                        llamaWatcher.setColor(getLlamaColor(view));
                                         if (getBoolean(view)) {
-                                            llw.setCarpet(AnimalColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                                            llamaWatcher.setCarpet(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
                                         }
                                         break;
                                     case OCELOT:
-                                        OcelotWatcher ow = (OcelotWatcher) livingWatcher;
-                                        ow.setBaby(getBaby(view));
+                                        OcelotWatcher ocelotWatcher = (OcelotWatcher) livingWatcher;
+                                        ocelotWatcher.setBaby(getBaby(view));
+                                        ocelotWatcher.setTrusting(getBoolean(view));
                                         break;
                                     case PARROT:
-                                        ParrotWatcher tw = (ParrotWatcher) livingWatcher;
-                                        tw.setVariant(getParrotVariant(view));
-                                        tw.setBaby(getBaby(view));
+                                        ParrotWatcher parrotWatcher = (ParrotWatcher) livingWatcher;
+                                        parrotWatcher.setVariant(getParrotVariant(view));
+                                        parrotWatcher.setBaby(getBaby(view));
                                         break;
                                     case PIG:
-                                        PigWatcher pw = (PigWatcher) livingWatcher;
-                                        pw.setSaddled(getBoolean(view));
-                                        pw.setBaby(getBaby(view));
+                                        PigWatcher pigWatcher = (PigWatcher) livingWatcher;
+                                        pigWatcher.setSaddled(getBoolean(view));
+                                        pigWatcher.setBaby(getBaby(view));
                                         break;
                                     case RABBIT:
-                                        RabbitWatcher rw = (RabbitWatcher) livingWatcher;
-                                        rw.setType(getRabbitType(view));
-                                        rw.setBaby(getBaby(view));
+                                        RabbitWatcher rabbitWatcher = (RabbitWatcher) livingWatcher;
+                                        rabbitWatcher.setType(getRabbitType(view));
+                                        rabbitWatcher.setBaby(getBaby(view));
                                         break;
                                     case VILLAGER:
-                                        VillagerWatcher vw = (VillagerWatcher) livingWatcher;
-                                        vw.setProfession(getProfession(view));
-                                        vw.setBaby(getBaby(view));
+                                        VillagerWatcher villagerWatcher = (VillagerWatcher) livingWatcher;
+                                        villagerWatcher.setProfession(getProfession(view));
+                                        villagerWatcher.setBaby(getBaby(view));
                                         break;
                                     case WOLF:
-                                        WolfWatcher ww = (WolfWatcher) livingWatcher;
+                                        WolfWatcher wolfWatcher = (WolfWatcher) livingWatcher;
                                         if (getBoolean(view)) {
-                                            ww.setTamed(true);
-                                            ww.setCollarColor(getColor(view));
+                                            wolfWatcher.setTamed(true);
+                                            wolfWatcher.setCollarColor(getColor(view));
                                         }
-                                        ww.setBaby(getBaby(view));
+                                        wolfWatcher.setBaby(getBaby(view));
                                         break;
                                     case SLIME:
                                     case MAGMA_CUBE:
-                                        SlimeWatcher slw = (SlimeWatcher) livingWatcher;
-                                        slw.setSize(getSlimeSize(view));
+                                        SlimeWatcher slimeWatcher = (SlimeWatcher) livingWatcher;
+                                        slimeWatcher.setSize(getSlimeSize(view));
                                         break;
                                     case BAT:
-                                        BatWatcher bw = (BatWatcher) livingWatcher;
-                                        bw.setHanging(!getBoolean(view));
+                                        BatWatcher batWatcher = (BatWatcher) livingWatcher;
+                                        batWatcher.setHanging(!getBoolean(view));
                                         break;
                                     case BLAZE:
-                                        BlazeWatcher bbw = (BlazeWatcher) livingWatcher;
-                                        bbw.setBlazing(getBoolean(view));
+                                        BlazeWatcher blazeWatcher = (BlazeWatcher) livingWatcher;
+                                        blazeWatcher.setBlazing(getBoolean(view));
                                         break;
                                     case CREEPER:
                                         CreeperWatcher cw = (CreeperWatcher) livingWatcher;
                                         cw.setPowered(getBoolean(view));
                                         break;
                                     case ENDERMAN:
-                                        EndermanWatcher ew = (EndermanWatcher) livingWatcher;
-                                        ew.setAggressive(getBoolean(view));
+                                        EndermanWatcher endermanWatcher = (EndermanWatcher) livingWatcher;
+                                        endermanWatcher.setAggressive(getBoolean(view));
                                         break;
                                     case COW:
-                                        AgeableWatcher aw = (AgeableWatcher) livingWatcher;
-                                        aw.setBaby(getBaby(view));
+                                        AgeableWatcher ageableWatcher = (AgeableWatcher) livingWatcher;
+                                        ageableWatcher.setBaby(getBaby(view));
                                         break;
                                     case ZOMBIE:
-                                        ZombieWatcher zw = (ZombieWatcher) livingWatcher;
-                                        zw.setBaby(getBaby(view));
+                                        ZombieWatcher zombieWatcher = (ZombieWatcher) livingWatcher;
+                                        zombieWatcher.setBaby(getBaby(view));
                                         break;
                                     case ZOMBIE_VILLAGER:
-                                        ZombieVillagerWatcher zvw = (ZombieVillagerWatcher) livingWatcher;
-                                        zvw.setBaby(getBaby(view));
-                                        zvw.setProfession(getProfession(view));
+                                        ZombieVillagerWatcher zombieVillagerWatcher = (ZombieVillagerWatcher) livingWatcher;
+                                        zombieVillagerWatcher.setBaby(getBaby(view));
+                                        zombieVillagerWatcher.setProfession(getProfession(view));
                                         break;
                                     case SNOWMAN:
-                                        SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
-                                        snw.setDerp(!snowmen.get(uuid));
+                                        SnowmanWatcher snowmanWatcher = (SnowmanWatcher) livingWatcher;
+                                        snowmanWatcher.setDerp(!snowmen.get(uuid));
                                         break;
                                     case TURTLE:
-                                        TurtleWatcher tur = (TurtleWatcher) livingWatcher;
-                                        tur.setBaby(getBaby(view));
+                                        TurtleWatcher turtleWatcher = (TurtleWatcher) livingWatcher;
+                                        turtleWatcher.setBaby(getBaby(view));
                                         break;
                                     case PUFFERFISH:
-                                        PufferFishWatcher puf = (PufferFishWatcher) livingWatcher;
-                                        puf.setPuffState(puffers.get(uuid));
+                                        PufferFishWatcher pufferFishWatcher = (PufferFishWatcher) livingWatcher;
+                                        pufferFishWatcher.setPuffState(puffers.get(uuid));
                                         break;
                                     case TROPICAL_FISH:
-                                        TropicalFishWatcher tro = (TropicalFishWatcher) livingWatcher;
-                                        tro.setPattern(TropicalFish.Pattern.values()[tropics.get(uuid)]);
-                                        tro.setBodyColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
-                                        tro.setPatternColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                                        TropicalFishWatcher tropicalFishWatcher = (TropicalFishWatcher) livingWatcher;
+                                        tropicalFishWatcher.setPattern(TropicalFish.Pattern.values()[tropics.get(uuid)]);
+                                        tropicalFishWatcher.setBodyColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                                        tropicalFishWatcher.setPatternColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                                        break;
+                                    case MUSHROOM_COW:
+                                        MushroomCowWatcher mushroomCowWatcher = (MushroomCowWatcher) livingWatcher;
+                                        mushroomCowWatcher.setVariant(getCowVariant(view));
+                                        break;
+                                    case FOX:
+                                        FoxWatcher foxWatcher = (FoxWatcher) livingWatcher;
+                                        foxWatcher.setType(getFoxType(view));
                                         break;
                                     default:
                                         break;
@@ -470,7 +486,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 } else {
                     o = 0;
                 }
-                t = org.bukkit.entity.Horse.Color.values()[o].toString();
+                t = Horse.Color.values()[o].toString();
                 horses.put(uuid, o);
                 break;
             case "LLAMA":
@@ -479,7 +495,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 } else {
                     o = 0;
                 }
-                t = org.bukkit.entity.Llama.Color.values()[o].toString();
+                t = Llama.Color.values()[o].toString();
                 llamas.put(uuid, o);
                 break;
             case "CAT":
@@ -490,6 +506,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Type.values()[o].toString();
                 cats.put(uuid, o);
+                break;
+            case "FOX":
+                if (foxes.containsKey(uuid)) {
+                    o = (foxes.get(uuid) + 1 < 2) ? foxes.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = Fox.Type.values()[o].toString();
+                foxes.put(uuid, o);
                 break;
             case "RABBIT":
                 if (rabbits.containsKey(uuid)) {
@@ -529,6 +554,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 t = slimeSizes.get(o).toString();
                 slimes.put(uuid, o);
                 break;
+            case "MUSHROOM_COW":
+                if (moos.containsKey(uuid)) {
+                    o = (moos.get(uuid) + 1 < 2) ? moos.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = MushroomCow.Variant.values()[o].toString();
+                moos.put(uuid, o);
+                break;
             case "PUFFERFISH":
                 if (puffers.containsKey(uuid)) {
                     o = (puffers.get(uuid) + 1 < 3) ? puffers.get(uuid) + 1 : 0;
@@ -547,6 +581,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 t = TropicalFish.Pattern.values()[o].toString();
                 tropics.put(uuid, o);
                 break;
+            case "PANDA":
+                if (genes.containsKey(uuid)) {
+                    o = (genes.get(uuid) + 1 < 7) ? genes.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = Panda.Gene.values()[o].toString();
+                genes.put(uuid, o);
+                break;
             default:
                 break;
         }
@@ -564,23 +607,33 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         return im.getLore().get(0).equals(plugin.getLanguage().getString("SET_ON"));
     }
 
-    private AnimalColor getColor(InventoryView i) {
+    private DyeColor getColor(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return AnimalColor.valueOf(im.getLore().get(0));
+            return DyeColor.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return AnimalColor.WHITE;
+            return DyeColor.WHITE;
         }
     }
 
-    private org.bukkit.entity.Horse.Color getHorseColor(InventoryView i) {
+    private Horse.Color getHorseColor(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return org.bukkit.entity.Horse.Color.valueOf(im.getLore().get(0));
+            return Horse.Color.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return org.bukkit.entity.Horse.Color.WHITE;
+            return Horse.Color.WHITE;
+        }
+    }
+
+    private MushroomCow.Variant getCowVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return MushroomCow.Variant.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return MushroomCow.Variant.RED;
         }
     }
 
@@ -601,6 +654,26 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             return Type.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Type.TABBY;
+        }
+    }
+
+    private Fox.Type getFoxType(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return Fox.Type.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return Fox.Type.RED;
+        }
+    }
+
+    private Panda.Gene getGene(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return Panda.Gene.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return Panda.Gene.NORMAL;
         }
     }
 
