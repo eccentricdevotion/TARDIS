@@ -874,6 +874,14 @@ public class TARDISInformationSystemListener implements Listener {
                             showRecipe(p, TARDISInfoMenu.SCANNER_CIRCUIT_RECIPE);
                         }
                         break;
+                    case ARROW_CIRCUIT:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.ARROW_CIRCUIT_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.ARROW_CIRCUIT_RECIPE);
+                        }
+                        break;
                     case TARDIS:
                         if (chat.equalsIgnoreCase("ab")) {
                             showCommand(p, TARDISInfoMenu.TARDIS_ABORT);
