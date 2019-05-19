@@ -76,7 +76,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = (data[0].equals(dn) && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        boolean special = (data[0].equalsIgnoreCase(dn) && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return (data[0].toLowerCase(Locale.ENGLISH).contains("tardis_world_") || special);
     }
 
