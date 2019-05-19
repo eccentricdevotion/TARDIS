@@ -35,7 +35,7 @@ class TARDISLampsRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<Block> lamps;
-    private final long start;
+    private final long end;
     private final BlockData light;
     private final BlockData BLACK = TARDISConstants.BLACK;
     private final BlockData SPONGE = Material.SPONGE.createBlockData();
@@ -44,10 +44,10 @@ class TARDISLampsRunnable implements Runnable {
     private int task;
     private Location handbrake_loc;
 
-    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start, Material light, boolean use_wool) {
+    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, Material light, boolean use_wool) {
         this.plugin = plugin;
         this.lamps = lamps;
-        this.start = start;
+        this.end = end;
         this.light = light.createBlockData();
         this.use_wool = use_wool;
         lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));
@@ -55,22 +55,7 @@ class TARDISLampsRunnable implements Runnable {
 
     @Override
     public void run() {
-        // play smoke effect
-        for (int j = 0; j < 9; j++) {
-            handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
-        }
-        lamps.forEach((b) -> {
-            if (b.getType().equals(light.getMaterial())) {
-                if (use_wool) {
-                    b.setBlockData(BLACK);
-                } else {
-                    b.setBlockData(SPONGE);
-                }
-            } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
-                b.setBlockData(light);
-            }
-        });
-        if (System.currentTimeMillis() > start) {
+        if (System.currentTimeMillis() > end) {
             // set all lamps back to whatever they were when the malfunction happened
             if (lights_on) {
                 lamps.forEach((b) -> {
@@ -90,6 +75,22 @@ class TARDISLampsRunnable implements Runnable {
                 });
             }
             plugin.getServer().getScheduler().cancelTask(task);
+        } else {
+            // play smoke effect
+            for (int j = 0; j < 9; j++) {
+                handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
+            }
+            lamps.forEach((b) -> {
+                if (b.getType().equals(light.getMaterial())) {
+                    if (use_wool) {
+                        b.setBlockData(BLACK);
+                    } else {
+                        b.setBlockData(SPONGE);
+                    }
+                } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
+                    b.setBlockData(light);
+                }
+            });
         }
     }
 
