@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import org.bukkit.Location;
 import org.bukkit.block.data.type.Repeater;
 
 import java.sql.Connection;
@@ -43,7 +44,7 @@ public class ResultSetRepeaters {
     private final int id;
     private final int secondary;
     private final int[] diodes = new int[4];
-    private final List<String> locations = new ArrayList<>();
+    private final List<Location> locations = new ArrayList<>();
     private final String prefix;
 
     /**
@@ -79,7 +80,7 @@ public class ResultSetRepeaters {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    locations.add(rs.getString("location"));
+                    locations.add(TARDISLocationGetters.getLocationFromDB(rs.getString("location"), 0, 0));
                 }
             } else {
                 return false;
@@ -104,10 +105,11 @@ public class ResultSetRepeaters {
 
     public int[] getRepeaters() {
         if (locations.size() == 4) {
-            Repeater r0 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(0), 0, 0).getBlock().getBlockData();
-            Repeater r1 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(1), 0, 0).getBlock().getBlockData();
-            Repeater r2 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(2), 0, 0).getBlock().getBlockData();
-            Repeater r3 = (Repeater) TARDISLocationGetters.getLocationFromDB(locations.get(3), 0, 0).getBlock().getBlockData();
+            // get repeaters
+            Repeater r0 = (Repeater) locations.get(0).getBlock().getBlockData();
+            Repeater r1 = (Repeater) locations.get(1).getBlock().getBlockData();
+            Repeater r2 = (Repeater) locations.get(2).getBlock().getBlockData();
+            Repeater r3 = (Repeater) locations.get(3).getBlock().getBlockData();
             // get repeater settings
             diodes[0] = r0.getDelay();
             diodes[1] = r1.getDelay();
@@ -119,7 +121,7 @@ public class ResultSetRepeaters {
         return diodes;
     }
 
-    public List<String> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 }

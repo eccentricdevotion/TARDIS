@@ -19,13 +19,11 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -86,13 +84,11 @@ class TARDISManualFlightRunnable implements Runnable {
     }
 
     private List<Location> getRepeaterList(int id) {
-        List<Location> repeaters = new ArrayList<>();
         ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
         if (rsr.resultSet()) {
-            List<String> locs = rsr.getLocations();
-            locs.forEach((l) -> repeaters.add(TARDISLocationGetters.getLocationFromDB(l, 0.0f, 0.0f)));
+            return rsr.getLocations();
         }
-        return repeaters;
+        return null;
     }
 
     public void setTaskID(int taskID) {
