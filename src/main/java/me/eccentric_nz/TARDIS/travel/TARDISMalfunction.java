@@ -201,11 +201,15 @@ public class TARDISMalfunction {
                 }
                 Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // flicker lights
-                long start = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), start, light, rsp.isWoolLightsOn());
+                long end = System.currentTimeMillis() + 10000;
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, rsp.isWoolLightsOn());
                 runnable.setHandbrake(handbrake);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);
+                // add fireworks
+                TARDISMalfunctionExplosion explodeable = new TARDISMalfunctionExplosion(plugin, id, end);
+                int taskEx = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, explodeable, 10L, 30L);
+                explodeable.setTask(taskEx);
             }
         }
     }
