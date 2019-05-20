@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -35,7 +35,7 @@ class TARDISReloadCommand {
     boolean reloadConfig(CommandSender sender) {
         plugin.reloadConfig();
         // check worlds
-        TARDISConfiguration tc = new TARDISConfiguration(plugin);
+        TARDISWorlds tc = new TARDISWorlds(plugin);
         tc.doWorlds();
         plugin.saveConfig();
         TARDISMessage.send(sender, "RELOADED");

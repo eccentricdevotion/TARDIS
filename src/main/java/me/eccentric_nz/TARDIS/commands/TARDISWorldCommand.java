@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
 import org.bukkit.*;
@@ -83,11 +83,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         TARDISMessage.send(sender, "ARG_WORLD_RENAME");
                         return true;
                     }
-                    // new world names must be lowercase
-                    if (hasUpperCase.apply(args[2])) {
-                        TARDISMessage.send(sender, "ARG_WORLD_LOWER");
-                        return true;
-                    }
                     // remove players from world
                     List<Player> players = world.getPlayers();
                     Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
@@ -107,7 +102,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.savePlanetsConfig();
                     }
                     // load world
-                    TARDISConfiguration.loadWorld(args[2]);
+                    TARDISWorlds.loadWorld(args[2]);
                     TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS", args[2]);
                     return true;
                 }
@@ -146,11 +141,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 if (args[0].toLowerCase().equals("rename")) {
                     if (args.length < 3) {
                         TARDISMessage.send(sender, "ARG_WORLD_RENAME");
-                        return true;
-                    }
-                    // new world names must be lowercase
-                    if (hasUpperCase.apply(args[2])) {
-                        TARDISMessage.send(sender, "ARG_WORLD_LOWER");
                         return true;
                     }
                     plugin.getTardisHelper().setLevelName(args[1], args[2]);

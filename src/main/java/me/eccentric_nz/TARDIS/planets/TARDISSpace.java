@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
@@ -65,6 +66,8 @@ public class TARDISSpace {
             plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
             plugin.getPlanetsConfig().set("planets." + name + ".void", true);
             plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doWeatherCycle", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
             plugin.savePlanetsConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             if (!inventory_group.equals("0")) {
@@ -113,6 +116,8 @@ public class TARDISSpace {
                 }
             }
         }
+        tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        tardisWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
         return tardisWorld;
     }
 

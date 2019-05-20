@@ -42,6 +42,7 @@ public class TARDISPlanetsUpdater {
 
     public void checkPlanetsConfig() {
         boolean save = false;
+        String dn = plugin.getConfig().getString("creation.default_world_name");
         if (plugin.getConfig().contains("worlds")) {
             Set<String> worlds = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
             for (String w : worlds) {
@@ -85,7 +86,6 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.tardis_zero_room.generator", "TARDISChunkGenerator");
                 planets_config.set("planets.tardis_zero_room.void", true);
             }
-            String dn = plugin.getConfig().getString("creation.default_world_name");
             planets_config.set("planets." + dn + ".enabled", true);
             planets_config.set("planets." + dn + ".time_travel", false);
             planets_config.set("planets." + dn + ".resource_pack", "default");
@@ -94,6 +94,16 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".environment", "NORMAL");
             planets_config.set("planets." + dn + ".generator", "TARDISChunkGenerator");
             planets_config.set("planets." + dn + ".void", true);
+            planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
+            planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
+            save = true;
+        }
+        if (!planets_config.contains("planets.tardis_zero_room.gamerules.doWeatherCycle")) {
+            planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
+            planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
+            planets_config.set("planets.tardis_zero_room.gamerules.doWeatherCycle", false);
+            planets_config.set("planets.tardis_zero_room.gamerules.doDaylightCycle", false);
+            planets_config.set("planets.tardis_zero_room.gamerules.announceAdvancements", false);
             save = true;
         }
         if (!planets_config.contains("planets.skaro.generator")) {
@@ -104,9 +114,11 @@ public class TARDISPlanetsUpdater {
                     planets_config.set("planets." + w + ".generator", "DEFAULT");
                 }
             }
+            save = true;
         }
         if (planets_config.contains("planets.siluria.false_nether")) {
             planets_config.set("planets.siluria.false_nether", null);
+            save = true;
         }
         if (!planets_config.contains("planets.skaro.flying_daleks") || !planets_config.contains("planets.skaro.acid")) {
             planets_config.set("planets.skaro.flying_daleks", true);

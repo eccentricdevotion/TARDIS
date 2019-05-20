@@ -42,6 +42,10 @@ planets:
     environment: NORMAL
     void: true
     generator: TARDISChunkGenerator
+    gamerules:
+      doWeatherCycle: false
+      doDaylightCycle: false
+#      keepInventory: true
   tardis_zero_room:
     enabled: false
     resource_pack: default
@@ -51,3 +55,7 @@ planets:
     environment: NORMAL
     void: true
     generator: TARDISChunkGenerator
+    gamerules:
+      doWeatherCycle: false
+      doDaylightCycle: false
+      announceAdvancements: false
