@@ -58,6 +58,10 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 // must be a player
                 return true;
             } else {
+                if (args.length < 1) {
+                    TARDISMessage.send(player, "");
+                    return false;
+                }
                 World world = plugin.getServer().getWorld(args[0]);
                 if (world != null) {
                     Location spawn = world.getSpawnLocation();
