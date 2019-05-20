@@ -14,9 +14,8 @@
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
-8. Custom time rotor model
-9. 13th Doctor's TARDIS console & Custard Cream dispenser
-10. Add more to the effects during a malfunction, like random fires, or "sparks" using particle effects
+7. 13th Doctor's TARDIS console & Custard Cream dispenser
+8. Properly update world names (to lowercase) in the database
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

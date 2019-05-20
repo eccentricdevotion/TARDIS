@@ -42,7 +42,9 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
 
     public TARDISTeleportCommand(TARDIS plugin) {
         this.plugin = plugin;
-        ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
+        for (World w : plugin.getServer().getWorlds()) {
+            ROOT_SUBS.add(w.getName());
+        }
     }
 
     @Override
@@ -64,6 +66,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                     spawn.setYaw(yaw);
                     spawn.setPitch(pitch);
                     player.teleport(spawn);
+                    return true;
                 } else {
                     TARDISMessage.send(player, "WORLD_NOT_FOUND");
                     return true;
