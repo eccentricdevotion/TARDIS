@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 eccentric_nz
+ * Copyright (C) 2019 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ package me.eccentric_nz.TARDIS.enumeration;
  * @author eccentric_nz
  */
 public enum MAP {
-    
+
     ADMIN("Server Admin Circuit"),
     ARS("TARDIS ARS Circuit"),
     BIO("Bio-scanner Circuit"),
