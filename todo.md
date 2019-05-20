@@ -2,12 +2,10 @@
 
 ## Next version `4.1`
 0. Update to Spigot 1.14.1
-   * Add new mob types to farming and genetic manipulator (waiting for LibsDisguises update)
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
-   * Test TIS for Siluria and Gallifrey
 1. Test player preference to bypass `tardis rescue accept`
 2. Test `invisibility` setting in TARDIS areas
 3. Test Handles transmat requests
