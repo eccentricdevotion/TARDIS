@@ -89,8 +89,7 @@ public class TARDISExterminator {
                 }
                 cleanHashMaps(id);
                 String[] chunkworld = chunkLoc.split(":");
-                String world = (chunkworld[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chunkworld[0].toLowerCase(Locale.ENGLISH));
-                World cw = plugin.getServer().getWorld(world);
+                World cw = plugin.getServer().getWorld(chunkworld[0]);
                 if (cw == null) {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
@@ -225,8 +224,7 @@ public class TARDISExterminator {
                     plugin.getUtils().restoreBiome(bb_loc, rsc.getBiome());
                 }
                 String[] chunkworld = chunkLoc.split(":");
-                String world = (chunkworld[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chunkworld[0].toLowerCase(Locale.ENGLISH));
-                World cw = plugin.getServer().getWorld(world);
+                World cw = plugin.getServer().getWorld(chunkworld[0]);
                 if (cw == null) {
                     TARDISMessage.send(player, "WORLD_DELETED");
                     return true;
@@ -375,7 +373,7 @@ public class TARDISExterminator {
         if (slot != -1 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
             TARDISTIPSData coords = tips.getTIPSData(slot);
-            World w = plugin.getServer().getWorld("tardis_zero_room");
+            World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
             if (w != null) {
                 tips.reclaimZeroChunk(w, coords);
             }

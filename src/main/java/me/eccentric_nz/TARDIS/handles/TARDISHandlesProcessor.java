@@ -49,7 +49,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -431,15 +430,14 @@ public class TARDISHandlesProcessor {
                                                 break;
                                             case SAVE_DISK:
                                                 if (player.hasPermission("tardis.save")) {
-                                                    String world = (lore.get(1).equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : lore.get(1).toLowerCase(Locale.ENGLISH));
                                                     int sx = TARDISNumberParsers.parseInt(lore.get(2));
                                                     int sy = TARDISNumberParsers.parseInt(lore.get(3));
                                                     int sz = TARDISNumberParsers.parseInt(lore.get(4));
-                                                    if (current.getWorld().getName().equals(world) && current.getBlockX() == sx && current.getBlockZ() == sz) {
+                                                    if (current.getWorld().getName().equals(lore.get(1)) && current.getBlockX() == sx && current.getBlockZ() == sz) {
                                                         continue;
                                                     }
                                                     TARDISMessage.handlesSend(player, "LOC_SET");
-                                                    goto_loc = new Location(plugin.getServer().getWorld(world), sx, sy, sz);
+                                                    goto_loc = new Location(plugin.getServer().getWorld(lore.get(1)), sx, sy, sz);
                                                     nextDirection = COMPASS.valueOf(lore.get(6));
                                                     sub = Boolean.valueOf(lore.get(7));
                                                 } else {

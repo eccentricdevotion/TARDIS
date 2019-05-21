@@ -36,7 +36,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -85,8 +84,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                                 addCompanion(id, comps, u);
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                     String[] data = tardis.getChunk().split(":");
-                                    String w = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
-                                    addToRegion(w, tardis.getOwner(), m.getDisplayName());
+                                    addToRegion(data[0], tardis.getOwner(), m.getDisplayName());
                                 }
                                 list(player);
                             }

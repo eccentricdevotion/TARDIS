@@ -27,7 +27,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Locale;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
@@ -77,8 +76,7 @@ public class ResultSetDoorBlocks {
                 while (rs.next()) {
                     // get block
                     String[] split = rs.getString("door_location").split(":");
-                    String world = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
-                    World cw = plugin.getServer().getWorld(world);
+                    World cw = plugin.getServer().getWorld(split[0]);
                     int cx = TARDISNumberParsers.parseInt(split[1]);
                     int cy = TARDISNumberParsers.parseInt(split[2]);
                     int cz = TARDISNumberParsers.parseInt(split[3]);

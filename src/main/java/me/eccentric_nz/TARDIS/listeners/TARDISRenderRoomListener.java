@@ -33,7 +33,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -75,8 +74,7 @@ public class TARDISRenderRoomListener implements Listener {
                 COMPASS d = rsd.getDoor_direction();
                 String doorLocStr = rsd.getDoor_location();
                 String[] split = doorLocStr.split(":");
-                String w = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
-                World cw = plugin.getServer().getWorld(w);
+                World cw = plugin.getServer().getWorld(split[0]);
                 int cx = TARDISNumberParsers.parseInt(split[1]);
                 int cy = TARDISNumberParsers.parseInt(split[2]);
                 int cz = TARDISNumberParsers.parseInt(split[3]);

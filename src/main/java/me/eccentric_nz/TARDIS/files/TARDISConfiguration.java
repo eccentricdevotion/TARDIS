@@ -176,7 +176,7 @@ public class TARDISConfiguration {
         // string
         stringOptions.put("creation.area", "none");
         stringOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
-        stringOptions.put("creation.default_world_name", "tardis_time_vortex");
+        stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         stringOptions.put("creation.gamemode", "survival");
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("handles.prefix", "Hey Handles");
@@ -207,8 +207,8 @@ public class TARDISConfiguration {
      */
     public void checkConfig() {
         int i = 0;
-        if (config.getString("creation.default_world_name").equals("TARDIS_TimeVortex")) {
-            plugin.getConfig().set("creation.default_world_name", "tardis_time_vortex");
+        if (config.getString("creation.default_world_name").equals("tardis_time_vortex")) {
+            plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
             i++;
         }
         if (!config.contains("rechargers")) {

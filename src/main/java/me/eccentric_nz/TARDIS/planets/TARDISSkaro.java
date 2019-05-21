@@ -48,24 +48,24 @@ public class TARDISSkaro {
     public void createDalekWorld() {
         String container = plugin.getServer().getWorldContainer().getAbsolutePath() + File.separator;
         try {
-            TARDISFileCopier.copy(container + "skaro.tar.gz", plugin.getResource("skaro.tar.gz"), true);
+            TARDISFileCopier.copy(container + "Skaro.tar.gz", plugin.getResource("Skaro.tar.gz"), true);
             // decompress the archive
-            File archive = new File(container + "skaro.tar.gz");
+            File archive = new File(container + "Skaro.tar.gz");
             File destination = new File(container);
             Archiver archiver = ArchiverFactory.createArchiver(archive);
             archiver.extract(archive, destination);
             // set a random seed
-            plugin.getTardisHelper().setRandomSeed("skaro");
+            plugin.getTardisHelper().setRandomSeed("Skaro");
             archive.delete();
             // load world
-            WorldCreator.name("skaro").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+            WorldCreator.name("Skaro").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
             // add world to config
-            plugin.getPlanetsConfig().set("planets.skaro.time_travel", true);
+            plugin.getPlanetsConfig().set("planets.Skaro.time_travel", true);
             plugin.savePlanetsConfig();
             // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
             Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
             if (twa != null) {
-                twa.getConfig().set("daleks.worlds.skaro", 500);
+                twa.getConfig().set("daleks.worlds.Skaro", 500);
                 twa.saveConfig();
             }
         } catch (IOException | CommandException e) {

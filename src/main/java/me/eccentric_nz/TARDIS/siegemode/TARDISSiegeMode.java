@@ -43,7 +43,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
@@ -110,31 +109,30 @@ public class TARDISSiegeMode {
             }
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                 String[] chu = tardis.getChunk().split(":");
-                String w = (chu[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chu[0].toLowerCase(Locale.ENGLISH));
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
                     List<TARDISSiegeArea> breeding = new ArrayList<>();
-                    plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((breeding_area) -> {
+                    plugin.getTrackerKeeper().getSiegeBreedingAreas().get(chu[0]).forEach((breeding_area) -> {
                         if (breeding_area.getId() != id) {
                             breeding.add(breeding_area);
                         }
                     });
                     if (breeding.size() > 0) {
-                        plugin.getTrackerKeeper().getSiegeBreedingAreas().put(w, breeding);
+                        plugin.getTrackerKeeper().getSiegeBreedingAreas().put(chu[0], breeding);
                     } else {
-                        plugin.getTrackerKeeper().getSiegeBreedingAreas().remove(w);
+                        plugin.getTrackerKeeper().getSiegeBreedingAreas().remove(chu[0]);
                     }
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
                     List<TARDISSiegeArea> growth = new ArrayList<>();
-                    plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w).forEach((growth_area) -> {
+                    plugin.getTrackerKeeper().getSiegeGrowthAreas().get(chu[0]).forEach((growth_area) -> {
                         if (growth_area.getId() != id) {
                             growth.add(growth_area);
                         }
                     });
                     if (growth.size() > 0) {
-                        plugin.getTrackerKeeper().getSiegeGrowthAreas().put(w, growth);
+                        plugin.getTrackerKeeper().getSiegeGrowthAreas().put(chu[0], growth);
                     } else {
-                        plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(w);
+                        plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(chu[0]);
                     }
                 }
             }

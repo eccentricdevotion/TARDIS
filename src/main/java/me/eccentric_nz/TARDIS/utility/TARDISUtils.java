@@ -68,11 +68,10 @@ public class TARDISUtils {
 
     public boolean canGrowRooms(String chunk) {
         String[] data = chunk.split(":");
-        String world = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
-        World room_world = plugin.getServer().getWorld(world);
+        World room_world = plugin.getServer().getWorld(data[0]);
         ChunkGenerator gen = room_world.getGenerator();
         WorldType wt = room_world.getWorldType();
-        String dn = "tardis_time_vortex";
+        String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
@@ -90,11 +89,11 @@ public class TARDISUtils {
         }
         ChunkGenerator gen = world.getGenerator();
         // get default world name
-        String dn = "tardis_time_vortex";
+        String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = ((name.equals(dn) || name.equals("tardis_zero_room")) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return name.equals("tardis_world_" + player.getName()) || special;
     }
 
@@ -104,7 +103,7 @@ public class TARDISUtils {
         String name = world.getName();
         ChunkGenerator gen = world.getGenerator();
         // get default world name
-        String dn = "tardis_time_vortex";
+        String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }

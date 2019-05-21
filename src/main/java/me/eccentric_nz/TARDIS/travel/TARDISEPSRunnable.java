@@ -33,7 +33,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -111,8 +110,7 @@ public class TARDISEPSRunnable implements Runnable {
     private Location getSpawnLocation(int id) {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
-            String world = (npc[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : npc[0].toLowerCase(Locale.ENGLISH));
-            World w = plugin.getServer().getWorld(world);
+            World w = plugin.getServer().getWorld(npc[0]);
             int x = TARDISNumberParsers.parseInt(npc[1]);
             int y = TARDISNumberParsers.parseInt(npc[2]);
             int z = TARDISNumberParsers.parseInt(npc[3]);
@@ -127,8 +125,7 @@ public class TARDISEPSRunnable implements Runnable {
             ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
             if (rsd.resultSet()) {
                 String[] door = rsd.getDoor_location().split(":");
-                String world = (door[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : door[0].toLowerCase(Locale.ENGLISH));
-                World w = plugin.getServer().getWorld(world);
+                World w = plugin.getServer().getWorld(door[0]);
                 int x = TARDISNumberParsers.parseInt(door[1]);
                 int y = TARDISNumberParsers.parseInt(door[2]);
                 int z = TARDISNumberParsers.parseInt(door[3]);

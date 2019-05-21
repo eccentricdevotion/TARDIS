@@ -889,13 +889,13 @@ public class TARDIS extends JavaPlugin {
 
     private void setupPlanets() {
         // Skaro
-        if (getPlanetsConfig().getBoolean("planets.skaro.enabled") && getServer().getWorld("skaro") == null) {
+        if (getPlanetsConfig().getBoolean("planets.Skaro.enabled") && getServer().getWorld("Skaro") == null) {
             new TARDISSkaro(this).createDalekWorld();
         }
-        if (getPlanetsConfig().getBoolean("planets.siluria.enabled") && getServer().getWorld("siluria") == null) {
+        if (getPlanetsConfig().getBoolean("planets.Siluria.enabled") && getServer().getWorld("Siluria") == null) {
             new TARDISSiluria(this).createSilurianUnderworld();
         }
-        if (getPlanetsConfig().getBoolean("planets.gallifrey.enabled") && getServer().getWorld("gallifrey") == null) {
+        if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") && getServer().getWorld("Gallifrey") == null) {
             new TARDISGallifrey(this).createTimeLordWorld();
         }
     }

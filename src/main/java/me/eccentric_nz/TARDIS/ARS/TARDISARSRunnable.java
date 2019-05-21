@@ -68,8 +68,7 @@ class TARDISARSRunnable implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             String[] chunk_data = tardis.getChunk().split(":");
-            String world = (chunk_data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : chunk_data[0].toLowerCase(Locale.ENGLISH));
-            World w = plugin.getServer().getWorld(world);
+            World w = plugin.getServer().getWorld(chunk_data[0]);
             HashMap<String, Object> wherepp = new HashMap<>();
             wherepp.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);

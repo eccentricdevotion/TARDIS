@@ -82,7 +82,7 @@ class TARDISAddRegionsCommand {
                     int t = rs.getInt("tips");
                     if (t >= 0) {
                         // check if region name exists
-                        String rn = "tardis_" + tl;
+                        String rn = "TARDIS_" + tl;
                         if (!config.contains("regions." + rn)) {
                             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                             TARDISTIPSData td = tintpos.getTIPSData(t);

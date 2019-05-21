@@ -27,7 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -68,8 +67,8 @@ class TARDISBuildCommand {
             setp.put("build_on", 0);
             TARDISAntiBuild tab = new TARDISAntiBuild();
             String[] data = tardis.getChunk().split(":");
-            String w = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));            // get region vectors
-            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(w, playerNameStr);
+            // get region vectors
+            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(data[0], playerNameStr);
             if (pr == null) {
                 TARDISMessage.send(player, "WG_NOT_FOUND");
                 return true;

@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 public enum PLANET {
 
-    GALLIFREY("gallifrey"),
-    SILURIA("siluria"),
-    SKARO("skaro");
+    GALLIFREY("Gallifrey"),
+    SILURIA("Siluria"),
+    SKARO("Skaro");
 
     private final String name;
     private static final HashMap<String, PLANET> PLANET_MAP = new HashMap<>();

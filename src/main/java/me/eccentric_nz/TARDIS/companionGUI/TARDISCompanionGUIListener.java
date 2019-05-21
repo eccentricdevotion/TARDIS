@@ -35,7 +35,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -91,8 +90,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                                     removeCompanion(id, comps, u);
                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                         String[] data = tardis.getChunk().split(":");
-                                        String w = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
-                                        removeFromRegion(w, tardis.getOwner(), m.getDisplayName());
+                                        removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
                                     }
                                     close(player);
                                 }

@@ -44,19 +44,19 @@ public class TARDISSiluria {
     public void createSilurianUnderworld() {
         String container = plugin.getServer().getWorldContainer().getAbsolutePath() + File.separator;
         try {
-            TARDISFileCopier.copy(container + "siluria.tar.gz", plugin.getResource("siluria.tar.gz"), true);
+            TARDISFileCopier.copy(container + "Siluria.tar.gz", plugin.getResource("Siluria.tar.gz"), true);
             // decompress the archive
-            File archive = new File(container + "siluria.tar.gz");
+            File archive = new File(container + "Siluria.tar.gz");
             File destination = new File(container);
             Archiver archiver = ArchiverFactory.createArchiver(archive);
             archiver.extract(archive, destination);
             // set a random seed
-            plugin.getTardisHelper().setRandomSeed("siluria");
+            plugin.getTardisHelper().setRandomSeed("Siluria");
             archive.delete();
             // load world
-            WorldCreator.name("siluria").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+            WorldCreator.name("Siluria").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
             // add world to config
-            plugin.getPlanetsConfig().set("planets.siluria.time_travel", true);
+            plugin.getPlanetsConfig().set("planets.Siluria.time_travel", true);
             plugin.savePlanetsConfig();
         } catch (IOException | CommandException e) {
             plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Siluria world files to " + container + " {0}", e.getMessage());

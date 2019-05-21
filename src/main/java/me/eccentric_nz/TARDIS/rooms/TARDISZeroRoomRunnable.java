@@ -30,7 +30,7 @@ public class TARDISZeroRoomRunnable implements Runnable {
     private final World zero_world;
 
     public TARDISZeroRoomRunnable(TARDIS plugin) {
-        zero_world = plugin.getServer().getWorld("tardis_zero_room");
+        zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
     }
 
     @Override

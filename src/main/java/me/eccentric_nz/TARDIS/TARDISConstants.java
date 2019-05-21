@@ -39,8 +39,8 @@ import java.util.Random;
 public class TARDISConstants {
 
     // TARDIS world names
-    public static final List<String> PLANETS = Arrays.asList("gallifrey", "siluria", "skaro");
-    public static final ImmutableMap<String, String> RENAME_LEVELS = ImmutableMap.of("Gallifrey", "gallifrey", "Siluria", "siluria", "Skaro", "skaro", "TARDIS_TimeVortex", "tardis_time_vortex", "TARDIS_Zero_Room", "tardis_zero_room");
+    public static final List<String> PLANETS = Arrays.asList("Gallifrey", "Siluria", "Skaro");
+    public static final ImmutableMap<String, String> REVERT_LEVELS = ImmutableMap.of("gallifrey", "Gallifrey", "siluria", "Siluria", "skaro", "Skaro", "tardis_time_vortex", "TARDIS_TimeVortex", "tardis_zero_room", "TARDIS_Zero_Room");
 
     // GUI materials
     public static final List<Material> GUI_IDS = Arrays.asList(Material.STONE, Material.GRASS_BLOCK, Material.OAK_PLANKS, Material.BEDROCK, Material.SAND, Material.GRAVEL, Material.GOLD_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.OAK_LOG, Material.OAK_LEAVES, Material.SPONGE, Material.GLASS, Material.LAPIS_ORE, Material.LAPIS_BLOCK, Material.DISPENSER, Material.SANDSTONE, Material.PISTON, Material.PINK_WOOL, Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.BRICK, Material.TNT, Material.BOOKSHELF, Material.MOSSY_COBBLESTONE, Material.OBSIDIAN, Material.SPAWNER, Material.DIAMOND_ORE, Material.DIAMOND_BLOCK, Material.CRAFTING_TABLE, Material.FURNACE, Material.REDSTONE_ORE, Material.ICE, Material.SNOW_BLOCK, Material.CACTUS, Material.CLAY, Material.JUKEBOX, Material.PUMPKIN, Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.STONE_BRICKS, Material.RED_MUSHROOM_BLOCK, Material.BROWN_MUSHROOM_BLOCK, Material.MELON, Material.MYCELIUM, Material.NETHER_BRICKS, Material.CAULDRON, Material.END_STONE, Material.REDSTONE_LAMP, Material.EMERALD_ORE, Material.EMERALD_BLOCK, Material.NETHER_QUARTZ_ORE, Material.QUARTZ_BLOCK);

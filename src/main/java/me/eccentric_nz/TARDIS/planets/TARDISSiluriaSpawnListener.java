@@ -41,7 +41,7 @@ public final class TARDISSiluriaSpawnListener implements Listener {
         if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
             return;
         }
-        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("siluria")) {
+        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Siluria")) {
             return;
         }
         if (!event.getEntity().getType().equals(EntityType.SKELETON)) {

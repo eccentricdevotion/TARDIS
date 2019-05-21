@@ -414,7 +414,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "BIOME_FROM_VORTEX");
                                         return true;
                                     }
-                                    if (args[2].equalsIgnoreCase("gallifrey") || args[2].equalsIgnoreCase("siluria") || args[2].equalsIgnoreCase("skaro")) {
+                                    if (args[2].equalsIgnoreCase("Gallifrey") || args[2].equalsIgnoreCase("Siluria") || args[2].equalsIgnoreCase("Skaro")) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", args[2]);
                                         return true;
                                     }
@@ -427,7 +427,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     x = 0;
                                     z = 0;
                                 } else {
-                                    if (rsc.getWorld().getName().equalsIgnoreCase("skaro")) {
+                                    if (rsc.getWorld().getName().equalsIgnoreCase("Skaro")) {
                                         TARDISMessage.send(player, "BIOME_NOT_SKARO");
                                         return true;
                                     }
@@ -493,10 +493,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "SAVE_NOT_FOUND");
                                 return true;
                             }
-                            String world = (rsd.getWorld().equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rsd.getWorld().toLowerCase(Locale.ENGLISH));
-                            World w = plugin.getServer().getWorld(world);
+                            World w = plugin.getServer().getWorld(rsd.getWorld());
                             if (w != null) {
-                                if (w.getName().startsWith("tardis_")) {
+                                if (w.getName().startsWith("TARDIS_")) {
                                     TARDISMessage.send(player, "SAVE_NO_TARDIS");
                                     return true;
                                 }

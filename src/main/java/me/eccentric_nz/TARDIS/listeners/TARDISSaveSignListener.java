@@ -43,7 +43,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -130,7 +129,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                             List<String> lore = im.getLore();
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
-                                if (lore.get(0).startsWith("tardis_")) {
+                                if (lore.get(0).startsWith("TARDIS_")) {
                                     close(player);
                                     TARDISMessage.send(player, "SAVE_NO_TARDIS");
                                     return;
@@ -305,8 +304,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
      * @return a Location
      */
     private Location getLocation(List<String> lore) {
-        String world = (lore.get(0).equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : lore.get(0).toLowerCase(Locale.ENGLISH));
-        World w = plugin.getServer().getWorld(world);
+        World w = plugin.getServer().getWorld(lore.get(0));
         if (w == null) {
             return null;
         }

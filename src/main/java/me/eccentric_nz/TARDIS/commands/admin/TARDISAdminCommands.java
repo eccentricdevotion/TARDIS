@@ -96,7 +96,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("set_size", "");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
-        firstsStr.put("skaro", "");
         firstsStr.put("spawn_abandoned", "");
         firstsStr.put("tardis_lamp", "police_box");
         firstsStr.put("use_clay", "creation");
@@ -379,7 +378,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     // get default world name
                     String defWorld = plugin.getConfig().getString("creation.default_world_name");
                     plugin.getPlanetsConfig().set("planets." + defWorld + ".gamemode", args[1].toUpperCase(Locale.ENGLISH));
-                    plugin.getPlanetsConfig().set("planets.tardis_zero_room.gamemode", args[1].toUpperCase(Locale.ENGLISH));
+                    plugin.getPlanetsConfig().set("planets.TARDIS_Zero_Room.gamemode", args[1].toUpperCase(Locale.ENGLISH));
                     plugin.savePlanetsConfig();
                     return true;
                 }

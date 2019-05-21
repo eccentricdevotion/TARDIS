@@ -26,7 +26,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -88,8 +87,7 @@ public class TARDISHadsPersister {
             ps = connection.prepareStatement("SELECT * FROM " + prefix + "dispersed");
             rs = ps.executeQuery();
             while (rs.next()) {
-                String w = (rs.getString("world").equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rs.getString("world").toLowerCase(Locale.ENGLISH));
-                World world = plugin.getServer().getWorld(w);
+                World world = plugin.getServer().getWorld(rs.getString("world"));
                 if (world != null) {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
                     Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));

@@ -23,7 +23,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the location of special areas the
@@ -95,10 +98,9 @@ public class ResultSetAreas {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (!onlynames) {
-                        String world = (rs.getString("world").equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : rs.getString("world").toLowerCase(Locale.ENGLISH));
                         area = new Area(
                                 rs.getString("area_name"),
-                                world,
+                                rs.getString("world"),
                                 rs.getInt("minx"),
                                 rs.getInt("minz"),
                                 rs.getInt("maxx"),

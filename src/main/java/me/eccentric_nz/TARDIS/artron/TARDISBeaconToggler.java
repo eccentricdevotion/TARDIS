@@ -32,7 +32,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -62,8 +61,7 @@ public class TARDISBeaconToggler {
             if (!beacon.isEmpty()) {
                 String[] beaconData = beacon.split(":");
                 if (beaconData.length > 1) {
-                    String world = (beaconData[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : beaconData[0].toLowerCase(Locale.ENGLISH));
-                    World w = plugin.getServer().getWorld(world);
+                    World w = plugin.getServer().getWorld(beaconData[0]);
                     int bx = TARDISNumberParsers.parseInt(beaconData[1]);
                     int by = TARDISNumberParsers.parseInt(beaconData[2]);
                     int bz = TARDISNumberParsers.parseInt(beaconData[3]);

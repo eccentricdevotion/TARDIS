@@ -29,7 +29,6 @@ import org.bukkit.World;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -53,8 +52,7 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String c = rs.getChunk();
             String[] data = c.split(":");
-            String world = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
-            World w = plugin.getServer().getWorld(world);
+            World w = plugin.getServer().getWorld(data[0]);
             int cx = TARDISNumberParsers.parseInt(data[1]);
             int cz = TARDISNumberParsers.parseInt(data[2]);
             return w.getChunkAt(cx, cz);
@@ -75,8 +73,7 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String chunkstr = rs.getChunk();
             String[] split = chunkstr.split(":");
-            String world = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
-            World w = plugin.getServer().getWorld(world);
+            World w = plugin.getServer().getWorld(split[0]);
             cx = TARDISNumberParsers.parseInt(split[1]);
             cz = TARDISNumberParsers.parseInt(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
@@ -101,8 +98,7 @@ public class TARDISLocationGetters {
         double savedx, savedy, savedz;
         // compile location from string
         String[] data = s.split(":");
-        String world = (data[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : data[0].toLowerCase(Locale.ENGLISH));
-        World savedw = Bukkit.getServer().getWorld(world);
+        World savedw = Bukkit.getServer().getWorld(data[0]);
         if (savedw == null) {
             return null;
         }
@@ -127,8 +123,7 @@ public class TARDISLocationGetters {
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
         String tmp = wStr[2].substring(0, (wStr[2].length() - 1));
-        String world = (tmp.equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : tmp.toLowerCase(Locale.ENGLISH));
-        World w = plugin.getServer().getWorld(world);
+        World w = plugin.getServer().getWorld(tmp);
         if (w == null) {
             return null;
         }

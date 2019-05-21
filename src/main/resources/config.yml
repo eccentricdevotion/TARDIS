@@ -13,7 +13,7 @@ creation:
   create_worlds: false
   create_worlds_with_perms: false
   default_world: true
-  default_world_name: tardis_time_vortex
+  default_world_name: TARDIS_TimeVortex
   tips_limit: 400
   border_radius: 256
   gamemode: survival

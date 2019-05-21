@@ -134,7 +134,7 @@ public class TARDISWorldGuardUtils {
             b1 = makeBlockVector(one);
             b2 = makeBlockVector(two);
         }
-        ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_" + p.getName(), b1, b2);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + p.getName(), b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p.getName());
         region.setOwners(dd);
@@ -167,7 +167,7 @@ public class TARDISWorldGuardUtils {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
-        String region_id = "tardis_" + p;
+        String region_id = "TARDIS_" + p;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p);
@@ -271,7 +271,7 @@ public class TARDISWorldGuardUtils {
      */
     public void removeRegion(World w, String p) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        rm.removeRegion("tardis_" + p);
+        rm.removeRegion("TARDIS_" + p);
         try {
             rm.save();
         } catch (StorageException e) {
@@ -356,8 +356,8 @@ public class TARDISWorldGuardUtils {
      */
     public void addMemberToRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        if (rm.hasRegion("tardis_" + owner)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + owner + " " + a + " -w " + w.getName());
+        if (rm.hasRegion("TARDIS_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + a + " -w " + w.getName());
         }
     }
 
@@ -370,8 +370,8 @@ public class TARDISWorldGuardUtils {
      */
     public void removeMemberFromRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        if (rm.hasRegion("tardis_" + owner)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + owner + " " + a + " -w " + w.getName());
+        if (rm.hasRegion("TARDIS_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember TARDIS_" + owner + " " + a + " -w " + w.getName());
         }
     }
 
@@ -488,7 +488,7 @@ public class TARDISWorldGuardUtils {
             return null;
         }
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        return rm.getRegion("tardis_" + p);
+        return rm.getRegion("TARDIS_" + p);
     }
 
     /**

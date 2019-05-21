@@ -37,7 +37,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -148,8 +147,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");
-            String w = (split[0].equals("TARDIS_TimeVortex") ? "tardis_time_vortex" : split[0].toLowerCase(Locale.ENGLISH));
-            world = plugin.getServer().getWorld(w);
+            world = plugin.getServer().getWorld(split[0]);
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());
             floor_type = Material.valueOf(tud.getFloor());
