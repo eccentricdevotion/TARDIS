@@ -94,6 +94,7 @@ public enum TARDISDescription {
     DELUXE("Luxury in a box - console design by killeratnight & L0rd Rahl."),
     ELEVENTH("It’s smaller on the outside... - console design by killeratnight & L0rd Rahl."),
     TWELFTH("The 12th Doctor's TARDIS - console design by killeratnight."),
+    THIRTEENTH("The 13th Doctor's TARDIS - console design by Razihel."),
     REDSTONE("This one has some redstone in it - console design by killeratnight & L0rd Rahl."),
     STEAMPUNK("Small, but steamy."),
     PLANK("A wood based interior."),

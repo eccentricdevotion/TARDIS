@@ -13,8 +13,7 @@
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
 7. 13th Doctor's TARDIS console & Custard Cream dispenser
-8. Properly update world names (to lowercase) in the database? _Spigot supports UPPERCASE in world names again, so would be easier to change the worlds names back..._
-9. Add gamerules to planets.yml
+8. Properly update world names (to lowercase) in the database?
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

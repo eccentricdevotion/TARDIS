@@ -59,6 +59,7 @@ public class TARDISConsoleLoader {
         CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
         CONSOLES.getBY_NAMES().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, false, false));
         CONSOLES.getBY_NAMES().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("THIRTEENTH", new SCHEMATIC("ORANGE_CONCRETE", "thirteenth", "13th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
         CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("WHITE_TERRACOTTA", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));

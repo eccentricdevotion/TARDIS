@@ -69,8 +69,9 @@ public class TARDISBuilderInner {
     /**
      * Builds the inside of the TARDIS.
      *
-     * @param schm       the name of the schematic file to use can be BUDGET, BIGGER, ELEVENTH, TWELFTH, REDSTONE,
-     *                   STEAMPUNK, DELUXE, PLANK, TOM, ARS, WAR, PYRAMID, MASTER or a CUSTOM name.
+     * @param schm       the name of the schematic file to use can be BUDGET, BIGGER, CORAL, ELEVENTH, TWELFTH,
+     *                   THIRTEENTH, REDSTONE, STEAMPUNK, DELUXE, PLANK, TOM, ARS, WAR, PYRAMID, MASTER or a CUSTOM
+     *                   name.
      * @param world      the world where the TARDIS is to be built.
      * @param dbID       the unique key of the record for this TARDIS in the database.
      * @param p          an instance of the player who owns the TARDIS.
