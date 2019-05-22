@@ -265,7 +265,7 @@
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>1.8.7</version>
+            <version>1.9.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldBorder.jar</systemPath>
