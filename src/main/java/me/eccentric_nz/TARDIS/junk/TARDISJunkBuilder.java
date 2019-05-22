@@ -133,27 +133,27 @@ public class TARDISJunkBuilder implements Runnable {
                                      * by setBlockAndRemember(), but remember it
                                      * so we can use it as the handbrake!
                                      */
-                                    String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
                                 }
                                 if (type.equals(Material.STONE_BUTTON)) {
                                     // remember location 1
-                                    String stone_button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    String stone_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
                                 }
                                 if (type.equals(Material.OAK_BUTTON)) {
                                     // remember location 6
-                                    String wood_button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
                                 }
                                 if (type.equals(Material.REPEATER)) {
                                     // remember location 3
-                                    String repeater = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 2, repeater, 0);
                                 }
                                 if (type.equals(Material.COMPARATOR)) {
                                     // remember location 2
-                                    String comparator = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    String comparator = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 3, comparator, 0);
                                 }
                                 if (TARDISMaterials.infested.contains(type)) {
@@ -164,7 +164,7 @@ public class TARDISJunkBuilder implements Runnable {
                                 }
                                 if (type.equals(Material.TRIPWIRE_HOOK)) {
                                     // remember location 4
-                                    String trip = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    String trip = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(bd.getTardisID(), 4, trip, 0);
                                 }
                                 switch (type) {

@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -187,7 +188,7 @@ public class TARDISHandlesProcessor {
                                         whereh.put("type", 26);
                                         ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
                                         if (rsh.resultSet()) {
-                                            Location handles = plugin.getLocationUtils().getLocationFromBukkitString(rsh.getLocation());
+                                            Location handles = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
                                             Block block = handles.getBlock();
                                             Powerable button = (Powerable) block.getBlockData();
                                             if (!button.isPowered()) {

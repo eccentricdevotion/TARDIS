@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -78,7 +79,7 @@ public class ResultSetConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Location l = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location"));
+                Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
                 if (l == null) {
                     return false;
                 }
@@ -128,7 +129,7 @@ public class ResultSetConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Location l = plugin.getLocationUtils().getLocationFromBukkitString(rs.getString("location"));
+                Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
                 if (l == null) {
                     return false;
                 }

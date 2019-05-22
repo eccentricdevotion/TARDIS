@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -119,8 +119,7 @@ public class TARDISPresetDestroyerFactory {
         if (rsd.resultSet()) {
             String dl = rsd.getDoor_location();
             if (dl != null) {
-                float f = 0.0F;
-                Location l = TARDISLocationGetters.getLocationFromDB(dl, f, f);
+                Location l = TARDISStaticLocationGetters.getLocationFromDB(dl);
                 if (l != null) {
                     Block b = l.getBlock();
                     b.setBlockData(TARDISConstants.AIR);

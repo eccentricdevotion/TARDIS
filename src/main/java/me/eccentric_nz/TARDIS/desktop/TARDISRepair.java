@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -126,8 +127,7 @@ class TARDISRepair {
                     startz = gsl[2];
                 }
                 int starty = (tardis.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
-                String[] split = tardis.getChunk().split(":");
-                World world = plugin.getServer().getWorld(split[0]);
+                World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";
                 Material wall_type = Material.ORANGE_WOOL;

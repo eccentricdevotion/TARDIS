@@ -338,7 +338,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         door_bottom = (door.getHalf().equals(Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
                                         boolean opened = TARDISStaticUtils.isDoorOpen(door_bottom);
                                         if (opened && preset.hasDoor()) {
-                                            exitLoc = TARDISLocationGetters.getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
+                                            exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoor_location());
                                         } else {
                                             exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
                                         }

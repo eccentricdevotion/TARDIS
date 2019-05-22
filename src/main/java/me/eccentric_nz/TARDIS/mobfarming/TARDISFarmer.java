@@ -479,12 +479,8 @@ public class TARDISFarmer {
                 }
                 if (!aquarium.isEmpty() && old_macd_had_a_fish != null) {
                     // get location of farm room
-                    String[] data = aquarium.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location fish_tank = new Location(world, x, y, z);
+                    World world = TARDISStaticLocationGetters.getWorld(aquarium);
+                    Location fish_tank = TARDISStaticLocationGetters.getSpawnLocationFromDB(aquarium);
                     switch (old_macd_had_a_fish.getType()) {
                         case COD:
                             fish_tank.add(3.0d, 1.5d, 3.0d);
@@ -516,13 +512,9 @@ public class TARDISFarmer {
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
-                    String[] data = farm.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
+                    World world = TARDISStaticLocationGetters.getWorld(farm);
                     if (old_macd_had_a_chicken.size() > 0) {
-                        Location chicken_pen = new Location(world, x + 3, y, z - 3);
+                        Location chicken_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, -3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
                             world.getChunkAt(chicken_pen).load();
                         }
@@ -542,7 +534,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (old_macd_had_a_cow.size() > 0) {
-                        Location cow_pen = new Location(world, x + 3, y, z + 3);
+                        Location cow_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
                         }
@@ -562,7 +554,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (old_macd_had_a_pig.size() > 0) {
-                        Location pig_pen = new Location(world, x - 3, y, z - 3);
+                        Location pig_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, -3);
                         while (!world.getChunkAt(pig_pen).isLoaded()) {
                             world.getChunkAt(pig_pen).load();
                         }
@@ -583,7 +575,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (old_macd_had_a_sheep.size() > 0) {
-                        Location sheep_pen = new Location(world, x - 3, y, z + 3);
+                        Location sheep_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, 3);
                         while (!world.getChunkAt(sheep_pen).isLoaded()) {
                             world.getChunkAt(sheep_pen).load();
                         }
@@ -604,7 +596,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (old_macd_had_a_mooshroom.size() > 0) {
-                        Location cow_pen = new Location(world, x + 3, y, z + 3);
+                        Location cow_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
                         }
@@ -653,12 +645,8 @@ public class TARDISFarmer {
                 }
                 if (!stable.isEmpty() && old_macd_had_a_horse.size() > 0) {
                     // get location of stable room
-                    String[] data = stable.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
+                    World world = TARDISStaticLocationGetters.getWorld(stable);
+                    Location horse_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stable);
                     while (!world.getChunkAt(horse_pen).isLoaded()) {
                         world.getChunkAt(horse_pen).load();
                     }
@@ -713,12 +701,8 @@ public class TARDISFarmer {
                 }
                 if (!stall.isEmpty() && old_macd_had_a_llama.size() > 0) {
                     // get location of stable room
-                    String[] data = stall.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location llama_pen = new Location(world, x + 0.5F, y, z + 0.5F);
+                    World world = TARDISStaticLocationGetters.getWorld(stall);
+                    Location llama_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stall);
                     while (!world.getChunkAt(llama_pen).isLoaded()) {
                         world.getChunkAt(llama_pen).load();
                     }
@@ -771,12 +755,8 @@ public class TARDISFarmer {
                 }
                 if (!hutch.isEmpty() && old_macd_had_a_rabbit.size() > 0) {
                     // get location of hutch room
-                    String[] data = hutch.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location rabbit_hutch = new Location(world, x + 0.5F, y, z + 0.5F);
+                    World world = TARDISStaticLocationGetters.getWorld(hutch);
+                    Location rabbit_hutch = TARDISStaticLocationGetters.getSpawnLocationFromDB(hutch);
                     while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
                         world.getChunkAt(rabbit_hutch).load();
                     }
@@ -805,12 +785,8 @@ public class TARDISFarmer {
                 }
                 if (!village.isEmpty() && old_macd_had_a_villager.size() > 0) {
                     // get location of village room
-                    String[] data = village.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
+                    World world = TARDISStaticLocationGetters.getWorld(village);
+                    Location v_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(village);
                     while (!world.getChunkAt(v_room).isLoaded()) {
                         world.getChunkAt(v_room).load();
                     }
@@ -847,12 +823,8 @@ public class TARDISFarmer {
                 }
                 if (!igloo.isEmpty() && old_macd_had_a_polarbear.size() > 0) {
                     // get location of igloo room
-                    String[] data = igloo.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location i_room = new Location(world, x + 0.5F, y, z + 0.5F);
+                    World world = TARDISStaticLocationGetters.getWorld(igloo);
+                    Location i_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(igloo);
                     while (!world.getChunkAt(i_room).isLoaded()) {
                         world.getChunkAt(i_room).load();
                     }
@@ -880,12 +852,8 @@ public class TARDISFarmer {
                 }
                 if (!birdcage.isEmpty() && old_macd_had_a_parrot.size() > 0) {
                     // get location of igloo room
-                    String[] data = birdcage.split(":");
-                    World world = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location b_room = new Location(world, x + 0.5F, y, z + 0.5F);
+                    World world = TARDISStaticLocationGetters.getWorld(birdcage);
+                    Location b_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(birdcage);
                     while (!world.getChunkAt(b_room).isLoaded()) {
                         world.getChunkAt(b_room).load();
                     }

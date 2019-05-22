@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -89,8 +90,7 @@ public class TARDISUpgradeBlockScanner {
                 startz = gsl[2];
             }
             int starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
-            String[] split = tardis.getChunk().split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             Material wall_type;
             Material floor_type;
             // get wall/floor block prefs from database...

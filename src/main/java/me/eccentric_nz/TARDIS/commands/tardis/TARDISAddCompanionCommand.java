@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -63,8 +64,8 @@ class TARDISAddCompanionCommand {
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
+            String data;
             int id;
-            String[] data;
             String owner;
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
@@ -73,7 +74,7 @@ class TARDISAddCompanionCommand {
                 Tardis tardis = rs.getTardis();
                 id = tardis.getTardis_id();
                 comps = tardis.getCompanions();
-                data = tardis.getChunk().split(":");
+                data = tardis.getChunk();
                 owner = tardis.getOwner();
             }
             if (args.length < 2) {
@@ -107,7 +108,7 @@ class TARDISAddCompanionCommand {
                     }
                     // if using WorldGuard, add them to the region membership
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                        World w = plugin.getServer().getWorld(data[0]);
+                        World w = TARDISStaticLocationGetters.getWorld(data);
                         if (w != null) {
                             plugin.getWorldGuardUtils().addMemberToRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
                         }

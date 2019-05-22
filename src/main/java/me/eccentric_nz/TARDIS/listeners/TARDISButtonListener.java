@@ -411,7 +411,7 @@ public class TARDISButtonListener implements Listener {
             TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
             return;
         }
-        Location zero = TARDISLocationGetters.getLocationFromDB(z, 0.0F, 0.0F);
+        Location zero = TARDISStaticLocationGetters.getLocationFromDB(z);
         if (zero != null) {
             TARDISMessage.send(player, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

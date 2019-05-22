@@ -22,9 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisChunk;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.io.File;
@@ -86,55 +84,6 @@ public class TARDISLocationGetters {
     }
 
     /**
-     * Gets a location object from data stored in the database. This is used when teleporting the player in and out of
-     * the TARDIS
-     *
-     * @param s     the saved location data from the database.
-     * @param yaw   the player's yaw.
-     * @param pitch the player's pitch.
-     * @return a Location.
-     */
-    public static Location getLocationFromDB(String s, float yaw, float pitch) {
-        double savedx, savedy, savedz;
-        // compile location from string
-        String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
-        if (savedw == null) {
-            return null;
-        }
-        savedx = TARDISNumberParsers.parseDouble(data[1]);
-        savedy = TARDISNumberParsers.parseDouble(data[2]);
-        savedz = TARDISNumberParsers.parseDouble(data[3]);
-        return new Location(savedw, savedx, savedy, savedz, yaw, pitch);
-    }
-
-    /**
-     * Gets a location object from data stored in the database.
-     *
-     * @param string the stored Bukkit location string e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
-     * @return the location or null
-     */
-    public Location getLocationFromBukkitString(String string) {
-        //Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
-        String[] loc_data = string.split(",");
-        // w, x, y, z - 0, 1, 2, 3
-        String[] wStr = loc_data[0].split("=");
-        String[] xStr = loc_data[1].split("=");
-        String[] yStr = loc_data[2].split("=");
-        String[] zStr = loc_data[3].split("=");
-        String tmp = wStr[2].substring(0, (wStr[2].length() - 1));
-        World w = plugin.getServer().getWorld(tmp);
-        if (w == null) {
-            return null;
-        }
-        // Location{world=CraftWorld{name=world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
-        double x = (xStr[1].contains("E")) ? Double.valueOf(xStr[1]) : TARDISNumberParsers.parseDouble(xStr[1]);
-        double y = TARDISNumberParsers.parseDouble(yStr[1]);
-        double z = (zStr[1].contains("E")) ? Double.valueOf(zStr[1]) : TARDISNumberParsers.parseDouble(zStr[1]);
-        return new Location(w, x, y, z);
-    }
-
-    /**
      * Checks whether a chunk is available to build a TARDIS in.
      *
      * @param w    the world the chunk is in.
@@ -169,18 +118,5 @@ public class TARDISLocationGetters {
             }
         }
         return chunkchk;
-    }
-
-    /**
-     * Create a TARDIS v2.3 location string from block coordinates.
-     *
-     * @param w the block's world
-     * @param x the x coordinate of the block's location
-     * @param y the y coordinate of the block's location
-     * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
-     */
-    public static String makeLocationStr(World w, int x, int y, int z) {
-        return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 }

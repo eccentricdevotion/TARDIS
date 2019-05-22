@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
@@ -324,13 +324,9 @@ public class TARDISDoorListener {
             COMPASS d = rsd.getDoor_direction();
             tdl.setD(d);
             String doorLocStr = rsd.getDoor_location();
-            String[] split = doorLocStr.split(":");
-            World cw = plugin.getServer().getWorld(split[0]);
+            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
             tdl.setW(cw);
-            int cx = TARDISNumberParsers.parseInt(split[1]);
-            int cy = TARDISNumberParsers.parseInt(split[2]);
-            int cz = TARDISNumberParsers.parseInt(split[3]);
-            Location tmp_loc = new Location(cw, cx, cy, cz);
+            Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
             int getx = tmp_loc.getBlockX();
             int getz = tmp_loc.getBlockZ();
             switch (d) {

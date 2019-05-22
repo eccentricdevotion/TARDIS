@@ -29,12 +29,11 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -275,12 +274,7 @@ class TARDISMaterialseFromVortex implements Runnable {
     }
 
     private void setBeaconUpBlock(String str, int id) {
-        String[] beaconData = str.split(":");
-        World w = plugin.getServer().getWorld(beaconData[0]);
-        int bx = TARDISNumberParsers.parseInt(beaconData[1]);
-        int by = TARDISNumberParsers.parseInt(beaconData[2]) + 1;
-        int bz = TARDISNumberParsers.parseInt(beaconData[3]);
-        Location bl = new Location(w, bx, by, bz);
+        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
         Block b = bl.getBlock();
         while (!b.getType().equals(Material.BEACON) && b.getLocation().getBlockY() > 0) {
             b = b.getRelative(BlockFace.DOWN);

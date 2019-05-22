@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -46,7 +47,7 @@ class TARDISRemoveCompanionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
             int id;
-            String[] data;
+            String data;
             String owner;
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
@@ -59,7 +60,7 @@ class TARDISRemoveCompanionCommand {
                     return true;
                 }
                 id = tardis.getTardis_id();
-                data = tardis.getChunk().split(":");
+                data = tardis.getChunk();
                 owner = tardis.getOwner();
             }
             if (args.length < 2) {
@@ -104,7 +105,7 @@ class TARDISRemoveCompanionCommand {
                 qf.doUpdate("tardis", set, tid);
                 // if using WorldGuard, remove them from the region membership
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World w = plugin.getServer().getWorld(data[0]);
+                    World w = TARDISStaticLocationGetters.getWorld(data);
                     if (w != null) {
                         plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
                     }

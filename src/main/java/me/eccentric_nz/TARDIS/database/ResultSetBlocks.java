@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -98,7 +99,7 @@ public class ResultSetBlocks {
                     if (rs.wasNull() || bd.equals("0")) {
                         bd = "minecraft:air";
                     }
-                    replacedBlock = new ReplacedBlock(rs.getInt("b_id"), rs.getInt("tardis_id"), plugin.getLocationUtils().getLocationFromBukkitString(str), str, plugin.getServer().createBlockData(bd), rs.getInt("police_box"));
+                    replacedBlock = new ReplacedBlock(rs.getInt("b_id"), rs.getInt("tardis_id"), TARDISStaticLocationGetters.getLocationFromBukkitString(str), str, plugin.getServer().createBlockData(bd), rs.getInt("police_box"));
                     if (multiple) {
                         data.add(replacedBlock);
                     }

@@ -21,8 +21,8 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,7 +68,7 @@ public class TARDISSchematicBuilder {
             whereh.put("type", c);
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
             if (rsc.resultSet()) {
-                Location location = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0, 0);
+                Location location = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
                 switch (c) {
                     case 2:
                         // world repeater
@@ -88,7 +88,7 @@ public class TARDISSchematicBuilder {
                         break;
                     default:
                         // handbrake
-                        h = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
+                        h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                         break;
                 }
             }

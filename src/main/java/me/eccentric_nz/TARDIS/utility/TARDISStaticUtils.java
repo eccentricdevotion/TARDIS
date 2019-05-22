@@ -178,7 +178,7 @@ public class TARDISStaticUtils {
      */
     public static void setSign(String loc, int line, String text, Player p) {
         // get sign block so we can update it
-        Location l = TARDISLocationGetters.getLocationFromDB(loc, 0, 0);
+        Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
         if (l != null) {
             Chunk chunk = l.getChunk();
             while (!chunk.isLoaded()) {
@@ -204,7 +204,7 @@ public class TARDISStaticUtils {
     public static String getLastLine(String loc) {
         // get sign block so we can read it
         String str = "";
-        Location l = TARDISLocationGetters.getLocationFromDB(loc, 0, 0);
+        Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
         if (l != null) {
             Block cc = l.getBlock();
             if (Tag.SIGNS.isTagged(cc.getType())) {

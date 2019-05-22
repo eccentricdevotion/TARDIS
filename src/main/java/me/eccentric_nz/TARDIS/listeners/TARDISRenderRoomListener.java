@@ -22,10 +22,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,13 +71,7 @@ public class TARDISRenderRoomListener implements Listener {
             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
             if (rsd.resultSet()) {
                 COMPASS d = rsd.getDoor_direction();
-                String doorLocStr = rsd.getDoor_location();
-                String[] split = doorLocStr.split(":");
-                World cw = plugin.getServer().getWorld(split[0]);
-                int cx = TARDISNumberParsers.parseInt(split[1]);
-                int cy = TARDISNumberParsers.parseInt(split[2]);
-                int cz = TARDISNumberParsers.parseInt(split[3]);
-                Location tp_loc = new Location(cw, cx, cy, cz);
+                Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
                 int getx = tp_loc.getBlockX();
                 int getz = tp_loc.getBlockZ();
                 switch (d) {

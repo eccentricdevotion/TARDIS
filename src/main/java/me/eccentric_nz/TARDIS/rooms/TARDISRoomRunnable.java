@@ -741,7 +741,7 @@ public class TARDISRoomRunnable implements Runnable {
                     switch (type) {
                         case STONE_BUTTON: // stone button - TARDISConstants.RANDOM
                             control_type = 1;
-                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;
                         case MUSHROOM_STEM: // repeater
                             control_type = repeaterOrder.get(r);
@@ -752,11 +752,11 @@ public class TARDISRoomRunnable implements Runnable {
                             break;
                         case OAK_BUTTON: // oak button - artron
                             control_type = 6;
-                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;
                         default: // cake - handbrake
                             control_type = 0;
-                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
                     }
                     qf.insertControl(tardis_id, control_type, loc_str, secondary);
                 }
@@ -765,7 +765,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // remember the button
                 String loc_str;
                 if (type.equals(Material.OAK_BUTTON)) {
-                    loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
+                    loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
                     qf.insertControl(tardis_id, 17, loc_str, 0);
                 }
             }

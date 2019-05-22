@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -146,8 +147,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 startz = gsl[2];
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
-            String[] split = tardis.getChunk().split(":");
-            world = plugin.getServer().getWorld(split[0]);
+            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());
             floor_type = Material.valueOf(tud.getFloor());

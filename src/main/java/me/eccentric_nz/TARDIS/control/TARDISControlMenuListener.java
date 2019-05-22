@@ -41,8 +41,8 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -201,7 +201,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
                                         return;
                                     }
-                                    Location zero = TARDISLocationGetters.getLocationFromDB(tardis.getZero(), 0.0F, 0.0F);
+                                    Location zero = TARDISStaticLocationGetters.getLocationFromDB(tardis.getZero());
                                     if (zero != null) {
                                         close(player);
                                         TARDISMessage.send(player, "ZERO_READY");

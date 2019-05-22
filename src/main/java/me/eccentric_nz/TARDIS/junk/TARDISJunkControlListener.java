@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -293,7 +294,7 @@ public class TARDISJunkControlListener implements Listener {
         where.put("type", type);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
-            Location l = plugin.getLocationUtils().getLocationFromBukkitString(rs.getLocation());
+            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
             b = l.getBlock();
         }
         return b;

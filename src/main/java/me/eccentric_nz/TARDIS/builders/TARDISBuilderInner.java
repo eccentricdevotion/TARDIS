@@ -210,7 +210,7 @@ public class TARDISBuilderInner {
                     type = data.getMaterial();
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
-                        String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 14, storage, 0);
                     }
                     // determine 'use_clay' material
@@ -309,12 +309,12 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.STONE_BUTTON) && !schm.getPermission().equals("junk")) { // random button
                         // remember the location of this button
-                        String button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 1, button, 0);
                     }
                     if (type.equals(Material.JUKEBOX)) {
                         // remember the location of this Advanced Console
-                        String advanced = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 15, advanced, 0);
                         // check if player has storage record, and update the tardis_id field
                         plugin.getUtils().updateStorageId(playerUUID, dbID, qf);
@@ -325,7 +325,7 @@ public class TARDISBuilderInner {
                          * setBlock(), but remember it so we can use it as the
                          * handbrake!
                          */
-                        String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                         // create default json for ARS
                         String[][][] empty = new String[3][9][9];
@@ -390,14 +390,14 @@ public class TARDISBuilderInner {
                          * wood button - remember it for the Artron Energy
                          * Capacitor.
                          */
-                        String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                     }
                     if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                         /*
                          * remember the telepathic circuit.
                          */
-                        String telepathicloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 23, telepathicloc, 0);
                     }
                     if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
@@ -409,7 +409,7 @@ public class TARDISBuilderInner {
                     // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                     if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
                         HashMap<String, Object> setpb = new HashMap<>();
-                        String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        String loc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         setpb.put("tardis_id", dbID);
                         setpb.put("location", loc);
                         setpb.put("data", "minecraft:air");

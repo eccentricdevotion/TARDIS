@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.*;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import org.bukkit.Location;
@@ -223,27 +220,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     String creeper = tardis.getCreeper();
                                     String beacon = tardis.getBeacon();
                                     if (!creeper.isEmpty() && !creeper.equals(":")) {
-                                        String[] creeperData = creeper.split(":");
-                                        String[] beaconData = beacon.split(":");
                                         World w = block.getLocation().getWorld();
-                                        int bx = 0, by = 0, bz = 0;
-                                        float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
-                                        float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
-                                        float cz = TARDISNumberParsers.parseFloat(creeperData[3]);
-                                        if (beaconData.length > 2) {
-                                            bx = TARDISNumberParsers.parseInt(beaconData[1]);
-                                            by = TARDISNumberParsers.parseInt(beaconData[2]);
-                                            bz = TARDISNumberParsers.parseInt(beaconData[3]);
-                                        }
-                                        Location cl = new Location(w, cx, cy, cz);
+                                        Location cl = TARDISStaticLocationGetters.getLocationFromDB(creeper);
                                         plugin.setTardisSpawn(true);
                                         Entity e = w.spawnEntity(cl, EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
-                                        if (beaconData.length > 2) {
-                                            Location bl = new Location(w, bx, by, bz);
-                                            bl.getBlock().setBlockData(TARDISConstants.GLASS);
-                                        }
+                                        Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
+                                        bl.setBlockData(TARDISConstants.GLASS);
                                     }
                                     // set the capacitor to 50% charge
                                     HashMap<String, Object> set = new HashMap<>();

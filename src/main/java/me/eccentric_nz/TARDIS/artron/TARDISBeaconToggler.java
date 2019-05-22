@@ -26,9 +26,8 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import java.util.HashMap;
@@ -61,11 +60,7 @@ public class TARDISBeaconToggler {
             if (!beacon.isEmpty()) {
                 String[] beaconData = beacon.split(":");
                 if (beaconData.length > 1) {
-                    World w = plugin.getServer().getWorld(beaconData[0]);
-                    int bx = TARDISNumberParsers.parseInt(beaconData[1]);
-                    int by = TARDISNumberParsers.parseInt(beaconData[2]);
-                    int bz = TARDISNumberParsers.parseInt(beaconData[3]);
-                    Location bl = new Location(w, bx, by, bz);
+                    Location bl = TARDISStaticLocationGetters.getLocationFromDB(beacon);
                     Block b = bl.getBlock();
                     while (!b.getChunk().isLoaded()) {
                         b.getChunk().load();

@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -367,7 +367,7 @@ class TARDISDematerialisationPreset implements Runnable {
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
             try {
-                Block b = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
+                Block b = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
                 if (p.equals(PRESET.FLOWER)) {
                     the_colour = b.getRelative(BlockFace.UP, 3).getBlockData();
                     String[] split = the_colour.getMaterial().toString().toLowerCase().split("_");

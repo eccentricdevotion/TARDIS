@@ -24,9 +24,9 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -309,7 +309,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);
                 if (rsc.resultSet()) {
                     // move the location to the y-repeater
-                    loc = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0.0f, 0.0f);
+                    loc = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
                     loc.add(0.5d, 0.125d, 0.5d);
                 }
             }

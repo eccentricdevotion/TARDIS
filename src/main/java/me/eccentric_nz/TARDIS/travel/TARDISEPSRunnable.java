@@ -21,12 +21,12 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -109,12 +109,7 @@ public class TARDISEPSRunnable implements Runnable {
      */
     private Location getSpawnLocation(int id) {
         if (!eps.isEmpty()) {
-            String[] npc = eps.split(":");
-            World w = plugin.getServer().getWorld(npc[0]);
-            int x = TARDISNumberParsers.parseInt(npc[1]);
-            int y = TARDISNumberParsers.parseInt(npc[2]);
-            int z = TARDISNumberParsers.parseInt(npc[3]);
-            return new Location(w, x, y, z);
+            return TARDISStaticLocationGetters.getSpawnLocationFromDB(eps);
         } else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // get world spawn location
             return plugin.getServer().getWorld("tardis_world_" + tl.getName()).getSpawnLocation();
@@ -124,27 +119,25 @@ public class TARDISEPSRunnable implements Runnable {
             where.put("door_type", 1);
             ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
             if (rsd.resultSet()) {
-                String[] door = rsd.getDoor_location().split(":");
-                World w = plugin.getServer().getWorld(door[0]);
-                int x = TARDISNumberParsers.parseInt(door[1]);
-                int y = TARDISNumberParsers.parseInt(door[2]);
-                int z = TARDISNumberParsers.parseInt(door[3]);
+                int x = 0;
+                int z = 0;
+                Location location = TARDISStaticLocationGetters.getSpawnLocationFromDB(rsd.getDoor_location());
                 switch (rsd.getDoor_direction()) {
                     case NORTH:
-                        z -= 2;
+                        z = -2;
                         break;
                     case EAST:
-                        x += 1;
-                        z -= 1;
+                        x = 1;
+                        z = -1;
                         break;
                     case WEST:
-                        x -= 1;
-                        z -= 1;
+                        x = -1;
+                        z = -1;
                         break;
                     default:
                         break;
                 }
-                return new Location(w, x, y, z);
+                return location.add(x, 0, z);
             } else {
                 return null;
             }

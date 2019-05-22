@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -96,7 +96,7 @@ public class ResultSetLamps {
             if (rs.isBeforeFirst()) {
                 if (multiple) {
                     while (rs.next()) {
-                        Location loc = TARDISLocationGetters.getLocationFromDB(rs.getString("location"), 0.0F, 0.0F);
+                        Location loc = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
                         if (loc != null) {
                             data.add(loc.getBlock());
                         }

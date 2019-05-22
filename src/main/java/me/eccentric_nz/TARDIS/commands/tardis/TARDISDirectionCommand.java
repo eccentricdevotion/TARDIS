@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Rotation;
@@ -163,7 +164,7 @@ public class TARDISDirectionCommand {
             ResultSetControls rsdf = new ResultSetControls(plugin, wheredf, false);
             if (rsdf.resultSet()) {
                 String locToCheck = rsdf.getLocation();
-                Location dfl = plugin.getLocationUtils().getLocationFromBukkitString(locToCheck);
+                Location dfl = TARDISStaticLocationGetters.getLocationFromBukkitString(locToCheck);
                 if (dfl != null) {
                     Chunk chunk = dfl.getChunk();
                     if (!chunk.isLoaded()) {

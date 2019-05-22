@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.CONTROL;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -28,7 +29,7 @@ public class TARDISChameleonFrame {
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
             // get location of Chameleon frame
-            Location location = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
+            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             if (location != null) {
                 for (Entity e : location.getChunk().getEntities()) {
                     if (e instanceof ItemFrame) {

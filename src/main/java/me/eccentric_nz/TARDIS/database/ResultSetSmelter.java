@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.Smelter;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -129,7 +130,7 @@ public class ResultSetSmelter {
     }
 
     private List<Chest> getChests(String location, boolean fuel) {
-        Location l = plugin.getLocationUtils().getLocationFromBukkitString(location);
+        Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
         List<Chest> chests = new ArrayList<>();
         List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();
         vectors.forEach((v) -> {

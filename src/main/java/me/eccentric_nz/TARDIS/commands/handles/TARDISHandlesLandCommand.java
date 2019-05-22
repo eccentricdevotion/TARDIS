@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
@@ -78,7 +79,7 @@ class TARDISHandlesLandCommand {
                 whereh.put("tardis_id", id);
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (rsc.resultSet()) {
-                    Location location = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
+                    Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                     TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
                     // Changes the lever to on
                     Switch lever = (Switch) location.getBlock().getBlockData();

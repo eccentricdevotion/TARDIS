@@ -27,11 +27,12 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.*;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
@@ -236,13 +237,7 @@ public class TARDISHandbrakeListener implements Listener {
     }
 
     public static void toggleBeacon(String str, boolean on) {
-        String[] beaconData = str.split(":");
-        World w = Bukkit.getServer().getWorld(beaconData[0]);
-        int bx = TARDISNumberParsers.parseInt(beaconData[1]);
-        int by = TARDISNumberParsers.parseInt(beaconData[2]);
-        int bz = TARDISNumberParsers.parseInt(beaconData[3]);
-        Location bl = new Location(w, bx, by, bz);
-        Block b = bl.getBlock();
+        Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
         b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
@@ -252,7 +247,7 @@ public class TARDISHandbrakeListener implements Listener {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Block door = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock();
+            Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
             return TARDISStaticUtils.isDoorOpen(door);
         }
         return false;

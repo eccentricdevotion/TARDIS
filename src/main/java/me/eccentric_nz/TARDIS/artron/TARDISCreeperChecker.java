@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Creeper;
@@ -61,13 +61,9 @@ public class TARDISCreeperChecker {
                 if (!t.getCreeper().isEmpty()) {
                     // only if the TARDIS has been initialised
                     if (t.isTardis_init()) {
-                        String[] creeperData = t.getCreeper().split(":");
-                        World w = plugin.getServer().getWorld(creeperData[0]);
+                        World w = TARDISStaticLocationGetters.getWorld(t.getCreeper());
                         if (w != null) {
-                            float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
-                            float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
-                            float cz = TARDISNumberParsers.parseFloat(creeperData[3]);
-                            Location l = new Location(w, cx, cy, cz);
+                            Location l = TARDISStaticLocationGetters.getLocationFromDB(t.getCreeper());
                             plugin.setTardisSpawn(true);
                             Entity e = w.spawnEntity(l, EntityType.CREEPER);
                             // if there is a creeper there already get rid of it!

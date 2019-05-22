@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -99,8 +100,8 @@ public class TARDISPortalPersister {
                     String t = rs.getString("teleport");
                     // check for null worlds
                     if (!p.contains("null") && !t.contains("null")) {
-                        Location portal = plugin.getLocationUtils().getLocationFromBukkitString(p);
-                        Location teleport = plugin.getLocationUtils().getLocationFromBukkitString(t);
+                        Location portal = TARDISStaticLocationGetters.getLocationFromBukkitString(p);
+                        Location teleport = TARDISStaticLocationGetters.getLocationFromBukkitString(t);
                         if (portal != null && teleport != null) {
                             COMPASS direction = COMPASS.valueOf(rs.getString("direction"));
                             TARDISTeleportLocation ttpl = new TARDISTeleportLocation();

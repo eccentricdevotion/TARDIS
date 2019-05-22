@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -84,12 +84,8 @@ class TARDISEnterCommand {
             if (rsi.resultSet()) {
                 COMPASS innerD = rsi.getDoor_direction();
                 String doorLocStr = rsi.getDoor_location();
-                String[] split = doorLocStr.split(":");
-                World cw = plugin.getServer().getWorld(split[0]);
-                int cx = TARDISNumberParsers.parseInt(split[1]);
-                int cy = TARDISNumberParsers.parseInt(split[2]);
-                int cz = TARDISNumberParsers.parseInt(split[3]);
-                Location tardis_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+                Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
                 int getx = tardis_loc.getBlockX();
                 int getz = tardis_loc.getBlockZ();
                 switch (innerD) {

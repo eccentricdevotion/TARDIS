@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.data.type.Repeater;
 
@@ -80,7 +80,7 @@ public class ResultSetRepeaters {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    locations.add(TARDISLocationGetters.getLocationFromDB(rs.getString("location"), 0, 0));
+                    locations.add(TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location")));
                 }
             } else {
                 return false;

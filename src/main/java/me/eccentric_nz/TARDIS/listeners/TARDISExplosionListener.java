@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCreeper;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -76,7 +77,7 @@ public class TARDISExplosionListener implements Listener {
                 return;
             }
             for (String str : plugin.getGeneralKeeper().getProtectBlockMap().keySet()) {
-                Location loc = plugin.getLocationUtils().getLocationFromBukkitString(str);
+                Location loc = TARDISStaticLocationGetters.getLocationFromBukkitString(str);
                 if (loc != null) {
                     Block block = loc.getBlock();
                     // if the block is a TARDIS block then remove it

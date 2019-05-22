@@ -21,9 +21,9 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
@@ -87,7 +87,7 @@ class TARDISHandlesTakeoffCommand {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                             return true;
                         }
-                        Location location = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
+                        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                         Block handbrake = location.getBlock();
                         HashMap<String, Object> wherek = new HashMap<>();
                         wherek.put("uuid", args[1]);
@@ -114,7 +114,7 @@ class TARDISHandlesTakeoffCommand {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Openable door = (Openable) TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getBlockData();
+            Openable door = (Openable) TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock().getBlockData();
             return door.isOpen();
         }
         return false;

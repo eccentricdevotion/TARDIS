@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -54,7 +55,7 @@ class TARDISARSRemoveCommand {
         wheres.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
         if (rsc.resultSet()) {
-            Location l = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
+            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             if (l != null) {
                 Block b = l.getBlock();
                 if (Tag.SIGNS.isTagged(b.getType())) {

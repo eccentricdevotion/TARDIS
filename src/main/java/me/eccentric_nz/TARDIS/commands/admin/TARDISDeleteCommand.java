@@ -104,8 +104,7 @@ public class TARDISDeleteCommand {
             } else {
                 wname = cdata[0];
             }
-            String name = wname.toLowerCase(Locale.ENGLISH);
-            World cw = plugin.getServer().getWorld(name);
+            World cw = plugin.getServer().getWorld(wname);
             if (cw == null) {
                 TARDISMessage.send(sender, "WORLD_DELETED");
                 return true;
@@ -148,27 +147,27 @@ public class TARDISDeleteCommand {
             // destroy the inner TARDIS
             // give the TARDIS time to remove itself as it's not hidden
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("tardis_world_")) {
+                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("tardis_world_")) {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
                     if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
+                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                     }
                     if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
+                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + wname);
                     }
                     if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + name);
+                        plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + wname);
                     }
                     if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                         // wb <world> clear
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
+                        plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + wname + " clear");
                     }
                     plugin.getServer().unloadWorld(cw, true);
-                    File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
+                    File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
                     if (!deleteFolder(world_folder)) {
-                        plugin.debug("Could not delete world <" + name + ">");
+                        plugin.debug("Could not delete world <" + wname + ">");
                     }
                 } else {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);

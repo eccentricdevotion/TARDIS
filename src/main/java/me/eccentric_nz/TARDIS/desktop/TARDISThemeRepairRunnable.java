@@ -34,7 +34,10 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -162,7 +165,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
             id = tardis.getTardis_id();
-            Chunk chunk = getChunk(tardis.getChunk());
+            Chunk chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity end : chunk.getEntities()) {
@@ -174,7 +177,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
                 // remove the charged creeper
-                Location creeper = getCreeperLocation(tardis.getCreeper());
+                Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                 Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
                 ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
                     if (e instanceof Creeper) {
@@ -194,8 +197,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startz = gsl[2];
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
-            String[] split = tardis.getChunk().split(":");
-            world = plugin.getServer().getWorld(split[0]);
+            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
@@ -370,7 +372,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
-                    String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 14, storage, 0);
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
@@ -410,12 +412,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.STONE_BUTTON)) { // random button
                     // remember the location of this button
-                    String button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 1, button, 0);
                 }
                 if (type.equals(Material.JUKEBOX)) {
                     // remember the location of this Advanced Console
-                    String advanced = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 15, advanced, 0);
                 }
                 if (type.equals(Material.CAKE)) {
@@ -423,7 +425,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                      * This block will be converted to a lever by setBlock(),
                      * but remember it so we can use it as the handbrake!
                      */
-                    String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 0, handbrakeloc, 0);
                 }
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
@@ -457,14 +459,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     /*
                      * Remember it for the Artron Energy Capacitor.
                      */
-                    String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 6, woodbuttonloc, 0);
                 }
                 if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                     /*
                      * remember the telepathic circuit.
                      */
-                    String telepathicloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 23, telepathicloc, 0);
                 }
                 if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
@@ -476,7 +478,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                 if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) && !type.equals(Material.BEDROCK)) {
                     HashMap<String, Object> setpb = new HashMap<>();
-                    String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    String loc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
                     setpb.put("data", "minecraft:air");
@@ -568,14 +570,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private Chunk getChunk(String str) {
-        String[] split = str.split(":");
-        World cw = plugin.getServer().getWorld(split[0]);
-        int cx = TARDISNumberParsers.parseInt(split[1]);
-        int cz = TARDISNumberParsers.parseInt(split[2]);
-        return cw.getChunkAt(cx, cz);
-    }
-
     private void setAir(int jx, int jy, int jz, World jw, int plusy) {
         for (int yy = jy; yy < (jy + plusy); yy++) {
             for (int xx = jx; xx < (jx + 16); xx++) {
@@ -585,15 +579,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             }
         }
-    }
-
-    private Location getCreeperLocation(String str) {
-        String[] creeperData = str.split(":");
-        World cw = plugin.getServer().getWorld(creeperData[0]);
-        float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
-        float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
-        float cz = TARDISNumberParsers.parseFloat(creeperData[3]);
-        return new Location(cw, cx, cy, cz);
     }
 
     private List<Chunk> getChunks(Chunk c, SCHEMATIC s) {

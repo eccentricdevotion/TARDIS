@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -64,8 +65,7 @@ class TARDISDelavafier {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            String[] split = tardis.getChunk().split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             for (int level = 2; level < 6; level++) {
                 for (int row = 0; row < 32; row++) {
                     for (int col = 0; col < 32; col++) {

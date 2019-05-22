@@ -23,10 +23,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
@@ -86,7 +85,7 @@ public class TARDISTakeoff {
         where.put("type", 0);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
-            Location handbrake = plugin.getLocationUtils().getLocationFromBukkitString(rs.getLocation());
+            Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
             // should the beacon turn on
             HashMap<String, Object> wherek = new HashMap<>();
             wherek.put("uuid", player.getUniqueId().toString());
@@ -132,12 +131,7 @@ public class TARDISTakeoff {
     }
 
     private void toggleBeacon(String str) {
-        String[] beaconData = str.split(":");
-        World w = plugin.getServer().getWorld(beaconData[0]);
-        int bx = TARDISNumberParsers.parseInt(beaconData[1]);
-        int by = TARDISNumberParsers.parseInt(beaconData[2]);
-        int bz = TARDISNumberParsers.parseInt(beaconData[3]);
-        Location bl = new Location(w, bx, by, bz);
+        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
         Block b = bl.getBlock();
         b.setBlockData(TARDISConstants.GLASS);
     }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -83,7 +84,7 @@ public class TARDISVortexPersister {
                 whereh.put("type", 0);
                 ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
                 if (rsh.resultSet()) {
-                    Location handbrake = plugin.getLocationUtils().getLocationFromBukkitString(rsh.getLocation());
+                    Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
                     new TARDISLoopingFlightSound(plugin, handbrake, id).run();
                     count++;
                 }

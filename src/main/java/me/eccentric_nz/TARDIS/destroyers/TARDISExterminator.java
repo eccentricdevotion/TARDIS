@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,8 +89,7 @@ public class TARDISExterminator {
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 }
                 cleanHashMaps(id);
-                String[] chunkworld = chunkLoc.split(":");
-                World cw = plugin.getServer().getWorld(chunkworld[0]);
+                World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
@@ -223,8 +223,7 @@ public class TARDISExterminator {
                     // restore biome
                     plugin.getUtils().restoreBiome(bb_loc, rsc.getBiome());
                 }
-                String[] chunkworld = chunkLoc.split(":");
-                World cw = plugin.getServer().getWorld(chunkworld[0]);
+                World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {
                     TARDISMessage.send(player, "WORLD_DELETED");
                     return true;
