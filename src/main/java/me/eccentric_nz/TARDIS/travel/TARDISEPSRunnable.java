@@ -112,7 +112,7 @@ public class TARDISEPSRunnable implements Runnable {
             return TARDISStaticLocationGetters.getSpawnLocationFromDB(eps);
         } else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // get world spawn location
-            return plugin.getServer().getWorld("tardis_world_" + tl.getName()).getSpawnLocation();
+            return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
         } else {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);

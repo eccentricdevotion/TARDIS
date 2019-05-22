@@ -35,7 +35,6 @@ import org.bukkit.generator.ChunkGenerator;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Various utility methods.
@@ -76,7 +75,7 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = (data[0].equalsIgnoreCase(dn) && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return (data[0].toLowerCase(Locale.ENGLISH).contains("tardis_world_") || special);
+        return (data[0].contains("TARDIS_WORLD_") || special);
     }
 
     public boolean inTARDISWorld(Player player) {
@@ -94,7 +93,7 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return name.equals("tardis_world_" + player.getName()) || special;
+        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
     public boolean inTARDISWorld(Location loc) {
@@ -108,7 +107,7 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return name.startsWith("tardis_world_") || special;
+        return name.startsWith("TARDIS_WORLD_") || special;
     }
 
     /**
@@ -132,7 +131,7 @@ public class TARDISUtils {
     }
 
     /**
-     * Gets the chat colour to use on the Ploice Box sign.
+     * Gets the chat colour to use on the Police Box sign.
      *
      * @return the configured chat colour
      */

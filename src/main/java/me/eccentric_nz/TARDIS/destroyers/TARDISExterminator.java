@@ -95,7 +95,7 @@ public class TARDISExterminator {
                     return false;
                 }
                 Material restore = getRestore(cw);
-                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("tardis_world_")) {
+                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanWorlds(cw, owner);
@@ -229,7 +229,7 @@ public class TARDISExterminator {
                     return true;
                 }
                 Material restore = getRestore(cw);
-                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("tardis_world_")) {
+                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
                 }
                 cleanWorlds(cw, owner);
@@ -322,8 +322,8 @@ public class TARDISExterminator {
             plugin.getWorldGuardUtils().removeRegion(w, owner);
             plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "renderer");
         }
-        // unload and remove the world if it's a `tardis_world_` world
-        if (w.getName().toLowerCase(Locale.ENGLISH).contains("tardis_world_")) {
+        // unload and remove the world if it's a `TARDIS_WORLD_` world
+        if (w.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
             String name = w.getName();
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();

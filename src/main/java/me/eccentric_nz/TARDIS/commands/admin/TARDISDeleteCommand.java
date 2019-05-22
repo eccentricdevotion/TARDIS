@@ -147,7 +147,7 @@ public class TARDISDeleteCommand {
             // destroy the inner TARDIS
             // give the TARDIS time to remove itself as it's not hidden
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("tardis_world_")) {
+                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("TARDIS_WORLD_")) {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
