@@ -75,7 +75,7 @@ public class TARDISWorlds {
                         }
                     }
                 } else {
-                    if (!TARDISConstants.PLANETS.contains(cw)) {
+                    if (!TARDISConstants.PLANETS.contains(cw) && !cw.equals("TARDIS_Zero_Room")) {
                         plugin.getPlanetsConfig().set("planets." + cw, null);
                         plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
                         // remove records from database that may contain the removed world
