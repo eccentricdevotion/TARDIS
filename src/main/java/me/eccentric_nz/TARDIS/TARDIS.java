@@ -204,6 +204,11 @@ public class TARDIS extends JavaPlugin {
             new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
+            // update world names
+            if (!getConfig().getBoolean("conversions.lowercase_world_names")) {
+                new TARDISWorldNameUpdate(this).replaceNames();
+                getConfig().set("conversions.lowercase_world_names", true);
+            }
             // update database materials
             if (!getConfig().getBoolean("conversions.ars_materials")) {
                 new ARSConverter(this).convertARS();
