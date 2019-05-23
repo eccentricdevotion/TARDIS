@@ -99,7 +99,7 @@ class TARDISLampsCommand {
                 // get dimensions
                 JSONObject dimensions = (JSONObject) obj.get("dimensions");
                 int h = dimensions.getInt("height");
-                starty = (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone")) ? 65 : 64;
+                starty = (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) ? 65 : 64;
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks

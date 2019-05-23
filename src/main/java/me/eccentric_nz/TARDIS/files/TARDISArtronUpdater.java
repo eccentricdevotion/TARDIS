@@ -99,6 +99,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("upgrades.steampunk", 5000);
         integerOptions.put("upgrades.tom", 5000);
         integerOptions.put("upgrades.twelfth", 7500);
+        integerOptions.put("upgrades.thirteenth", 8000);
         integerOptions.put("upgrades.war", 5000);
         integerOptions.put("upgrades.template.small", 1666);
         integerOptions.put("upgrades.template.medium", 2500);

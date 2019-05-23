@@ -474,7 +474,7 @@ public class TARDISUpdateListener implements Listener {
                             empty[1][4][5] = control;
                             empty[1][5][4] = control;
                             empty[1][5][5] = control;
-                        } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth")) {
+                        } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
                             empty[1][4][5] = control;
                             empty[1][5][4] = control;
                             empty[1][5][5] = control;
