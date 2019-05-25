@@ -224,6 +224,18 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
+            if (blockName.equalsIgnoreCase("dispenser") && blockType.equals(Material.DISPENSER)) {
+                HashMap<String, Object> whered = new HashMap<>();
+                whered.put("tardis_id", id);
+                whered.put("type", 28);
+                ResultSetControls rsc = new ResultSetControls(plugin, whered, false);
+                if (!rsc.resultSet()) {
+                    qf.insertControl(id, 28, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
             if (blockName.equalsIgnoreCase("telepathic") && blockType.equals(Material.DAYLIGHT_DETECTOR)) {
                 if (!plugin.getTrackerKeeper().getTelepathicPlacements().containsKey(uuid)) {
                     TARDISMessage.send(player, "TELEPATHIC_PLACE");

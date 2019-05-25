@@ -41,16 +41,17 @@ public enum CONTROL {
     ADVANCED_CONSOLE(15, "advanced"),
     ZERO_ENTRY(16, "zero"),
     ZERO_EXIT(17, ""),
-    DIRECTION(18, ""),
+    DIRECTION(18, "direction"),
     LAZARUS_DEVICE(20, ""),
     DOOR_TOGGLE_WOOL(20, "toggle_wool"),
     SIEGE(21, "siege"),
     CONTROLS(22, "control"),
     TELEPATHIC_CIRCUIT(23, "telepathic"),
     SONIC_GENERATOR(24, "generator"),
-    SHELL(25, ""),
+    SHELL(25, "shell"),
     HANDLES(26, "handles"),
-    FRAME(27, "");
+    FRAME(27, "frame"),
+    DISPENSER(28, "dispenser");
 
     private final int id;
     private final String update;
@@ -75,4 +76,5 @@ public enum CONTROL {
 
     public static HashMap<String, Integer> getUPDATE_CONTROLS() {
         return UPDATE_CONTROLS;
-    }}
+    }
+}

@@ -74,6 +74,7 @@ public class TARDISArtronLevels {
         int level = rs.getArtronLevel();
         if (level - required <= 100) {
             TARDISMessage.send(p, "ENERGY_LOW");
+            return false;
         }
         return (level > required);
     }

@@ -75,7 +75,9 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"7. Toggle Black Wool behind door\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update toggle_wool\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"8. Sonic Generator\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update generator\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"9. Vault sorter chest\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update vault\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"10. Zero room transmat button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update zero\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
+            "{\"text\":\"10. Zero room transmat button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update zero\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+            "{\"text\":\"11. Custard Cream dispenser\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update dispenser\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+            "{\"text\":\"12. Chameleon preset frame\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update frame\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
 
     public List<String> getSections() {

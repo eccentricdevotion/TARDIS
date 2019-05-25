@@ -12,8 +12,7 @@
 4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
-7. 13th Doctor's TARDIS console & Custard Cream dispenser
-8. Properly update world names (to lowercase) in the database?
+7. 13th Doctor's TARDIS console
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

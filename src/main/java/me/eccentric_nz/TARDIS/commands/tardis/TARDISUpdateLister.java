@@ -93,6 +93,7 @@ class TARDISUpdateLister {
         misc.add(ChatColor.LIGHT_PURPLE + "zero" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Zero room transmat button");
         misc.add(ChatColor.LIGHT_PURPLE + "beacon" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Beacon toggle block");
         misc.add(ChatColor.LIGHT_PURPLE + "frame" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Chameleon Item Frame");
+        misc.add(ChatColor.LIGHT_PURPLE + "dispenser" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Custard Cream Dispenser");
         update_options.put("Others", misc);
         return update_options;
     }
