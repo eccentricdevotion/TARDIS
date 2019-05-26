@@ -116,7 +116,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -168,7 +168,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.apache.commons:commons-compress</pattern>
-                                    <shadedPattern>org.rauschig.org.org.apache.commons:commons-compress</shadedPattern>
+                                    <shadedPattern>org.rauschig.org.apache.commons:commons-compress</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -179,7 +179,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.1.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
