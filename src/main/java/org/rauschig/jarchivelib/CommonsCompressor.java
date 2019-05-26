@@ -1,34 +1,26 @@
 /**
- *    Copyright 2013 Thomas Rausch
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2013 Thomas Rausch
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.rauschig.jarchivelib;
-
-import static org.rauschig.jarchivelib.CommonsStreamFactory.createCompressorInputStream;
-import static org.rauschig.jarchivelib.CommonsStreamFactory.createCompressorOutputStream;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.compressors.CompressorInputStream;
 import org.apache.commons.compress.compressors.CompressorOutputStream;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
+
+import java.io.*;
+
+import static org.rauschig.jarchivelib.CommonsStreamFactory.createCompressorInputStream;
+import static org.rauschig.jarchivelib.CommonsStreamFactory.createCompressorOutputStream;
 
 /**
  * Implementation of a compressor that uses {@link CompressorStreamFactory} to generate compressor streams by a given
@@ -40,7 +32,7 @@ class CommonsCompressor implements Compressor {
     private final CompressionType compressionType;
 
     CommonsCompressor(CompressionType type) {
-        this.compressionType = type;
+        compressionType = type;
     }
 
     public CompressionType getCompressionType() {
@@ -136,5 +128,4 @@ class CommonsCompressor implements Compressor {
             throw new IllegalArgumentException("Can not write to destination " + destination);
         }
     }
-
 }
