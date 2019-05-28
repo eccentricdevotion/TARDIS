@@ -109,7 +109,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
         t.put("ENDER", Material.PURPUR_BLOCK); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
-        t.put("FACTORY", Material.BONE_BLOCK); // factory schematic designed by Razihel
+        t.put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
         t.put("PLANK", Material.BOOKSHELF); // plank
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
