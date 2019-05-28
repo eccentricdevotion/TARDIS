@@ -196,7 +196,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.1-R0.1-SNAPSHOT</version>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -265,7 +265,7 @@
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.10</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldBorder.jar</systemPath>
