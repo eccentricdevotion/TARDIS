@@ -472,6 +472,9 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("n")) {
                             showInfo(p, TARDISInfoMenu.THIRTEENTH);
                         }
+                        if (chat.equalsIgnoreCase("y")) {
+                            showInfo(p, TARDISInfoMenu.FACTORY);
+                        }
                         if (chat.equalsIgnoreCase("R")) {
                             showInfo(p, TARDISInfoMenu.REDSTONE);
                         }

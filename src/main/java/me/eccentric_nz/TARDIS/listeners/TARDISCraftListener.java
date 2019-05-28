@@ -67,6 +67,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.NETHER_WART_BLOCK, "CORAL"); // coral schematic designed by vistaero
         t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
         t.put(Material.ORANGE_CONCRETE, "THIRTEENTH"); // thirteenth designed by Razihel
+        t.put(Material.BONE_BLOCK, "FACTORY"); // factory designed by Razihel
         t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone

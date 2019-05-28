@@ -162,6 +162,7 @@ public enum TARDISInfoMenu {
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
     TWELFTH("TIS|TARDIS Types|Twelfth", "TYPES", "f"),
     THIRTEENTH("TIS|TARDIS Types|Thirteenth", "TYPES", "n"),
+    FACTORY("TIS|TARDIS Types|Factory", "TYPES", "y"),
     REDSTONE("TIS|TARDIS Types|Redstone", "TYPES", "R"),
     STEAMPUNK("TIS|TARDIS Types|Steampunk", "TYPES", "S"),
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
