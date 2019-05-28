@@ -59,7 +59,7 @@ public class TARDISThemeInventory {
      */
 
     private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get consoles
         for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
@@ -97,7 +97,7 @@ public class TARDISThemeInventory {
             ItemMeta hive_im = arc.getItemMeta();
             hive_im.setDisplayName("Archive Consoles");
             arc.setItemMeta(hive_im);
-            stack[22] = arc;
+            stack[46] = arc;
         }
         if (plugin.getConfig().getBoolean("allow.repair")) {
             // repair
@@ -106,7 +106,7 @@ public class TARDISThemeInventory {
                 ItemMeta air_im = rep.getItemMeta();
                 air_im.setDisplayName("Repair Console");
                 rep.setItemMeta(air_im);
-                stack[23] = rep;
+                stack[47] = rep;
             }
             // clean
             if (player.hasPermission("tardis.repair")) {
@@ -114,7 +114,7 @@ public class TARDISThemeInventory {
                 ItemMeta an_im = cle.getItemMeta();
                 an_im.setDisplayName("Clean");
                 cle.setItemMeta(an_im);
-                stack[24] = cle;
+                stack[48] = cle;
             }
         }
         // close
@@ -122,7 +122,7 @@ public class TARDISThemeInventory {
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[53] = close;
 
         return stack;
     }

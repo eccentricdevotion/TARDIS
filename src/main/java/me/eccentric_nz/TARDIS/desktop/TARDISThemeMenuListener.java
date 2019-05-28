@@ -57,26 +57,26 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
         if (name.equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
+            if (slot >= 0 && slot < 54) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 22:
+                    case 46:
                         // archive
                         archive(p);
                         break;
-                    case 23:
+                    case 47:
                         // repair
                         if (plugin.getConfig().getBoolean("allow.repair")) {
                             repair(p);
                         }
                         break;
-                    case 24:
+                    case 48:
                         // clean
                         if (plugin.getConfig().getBoolean("allow.repair")) {
                             clean(p);
                         }
                         break;
-                    case 26:
+                    case 53:
                         // close
                         close(p);
                         break;
