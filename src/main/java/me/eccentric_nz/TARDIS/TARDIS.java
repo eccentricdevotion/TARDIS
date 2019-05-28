@@ -150,21 +150,21 @@ public class TARDIS extends JavaPlugin {
         worldGuardOnServer = false;
         helperOnServer = false;
         invManager = INVENTORY_MANAGER.NONE;
-        versions.put("Citizens", "2.0.24");
+        versions.put("Citizens", "2.0.25");
         versions.put("Factions", "2.8.19");
-        versions.put("GriefPrevention", "14.8");
-        versions.put("LibsDisguises", "9.7.0");
+        versions.put("GriefPrevention", "16.11");
+        versions.put("LibsDisguises", "9.8.2");
         versions.put("MultiWorld", "5.2");
         versions.put("Multiverse-Adventure", "2.5");
         versions.put("Multiverse-Core", "3.0");
         versions.put("Multiverse-Inventories", "3.0");
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.13.1");
-        versions.put("PerWorldInventory", "2.0.0");
-        versions.put("ProtocolLib", "4.4.0");
+        versions.put("PerWorldInventory", "2.3.0");
+        versions.put("ProtocolLib", "4.5.0");
         versions.put("TARDISChunkGenerator", "4.1.0");
-        versions.put("Towny", "0.91");
-        versions.put("WorldBorder", "1.8.1");
+        versions.put("Towny", "0.93");
+        versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
     }
 
