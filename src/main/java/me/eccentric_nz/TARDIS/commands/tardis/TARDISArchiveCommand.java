@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -187,7 +188,7 @@ class TARDISArchiveCommand {
                             sx = gsl[0];
                             sz = gsl[2];
                         }
-                        int sy = (current.getPermission().equals("redstone")) ? 65 : 64;
+                        int sy = TARDISConstants.HIGHER.contains(current.getPermission()) ? 65 : 64;
                         ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
                         if (sub.equals("scan")) {
                             TARDISMessage.send(player, "ARCHIVE_SCAN");

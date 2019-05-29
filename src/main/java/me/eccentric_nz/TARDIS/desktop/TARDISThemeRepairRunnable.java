@@ -196,7 +196,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
+            starty = TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
             world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);

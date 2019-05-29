@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -99,7 +100,7 @@ class TARDISLampsCommand {
                 // get dimensions
                 JSONObject dimensions = (JSONObject) obj.get("dimensions");
                 int h = dimensions.getInt("height");
-                starty = (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth") || schm.getPermission().equals("factory")) ? 65 : 64;
+                starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks

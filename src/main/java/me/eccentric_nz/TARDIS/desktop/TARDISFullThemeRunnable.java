@@ -219,7 +219,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
+            starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
             world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
@@ -232,10 +232,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             floor_type = Material.valueOf(floor[0]);
             // get input array
             arr = (JSONArray) obj.get("input");
-            // clear existing lamp blocks
-            HashMap<String, Object> whered = new HashMap<>();
-            whered.put("tardis_id", id);
-            qf.doDelete("lamps", whered);
             // clear existing precious blocks
             HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("tardis_id", id);

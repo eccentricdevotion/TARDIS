@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -89,7 +90,7 @@ public class TARDISUpgradeBlockScanner {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            int starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
+            int starty = TARDISConstants.HIGHER.contains(tud.getPrevious().getPermission()) ? 65 : 64;
             World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             Material wall_type;
             Material floor_type;
