@@ -62,7 +62,7 @@ public class TARDISConsoleLoader {
         // THIRTEENTH designed by Razihel
         CONSOLES.getBY_NAMES().put("THIRTEENTH", new SCHEMATIC("ORANGE_CONCRETE", "thirteenth", "13th Doctor's Console", ConsoleSize.MEDIUM, false, false, false));
         // FACTORY designed by Razihel
-        CONSOLES.getBY_NAMES().put("FACTORY", new SCHEMATIC("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, false, false));
+        CONSOLES.getBY_NAMES().put("FACTORY", new SCHEMATIC("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, true, false));
         CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
         CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("WHITE_TERRACOTTA", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));
