@@ -248,11 +248,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     // Maps still seem to use numeric values
-    private void showShapedRecipe(Player p, String str) {
+    private void showShapedRecipe(Player player, String str) {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
-        p.closeInventory();
-        plugin.getTrackerKeeper().getRecipeView().add(p.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "" + str + " recipe");
+        player.discoverRecipe(recipe.getKey());
+        player.closeInventory();
+        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
         int mapCount = 0;
@@ -302,12 +303,13 @@ public class TARDISRecipeCommands implements CommandExecutor {
         result.setAmount(1);
         result.setItemMeta(im);
         inv.setItem(17, result);
-        p.openInventory(inv);
+        player.openInventory(inv);
     }
 
     // Maps still seem to use numeric values
     private void showShapelessRecipe(Player player, String str) {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
+        player.discoverRecipe(recipe.getKey());
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
