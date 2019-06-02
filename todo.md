@@ -13,6 +13,7 @@
 5. Actually use `TARDISArtronLevels#checkLevel()`
 6. Update documentation...
 7. 13th Doctor's and Factory TARDIS console
+   * Add advanced console and disk storage to schematics
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
