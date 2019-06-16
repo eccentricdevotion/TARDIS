@@ -1,7 +1,7 @@
 # TODO
 
-## Next version `4.1`
-0. Update to Spigot 1.14.1
+## Next version `4.1.0`
+0. Update to Spigot 1.14.2
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
@@ -26,6 +26,7 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
+0. CustomModelData for all TARDIS items
 0. Custom Entity & Item models using Optifine (when they can be applied to named entities)
 1. Rare armour drops
 2. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)

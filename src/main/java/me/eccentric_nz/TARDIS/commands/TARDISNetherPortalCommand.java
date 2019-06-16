@@ -112,7 +112,6 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
             TARDISMessage.send(sender, "O2N_Y");
             return false;
         }
-        // get player direction
         String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
         // get destination coords
         if (overworld) {
