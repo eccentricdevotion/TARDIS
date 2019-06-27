@@ -1,7 +1,7 @@
 # TODO
 
 ## Next version `4.1.0`
-0. Update to Spigot 1.14.2
+0. Update to Spigot 1.14.4
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
@@ -14,6 +14,7 @@
 6. Update documentation...
 7. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
+8. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -27,7 +28,7 @@
 
 ## Resource Pack / TARDISWeepingAngels
 0. CustomModelData for all TARDIS items
-0. Custom Entity & Item models using Optifine (when they can be applied to named entities)
+0. Custom Entity models using Optifine (when they can be applied to named entities)
 1. Rare armour drops
 2. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
 3. Re-skin mobs for Resource pack, and add new mob sounds
