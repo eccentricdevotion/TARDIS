@@ -217,7 +217,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>7.0.0</version>
+            <version>7.0.1</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldGuard.jar</systemPath>
@@ -225,7 +225,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>7.0.0</version>
+            <version>7.0.1</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
