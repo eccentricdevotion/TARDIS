@@ -422,10 +422,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     qf.insertSyncControl(id, 14, storage, 0);
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
-                    type = wall_type;
+                    data = wall_type.createBlockData();
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
-                    type = floor_type;
+                    data = floor_type.createBlockData();
                 }
                 if (type.equals(Material.SPAWNER)) { // scanner button
                     /*
@@ -542,7 +542,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.OAK_BUTTON)) {
                     /*
-                     * wood button will be coverted to the correct id by
+                     * wood button will be converted to the correct id by
                      * setBlock(), but remember it for the Artron Energy
                      * Capacitor.
                      */
