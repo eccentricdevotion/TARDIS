@@ -93,6 +93,7 @@ public class TARDISCondensablesUpdater {
             list.put("ANDESITE_SLAB", 2);
             list.put("ANDESITE_STAIRS", 2);
             list.put("ANDESITE_WALL", 2);
+            list.put("BAMBOO", 2);
             list.put("BARREL", 16);
             list.put("BELL", 100);
             list.put("BIRCH_SIGN", 2);
@@ -101,8 +102,11 @@ public class TARDISCondensablesUpdater {
             list.put("BLAST_FURNACE", 110);
             list.put("BLUE_DYE", 10);
             list.put("BRICK_WALL", 2);
+            list.put("CAMPFIRE", 24);
             list.put("CARTOGRAPHY_TABLE", 28);
+            list.put("COMPOSTER", 10);
             list.put("CORNFLOWER", 2);
+            list.put("CROSSBOW", 60);
             list.put("CUT_RED_SANDSTONE_SLAB", 3);
             list.put("CUT_SANDSTONE_SLAB", 3);
             list.put("DARK_OAK_SIGN", 2);
@@ -112,6 +116,7 @@ public class TARDISCondensablesUpdater {
             list.put("DIORITE_WALL", 2);
             list.put("END_STONE_BRICK_SLAB", 21);
             list.put("END_STONE_BRICK_WALL", 21);
+            list.put("FLETCHING_TABLE", 12);
             list.put("GRANITE_SLAB", 2);
             list.put("GRANITE_STAIRS", 2);
             list.put("GRANITE_WALL", 2);
@@ -144,6 +149,7 @@ public class TARDISCondensablesUpdater {
             list.put("RED_NETHER_BRICK_WALL", 12);
             list.put("RED_SANDSTONE_WALL", 2);
             list.put("SANDSTONE_WALL", 2);
+            list.put("SCAFFOLDING", 18);
             list.put("SMITHING_TABLE", 52);
             list.put("SMOKER", 18);
             list.put("SMOOTH_QUARTZ_SLAB", 60);
@@ -158,6 +164,7 @@ public class TARDISCondensablesUpdater {
             list.put("STONE_BRICK_WALL", 2);
             list.put("STONE_STAIRS", 23);
             list.put("STONECUTTER", 112);
+            list.put("SUSPICIOUS_STEW", 8);
             list.put("SWEET_BERRIES", 10);
             list.put("WHITE_DYE", 10);
             list.put("WITHER_ROSE", 2);
