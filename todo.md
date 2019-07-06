@@ -27,11 +27,12 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
-0. CustomModelData for all TARDIS items
-0. Custom Entity models using Optifine (when they can be applied to named entities)
-1. Rare armour drops
-2. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
-3. Re-skin mobs for Resource pack, and add new mob sounds
+1. CustomModelData for all TARDIS items
+2. CustomModelData for Weeping Angel wings?
+3. Custom Entity models using Optifine (when they can be applied to named entities)
+4. Rare armour drops
+5. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
+6. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
    * Illagers -> Red-eyed Ood - _started_
@@ -45,9 +46,9 @@
    * Stray -> Scarecrows
    * Judoon
    * Clockwork Droid
-4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
-5. Rename resource pack to 'TARDIS-Optifine'?
-6. Custom time rotor model
+7. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+8. Rename resource pack to 'TARDIS-Optifine'?
+9. Custom time rotor model
 
 ## Minecraft API if ever available
 1. Recreate everything with the new API :)

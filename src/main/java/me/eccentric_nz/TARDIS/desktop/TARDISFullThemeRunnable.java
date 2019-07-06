@@ -247,8 +247,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (tud.getSchematic().getPermission().equals("twelfth") || tud.getPrevious().getPermission().equals("twelfth")) {
                 loc = chunk.getBlock(9, 69, 3).getLocation();
             } else {
-                loc = chunk.getBlock(8, 69, 4).getLocation();
+                int floorLevel = tud.getSchematic().getPermission().equals("bigger") ? 70 : 69;
+                loc = chunk.getBlock(8, floorLevel, 4).getLocation();
             }
+            loc.getBlock().getRelative(BlockFace.DOWN).setType(Material.BARRIER);
             // get players in TARDIS
             HashMap<String, Object> wherev = new HashMap<>();
             wherev.put("tardis_id", id);
