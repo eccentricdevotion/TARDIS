@@ -302,7 +302,7 @@ public class TARDISGeneralInstanceKeeper {
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
             Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             therechargers.forEach((s) -> {
-                World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + s.toLowerCase(Locale.ENGLISH) + ".world"));
+                World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + s + ".world"));
                 int x = plugin.getConfig().getInt("rechargers." + s + ".x");
                 int y = plugin.getConfig().getInt("rechargers." + s + ".y");
                 int z = plugin.getConfig().getInt("rechargers." + s + ".z");
