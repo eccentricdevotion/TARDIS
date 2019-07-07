@@ -1,6 +1,9 @@
 ---
 name: Bug report
 about: Report a TARDIS error
+title: ''
+labels: bug
+assignees: eccentricdevotion
 
 ---
 
@@ -18,4 +21,4 @@ Steps to reproduce the behaviour:
 If applicable, add screenshots to help explain your problem.
 
 **Log files**
-If applicable, paste your server log on a website like pastebin.com, and post a link here.
+If applicable, paste your server log (_showing the whole server startup to when the error occurs_) on a website like pastebin.com, and post a link here.
