@@ -365,8 +365,8 @@ public class TARDIS extends JavaPlugin {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
                     ver = new Version(semi[0]);
-                } else if (plg.equals("OpenTerrainGenerator") && preSplit.contains(" ")) {
-                    // eg 1.12.2 v6
+                } else if (plg.equals("Towny") && preSplit.contains(" ")) {
+                    // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
                     ver = new Version(space[0]);
                 } else {
