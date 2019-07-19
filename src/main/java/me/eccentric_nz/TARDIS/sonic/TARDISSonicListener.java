@@ -396,7 +396,7 @@ public class TARDISSonicListener implements Listener {
                             }
                         }
                     }
-                    if (player.hasPermission("tardis.sonic.arrow") && lore.contains("Pickup Arrows Upgrade")) {
+                    if (player.hasPermission("tardis.sonic.arrow") && lore != null && lore.contains("Pickup Arrows Upgrade")) {
                         playSonicSound(player, now, 600L, "sonic_short");
                         // scan area around block for an arrow
                         List<Entity> nearbyEntites = new ArrayList(b.getWorld().getNearbyEntities(b.getLocation(), 2, 2, 2));
