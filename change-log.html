@@ -78,47 +78,14 @@
             <li>Fixed falling into the void when changing desktop theme to the BIGGER console</li>
             <li>Fixed a NPE in constructs converter</li>
         </ul>
-        <h3>TARDIS v3.8.2</h3>
-        <h4>Changes</h4>
-        <ul>
-            <li>The plugin now requires TARDISChunkGenerator v2.5.5 (see Additional Files)</li>
-            <li>The required build of Multiverse-Inventories is now v2.5.0-SNAPSHOT-b431 or higher</li>
-            <li>Spawned abandoned TARDISes are now listed as being owned by TARDIS Admin</li>
-            <li>You can no longer use the TARDIS back door in junk and siege mode</li>
-            <li>Removed the Villager Career getting/setting methods from TARDISChunkGenerator (they&rsquo;re now included in Bukkit API)</li>
-        </ul>
-        <h4>Additions</h4>
-        <ul>
-            <li>Added a config option for <code>preferences.no_coords</code>
-                <ul>
-                    <li>Defaults to <code>false</code> &mdash; when set to <code>true</code>, will not display the random destination coordinates in chat when the random button is pressed</li>
-                </ul>
-            </li>
-            <li>Added a <code>false_nether</code> key to <em>planets.ym</em>l</li>
-            <li>Added support for LockettePro</li>
-            <li>Added the vault chest to the <code>/tardis update</code> lister</li>
-            <li>Added Stained Clay (Terracotta) to the blocks that can be smelted in the Smelter room</li>
-        </ul>
-        <h4>Bug fixes</h4>
-        <ul>
-            <li>Fixed the Lazarus Device pressure plate location not being updated when the room was grown a second or more times</li>
-            <li>Fixed &ldquo;false&rdquo; NETHER world random location finding</li>
-            <li>Fixed a bug in the Multiverse-Inventories version check</li>
-            <li>Fixed a NullPointerException using the Admin sonic when TARDIS travellers are offline</li>
-            <li>Fixed spawned abandoned TARDISes throwing a NullPointerException because they have no associated UUID</li>
-            <li>Fixed setting the TARDIS exterior direction when spawning abandoned TARDISes</li>
-            <li>Fixed deleting abandoned TARDISes</li>
-            <li>Fixed an error with ProtocolLib sending JSON chat (we now use our own TARDISChunkGenerator method instead)</li>
-            <li>Resolved a class cast exception in Chameleon Arch inventory restoration</li>
-        </ul>
         <h3>TARDIS v4.0.6</h3>
         <h4>Additions</h4>
         <ul>
             <li>Added API to get door open/closed status for Dynmap-TARDIS</li>
             <li>Now rotating Directional blocks in Chameleon Constructs for MCDW Models</li>
             <li>Implemented a TARDIS Chameleon item frame &mdash; /tardis update frame &mdash; will show the associated Chameleon preset block in the item frame</li>
-            <h4>Changes</h4>
         </ul>
+        <h4>Changes</h4>
         <ul>
             <li>Updated Multiverse dependency to v3.0</li>
         </ul>
