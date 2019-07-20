@@ -32,6 +32,52 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v4.1.0</h3>
+        <p>Updated to Spigot 1.14.4-R0.1</p>
+        <p>Requires TARDISChunkGenerator 4.1.0 (included in ZIP file)</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added new biomes to Biome disks</li>
+            <li>Added new items and blocks to condenser</li>
+            <li>Added world management features to support Whovian worlds. Multiverse (or other world managers) are no longer required (but still compatible). Please let TARDIS manage its own worlds!</li>
+            <li>Added a <code>/tardisworld [load|unload] [world] [type] [environment][generator]</code>command</li>
+            <li>Added a command to change the gamemode of a world <code>/tardisworld gm [gamemode]</code></li>
+            <li>Added a command to rename a world <code>/tardisworld rename [old name] [new name]</code></li>
+            <li>Added a <code>/tardisteleport [world]</code> command</li>
+            <li>Added a <code>/tardisgamemode [gamemode] [player]</code> command</li>
+            <li>Added a <code>tardis.gamemode.bypass</code> permission to bypass gamemode switching when changing worlds</li>
+            <li>Added a Pickup Arrows sonic upgrade</li>
+            <li>Added Custard Cream recipe and a Custard Cream dispenser</li>
+            <li>Added the Berry Bush to Sonic replanter</li>
+            <li>Added some fireworks to repeaters when there is a malfunction</li>
+            <li>Added the 13th Doctor&rsquo;s console</li>
+            <li>Added the Factory console</li>
+        </ul>
+        <h4>Changes</h4>
+        <p>Lots of code changes made to support Spigot 1.14.x!</p>
+        <ul>
+            <li>Updated all item and block names to 1.14.x</li>
+            <li>Tamed cats can be farmed, but not wild ocelots</li>
+            <li>MushroomCow variants are now saved when mob farming and ejecting</li>
+            <li>Updated to the latest WorldGuard / WorldEdit APIs</li>
+            <li>The plugin no longer relies on the TerrainControl / OpenTerrainGenerator plugin to generate custom Whovian worlds (Skaro, Gallifrey, Siluria)</li>
+            <li>Moved all planet / world configuration to <em>planets.yml</em></li>
+            <li>Removed the WorldEdit version check so servers can use FAWE instead</li>
+            <li>Now checking for Handles when changing the Desktop Theme (and cancelling if he is found so he can be removed)</li>
+            <li>There is now increased damage to circuits if a malfunction occurs (and difficulty is set to hard)</li>
+            <li>Increased the size of the Desktop Theme GUI so it will fit in more custom consoles</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed random location repeater SQL queries for servers using MySQL</li>
+            <li>Fixed the AQUARIUM schematic with missing repeater</li>
+            <li>Fixed problems with the <code>/tardissay</code> command</li>
+            <li>Fixed doing TARDIS achievements even if they are disabled in the config</li>
+            <li>Make sure a TARDIS&rsquo; home location isn&rsquo;t in another Time Lord&rsquo;s home location</li>
+            <li>Fixed the Desktop theme not using a player&rsquo;s wall and floor block preferences</li>
+            <li>Fixed falling into the void when changing desktop theme to the BIGGER console</li>
+            <li>Fixed a NPE in constructs converter</li>
+        </ul>
         <h3>TARDIS v3.8.2</h3>
         <h4>Changes</h4>
         <ul>
@@ -39,7 +85,7 @@
             <li>The required build of Multiverse-Inventories is now v2.5.0-SNAPSHOT-b431 or higher</li>
             <li>Spawned abandoned TARDISes are now listed as being owned by TARDIS Admin</li>
             <li>You can no longer use the TARDIS back door in junk and siege mode</li>
-            <li>Removed the Villager Career getting/setting methods from TARDISChunkGenerator (they're now included in Bukkit API)</li>
+            <li>Removed the Villager Career getting/setting methods from TARDISChunkGenerator (they&rsquo;re now included in Bukkit API)</li>
         </ul>
         <h4>Additions</h4>
         <ul>
@@ -57,6 +103,219 @@
         <ul>
             <li>Fixed the Lazarus Device pressure plate location not being updated when the room was grown a second or more times</li>
             <li>Fixed &ldquo;false&rdquo; NETHER world random location finding</li>
+            <li>Fixed a bug in the Multiverse-Inventories version check</li>
+            <li>Fixed a NullPointerException using the Admin sonic when TARDIS travellers are offline</li>
+            <li>Fixed spawned abandoned TARDISes throwing a NullPointerException because they have no associated UUID</li>
+            <li>Fixed setting the TARDIS exterior direction when spawning abandoned TARDISes</li>
+            <li>Fixed deleting abandoned TARDISes</li>
+            <li>Fixed an error with ProtocolLib sending JSON chat (we now use our own TARDISChunkGenerator method instead)</li>
+            <li>Resolved a class cast exception in Chameleon Arch inventory restoration</li>
+        </ul>
+        <h3>TARDIS v4.0.6</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added API to get door open/closed status for Dynmap-TARDIS</li>
+            <li>Now rotating Directional blocks in Chameleon Constructs for MCDW Models</li>
+            <li>Implemented a TARDIS Chameleon item frame &mdash; /tardis update frame &mdash; will show the associated Chameleon preset block in the item frame</li>
+            <h4>Changes</h4>
+        </ul>
+        <ul>
+            <li>Updated Multiverse dependency to v3.0</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed the `open_door_policy` so it actually works</li>
+            <li>Fixed Junk TARDIS not being created properly</li>
+            <li>Fixed opening keyboard sign GUI</li>
+            <li>Fixed TOPSYTUVEY and JAIL presets popping off doors</li>
+            <li>Fixed door direction in REDSTONE console</li>
+            <li>Fixed trapdoor direction on lamp post preset</li>
+            <li>Fixed claiming an abandoned TARDIS</li>
+            <li>Added a random UUID for spawned abandoned TARDISes to fix some issues</li>
+            <li>Fixed Multiverse world aliases</li>
+            <li>Added some checks to/for TARDIS_Zero_Room so falling into the void works correctly according to the TARDIS feature</li>
+        </ul>
+        <h3>TARDIS v4.0.5</h3>
+        <p>Requires TARDISChunkGenerator v4.0.5 &mdash; included in the zip file</p>
+        <p>If using WorldGuard 7 you need build #1755 or higher</p>
+        <p>If using WorldEdit 7 you need build #3930 or higher</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added some missing entities to the TARDIS scanner feature</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>No longer runs on CraftBukkit/Spigot 1.13.1 &mdash; update...</li>
+            <li>Updated to latest WorldGuard/WorldEdit API changes</li>
+            <li>Clarified usage of most /handles commands</li>
+            <li>The plugin now ignores underwater plants when finding submarine location</li>
+            <li>The plugin now checks plugin protection for all sonic-able blocks</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Replaced a missed block ID with its proper BlockData value</li>
+            <li>Fixed a bug where Banner JSON could potentially be null + banner base colour is now set by block type</li>
+            <li>Fixed being able to sonic doors and other blocks protected by the Towny plugin</li>
+            <li>Fixed the TORCH chameleon preset</li>
+            <li>Fixed a bug where villagers lost their attributes when ejecting them</li>
+            <li>Fixed a bug with handles commands when used with Paper</li>
+            <li>Fixed the ZERO room location not being added to the database</li>
+        </ul>
+        <h3>TARDIS v4.0.4</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added the Thirteenth Doctor&rsquo;s (Jodie Whittiaker) Sonic</li>
+            <li>Added occupy to the /tardisbind command</li>
+            <li>Added a /tardis construct asymmetric command</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Changed the TARDIS police telephone block from QUARTZ_PILLAR to OBSERVER &mdash; you&rsquo;ll need to update the TARDIS-MCP resource pack</li>
+            <li>The TARDIS is now set to hidden if the world the TARDIS is currently in no longer exists</li>
+            <li>Old Chameleon Construct data is now converted to the new BlockData format</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Re-enabled the custom Chameleon preset</li>
+            <li>Fixed not being able to craft the MASTER seed block</li>
+            <li>Fixed the ELEVENTH console failing to build when the seed block is clicked</li>
+            <li>Removed a duplicate key in TARDIS condensable list</li>
+            <li>Fixed the blocks table erroring when writing data to the time field</li>
+            <li>Fixed fence blocks and other problems in Swamp preset</li>
+            <li>Fixed asymmetric Chameleon presets and bed directions</li>
+            <li>Fixed Weeping Angel Chameleon preset head direction</li>
+            <li>Fixed a bug writing "Current location" to preset field in tardis table</li>
+            <li>Fixed an IllegalArgumentException when trying to get Chameleon preset</li>
+            <li>Fixed a bug with the Handles sound effects not playing when he is clicked</li>
+        </ul>
+        <h3>TARDIS v4.0.3</h3>
+        <p>Requires TARDISChunkGenerator 4.0.3 and Spigot 1.13.1-R0.1-SNAPSHOT</p>
+        <h4>Changes</h4>
+        <ul>
+            <li>Updated for CraftBukkit/Spigot 1.13.1</li>
+            <li>The &lsquo;back&rsquo; destination is now always set when dematerialising (instead of just for /tardis comehere and the Stattenheim Remote)</li>
+            <li>You can no longer land on the end portal in The End when using the Destination Terminal GUI</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed an ArrayIndexOutOfBoundsExceptionin TARDISRecordingTask</li>
+            <li>Fixed a bug with Chameleon presets not loading properly from Save Sign GUI</li>
+            <li>Fixed BEDS not being set properly in Chameleon presets</li>
+            <li>Fixed the wall and floor block from the TARDIS seed not being set correctly on TARDIS creation</li>
+            <li>Fixed a NPE loading protected blocks from the database</li>
+            <li>Fixed mob farming not working (you&rsquo;ll need to regrow the farm room if you have an existing one that was created in 1.13)</li>
+            <li>Fixed the renderer room not working (you&rsquo;ll need to regrow the room if you have an existing one that was created in 1.13)</li>
+            <li>Fixed the greenhouse room losing crops and levers, and missing sugar cane (probably best to grow a new one of these too)</li>
+            <li>Fixed Chamelon constructs and the stained glass cycle when dematerialising</li>
+            <li>Prevented some items dropping when materialising</li>
+            <li>Sonic Screwdriver upgrades work again</li>
+            <li>Fixed the Redstone upgraded Sonic not turning on redstone lamps</li>
+            <li>Fixed the Admin Sonic on TARDIS doors</li>
+            <li>Added two missing room permissions &mdash; tardis.room.aquarium and tardis.room.shell</li>
+            <li>Fixed the TARDIS exterior lamp not being lit</li>
+            <li>Fixed the /tardisrecipe cell command</li>
+            <li>Fixed players still being killed when falling into the void in the Time Vortex world and preferences.vortex_fall is set to teleport</li>
+            <li>Fixed TARDIS farmed Villager trades being overwritten when their career is set</li>
+            <li>Fixed Villager careers being randomly set for their profession e.g. librarians sometimes becoming cartographers</li>
+            <li>Fixed case sensitive getWorld() method in TARDISMultiverseHelper</li>
+            <li>Fixed TARDIS door knocking throwing an ArrayIndexOutOfBoundsException when the TARDIS key is AIR</li>
+        </ul>
+        <h3>TARDIS v4.0.2</h3>
+        <p>Requires TARDISChunkGenerator v4.0.2</p>
+        <h4>Changes</h4>
+        <ul>
+            <li>Custom room schematics are now disabled if they contain bogus data &mdash; old custom rooms will need their schematics updated</li>
+            <li>The TARDIS Schematic Wand is now a TARDIS recipe (you can edit the recipe result and therefore the tool it uses in recipes.yml)</li>
+            <li>The TARDIS cave finder command (/tardistravel cave) uses a new method to find caves</li>
+            <li>Updated to the latest WorldGuard v7.0.0 API changes</li>
+            <li>Bow Tie and Jelly Baby recipe variants are now grouped together</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Updated default Disk Storage inventory serialization so that the TARDIS Disk Storage GUI displays correctly</li>
+            <li>Fixed an error opening the Area Disk storage when there are no defined TARDIS areas</li>
+            <li>Fixed TARDIS Biome Reader recipe</li>
+            <li>Fixed the cave finder timing out and crashing the server due to a new type of "cave air" found in 1.13</li>
+            <li>Fixed a bug where the Rift Circuit &amp; Manipulator recipes didn&rsquo;t get added properly</li>
+            <li>Fixed the default config being cleared on first run</li>
+            <li>Fixed a typo in default config that led to two options for the default TARDIS lamp block</li>
+            <li>Fixed a bug where using the /tardisadmin command to set Artron values could overwrite the config file instead of artron.yml</li>
+        </ul>
+        <h3>TARDIS v4.0.1</h3>
+        <p>Requires TARDISChunkGenerator v4.0.1</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Now includes a world loader &mdash; if a multi-world plugin is not installed on the server, TARDIS will load any worlds found in its config</li>
+            <li>Added a Paper Bag to hold Jelly Babies &mdash; <a href="https://github.com/eccentricdevotion/TARDIS/issues/74" target="_blank">https://github.com/eccentricdevotion/TARDIS/issues/74</a></li>
+            <li>/tardisrecipe paper-bag</li>
+            <li>SHIFT-click the bag in inventory to store up to 4 stacks of Jelly Babies in it</li>
+            <li>RIGHT-click the bag in inventory to get a random Jelly Baby out of the bag</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            Updated WorldGuard and WorldEdit dependencies to v7.0.0
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed data conversion errors when using MySQL database or updating from an early version of the plugin</li>
+            <li>Fixed Trapped Chests not being sorted correctly with the Sonic Screwdriver</li>
+        </ul>
+        <h3>TARDIS v4.0.0</h3>
+        <p>For Spigot 1.13</p>
+        <p>This release is not recommended for production servers &mdash; use at your own risk!</p>
+        <p>Initial update to 1.13. While most TARDIS functions are working, we are still waiting for some dependent plugins to update (LibsDisguises, WorldGuard, TerrainControl/OpenTerrainGenerator etc). There may also be changes to the Spigot API, so thorough testing is impossible at this stage...</p>
+        <h3>TARDIS v3.8.3</h3>
+        <p>For Spigot 1.12.2</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added Handles &mdash; <a href="https://dev.bukkit.org/projects/tardis/issues/1549" target="_blank">https://dev.bukkit.org/projects/tardis/issues/1549</a></li>
+            <li>Add an Artron energy event to the TARDIS API</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Use Essentials nickname on sign if available</li>
+            <li>Made in-game command help better (esp. for `/tardisadmin`)</li>
+            <li>Return blocks to player if they close the Chameleon Constructor without saving the construct</li>
+            <li>Disable abandoned TARDISes if `create_worlds` is true</li>
+            <li>Update to Terrain Control 2.9.0-SNAPSHOT</li>
+            <li>If Project Rassilon is enabled and player regenerates in siege mode, then transfer Time Lord energy to TARDIS</li>
+            <li>You can no longer SHIFT-click to exit if using the INVISIBLE preset</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Reduced poor timings caused by TARDIS Hum lambda</li>
+            <li>Reduced poor timings caused by explosion listener</li>
+            <li>Fixed ArrayIndexOutOfBoundsException in /tadmin delete [player] command</li>
+            <li>Fixed broken /tardisadmin list command</li>
+            <li>Fixed broken /tardisrecipe command</li>
+            <li>Don&rsquo;t allow hiding if the TARDIS is dispersed</li>
+            <li>Don&rsquo;t set a cooldown unless actually doing a rebuild</li>
+            <li>Fixed "How do I make a TARDIS"</li>
+            <li>Apply Isomorphic controls to all controls...</li>
+            <li>NamespacedKeys must be lower case</li>
+        </ul>
+        <h3>TARDIS v3.8.2</h3>
+        <h4>Changes</h4>
+        <ul>
+            <li>The plugin now requires TARDISChunkGenerator v2.5.5</li>
+            <li>The required build of Multiverse-Inventories is now v2.5.0-SNAPSHOT-b431 or higher</li>
+            <li>Spawned abandoned TARDISes as now listed as being owned by TARDIS Admin</li>
+            <li>You can no longer use the TARDIS back door in junk and siege mode</li>
+            <li>Removed the Villager Career getting/setting methods from TARDISChunkGenerator (they&rsquo;re now included in Bukkit API)</li>
+        </ul>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a config option for preferences.no_coords</li>
+            <li>Defaults to false &mdash; when set to true, will not display the random destination coordinates in chat when the random button is pressed</li>
+            <li>Added a false_nether key to planets.yml</li>
+            <li>Added support for LockettePro</li>
+            <li>Added the vault chest to the /tardis update lister</li>
+            <li>Added Stained Clay (Terracotta) to the blocks than can be smelted in the Smelter room</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed the Lazarus Device pressure plate location not being updated when the room was grown a second or more times</li>
+            <li>Fixed "false" NETHER world random location finding</li>
             <li>Fixed a bug in the Multiverse-Inventories version check</li>
             <li>Fixed a NullPointerException using the Admin sonic when TARDIS travellers are offline</li>
             <li>Fixed spawned abandoned TARDISes throwing a NullPointerException because they have no associated UUID</li>
