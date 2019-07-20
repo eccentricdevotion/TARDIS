@@ -104,8 +104,7 @@
         </ul>
         <h3>TARDIS v4.0.5</h3>
         <p>Requires TARDISChunkGenerator v4.0.5 &mdash; included in the zip file</p>
-        <p>If using WorldGuard 7 you need build #1755 or higher</p>
-        <p>If using WorldEdit 7 you need build #3930 or higher</p>
+        <p>If using WorldGuard 7 you need build #1755 or higher. If using WorldEdit 7 you need build #3930 or higher</p>
         <h4>Additions</h4>
         <ul>
             <li>Added some missing entities to the TARDIS scanner feature</li>
@@ -152,7 +151,7 @@
             <li>Fixed asymmetric Chameleon presets and bed directions</li>
             <li>Fixed Weeping Angel Chameleon preset head direction</li>
             <li>Fixed a bug writing "Current location" to preset field in tardis table</li>
-            <li>Fixed an IllegalArgumentException when trying to get Chameleon preset</li>
+            <li>Fixed an <code>IllegalArgumentException</code> when trying to get Chameleon preset</li>
             <li>Fixed a bug with the Handles sound effects not playing when he is clicked</li>
         </ul>
         <h3>TARDIS v4.0.3</h3>
@@ -160,12 +159,12 @@
         <h4>Changes</h4>
         <ul>
             <li>Updated for CraftBukkit/Spigot 1.13.1</li>
-            <li>The &lsquo;back&rsquo; destination is now always set when dematerialising (instead of just for /tardis comehere and the Stattenheim Remote)</li>
+            <li>The &lsquo;back&rsquo; destination is now always set when dematerialising (instead of just for <code>/tardis comehere</code> and the Stattenheim Remote)</li>
             <li>You can no longer land on the end portal in The End when using the Destination Terminal GUI</li>
         </ul>
         <h4>Bug fixes</h4>
         <ul>
-            <li>Fixed an ArrayIndexOutOfBoundsExceptionin TARDISRecordingTask</li>
+            <li>Fixed an <code>ArrayIndexOutOfBoundsException</code> in TARDISRecordingTask</li>
             <li>Fixed a bug with Chameleon presets not loading properly from Save Sign GUI</li>
             <li>Fixed BEDS not being set properly in Chameleon presets</li>
             <li>Fixed the wall and floor block from the TARDIS seed not being set correctly on TARDIS creation</li>
@@ -178,14 +177,14 @@
             <li>Sonic Screwdriver upgrades work again</li>
             <li>Fixed the Redstone upgraded Sonic not turning on redstone lamps</li>
             <li>Fixed the Admin Sonic on TARDIS doors</li>
-            <li>Added two missing room permissions &mdash; tardis.room.aquarium and tardis.room.shell</li>
+            <li>Added two missing room permissions &mdash; <code>tardis.room.aquarium</code> and <code>tardis.room.shell</code></li>
             <li>Fixed the TARDIS exterior lamp not being lit</li>
             <li>Fixed the /tardisrecipe cell command</li>
-            <li>Fixed players still being killed when falling into the void in the Time Vortex world and preferences.vortex_fall is set to teleport</li>
+            <li>Fixed players still being killed when falling into the void in the Time Vortex world and <code>preferences.vortex_fall</code> is set to teleport</li>
             <li>Fixed TARDIS farmed Villager trades being overwritten when their career is set</li>
             <li>Fixed Villager careers being randomly set for their profession e.g. librarians sometimes becoming cartographers</li>
             <li>Fixed case sensitive getWorld() method in TARDISMultiverseHelper</li>
-            <li>Fixed TARDIS door knocking throwing an ArrayIndexOutOfBoundsException when the TARDIS key is AIR</li>
+            <li>Fixed TARDIS door knocking throwing an <code>ArrayIndexOutOfBoundsException</code> when the TARDIS key is AIR</li>
         </ul>
         <h3>TARDIS v4.0.2</h3>
         <p>Requires TARDISChunkGenerator v4.0.2</p>
@@ -229,7 +228,7 @@
         </ul>
         <h3>TARDIS v4.0.0</h3>
         <p>For Spigot 1.13</p>
-        <p>This release is not recommended for production servers &mdash; use at your own risk!</p>
+        <p style="color:red;">This release is not recommended for production servers &mdash; use at your own risk!</p>
         <p>Initial update to 1.13. While most TARDIS functions are working, we are still waiting for some dependent plugins to update (LibsDisguises, WorldGuard, TerrainControl/OpenTerrainGenerator etc). There may also be changes to the Spigot API, so thorough testing is impossible at this stage...</p>
         <h3>TARDIS v3.8.3</h3>
         <p>For Spigot 1.12.2</p>
@@ -252,7 +251,7 @@
         <ul>
             <li>Reduced poor timings caused by TARDIS Hum lambda</li>
             <li>Reduced poor timings caused by explosion listener</li>
-            <li>Fixed ArrayIndexOutOfBoundsException in <code>/tadmin delete [player] command</code></li>
+            <li>Fixed <code>ArrayIndexOutOfBoundsException</code> in <code>/tadmin delete [player] command</code></li>
             <li>Fixed broken <code>/tardisadmin list command</code></li>
             <li>Fixed broken <code>/tardisrecipe command</code></li>
             <li>Don&rsquo;t allow hiding if the TARDIS is dispersed</li>
@@ -272,7 +271,7 @@
         </ul>
         <h4>Additions</h4>
         <ul>
-            <li>Added a config option for preferences.no_coords</li>
+            <li>Added a config option for <code>preferences.no_coords</code></li>
             <li>Defaults to false &mdash; when set to true, will not display the random destination coordinates in chat when the random button is pressed</li>
             <li>Added a false_nether key to planets.yml</li>
             <li>Added support for LockettePro</li>
@@ -284,8 +283,8 @@
             <li>Fixed the Lazarus Device pressure plate location not being updated when the room was grown a second or more times</li>
             <li>Fixed "false" NETHER world random location finding</li>
             <li>Fixed a bug in the Multiverse-Inventories version check</li>
-            <li>Fixed a NullPointerException using the Admin sonic when TARDIS travellers are offline</li>
-            <li>Fixed spawned abandoned TARDISes throwing a NullPointerException because they have no associated UUID</li>
+            <li>Fixed a <code>NullPointerException</code> using the Admin sonic when TARDIS travellers are offline</li>
+            <li>Fixed spawned abandoned TARDISes throwing a <code>NullPointerException</code> because they have no associated UUID</li>
             <li>Fixed setting the TARDIS exterior direction when spawning abandoned TARDISes</li>
             <li>Fixed deleting abandoned TARDISes</li>
             <li>Fixed an error with ProtocolLib sending JSON chat (we now use our own TARDISChunkGenerator method instead)</li>
@@ -452,7 +451,7 @@
         <ul>
             <li>Fixed blocks required for IGLOO room when <code>growth.rooms_require_blocks</code> is <code>true</code></li>
             <li>Made sure Junk Mode is ON before allowing it to be OFF (and vice versa)</li>
-            <li>Fixed a NullPointerException related to the perception filter  when disabling the plugin</li>
+            <li>Fixed a <code>NullPointerException</code> related to the perception filter  when disabling the plugin</li>
             <li>Added more world checks to cave finder top prevent server crashes when running the <code>/tardistravel cave</code> command in empty &ldquo;void&rdquo; worlds</li>
             <li>Fixed the ENDER console entry in TARDIS Information System</li>
         </ul>
