@@ -114,6 +114,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.BROWN_TERRACOTTA, Material.BROWN_STAINED_GLASS);
         stain.put(Material.BROWN_WALL_BANNER, Material.BROWN_STAINED_GLASS);
         stain.put(Material.BROWN_WOOL, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.BUBBLE_COLUMN, Material.LIGHT_BLUE_STAINED_GLASS);
         stain.put(Material.BUBBLE_CORAL, Material.MAGENTA_STAINED_GLASS);
         stain.put(Material.BUBBLE_CORAL_BLOCK, Material.MAGENTA_STAINED_GLASS);
         stain.put(Material.BUBBLE_CORAL_FAN, Material.MAGENTA_STAINED_GLASS);
