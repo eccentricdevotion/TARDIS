@@ -22,7 +22,7 @@
 <div class="wrapper">
     <header>
         <h1>TARDIS</h1>
-        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p>A Spigot / Paper plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
         <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
         <ul>
             <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
@@ -31,12 +31,12 @@
     </header>
     <section>
         <h1>How to use BuildTools</h1>
-        <p>TARDIS is always compiled against the latest version of Bukkit. Bukkit is being constantly updated, and sometimes TARDIS takes advantage of the new features that have been added to the Bukkit API. This means that if you don&rsquo;t keep your server JAR file up-to-date, then TARDIS <em>may not be able to run properly</em>.</p>
-        <p>Spigot has released a tool called BuildTools that allows you to get the latest versions of Spigot and CraftBukkit (as well as their APIs &mdash; but only plugin developers need to worry about those).</p>
+        <p>TARDIS is always compiled against the latest version of Spigot. Spigot is being constantly updated, and sometimes TARDIS takes advantage of the new features that have been added to the Spigot API. This means that if you don&rsquo;t keep your server JAR file up-to-date, then TARDIS <em>may not be able to run properly</em>.</p>
+        <p>Spigot has released a tool called BuildTools that allows you to get the latest version of Spigot (as well as the Spigot API &mdash; but only plugin developers need to worry about that).</p>
         <p>Using BuildTools is a slightly tricky process to setup the first time around, but if you follow the steps below, they will hopefully help you get it right :)</p>
         <p>This guide is for <strong>Windows</strong>, if you use Linux, then you probably already have a good idea how to do this sort of thing &mdash; just follow <a href="http://www.spigotmc.org/threads/bukkit-craftbukkit-spigot-1-8.36598/" target="_blank">Spigot&rsquo;s instructions</a></p>
         <h2>Getting the right tools</h2>
-        <p>To compile Spigot / CraftBukkit you will need three things:</p>
+        <p>To compile Spigot you will need three things:</p>
         <ol>
             <li>The BuildTools JAR &mdash; you can download that here: <a href="https://hub.spigotmc.org/jenkins/job/BuildTools/" target="_blank">https://hub.spigotmc.org/jenkins/job/BuildTools/</a></li>
             <li>The Java Software Development Kit (JDK) &mdash; download from the Oracle wbsite: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a> &mdash; you probably have Java installed already, but you need this version to actually build anything from code</li>
@@ -52,7 +52,7 @@
         <p>You are going to be running BuildTools from the GitHub command line, but before you do that you will need to set up a Java system variable.</p>
         <p>Follow these next steps to do that:</p>
         <ol>
-            <li>Open an Explorer window, right-click <strong>Computer</strong> and choose <strong>Properties</strong> &mdash; this should open the <strong>Control Panel</strong> to <strong>System information</strong>
+            <li>Open an Explorer window, right-click <strong>Computer</strong> and choose <strong>Properties</strong> &mdash; this should open the <strong>Control Panel</strong> to <strong>System information</strong></li>
             <li>On the left hand side click <strong>Advanced system settings</strong></li>
             <li>In the <strong>System properties</strong> window that comes up click <strong>Environment variables...</strong></li>
             <li>In the bottom (<strong>System variables</strong>) section click the <strong>New...</strong> button</li>
@@ -68,7 +68,7 @@
             <li>Now you can start the build process, type <code>java -jar BuildTools.jar</code></li>
             <li>Let the programme do it&rsquo;s thing, it will download everything it needs, and takes about 10 minutes to compile the JARs</li>
         </ol>
-        <p>Once the process is complete, you will find both the Spigot and CraftBukkit JARs waiting for you in the BuildTools folder.</p>
+        <p>Once the process is complete, you will find the Spigot JAR waiting for you in the BuildTools folder.</p>
         <h2>Keeping up-to-date</h2>
         <p>Once you have it all setup, it is easy to keep your server up-to-date &mdash; just redo the steps under the <em>Building the server JARs</em> heading. BuildTools will fetch the latest code changes and produce a new set of server JARs.</p>
     </section>
