@@ -159,7 +159,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Core", "3.0");
         versions.put("Multiverse-Inventories", "3.0");
         versions.put("MultiInv", "3.3.6");
-        versions.put("My_Worlds", "1.13.1");
+        versions.put("My_Worlds", "1.14.4");
         versions.put("PerWorldInventory", "2.3.0");
         versions.put("ProtocolLib", "4.5.0");
         versions.put("TARDISChunkGenerator", "4.1.0");
@@ -369,6 +369,10 @@ public class TARDIS extends JavaPlugin {
                     // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
                     ver = new Version(space[0]);
+                } else if (plg.equals("My_Worlds") && preSplit.contains("-")) {
+                    // eg 1.14.4-v1
+                    String[] dash = split[0].split("-");
+                    ver = new Version(dash[0]);
                 } else {
                     ver = new Version(split[0]);
                 }
