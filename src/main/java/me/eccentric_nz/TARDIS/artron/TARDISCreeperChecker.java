@@ -26,7 +26,7 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * The Doctor's favorite food - jelly babies have been considered a delicacy by the Doctor ever since his second
@@ -37,45 +37,41 @@ import java.util.List;
 public class TARDISCreeperChecker {
 
     private final TARDIS plugin;
+    private final int id;
 
-    public TARDISCreeperChecker(TARDIS plugin) {
+    public TARDISCreeperChecker(TARDIS plugin, int id) {
         this.plugin = plugin;
-    }
-
-    /**
-     * A repeating task that checks if the charged creeper in the TARDIS Artron Energy Capacitor is still there.
-     */
-    public void startCreeperCheck() {
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> checkCreepers(), 600L, 12000L);
+        this.id = id;
     }
 
     /**
      * Checks the creeper is there and spawns in a new one if not.
      */
-    private void checkCreepers() {
-        ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true, 0);
+    public void checkCreeper() {
+        HashMap<String, Object> wheret = new HashMap<>();
+        wheret.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
         if (rs.resultSet()) {
-            List<Tardis> data = rs.getData();
-            for (Tardis t : data) {
-                // only if there is a saved creeper location
-                if (!t.getCreeper().isEmpty()) {
-                    // only if the TARDIS has been initialised
-                    if (t.isTardis_init()) {
-                        World w = TARDISStaticLocationGetters.getWorld(t.getCreeper());
-                        if (w != null) {
-                            Location l = TARDISStaticLocationGetters.getLocationFromDB(t.getCreeper());
-                            plugin.setTardisSpawn(true);
-                            Entity e = w.spawnEntity(l, EntityType.CREEPER);
-                            // if there is a creeper there already get rid of it!
-                            for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
-                                if (k.getType().equals(EntityType.CREEPER)) {
-                                    e.remove();
-                                    break;
-                                }
+            Tardis tardis = rs.getTardis();
+            // only if there is a saved creeper location
+            if (!tardis.getCreeper().isEmpty()) {
+                // only if the TARDIS has been initialised
+                if (tardis.isTardis_init()) {
+                    World w = TARDISStaticLocationGetters.getWorld(tardis.getCreeper());
+                    if (w != null) {
+                        Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                        plugin.setTardisSpawn(true);
+                        Entity e = w.spawnEntity(l.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
+                        // if there is a creeper there already get rid of it!
+                        for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
+                            if (k.getType().equals(EntityType.CREEPER)) {
+                                e.remove();
+                                break;
                             }
-                            Creeper c = (Creeper) e;
-                            c.setPowered(true);
                         }
+                        Creeper c = (Creeper) e;
+                        c.setPowered(true);
+                        c.setRemoveWhenFarAway(false);
                     }
                 }
             }

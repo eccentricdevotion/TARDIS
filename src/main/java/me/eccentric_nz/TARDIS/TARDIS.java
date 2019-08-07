@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
-import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
@@ -251,7 +250,6 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             startZeroHealing();
             startSiegeTicks();
-            new TARDISCreeperChecker(this).startCreeperCheck();
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
                 TARDISSpace alwaysNight = new TARDISSpace(this);
                 if (getConfig().getBoolean("creation.keep_night")) {

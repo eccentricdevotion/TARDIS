@@ -94,18 +94,18 @@ public class TARDISArtronCapacitorListener implements Listener {
         if (block != null) {
             Material blockType = block.getType();
             Action action = event.getAction();
-            if (action == Action.RIGHT_CLICK_BLOCK) {
-                // only proceed if they are clicking a button!
-                if (validBlocks.contains(blockType)) {
-                    // we need to get this block's location and then get the tardis_id from it
-                    String buttonloc = block.getLocation().toString();
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("type", 6);
-                    where.put("location", buttonloc);
-                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                    if (rsc.resultSet()) {
+            // only proceed if they are clicking a button!
+            if (validBlocks.contains(blockType)) {
+                // we need to get this block's location and then get the tardis_id from it
+                String buttonloc = block.getLocation().toString();
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("type", 6);
+                where.put("location", buttonloc);
+                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                if (rsc.resultSet()) {
+                    int id = rsc.getTardis_id();
+                    if (action == Action.RIGHT_CLICK_BLOCK) {
                         // get tardis data
-                        int id = rsc.getTardis_id();
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
@@ -226,6 +226,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         Entity e = w.spawnEntity(cl, EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
+                                        c.setRemoveWhenFarAway(false);
                                         Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
                                         bl.setBlockData(TARDISConstants.GLASS);
                                     }
@@ -332,6 +333,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                             }
                         }
+                    } else if (action == Action.LEFT_CLICK_BLOCK && player.isSneaking()) {
+                        event.setCancelled(true);
+                        // check if the charged creeper in the TARDIS Artron Energy Capacitor is still there
+                        new TARDISCreeperChecker(plugin, id).checkCreeper();
                     }
                 }
             }

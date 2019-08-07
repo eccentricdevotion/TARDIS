@@ -38,7 +38,7 @@ public class ResultSetCreeper {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the doors table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
      *
      * @param plugin   an instance of the main class.
      * @param location the location to check for.
