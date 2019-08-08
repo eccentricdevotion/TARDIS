@@ -188,5 +188,6 @@ conversions:
   condenser_materials: true
   player_prefs_materials: true
   block_materials: true
+  block_wall_signs: true
   custom_preset: true
   constructs: true

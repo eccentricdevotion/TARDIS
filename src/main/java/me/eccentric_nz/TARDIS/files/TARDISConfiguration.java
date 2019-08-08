@@ -78,6 +78,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.condenser_materials", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.block_materials", false);
+        booleanOptions.put("conversions.block_wall_signs", false);
         booleanOptions.put("conversions.constructs", false);
         booleanOptions.put("conversions.custom_preset", false);
         booleanOptions.put("creation.add_perms", true);

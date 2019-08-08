@@ -263,6 +263,9 @@ public class TARDIS extends JavaPlugin {
                 tmic.checkBlockData();
                 new TARDISFarmingConverter(this).update();
             }
+            if (!getConfig().getBoolean("conversions.block_wall_signs")) {
+                new TARDISWallSignConverter(this).convertSignBlocks();
+            }
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();
             bl.loadProtectBlocks();
