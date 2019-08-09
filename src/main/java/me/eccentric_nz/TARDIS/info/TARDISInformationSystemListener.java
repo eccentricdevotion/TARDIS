@@ -56,7 +56,7 @@ public class TARDISInformationSystemListener implements Listener {
         UUID uuid = p.getUniqueId();
         if (plugin.getTrackerKeeper().getInfoMenu().containsKey(uuid)) {
             event.setCancelled(true);
-            String chat = event.getMessage();
+            String chat = ChatColor.stripColor(event.getMessage());
             // always exit if 'e' is pressed
             if (chat.equalsIgnoreCase("E")) {
                 exit(p);
