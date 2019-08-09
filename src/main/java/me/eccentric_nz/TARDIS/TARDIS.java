@@ -357,11 +357,16 @@ public class TARDIS extends JavaPlugin {
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
-                Version ver;
+                Version ver = new Version(split[0]);
                 if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
                     ver = new Version("1");
-                } else if (plg.equals("Factions") && preSplit.endsWith("Beta")) {
-                    ver = new Version(split[0].substring(0, split[0].length() - 4));
+                } else if (plg.equals("Factions")) {
+                    if (preSplit.endsWith("Beta")) {
+                        ver = new Version(split[0].substring(0, split[0].length() - 4));
+                    } else if (check.getDescription().getMain().contains("SavageFactions")) {
+                        ver = new Version(split[0]);
+                        minver = new Version("1.6.9.5");
+                    }
                 } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
@@ -370,12 +375,6 @@ public class TARDIS extends JavaPlugin {
                     // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
                     ver = new Version(space[0]);
-                } else if (plg.equals("My_Worlds") && preSplit.contains("-")) {
-                    // eg 1.14.4-v1
-                    String[] dash = split[0].split("-");
-                    ver = new Version(dash[0]);
-                } else {
-                    ver = new Version(split[0]);
                 }
                 return (ver.compareTo(minver) >= 0);
             } catch (IllegalArgumentException e) {
