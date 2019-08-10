@@ -16,38 +16,60 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import java.util.HashMap;
+
 /**
  * @author eccentric_nz
  */
 public enum MAP {
 
-    ADMIN("Server Admin Circuit"),
-    ARS("TARDIS ARS Circuit"),
-    BIO("Bio-scanner Circuit"),
-    CHAMELEON("TARDIS Chameleon Circuit"),
-    DIAMOND("Diamond Disruptor Circuit"),
-    EMERALD("Emerald Environment Circuit"),
-    INPUT("TARDIS Input Circuit"),
-    INVISIBILITY("TARDIS Invisibility Circuit"),
-    LOCATOR("TARDIS Locator Circuit"),
-    MATERIALISATION("TARDIS Materialisation Circuit"),
-    MEMORY("TARDIS Memory Circuit"),
-    PAINTER("Painter Circuit"),
-    PERCEPTION("Perception Circuit"),
-    RANDOM("TARDIS Randomiser Circuit"),
-    REDSTONE("Redstone Activator Circuit"),
-    SCANNER("TARDIS Scanner Circuit"),
-    SONIC("Sonic Oscillator"),
-    STATTENHEIM("TARDIS Stattenheim Circuit"),
-    TEMPORAL("TARDIS Temporal Circuit");
+    ADMIN("Server Admin Circuit", 1968),
+    ARS("TARDIS ARS Circuit", 1973),
+    BIO("Bio-scanner Circuit", 1969),
+    CHAMELEON("TARDIS Chameleon Circuit", 1966),
+    DIAMOND("Diamond Disruptor Circuit", 1971),
+    EMERALD("Emerald Environment Circuit", 1972),
+    IGNITE("Ignite Circuit", 1982),
+    INPUT("TARDIS Input Circuit", 1976),
+    INVISIBILITY("TARDIS Invisibility Circuit", 1981),
+    LOCATOR("TARDIS Locator Circuit", 1965),
+    MATERIALISATION("TARDIS Materialisation Circuit", 1964),
+    MEMORY("TARDIS Memory Circuit", 1975),
+    PAINTER("Painter Circuit", 1979),
+    PERCEPTION("Perception Circuit", 1978),
+    PICKUP("Pickup Arrows Circuit", 1984),
+    RANDOM("TARDIS Randomiser Circuit", 1980),
+    REDSTONE("Redstone Activator Circuit", 1970),
+    RIFT("Rift Circuit", 1983),
+    SCANNER("TARDIS Scanner Circuit", 1977),
+    SONIC("Sonic Oscillator", 1967),
+    STATTENHEIM("TARDIS Stattenheim Circuit", 1963),
+    TEMPORAL("TARDIS Temporal Circuit", 1974);
 
     String displayName;
+    int id;
+    private static final HashMap<Integer, MAP> BY_ID = new HashMap<>();
 
-    MAP(String displayName) {
+    MAP(String displayName, int id) {
         this.displayName = displayName;
+        this.id = id;
+    }
+
+    static {
+        for (MAP map : values()) {
+            BY_ID.put(map.id, map);
+        }
     }
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public static HashMap<Integer, MAP> getById() {
+        return BY_ID;
     }
 }

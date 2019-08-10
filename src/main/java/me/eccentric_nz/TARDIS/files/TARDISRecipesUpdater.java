@@ -128,9 +128,9 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Redstone Activator Circuit.hard_ingredients.R", "REPEATER");
             recipes_config.set("shaped.Redstone Activator Circuit.result", "FILLED_MAP:1970");
             recipes_config.set("shaped.Rift Circuit.result", "FILLED_MAP:1983");
-            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK=Acid Battery");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "FILLED_MAP:1983");
-            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK=Acid Battery");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "FILLED_MAP:1983");
             recipes_config.set("shaped.Server Admin Circuit.easy_ingredients.O", "FILLED_MAP:1967");
             recipes_config.set("shaped.Server Admin Circuit.hard_ingredients.O", "FILLED_MAP:1967");
@@ -294,11 +294,11 @@ public class TARDISRecipesUpdater {
         }
         if (!recipes_config.contains("shaped.Rust Plague Sword")) {
             recipes_config.set("shaped.Rust Plague Sword.easy_shape", "RIR,RIR,-S-");
-            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.R", "LAVA_BUCKET");
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.R", "LAVA_BUCKET=Rust Bucket");
             recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.I", "IRON_INGOT");
             recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.S", "STICK");
             recipes_config.set("shaped.Rust Plague Sword.hard_shape", "RIR,RIR,DSD");
-            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.R", "LAVA_BUCKET");
+            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.R", "LAVA_BUCKET=Rust Bucket");
             recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.I", "IRON_INGOT");
             recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.S", "STICK");
@@ -307,16 +307,26 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rust Plague Sword.lore", "Dalek Virus Dispenser");
             i++;
         }
+        if (!recipes_config.getString("shaped.Rust Plague Sword.easy_ingredients.R").contains("=")) {
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.R", "LAVA_BUCKET=Rust Bucket");
+            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.R", "LAVA_BUCKET=Rust Bucket");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Acid Battery")) {
             recipes_config.set("shaped.Acid Battery.easy_shape", "-A-,ARA,-A-");
-            recipes_config.set("shaped.Acid Battery.easy_ingredients.A", "WATER_BUCKET");
+            recipes_config.set("shaped.Acid Battery.easy_ingredients.A", "WATER_BUCKET=Acid Bucket");
             recipes_config.set("shaped.Acid Battery.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Acid Battery.hard_shape", "-A-,ARA,-A-");
-            recipes_config.set("shaped.Acid Battery.hard_ingredients.A", "WATER_BUCKET");
+            recipes_config.set("shaped.Acid Battery.hard_ingredients.A", "WATER_BUCKET=Acid Bucket");
             recipes_config.set("shaped.Acid Battery.hard_ingredients.R", "REDSTONE_BLOCK");
             recipes_config.set("shaped.Acid Battery.result", "NETHER_BRICK");
             recipes_config.set("shaped.Acid Battery.amount", 1);
             recipes_config.set("shaped.Acid Battery.lore", "");
+            i++;
+        }
+        if (!recipes_config.getString("shaped.Acid Battery.easy_ingredients.A").contains("=")) {
+            recipes_config.set("shaped.Acid Battery.easy_ingredients.A", "WATER_BUCKET=Acid Bucket");
+            recipes_config.set("shaped.Acid Battery.hard_ingredients.A", "WATER_BUCKET=Acid Bucket");
             i++;
         }
         if (!recipes_config.contains("shaped.Rift Circuit.lore")) {
@@ -333,16 +343,21 @@ public class TARDISRecipesUpdater {
         }
         if (!recipes_config.contains("shaped.Rift Manipulator.lore")) {
             recipes_config.set("shaped.Rift Manipulator.easy_shape", "-A-,ACA,RAR");
-            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK=Acid Battery");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "FILLED_MAP:1983");
             recipes_config.set("shaped.Rift Manipulator.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Rift Manipulator.hard_shape", "-A-,ACA,NAN");
-            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK=Acid Battery");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "FILLED_MAP:1983");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.N", "NETHER_STAR");
             recipes_config.set("shaped.Rift Manipulator.result", "BEACON");
             recipes_config.set("shaped.Rift Manipulator.amount", 1);
             recipes_config.set("shaped.Rift Manipulator.lore", "");
+            i++;
+        }
+        if (!recipes_config.getString("shaped.Rift Manipulator.easy_ingredients.A").contains("=")) {
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK=Acid Battery");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK=Acid Battery");
             i++;
         }
         if (!recipes_config.contains("shaped.Sonic Generator")) {

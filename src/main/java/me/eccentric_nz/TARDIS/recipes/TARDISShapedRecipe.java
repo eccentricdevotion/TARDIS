@@ -18,20 +18,19 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.MAP;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.MapMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -44,6 +43,8 @@ public class TARDISShapedRecipe {
     private ChatColor sonicDisplay;
     private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<>();
     private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<>();
+    private final List<String> recipe_choice_lookup = new ArrayList<>();
+    private final List<String> recipe_choice_materials = new ArrayList<>();
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,6 +64,7 @@ public class TARDISShapedRecipe {
         sonic_colour_lookup.put("sarah_jane", ChatColor.RED);
         sonic_colour_lookup.put("river_song", ChatColor.GOLD);
         sonic_colour_lookup.put("twelfth", ChatColor.UNDERLINE);
+        sonic_colour_lookup.put("thirteenth", ChatColor.BLACK);
         sonic_colour_lookup.put("war", ChatColor.DARK_RED);
         key_colour_lookup.put("first", ChatColor.AQUA);
         key_colour_lookup.put("second", ChatColor.DARK_BLUE);
@@ -77,6 +79,24 @@ public class TARDISShapedRecipe {
         key_colour_lookup.put("sally", ChatColor.DARK_AQUA);
         key_colour_lookup.put("perception", ChatColor.BLUE);
         key_colour_lookup.put("gold", ChatColor.GOLD);
+        recipe_choice_lookup.add("Acid Battery");
+        recipe_choice_lookup.add("Rift Manipulator");
+        recipe_choice_lookup.add("Rust Plague Sword");
+        recipe_choice_lookup.add("TARDIS Locator");
+        recipe_choice_lookup.add("Stattenheim Remote");
+        recipe_choice_lookup.add("TARDIS Chameleon Circuit");
+        recipe_choice_lookup.add("TARDIS Remote Key");
+        recipe_choice_lookup.add("TARDIS Invisibility Circuit");
+        recipe_choice_lookup.add("Perception Filter");
+        recipe_choice_lookup.add("Sonic Screwdriver");
+        recipe_choice_lookup.add("Server Admin Circuit");
+        recipe_choice_lookup.add("Fob Watch");
+        recipe_choice_lookup.add("TARDIS Biome Reader");
+        recipe_choice_lookup.add("TARDIS Stattenheim Circuit");
+        recipe_choice_materials.add("FILLED_MAP");
+        recipe_choice_materials.add("LAVA_BUCKET=Rust Bucket");
+        recipe_choice_materials.add("WATER_BUCKET=Acid Bucket");
+        recipe_choice_materials.add("NETHER_BRICK=Acid Battery");
     }
 
     public void addShapedRecipes() {
@@ -92,8 +112,8 @@ public class TARDISShapedRecipe {
          * amount: 1 lore: "The vorpal blade\ngoes snicker-snack!" enchantment:
          * FIRE_ASPECT strength: 3
          */
-        String[] result_iddata = plugin.getRecipesConfig().getString("shaped." + s + ".result").split(":");
-        Material mat = Material.valueOf(result_iddata[0]);
+        String[] resultAndData = plugin.getRecipesConfig().getString("shaped." + s + ".result").split(":");
+        Material mat = Material.valueOf(resultAndData[0]);
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
@@ -107,8 +127,8 @@ public class TARDISShapedRecipe {
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
-        if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
-            int map = TARDISNumberParsers.parseInt(result_iddata[1]);
+        if (resultAndData.length == 2 && mat.equals(Material.FILLED_MAP)) {
+            int map = TARDISNumberParsers.parseInt(resultAndData[1]);
             MapMeta mapMeta = (MapMeta) im;
             mapMeta.setMapId(map);
             is.setItemMeta(mapMeta);
@@ -134,9 +154,30 @@ public class TARDISShapedRecipe {
             Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
             ingredients.forEach((g) -> {
                 char c = g.charAt(0);
-                String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
-                Material m = Material.valueOf(recipe_iddata[0]);
-                r.setIngredient(c, m);
+                String[] recipeAndMapID = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
+                if (recipe_choice_lookup.contains(s) && recipe_choice_materials.contains(recipeAndMapID[0])) {
+                    ItemStack exact;
+                    if (recipeAndMapID[0].contains("=")) {
+                        String[] choice = recipeAndMapID[0].split("=");
+                        Material m = Material.valueOf(choice[0]);
+                        exact = new ItemStack(m, 1);
+                        ItemMeta em = exact.getItemMeta();
+                        em.setDisplayName(choice[1]);
+                        exact.setItemMeta(em);
+                    } else {
+                        exact = new ItemStack(Material.FILLED_MAP, 1);
+                        ItemMeta em = exact.getItemMeta();
+                        int map = TARDISNumberParsers.parseInt(recipeAndMapID[1]);
+                        em.setDisplayName(MAP.getById().get(map).getDisplayName());
+                        MapMeta mapMeta = (MapMeta) em;
+                        mapMeta.setMapId(map);
+                        exact.setItemMeta(mapMeta);
+                    }
+                    r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
+                } else {
+                    Material m = Material.valueOf(recipeAndMapID[0]);
+                    r.setIngredient(c, m);
+                }
             });
         } catch (IllegalArgumentException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");

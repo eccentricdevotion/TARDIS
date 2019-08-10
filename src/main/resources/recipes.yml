@@ -781,7 +781,7 @@ shaped:
   Acid Battery:
     easy_shape: -A-,ARA,-A-
     easy_ingredients:
-      A: WATER_BUCKET
+      A: WATER_BUCKET=Acid Bucket
       R: REDSTONE
     hard_shape: -A-,ARA,-A-
     hard_ingredients:
@@ -805,12 +805,12 @@ shaped:
   Rift Manipulator:
     easy_shape: -A-,ACA,RAR
     easy_ingredients:
-      A: NETHER_BRICK
+      A: NETHER_BRICK=Acid Battery
       C: 'FILLED_MAP:1983'
       R: REDSTONE
     hard_shape: -A-,ACA,NAN
     hard_ingredients:
-      A: NETHER_BRICK
+      A: NETHER_BRICK=Acid Battery
       C: 'FILLED_MAP:1983'
       N: NETHER_STAR
     result: BEACON
@@ -819,12 +819,12 @@ shaped:
   Rust Plague Sword:
     easy_shape: RIR,RIR,-S-
     easy_ingredients:
-      R: LAVA_BUCKET
+      R: LAVA_BUCKET=Rust Bucket
       I: IRON_INGOT
       S: STICK
     hard_shape: RIR,RIR,DSD
     hard_ingredients:
-      R: LAVA_BUCKET
+      R: LAVA_BUCKET=Rust Bucket
       I: IRON_INGOT
       D: DIAMOND
       S: STICK

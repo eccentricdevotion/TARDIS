@@ -237,76 +237,6 @@ public class TARDISCraftListener implements Listener {
             }
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
                 String dn = is.getItemMeta().getDisplayName();
-                boolean hard = plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard");
-                switch (dn) {
-                    case "TARDIS Locator":
-                        if (hard && !matrixContains(ci, "TARDIS Locator Circuit")) { // must have "TARDIS Locator Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "Stattenheim Remote":
-                        if (hard && !matrixContains(ci, "TARDIS Stattenheim Circuit")) { // must have  "TARDIS Stattenheim Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "TARDIS Chameleon Circuit":
-                    case "TARDIS Remote Key":
-                        if (hard && !matrixContains(ci, "TARDIS Materialisation Circuit")) { // must have  "TARDIS Materialisation Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "TARDIS Invisibility Circuit":
-                        if (!matrixContains(ci, "Perception Circuit")) { // must have  "Perception Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "Perception Filter":
-                        if (hard && !matrixContains(ci, "Perception Circuit")) { // must have  "Perception Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "Sonic Screwdriver":
-                        if (hard && !matrixContains(ci, "Sonic Oscillator")) { // must have  "Sonic Oscillator" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "Server Admin Circuit":
-                        if (!matrixContains(ci, "Perception Circuit")) { // must have  "Sonic Oscillator" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "Fob Watch":
-                        if (!matrixContains(ci, "Perception Circuit")) { // must have  "TARDIS Chameleon Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "TARDIS Biome Reader":
-                        if (!matrixContains(ci, "Perception Circuit")) { // must have  "Emerald Environment Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "Rift Manipulator":
-                        if (!matrixContains(ci, "Perception Circuit")) { // must have "Rift Circuit" ingredient
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                    case "TARDIS Stattenheim Circuit":
-                        if (!matrixContains(ci, "TARDIS Locator Circuit") || !matrixContains(ci, "TARDIS Materialisation Circuit")) { // must have "TARDIS Locator Circuit" and "TARDIS Materialisation Circuit" ingredients
-                            ci.setResult(null);
-                            return;
-                        }
-                        break;
-                }
                 if (is.getType().equals(Material.FILLED_MAP)) {
                     if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
                         // which circuit is it?
@@ -326,31 +256,7 @@ public class TARDISCraftListener implements Listener {
                         is.setItemMeta(im);
                         ci.setResult(is);
                     }
-                } else if (is.getType().equals(Material.NETHER_BRICK) && dn.equals("Acid Battery")) {
-                    for (int i = 2; i < 9; i += 2) {
-                        ItemStack water = ci.getItem(i);
-                        if (!water.hasItemMeta() || !water.getItemMeta().hasDisplayName() || !water.getItemMeta().getDisplayName().equals("Acid Bucket")) {
-                            ci.setResult(null);
-                            break;
-                        }
-                    }
-                } else if (is.getType().equals(Material.BEACON) && dn.equals("Rift Manipulator")) {
-                    for (int i = 2; i < 9; i += 2) {
-                        ItemStack acid = ci.getItem(i);
-                        if (!acid.hasItemMeta() || !acid.getItemMeta().hasDisplayName() || !acid.getItemMeta().getDisplayName().equals("Acid Battery")) {
-                            ci.setResult(null);
-                            break;
-                        }
-                    }
                 } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
-                    List<Integer> slots = Arrays.asList(1, 3, 4, 6);
-                    for (int i : slots) {
-                        ItemStack rust = ci.getItem(i);
-                        if (!rust.hasItemMeta() || !rust.getItemMeta().hasDisplayName() || !rust.getItemMeta().getDisplayName().equals("Rust Bucket")) {
-                            ci.setResult(null);
-                            break;
-                        }
-                    }
                     // enchant the result
                     is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
                     ci.setResult(is);
@@ -362,14 +268,5 @@ public class TARDISCraftListener implements Listener {
                 }
             }
         }
-    }
-
-    private boolean matrixContains(CraftingInventory inventory, String circuit) {
-        for (ItemStack is : inventory.getMatrix()) {
-            if (is != null && is.getType().equals(Material.FILLED_MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals(circuit)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
