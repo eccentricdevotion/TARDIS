@@ -343,9 +343,6 @@ public class TARDISCraftListener implements Listener {
                         }
                     }
                 } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
-                    // enchant the result
-                    is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
-                    ci.setResult(is);
                     List<Integer> slots = Arrays.asList(1, 3, 4, 6);
                     for (int i : slots) {
                         ItemStack rust = ci.getItem(i);
@@ -354,6 +351,9 @@ public class TARDISCraftListener implements Listener {
                             break;
                         }
                     }
+                    // enchant the result
+                    is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
+                    ci.setResult(is);
                 } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
                     LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
                     lam.setColor(Color.WHITE);
