@@ -283,6 +283,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.FILLED_MAP)) {
                     im.setDisplayName("Rift Circuit");
                 }
+                if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
+                    im.setDisplayName("Rust Bucket");
+                }
                 item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
             }
