@@ -1121,19 +1121,19 @@ public class TARDISInformationSystemListener implements Listener {
                     // FOURTH level menus
                     case SKARO_ITEMS:
                         if (chat.equalsIgnoreCase("R")) {
-                            showInfo(p, TARDISInfoMenu.RIFT_CIRCUIT);
+                            processKey(p, TARDISInfoMenu.RIFT_CIRCUIT);
                         }
                         if (chat.equalsIgnoreCase("M")) {
-                            showInfo(p, TARDISInfoMenu.RIFT_MANIPULATOR);
+                            processKey(p, TARDISInfoMenu.RIFT_MANIPULATOR);
                         }
                         if (chat.equalsIgnoreCase("u")) {
                             processKey(p, TARDISInfoMenu.RUST_BUCKET);
                         }
                         if (chat.equalsIgnoreCase("P")) {
-                            showInfo(p, TARDISInfoMenu.RUST_PLAGUE_SWORD);
+                            processKey(p, TARDISInfoMenu.RUST_PLAGUE_SWORD);
                         }
                         if (chat.equalsIgnoreCase("A")) {
-                            showInfo(p, TARDISInfoMenu.ACID_BUCKET);
+                            processKey(p, TARDISInfoMenu.ACID_BUCKET);
                         }
                         if (chat.equalsIgnoreCase("c")) {
                             processKey(p, TARDISInfoMenu.ACID_BATTERY);
