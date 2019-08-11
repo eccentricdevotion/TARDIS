@@ -203,7 +203,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.1.0</version>
+            <version>4.1.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
