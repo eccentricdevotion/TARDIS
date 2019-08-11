@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> SEED_SUBS;
+    private final ImmutableList<String> ENTITY_SUBS;
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -74,6 +77,13 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
         WORLD_SUBS = ImmutableList.copyOf(worlds);
         SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
+        List<String> tmpEntities = new ArrayList<>();
+        for (EntityType e : EntityType.values()) {
+            if (e.getEntityClass() != null && Creature.class.isAssignableFrom(e.getEntityClass())) {
+                tmpEntities.add(e.toString());
+            }
+        }
+        ENTITY_SUBS = ImmutableList.copyOf(tmpEntities);
     }
 
     @Override
@@ -88,6 +98,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             }
             if (sub.equals("config")) {
                 return partial(lastArg, CONFIG_SUBS);
+            }
+            if (sub.equals("disguise")) {
+                return partial(lastArg, ENTITY_SUBS);
             }
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
@@ -137,7 +150,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("use_clay")) {
                 return partial(lastArg, USE_CLAY_SUBS);
             }
-            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("set_size")) {
+            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("set_size") || sub.equals("undisguise")) {
                 // return null to default to online player name matching
                 return null;
             } else {
@@ -148,6 +161,8 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
                 return partial(lastArg, PRESETS);
             } else if (args[0].equalsIgnoreCase("set_size")) {
                 return partial(lastArg, SEED_SUBS);
+            } else if (args[0].equalsIgnoreCase("disguise")) {
+                return null;
             } else {
                 return partial(lastArg, BOOL_SUBS);
             }

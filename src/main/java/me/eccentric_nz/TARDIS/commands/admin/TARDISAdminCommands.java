@@ -72,6 +72,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("delete", "");
         firstsStr.put("desiege", "");
         firstsStr.put("difficulty", "preferences");
+        firstsStr.put("disguise", "");
         firstsStr.put("enter", "");
         firstsStr.put("exclude", "");
         firstsStr.put("find", "");
@@ -99,6 +100,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("spawn_abandoned", "");
         firstsStr.put("tardis_lamp", "police_box");
         firstsStr.put("use_clay", "creation");
+        firstsStr.put("undisguise", "");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
@@ -319,6 +321,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("decharge")) {
                     return new TARDISDechargeCommand(plugin).removeChragerStatus(sender, args);
+                }
+                if (first.equals("disguise") || first.equals("undisguise")) {
+                    return new TARDISDisguiseCommand(plugin).disguise(sender, args);
                 }
                 if (first.equals("enter")) {
                     return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
