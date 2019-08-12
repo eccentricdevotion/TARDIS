@@ -252,6 +252,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("purge_portals")) {
                     return new TARDISPortalCommand(plugin).clearAll(sender);
                 }
+                if (first.equals("undisguise")) {
+                    return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                }
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
@@ -322,7 +325,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("decharge")) {
                     return new TARDISDechargeCommand(plugin).removeChragerStatus(sender, args);
                 }
-                if (first.equals("disguise") || first.equals("undisguise")) {
+                if (first.equals("disguise")) {
                     return new TARDISDisguiseCommand(plugin).disguise(sender, args);
                 }
                 if (first.equals("enter")) {
