@@ -268,7 +268,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         catWatcher.setType(getCatType(view));
                                         if (getBoolean(view)) {
                                             catWatcher.setTamed(true);
-                                            catWatcher.setCollarColor(getColor(view));
+//                                            catWatcher.setCollarColor(getColor(view));
                                         }
                                         catWatcher.setBaby(getBaby(view));
                                         break;
@@ -471,7 +471,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 break;
             case "SHEEP":
             case "WOLF":
-            case "SHULKER":
                 if (sheep.containsKey(uuid)) {
                     o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
                 } else {
