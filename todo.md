@@ -1,7 +1,7 @@
 # TODO
 
-## Next version `4.1.0`
-0. Update to Spigot 1.14.4
+## Next version `4.1.1`
+0. New features
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
@@ -15,6 +15,8 @@
 7. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
 8. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
+9. Use TARDIS Disguises for Arch feature
+10. Finish disguise listeners
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -27,6 +29,7 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
+0. Use TARDIS Disguises if LibsDisguises is not available
 1. CustomModelData for all TARDIS items
 2. CustomModelData for Weeping Angel wings?
 3. Custom Entity models using Optifine (when they can be applied to named entities)

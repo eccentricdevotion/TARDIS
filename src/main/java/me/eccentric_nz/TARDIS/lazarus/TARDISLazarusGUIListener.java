@@ -17,19 +17,16 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardischunkgenerator.disguise.AGE;
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.RabbitType;
-import me.libraryaddict.disguise.disguisetypes.watchers.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -249,161 +246,154 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ZYGON on " + player.getUniqueId());
                             }
                         } else {
-                            DisguiseType dt = DisguiseType.valueOf(disguise);
-                            if (dt.equals(DisguiseType.PLAYER)) {
-                                PlayerDisguise playerDisguise = new PlayerDisguise("Herobrine");
-                                DisguiseAPI.disguiseToAll(player, playerDisguise);
-                            } else {
-                                MobDisguise mobDisguise = new MobDisguise(dt);
-                                LivingWatcher livingWatcher;
-                                try {
-                                    livingWatcher = mobDisguise.getWatcher();
-                                } catch (NoSuchMethodError e) {
-                                    TARDISMessage.message(player, "LIBS");
-                                    return;
-                                }
-                                switch (dt) {
-                                    case CAT:
-                                        CatWatcher catWatcher = (CatWatcher) livingWatcher;
-                                        catWatcher.setType(getCatType(view));
-                                        if (getBoolean(view)) {
-                                            catWatcher.setTamed(true);
-//                                            catWatcher.setCollarColor(getColor(view));
-                                        }
-                                        catWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case PANDA:
-                                        PandaWatcher pandaWatcher = (PandaWatcher) livingWatcher;
-                                        pandaWatcher.setMainGene(getGene(view));
-                                        pandaWatcher.setHiddenGene(Panda.Gene.NORMAL);
-                                        break;
-                                    case DONKEY:
-                                    case MULE:
-                                        ChestedHorseWatcher chestedHorseWatcher = (ChestedHorseWatcher) livingWatcher;
-                                        chestedHorseWatcher.setCarryingChest(getBoolean(view));
-                                        break;
-                                    case PILLAGER:
-                                        PillagerWatcher pillagerWatcher = (PillagerWatcher) livingWatcher;
-                                        pillagerWatcher.setAimimgBow(getBoolean(view));
-                                        break;
-                                    case SHEEP:
-                                        SheepWatcher sheepWatcher = (SheepWatcher) livingWatcher;
-                                        sheepWatcher.setColor(getColor(view));
-                                        sheepWatcher.setBaby(getBaby(view));
-                                        if (getBoolean(view)) {
-                                            sheepWatcher.setCustomName("jeb_");
-                                            sheepWatcher.setCustomNameVisible(true);
-                                        }
-                                        break;
-                                    case HORSE:
-                                        HorseWatcher horseWatcher = (HorseWatcher) livingWatcher;
-                                        horseWatcher.setColor(getHorseColor(view));
-                                        horseWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case LLAMA:
-                                        LlamaWatcher llamaWatcher = (LlamaWatcher) livingWatcher;
-                                        llamaWatcher.setColor(getLlamaColor(view));
-                                        if (getBoolean(view)) {
-                                            llamaWatcher.setCarpet(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
-                                        }
-                                        break;
-                                    case OCELOT:
-                                        OcelotWatcher ocelotWatcher = (OcelotWatcher) livingWatcher;
-                                        ocelotWatcher.setBaby(getBaby(view));
-                                        ocelotWatcher.setTrusting(getBoolean(view));
-                                        break;
-                                    case PARROT:
-                                        ParrotWatcher parrotWatcher = (ParrotWatcher) livingWatcher;
-                                        parrotWatcher.setVariant(getParrotVariant(view));
-                                        parrotWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case PIG:
-                                        PigWatcher pigWatcher = (PigWatcher) livingWatcher;
-                                        pigWatcher.setSaddled(getBoolean(view));
-                                        pigWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case RABBIT:
-                                        RabbitWatcher rabbitWatcher = (RabbitWatcher) livingWatcher;
-                                        rabbitWatcher.setType(getRabbitType(view));
-                                        rabbitWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case VILLAGER:
-                                        VillagerWatcher villagerWatcher = (VillagerWatcher) livingWatcher;
-                                        villagerWatcher.setProfession(getProfession(view));
-                                        villagerWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case WOLF:
-                                        WolfWatcher wolfWatcher = (WolfWatcher) livingWatcher;
-                                        if (getBoolean(view)) {
-                                            wolfWatcher.setTamed(true);
-                                            wolfWatcher.setCollarColor(getColor(view));
-                                        }
-                                        wolfWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case SLIME:
-                                    case MAGMA_CUBE:
-                                        SlimeWatcher slimeWatcher = (SlimeWatcher) livingWatcher;
-                                        slimeWatcher.setSize(getSlimeSize(view));
-                                        break;
-                                    case BAT:
-                                        BatWatcher batWatcher = (BatWatcher) livingWatcher;
-                                        batWatcher.setHanging(!getBoolean(view));
-                                        break;
-                                    case BLAZE:
-                                        BlazeWatcher blazeWatcher = (BlazeWatcher) livingWatcher;
-                                        blazeWatcher.setBlazing(getBoolean(view));
-                                        break;
-                                    case CREEPER:
-                                        CreeperWatcher cw = (CreeperWatcher) livingWatcher;
-                                        cw.setPowered(getBoolean(view));
-                                        break;
-                                    case ENDERMAN:
-                                        EndermanWatcher endermanWatcher = (EndermanWatcher) livingWatcher;
-                                        endermanWatcher.setAggressive(getBoolean(view));
-                                        break;
-                                    case COW:
-                                        AgeableWatcher ageableWatcher = (AgeableWatcher) livingWatcher;
-                                        ageableWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case ZOMBIE:
-                                        ZombieWatcher zombieWatcher = (ZombieWatcher) livingWatcher;
-                                        zombieWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case ZOMBIE_VILLAGER:
-                                        ZombieVillagerWatcher zombieVillagerWatcher = (ZombieVillagerWatcher) livingWatcher;
-                                        zombieVillagerWatcher.setBaby(getBaby(view));
-                                        zombieVillagerWatcher.setProfession(getProfession(view));
-                                        break;
-                                    case SNOWMAN:
-                                        SnowmanWatcher snowmanWatcher = (SnowmanWatcher) livingWatcher;
-                                        snowmanWatcher.setDerp(!snowmen.get(uuid));
-                                        break;
-                                    case TURTLE:
-                                        TurtleWatcher turtleWatcher = (TurtleWatcher) livingWatcher;
-                                        turtleWatcher.setBaby(getBaby(view));
-                                        break;
-                                    case PUFFERFISH:
-                                        PufferFishWatcher pufferFishWatcher = (PufferFishWatcher) livingWatcher;
-                                        pufferFishWatcher.setPuffState(puffers.get(uuid));
-                                        break;
-                                    case TROPICAL_FISH:
-                                        TropicalFishWatcher tropicalFishWatcher = (TropicalFishWatcher) livingWatcher;
-                                        tropicalFishWatcher.setPattern(TropicalFish.Pattern.values()[tropics.get(uuid)]);
-                                        tropicalFishWatcher.setBodyColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
-                                        tropicalFishWatcher.setPatternColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
-                                        break;
-                                    case MUSHROOM_COW:
-                                        MushroomCowWatcher mushroomCowWatcher = (MushroomCowWatcher) livingWatcher;
-                                        mushroomCowWatcher.setVariant(getCowVariant(view));
-                                        break;
-                                    case FOX:
-                                        FoxWatcher foxWatcher = (FoxWatcher) livingWatcher;
-                                        foxWatcher.setType(getFoxType(view));
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                DisguiseAPI.disguiseToAll(player, mobDisguise);
+                            EntityType dt = EntityType.valueOf(disguise);
+                            Object[] options = null;
+                            switch (dt) {
+                                case CAT:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getCatType(view), getBoolean(view), getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getCatType(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case PANDA:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getGene(view), false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getGene(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case DONKEY:
+                                case MULE:
+                                case PIG:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, null, getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
+                                    } else {
+                                        options = new Object[]{getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
+                                    }
+                                    break;
+                                case PILLAGER:
+                                case BAT:
+                                case CREEPER:
+                                case ENDERMAN:
+                                case BLAZE:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, null, getBoolean(view), false).createDisguise();
+                                    } else {
+                                        options = new Object[]{getBoolean(view)};
+                                    }
+                                    break;
+                                case SHEEP:
+                                case WOLF:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getColor(view), getBoolean(view), getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getColor(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case HORSE:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getHorseColor(view), false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getHorseColor(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case LLAMA:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getLlamaColor(view), getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
+                                    } else {
+                                        options = new Object[]{getLlamaColor(view), getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
+                                    }
+                                    break;
+                                case OCELOT:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, null, getBoolean(view), getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case PARROT:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getParrotVariant(view), false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getParrotVariant(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case RABBIT:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getRabbitType(view), getBoolean(view), getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getRabbitType(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case VILLAGER:
+                                case ZOMBIE_VILLAGER:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getProfession(view), false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getProfession(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case SLIME:
+                                case MAGMA_CUBE:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getSlimeSize(view), false, false).createDisguise();
+                                    } else {
+                                        options = new Object[]{getSlimeSize(view)};
+                                    }
+                                    break;
+                                case COW:
+                                case TURTLE:
+                                case ZOMBIE:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, null, false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case SNOWMAN:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, snowmen.get(uuid), false, false).createDisguise();
+                                    } else {
+                                        options = new Object[]{snowmen.get(uuid)};
+                                    }
+                                    break;
+                                case PUFFERFISH:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, puffers.get(uuid), false, false).createDisguise();
+                                    } else {
+                                        options = new Object[]{puffers.get(uuid)};
+                                    }
+                                    break;
+                                case TROPICAL_FISH:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, TropicalFish.Pattern.values()[tropics.get(uuid)], false, false).createDisguise();
+                                    } else {
+                                        options = new Object[]{TropicalFish.Pattern.values()[tropics.get(uuid)]};
+                                    }
+                                    break;
+                                case MUSHROOM_COW:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getCowVariant(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                case FOX:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, getFoxType(view), false, getBaby(view)).createDisguise();
+                                    } else {
+                                        options = new Object[]{getFoxType(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
+                                default:
+                                    if (plugin.isDisguisesOnServer()) {
+                                        new TARDISLazarusLibs(player, disguise, null, false, false).createDisguise();
+                                    }
+                                    break;
+                            }
+                            if (!plugin.isDisguisesOnServer()) {
+                                new TARDISLazarusDisguise(plugin, player, dt, options).createDisguise();
                             }
                         }
                         TARDISMessage.send(player, "GENETICS_MODIFIED", disguise);
