@@ -27,4 +27,16 @@ public class TARDISLazarusDisguise {
             plugin.getTardisHelper().disguise(entityType, player, options);
         }
     }
+
+    public static void removeDisguise(Player player) {
+        TARDIS.plugin.getTardisHelper().undisguise(player);
+    }
+
+    public static void runImmortalityGate(Player player) {
+        TARDIS.plugin.getServer().getOnlinePlayers().forEach((p) -> {
+            if (!p.equals(player)) {
+                TARDIS.plugin.getTardisHelper().disguise(p, player.getUniqueId());
+            }
+        });
+    }
 }

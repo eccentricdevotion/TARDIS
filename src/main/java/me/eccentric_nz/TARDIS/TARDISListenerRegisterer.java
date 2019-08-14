@@ -255,10 +255,10 @@ class TARDISListenerRegisterer {
                         }
                     }
                 }
-                plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
-                plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
             }
         }
+        plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISItemFrameListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);

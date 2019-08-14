@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -185,5 +186,20 @@ public class TARDISLazarusLibs {
             }
             DisguiseAPI.disguiseToAll(player, mobDisguise);
         }
+    }
+
+    public static void removeDisguise(Player player) {
+        if (DisguiseAPI.isDisguised(player)) {
+            DisguiseAPI.undisguiseToAll(player);
+        }
+    }
+
+    public static void runImmortalityGate(Player player) {
+        PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
+        TARDIS.plugin.getServer().getOnlinePlayers().forEach((p) -> {
+            if (!p.equals(player)) {
+                DisguiseAPI.disguiseToAll(p, playerDisguise);
+            }
+        });
     }
 }

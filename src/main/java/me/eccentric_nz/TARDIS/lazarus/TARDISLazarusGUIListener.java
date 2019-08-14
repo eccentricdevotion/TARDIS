@@ -24,9 +24,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.tardischunkgenerator.disguise.AGE;
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
-import me.libraryaddict.disguise.disguisetypes.RabbitType;
+import me.eccentric_nz.tardischunkgenerator.disguise.MUSHROOM_COW;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -164,10 +162,12 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // undisguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (DisguiseAPI.isDisguised(player)) {
-                        DisguiseAPI.undisguiseToAll(player);
-                    } else {
+                    if (twaMonsters.contains(disguises.get(uuid))) {
                         twaOff(player);
+                    } else if (plugin.isDisguisesOnServer()) {
+                        TARDISLazarusLibs.removeDisguise(player);
+                    } else {
+                        TARDISLazarusDisguise.removeDisguise(player);
                     }
                     TARDISMessage.send(player, "GENETICS_RESTORED");
                     plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
@@ -189,24 +189,27 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // disguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (DisguiseAPI.isDisguised(player)) {
-                        DisguiseAPI.undisguiseToAll(player);
+                    if (plugin.isDisguisesOnServer()) {
+                        TARDISLazarusLibs.removeDisguise(player);
+                    } else {
+                        TARDISLazarusDisguise.removeDisguise(player);
                     }
                     if (isReversedPolarity(view)) {
                         plugin.getTrackerKeeper().setImmortalityGate(player.getName());
-                        PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
-                        plugin.getServer().getOnlinePlayers().forEach((p) -> {
-                            if (!p.getUniqueId().equals(uuid)) {
-                                DisguiseAPI.disguiseToAll(p, playerDisguise);
-                            }
-                        });
+                        if (plugin.isDisguisesOnServer()) {
+                            TARDISLazarusLibs.runImmortalityGate(player);
+                        } else {
+                            TARDISLazarusDisguise.runImmortalityGate(player);
+                        }
                         plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master has cloned his genetic template to all players. Behold the Master Race!");
                         plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
                         // schedule a delayed task to remove the disguise
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getServer().getOnlinePlayers().forEach((p) -> {
-                                if (DisguiseAPI.isDisguised(p)) {
-                                    DisguiseAPI.undisguiseToAll(p);
+                                if (plugin.isDisguisesOnServer()) {
+                                    TARDISLazarusLibs.removeDisguise(p);
+                                } else {
+                                    TARDISLazarusDisguise.removeDisguise(p);
                                 }
                             });
                             plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
@@ -376,7 +379,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
                                     } else {
-                                        options = new Object[]{getCowVariant(view), AGE.getFromBoolean(getBaby(view))};
+                                        options = new Object[]{MUSHROOM_COW.valueOf(getCowVariant(view).toString()), AGE.getFromBoolean(getBaby(view))};
                                     }
                                     break;
                                 case FOX:
@@ -511,7 +514,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 } else {
                     o = 0;
                 }
-                t = RabbitType.values()[o].toString();
+                t = Rabbit.Type.values()[o].toString();
                 rabbits.put(uuid, o);
                 break;
             case "PARROT":
@@ -676,13 +679,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private RabbitType getRabbitType(InventoryView i) {
+    private Rabbit.Type getRabbitType(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return RabbitType.valueOf(im.getLore().get(0));
+            return Rabbit.Type.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return RabbitType.BROWN;
+            return Rabbit.Type.BROWN;
         }
     }
 
