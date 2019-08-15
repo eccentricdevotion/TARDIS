@@ -105,6 +105,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         im.setLore(Collections.singletonList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
+                        if (display.equals("HEROBRINE")) {
+                            display = "PLAYER";
+                        }
                         disguises.put(uuid, display);
                         setSlotFourtyEight(view, display, uuid);
                     }

@@ -65,6 +65,13 @@ class TARDISLazarusExtraInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] eggs = new ItemStack[54];
         int i = 0;
+        // put herobrine
+        ItemStack hero = new ItemStack(Material.PLAYER_HEAD, 1);
+        ItemMeta brine = hero.getItemMeta();
+        brine.setDisplayName("HEROBRINE");
+        hero.setItemMeta(brine);
+        eggs[i] = hero;
+        i++;
         // golems
         // put iron golem
         ItemStack iron = new ItemStack(Material.IRON_BLOCK, 1);
