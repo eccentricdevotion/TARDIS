@@ -88,6 +88,13 @@ public class TARDISExterminator {
                 if (!hid) {
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 }
+                // remove the inner door portal
+                if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+                    ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
+                    if (rsdb.resultSet()) {
+                        plugin.getTrackerKeeper().getPortals().remove(rsdb.getInnerBlock().getLocation());
+                    }
+                }
                 cleanHashMaps(id);
                 World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {

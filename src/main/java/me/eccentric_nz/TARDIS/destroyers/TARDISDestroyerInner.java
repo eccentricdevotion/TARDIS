@@ -168,6 +168,6 @@ public class TARDISDestroyerInner {
             chest = (Chest) block.getRelative(BlockFace.WEST).getState();
             return chest;
         }
-        return chest;
+        return null;
     }
 }
