@@ -68,7 +68,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
-    private int max_slot = 36;
+    private final int max_slot = 45;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -87,9 +87,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator")) {
             event.setCancelled(true);
-            if (plugin.checkTWA()) {
-                max_slot = 45;
-            }
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
