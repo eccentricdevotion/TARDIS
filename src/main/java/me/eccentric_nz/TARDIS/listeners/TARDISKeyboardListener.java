@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -31,10 +30,10 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,33 +54,43 @@ public class TARDISKeyboardListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onKeyboardInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+    public void onBlockPlace(BlockPlaceEvent event) {
+//        if (!isKeyboardEditor(event.getItemInHand())) {
+//            return;
+//        }
+        Block block = event.getBlockPlaced();
+        if (!Tag.SIGNS.isTagged(block.getType()) || !plugin.getUtils().inTARDISWorld(event.getPlayer())) {
             return;
         }
-        Block b = event.getClickedBlock();
-        if (b != null && Tag.SIGNS.isTagged(b.getType())) {
-            Player player = event.getPlayer();
-            String loc = event.getClickedBlock().getLocation().toString();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("type", 7);
-            where.put("location", loc);
-            ResultSetControls rs = new ResultSetControls(plugin, where, false);
-            if (rs.resultSet()) {
-                TARDISCircuitChecker tcc = null;
-                if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                    tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
-                    tcc.getCircuits();
-                }
-                if (tcc != null && !tcc.hasInput()) {
-                    TARDISMessage.send(player, "INPUT_MISSING");
-                    return;
-                }
-                Sign sign = (Sign) b.getState();
-                plugin.getTrackerKeeper().getSign().put(loc, sign);
-                plugin.getTardisHelper().openSignGUI(player, sign);
+        Block against = event.getBlockAgainst();
+        if (!Tag.SIGNS.isTagged(against.getType())) {
+            return;
+        }
+        String loc_str = against.getLocation().toString();
+        ResultSetKeyboard rsk = new ResultSetKeyboard(plugin, loc_str);
+        if (rsk.resultSet()) {
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, rsk.getTardis_id());
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasInput()) {
+                TARDISMessage.send(event.getPlayer(), "INPUT_MISSING");
+                return;
+            }
+            Sign keyboard = (Sign) against.getState();
+            plugin.getTrackerKeeper().getSign().put(block.getLocation().toString(), keyboard);
+        }
+    }
+
+    public static boolean isKeyboardEditor(ItemStack is) {
+        if (is != null && Tag.SIGNS.isTagged(is.getType()) && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData()) {
+                return true;
             }
         }
+        return false;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -92,24 +101,22 @@ public class TARDISKeyboardListener implements Listener {
         }
         Sign keyboard = plugin.getTrackerKeeper().getSign().get(loc);
         Player p = event.getPlayer();
-        if (!plugin.getPM().isPluginEnabled("ProtocolLib")) {
-            int i = 0;
-            for (String l : event.getLines()) {
-                keyboard.setLine(i, l);
-                i++;
-            }
-            keyboard.update();
-            plugin.getTrackerKeeper().getSign().remove(loc);
-            // cancel the edit and give the sign back to the player
-            event.setCancelled(true);
-            event.getBlock().setBlockData(TARDISConstants.AIR);
-            if (p.getGameMode() != GameMode.CREATIVE) {
-                ItemStack itemInHand = p.getInventory().getItemInMainHand();
-                if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
-                    p.getInventory().setItemInMainHand(new ItemStack(Material.OAK_SIGN, 1));
-                } else {
-                    itemInHand.setAmount(itemInHand.getAmount() + 1);
-                }
+        int i = 0;
+        for (String l : event.getLines()) {
+            keyboard.setLine(i, l);
+            i++;
+        }
+        keyboard.update();
+        plugin.getTrackerKeeper().getSign().remove(loc);
+        // cancel the edit and give the sign back to the player
+        event.setCancelled(true);
+        event.getBlock().setBlockData(TARDISConstants.AIR);
+        if (p.getGameMode() != GameMode.CREATIVE) {
+            ItemStack itemInHand = p.getInventory().getItemInMainHand();
+            if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
+                p.getInventory().setItemInMainHand(new ItemStack(Material.OAK_SIGN, 1));
+            } else {
+                itemInHand.setAmount(itemInHand.getAmount() + 1);
             }
         }
         // process the lines...
