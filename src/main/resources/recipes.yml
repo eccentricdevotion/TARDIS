@@ -785,7 +785,7 @@ shaped:
       R: REDSTONE
     hard_shape: -A-,ARA,-A-
     hard_ingredients:
-      A: WATER_BUCKET
+      A: WATER_BUCKET=Acid Bucket
       R: REDSTONE_BLOCK
     result: NETHER_BRICK
     amount: 1
@@ -875,6 +875,18 @@ shaped:
     result: PAPER
     amount: 1
     lore: "Smaller on the outside"
+  TARDIS Keyboard Editor:
+    easy_shape: ---,RSR,-R-
+    easy_ingredients:
+      R: REDSTONE
+      S: OAK_SIGN
+    hard_shape: ---,RSR,-R-
+    hard_ingredients:
+      R: REDSTONE
+      S: OAK_SIGN
+    result: OAK_SIGN
+    amount: 1
+    lore: ""
 # -------------------
 # these are the shapeless recipes
 # -------------------

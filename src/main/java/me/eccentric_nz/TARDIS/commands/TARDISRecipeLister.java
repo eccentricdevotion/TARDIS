@@ -126,6 +126,7 @@ class TARDISRecipeLister {
         }
         accessories.add(ChatColor.GREEN + "wand" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
         accessories.add(ChatColor.GREEN + "watch" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
+        accessories.add(ChatColor.GREEN + "keyboard" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
         recipe_options.put("Accessories", accessories);
         return recipe_options;
     }

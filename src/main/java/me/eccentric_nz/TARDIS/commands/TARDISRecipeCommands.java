@@ -72,6 +72,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("jammy-dodger", "Jammy Dodger");
         recipeItems.put("jelly-baby", "Orange Jelly Baby");
         recipeItems.put("key", "TARDIS Key");
+        recipeItems.put("keyboard", "TARDIS Keyboard Editor");
         recipeItems.put("l-circuit", "TARDIS Locator Circuit");
         recipeItems.put("locator", "TARDIS Locator");
         recipeItems.put("m-circuit", "TARDIS Materialisation Circuit");
@@ -170,53 +171,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             String which = args[0].toLowerCase();
             switch (which) {
-                case "a-circuit":
-                case "acid-battery":
-                case "arrow-circuit":
-                case "ars-circuit":
-                case "bio-circuit":
-                case "blank":
-                case "bow-tie":
-                case "c-circuit":
-                case "cell":
-                case "communicator":
-                case "d-circuit":
-                case "e-circuit":
-                case "filter":
-                case "fish-finger":
-                case "furnace":
-                case "generator":
-                case "glasses":
-                case "handles":
-                case "i-circuit":
-                case "ignite-circuit":
-                case "invisible":
-                case "jammy-dodger":
-                case "key":
-                case "l-circuit":
-                case "locator":
-                case "m-circuit":
-                case "memory-circuit":
-                case "oscillator":
-                case "p-circuit":
-                case "painter":
-                case "paper-bag":
-                case "r-circuit":
-                case "r-key":
-                case "randomiser-circuit":
-                case "reader":
-                case "remote":
-                case "rift-circuit":
-                case "rift-manipulator":
-                case "rust":
-                case "s-circuit":
-                case "scanner-circuit":
-                case "sonic":
-                case "t-circuit":
-                case "telepathic":
-                case "watch":
-                    showShapedRecipe(player, recipeItems.get(which));
-                    return true;
                 case "vortex":
                     if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
                         TARDISMessage.send(sender, "RECIPE_VORTEX");
@@ -241,6 +195,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 case "save-disk":
                 case "wand":
                     showShapelessRecipe(player, recipeItems.get(which));
+                    return true;
+                default:
+                    showShapedRecipe(player, recipeItems.get(which));
                     return true;
             }
         }

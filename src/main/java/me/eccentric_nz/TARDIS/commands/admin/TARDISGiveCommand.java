@@ -81,6 +81,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("jammy-dodger", "Jammy Dodger");
         items.put("jelly-baby", "Orange Jelly Baby");
         items.put("key", "TARDIS Key");
+        items.put("keyboard", "TARDIS Keyboard Editor");
         items.put("kit", "TARDIS Item Kit");
         items.put("l-circuit", "TARDIS Locator Circuit");
         items.put("locator", "TARDIS Locator");
