@@ -230,7 +230,7 @@ shaped:
       S: SLIME_BALL
       P: 'POTION'
       E: EMERALD
-    result: 'DAYLIGHT_DETECTOR'
+    result: DAYLIGHT_DETECTOR
     amount: 1
     lore: "Allow companions to~use TARDIS commands"
   Perception Filter:

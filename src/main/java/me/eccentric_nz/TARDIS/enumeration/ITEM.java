@@ -1,0 +1,143 @@
+package me.eccentric_nz.TARDIS.enumeration;
+
+import java.util.Locale;
+
+public enum ITEM {
+    // shaped recipes start here
+    TARDIS_LOCATOR(10000001),
+    STATTENHEIM_REMOTE(10000001),
+    TARDIS_REMOTE_KEY(10000002),
+    TARDIS_LOCATOR_CIRCUIT(10001965),
+    TARDIS_MATERIALISATION_CIRCUIT(10001964),
+    TARDIS_STATTENHEIM_CIRCUIT(10001963),
+    TARDIS_CHAMELEON_CIRCUIT(10001966),
+    TARDIS_ARS_CIRCUIT(10001973),
+    TARDIS_TEMPORAL_CIRCUIT(10001974),
+    TARDIS_MEMORY_CIRCUIT(10001975),
+    TARDIS_INPUT_CIRCUIT(10001976),
+    TARDIS_SCANNER_CIRCUIT(10001977),
+    TARDIS_RANDOMISER_CIRCUIT(10001980),
+    TARDIS_INVISIBILITY_CIRCUIT(10001981),
+    TARDIS_TELEPATHIC_CIRCUIT(10000001),
+    PERCEPTION_FILTER(10000001),
+    PERCEPTION_CIRCUIT(10001978),
+    TARDIS_KEY(10000001),
+    BLANK_STORAGE_DISK(10000001),
+    SONIC_OSCILLATOR(10001967),
+    SONIC_SCREWDRIVER(10000011),
+    SONIC_GENERATOR(10000001),
+    SERVER_ADMIN_CIRCUIT(10001968),
+    BIO_SCANNER_CIRCUIT(10001969),
+    REDSTONE_ACTIVATOR_CIRCUIT(10001970),
+    DIAMOND_DISRUPTOR_CIRCUIT(10001971),
+    EMERALD_ENVIRONMENT_CIRCUIT(10001972),
+    PAINTER_CIRCUIT(10001979),
+    IGNITE_CIRCUIT(10001982),
+    PICKUP_ARROWS_CIRCUIT(10001984),
+    ARTRON_STORAGE_CELL(10000001),
+    TARDIS_ARTRON_FURNACE(10000001),
+    JAMMY_DODGER(10000001),
+    FISH_FINGER(10000001),
+    CUSTARD_CREAM(10000001),
+    WHITE_BOW_TIE(10000001),
+    ORANGE_BOW_TIE(10000002),
+    MAGENTA_BOW_TIE(10000003),
+    LIGHT_BLUE_BOW_TIE(10000004),
+    YELLOW_BOW_TIE(10000005),
+    LIME_BOW_TIE(10000006),
+    PINK_BOW_TIE(10000007),
+    GREY_BOW_TIE(10000008),
+    LIGHT_GREY_BOW_TIE(10000009),
+    CYAN_BOW_TIE(10000010),
+    PURPLE_BOW_TIE(10000011),
+    BLUE_BOW_TIE(10000012),
+    BROWN_BOW_TIE(10000013),
+    GREEN_BOW_TIE(10000014),
+    RED_BOW_TIE(10000015),
+    BLACK_BOW_TIE(10000016),
+    THREE_D_GLASSES(10000001),
+    FOB_WATCH(10000001),
+    TARDIS_BIOME_READER(10000001),
+    ACID_BATTERY(10000001),
+    RIFT_CIRCUIT(10001983),
+    RIFT_MANIPULATOR(10000001),
+    RUST_PLAGUE_SWORD(10000001),
+    HANDLES(10000001),
+    TARDIS_COMMUNICATOR(10000001),
+    PAPER_BAG(10000001),
+    TARDIS_KEYBOARD_EDITOR(10000001),
+    // unshaped recipes start here
+    TARDIS_SCHEMATIC_WAND(10000001),
+    SAVE_STORAGE_DISK(10000001),
+    PLAYER_STORAGE_DISK(10000001),
+    BIOME_STORAGE_DISK(10000001),
+    PRESET_STORAGE_DISK(10000001),
+    //    ADMIN_UPGRADE(10000001),
+    //    BIO_SCANNER_UPGRADE(10000001),
+    //    REDSTONE_UPGRADE(10000001),
+    //    DIAMOND_UPGRADE(10000001),
+    //    EMERALD_UPGRADE(10000001),
+    //    PAINTER_UPGRADE(10000001),
+    //    IGNITE_UPGRADE(10000001),
+    BOWL_OF_CUSTARD(10000001),
+    VANILLA_JELLY_BABY(10000001),
+    ORANGE_JELLY_BABY(10000002),
+    WATERMELON_JELLY_BABY(10000003),
+    BUBBLEGUM_JELLY_BABY(10000004),
+    LEMON_JELLY_BABY(10000005),
+    LIME_JELLY_BABY(10000006),
+    STRAWBERRY_JELLY_BABY(10000007),
+    EARL_GREY_JELLY_BABY(10000008),
+    VODKA_JELLY_BABY(10000009),
+    ISLAND_PUNCH_JELLY_BABY(10000010),
+    GRAPE_JELLY_BABY(10000011),
+    BLUEBERRY_JELLY_BABY(10000012),
+    CAPPUCCINO_JELLY_BABY(10000013),
+    APPLE_JELLY_BABY(10000014),
+    RASPBERRY_JELLY_BABY(10000015),
+    LICORICE_JELLY_BABY(10000016);
+
+    private final int customModelData;
+    private final String name;
+
+    ITEM(int customModelData) {
+        this.customModelData = customModelData;
+        name = setName(this);
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static ITEM getByName(String name) {
+        String processed = name.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
+        return ITEM.valueOf(processed);
+    }
+
+    private String setName(ITEM item) {
+        String s = item.toString();
+        if (item == THREE_D_GLASSES) {
+            return "3-D Glasses";
+        } else if (s.startsWith("BIO_")) {
+            return capitalise(s.replace("BIO_SCANNER", "Bio-scanner"));
+        }
+        return capitalise(s);
+    }
+
+    private String capitalise(String s) {
+        String[] split = s.split("_");
+        StringBuilder builder = new StringBuilder();
+        for (String str : split) {
+            builder.append(uppercaseFirst(str)).append(" ");
+        }
+        return builder.toString().trim();
+    }
+
+    private String uppercaseFirst(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+}
