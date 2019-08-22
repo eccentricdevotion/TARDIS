@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.ITEM;
 import me.eccentric_nz.TARDIS.enumeration.MAP;
+import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -125,7 +125,7 @@ public class TARDISShapedRecipe {
         } else {
             im.setDisplayName(s);
         }
-        im.setCustomModelData(ITEM.getByName(s).getCustomModelData());
+        im.setCustomModelData(RECIPE_ITEM.getByName(s).getCustomModelData());
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
