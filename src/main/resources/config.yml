@@ -23,7 +23,6 @@ creation:
   enable_legacy: true
   custom_schematic: false
   custom_schematic_seed: OBSIDIAN
-  use_block_stack: false
   use_clay: WOOL
   count: 0
   sky_biome: true

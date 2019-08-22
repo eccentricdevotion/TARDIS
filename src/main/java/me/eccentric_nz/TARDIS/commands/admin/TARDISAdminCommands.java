@@ -158,7 +158,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("switch_resource_packs", "");
         firstsBool.put("the_end", "travel");
         firstsBool.put("tp_switch", "allow");
-        firstsBool.put("use_block_stack", "creation");
         firstsBool.put("use_worldguard", "preferences");
         firstsBool.put("village_travel", "allow");
         firstsBool.put("walk_in_tardis", "preferences");

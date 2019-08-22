@@ -81,9 +81,6 @@ class TARDISListenerRegisterer {
      * Registers all the listeners for the various events required to use the TARDIS.
      */
     void registerListeners() {
-        if (plugin.getConfig().getBoolean("creation.use_block_stack")) {
-            plugin.getPM().registerEvents(new TARDISBlockStackListener(plugin), plugin);
-        }
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
