@@ -18,8 +18,8 @@ permissions:
   tardis.delete:
     description: Allow players to delete any TARDIS.
     default: false
-  tardis.adandon:
-    description: Allow players to adandon their TARDIS.
+  tardis.abandon:
+    description: Allow players to abandon their TARDIS.
     default: op
   tardis.archive:
     description: Allow players to archive their TARDIS console.
