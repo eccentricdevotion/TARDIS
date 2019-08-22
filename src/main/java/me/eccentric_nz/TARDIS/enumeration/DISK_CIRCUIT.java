@@ -30,7 +30,9 @@ public enum DISK_CIRCUIT {
     AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
     ARS("TARDIS ARS Circuit", Material.FILLED_MAP),
     BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
+    BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD),
     CHAMELEON("TARDIS Chameleon Circuit", Material.FILLED_MAP),
+    HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
     INPUT("TARDIS Input Circuit", Material.FILLED_MAP),
     INVISIBILITY("TARDIS Invisibility Circuit", Material.FILLED_MAP),
     KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
@@ -66,6 +68,8 @@ public enum DISK_CIRCUIT {
         switch (this) {
             case AREA:
             case BIOME:
+            case BLANK:
+            case HANDLES:
             case PLAYER:
             case PRESET:
             case SAVE:

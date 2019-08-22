@@ -145,6 +145,7 @@ public class TARDISHandlesProgramListener implements Listener {
                         im.setDisplayName("Handles Program Disk");
                         im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
                         im.addItemFlags(ItemFlag.values());
+                        im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         player.getWorld().dropItemNaturally(player.getLocation(), is);
                         TARDISMessage.send(player, "HANDLES_SAVED");

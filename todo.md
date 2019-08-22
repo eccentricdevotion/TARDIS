@@ -15,8 +15,10 @@
 7. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
 8. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
+   * Update Disk Storage defaults
 9. Use TARDIS Disguises for Arch feature
-10. Finish disguise listeners
+10. Test hey handles land
+11. Test handles for issue 1630
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -29,9 +31,8 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
-0. Use TARDIS Disguises if LibsDisguises is not available
-1. CustomModelData for all TARDIS items
-2. CustomModelData for Weeping Angel wings?
+1. CustomModelData for all TARDIS items - _started_
+2. CustomModelData for Weeping Angel wings? - _started_
 3. Custom Entity models using Optifine (when they can be applied to named entities)
 4. Rare armour drops
 5. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
