@@ -39,9 +39,11 @@ public class TARDISWalls {
         BLOCKS.add(Material.BIRCH_LOG);
         BLOCKS.add(Material.BIRCH_PLANKS);
         BLOCKS.add(Material.BLACK_CONCRETE);
+        BLOCKS.add(Material.BLACK_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.BLACK_TERRACOTTA);
         BLOCKS.add(Material.BLACK_WOOL);
         BLOCKS.add(Material.BLUE_CONCRETE);
+        BLOCKS.add(Material.BLUE_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.BLUE_TERRACOTTA);
         BLOCKS.add(Material.BLUE_WOOL);
         BLOCKS.add(Material.BONE_BLOCK);
@@ -70,24 +72,30 @@ public class TARDISWalls {
         BLOCKS.add(Material.END_STONE_BRICKS);
         BLOCKS.add(Material.GRANITE);
         BLOCKS.add(Material.GRAY_CONCRETE);
+        BLOCKS.add(Material.GRAY_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.GRAY_TERRACOTTA);
         BLOCKS.add(Material.GRAY_WOOL);
         BLOCKS.add(Material.GREEN_CONCRETE);
+        BLOCKS.add(Material.GREEN_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.GREEN_TERRACOTTA);
         BLOCKS.add(Material.GREEN_WOOL);
         BLOCKS.add(Material.HAY_BLOCK);
         BLOCKS.add(Material.JUNGLE_LOG);
         BLOCKS.add(Material.JUNGLE_PLANKS);
         BLOCKS.add(Material.LIGHT_BLUE_CONCRETE);
+        BLOCKS.add(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.LIGHT_BLUE_TERRACOTTA);
         BLOCKS.add(Material.LIGHT_BLUE_WOOL);
         BLOCKS.add(Material.LIGHT_GRAY_CONCRETE);
+        BLOCKS.add(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.LIGHT_GRAY_TERRACOTTA);
         BLOCKS.add(Material.LIGHT_GRAY_WOOL);
         BLOCKS.add(Material.LIME_CONCRETE);
+        BLOCKS.add(Material.LIME_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.LIME_TERRACOTTA);
         BLOCKS.add(Material.LIME_WOOL);
         BLOCKS.add(Material.MAGENTA_CONCRETE);
+        BLOCKS.add(Material.MAGENTA_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.MAGENTA_TERRACOTTA);
         BLOCKS.add(Material.MAGENTA_WOOL);
         BLOCKS.add(Material.MOSSY_COBBLESTONE);
@@ -99,10 +107,12 @@ public class TARDISWalls {
         BLOCKS.add(Material.OAK_LOG);
         BLOCKS.add(Material.OAK_PLANKS);
         BLOCKS.add(Material.ORANGE_CONCRETE);
+        BLOCKS.add(Material.ORANGE_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.ORANGE_TERRACOTTA);
         BLOCKS.add(Material.ORANGE_WOOL);
         BLOCKS.add(Material.PACKED_ICE);
         BLOCKS.add(Material.PINK_CONCRETE);
+        BLOCKS.add(Material.PINK_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.PINK_TERRACOTTA);
         BLOCKS.add(Material.PINK_WOOL);
         BLOCKS.add(Material.PODZOL);
@@ -112,6 +122,7 @@ public class TARDISWalls {
         BLOCKS.add(Material.PRISMARINE);
         BLOCKS.add(Material.PRISMARINE_BRICKS);
         BLOCKS.add(Material.PURPLE_CONCRETE);
+        BLOCKS.add(Material.PURPLE_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.PURPLE_TERRACOTTA);
         BLOCKS.add(Material.PURPLE_WOOL);
         BLOCKS.add(Material.PURPUR_BLOCK);
@@ -119,6 +130,7 @@ public class TARDISWalls {
         BLOCKS.add(Material.QUARTZ_BLOCK);
         BLOCKS.add(Material.QUARTZ_PILLAR);
         BLOCKS.add(Material.RED_CONCRETE);
+        BLOCKS.add(Material.RED_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.RED_MUSHROOM_BLOCK);
         BLOCKS.add(Material.RED_NETHER_BRICKS);
         BLOCKS.add(Material.RED_SANDSTONE);
@@ -134,49 +146,35 @@ public class TARDISWalls {
         BLOCKS.add(Material.STONE_BRICKS);
         BLOCKS.add(Material.TERRACOTTA);
         BLOCKS.add(Material.WHITE_CONCRETE);
+        BLOCKS.add(Material.WHITE_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.WHITE_TERRACOTTA);
         BLOCKS.add(Material.WHITE_WOOL);
         BLOCKS.add(Material.YELLOW_CONCRETE);
+        BLOCKS.add(Material.YELLOW_GLAZED_TERRACOTTA);
         BLOCKS.add(Material.YELLOW_TERRACOTTA);
         BLOCKS.add(Material.YELLOW_WOOL);
         if (TARDIS.plugin.getConfig().getBoolean("allow.all_blocks")) {
             BLOCKS.add(Material.BEDROCK);
-            BLOCKS.add(Material.BLACK_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.BLUE_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.BROWN_GLAZED_TERRACOTTA);
+            BLOCKS.add(Material.BROWN_GLAZED_TERRACOTTA); // MCDW TARDIS model
             BLOCKS.add(Material.COAL_ORE);
-            BLOCKS.add(Material.CYAN_GLAZED_TERRACOTTA);
+            BLOCKS.add(Material.CYAN_GLAZED_TERRACOTTA); // MCDW TARDIS model
             BLOCKS.add(Material.DIAMOND_BLOCK);
             BLOCKS.add(Material.DIAMOND_ORE);
             BLOCKS.add(Material.EMERALD_BLOCK);
             BLOCKS.add(Material.EMERALD_ORE);
             BLOCKS.add(Material.GOLD_BLOCK);
             BLOCKS.add(Material.GOLD_ORE);
-            BLOCKS.add(Material.GRAY_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.GREEN_GLAZED_TERRACOTTA);
             BLOCKS.add(Material.IRON_BLOCK);
             BLOCKS.add(Material.IRON_ORE);
-            BLOCKS.add(Material.JACK_O_LANTERN);
+            BLOCKS.add(Material.JACK_O_LANTERN); // MCDW TARDIS model
             BLOCKS.add(Material.LAPIS_BLOCK);
-            BLOCKS.add(Material.LAPIS_BLOCK);
-            BLOCKS.add(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.LIME_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.LIME_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.MAGENTA_GLAZED_TERRACOTTA);
             BLOCKS.add(Material.MELON);
             BLOCKS.add(Material.NETHER_QUARTZ_ORE);
             BLOCKS.add(Material.OBSIDIAN);
-            BLOCKS.add(Material.ORANGE_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.PINK_GLAZED_TERRACOTTA);
             BLOCKS.add(Material.PUMPKIN);
-            BLOCKS.add(Material.PURPLE_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.RED_GLAZED_TERRACOTTA);
             BLOCKS.add(Material.REDSTONE_BLOCK);
             BLOCKS.add(Material.REDSTONE_ORE);
             BLOCKS.add(Material.SEA_LANTERN);
-            BLOCKS.add(Material.WHITE_GLAZED_TERRACOTTA);
-            BLOCKS.add(Material.YELLOW_GLAZED_TERRACOTTA);
         }
     }
 }
