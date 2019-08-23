@@ -22,12 +22,17 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 
@@ -42,14 +47,16 @@ import java.util.HashMap;
 public class TARDISBlockPlaceListener implements Listener {
 
     private final TARDIS plugin;
+    private final NamespacedKey nsk;
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
+        nsk = new NamespacedKey(this.plugin, "customBlock");
     }
 
     /**
-     * Listens for player block placing. If the player places a stack of blocks in a certain pattern for example (but
-     * not limited to): IRON_BLOCK, LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
+     * Listens for a player placing a block. If the player places a brown mushroom block with a TARDIS namespaced key,
+     * then convert it to one of the unused brown mushroom block states.
      *
      * @param event a player placing a block
      */
@@ -62,15 +69,52 @@ public class TARDISBlockPlaceListener implements Listener {
             TARDISMessage.send(player, "NOT_IN_ZERO");
             return;
         }
-        String block = event.getBlockPlaced().getLocation().toString();
-        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
+        String blockStr = event.getBlockPlaced().getLocation().toString();
+        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(blockStr)) {
             event.setCancelled(true);
             TARDISMessage.send(player, "NO_PLACE");
+        }
+        ItemStack is = event.getItemInHand();
+        if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.getPersistentDataContainer().has(nsk, PersistentDataType.INTEGER)) {
+                int which = im.getPersistentDataContainer().get(nsk, PersistentDataType.INTEGER);
+                MultipleFacing multipleFacing = (MultipleFacing) Material.BROWN_MUSHROOM_BLOCK.createBlockData();
+                switch (which) {
+                    case 1:
+                        multipleFacing.setFace(BlockFace.DOWN, false);
+                        multipleFacing.setFace(BlockFace.EAST, false);
+                        multipleFacing.setFace(BlockFace.NORTH, false);
+                        multipleFacing.setFace(BlockFace.SOUTH, false);
+                        multipleFacing.setFace(BlockFace.UP, false);
+                        multipleFacing.setFace(BlockFace.WEST, true);
+                        break;
+                    case 2:
+                        multipleFacing.setFace(BlockFace.DOWN, false);
+                        multipleFacing.setFace(BlockFace.EAST, false);
+                        multipleFacing.setFace(BlockFace.NORTH, false);
+                        multipleFacing.setFace(BlockFace.SOUTH, true);
+                        multipleFacing.setFace(BlockFace.UP, false);
+                        multipleFacing.setFace(BlockFace.WEST, false);
+                        break;
+                    case 3:
+                        multipleFacing.setFace(BlockFace.DOWN, false);
+                        multipleFacing.setFace(BlockFace.EAST, false);
+                        multipleFacing.setFace(BlockFace.NORTH, false);
+                        multipleFacing.setFace(BlockFace.SOUTH, true);
+                        multipleFacing.setFace(BlockFace.UP, false);
+                        multipleFacing.setFace(BlockFace.WEST, true);
+                        break;
+                    default:
+                }
+                Block block = event.getBlockPlaced();
+                block.setBlockData(multipleFacing);
+                return;
+            }
         }
         if (!player.hasPermission("tardis.rift")) {
             return;
         }
-        ItemStack is = event.getItemInHand();
         if (!is.getType().equals(Material.BEACON) || !is.hasItemMeta()) {
             return;
         }
