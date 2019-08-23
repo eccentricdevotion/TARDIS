@@ -83,6 +83,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("language", "preferences");
         firstsStr.put("list", "");
         firstsStr.put("make_preset", "");
+        firstsStr.put("mushroom", "");
         firstsStr.put("playercount", "");
         firstsStr.put("prune", "");
         firstsStr.put("prunelist", "");
@@ -257,6 +258,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
+                }
+                if (first.equals("mushroom")) {
+                    return new TARDISMushroomCommand(plugin).give(sender, args);
                 }
                 if (first.equals("arch")) {
                     if (args.length > 2) {
