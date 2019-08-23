@@ -23,12 +23,15 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
+
+import java.util.Collection;
 
 /**
  * @author eccentric_nz
@@ -73,6 +76,12 @@ public class TARDISBlockPhysicsListener implements Listener {
                 if (block.getType().equals(Material.VINE)) {
                     event.setCancelled(true);
                 }
+            }
+        } else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
+            MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
+            Collection<BlockFace> faces = multipleFacing.getFaces();
+            if ((faces.size() == 1 && (faces.contains(BlockFace.SOUTH) || faces.contains(BlockFace.WEST))) || faces.size() == 2 && faces.contains(BlockFace.SOUTH) && faces.contains(BlockFace.WEST)) {
+                event.setCancelled(true);
             }
         }
     }
