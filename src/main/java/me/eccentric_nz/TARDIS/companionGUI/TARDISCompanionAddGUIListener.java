@@ -96,17 +96,17 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     }
 
     private void list(Player player) {
-        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
-            String comps = rs.getCompanions();
-            close(player);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+        close(player);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
+            if (rs.fromUUID(player.getUniqueId().toString())) {
+                String comps = rs.getCompanions();
                 ItemStack[] items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
                 Inventory cominv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
                 cominv.setContents(items);
                 player.openInventory(cominv);
-            }, 2L);
-        }
+            }
+        }, 5L);
     }
 
     private void addCompanion(int id, String comps, String puid) {
