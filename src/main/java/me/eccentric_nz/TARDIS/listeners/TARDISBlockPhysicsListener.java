@@ -80,7 +80,7 @@ public class TARDISBlockPhysicsListener implements Listener {
         } else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
             MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
             Collection<BlockFace> faces = multipleFacing.getFaces();
-            if ((faces.size() == 1 && (faces.contains(BlockFace.SOUTH) || faces.contains(BlockFace.WEST))) || faces.size() == 2 && faces.contains(BlockFace.SOUTH) && faces.contains(BlockFace.WEST)) {
+            if ((faces.size() == 1 && (faces.contains(BlockFace.SOUTH) || faces.contains(BlockFace.WEST) || faces.contains(BlockFace.NORTH))) || (faces.size() == 2 && faces.contains(BlockFace.SOUTH) && faces.contains(BlockFace.WEST)) || (faces.size() == 2 && faces.contains(BlockFace.NORTH) && faces.contains(BlockFace.WEST))) {
                 event.setCancelled(true);
             }
         }

@@ -105,6 +105,22 @@ public class TARDISBlockPlaceListener implements Listener {
                         multipleFacing.setFace(BlockFace.UP, false);
                         multipleFacing.setFace(BlockFace.WEST, true);
                         break;
+                    case 4:
+                        multipleFacing.setFace(BlockFace.DOWN, false);
+                        multipleFacing.setFace(BlockFace.EAST, false);
+                        multipleFacing.setFace(BlockFace.NORTH, true);
+                        multipleFacing.setFace(BlockFace.SOUTH, false);
+                        multipleFacing.setFace(BlockFace.UP, false);
+                        multipleFacing.setFace(BlockFace.WEST, false);
+                        break;
+                    case 5:
+                        multipleFacing.setFace(BlockFace.DOWN, false);
+                        multipleFacing.setFace(BlockFace.EAST, false);
+                        multipleFacing.setFace(BlockFace.NORTH, true);
+                        multipleFacing.setFace(BlockFace.SOUTH, false);
+                        multipleFacing.setFace(BlockFace.UP, false);
+                        multipleFacing.setFace(BlockFace.WEST, true);
+                        break;
                     default:
                 }
                 Block block = event.getBlockPlaced();

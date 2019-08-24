@@ -17,7 +17,7 @@ import java.util.List;
 public class TARDISMushroomCommand {
 
     private final TARDIS plugin;
-    private final List<String> blockNames = Arrays.asList("", "The Moment", "Siege Cube", "Police Box");
+    private final List<String> blockNames = Arrays.asList("", "The Moment", "Siege Cube", "Police Box", "Something", "Something activated");
     private final NamespacedKey nsk;
 
     public TARDISMushroomCommand(TARDIS plugin) {
