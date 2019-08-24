@@ -19,6 +19,7 @@
 9. Use TARDIS Disguises for Arch feature
 10. Test hey handles land
 11. Test handles for issue 1630
+12. Fix lore in /tgive command (at least for the schematic wand)
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

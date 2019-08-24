@@ -17,6 +17,7 @@ planets:
     world_type: BUFFET
     environment: NORMAL
     generator: DEFAULT
+    keep_spawn_in_memory: false
   Siluria:
     enabled: false
     resource_pack: default
@@ -25,6 +26,7 @@ planets:
     world_type: BUFFET
     environment: NORMAL
     generator: DEFAULT
+    keep_spawn_in_memory: false
   Gallifrey:
     enabled: false
     resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
@@ -33,6 +35,7 @@ planets:
     world_type: BUFFET
     environment: NORMAL
     generator: DEFAULT
+    keep_spawn_in_memory: false
   TARDIS_TimeVortex:
     enabled: true
     resource_pack: default
@@ -45,7 +48,8 @@ planets:
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
-  #      keepInventory: true
+    #      keepInventory: true
+    keep_spawn_in_memory: false
   TARDIS_Zero_Room:
     enabled: false
     resource_pack: default
@@ -59,3 +63,4 @@ planets:
       doWeatherCycle: false
       doDaylightCycle: false
       announceAdvancements: false
+    keep_spawn_in_memory: false
