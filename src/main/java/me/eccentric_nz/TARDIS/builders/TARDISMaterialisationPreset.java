@@ -51,7 +51,7 @@ class TARDISMaterialisationPreset implements Runnable {
     private final PRESET preset;
     private int task;
     private int i;
-    private final BlockData cham_id;
+    private final BlockData data;
     private final ADAPTION adapt;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
@@ -72,25 +72,29 @@ class TARDISMaterialisationPreset implements Runnable {
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the transparency of materialisation by
      * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
-     * @param plugin  instance of the TARDIS plugin
-     * @param bd      the Materialisation data
-     * @param preset  the preset to construct
-     * @param cham_id the chameleon block data for the police box
-     * @param adapt   the chameleon circuit adaption setting
-     * @param loops   the number of loops to run
+     * @param plugin instance of the TARDIS plugin
+     * @param bd     the Materialisation data
+     * @param preset the preset to construct
+     * @param data   the chameleon block data for the police box
+     * @param adapt  the chameleon circuit adaption setting
+     * @param loops  the number of loops to run
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData cham_id, ADAPTION adapt, int loops) {
+    public TARDISMaterialisationPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, ADAPTION adapt, int loops) {
         this.plugin = plugin;
         this.bd = bd;
         this.loops = loops;
         i = 0;
         this.preset = preset;
-        this.cham_id = cham_id;
+        this.data = data;
         this.adapt = adapt;
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(TARDISConstants.RANDOM.nextInt(2));
         }
-        if (this.preset.equals(PRESET.CONSTRUCT)) {
+        if (preset.isColoured()) {
+            column = plugin.getBoxes().getColumn(preset, bd.getDirection());
+            stained_column = plugin.getBoxes().getStained(preset, bd.getDirection());
+            glass_column = plugin.getBoxes().getGlass(preset, bd.getDirection());
+        } else if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stainData", bd.getDirection()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glassData", bd.getDirection()).getColumn();
@@ -260,7 +264,7 @@ class TARDISMaterialisationPreset implements Runnable {
                             Material mat = colData[yy].getMaterial();
                             switch (mat) {
                                 case DIRT:
-                                    BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
+                                    BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? data : colData[yy];
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
                                     break;
                                 case WHITE_WOOL:
@@ -272,7 +276,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, party, bd.getTardisID());
                                     break;
                                 case BLUE_WOOL:
-                                    BlockData old = ((preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && adapt.equals(ADAPTION.BLOCK)) ? cham_id : colData[yy];
+                                    BlockData old = ((preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && adapt.equals(ADAPTION.BLOCK)) ? data : colData[yy];
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, old, bd.getTardisID());
                                     break;
                                 case TORCH: // lamps, glowstone and torches
@@ -498,7 +502,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case LIGHT_GRAY_TERRACOTTA:
-                                    BlockData chai = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.BIOME)) ? cham_id : colData[yy];
+                                    BlockData chai = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.BIOME)) ? data : colData[yy];
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
                                     break;
                                 default: // everything else
@@ -577,7 +581,7 @@ class TARDISMaterialisationPreset implements Runnable {
                         Material mat = coldatas[yy].getMaterial();
                         switch (mat) {
                             case DIRT:
-                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : coldatas[yy];
+                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? data : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                                 break;
                             case BEDROCK:
@@ -626,7 +630,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, directional);
                                 } else if (adapt.equals(ADAPTION.BLOCK) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham_id);
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, data);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, mat);
                                 }
@@ -683,7 +687,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 break;
                             case LIGHT_GRAY_STAINED_GLASS:
-                                Material chag = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.BIOME)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()) : mat;
+                                Material chag = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.BIOME)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chag);
                             case WHITE_STAINED_GLASS:
                                 Material chaw = (preset.equals(PRESET.FLOWER)) ? random_glass : mat;
@@ -694,7 +698,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chal);
                                 break;
                             case BLUE_STAINED_GLASS:
-                                Material chad = ((preset.equals(PRESET.OLD) && adapt.equals(ADAPTION.BLOCK)) || preset.equals(PRESET.SUBMERGED)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()) : mat;
+                                Material chad = ((preset.equals(PRESET.OLD) && adapt.equals(ADAPTION.BLOCK)) || preset.equals(PRESET.SUBMERGED)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
                                 break;
                             case SKELETON_SKULL:
@@ -714,7 +718,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                 }
                                 break;
                             case LIGHT_GRAY_TERRACOTTA:
-                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : coldatas[yy];
+                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? data : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                                 break;
                             default: // everything else

@@ -305,7 +305,7 @@ class TARDISPresetInventory {
                 mine, cre, pea, lamp, candy, toi, rob, tor, pine,
                 pun, por, cake, grave, topsy, mush, fen, gaz, app,
                 lig, lib, sno, jail, pan, dou, pris, cho, and,
-                dio, gra, null, custom, null, null, null, back, close
+                dio, gra, null, custom, null, null, page, back, close
         };
     }
 

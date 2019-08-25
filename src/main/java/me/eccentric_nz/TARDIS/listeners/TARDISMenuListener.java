@@ -73,6 +73,7 @@ public class TARDISMenuListener {
         map.put(ChatColor.DARK_RED + "Chameleon Construction", 18);
         map.put(ChatColor.DARK_RED + "Chameleon Help", 54);
         map.put(ChatColor.DARK_RED + "Chameleon Presets", 54);
+        map.put(ChatColor.DARK_RED + "Chameleon Police Boxes", 27);
         map.put(ChatColor.DARK_RED + "Chameleon Template", 54);
         map.put(ChatColor.DARK_RED + "Companions", 54);
         map.put(ChatColor.DARK_RED + "Destination Terminal", 54);

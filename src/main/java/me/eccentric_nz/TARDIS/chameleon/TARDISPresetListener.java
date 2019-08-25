@@ -516,6 +516,16 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
                                     break;
+                                case 51:
+                                    // go to page two (coloured police boxes)
+                                    close(player);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        ItemStack[] boxes = new TARDISPoliceBoxInventory(plugin).getBoxes();
+                                        Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Police Boxes");
+                                        gui.setContents(boxes);
+                                        player.openInventory(gui);
+                                    }, 2L);
+                                    break;
                                 case 52:
                                     // return to Chameleon Circuit GUI
                                     close(player);

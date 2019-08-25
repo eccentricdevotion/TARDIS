@@ -121,6 +121,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPhysicsListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISPoliceBoxListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonConstructorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonConstructorOpenCloseListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonHelpListener(plugin), plugin);

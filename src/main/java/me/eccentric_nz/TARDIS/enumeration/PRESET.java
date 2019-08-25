@@ -92,7 +92,24 @@ public enum PRESET {
     SAVANNA(Material.BARRIER, "SAVANNA", "", true, true),
     TAIGA(Material.BARRIER, "TAIGA", "", true, true),
     COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true),
-    BOAT(Material.BARRIER, "BOAT", "", false, false);
+    BOAT(Material.BARRIER, "BOAT", "", false, false),
+    // coloured police boxes
+    POLICE_BOX_BLUE(Material.BLUE_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_WHITE(Material.WHITE_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_ORANGE(Material.ORANGE_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_MAGENTA(Material.MAGENTA_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_LIGHT_BLUE(Material.LIGHT_BLUE_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_YELLOW(Material.YELLOW_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_LIME(Material.LIME_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_PINK(Material.PINK_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_GRAY(Material.GRAY_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_LIGHT_GRAY(Material.LIGHT_GRAY_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_CYAN(Material.CYAN_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_PURPLE(Material.PURPLE_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_BROWN(Material.BROWN_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_GREEN(Material.GREEN_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_RED(Material.RED_CONCRETE_POWDER, "", "", false, false),
+    POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, "", "", false, false);
 
     Material material;
     String firstLine;
@@ -136,6 +153,30 @@ public enum PRESET {
     static {
         for (PRESET preset : values()) {
             BY_MATERIAL.put(preset.getMaterial(), preset);
+        }
+    }
+
+    public boolean isColoured() {
+        switch (this) {
+            case POLICE_BOX_BLUE:
+            case POLICE_BOX_WHITE:
+            case POLICE_BOX_ORANGE:
+            case POLICE_BOX_MAGENTA:
+            case POLICE_BOX_LIGHT_BLUE:
+            case POLICE_BOX_YELLOW:
+            case POLICE_BOX_LIME:
+            case POLICE_BOX_PINK:
+            case POLICE_BOX_GRAY:
+            case POLICE_BOX_LIGHT_GRAY:
+            case POLICE_BOX_CYAN:
+            case POLICE_BOX_PURPLE:
+            case POLICE_BOX_BROWN:
+            case POLICE_BOX_GREEN:
+            case POLICE_BOX_RED:
+            case POLICE_BOX_BLACK:
+                return true;
+            default:
+                return false;
         }
     }
 }
