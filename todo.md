@@ -18,7 +18,7 @@
    * Update Disk Storage defaults
 9. Use TARDIS Disguises for Arch feature
 10. Test hey handles land
-11. Test handles for issue 1630
+11. `/handles remove` command
 12. Fix lore in /tgive command (at least for the schematic wand)
 
 ## TARDIS data pack

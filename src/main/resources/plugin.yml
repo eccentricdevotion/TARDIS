@@ -633,6 +633,9 @@ commands:
     playercount:
       description: Check or set a player's TARDIS count.
       usage: /<command> playercount [player] [count]
+    assemble:
+      description: Make a player's TARDIS reassemble itself after a HADS dispersal.
+      usage: /<command> assemble [player]
   tardisgive:
     aliases: tgive
     description: Give TARDIS items to a player.
