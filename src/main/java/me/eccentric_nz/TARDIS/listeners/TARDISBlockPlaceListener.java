@@ -18,13 +18,13 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,53 +75,15 @@ public class TARDISBlockPlaceListener implements Listener {
             TARDISMessage.send(player, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
-        if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) && is.hasItemMeta()) {
+        if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK)) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.getPersistentDataContainer().has(nsk, PersistentDataType.INTEGER)) {
                 int which = im.getPersistentDataContainer().get(nsk, PersistentDataType.INTEGER);
-                MultipleFacing multipleFacing = (MultipleFacing) Material.BROWN_MUSHROOM_BLOCK.createBlockData();
-                switch (which) {
-                    case 1:
-                        multipleFacing.setFace(BlockFace.DOWN, false);
-                        multipleFacing.setFace(BlockFace.EAST, false);
-                        multipleFacing.setFace(BlockFace.NORTH, false);
-                        multipleFacing.setFace(BlockFace.SOUTH, false);
-                        multipleFacing.setFace(BlockFace.UP, false);
-                        multipleFacing.setFace(BlockFace.WEST, true);
-                        break;
-                    case 2:
-                        multipleFacing.setFace(BlockFace.DOWN, false);
-                        multipleFacing.setFace(BlockFace.EAST, false);
-                        multipleFacing.setFace(BlockFace.NORTH, false);
-                        multipleFacing.setFace(BlockFace.SOUTH, true);
-                        multipleFacing.setFace(BlockFace.UP, false);
-                        multipleFacing.setFace(BlockFace.WEST, false);
-                        break;
-                    case 3:
-                        multipleFacing.setFace(BlockFace.DOWN, false);
-                        multipleFacing.setFace(BlockFace.EAST, false);
-                        multipleFacing.setFace(BlockFace.NORTH, false);
-                        multipleFacing.setFace(BlockFace.SOUTH, true);
-                        multipleFacing.setFace(BlockFace.UP, false);
-                        multipleFacing.setFace(BlockFace.WEST, true);
-                        break;
-                    case 4:
-                        multipleFacing.setFace(BlockFace.DOWN, false);
-                        multipleFacing.setFace(BlockFace.EAST, false);
-                        multipleFacing.setFace(BlockFace.NORTH, true);
-                        multipleFacing.setFace(BlockFace.SOUTH, false);
-                        multipleFacing.setFace(BlockFace.UP, false);
-                        multipleFacing.setFace(BlockFace.WEST, false);
-                        break;
-                    case 5:
-                        multipleFacing.setFace(BlockFace.DOWN, false);
-                        multipleFacing.setFace(BlockFace.EAST, false);
-                        multipleFacing.setFace(BlockFace.NORTH, true);
-                        multipleFacing.setFace(BlockFace.SOUTH, false);
-                        multipleFacing.setFace(BlockFace.UP, false);
-                        multipleFacing.setFace(BlockFace.WEST, true);
-                        break;
-                    default:
+                MultipleFacing multipleFacing;
+                if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
+                } else {
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
                 }
                 Block block = event.getBlockPlaced();
                 block.setBlockData(multipleFacing);

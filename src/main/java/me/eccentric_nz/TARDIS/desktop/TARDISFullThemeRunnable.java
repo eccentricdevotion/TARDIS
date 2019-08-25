@@ -258,8 +258,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (rsv.resultSet()) {
                 rsv.getData().forEach((u) -> {
                     Player pv = plugin.getServer().getPlayer(u);
-                    pv.teleport(loc);
-                    TARDISMessage.send(pv, "UPGRADE_TELEPORT");
+                    if (pv != null) { // may have gone offline!
+                        pv.teleport(loc);
+                        TARDISMessage.send(pv, "UPGRADE_TELEPORT");
+                    }
                 });
             }
             // clear lamps table as we'll be adding the new lamp positions later
