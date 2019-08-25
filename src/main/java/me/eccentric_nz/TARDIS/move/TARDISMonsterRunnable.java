@@ -23,10 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
-import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -349,8 +346,12 @@ public class TARDISMonsterRunnable implements Runnable {
                     if (m.getEquipment() != null) {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
-                        if (m.getEquipment().getHelmet().getType().equals(Material.VINE) && plugin.getPM().isPluginEnabled("LibsDisguises")) {
-                            TARDISDalekDisguiser.dalekanium(skeleton);
+                        if (m.getEquipment().getHelmet().getType().equals(Material.VINE)) {
+                            if (plugin.isDisguisesOnServer()) {
+                                TARDISDalekLibsDisguiser.dalekanium(skeleton);
+                            } else {
+                                TARDISDalekDisguiser.dalekanium(skeleton);
+                            }
                         }
                     }
                     break;
