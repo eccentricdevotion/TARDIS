@@ -254,6 +254,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster")) {
             ItemMeta im = result.getItemMeta();
             im.addItemFlags(ItemFlag.values());
+            result.setItemMeta(im);
         }
         result.setAmount(amount);
         player.getInventory().addItem(result);

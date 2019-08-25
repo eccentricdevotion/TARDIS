@@ -63,7 +63,7 @@ public class TARDISShapelessRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(s);
         if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
-            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
+            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("~")));
         }
         if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
             int map = TARDISNumberParsers.parseInt(result_iddata[1]);

@@ -19,8 +19,7 @@
 9. Use TARDIS Disguises for Arch feature
 10. Test hey handles land
 11. `/handles remove` command
-12. Fix lore in /tgive command (at least for the schematic wand)
-13. Exit nicely when walking out of the TARDIS interior to the new coloured police boxes
+12. Exit nicely when walking out of the TARDIS interior to the new coloured police boxes
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
