@@ -38,10 +38,13 @@ public class TARDISMushroomCommand {
                 which = redSubs.indexOf(args[1]);
                 mushroom = Material.RED_MUSHROOM_BLOCK;
                 displayName = redBlockNames.get(which);
-            } else {
+            } else if (brownSubs.contains(args[1])) {
                 which = brownSubs.indexOf(args[1]);
                 mushroom = Material.BROWN_MUSHROOM_BLOCK;
                 displayName = brownBlockNames.get(which);
+            } else {
+                TARDISMessage.message(sender, "Invalid TARDIS mushroom block state!");
+                return true;
             }
             if (which != 0) {
                 ItemStack is = new ItemStack(mushroom, 16);
