@@ -36,7 +36,6 @@ public class PoliceBoxLightGrayEastPreset extends PoliceBoxPreset {
         }
         blueprintData[8][0] = "minecraft:oak_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]";
         blueprintData[8][1] = "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=false,up=true,west=true]";
-        blueprintData[8][2] = "minecraft:light_gray_carpet";
         setBlueprintData(blueprintData);
         // set stained data strings
         String[][] stainedData = new String[10][4];
@@ -45,7 +44,7 @@ public class PoliceBoxLightGrayEastPreset extends PoliceBoxPreset {
                 stainedData[c][r] = "minecraft:air";
             }
         }
-        stainedData[8][0] = "minecraft:oak_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]";
+        stainedData[8][0] = "minecraft:light_gray_stained_glass";
         stainedData[8][1] = "minecraft:light_gray_stained_glass";
         stainedData[8][2] = "minecraft:light_gray_stained_glass";
         setStainedData(stainedData);
@@ -56,7 +55,7 @@ public class PoliceBoxLightGrayEastPreset extends PoliceBoxPreset {
                 glassData[c][r] = "minecraft:air";
             }
         }
-        glassData[8][0] = "minecraft:oak_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]";
+        glassData[8][0] = "minecraft:glass";
         glassData[8][1] = "minecraft:glass";
         glassData[8][2] = "minecraft:glass";
         setGlassData(glassData);

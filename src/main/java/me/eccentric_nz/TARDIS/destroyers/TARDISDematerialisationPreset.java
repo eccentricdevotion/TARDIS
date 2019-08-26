@@ -75,7 +75,11 @@ class TARDISDematerialisationPreset implements Runnable {
         this.preset = preset;
         i = 0;
         this.cham_id = cham_id;
-        if (this.preset.equals(PRESET.CONSTRUCT)) {
+        if (preset.isColoured()) {
+            column = plugin.getBoxes().getColumn(preset, dd.getDirection());
+            stained_column = plugin.getBoxes().getStained(preset, dd.getDirection());
+            glass_column = plugin.getBoxes().getGlass(preset, dd.getDirection());
+        } else if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection()).getColumn();

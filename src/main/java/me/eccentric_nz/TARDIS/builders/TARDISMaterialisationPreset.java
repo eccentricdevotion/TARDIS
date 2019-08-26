@@ -314,26 +314,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     if (door) {
                                         // remember the door location
-                                        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
-                                        String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
-                                        plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-                                        // should insert the door when tardis is first made, and then update location there after!
-                                        HashMap<String, Object> whered = new HashMap<>();
-                                        whered.put("door_type", 0);
-                                        whered.put("tardis_id", bd.getTardisID());
-                                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                                        HashMap<String, Object> setd = new HashMap<>();
-                                        setd.put("door_location", doorloc);
-                                        setd.put("door_direction", bd.getDirection().toString());
-                                        if (rsd.resultSet()) {
-                                            HashMap<String, Object> whereid = new HashMap<>();
-                                            whereid.put("door_id", rsd.getDoor_id());
-                                            qf.doUpdate("doors", setd, whereid);
-                                        } else {
-                                            setd.put("tardis_id", bd.getTardisID());
-                                            setd.put("door_type", 0);
-                                            qf.doInsert("doors", setd);
-                                        }
+                                        saveDoorLocation(world, xx, y, yy, zz, qf);
                                     } else {
                                         String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
@@ -666,7 +647,12 @@ class TARDISMaterialisationPreset implements Runnable {
                             case JUNGLE_TRAPDOOR:
                             case ACACIA_TRAPDOOR:
                             case DARK_OAK_TRAPDOOR:
-                                // don't change the door
+                                if (preset.isColoured()) {
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    // remember the door location
+                                    saveDoorLocation(world, xx, y, yy, zz, qf);
+                                }
+                                // else don't change the door
                                 break;
                             case LEVER:
                                 // remember this block and do at end
@@ -847,6 +833,30 @@ class TARDISMaterialisationPreset implements Runnable {
         HashMap<String, Object> setj = new HashMap<>();
         setj.put(field, location);
         new QueryFactory(plugin).doUpdate("junk", setj, wherej);
+    }
+
+    private void saveDoorLocation(World world, int xx, int y, int yy, int zz, QueryFactory qf) {
+        // remember the door location
+        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+        String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+        plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
+        // should insert the door when tardis is first made, and then update location there after!
+        HashMap<String, Object> whered = new HashMap<>();
+        whered.put("door_type", 0);
+        whered.put("tardis_id", bd.getTardisID());
+        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+        HashMap<String, Object> setd = new HashMap<>();
+        setd.put("door_location", doorloc);
+        setd.put("door_direction", bd.getDirection().toString());
+        if (rsd.resultSet()) {
+            HashMap<String, Object> whereid = new HashMap<>();
+            whereid.put("door_id", rsd.getDoor_id());
+            qf.doUpdate("doors", setd, whereid);
+        } else {
+            setd.put("tardis_id", bd.getTardisID());
+            setd.put("door_type", 0);
+            qf.doInsert("doors", setd);
+        }
     }
 
     public void setTask(int task) {
