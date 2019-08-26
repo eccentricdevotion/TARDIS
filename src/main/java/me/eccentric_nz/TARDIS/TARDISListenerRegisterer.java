@@ -242,16 +242,14 @@ class TARDISListenerRegisterer {
             if (plugin.getConfig().getBoolean("allow.zero_room")) {
                 new TARDISZeroRoomPacketListener(plugin);
             }
-            if (plugin.isDisguisesOnServer()) {
-                if (plugin.getConfig().getBoolean("arch.enabled")) {
-                    plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
-                    plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
-                    plugin.getPM().registerEvents(new TARDISRespawnListener(plugin), plugin);
-                    if (plugin.getConfig().getBoolean("arch.switch_inventory")) {
-                        if (!plugin.getInvManager().equals(INVENTORY_MANAGER.NONE)) {
-                            plugin.getPM().registerEvents(new TARDISInventoryPluginHelper(plugin), plugin);
-                        }
-                    }
+        }
+        if (plugin.getConfig().getBoolean("arch.enabled")) {
+            plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISRespawnListener(plugin), plugin);
+            if (plugin.getConfig().getBoolean("arch.switch_inventory")) {
+                if (!plugin.getInvManager().equals(INVENTORY_MANAGER.NONE)) {
+                    plugin.getPM().registerEvents(new TARDISInventoryPluginHelper(plugin), plugin);
                 }
             }
         }

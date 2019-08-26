@@ -154,7 +154,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("mushroom")) {
                 return partial(lastArg, MUSHROOM_SUBS);
             }
-            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("set_size") || sub.equals("undisguise")) {
+            if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("set_size") || sub.equals("undisguise")) {
                 // return null to default to online player name matching
                 return null;
             } else {

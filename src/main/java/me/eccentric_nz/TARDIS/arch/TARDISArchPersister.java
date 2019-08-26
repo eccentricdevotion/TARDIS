@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.arch;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -150,15 +148,20 @@ public class TARDISArchPersister {
                     long time = System.currentTimeMillis() + rs.getLong("arch_time");
                     TARDISWatchData twd = new TARDISWatchData(name, time);
                     plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
-                    if (DisguiseAPI.isDisguised(player)) {
-                        DisguiseAPI.undisguiseToAll(player);
+                    if (plugin.isDisguisesOnServer()) {
+                        TARDISArchLibsDisguise.undisguise(player);
+                    } else {
+                        TARDISArchDisguise.undisguise(player);
                     }
-                    PlayerDisguise playerDisguise = new PlayerDisguise(name);
-                    playerDisguise.setHideHeldItemFromSelf(false);
-                    playerDisguise.setViewSelfDisguise(false);
-                    DisguiseAPI.disguiseToAll(player, playerDisguise);
-                    player.setDisplayName(name);
-                    player.setPlayerListName(name);
+                    if (plugin.isDisguisesOnServer()) {
+                        TARDISArchLibsDisguise.disguise(player, name);
+                    } else {
+                        TARDISArchDisguise.disguise(player, name);
+                    }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        player.setDisplayName(name);
+                        player.setPlayerListName(name);
+                    }, 5L);
                 }
             }
         } catch (SQLException ex) {
@@ -185,19 +188,26 @@ public class TARDISArchPersister {
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
                         Player player = plugin.getServer().getPlayer(UUID.fromString(rs.getString("uuid")));
-                        if (player != null && player.isOnline() && !DisguiseAPI.isDisguised(player)) {
+                        if (player != null && player.isOnline()) {
                             // disguise the player
                             String name = rs.getString("arch_name");
                             long time = System.currentTimeMillis() + rs.getLong("arch_time");
                             TARDISWatchData twd = new TARDISWatchData(name, time);
                             plugin.getTrackerKeeper().getJohnSmith().put(player.getUniqueId(), twd);
-                            DisguiseAPI.undisguiseToAll(player);
-                            PlayerDisguise playerDisguise = new PlayerDisguise(name);
-                            playerDisguise.setHideHeldItemFromSelf(false);
-                            playerDisguise.setViewSelfDisguise(false);
-                            DisguiseAPI.disguiseToAll(player, playerDisguise);
-                            player.setDisplayName(name);
-                            player.setPlayerListName(name);
+                            if (plugin.isDisguisesOnServer()) {
+                                TARDISArchLibsDisguise.undisguise(player);
+                            } else {
+                                TARDISArchDisguise.undisguise(player);
+                            }
+                            if (plugin.isDisguisesOnServer()) {
+                                TARDISArchLibsDisguise.disguise(player, name);
+                            } else {
+                                TARDISArchDisguise.disguise(player, name);
+                            }
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.setDisplayName(name);
+                                player.setPlayerListName(name);
+                            }, 5L);
                         }
                     }
                 }
