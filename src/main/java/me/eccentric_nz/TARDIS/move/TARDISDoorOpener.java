@@ -152,8 +152,25 @@ public class TARDISDoorOpener {
                         exdoor = tmp_loc.clone();
                         exdirection = COMPASS.valueOf(map.get("door_direction"));
                         // adjust for teleport
-                        exdoor.setX(exdoor.getX() + 0.5);
-                        exdoor.setZ(exdoor.getZ() + 0.5);
+                        if (preset.isColoured()) {
+                            switch (rsc.getDirection()) {
+                                case NORTH:
+                                    exdoor.add(0.5d, 0.0d, 1.0d);
+                                    break;
+                                case WEST:
+                                    exdoor.add(1.0d, 0.0d, 0.5d);
+                                    break;
+                                case SOUTH:
+                                    exdoor.add(0.5d, 0.0d, -1.0d);
+                                    break;
+                                default:
+                                    exdoor.add(-1.0d, 0.0d, 0.5d);
+                                    break;
+                            }
+                        } else {
+                            exdoor.setX(exdoor.getX() + 0.5);
+                            exdoor.setZ(exdoor.getZ() + 0.5);
+                        }
                     }
                 }
                 if (!checkForSpace(block, indirection)) {
@@ -193,8 +210,7 @@ public class TARDISDoorOpener {
 
     private boolean checkForSpace(Block b, COMPASS d) {
         BlockFace face = getOppositeFace(d);
-        return (plugin.getUtils().isAir(b.getRelative(face).getType())
-                && plugin.getUtils().isAir(b.getRelative(face).getRelative(BlockFace.UP).getType()));
+        return (plugin.getUtils().isAir(b.getRelative(face).getType()) && plugin.getUtils().isAir(b.getRelative(face).getRelative(BlockFace.UP).getType()));
     }
 
     private BlockFace getOppositeFace(COMPASS d) {
