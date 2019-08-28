@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -62,6 +61,7 @@ public class TARDISTerminalListener implements Listener {
     private final HashMap<UUID, String> terminalDestination = new HashMap<>();
     private final HashMap<UUID, Integer> terminalStep = new HashMap<>();
     private final HashMap<UUID, Integer> terminalIDs = new HashMap<>();
+    private final HashMap<UUID, Integer> terminalWorlds = new HashMap<>();
     private final HashMap<UUID, Boolean> terminalSub = new HashMap<>();
 
     public TARDISTerminalListener(TARDIS plugin) {
@@ -124,6 +124,7 @@ public class TARDISTerminalListener implements Listener {
                             setCurrent(view, player, 36);
                             break;
                         case 38:
+                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 38);
                             break;
                         case 40:
@@ -419,16 +420,15 @@ public class TARDISTerminalListener implements Listener {
                 }
             }
         });
-        // random world
+        // next world in list
         if (allowedWorlds.size() > 0) {
-            int rw = TARDISConstants.RANDOM.nextInt(allowedWorlds.size());
-            int i = 0;
-            for (String w : allowedWorlds) {
-                if (i == rw) {
-                    world = w;
-                }
-                i += 1;
+//            int rw = TARDISConstants.RANDOM.nextInt(allowedWorlds.size());
+            int rw = terminalWorlds.get(p.getUniqueId());
+            if (rw > allowedWorlds.size() - 1) {
+                rw = 0;
+                terminalWorlds.put(p.getUniqueId(), 0);
             }
+            world = allowedWorlds.get(rw);
         } else {
             // if all else fails return the current world
             world = this_world;
@@ -560,6 +560,7 @@ public class TARDISTerminalListener implements Listener {
             terminalStep.remove(uuid);
             terminalDestination.remove(uuid);
             terminalSub.remove(uuid);
+            terminalWorlds.remove(uuid);
             p.closeInventory();
         }, 1L);
     }
