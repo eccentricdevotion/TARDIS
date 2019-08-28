@@ -52,6 +52,7 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.ENDERMITE);
         monsters.add(EntityType.HUSK);
         monsters.add(EntityType.PIG_ZOMBIE);
+        monsters.add(EntityType.PILLAGER);
         monsters.add(EntityType.SILVERFISH);
         monsters.add(EntityType.SKELETON);
         monsters.add(EntityType.SLIME);
@@ -170,6 +171,11 @@ public class TARDISMonsterRunnable implements Runnable {
                                                 tm.setProfession(prof);
                                                 dn = "Zombie Villager";
                                             }
+                                            break;
+                                        case PILLAGER:
+                                            Pillager pillager = (Pillager) e;
+                                            tm.setEquipment(pillager.getEquipment());
+                                            dn = "Pillager";
                                             break;
                                         default:
                                             break;
@@ -389,6 +395,14 @@ public class TARDISMonsterRunnable implements Runnable {
                     if (m.getEquipment() != null) {
                         zv.setArmorContents(m.getEquipment().getArmorContents());
                         zv.setItemInMainHand(m.getEquipment().getItemInMainHand());
+                    }
+                    break;
+                case PILLAGER:
+                    Pillager pillager = (Pillager) ent;
+                    EntityEquipment p = pillager.getEquipment();
+                    if (m.getEquipment() != null) {
+                        p.setArmorContents(m.getEquipment().getArmorContents());
+                        p.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
                     break;
                 default:
