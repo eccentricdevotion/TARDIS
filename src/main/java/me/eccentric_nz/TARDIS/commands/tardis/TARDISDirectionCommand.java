@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
@@ -121,6 +122,8 @@ public class TARDISDirectionCommand {
             did.put("tardis_id", id);
             setd.put("door_direction", dir);
             qf.doUpdate("doors", setd, did);
+            // close doors & therefore remove open portals...
+            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             COMPASS d = COMPASS.valueOf(dir);
             // destroy sign
