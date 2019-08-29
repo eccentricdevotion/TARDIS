@@ -43,7 +43,6 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesEventListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesSavedListener;
-import me.eccentric_nz.TARDIS.howto.TARDISChameleonWallMenuListener;
 import me.eccentric_nz.TARDIS.howto.TARDISRecipeMenuListener;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedMenuListener;
 import me.eccentric_nz.TARDIS.howto.TARDISWallFloorMenuListener;
@@ -228,7 +227,6 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISWallMenuListener(plugin), plugin);
         // howto
         plugin.getPM().registerEvents(new TARDISWallFloorMenuListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISChameleonWallMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSeedMenuListener(plugin), plugin);
         if (getNPCManager()) {
