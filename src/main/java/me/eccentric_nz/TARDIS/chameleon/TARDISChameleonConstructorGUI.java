@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -48,6 +49,7 @@ class TARDISChameleonConstructorGUI {
         ItemStack help = new ItemStack(Material.BOWL, 1);
         ItemMeta hp = help.getItemMeta();
         hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
+        hp.setCustomModelData(GUIChameleonConstructor.HELP.getCustomModelData());
         help.setItemMeta(hp);
         is[2] = help;
         // info
@@ -55,24 +57,28 @@ class TARDISChameleonConstructorGUI {
         ItemMeta io = info.getItemMeta();
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
         io.setLore(plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT"));
+        io.setCustomModelData(GUIChameleonConstructor.INFO.getCustomModelData());
         info.setItemMeta(io);
         is[3] = info;
         // abort
         ItemStack abort = new ItemStack(Material.BOWL, 1);
         ItemMeta at = abort.getItemMeta();
         at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
+        at.setCustomModelData(GUIChameleonConstructor.ABORT.getCustomModelData());
         abort.setItemMeta(at);
         is[5] = abort;
         // load button
         ItemStack load = new ItemStack(Material.BOWL, 1);
         ItemMeta ld = load.getItemMeta();
         ld.setDisplayName(plugin.getChameleonGuis().getString("USE_PREV"));
+        ld.setCustomModelData(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.getCustomModelData());
         load.setItemMeta(ld);
         is[7] = load;
         // save button
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta se = save.getItemMeta();
         se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
+        se.setCustomModelData(GUIChameleonConstructor.SAVE_CONSTRUCT.getCustomModelData());
         save.setItemMeta(se);
         is[8] = save;
         // lamp button

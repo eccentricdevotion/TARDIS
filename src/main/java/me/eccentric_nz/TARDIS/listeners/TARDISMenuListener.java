@@ -78,8 +78,9 @@ public class TARDISMenuListener {
         map.put(ChatColor.DARK_RED + "Companions", 54);
         map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
         map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
+        // TODO should Handles Program GUI be in here?
+//        map.put(ChatColor.DARK_RED + "Handles Program", 54);
         map.put(ChatColor.DARK_RED + "Player Prefs Menu", 18);
-        map.put(ChatColor.DARK_RED + "Police Box Wall Menu", 90);
         map.put(ChatColor.DARK_RED + "Saved Programs", 54);
         map.put(ChatColor.DARK_RED + "Sonic Activator", 9);
         map.put(ChatColor.DARK_RED + "Sonic Generator", 54);

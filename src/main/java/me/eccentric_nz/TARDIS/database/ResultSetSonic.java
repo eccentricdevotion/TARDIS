@@ -29,10 +29,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
- * <p>
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
- * environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix, including... a Time Lord's preferred sonic
+ * screwdriver specifications.
  *
  * @author eccentric_nz
  */
@@ -96,7 +94,7 @@ public class ResultSetSonic {
                 sonic = new Sonic(
                         UUID.fromString(rs.getString("uuid")),
                         rs.getBoolean("activated"),
-                        cc,
+                        cc, rs.getInt("model"),
                         rs.getBoolean("bio"),
                         rs.getBoolean("diamond"),
                         rs.getBoolean("emerald"),
@@ -109,7 +107,7 @@ public class ResultSetSonic {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for vaults table! " + e.getMessage());
+            plugin.debug("ResultSet error for sonic table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -120,7 +118,7 @@ public class ResultSetSonic {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing vaults table! " + e.getMessage());
+                plugin.debug("Error closing sonic table! " + e.getMessage());
             }
         }
         return true;

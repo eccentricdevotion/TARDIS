@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISavedPrograms;
 import me.eccentric_nz.TARDIS.database.ResultSetPrograms;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import org.bukkit.ChatColor;
@@ -66,7 +67,7 @@ class TARDISHandlesSavedInventory {
                     im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
                 }
                 im.addItemFlags(ItemFlag.values());
-                im.setCustomModelData(10000001);
+                im.setCustomModelData(1);
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;
@@ -79,36 +80,42 @@ class TARDISHandlesSavedInventory {
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
         bk.setDisplayName("Back to editor");
+        bk.setCustomModelData(GUISavedPrograms.BACK_TO_EDITOR.getCustomModelData());
         back.setItemMeta(bk);
         stack[45] = back;
         // load button
         ItemStack load = new ItemStack(Material.BOWL, 1);
         ItemMeta ld = load.getItemMeta();
         ld.setDisplayName("Load selected program in editor");
+        ld.setCustomModelData(GUISavedPrograms.LOAD_SELECTED_PROGRAM_IN_EDITOR.getCustomModelData());
         load.setItemMeta(ld);
         stack[47] = load;
         // deactivate
         ItemStack deactivate = new ItemStack(Material.BUCKET, 1);
         ItemMeta dem = deactivate.getItemMeta();
         dem.setDisplayName("Deactivate selected program");
+        dem.setCustomModelData(GUISavedPrograms.DEACTIVATE_SELECTED_PROGRAM.getCustomModelData());
         deactivate.setItemMeta(dem);
         stack[48] = deactivate;
         // delete
         ItemStack delete = new ItemStack(Material.BUCKET, 1);
         ItemMeta dm = delete.getItemMeta();
         dm.setDisplayName("Delete selected program");
+        dm.setCustomModelData(GUISavedPrograms.DELETE_SELECTED_PROGRAM.getCustomModelData());
         delete.setItemMeta(dm);
         stack[49] = delete;
         // check out
         ItemStack checked = new ItemStack(Material.BOWL, 1);
         ItemMeta km = checked.getItemMeta();
         km.setDisplayName("Check out selected program");
+        km.setCustomModelData(GUISavedPrograms.CHECK_OUT_SELECTED_PROGRAM.getCustomModelData());
         checked.setItemMeta(km);
         stack[51] = checked;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta cm = close.getItemMeta();
         cm.setDisplayName("Close");
+        cm.setCustomModelData(GUISavedPrograms.CLOSE.getCustomModelData());
         close.setItemMeta(cm);
         stack[53] = close;
         return stack;

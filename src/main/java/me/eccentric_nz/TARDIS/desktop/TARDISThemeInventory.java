@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
@@ -86,6 +87,7 @@ public class TARDISThemeInventory {
                     lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
                 }
                 im.setLore(lore);
+                im.setCustomModelData(1);
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;
@@ -96,6 +98,7 @@ public class TARDISThemeInventory {
             ItemStack arc = new ItemStack(Material.BOWL, 1);
             ItemMeta hive_im = arc.getItemMeta();
             hive_im.setDisplayName("Archive Consoles");
+            hive_im.setCustomModelData(GUIUpgrade.ARCHIVE_CONSOLES.getCustomModelData());
             arc.setItemMeta(hive_im);
             stack[46] = arc;
         }
@@ -105,6 +108,7 @@ public class TARDISThemeInventory {
                 ItemStack rep = new ItemStack(Material.BOWL, 1);
                 ItemMeta air_im = rep.getItemMeta();
                 air_im.setDisplayName("Repair Console");
+                air_im.setCustomModelData(GUIUpgrade.REPAIR_CONSOLE.getCustomModelData());
                 rep.setItemMeta(air_im);
                 stack[47] = rep;
             }
@@ -113,6 +117,7 @@ public class TARDISThemeInventory {
                 ItemStack cle = new ItemStack(Material.BOWL, 1);
                 ItemMeta an_im = cle.getItemMeta();
                 an_im.setDisplayName("Clean");
+                an_im.setCustomModelData(GUIUpgrade.CLEAN.getCustomModelData());
                 cle.setItemMeta(an_im);
                 stack[48] = cle;
             }
@@ -121,6 +126,7 @@ public class TARDISThemeInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
+        close_im.setCustomModelData(GUIUpgrade.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
 

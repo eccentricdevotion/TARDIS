@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -206,6 +207,7 @@ class TARDISLazarusExtraInventory {
         ItemStack can = new ItemStack(Material.BOWL, 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
+        cel.setCustomModelData(GUIGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
         can.setItemMeta(cel);
         eggs[53] = can;
 

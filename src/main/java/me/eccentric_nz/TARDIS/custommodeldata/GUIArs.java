@@ -1,51 +1,38 @@
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-
-import java.util.Locale;
 
 public enum GUIArs {
 
-    // ARS
-    UP(10000001, 1, Material.CYAN_WOOL),
-    DOWN(10000002, 1, Material.CYAN_WOOL),
-    LEFT(10000003, 1, Material.CYAN_WOOL),
-    RIGHT(10000004, 1, Material.CYAN_WOOL),
-    LOAD_MAP(10000001, 1, Material.MAP),
-    RECONFIGURE(10000001, 1, Material.PINK_WOOL),
-    BOTTOM_LEVEL(10000001, 1, Material.WHITE_WOOL),
-    MAIN_LEVEL(10000001, 1, Material.YELLOW_WOOL),
-    TOP_LEVEL(10000002, 1, Material.WHITE_WOOL),
-    RESET_SELECTED(10000001, 1, Material.COBBLESTONE),
-    SCROLL_LEFT(10000001, 1, Material.RED_WOOL),
-    SCROLL_RIGHT(10000001, 1, Material.LIME_WOOL),
-    JETTISON(10000001, 1, Material.TNT),
-    LOAD_THE_MAP(10000001, 1, Material.BLACK_WOOL),
-    EMPTY_SLOT(10000001, 1, Material.STONE);
+    // Architectural Reconfiguration
+
+    BUTTON_UP(1, 1, Material.CYAN_WOOL),
+    BUTTON_DOWN(2, 18, Material.CYAN_WOOL),
+    BUTTON_LEFT(3, 9, Material.CYAN_WOOL),
+    BUTTON_RIGHT(4, 11, Material.CYAN_WOOL),
+    BUTTON_MAP(2, 10, Material.MAP),
+    BUTTON_RECON(1, 12, Material.PINK_WOOL),
+    BUTTON_LEVEL_B(1, 27, Material.WHITE_WOOL),
+    BUTTON_LEVEL(1, 28, Material.YELLOW_WOOL),
+    BUTTON_LEVEL_T(2, 29, Material.WHITE_WOOL),
+    BUTTON_RESET(1, 30, Material.COBBLESTONE),
+    BUTTON_SCROLL_L(1, 36, Material.RED_WOOL),
+    BUTTON_SCROLL_R(1, 38, Material.LIME_WOOL),
+    BUTTON_JETT(1, 39, Material.TNT),
+    BUTTON_MAP_NO(1, -1, Material.BLACK_WOOL),
+    EMPTY_SLOT(1, -1, Material.STONE);
 
     // TODO add room blocks?
 
     private final int customModelData;
     private final int slot;
     private final Material material;
-    private final String name;
 
     GUIArs(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
-        name = setName(this);
-    }
-
-    public static GUIArs getByName(String name) {
-        String processed = name.replace(" ", "_").toUpperCase(Locale.ENGLISH);
-        return GUIArs.valueOf(processed);
-    }
-
-    private String setName(GUIArs item) {
-        String s = item.toString();
-        return TARDISStringUtils.sentenceCase(s);
     }
 
     public int getCustomModelData() {
@@ -61,6 +48,7 @@ public enum GUIArs {
     }
 
     public String getName() {
-        return name;
+        String s = toString();
+        return (this == EMPTY_SLOT) ? "Empty Slot" : TARDIS.plugin.getLanguage().getString(s);
     }
 }

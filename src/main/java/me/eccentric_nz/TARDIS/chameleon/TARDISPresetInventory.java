@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -292,21 +293,16 @@ class TARDISPresetInventory {
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
+        but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
         back.setItemMeta(but);
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{
-                box, jungle, nether, def, swamp, tent, village, yellow, tel,
-                ang, sub, flo, stone, chal, desert, well, win, rub,
-                mine, cre, pea, lamp, candy, toi, rob, tor, pine,
-                pun, por, cake, grave, topsy, mush, fen, gaz, app,
-                lig, lib, sno, jail, pan, dou, pris, cho, and,
-                dio, gra, null, custom, null, null, page, back, close
-        };
+        return new ItemStack[]{box, jungle, nether, def, swamp, tent, village, yellow, tel, ang, sub, flo, stone, chal, desert, well, win, rub, mine, cre, pea, lamp, candy, toi, rob, tor, pine, pun, por, cake, grave, topsy, mush, fen, gaz, app, lig, lib, sno, jail, pan, dou, pris, cho, and, dio, gra, null, custom, null, null, page, back, close};
     }
 
     public ItemStack[] getPresets() {

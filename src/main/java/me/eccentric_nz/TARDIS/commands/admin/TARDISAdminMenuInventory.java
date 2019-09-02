@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIConfiguration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -53,6 +54,11 @@ public class TARDISAdminMenuInventory {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
+                int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
+                if (value == "false") {
+                    cmd += 100; // xx -> 1xx
+                }
+                im.setCustomModelData(cmd);
                 im.setLore(Collections.singletonList(value));
                 is.setItemMeta(im);
                 options.add(is);
@@ -70,12 +76,14 @@ public class TARDISAdminMenuInventory {
         ItemStack next = new ItemStack(Material.BOWL, 1);
         ItemMeta page = next.getItemMeta();
         page.setDisplayName("Next page");
+        page.setCustomModelData(GUIConfiguration.NEXT.getCustomModelData());
         next.setItemMeta(page);
         stack[52] = next;
         // player prefs
         ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta prefs = play.getItemMeta();
         prefs.setDisplayName("Player Preferences");
+        prefs.setCustomModelData(GUIConfiguration.PREFS.getCustomModelData());
         play.setItemMeta(prefs);
         stack[53] = play;
         return stack;

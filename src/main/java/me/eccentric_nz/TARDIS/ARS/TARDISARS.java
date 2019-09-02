@@ -62,7 +62,6 @@ public enum TARDISARS implements ARS {
     private final String descriptiveName;
     private final int offset;
     private final static HashMap<String, ARS> EXTENDED_MATERIAL = new HashMap<>();
-//    private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<>();
 
     TARDISARS(String material, String name, String descriptiveName, int offset) {
         this.material = material;
@@ -113,7 +112,6 @@ public enum TARDISARS implements ARS {
 
     static {
         for (ARS room : values()) {
-//            EXTENDED_NAME.put(room.getActualName(), room);
             EXTENDED_MATERIAL.put(room.getMaterial(), room);
         }
     }
@@ -128,20 +126,7 @@ public enum TARDISARS implements ARS {
         return EXTENDED_MATERIAL.getOrDefault(mat, SLOT);
     }
 
-//    /**
-//     * Attempts to get the ARS room with the given ID
-//     *
-//     * @param material material of the ARS room to get
-//     * @return ARS room if found, or null
-//     */
-//    public static ARS ARSFor(Material material) {
-//        return EXTENDED_MATERIAL.getOrDefault(material, SLOT);
-//    }
-
     public static void addNewARS(ARS room) {
-//        if (!EXTENDED_NAME.containsKey(room.getActualName())) {
-//            EXTENDED_NAME.put(room.getActualName(), room);
-//        }
         if (!EXTENDED_MATERIAL.containsKey(room.getMaterial())) {
             EXTENDED_MATERIAL.put(room.getMaterial(), room);
         }

@@ -28,6 +28,7 @@ public class Sonic {
     private final UUID uuid;
     private final boolean activated;
     private final ChatColor sonicType;
+    private final int customModelData;
     private final boolean bio;
     private final boolean diamond;
     private final boolean emerald;
@@ -36,10 +37,11 @@ public class Sonic {
     private final boolean ignite;
     private final boolean arrow;
 
-    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow) {
+    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow) {
         this.uuid = uuid;
         this.activated = activated;
         this.sonicType = sonicType;
+        this.customModelData = customModelData;
         this.bio = bio;
         this.diamond = diamond;
         this.emerald = emerald;
@@ -59,6 +61,10 @@ public class Sonic {
 
     public ChatColor getSonicType() {
         return sonicType;
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
     }
 
     public boolean hasBio() {

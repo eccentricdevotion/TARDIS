@@ -145,7 +145,7 @@ public class TARDISHandlesProgramListener implements Listener {
                         im.setDisplayName("Handles Program Disk");
                         im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
                         im.addItemFlags(ItemFlag.values());
-                        im.setCustomModelData(10000001);
+                        im.setCustomModelData(1);
                         is.setItemMeta(im);
                         player.getWorld().dropItemNaturally(player.getLocation(), is);
                         TARDISMessage.send(player, "HANDLES_SAVED");
@@ -213,7 +213,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     break;
                 default:
                     ItemStack item = player.getItemOnCursor();
-                    if (slot > 53 && item != null && item.getType().equals(Material.BOWL)) {
+                    if (slot > 53 && item != null && item.getType().equals(Material.PAPER)) {
                         event.setCancelled(true);
                         player.setItemOnCursor(null);
                     }
@@ -231,7 +231,7 @@ public class TARDISHandlesProgramListener implements Listener {
         }
         Player p = (Player) event.getPlayer();
         ItemStack item = p.getItemOnCursor();
-        if (item != null && item.getType().equals(Material.BOWL)) {
+        if (item != null && item.getType().equals(Material.PAPER)) {
             p.setItemOnCursor(null);
         }
     }
@@ -244,12 +244,13 @@ public class TARDISHandlesProgramListener implements Listener {
      * @param block the program block
      */
     private void setSlot(InventoryView view, int slot, TARDISHandlesBlock block) {
-        ItemStack is = new ItemStack(Material.BOWL, 1);
+        ItemStack is = new ItemStack(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(block.getDisplayName());
         if (block.getLore() != null) {
             im.setLore(block.getLore());
         }
+        im.setCustomModelData(block.getCustomModelData());
         is.setItemMeta(im);
         view.setItem(slot, is);
     }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -93,6 +94,7 @@ public class TARDISARSMap {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName("Close");
+        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(gui);
         // where am I?
         ItemStack where = new ItemStack(Material.COMPASS, 1);

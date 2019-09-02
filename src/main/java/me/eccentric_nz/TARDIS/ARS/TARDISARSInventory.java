@@ -147,6 +147,7 @@ public class TARDISARSInventory {
                 im.setDisplayName(a.getDescriptiveName());
                 List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a.getActualName() + ".cost"));
                 im.setLore(lore);
+                im.setCustomModelData(1);
                 room.setItemMeta(im);
                 is[i] = room;
                 i++;

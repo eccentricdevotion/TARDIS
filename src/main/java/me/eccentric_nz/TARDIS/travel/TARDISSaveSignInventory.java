@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -125,16 +126,19 @@ public class TARDISSaveSignInventory {
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
         switchto.setDisplayName("Load TARDIS areas");
+        switchto.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
         map.setItemMeta(switchto);
         // add button to allow rearranging saves
-        ItemStack tool = new ItemStack(Material.DANDELION, 1);
+        ItemStack tool = new ItemStack(Material.ARROW, 1);
         ItemMeta rearrange = tool.getItemMeta();
         rearrange.setDisplayName("Rearrange saves");
+        rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
         tool.setItemMeta(rearrange);
         // add button to allow deleting saves
         ItemStack bucket = new ItemStack(Material.BUCKET, 1);
         ItemMeta delete = bucket.getItemMeta();
         delete.setDisplayName("Delete save");
+        delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
         bucket.setItemMeta(delete);
         for (int m = 45; m < 54; m++) {
             switch (m) {

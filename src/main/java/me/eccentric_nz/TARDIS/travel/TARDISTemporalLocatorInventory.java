@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
+import me.eccentric_nz.TARDIS.custommodeldata.GUITemporalLocator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,37 +36,9 @@ public class TARDISTemporalLocatorInventory {
 
     private final ItemStack[] temporal;
     private final TARDIS plugin;
-    private final List<String> time = new ArrayList<>();
 
     public TARDISTemporalLocatorInventory(TARDIS plugin) {
         this.plugin = plugin;
-        time.add(" ");
-        time.add(" ");
-        time.add(" ");
-        time.add(" ");
-        time.add("7 AM");
-        time.add("8 AM");
-        time.add("9 AM");
-        time.add("10 AM");
-        time.add("11 AM");
-        time.add("12 AM");
-        time.add("1 PM");
-        time.add("2 PM");
-        time.add("3 PM");
-        time.add("4 PM");
-        time.add("5 PM");
-        time.add("6 PM");
-        time.add("7 PM");
-        time.add("8 PM");
-        time.add("9 PM");
-        time.add("10 PM");
-        time.add("11 PM");
-        time.add("12 PM");
-        time.add("1 AM");
-        time.add("2 AM");
-        time.add("3 AM");
-        time.add("4 AM");
-        time.add("5 AM");
         temporal = getItemStack();
     }
 
@@ -77,47 +49,22 @@ public class TARDISTemporalLocatorInventory {
      */
     private ItemStack[] getItemStack() {
         ItemStack[] clocks = new ItemStack[27];
-        // add morning
-        ItemStack morn = new ItemStack(Material.CLOCK, 1);
-        ItemMeta ing = morn.getItemMeta();
-        ing.setDisplayName(plugin.getLanguage().getString("BUTTON_Morn"));
-        ing.setLore(Arrays.asList("0 ticks", "6 AM"));
-        morn.setItemMeta(ing);
-        clocks[0] = morn;
-        // add midday
-        ItemStack mid = new ItemStack(Material.CLOCK, 1);
-        ItemMeta day = mid.getItemMeta();
-        day.setDisplayName(plugin.getLanguage().getString("BUTTON_NOON"));
-        day.setLore(Arrays.asList("6000 ticks", "12 Noon"));
-        mid.setItemMeta(day);
-        clocks[1] = mid;
-        // add night
-        ItemStack nig = new ItemStack(Material.CLOCK, 1);
-        ItemMeta ht = nig.getItemMeta();
-        ht.setDisplayName(plugin.getLanguage().getString("BUTTON_NIGHT"));
-        ht.setLore(Arrays.asList("12000 ticks", "6 PM"));
-        nig.setItemMeta(ht);
-        clocks[2] = nig;
-        // add midnight
-        ItemStack zero = new ItemStack(Material.CLOCK, 1);
-        ItemMeta hrs = zero.getItemMeta();
-        hrs.setDisplayName(plugin.getLanguage().getString("BUTTON_MID"));
-        hrs.setLore(Arrays.asList("18000 ticks", "12 PM"));
-        zero.setItemMeta(hrs);
-        clocks[3] = zero;
-
-        // add some clocks
-        int c = 4;
-        for (int i = 1000; i < 24000; i += 1000) {
-            ItemStack is = new ItemStack(Material.CLOCK, 1);
+        for (GUITemporalLocator clock : GUITemporalLocator.values()) {
+            ItemStack is = new ItemStack(clock.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(time.get(c));
-            List<String> lore = new ArrayList<>();
-            lore.add(i + " ticks");
-            im.setLore(lore);
+            if (clock.ordinal() < 4) {
+                im.setDisplayName(plugin.getLanguage().getString(clock.toString()));
+            } else {
+                im.setDisplayName(clock.getName());
+            }
+            if (clock.getLore().contains("~")) {
+                im.setLore(Arrays.asList(clock.getLore().split("~")));
+            } else {
+                im.setLore(Arrays.asList(clock.getLore()));
+            }
+            im.setCustomModelData(clock.getCustomModelData());
             is.setItemMeta(im);
-            clocks[c] = is;
-            c++;
+            clocks[clock.getSlot()] = is;
         }
         return clocks;
     }

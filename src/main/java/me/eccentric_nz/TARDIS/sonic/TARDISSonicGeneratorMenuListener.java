@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -129,6 +130,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         String choice_name = choice_im.getDisplayName();
                         sonic_im = sonic.getItemMeta();
                         sonic_im.setDisplayName(choice_name);
+                        sonic_im.setCustomModelData(choice_im.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
                         if (slotWasNull) {
                             view.setItem(49, sonic);
@@ -150,8 +152,9 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         } else {
                             // remove lore
                             sonic_im.setLore(null);
-                            sonic.setItemMeta(sonic_im);
                         }
+                        sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
+                        sonic.setItemMeta(sonic_im);
                         setCost(view, costs.get("Standard Sonic"));
                         break;
                     case 29:
@@ -234,6 +237,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
             colour = ChatColor.getByChar(dn.substring(1, 2)).name();
         }
         set.put("sonic_type", colour);
+        set.put("model", im.getCustomModelData());
         if (im.hasLore()) {
             List<String> lore = im.getLore();
             fields.forEach((key, value) -> set.put(value, (lore.contains(key)) ? 1 : 0));

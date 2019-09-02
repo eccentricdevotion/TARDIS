@@ -122,7 +122,7 @@ public class TARDISTerminalInventory {
         // the end
         ItemStack e;
         String edn;
-        if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+        if (plugin.getConfig().getBoolean("travel.the_end") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
             e = new ItemStack(Material.END_STONE, 1);
             edn = "The End";
         } else {

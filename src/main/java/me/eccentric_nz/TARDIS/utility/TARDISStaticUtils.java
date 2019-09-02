@@ -25,6 +25,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
+import org.bukkit.util.EulerAngle;
 
 import java.util.UUID;
 
@@ -291,5 +292,15 @@ public class TARDISStaticUtils {
 
     public static UUID getZERO_UUID() {
         return ZERO_UUID;
+    }
+
+    public static EulerAngle angleToEulerAngle(int degrees) {
+        return angleToEulerAngle(((double) degrees) / 360 * Math.PI);
+    }
+
+    public static EulerAngle angleToEulerAngle(double radians) {
+        double x = Math.cos(radians);
+        double z = Math.sin(radians);
+        return new EulerAngle(x, 0, z);
     }
 }

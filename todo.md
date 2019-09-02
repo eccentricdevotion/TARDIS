@@ -1,24 +1,26 @@
 # TODO
 
 ## Next version `4.1.1`
-0. New features
+1. New features
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
-1. Test player preference to bypass `tardis rescue accept`
-2. Test `invisibility` setting in TARDIS areas
-3. Test Handles transmat requests
-4. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-5. Actually use `TARDISArtronLevels#checkLevel()`
-6. Update documentation...
-7. 13th Doctor's and Factory TARDIS console
+   * Chemistry room + add all chemistry plugin features
+2. Make TARDIS circuits not maps
+3. Test player preference to bypass `tardis rescue accept`
+4. Test `invisibility` setting in TARDIS areas
+5. Test Handles transmat requests
+6. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+7. Actually use `TARDISArtronLevels#checkLevel()`
+8. Update documentation...
+9. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
-8. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
+10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
    * Update Disk Storage defaults
-9. Use TARDIS Disguises for Arch feature
-10. Test hey handles land
-11. `/handles remove` command
+11. Use TARDIS Disguises for Arch feature
+12. Test hey handles land
+13. `/handles remove` command
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -32,6 +34,7 @@
 
 ## Resource Pack / TARDISWeepingAngels
 1. CustomModelData for all TARDIS items - _started_
+   * Need to resolve conflicts with Chemistry plugin resource pack
 2. CustomModelData for Weeping Angel wings? - _started_
 3. Custom Entity models using Optifine (when they can be applied to named entities)
 4. Rare armour drops

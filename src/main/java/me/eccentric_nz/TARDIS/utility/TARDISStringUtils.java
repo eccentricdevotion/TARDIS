@@ -22,6 +22,9 @@ public class TARDISStringUtils {
     }
 
     public static String uppercaseFirst(String s) {
+        if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
+            return s.toUpperCase();
+        }
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 

@@ -116,6 +116,13 @@ public class TARDISAdminMenuListener implements Listener {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
+        int cmd = im.getCustomModelData();
+        if (cmd > 100) {
+            cmd -= 100;
+        } else {
+            cmd += 100;
+        }
+        im.setCustomModelData(cmd);
         is.setItemMeta(im);
     }
 }

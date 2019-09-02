@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
+import me.eccentric_nz.TARDIS.custommodeldata.GUISeeds;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.Material;
@@ -71,6 +72,7 @@ public class TARDISSeedsInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
+        close_im.setCustomModelData(GUISeeds.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;

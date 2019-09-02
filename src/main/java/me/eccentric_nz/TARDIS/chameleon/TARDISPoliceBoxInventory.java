@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -70,12 +71,14 @@ class TARDISPoliceBoxInventory {
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
+        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
         back.setItemMeta(but);
         boxes[25] = back;
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
         close.setItemMeta(can);
         boxes[26] = close;
 

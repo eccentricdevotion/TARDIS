@@ -44,7 +44,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPrefsMenuClick(InventoryClickEvent event) {
+    public void onSonicMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
@@ -81,6 +81,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
                         String choice_name = choice_im.getDisplayName();
                         ItemMeta sonic_im = sonic.getItemMeta();
                         sonic_im.setDisplayName(choice_name);
+                        sonic_im.setCustomModelData(choice_im.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
                         break;
                     case 18:
