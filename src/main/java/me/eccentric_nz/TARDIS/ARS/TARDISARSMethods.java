@@ -142,8 +142,8 @@ public class TARDISARSMethods {
      *
      * @param view     the inventory to update
      * @param slot     the slot number to update
-     * @param material the item id to set the item stack to
-     * @param room     the room type associated with the id
+     * @param material the item (material) type to set the item stack to
+     * @param room     the room type associated with the block type
      * @param uuid     the player using the GUI
      * @param update   whether to update the grid display
      */
@@ -158,6 +158,7 @@ public class TARDISARSMethods {
         } else {
             im.setLore(null);
         }
+        im.setCustomModelData(1);
         is.setItemMeta(im);
         view.setItem(slot, is);
         if (update) {
@@ -276,6 +277,7 @@ public class TARDISARSMethods {
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
+            im.setCustomModelData(1);
             is.setItemMeta(im);
             setSlot(view, i, is, uuid, false);
         }

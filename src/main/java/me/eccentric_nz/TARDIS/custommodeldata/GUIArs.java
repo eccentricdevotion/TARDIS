@@ -23,8 +23,6 @@ public enum GUIArs {
     BUTTON_MAP_NO(1, -1, Material.BLACK_WOOL),
     EMPTY_SLOT(1, -1, Material.STONE);
 
-    // TODO add room blocks?
-
     private final int customModelData;
     private final int slot;
     private final Material material;
