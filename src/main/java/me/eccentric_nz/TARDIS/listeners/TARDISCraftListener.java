@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -39,6 +40,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -129,9 +131,12 @@ public class TARDISCraftListener implements Listener {
                     }
                     // get the materials in crafting slots
                     Material m7 = inv.getItem(7).getType(); // tardis type
-                    ItemStack is = new ItemStack(m7, 1);
+                    ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
                     ItemMeta im = is.getItemMeta();
+                    int model = TARDISSeedModel.modelByMaterial(m7);
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
                     im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+                    im.setCustomModelData(10000000 + model);
                     List<String> lore = new ArrayList<>();
                     lore.add(t.get(m7));
                     lore.add("Walls: " + inv.getItem(6).getType().toString());

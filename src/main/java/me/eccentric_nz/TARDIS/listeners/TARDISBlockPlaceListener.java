@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
@@ -47,11 +46,9 @@ import java.util.HashMap;
 public class TARDISBlockPlaceListener implements Listener {
 
     private final TARDIS plugin;
-    private final NamespacedKey nsk;
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
-        nsk = new NamespacedKey(this.plugin, "customBlock");
     }
 
     /**
@@ -75,15 +72,17 @@ public class TARDISBlockPlaceListener implements Listener {
             TARDISMessage.send(player, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
-        if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK)) && is.hasItemMeta()) {
+        if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.getPersistentDataContainer().has(nsk, PersistentDataType.INTEGER)) {
-                int which = im.getPersistentDataContainer().get(nsk, PersistentDataType.INTEGER);
+            if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                 MultipleFacing multipleFacing;
                 if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
                     multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
-                } else {
+                } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
                     multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                } else {
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
                 }
                 Block block = event.getBlockPlaced();
                 block.setBlockData(multipleFacing);

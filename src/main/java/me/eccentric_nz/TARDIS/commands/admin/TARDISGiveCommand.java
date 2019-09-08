@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,6 +38,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -326,10 +327,12 @@ public class TARDISGiveCommand implements CommandExecutor {
         Player player = plugin.getServer().getPlayer(p);
         ItemStack is;
         if (CONSOLES.getBY_NAMES().containsKey(type)) {
-            SCHEMATIC schm = CONSOLES.getBY_NAMES().get(type);
-            is = new ItemStack(schm.getSeedMaterial(), 1);
+            is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
             // set display name
             ItemMeta im = is.getItemMeta();
+            int model = TARDISSeedModel.modelByString(type);
+            im.setCustomModelData(10000000 + model);
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
             im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
             lore.add(type);

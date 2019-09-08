@@ -20,11 +20,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.*;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,6 +38,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,6 +75,11 @@ public class TARDISSeedBlockListener implements Listener {
             return;
         }
         if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+            if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
+                MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                event.getBlockPlaced().setBlockData(multipleFacing);
+            }
             List<String> lore = im.getLore();
             SCHEMATIC schm = CONSOLES.getBY_NAMES().get(lore.get(0));
             Material wall = Material.valueOf(getValuesFromWallString(lore.get(1)));
@@ -102,14 +111,18 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISBuildData data = trackTARDISSeed.get(l);
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
-                ItemStack is = new ItemStack(event.getBlock().getType(), 1);
+                ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
                 ItemMeta im = is.getItemMeta();
                 if (im == null) {
                     return;
                 }
+                String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
+                int model = TARDISSeedModel.modelByString(console);
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+                im.setCustomModelData(10000000 + model);
                 List<String> lore = new ArrayList<>();
-                lore.add(data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
+                lore.add(console);
                 lore.add("Walls: " + data.getWallType().toString());
                 lore.add("Floors: " + data.getFloorType().toString());
                 im.setLore(lore);

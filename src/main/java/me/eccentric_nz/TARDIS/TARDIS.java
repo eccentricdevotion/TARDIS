@@ -61,6 +61,7 @@ import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -146,6 +147,7 @@ public class TARDIS extends JavaPlugin {
     private DIFFICULTY difficulty;
     private WORLD_MANAGER worldManager;
     private BukkitTask recordingTask;
+    private NamespacedKey customBlockKey;
 
     public TARDIS() {
         worldGuardOnServer = false;
@@ -175,6 +177,7 @@ public class TARDIS extends JavaPlugin {
         pm = getServer().getPluginManager();
         pluginName = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
+        customBlockKey = new NamespacedKey(this, "customBlock");
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
         Version minversion = new Version("1.14.1");
@@ -1159,6 +1162,10 @@ public class TARDIS extends JavaPlugin {
 
     public void setRecordingTask(BukkitTask recordingTask) {
         this.recordingTask = recordingTask;
+    }
+
+    public NamespacedKey getCustomBlockKey() {
+        return customBlockKey;
     }
 
     public void savePlanetsConfig() {
