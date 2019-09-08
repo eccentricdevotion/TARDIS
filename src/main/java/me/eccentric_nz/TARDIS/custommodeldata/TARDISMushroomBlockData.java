@@ -193,6 +193,57 @@ public class TARDISMushroomBlockData {
             put(37, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
+            // master
+            put(39, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=true}]");
+        }
+    };
+
+    public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<Integer, String>() {
+        {
+            // weeping_angel_head
+            put(1, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]");
+            // cyberman_head
+            put(2, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=false]");
+            // zygon_head
+            put(3, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=true]");
+            // dalek_head
+            put(4, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=false]");
+            // dalek_brass
+            put(5, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=true]");
+            // dalek_white
+            put(6, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=false]");
+            // dalek_orange
+            put(7, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=true]");
+            // dalek_magenta
+            put(8, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=false,west=false]");
+            // dalek_light_blue
+            put(9, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=false,west=true]");
+            // dalek_yellow
+            put(10, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=true,west=false]");
+            // dalek_lime
+            put(11, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=true,west=true]");
+            // dalek_pink
+            put(12, "minecraft:mushroom_stem[down=false,east=false,north=true,south=true,up=false,west=false]");
+            // dalek_gray
+            put(13, "minecraft:mushroom_stem[down=false,east=false,north=true,south=true,up=false,west=true]");
+            // dalek_light_gray
+            put(14, "minecraft:mushroom_stem[down=false,east=false,north=true,south=true,up=true,west=false]");
+            // dalek_cyan
+            put(15, "minecraft:mushroom_stem[down=false,east=false,north=true,south=true,up=true,west=true]");
+            // dalek_purple
+            put(16, "minecraft:mushroom_stem[down=false,east=true,north=false,south=false,up=false,west=false]");
+            // dalek_blue
+            put(17, "minecraft:mushroom_stem[down=false,east=true,north=false,south=false,up=false,west=true]");
+            // dalek_brown
+            put(18, "minecraft:mushroom_stem[down=false,east=true,north=false,south=false,up=true,west=false]");
+            // dalek_green
+            put(19, "minecraft:mushroom_stem[down=false,east=true,north=false,south=false,up=true,west=true]");
+            // dalek_red
+            put(20, "minecraft:mushroom_stem[down=false,east=true,north=false,south=true,up=false,west=false]");
+            // dalek_black
+            put(21, "minecraft:mushroom_stem[down=false,east=true,north=false,south=true,up=false,west=true]");
+            // silurian_head
+            put(22, "minecraft:mushroom_stem[down=false,east=true,north=false,south=true,up=true,west=false]");
         }
     };
 }

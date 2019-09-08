@@ -86,6 +86,11 @@ public class TARDISBlockPhysicsListener implements Listener {
             if (!TARDISMushroomBlock.isVanillaRedMushroomState(multipleFacing)) {
                 event.setCancelled(true);
             }
+        } else if (block.getType().equals(Material.MUSHROOM_STEM)) {
+            MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
+            if (!TARDISMushroomBlock.isVanillaMushroomStemState(multipleFacing)) {
+                event.setCancelled(true);
+            }
         }
     }
 

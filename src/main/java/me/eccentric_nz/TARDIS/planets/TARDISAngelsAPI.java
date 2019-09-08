@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -36,5 +38,9 @@ public class TARDISAngelsAPI {
         Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
         TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
         return twa.getWeepingAngelsAPI();
+    }
+
+    public static boolean isDalek(Skeleton skeleton) {
+        return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
     }
 }

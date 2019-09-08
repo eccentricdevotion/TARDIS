@@ -34,8 +34,7 @@
 
 ## Resource Pack / TARDISWeepingAngels
 1. CustomModelData for all TARDIS items - _started_
-   * Need to resolve conflicts with Chemistry plugin resource pack
-2. CustomModelData for Weeping Angel wings? - _started_
+2. Update existing monsters with persistent data if they don't have it.
 3. Custom Entity models using Optifine (when they can be applied to named entities)
 4. Rare armour drops
 5. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
