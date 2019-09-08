@@ -12,13 +12,12 @@
 4. Test `invisibility` setting in TARDIS areas
 5. Test Handles transmat requests
 6. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-7. Actually use `TARDISArtronLevels#checkLevel()`
+7. Actually use `TARDISArtronLevels#checkLevel()`?
 8. Update documentation...
 9. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
 10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
    * Update Disk Storage defaults
-11. Use TARDIS Disguises for Arch feature
 12. Test hey handles land
 13. `/handles remove` command
 
