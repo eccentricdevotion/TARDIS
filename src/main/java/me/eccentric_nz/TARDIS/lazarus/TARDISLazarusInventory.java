@@ -123,18 +123,21 @@ class TARDISLazarusInventory {
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
+        master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
         the.setItemMeta(master);
         eggs[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(Collections.singletonList("ADULT"));
+        baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.getCustomModelData());
         adult.setItemMeta(baby);
         eggs[47] = adult;
         ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Collections.singletonList("WHITE"));
+        col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.getCustomModelData());
         typ.setItemMeta(col);
         eggs[48] = typ;
         ItemStack tamed = new ItemStack(Material.LEAD, 1);
@@ -146,18 +149,21 @@ class TARDISLazarusInventory {
         }
         opts.add(ChatColor.RED + "FALSE");
         tf.setLore(opts);
+        tf.setCustomModelData(GUIGeneticManipulator.BUTTON_OPTS.getCustomModelData());
         tamed.setItemMeta(tf);
         eggs[49] = tamed;
         // add buttons
         ItemStack rem = new ItemStack(Material.APPLE, 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
+        ove.setCustomModelData(GUIGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
         rem.setItemMeta(ove);
         eggs[51] = rem;
         // set
         ItemStack s = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
+        sim.setCustomModelData(GUIGeneticManipulator.BUTTON_DNA.getCustomModelData());
         s.setItemMeta(sim);
         eggs[52] = s;
         ItemStack can = new ItemStack(Material.BOWL, 1);
