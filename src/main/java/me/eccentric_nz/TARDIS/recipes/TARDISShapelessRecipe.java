@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -65,6 +66,7 @@ public class TARDISShapelessRecipe {
         if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("~")));
         }
+        im.setCustomModelData(RECIPE_ITEM.getByName(s).getCustomModelData());
         if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
             int map = TARDISNumberParsers.parseInt(result_iddata[1]);
             MapMeta mapMeta = (MapMeta) im;
