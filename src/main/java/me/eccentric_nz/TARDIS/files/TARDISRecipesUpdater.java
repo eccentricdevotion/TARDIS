@@ -653,6 +653,13 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Ignite Upgrade.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shapeless.Pickup Arrows Upgrade")) {
+            recipes_config.set("shapeless.Pickup Arrows Upgrade.recipe", "BLAZE_ROD,FILLED_MAP:1984");
+            recipes_config.set("shapeless.Pickup Arrows Upgrade.result", "BLAZE_ROD");
+            recipes_config.set("shapeless.Pickup Arrows Upgrade.amount", 1);
+            recipes_config.set("shapeless.Pickup Arrows Upgrade.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.TARDIS Artron Furnace")) {
             recipes_config.set("shaped.TARDIS Artron Furnace.easy_shape", "---,OFO,RRR");
             recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.O", "OBSIDIAN");

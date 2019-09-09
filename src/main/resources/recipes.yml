@@ -951,6 +951,11 @@ shapeless:
     result: BLAZE_ROD
     amount: 1
     lore: ""
+  Pickup Arrows Upgrade:
+    recipe: 'BLAZE_ROD,FILLED_MAP:1984'
+    result: BLAZE_ROD
+    amount: 1
+    lore: ""
   Bowl of Custard:
     recipe: BOWL,MILK_BUCKET,EGG
     result: MUSHROOM_STEW
