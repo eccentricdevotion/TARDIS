@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
@@ -137,8 +138,8 @@ public class TARDISShapedRecipe {
         } else {
             if (s.endsWith("Bow Tie") || s.equals("3-D Glasses")) {
                 Damageable damageable = (Damageable) im;
-                int damage = (s.endsWith("Bow Tie")) ? 75 : 50;
-                damageable.setDamage(damage);
+                damageable.setDamage(50);
+                im.addItemFlags(ItemFlag.values());
             }
             is.setItemMeta(im);
         }

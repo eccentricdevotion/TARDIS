@@ -409,7 +409,7 @@ public class TARDISRecipesUpdater {
         } else if (recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.T").equals("REDSTONE_TORCH")) {
             recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
         }
-        if (!recipes_config.contains("shaped.White Bow Tie") || recipes_config.getString("shaped.White Bow Tie.easy_ingredients.W").contains(":")) {
+        if (!recipes_config.contains("shaped.White Bow Tie") || recipes_config.getString("shaped.White Bow Tie.easy_ingredients.W").contains(":") || recipes_config.getString("shaped.White Bow Tie.result").equals("LEATHER_CHESTPLATE")) {
             for (Map.Entry<String, String> map : colours.entrySet()) {
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.S", "STRING");
@@ -419,7 +419,7 @@ public class TARDISRecipesUpdater {
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.T", "TRIPWIRE_HOOK");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.L", "LEATHER");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.W", map.getValue());
-                recipes_config.set("shaped." + map.getKey() + " Bow Tie.result", "LEATHER_CHESTPLATE");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.result", "LEATHER_HELMET");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.amount", 1);
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.lore", "Bow ties are cool!");
                 i++;

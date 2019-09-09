@@ -244,6 +244,40 @@ public class TARDISMushroomBlockData {
             put(21, "minecraft:mushroom_stem[down=false,east=true,north=false,south=true,up=false,west=true]");
             // silurian_head
             put(22, "minecraft:mushroom_stem[down=false,east=true,north=false,south=true,up=true,west=false]");
+            // bowtie_white
+            put(23, "minecraft:mushroom_stem[down=false,east=true,north=false,south=true,up=true,west=true]");
+            // bowtie_orange
+            put(24, "minecraft:mushroom_stem[down=false,east=true,north=true,south=false,up=false,west=false]");
+            // bowtie_magenta
+            put(25, "minecraft:mushroom_stem[down=false,east=true,north=true,south=false,up=false,west=true]");
+            // bowtie_light_blue
+            put(26, "minecraft:mushroom_stem[down=false,east=true,north=true,south=false,up=true,west=false]");
+            // bowtie_yellow
+            put(27, "minecraft:mushroom_stem[down=false,east=true,north=true,south=false,up=true,west=true]");
+            // bowtie_lime
+            put(28, "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=false]");
+            // bowtie_pink
+            put(29, "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=true,west=false]");
+            // bowtie_gray
+            put(30, "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=true,west=true]");
+            // bowtie_light_gray
+            put(31, "minecraft:mushroom_stem[down=true,east=false,north=false,south=false,up=false,west=false]");
+            // bowtie_cyan
+            put(32, "minecraft:mushroom_stem[down=true,east=false,north=false,south=false,up=false,west=true]");
+            // bowtie_purple
+            put(33, "minecraft:mushroom_stem[down=true,east=false,north=false,south=false,up=true,west=false]");
+            // bowtie_blue
+            put(34, "minecraft:mushroom_stem[down=true,east=false,north=false,south=false,up=true,west=true]");
+            // bowtie_brown
+            put(35, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=false,west=false]");
+            // bowtie_green
+            put(36, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=false,west=true]");
+            // bowtie_red
+            put(37, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");
+            // bowtie_black
+            put(38, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]");
+            // 3-D glasses
+            put(39, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
         }
     };
 }

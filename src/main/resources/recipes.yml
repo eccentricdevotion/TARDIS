@@ -515,7 +515,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: WHITE_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Orange Bow Tie:
@@ -529,7 +529,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: ORANGE_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Magenta Bow Tie:
@@ -543,7 +543,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: MAGENTA_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Light Blue Bow Tie:
@@ -557,7 +557,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: LIGHT_BLUE_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Yellow Bow Tie:
@@ -571,7 +571,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: YELLOW_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Lime Bow Tie:
@@ -585,7 +585,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: LIME_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Pink Bow Tie:
@@ -599,7 +599,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: PINK_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Grey Bow Tie:
@@ -613,7 +613,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: GRAY_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Light Grey Bow Tie:
@@ -627,7 +627,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: LIGHT_GRAY_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Cyan Bow Tie:
@@ -641,7 +641,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: CYAN_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Purple Bow Tie:
@@ -655,7 +655,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: PURPLE_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Blue Bow Tie:
@@ -669,7 +669,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: BLUE_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Brown Bow Tie:
@@ -683,7 +683,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: BROWN_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Green Bow Tie:
@@ -697,7 +697,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: GREEN_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Red Bow Tie:
@@ -711,7 +711,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: RED_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   Black Bow Tie:
@@ -725,7 +725,7 @@ shaped:
       T: TRIPWIRE_HOOK
       L: LEATHER
       W: BLACK_WOOL
-    result: LEATHER_CHESTPLATE
+    result: LEATHER_HELMET
     amount: 1
     lore: Bow ties are cool!
   3-D Glasses:

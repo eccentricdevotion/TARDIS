@@ -281,6 +281,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISItemSpawnListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISAccessoryListener(plugin), plugin);
     }
 
     private boolean getNPCManager() {
