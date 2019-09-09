@@ -66,8 +66,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
-    private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
+    private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "DALEK", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
+    private final List<String> twaHelmets = Arrays.asList("Weeping Angel Head", "Cyberman Head", "Dalek Head", "Ice Warrior Head", "Empty Child Head", "Silurian Head", "Sontaran Head", "Strax Head", "Vashta Nerada Head", "Zygon Head");
     private final int max_slot = 45;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
@@ -175,7 +175,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 // open the door
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     openDoor(b);
-                    untrack(uuid);
+                    untrack(uuid, true);
                     plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
                 }, 100L);
             }
@@ -226,6 +226,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                             }
                             if (disguise.equals("CYBERMAN")) {
                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "twad CYBERMAN on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("DALEK")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad DALEK on " + player.getUniqueId());
                             }
                             if (disguise.equals("ICE WARRIOR")) {
                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ICE on " + player.getUniqueId());
@@ -406,7 +409,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 // open the door
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     openDoor(b);
-                    untrack(uuid);
+                    untrack(uuid, false);
                     plugin.getTrackerKeeper().getGeneticallyModified().add(uuid);
                 }, 100L);
             }
@@ -427,14 +430,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
                 b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
             }
-            untrack(uuid);
+            untrack(uuid, false);
         }
     }
 
-    private void untrack(UUID uuid) {
+    private void untrack(UUID uuid, boolean remove) {
         // stop tracking player
         plugin.getTrackerKeeper().getLazarus().remove(uuid);
-        disguises.remove(uuid);
+        if (remove) {
+            disguises.remove(uuid);
+        }
         sheep.remove(uuid);
         horses.remove(uuid);
         cats.remove(uuid);
@@ -721,10 +726,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     }
 
     private void twaOff(Player player) {
-        ItemStack chest = player.getInventory().getChestplate();
-        if (chest != null && chest.hasItemMeta() && chest.getItemMeta().hasDisplayName()) {
-            String metaName = chest.getItemMeta().getDisplayName();
-            if (twaChests.contains(metaName)) {
+        ItemStack helmet = player.getInventory().getHelmet();
+        if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
+            String metaName = helmet.getItemMeta().getDisplayName();
+            if (twaHelmets.contains(metaName)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL off " + player.getUniqueId());
             }
         }

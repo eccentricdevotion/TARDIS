@@ -97,7 +97,7 @@ public class TARDISSpawnListener implements Listener {
                 if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-                    TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le);
+                    TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
                 }
             }

@@ -56,7 +56,7 @@ public class TARDISSkaroSpawnListener implements Listener {
         }
         LivingEntity le = event.getEntity();
         // it's a Dalek - disguise it!
-        twaAPI.setDalekEquipment(le);
+        twaAPI.setDalekEquipment(le, false);
         if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
             // make the Dalek fly
             EntityEquipment ee = le.getEquipment();
