@@ -386,7 +386,7 @@ public class TARDISBuilderInner {
                             }
                         }
                     }
-                    if (Tag.BUTTONS.isTagged(type) && !schm.getPermission().equals("junk")) {
+                    if (Tag.WOODEN_BUTTONS.isTagged(type) && !schm.getPermission().equals("junk")) {
                         /*
                          * wood button - remember it for the Artron Energy
                          * Capacitor.

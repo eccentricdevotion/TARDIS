@@ -218,17 +218,19 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
                                     // get locations from database
                                     String creeper = tardis.getCreeper();
-                                    String beacon = tardis.getBeacon();
                                     if (!creeper.isEmpty() && !creeper.equals(":")) {
                                         World w = block.getLocation().getWorld();
                                         Location cl = TARDISStaticLocationGetters.getLocationFromDB(creeper);
                                         plugin.setTardisSpawn(true);
-                                        Entity e = w.spawnEntity(cl, EntityType.CREEPER);
+                                        Entity e = w.spawnEntity(cl.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
                                         c.setRemoveWhenFarAway(false);
-                                        Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
-                                        bl.setBlockData(TARDISConstants.GLASS);
+                                        if (tardis.getSchematic().hasBeacon()) {
+                                            String beacon = tardis.getBeacon();
+                                            Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
+                                            bl.setBlockData(TARDISConstants.GLASS);
+                                        }
                                     }
                                     // set the capacitor to 50% charge
                                     HashMap<String, Object> set = new HashMap<>();
