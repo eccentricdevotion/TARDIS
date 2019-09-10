@@ -20,6 +20,7 @@
    * Update Disk Storage defaults
 12. Test hey handles land
 13. `/handles remove` command
+14. Set Master button to ON (In Lazarus GUI) when it is in use
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

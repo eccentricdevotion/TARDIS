@@ -49,6 +49,7 @@ class TARDISPresetInventory {
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
+        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
         page.setItemMeta(two);
         // New Police Box
         ItemStack box = new ItemStack(Material.BLUE_WOOL, 1);

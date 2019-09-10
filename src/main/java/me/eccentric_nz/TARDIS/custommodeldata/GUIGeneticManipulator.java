@@ -6,7 +6,7 @@ import org.bukkit.Material;
 public enum GUIGeneticManipulator {
 
     // Genetic Manipulator
-    BUTTON_MASTER(2, 45, Material.COMPARATOR),
+    BUTTON_MASTER(3, 45, Material.COMPARATOR),
     BUTTON_AGE(2, 47, Material.HOPPER),
     BUTTON_TYPE(1, 48, Material.CYAN_DYE),
     BUTTON_OPTS(1, 49, Material.LEAD),
