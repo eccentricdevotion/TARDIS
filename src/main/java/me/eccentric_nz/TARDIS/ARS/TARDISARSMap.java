@@ -49,46 +49,55 @@ public class TARDISARSMap {
         ItemStack pad_up = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta up = pad_up.getItemMeta();
         up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
+        up.setCustomModelData(GUIMap.BUTTON_UP.getCustomModelData());
         pad_up.setItemMeta(up);
         // down
         ItemStack pad_down = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta down = pad_down.getItemMeta();
         down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
+        down.setCustomModelData(GUIMap.BUTTON_DOWN.getCustomModelData());
         pad_down.setItemMeta(down);
         // left
         ItemStack pad_left = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta left = pad_left.getItemMeta();
         left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
+        left.setCustomModelData(GUIMap.BUTTON_LEFT.getCustomModelData());
         pad_left.setItemMeta(left);
         // right
         ItemStack pad_right = new ItemStack(Material.CYAN_WOOL, 1);
         ItemMeta right = pad_right.getItemMeta();
         right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
+        right.setCustomModelData(GUIMap.BUTTON_RIGHT.getCustomModelData());
         pad_right.setItemMeta(right);
         // level selected
         ItemStack level_sel = new ItemStack(Material.YELLOW_WOOL, 1);
         ItemMeta main = level_sel.getItemMeta();
         main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
+        main.setCustomModelData(GUIMap.BUTTON_LEVEL.getCustomModelData());
         level_sel.setItemMeta(main);
         // level top
         ItemStack level_top = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta top = level_top.getItemMeta();
         top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
+        top.setCustomModelData(GUIMap.BUTTON_LEVEL_T.getCustomModelData());
         level_top.setItemMeta(top);
         // level top
         ItemStack level_bot = new ItemStack(Material.WHITE_WOOL, 1);
         ItemMeta bot = level_bot.getItemMeta();
         bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
+        bot.setCustomModelData(GUIMap.BUTTON_LEVEL_B.getCustomModelData());
         level_bot.setItemMeta(bot);
         // stone
         ItemStack black = new ItemStack(Material.BLACK_WOOL, 1);
         ItemMeta wool = black.getItemMeta();
         wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_ON"));
+        wool.setCustomModelData(GUIMap.BUTTON_MAP_ON.getCustomModelData());
         black.setItemMeta(wool);
         // load map
         ItemStack loa = new ItemStack(Material.MAP, 1);
         ItemMeta der = loa.getItemMeta();
         der.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
+        der.setCustomModelData(GUIMap.BUTTON_MAP.getCustomModelData());
         loa.setItemMeta(der);
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
@@ -100,6 +109,7 @@ public class TARDISARSMap {
         ItemStack where = new ItemStack(Material.COMPASS, 1);
         ItemMeta ami = where.getItemMeta();
         ami.setDisplayName(plugin.getLanguage().getString("BUTTON_WHERE"));
+        ami.setCustomModelData(GUIMap.BUTTON_WHERE.getCustomModelData());
         where.setItemMeta(ami);
 
         return new ItemStack[]{

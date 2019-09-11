@@ -31,7 +31,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -111,58 +113,65 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     }
 
     private void findPlayer(Player p, InventoryView view) {
-        UUID uuid = p.getUniqueId();
-        int id = ids.get(uuid);
-        // need to get the console location - will be different for non-TIPS TARDISes
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            int pos = tardis.getTIPS();
-            int tx = 0, tz = 0;
-            if (pos != -1) {
-                // tips slot
-                TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData coords = tips.getTIPSData(pos);
-                tx = coords.getCentreX();
-                tz = coords.getCentreZ();
+        if (map_data.containsKey(p.getUniqueId())) {
+            UUID uuid = p.getUniqueId();
+            int id = ids.get(uuid);
+            // need to get the console location - will be different for non-TIPS TARDISes
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
+                int pos = tardis.getTIPS();
+                int tx = 0, tz = 0;
+                if (pos != -1) {
+                    // tips slot
+                    TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+                    TARDISTIPSData coords = tips.getTIPSData(pos);
+                    tx = coords.getCentreX();
+                    tz = coords.getCentreZ();
+                }
+                Location loc = p.getLocation();
+                int px = loc.getBlockX();
+                int pz = loc.getBlockZ();
+                // determine row and col
+                int col = (int) (4 + (Math.floor((px - tx) / 16.0d)));
+                int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
+                if (col < 0 || col > 8 || row < 0 || row > 8) {
+                    // outside ARS grid
+                    setLore(view, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
+                    return;
+                }
+                int east = getOffset(col);
+                int south = getOffset(row);
+                int py = loc.getBlockY();
+                int level = 28;
+                if (py >= 48 && py < 64) {
+                    level = 27;
+                }
+                if (py >= 80 && py < 96) {
+                    level = 29;
+                }
+                // set map
+                switchLevel(view, level, uuid);
+                TARDISARSMapData md = map_data.get(uuid);
+                md.setY(level - 27);
+                md.setE(east);
+                md.setS(south);
+                setMap(level - 27, east, south, uuid, view);
+                setLore(view, level, null);
+                map_data.put(uuid, md);
+                // get itemstack to enchant and change lore
+                int slot = ((row - south) * 9) + 4 + (col - east);
+                ItemStack is = view.getItem(slot);
+                is.setType(Material.ARROW);
+                ItemMeta im = is.getItemMeta();
+                im.setLore(Collections.singletonList(plugin.getLanguage().getString("ARS_MAP_HERE")));
+                im.setCustomModelData(6);
+                is.setItemMeta(im);
             }
-            Location loc = p.getLocation();
-            int px = loc.getBlockX();
-            int pz = loc.getBlockZ();
-            // determine row and col
-            int col = (int) (4 + (Math.floor((px - tx) / 16.0d)));
-            int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
-            if (col < 0 || col > 8 || row < 0 || row > 8) {
-                // outside ARS grid
-                setLore(view, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
-                return;
-            }
-            int east = getOffset(col);
-            int south = getOffset(row);
-            int py = loc.getBlockY();
-            int level = 28;
-            if (py >= 48 && py < 64) {
-                level = 27;
-            }
-            if (py >= 80 && py < 96) {
-                level = 29;
-            }
-            // set map
-            switchLevel(view, level, uuid);
-            TARDISARSMapData md = map_data.get(uuid);
-            md.setY(level - 27);
-            md.setE(east);
-            md.setS(south);
-            setMap(level - 27, east, south, uuid, view);
-            setLore(view, level, null);
-            map_data.put(uuid, md);
-            // get itemstack to enchant and change lore
-            int slot = ((row - south) * 9) + 4 + (col - east);
-            ItemStack is = view.getItem(slot);
-            is.setType(Material.ARROW);
-            setLore(view, slot, plugin.getLanguage().getString("ARS_MAP_HERE"));
+        } else {
+            setLore(view, 47, plugin.getLanguage().getString("ARS_LOAD"));
         }
     }
 

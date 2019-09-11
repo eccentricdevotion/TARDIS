@@ -277,7 +277,7 @@ public class TARDISARSMethods {
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
-            im.setCustomModelData(1);
+            im.setCustomModelData(i - 26);
             is.setItemMeta(im);
             setSlot(view, i, is, uuid, false);
         }

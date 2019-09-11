@@ -13,14 +13,14 @@ public enum GUIArs {
     BUTTON_RIGHT(4, 11, Material.CYAN_WOOL),
     BUTTON_MAP(2, 10, Material.MAP),
     BUTTON_RECON(1, 12, Material.PINK_WOOL),
-    BUTTON_LEVEL_B(1, 27, Material.WHITE_WOOL),
-    BUTTON_LEVEL(1, 28, Material.YELLOW_WOOL),
-    BUTTON_LEVEL_T(2, 29, Material.WHITE_WOOL),
+    BUTTON_LEVEL_B(3, 27, Material.WHITE_WOOL),
+    BUTTON_LEVEL(2, 28, Material.YELLOW_WOOL),
+    BUTTON_LEVEL_T(1, 29, Material.WHITE_WOOL),
     BUTTON_RESET(1, 30, Material.COBBLESTONE),
     BUTTON_SCROLL_L(1, 36, Material.RED_WOOL),
     BUTTON_SCROLL_R(1, 38, Material.LIME_WOOL),
     BUTTON_JETT(1, 39, Material.TNT),
-    BUTTON_MAP_NO(1, -1, Material.BLACK_WOOL),
+    BUTTON_MAP_ON(1, -1, Material.BLACK_WOOL),
     EMPTY_SLOT(1, -1, Material.STONE);
 
     private final int customModelData;
