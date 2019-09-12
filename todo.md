@@ -16,7 +16,7 @@
 8. Update documentation...
 9. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
-10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)`
+10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)` - _started_
    * Update Disk Storage defaults
 12. Test hey handles land
 13. `/handles remove` command
