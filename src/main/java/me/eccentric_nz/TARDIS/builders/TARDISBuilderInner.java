@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -38,10 +39,7 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Lightable;
-import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -571,6 +569,23 @@ public class TARDISBuilderInner {
         if (ender != null) {
             Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
             ((EnderCrystal) ender_crystal).setShowingBottom(false);
+        }
+        if (obj.has("paintings")) {
+            JSONArray paintings = (JSONArray) obj.get("paintings");
+            for (int i = 0; i < paintings.length(); i++) {
+                JSONObject painting = paintings.getJSONObject(i);
+                JSONObject rel = painting.getJSONObject("rel_location");
+                int px = rel.getInt("x");
+                int py = rel.getInt("y");
+                int pz = rel.getInt("z");
+                Art art = Art.valueOf(painting.getString("art"));
+                BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
+                Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
+                Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                ent.teleport(pl);
+                ent.setFacingDirection(facing, true);
+                ent.setArt(art, true);
+            }
         }
         // finished processing - update tardis table!
         qf.doUpdate("tardis", set, where);

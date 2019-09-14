@@ -22,18 +22,23 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TARDISSchematicCommand implements CommandExecutor {
@@ -126,6 +131,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     TARDISMessage.send(player, "SCHM_MULTIPLE");
                     return true;
                 }
+                JSONArray paintings = new JSONArray();
+                List<Entity> entities = new ArrayList<>();
                 // create JSON arrays for block data
                 JSONArray levels = new JSONArray();
                 // loop through the blocks inside this cube
@@ -136,6 +143,25 @@ public class TARDISSchematicCommand implements CommandExecutor {
                         for (int c = minz; c <= maxz; c++) {
                             JSONObject obj = new JSONObject();
                             Block b = w.getBlockAt(r, l, c);
+                            // check for paintings
+                            Location bLocation = b.getLocation();
+                            for (Entity entity : bLocation.getWorld().getNearbyEntities(bLocation, 1.25, 1.25, 1.25)) {
+                                if (entity instanceof Painting) {
+                                    Location ploc = entity.getLocation();
+                                    if (!entities.contains(entity)) {
+                                        JSONObject painting = new JSONObject();
+                                        JSONObject loc = new JSONObject();
+                                        loc.put("x", ploc.getBlockX() - minx);
+                                        loc.put("y", ploc.getBlockY() - miny);
+                                        loc.put("z", ploc.getBlockZ() - minz);
+                                        painting.put("rel_location", loc);
+                                        painting.put("art", ((Painting) entity).getArt().toString());
+                                        painting.put("facing", entity.getFacing().toString());
+                                        paintings.put(painting);
+                                        entities.add(entity);
+                                    }
+                                }
+                            }
                             String blockData = b.getBlockData().getAsString();
                             obj.put("data", blockData);
                             // banners
@@ -164,6 +190,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 schematic.put("relative", relative);
                 schematic.put("dimensions", dimensions);
                 schematic.put("input", levels);
+                if (paintings.length() > 0) {
+                    schematic.put("paintings", paintings);
+                }
                 String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
                 File file = new File(output);
                 try {

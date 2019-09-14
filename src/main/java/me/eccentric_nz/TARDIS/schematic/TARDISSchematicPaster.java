@@ -19,11 +19,17 @@ package me.eccentric_nz.TARDIS.schematic;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
+import org.bukkit.Art;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -131,6 +137,28 @@ class TARDISSchematicPaster {
             prtb.setBlockData(ptdata);
         });
         setBanners(postBanners);
+        // paintings
+        if (obj.has("paintings")) {
+            JSONArray paintings = (JSONArray) obj.get("paintings");
+            for (int i = 0; i < paintings.length(); i++) {
+                JSONObject painting = paintings.getJSONObject(i);
+                JSONObject rel = painting.getJSONObject("rel_location");
+                int px = rel.getInt("x");
+                int py = rel.getInt("y");
+                int pz = rel.getInt("z");
+                Art art = Art.valueOf(painting.getString("art"));
+                BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
+                Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
+                try {
+                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                    ent.teleport(pl);
+                    ent.setFacingDirection(facing, true);
+                    ent.setArt(art, true);
+                } catch (IllegalArgumentException e) {
+                    plugin.debug("Invalid painting location!");
+                }
+            }
+        }
         return true;
     }
 }

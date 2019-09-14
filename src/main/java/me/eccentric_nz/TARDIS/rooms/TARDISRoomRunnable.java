@@ -25,10 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.utility.*;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,6 +34,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.block.data.type.SeaPickle;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -278,6 +277,24 @@ public class TARDISRoomRunnable implements Runnable {
                             }
                         }
                     }
+                }
+            }
+            if (s.has("paintings")) {
+                // place paintings
+                JSONArray paintings = (JSONArray) s.get("paintings");
+                for (int i = 0; i < paintings.length(); i++) {
+                    JSONObject painting = paintings.getJSONObject(i);
+                    JSONObject rel = painting.getJSONObject("rel_location");
+                    int px = rel.getInt("x");
+                    int py = rel.getInt("y");
+                    int pz = rel.getInt("z");
+                    Art art = Art.valueOf(painting.getString("art"));
+                    BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
+                    Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, resety + py, resetz + pz));
+                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                    ent.teleport(pl);
+                    ent.setFacingDirection(facing, true);
+                    ent.setArt(art, true);
                 }
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
