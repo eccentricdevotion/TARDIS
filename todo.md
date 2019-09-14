@@ -17,8 +17,7 @@
    * Add advanced console and disk storage to schematics
 10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)` - _started_
    * Update Disk Storage defaults
-13. `/handles remove` command
-14. Set Master button to ON (In Lazarus GUI) when it is in use
+13. Set Master button to ON (In Lazarus GUI) when it is in use
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

@@ -47,6 +47,10 @@ public class TARDISHandlesCommand implements CommandExecutor {
             player = (Player) sender;
             return new TARDISHandlesDiskCommand(plugin).renameDisk(player, args);
         }
+        if (args[0].equals("remove")) {
+            player = (Player) sender;
+            return new TARDISHandlesRemoveCommand(plugin).purge(player);
+        }
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
             return true;

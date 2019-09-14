@@ -1001,6 +1001,10 @@ commands:
       description: Name a Handles Program Disk
       usage: /<command> disk [new name]
       permission: tardis.handles.program
+    remove:
+      description: Remove the Handles record from the TARDIS database
+      usage: /<command> remove
+      permission: tardis.handles.use
   tardisteleport:
     aliases: [tardistp, ttp]
     description: Teleport to a world's spawn point
