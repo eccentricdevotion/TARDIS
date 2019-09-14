@@ -23,43 +23,45 @@ public class TARDISAccessoryListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHelmetSlotEquip(InventoryClickEvent event) {
         Inventory inv = event.getClickedInventory();
-        InventoryType inventoryType = inv.getType();
-        if (inventoryType == InventoryType.PLAYER && event.getRawSlot() == 5) {
-            ItemStack cursor = event.getCursor();
-            if (cursor != null && cursor.getType() == Material.LEATHER_HELMET && cursor.hasItemMeta() && isNullOrAir(event.getCurrentItem())) {
-                ItemMeta im = cursor.getItemMeta();
-                if (im.hasCustomModelData()) {
-                    int cmd = im.getCustomModelData();
-                    if (cmd > 10000022 && cmd < 10000040) {
-                        ItemStack bowtie = new ItemStack(Material.MUSHROOM_STEM, 1);
-                        ItemMeta bim = bowtie.getItemMeta();
-                        bim.setDisplayName(im.getDisplayName());
-                        bim.setCustomModelData(cmd);
-                        bowtie.setItemMeta(bim);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            event.getWhoClicked().setItemOnCursor(null);
-                            event.setCurrentItem(bowtie);
-                        }, 1L);
+        if (inv != null) {
+            InventoryType inventoryType = inv.getType();
+            if (inventoryType == InventoryType.PLAYER && event.getRawSlot() == 5) {
+                ItemStack cursor = event.getCursor();
+                if (cursor != null && cursor.getType() == Material.LEATHER_HELMET && cursor.hasItemMeta() && isNullOrAir(event.getCurrentItem())) {
+                    ItemMeta im = cursor.getItemMeta();
+                    if (im.hasCustomModelData()) {
+                        int cmd = im.getCustomModelData();
+                        if (cmd > 10000022 && cmd < 10000040) {
+                            ItemStack bowtie = new ItemStack(Material.MUSHROOM_STEM, 1);
+                            ItemMeta bim = bowtie.getItemMeta();
+                            bim.setDisplayName(im.getDisplayName());
+                            bim.setCustomModelData(cmd);
+                            bowtie.setItemMeta(bim);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                event.getWhoClicked().setItemOnCursor(null);
+                                event.setCurrentItem(bowtie);
+                            }, 1L);
+                        }
                     }
-                }
-            } else if (isNullOrAir(cursor) && event.getCurrentItem().getType() == Material.MUSHROOM_STEM && event.getCurrentItem().hasItemMeta()) {
-                ItemStack current = event.getCurrentItem();
-                ItemMeta im = current.getItemMeta();
-                if (im.hasCustomModelData()) {
-                    int cmd = im.getCustomModelData();
-                    if (cmd > 10000022 && cmd < 10000040) {
-                        ItemStack bowtie = new ItemStack(Material.LEATHER_HELMET, 1);
-                        ItemMeta bim = bowtie.getItemMeta();
-                        bim.setDisplayName(im.getDisplayName());
-                        bim.setCustomModelData(cmd);
-                        bim.addItemFlags(ItemFlag.values());
-                        Damageable damageable = (Damageable) im;
-                        damageable.setDamage(50);
-                        bowtie.setItemMeta(bim);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            event.getWhoClicked().setItemOnCursor(bowtie);
-                        }, 1L);
-                        event.setCurrentItem(null);
+                } else if (isNullOrAir(cursor) && event.getCurrentItem().getType() == Material.MUSHROOM_STEM && event.getCurrentItem().hasItemMeta()) {
+                    ItemStack current = event.getCurrentItem();
+                    ItemMeta im = current.getItemMeta();
+                    if (im.hasCustomModelData()) {
+                        int cmd = im.getCustomModelData();
+                        if (cmd > 10000022 && cmd < 10000040) {
+                            ItemStack bowtie = new ItemStack(Material.LEATHER_HELMET, 1);
+                            ItemMeta bim = bowtie.getItemMeta();
+                            bim.setDisplayName(im.getDisplayName());
+                            bim.setCustomModelData(cmd);
+                            bim.addItemFlags(ItemFlag.values());
+                            Damageable damageable = (Damageable) im;
+                            damageable.setDamage(50);
+                            bowtie.setItemMeta(bim);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                event.getWhoClicked().setItemOnCursor(bowtie);
+                            }, 1L);
+                            event.setCurrentItem(null);
+                        }
                     }
                 }
             }
