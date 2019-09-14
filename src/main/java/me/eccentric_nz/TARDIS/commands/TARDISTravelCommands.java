@@ -90,7 +90,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);
-                TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 // get tardis data
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
@@ -624,8 +623,51 @@ public class TARDISTravelCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.timetravel.location")) {
                         switch (args.length) {
                             case 2:
-                                TARDISMessage.send(player, "ARG_COORDS");
-                                return false;
+                                if (args[0].equalsIgnoreCase("random")) {
+                                    // check world is an actual world
+                                    World world = plugin.getServer().getWorld(args[1]);
+                                    if (world == null) {
+                                        TARDISMessage.send(player, "COULD_NOT_FIND_WORLD");
+                                        return true;
+                                    }
+                                    // check world is enabled for travel
+                                    if (!containsIgnoreCase(world.getName(), plugin.getTardisAPI().getWorlds())) {
+                                        TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                                        return true;
+                                    }
+                                    // only world specified
+                                    List<String> worlds = Collections.singletonList(world.getName());
+                                    // get current location
+                                    HashMap<String, Object> wherec = new HashMap<>();
+                                    wherec.put("tardis_id", id);
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                                    if (rsc.resultSet()) {
+                                        Parameters parameters = new Parameters(player, FLAG.getNoMessageFlags());
+                                        parameters.setCompass(rsc.getDirection());
+                                        Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
+                                        if (l != null) {
+                                            set.put("world", l.getWorld().getName());
+                                            set.put("x", l.getBlockX());
+                                            set.put("y", l.getBlockY());
+                                            set.put("z", l.getBlockZ());
+                                            set.put("submarine", 0);
+                                            qf.doSyncUpdate("next", set, tid);
+                                            TARDISMessage.send(player, "LOC_SAVED", true);
+                                            plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                            plugin.getTrackerKeeper().getRescue().remove(id);
+                                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                                new TARDISLand(plugin, id, player).exitVortex();
+                                            }
+                                            return true;
+                                        }
+                                    } else {
+                                        TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                                        return true;
+                                    }
+                                } else {
+                                    TARDISMessage.send(player, "ARG_COORDS");
+                                    return false;
+                                }
                             case 3:
                                 if (args[0].startsWith("~")) {
                                     HashMap<String, Object> wherecl = new HashMap<>();
@@ -654,7 +696,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     // make location
                                     Location location = new Location(rsc.getWorld(), x, y, z);
                                     // check location
-                                    int count = checkLocation(location, player, id, tt);
+                                    int count = checkLocation(location, player, id);
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                         return true;
@@ -677,7 +719,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     // automatically get highest block Y coord
                                     Location determiney = getCoordinateLocation(args, player, id);
                                     if (determiney != null) {
-                                        int count = checkLocation(determiney, player, id, tt);
+                                        int count = checkLocation(determiney, player, id);
                                         if (count > 0) {
                                             TARDISMessage.send(player, "NOT_SAFE");
                                             return true;
@@ -704,7 +746,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 Location giveny = getCoordinateLocation(args, player, id);
                                 if (giveny != null) {
                                     // check location
-                                    int count = checkLocation(giveny, player, id, tt);
+                                    int count = checkLocation(giveny, player, id);
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                         return true;
@@ -927,7 +969,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         return null;
     }
 
-    private int checkLocation(Location location, Player player, int id, TARDISTimeTravel tt) {
+    private int checkLocation(Location location, Player player, int id) {
         if (location.getWorld().getEnvironment().equals(Environment.NETHER) && location.getY() > 127) {
             TARDISMessage.send(player, "TRAVEL_NETHER");
             return 1;
@@ -965,5 +1007,14 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
         }
         return Integer.MAX_VALUE;
+    }
+
+    private boolean containsIgnoreCase(String str, List<String> list) {
+        for (String s : list) {
+            if (s.equalsIgnoreCase(str)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

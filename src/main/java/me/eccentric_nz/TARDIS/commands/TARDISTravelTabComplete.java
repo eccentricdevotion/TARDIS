@@ -43,7 +43,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "dest", "area", "back", "cave", "village", "cancel", "costs"));
+        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "dest", "area", "back", "cave", "village", "random", "cancel", "costs"));
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
