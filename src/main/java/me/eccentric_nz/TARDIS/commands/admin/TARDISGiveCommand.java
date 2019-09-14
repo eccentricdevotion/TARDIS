@@ -67,6 +67,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("bow-tie", "Red Bow Tie");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("cell", "Artron Storage Cell");
+        items.put("communicator", "TARDIS Communicator");
         items.put("custard", "Bowl of Custard");
         items.put("d-circuit", "Diamond Disruptor Circuit");
         items.put("e-circuit", "Emerald Environment Circuit");

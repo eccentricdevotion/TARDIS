@@ -1,7 +1,5 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-
 import java.util.Locale;
 
 public enum RECIPE_ITEM {
@@ -40,7 +38,7 @@ public enum RECIPE_ITEM {
     TARDIS_ARTRON_FURNACE(10000001),
     TARDIS_BIOME_READER(10000001),
     TARDIS_CHAMELEON_CIRCUIT(10001966),
-    TARDIS_COMMUNICATOR(10000001),
+    TARDIS_COMMUNICATOR(10000040),
     TARDIS_INPUT_CIRCUIT(10001976),
     TARDIS_INVISIBILITY_CIRCUIT(10001981),
     TARDIS_KEY(10000001),
@@ -107,33 +105,17 @@ public enum RECIPE_ITEM {
     PICKUP_ARROWS_UPGRADE(10001984);
 
     private final int customModelData;
-    private final String name;
 
     RECIPE_ITEM(int customModelData) {
         this.customModelData = customModelData;
-        name = setName(this);
     }
 
     public int getCustomModelData() {
         return customModelData;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static RECIPE_ITEM getByName(String name) {
         String processed = name.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
         return RECIPE_ITEM.valueOf(processed);
-    }
-
-    private String setName(RECIPE_ITEM item) {
-        String s = item.toString();
-        if (item == THREE_D_GLASSES) {
-            return "3-D Glasses";
-        } else if (s.startsWith("BIO_")) {
-            return TARDISStringUtils.capitalise(s.replace("BIO_SCANNER", "Bio-scanner"));
-        }
-        return TARDISStringUtils.capitalise(s);
     }
 }

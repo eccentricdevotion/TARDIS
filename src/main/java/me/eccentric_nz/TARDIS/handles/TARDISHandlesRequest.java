@@ -76,7 +76,7 @@ public class TARDISHandlesRequest {
                     }
                     PlayerInventory pi = player.getInventory();
                     ItemStack communicator = pi.getHelmet();
-                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.LEATHER_HELMET) || !communicator.getItemMeta().getDisplayName().equals("TARDIS Communicator")) {
+                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.MUSHROOM_STEM) || !communicator.getItemMeta().getDisplayName().equals("TARDIS Communicator")) {
                         TARDISMessage.send(player, "HANDLES_COMMUNICATOR");
                         return;
                     }

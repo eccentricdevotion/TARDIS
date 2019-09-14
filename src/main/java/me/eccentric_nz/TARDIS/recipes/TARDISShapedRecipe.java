@@ -136,7 +136,7 @@ public class TARDISShapedRecipe {
             mapMeta.setMapId(map);
             is.setItemMeta(mapMeta);
         } else {
-            if (s.endsWith("Bow Tie") || s.equals("3-D Glasses")) {
+            if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("TARDIS Communicator")) {
                 Damageable damageable = (Damageable) im;
                 damageable.setDamage(50);
                 im.addItemFlags(ItemFlag.values());

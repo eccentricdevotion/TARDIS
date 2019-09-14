@@ -290,6 +290,8 @@ public class TARDISMushroomBlockData {
             put(38, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]");
             // 3-D glasses
             put(39, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
+            // handles communicator
+            put(40, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]");
         }
     };
 }

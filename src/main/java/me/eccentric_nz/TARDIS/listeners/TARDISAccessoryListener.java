@@ -31,15 +31,15 @@ public class TARDISAccessoryListener implements Listener {
                     ItemMeta im = cursor.getItemMeta();
                     if (im.hasCustomModelData()) {
                         int cmd = im.getCustomModelData();
-                        if (cmd > 10000022 && cmd < 10000040) {
-                            ItemStack bowtie = new ItemStack(Material.MUSHROOM_STEM, 1);
-                            ItemMeta bim = bowtie.getItemMeta();
+                        if (cmd > 10000022 && cmd < 10000041) {
+                            ItemStack accessory = new ItemStack(Material.MUSHROOM_STEM, 1);
+                            ItemMeta bim = accessory.getItemMeta();
                             bim.setDisplayName(im.getDisplayName());
                             bim.setCustomModelData(cmd);
-                            bowtie.setItemMeta(bim);
+                            accessory.setItemMeta(bim);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 event.getWhoClicked().setItemOnCursor(null);
-                                event.setCurrentItem(bowtie);
+                                event.setCurrentItem(accessory);
                             }, 1L);
                         }
                     }
@@ -48,17 +48,17 @@ public class TARDISAccessoryListener implements Listener {
                     ItemMeta im = current.getItemMeta();
                     if (im.hasCustomModelData()) {
                         int cmd = im.getCustomModelData();
-                        if (cmd > 10000022 && cmd < 10000040) {
-                            ItemStack bowtie = new ItemStack(Material.LEATHER_HELMET, 1);
-                            ItemMeta bim = bowtie.getItemMeta();
+                        if (cmd > 10000022 && cmd < 10000041) {
+                            ItemStack accessory = new ItemStack(Material.LEATHER_HELMET, 1);
+                            ItemMeta bim = accessory.getItemMeta();
                             bim.setDisplayName(im.getDisplayName());
                             bim.setCustomModelData(cmd);
                             bim.addItemFlags(ItemFlag.values());
                             Damageable damageable = (Damageable) im;
                             damageable.setDamage(50);
-                            bowtie.setItemMeta(bim);
+                            accessory.setItemMeta(bim);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                event.getWhoClicked().setItemOnCursor(bowtie);
+                                event.getWhoClicked().setItemOnCursor(accessory);
                             }, 1L);
                             event.setCurrentItem(null);
                         }
