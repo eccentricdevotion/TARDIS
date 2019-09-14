@@ -65,7 +65,7 @@ public class TARDISHandlesCommand implements CommandExecutor {
         player = plugin.getServer().getPlayer(uuid);
         switch (args[0]) {
             case "land":
-                return new TARDISHandlesTakeoffCommand(plugin).enterVortex(player, args);
+                return new TARDISHandlesLandCommand(plugin).exitVortex(player, TARDISNumberParsers.parseInt(args[2]), args[1]);
             case "lock":
             case "unlock":
                 return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.valueOf(args[3]));

@@ -1,12 +1,11 @@
 # TODO
 
-## Next version `4.1.1`
+## Next version `4.2`
 1. New features
    * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
-   * Chemistry room + add all chemistry plugin features
 2. Make TARDIS circuits not maps
 3. Test player preference to bypass `tardis rescue accept`
 4. Test `invisibility` setting in TARDIS areas
@@ -18,7 +17,6 @@
    * Add advanced console and disk storage to schematics
 10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)` - _started_
    * Update Disk Storage defaults
-12. Test hey handles land
 13. `/handles remove` command
 14. Set Master button to ON (In Lazarus GUI) when it is in use
 
