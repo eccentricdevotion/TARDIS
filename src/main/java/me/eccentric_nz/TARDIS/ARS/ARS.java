@@ -25,10 +25,7 @@ public interface ARS {
 
     String getMaterial();
 
-    String getActualName();
-
     String getDescriptiveName();
 
     int getOffset();
-
 }

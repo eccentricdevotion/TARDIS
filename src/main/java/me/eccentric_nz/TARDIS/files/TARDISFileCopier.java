@@ -78,8 +78,8 @@ public class TARDISFileCopier {
         // copy default room files as well
         for (TARDISARS ta : TARDISARS.values()) {
             if (ta.getOffset() != 0) {
-                String str = basepath + ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm";
-                copy(str, plugin.getResource(ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm"), true);
+                String str = basepath + ta.toString().toLowerCase(Locale.ENGLISH) + ".tschm";
+                copy(str, plugin.getResource(ta.toString().toLowerCase(Locale.ENGLISH) + ".tschm"), true);
             }
         }
         String zeronstr = basepath + "zero.tschm";

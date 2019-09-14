@@ -62,7 +62,7 @@ class TARDISARSRunnable implements Runnable {
 
     @Override
     public void run() {
-        String whichroom = room.getActualName();
+        String whichroom = room.toString();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

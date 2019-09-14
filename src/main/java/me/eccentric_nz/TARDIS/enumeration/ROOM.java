@@ -27,6 +27,7 @@ public enum ROOM {
     BAKER,
     BEDROOM,
     BIRDCAGE,
+    CHEMISTRY,
     EMPTY,
     FARM,
     GRAVITY,

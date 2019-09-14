@@ -33,22 +33,22 @@ upgrades:
   coral: 8000
   deluxe: 10000
   eleventh: 10000
-  factory: 7500
-  thirteenth: 8000
   ender: 5000
-  legacy_bigger: 7500
-  legacy_budget: 5000
-  legacy_deluxe: 10000
-  legacy_eleventh: 10000
-  legacy_redstone: 8000
+  factory: 7500
   master: 10000
   plank: 5000
   pyramid: 5000
   redstone: 7500
   steampunk: 5000
+  thirteenth: 8000
   tom: 5000
   twelfth: 7500
   war: 5000
+  legacy_bigger: 7500
+  legacy_budget: 5000
+  legacy_deluxe: 10000
+  legacy_eleventh: 10000
+  legacy_redstone: 8000
   custom: 10000
   archive:
     small: 5000

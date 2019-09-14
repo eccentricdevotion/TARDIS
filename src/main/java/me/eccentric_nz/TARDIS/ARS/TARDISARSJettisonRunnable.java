@@ -53,7 +53,7 @@ class TARDISARSJettisonRunnable implements Runnable {
     @Override
     public void run() {
         QueryFactory qf = new QueryFactory(plugin);
-        String r = room.getActualName();
+        String r = room.toString();
         // remove the room
         World w = slot.getChunk().getWorld();
         int x = slot.getX();

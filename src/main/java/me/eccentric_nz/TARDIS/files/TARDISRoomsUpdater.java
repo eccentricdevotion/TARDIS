@@ -52,6 +52,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.BEDROOM.user", false);
         booleanOptions.put("rooms.BIRDCAGE.enabled", true);
         booleanOptions.put("rooms.BIRDCAGE.user", false);
+        booleanOptions.put("rooms.CHEMISTRY.enabled", true);
+        booleanOptions.put("rooms.CHEMISTRY.user", false);
         booleanOptions.put("rooms.EMPTY.enabled", true);
         booleanOptions.put("rooms.EMPTY.user", false);
         booleanOptions.put("rooms.FARM.enabled", true);
@@ -115,6 +117,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.BEDROOM.offset", -4);
         integerOptions.put("rooms.BIRDCAGE.cost", 350);
         integerOptions.put("rooms.BIRDCAGE.offset", -4);
+        integerOptions.put("rooms.CHEMISTRY.cost", 550);
+        integerOptions.put("rooms.CHEMISTRY.offset", -4);
         integerOptions.put("rooms.EMPTY.cost", 250);
         integerOptions.put("rooms.EMPTY.offset", -4);
         integerOptions.put("rooms.FARM.cost", 350);
@@ -166,14 +170,16 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.ZERO.cost", 650);
         integerOptions.put("rooms.ZERO.offset", -4);
         // string
+        stringOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
         stringOptions.put("rooms.AQUARIUM.seed", "TUBE_CORAL_BLOCK");
         stringOptions.put("rooms.ARBORETUM.seed", "OAK_LEAVES");
         stringOptions.put("rooms.BAKER.seed", "END_STONE");
         stringOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
+        stringOptions.put("rooms.BIRDCAGE.seed", "YELLOW_GLAZED_TERRACOTTA");
+        stringOptions.put("rooms.CHEMISTRY.seed", "BLAST_FURNACE");
         stringOptions.put("rooms.EMPTY.seed", "GLASS");
         stringOptions.put("rooms.FARM.seed", "DIRT");
         stringOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
-        stringOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
         stringOptions.put("rooms.GREENHOUSE.seed", "MELON");
         stringOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         stringOptions.put("rooms.HUTCH.seed", "ACACIA_LOG");
@@ -190,7 +196,6 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.SMELTER.seed", "CHEST");
         stringOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         stringOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
-        stringOptions.put("rooms.BIRDCAGE.seed", "YELLOW_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.TRENZALORE.seed", "BRICK");
         stringOptions.put("rooms.VAULT.seed", "DISPENSER");
         stringOptions.put("rooms.VILLAGE.seed", "LOG");
@@ -201,9 +206,6 @@ public class TARDISRoomsUpdater {
 
     public void checkRoomsConfig() {
         int i = 0;
-        if (rooms_config.contains("rooms.AQUARUIM")) {
-            rooms_config.set("rooms.AQUARUIM", null);
-        }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
             if (!rooms_config.contains(entry.getKey())) {

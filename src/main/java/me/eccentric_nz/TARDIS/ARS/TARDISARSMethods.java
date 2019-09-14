@@ -152,7 +152,7 @@ public class TARDISARSMethods {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
-            String config_path = TARDISARS.ARSFor(material.toString()).getActualName();
+            String config_path = TARDISARS.ARSFor(material.toString()).toString();
             List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
             im.setLore(lore);
         } else {
@@ -477,7 +477,7 @@ public class TARDISARSMethods {
         }
         HashMap<String, Integer> item_counts = new HashMap<>();
         for (Map.Entry<TARDISARSSlot, ARS> rooms : map.entrySet()) {
-            HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().getActualName());
+            HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().toString());
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String bid = entry.getKey();
                 String bkey;

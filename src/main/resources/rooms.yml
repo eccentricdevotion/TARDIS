@@ -30,6 +30,12 @@ rooms:
     offset: -4
     seed: YELLOW_GLAZED_TERRACOTTA
     user: false
+  CHEMISTRY:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: BLAST_FURNACE
+    user: false
   KITCHEN:
     enabled: true
     cost: 450

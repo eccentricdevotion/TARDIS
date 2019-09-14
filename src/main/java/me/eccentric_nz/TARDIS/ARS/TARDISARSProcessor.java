@@ -128,11 +128,11 @@ class TARDISARSProcessor {
             // calculate energy gained by jettisons
             for (Map.Entry<TARDISARSJettison, ARS> c : jettison.entrySet()) {
                 if (c.getValue() != null) {
-                    recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().getActualName() + ".cost"));
+                    recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
                 }
             }
             for (Map.Entry<TARDISARSSlot, ARS> c : changed.entrySet()) {
-                int cost = plugin.getRoomsConfig().getInt("rooms." + c.getValue().getActualName() + ".cost");
+                int cost = plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
                 totalcost += cost;
             }
             ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);

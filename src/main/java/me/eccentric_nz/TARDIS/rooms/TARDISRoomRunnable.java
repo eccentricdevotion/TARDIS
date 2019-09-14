@@ -29,6 +29,7 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -71,6 +72,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final List<Block> pumpkinblocks = new ArrayList<>();
     private final List<Block> wheatblocks = new ArrayList<>();
     private final List<Block> farmlandblocks = new ArrayList<>();
+    private final List<Block> signblocks = new ArrayList<>();
     private final List<Material> notThese = new ArrayList<>();
     private final List<BlockData> flora = new ArrayList<>();
     private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
@@ -169,6 +171,20 @@ public class TARDISRoomRunnable implements Runnable {
                 // set all the ice to water
                 iceblocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
                 iceblocks.clear();
+            }
+            if (signblocks.size() > 0) {
+                boolean first = true;
+                for (Block b : signblocks) {
+                    Sign sign = (Sign) b.getState();
+                    if (first) {
+                        sign.setLine(1, "Chemistry");
+                        sign.setLine(2, "Lab");
+                    } else {
+                        sign.setLine(1, "Science");
+                        sign.setLine(2, "is fun!");
+                    }
+                    sign.update();
+                }
             }
             if (room.equals("AQUARIUM")) {
                 // add some underwater flora
@@ -427,6 +443,10 @@ public class TARDISRoomRunnable implements Runnable {
                 } else {
                     data = floor_type.createBlockData();
                 }
+            }
+            if (type.equals(Material.SPRUCE_SIGN) && room.equals("CHEMISTRY")) {
+                Block sign = world.getBlockAt(startx, starty, startz);
+                signblocks.add(sign);
             }
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser
