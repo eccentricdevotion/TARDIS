@@ -179,6 +179,7 @@ public class TARDISRoomRunnable implements Runnable {
                     if (first) {
                         sign.setLine(1, "Chemistry");
                         sign.setLine(2, "Lab");
+                        first = false;
                     } else {
                         sign.setLine(1, "Science");
                         sign.setLine(2, "is fun!");

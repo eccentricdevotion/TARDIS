@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPoliceBox;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
+import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
+import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
@@ -305,6 +307,10 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("allow.hads")) {
                 TARDISHadsPersister thp = new TARDISHadsPersister(this);
                 thp.load();
+            }
+            if (getConfig().getBoolean("allow.chemistry")) {
+                new ChemistryBlockRecipes(this).addRecipes();
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200L, 200L);
             }
             new TARDISVortexPersister(this).load();
             new TARDISJunkPlayerPersister(this).load();

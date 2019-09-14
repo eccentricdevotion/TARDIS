@@ -203,6 +203,7 @@ permissions:
       tardis.room.baker: true
       tardis.room.bedroom: true
       tardis.room.birdcage: true
+      tardis.room.chemistry: true
       tardis.room.empty: true
       tardis.room.farm: true
       tardis.room.gravity: true
@@ -353,6 +354,30 @@ permissions:
   tardis.gamemode.bypass:
     description: Allows a player to bypass gamemode switching when changing worlds.
     default: false
+  tardis.chemistry.command:
+    description: Allow a player to open Chemistry GUIs by command.
+    default: op
+  tardis.chemistry.creative:
+    description: Allow a player to craft and open the Chemistry creative GUIs.
+    default: op
+  tardis.construct.build:
+    description: Allow a player to craft and open the 'Element constructor' GUI.
+    default: op
+  tardis.compound.create:
+    description: Allow a player to craft and open the 'Chemical compounds' GUI.
+    default: op
+  tardis.reducer.use:
+    description: Allow a player to craft and open the 'Material reducer' GUI.
+    default: op
+  tardis.products.craft:
+    description: Allow a player to craft and open the 'Product crafting' GUI.
+    default: op
+  tardis.lab.combine:
+    description: Allow a player to craft and open the 'Lab table' GUI.
+    default: op
+  tardis.formula.show:
+    description: Allow a player to view a compound or product formula.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
@@ -991,3 +1016,38 @@ commands:
     description: Set a player's gamemode
     usage: /<command> [GameMode] <player>
     permission: tardis.admin
+  chemistry:
+    description: Open a Chemistry creative GUI.
+    usage: /<command> [elements|compounds|lab|products]
+    permission: tardis.chemistry.creative
+    permission-message: You don't have the permission <permission> to use this command
+  construct:
+    description: Open the 'Element constructor' GUI.
+    usage: /<command>
+    permission: tardis.compound.create
+    permission-message: You don't have the permission <permission> to use this command
+  compound:
+    description: Open the 'Chemical compounds' creation GUI.
+    usage: /<command>
+    permission: tardis.compound.create
+    permission-message: You don't have the permission <permission> to use this command
+  reduce:
+    description: Open the 'Material reducer' GUI.
+    usage: /<command>
+    permission: tardis.reducer.use
+    permission-message: You don't have the permission <permission> to use this command
+  product:
+    description: Open the 'Product crafting' GUI.
+    usage: /<command>
+    permission: tardis.product.craft
+    permission-message: You don't have the permission <permission> to use this command
+  lab:
+    description: Open the 'Lab table' GUI.
+    usage: /<command>
+    permission: tardis.lab.combine
+    permission-message: You don't have the permission <permission> to use this command
+  formula:
+    description: Show a compound or product formula.
+    usage: /<command> [compound|product]
+    permission: tardis.formula.show
+    permission-message: You don't have the permission <permission> to use this command

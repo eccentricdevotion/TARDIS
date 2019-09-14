@@ -1,0 +1,57 @@
+package me.eccentric_nz.TARDIS.chemistry.product;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+
+public class SparklerListener implements Listener {
+
+    private final TARDIS plugin;
+    private final HashMap<String, BlockData> colours = new HashMap<>();
+
+    public SparklerListener(TARDIS plugin) {
+        this.plugin = plugin;
+        colours.put("Orange Sparkler", Material.ORANGE_WOOL.createBlockData());
+        colours.put("Blue Sparkler", Material.BLUE_WOOL.createBlockData());
+        colours.put("Green Sparkler", Material.GREEN_WOOL.createBlockData());
+        colours.put("Purple Sparkler", Material.PURPLE_WOOL.createBlockData());
+        colours.put("Red Sparkler", Material.RED_WOOL.createBlockData());
+    }
+
+    @EventHandler
+    public void onSparklerUse(PlayerInteractEvent event) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            Player player = event.getPlayer();
+            ItemStack is = event.getItem();
+            if (is != null && SparklerMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
+                ItemMeta im = is.getItemMeta();
+                if (im.hasDisplayName() && im.getDisplayName().endsWith("Sparkler") && im.hasCustomModelData() && !im.hasEnchant(Enchantment.LOYALTY)) {
+                    player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
+                    // switch custom data models e.g. 10000035 -> 12000035
+                    int cmd = im.getCustomModelData() + 2000000;
+                    im.setCustomModelData(cmd);
+                    // set custom data on sparkler
+                    im.addEnchant(Enchantment.LOYALTY, 1, true);
+                    is.setItemMeta(im);
+                    // start sparkler runnable
+                    BlockData colour = colours.get(ChatColor.stripColor(im.getDisplayName()));
+                    SparklerRunnable runnable = new SparklerRunnable(player, colour, System.currentTimeMillis());
+                    int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 2L);
+                    runnable.setTaskId(taskId);
+                }
+            }
+        }
+    }
+}

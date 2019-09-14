@@ -195,6 +195,18 @@ public class TARDISMushroomBlockData {
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
             // master
             put(39, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=true}]");
+            // creative (atomic elements)
+            put(40, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]");
+            // chemical compounds
+            put(41, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=true]");
+            // material reducer (chemistry)
+            put(42, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=false]");
+            // element constructor (chemistry)
+            put(43, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=true]");
+            // lab table (chemistry)
+            put(44, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=false]");
+            // product crafting (chemistry)
+            put(45, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=true]");
         }
     };
 

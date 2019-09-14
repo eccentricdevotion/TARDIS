@@ -138,6 +138,7 @@ allow:
   village_travel: false
   perception_filter: true
   repair: true
+  chemistry: true
 # room related
 growth:
   gravity_max_distance: 15

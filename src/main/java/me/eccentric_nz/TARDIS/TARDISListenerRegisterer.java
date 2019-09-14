@@ -24,6 +24,17 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.chameleon.*;
+import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockListener;
+import me.eccentric_nz.TARDIS.chemistry.compound.CompoundGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructorGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.creative.CreativeGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.element.ElementGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.formula.FormulaViewerListener;
+import me.eccentric_nz.TARDIS.chemistry.lab.LabGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
+import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
+import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerGUIListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
@@ -282,6 +293,19 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISItemSpawnListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAccessoryListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.chemistry")) {
+            plugin.getPM().registerEvents(new ChemistryBlockListener(plugin), plugin);
+            plugin.getPM().registerEvents(new CreativeGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new ElementGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new ConstructorGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new CompoundGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new ReducerGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new ProductGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new LabGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new FormulaViewerListener(plugin), plugin);
+            plugin.getPM().registerEvents(new GlowStickListener(plugin), plugin);
+            plugin.getPM().registerEvents(new SparklerListener(plugin), plugin);
+        }
     }
 
     private boolean getNPCManager() {
