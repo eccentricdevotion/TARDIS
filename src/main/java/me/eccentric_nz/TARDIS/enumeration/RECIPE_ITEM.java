@@ -102,7 +102,9 @@ public enum RECIPE_ITEM {
     EMERALD_UPGRADE(10001972),
     PAINTER_UPGRADE(10001979),
     IGNITE_UPGRADE(10001982),
-    PICKUP_ARROWS_UPGRADE(10001984);
+    PICKUP_ARROWS_UPGRADE(10001984),
+    // not fond
+    NOT_FOUND(-1);
 
     private final int customModelData;
 
@@ -116,6 +118,10 @@ public enum RECIPE_ITEM {
 
     public static RECIPE_ITEM getByName(String name) {
         String processed = name.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
-        return RECIPE_ITEM.valueOf(processed);
+        try {
+            return RECIPE_ITEM.valueOf(processed);
+        } catch (IllegalArgumentException e) {
+            return NOT_FOUND;
+        }
     }
 }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -223,25 +224,32 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.FILLED_MAP)) {
                     im.setDisplayName(getDisplayName(str, mapCount));
+                    im.setCustomModelData(RECIPE_ITEM.getByName(str).getCustomModelData());
                     mapCount++;
                 }
                 if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
                     im.setDisplayName("TARDIS Key");
+                    im.setCustomModelData(15);
                 }
                 if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
                     im.setDisplayName("Blaster Battery");
+                    im.setCustomModelData(10000002);
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName("Acid Bucket");
+                    im.setCustomModelData(1);
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     im.setDisplayName("Acid Battery");
+                    im.setCustomModelData(10000001);
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.FILLED_MAP)) {
                     im.setDisplayName("Rift Circuit");
+                    im.setCustomModelData(10001983);
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
                     im.setDisplayName("Rust Bucket");
+                    im.setCustomModelData(1);
                 }
                 item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
@@ -250,6 +258,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(str);
+        RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(str);
+        if (recipeItem != RECIPE_ITEM.NOT_FOUND) {
+            im.setCustomModelData(recipeItem.getCustomModelData());
+        }
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<String> lore = im.getLore();
@@ -277,11 +289,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
         for (int i = 0; i < ingredients.size(); i++) {
             ItemMeta im = ingredients.get(i).getItemMeta();
             if (ingredients.get(i).getType().equals(Material.FILLED_MAP)) {
-                im.setDisplayName(getDisplayName(str, mapCount));
+                String dn = getDisplayName(str, mapCount);
+                im.setDisplayName(dn);
+                im.setCustomModelData(RECIPE_ITEM.getByName(dn).getCustomModelData());
                 mapCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
+                im.setCustomModelData(10000001);
             }
             ingredients.get(i).setItemMeta(im);
             inv.setItem(i * 9, ingredients.get(i));
@@ -289,8 +304,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(str);
-        if (str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Sonic Blaster")) {
+        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Sonic Blaster")) {
             im.addItemFlags(ItemFlag.values());
+        }
+        RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(str);
+        if (recipeItem != RECIPE_ITEM.NOT_FOUND) {
+            im.setCustomModelData(recipeItem.getCustomModelData());
         }
         result.setAmount(1);
         result.setItemMeta(im);
