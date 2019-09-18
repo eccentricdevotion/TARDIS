@@ -114,7 +114,6 @@ public class TARDISUtils {
      *
      * @param uuid the player's UUID
      * @param id   the player's TARDIS ID
-     * @param qf   an instance of the database QueyFactory
      */
     public void updateStorageId(String uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
