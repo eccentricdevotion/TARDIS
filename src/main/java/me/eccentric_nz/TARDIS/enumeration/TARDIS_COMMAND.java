@@ -41,6 +41,7 @@ public enum TARDIS_COMMAND {
     excite,
     exterminate,
     find,
+    handbrake,
     help,
     hide,
     home,

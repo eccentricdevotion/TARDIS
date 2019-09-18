@@ -165,7 +165,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
                 return partial(lastArg, PRESETS);
             } else if (args[0].equalsIgnoreCase("set_size")) {
                 return partial(lastArg, SEED_SUBS);
-            } else if (args[0].equalsIgnoreCase("disguise")) {
+            } else if (args[0].equalsIgnoreCase("disguise") || args[0].equalsIgnoreCase("handbrake")) {
                 return null;
             } else {
                 return partial(lastArg, BOOL_SUBS);
@@ -185,6 +185,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron);
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron);
+        newList.add("handbrake");
         return newList;
     }
 }

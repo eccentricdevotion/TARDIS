@@ -135,6 +135,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
                 case find:
                     return new TARDISFindCommand(plugin).findTARDIS(player, args);
+                case handbrake:
+                    return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, false);
                 case hide:
                     return new TARDISHideCommand(plugin).hide(player);
                 case home:

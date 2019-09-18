@@ -77,6 +77,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("exclude", "");
         firstsStr.put("find", "");
         firstsStr.put("gamemode", "creation");
+        firstsStr.put("handbrake", "");
         firstsStr.put("include", "");
         firstsStr.put("inventory_group", "creation");
         firstsStr.put("key", "preferences");
@@ -330,6 +331,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("disguise")) {
                     return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                }
+                if (first.equals("handbrake")) {
+                    return new TARDISBrakeCommand(plugin).toggle(sender, args);
                 }
                 if (first.equals("enter")) {
                     return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
