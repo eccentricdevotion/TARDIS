@@ -292,6 +292,14 @@ public class TARDISMushroomBlockData {
             put(39, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
             // handles communicator
             put(40, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]");
+            // blue_torch
+            put(41, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
+            // green_torch
+            put(42, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]");
+            // purple_torch
+            put(43, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
+            // red_torch
+            put(44, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
         }
     };
 }

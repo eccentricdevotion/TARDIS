@@ -6,6 +6,7 @@
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
+   * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures?
 2. Make TARDIS circuits not maps
 3. Test player preference to bypass `tardis rescue accept`
 4. Test `invisibility` setting in TARDIS areas
@@ -17,7 +18,7 @@
    * Add advanced console and disk storage to schematics
 10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)` - _started_
    * Update Disk Storage defaults
-13. Set Master button to ON (In Lazarus GUI) when it is in use
+11. Set Master button to ON (In Lazarus GUI) when it is in use
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -30,7 +31,7 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
-1. CustomModelData for all TARDIS items - _started_
+1. Custom Time Rotor model
 2. Update existing monsters with persistent data if they don't have it.
 3. Custom Entity models using Optifine (when they can be applied to named entities)
 4. Rare armour drops
