@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -80,7 +79,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                             set.put("checked", 0);
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("program_id", pid);
-                            new QueryFactory(plugin).doUpdate("programs", set, where);
+                            plugin.getQueryFactory().doUpdate("programs", set, where);
                             player.setItemOnCursor(null);
                             lore.set(2, "Checked IN");
                             im.setLore(lore);
@@ -131,7 +130,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     where.put("program_id", pid);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("parsed", "");
-                    new QueryFactory(plugin).doUpdate("programs", set, where);
+                    plugin.getQueryFactory().doUpdate("programs", set, where);
                     // update lore
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
@@ -150,7 +149,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
-                    new QueryFactory(plugin).doDelete("programs", where);
+                    plugin.getQueryFactory().doDelete("programs", where);
                     // remove item stack
                     event.getClickedInventory().clear(selectedSlot.get(uuid));
                     setSlots(view, -1);
@@ -182,7 +181,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     set.put("checked", 1);
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
-                    new QueryFactory(plugin).doUpdate("programs", set, where);
+                    plugin.getQueryFactory().doUpdate("programs", set, where);
                 } else {
                     TARDISMessage.send(player, "HANDLES_SELECT");
                 }

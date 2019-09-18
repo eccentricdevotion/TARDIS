@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -122,8 +121,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     where.put("area_name", args[1]);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("parking_distance", park);
-                    QueryFactory qf = new QueryFactory(plugin);
-                    qf.doUpdate("areas", set, where);
+                    plugin.getQueryFactory().doUpdate("areas", set, where);
                     TARDISMessage.send(player, "AREA_PARK_SET", args[1]);
                     return true;
                 case "remove":
@@ -133,8 +131,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("area_name", args[1]);
-                    QueryFactory factory = new QueryFactory(plugin);
-                    factory.doDelete("areas", wherer);
+                    plugin.getQueryFactory().doDelete("areas", wherer);
                     TARDISMessage.send(player, "AREA_DELETE", args[1]);
                     return true;
                 case "show":
@@ -241,8 +238,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     invisSet.put("invisibility", value);
                     HashMap<String, Object> whereInvis = new HashMap<>();
                     whereInvis.put("area_name", args[1]);
-                    QueryFactory queryFactory = new QueryFactory(plugin);
-                    queryFactory.doUpdate("areas", invisSet, whereInvis);
+                    plugin.getQueryFactory().doUpdate("areas", invisSet, whereInvis);
                     TARDISMessage.send(player, "AREA_INVISIBILITY_SET", args[1]);
                     return true;
                 default:

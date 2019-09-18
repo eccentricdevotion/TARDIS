@@ -19,7 +19,10 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetChunks;
+import me.eccentric_nz.TARDIS.database.ResultSetLamps;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -71,12 +74,11 @@ class TARDISLampsCommand {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
-            QueryFactory qf = new QueryFactory(plugin);
             if (rsl.resultSet()) {
                 TARDISMessage.send(owner, "LAMP_DELETE");
                 HashMap<String, Object> wheredel = new HashMap<>();
                 wheredel.put("tardis_id", id);
-                qf.doDelete("lamps", wheredel);
+                plugin.getQueryFactory().doDelete("lamps", wheredel);
             }
             // get the TARDIS console chunks
             HashMap<String, Object> wherec = new HashMap<>();
@@ -122,7 +124,7 @@ class TARDISLampsCommand {
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("tardis_id", id);
                                     set.put("location", lamp);
-                                    qf.doInsert("lamps", set);
+                                    plugin.getQueryFactory().doInsert("lamps", set);
                                     TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
                                 }
                             }

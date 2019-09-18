@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -151,7 +150,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         TARDISMessage.send(player, "CHAM_NO_SAVE");
                                         return;
                                     }
-                                    buildConstruct(tardis.getPreset().toString(), id, new QueryFactory(plugin), tardis.getChameleon(), player);
+                                    buildConstruct(tardis.getPreset().toString(), id, tardis.getChameleon(), player);
                                     break;
                                 case 8:
                                     String air = TARDISConstants.AIR.getAsString();
@@ -247,7 +246,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     HashMap<String, Object> wherec = new HashMap<>();
                                     wherec.put("tardis_id", id);
                                     ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
-                                    QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("blueprintData", jsonBlue);
                                     set.put("stainData", jsonStain);
@@ -256,13 +254,13 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         // update
                                         HashMap<String, Object> whereu = new HashMap<>();
                                         whereu.put("tardis_id", id);
-                                        qf.doUpdate("chameleon", set, whereu);
+                                        plugin.getQueryFactory().doUpdate("chameleon", set, whereu);
                                     } else {
                                         // insert
                                         set.put("tardis_id", id);
-                                        qf.doInsert("chameleon", set);
+                                        plugin.getQueryFactory().doInsert("chameleon", set);
                                     }
-                                    buildConstruct(tardis.getPreset().toString(), id, qf, tardis.getChameleon(), player);
+                                    buildConstruct(tardis.getPreset().toString(), id, tardis.getChameleon(), player);
                                     break;
                                 case 26:
                                     // set lamp
@@ -317,14 +315,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         currentDoor.put(uuid, d);
     }
 
-    private void buildConstruct(String preset, int id, QueryFactory qf, String location, Player player) {
+    private void buildConstruct(String preset, int id, String location, Player player) {
         // update tardis table
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
         sett.put("chameleon_demat", preset);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
-        qf.doUpdate("tardis", sett, wheret);
+        plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
         // update chameleon sign
         TARDISStaticUtils.setSign(location, 3, "CONSTRUCT", player);
         new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT);

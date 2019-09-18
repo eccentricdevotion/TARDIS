@@ -20,7 +20,6 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -175,7 +174,6 @@ class TARDISComehereCommand {
                     return true;
                 }
                 World w = rsc.getWorld();
-                QueryFactory qf = new QueryFactory(plugin);
                 Location oldSave = null;
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);
@@ -198,7 +196,7 @@ class TARDISComehereCommand {
                     bset.put("z", eyeLocation.getZ());
                     bset.put("submarine", (sub) ? 1 : 0);
                 }
-                qf.doUpdate("back", bset, bid);
+                plugin.getQueryFactory().doUpdate("back", bset, bid);
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", id);
                 HashMap<String, Object> set = new HashMap<>();
@@ -213,11 +211,11 @@ class TARDISComehereCommand {
                     sett.put("hidden", 0);
                     HashMap<String, Object> ttid = new HashMap<>();
                     ttid.put("tardis_id", id);
-                    qf.doUpdate("tardis", sett, ttid);
+                    plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
                     // restore biome
                     plugin.getUtils().restoreBiome(oldSave, biome);
                 }
-                qf.doUpdate("current", set, tid);
+                plugin.getQueryFactory().doUpdate("current", set, tid);
                 TARDISMessage.send(player, "TARDIS_COMING");
                 long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
@@ -237,7 +235,7 @@ class TARDISComehereCommand {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
                             plugin.getPresetDestroyer().destroyPreset(dd);
                         } else {
-                            plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                            plugin.getPresetDestroyer().removeBlockProtection(id);
                         }
                     }, delay);
                 }
@@ -254,7 +252,7 @@ class TARDISComehereCommand {
                 // remove energy from TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
-                qf.alterEnergyLevel("tardis", -ch, wheret, player);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
                 plugin.getTrackerKeeper().getRescue().remove(id);
                 return true;

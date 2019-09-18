@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.rmtheis.yandtran.translate.Language;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -31,7 +31,7 @@ import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.uc
  */
 class TARDISSetLanguageCommand {
 
-    boolean setLanguagePref(Player player, String[] args, QueryFactory qf) {
+    boolean setLanguagePref(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
             TARDISMessage.send(player, "PREF_NEED", pref);
@@ -49,7 +49,7 @@ class TARDISSetLanguageCommand {
         setl.put(pref, l);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", setl, where);
+        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
         TARDISMessage.send(player, "PREF_SET", ucfirst(pref));
         return true;
     }

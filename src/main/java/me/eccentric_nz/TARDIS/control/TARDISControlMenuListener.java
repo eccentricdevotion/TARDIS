@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -209,7 +208,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
                                         HashMap<String, Object> wherez = new HashMap<>();
                                         wherez.put("tardis_id", id);
-                                        new QueryFactory(plugin).alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                                        plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
                                     } else {
                                         TARDISMessage.send(player, "NO_ZERO");
                                     }

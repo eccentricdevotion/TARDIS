@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetVoid;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -111,7 +114,6 @@ public class TARDISMoveListener implements Listener {
                     pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
                 }
                 // set travelling status
-                QueryFactory qf = new QueryFactory(plugin);
                 if (exit) {
                     // unoccupied
                     plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
@@ -121,12 +123,12 @@ public class TARDISMoveListener implements Listener {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", id);
                     set.put("uuid", uuid.toString());
-                    qf.doSyncInsert("travellers", set);
+                    plugin.getQueryFactory().doSyncInsert("travellers", set);
                     // check to see whether the TARDIS has been updated to VOID biome
                     if (!new ResultSetVoid(plugin, id).hasUpdatedToVOID()) {
                         new TARDISVoidUpdate(plugin, id).updateBiome();
                         // add tardis id to void table
-                        qf.addToVoid(id);
+                        plugin.getQueryFactory().addToVoid(id);
                     }
                 }
                 // tp player

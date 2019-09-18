@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
@@ -449,14 +448,13 @@ public class TARDISRoomRunnable implements Runnable {
                 Block sign = world.getBlockAt(startx, starty, startz);
                 signblocks.add(sign);
             }
-            QueryFactory qf = new QueryFactory(plugin);
             // set condenser
             if (type.equals(Material.CHEST) && room.equals("HARMONY")) {
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("condenser", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", tardis_id);
-                qf.doUpdate("tardis", setc, wherec);
+                plugin.getQueryFactory().doUpdate("tardis", setc, wherec);
             }
             // set drop chest
             if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && p.hasPermission("tardis.vault")) {
@@ -479,7 +477,7 @@ public class TARDISRoomRunnable implements Runnable {
                 setv.put("x", x);
                 setv.put("y", y);
                 setv.put("z", z);
-                qf.doInsert("vaults", setv);
+                plugin.getQueryFactory().doInsert("vaults", setv);
             }
             // set farm
             if (type.equals(Material.SPAWNER) && room.equals("FARM")) {
@@ -487,16 +485,16 @@ public class TARDISRoomRunnable implements Runnable {
                 setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", tardis_id);
-                qf.doUpdate("farming", setf, wheref);
+                plugin.getQueryFactory().doUpdate("farming", setf, wheref);
                 // replace with floor material
                 data = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw.createBlockData() : floor_type.createBlockData();
                 // update player prefs - turn on mob farming
-                turnOnFarming(p, qf);
+                turnOnFarming(p);
             }
             // set lazarus
             if (type.equals(Material.OAK_PRESSURE_PLATE) && room.equals("LAZARUS")) {
                 String plate = (new Location(world, startx, starty, startz)).toString();
-                qf.insertControl(tardis_id, 19, plate, 0);
+                plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
             }
             // set stable
             if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE"))) {
@@ -505,15 +503,15 @@ public class TARDISRoomRunnable implements Runnable {
                 HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("tardis_id", tardis_id);
                 if (room.equals("RENDERER") || room.equals("ZERO")) {
-                    qf.doUpdate("tardis", sets, wheres);
+                    plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
                 } else {
                     ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
                     if (rsf.resultSet()) {
                         // update
-                        qf.doUpdate("farming", sets, wheres);
+                        plugin.getQueryFactory().doUpdate("farming", sets, wheres);
                     } else {
                         sets.put("tardis_id", tardis_id);
-                        qf.doInsert("farming", sets);
+                        plugin.getQueryFactory().doInsert("farming", sets);
                     }
                 }
                 // replace with correct block
@@ -547,7 +545,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (!room.equals("ZERO")) {
                     // update player prefs - turn on mob farming
-                    turnOnFarming(p, qf);
+                    turnOnFarming(p);
                 }
             }
             if (type.equals(Material.SOUL_SAND) && room.equals("SMELTER")) {
@@ -555,7 +553,7 @@ public class TARDISRoomRunnable implements Runnable {
                 HashMap<String, Object> setsm = new HashMap<>();
                 setsm.put("tardis_id", tardis_id);
                 setsm.put("location", pos);
-                qf.doInsert("vaults", setsm);
+                plugin.getQueryFactory().doInsert("vaults", setsm);
                 data = Material.CHEST.createBlockData();
             }
             if (type.equals(Material.DEAD_HORN_CORAL_BLOCK) && room.equals("AQUARIUM")) {
@@ -566,19 +564,19 @@ public class TARDISRoomRunnable implements Runnable {
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", tardis_id);
                     // update
-                    qf.doUpdate("farming", setaqua, wheres);
+                    plugin.getQueryFactory().doUpdate("farming", setaqua, wheres);
                 } else {
                     setaqua.put("tardis_id", tardis_id);
-                    qf.doInsert("farming", setaqua);
+                    plugin.getQueryFactory().doInsert("farming", setaqua);
                 }
                 data = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw.createBlockData() : floor_type.createBlockData();
-                turnOnFarming(p, qf);
+                turnOnFarming(p);
                 aqua_spawn = new Location(world, startx, starty + 1, startz);
             }
             // remember shell room button
             if (type.equals(Material.STONE_BUTTON) && room.equals("SHELL")) {
                 String loc_str = new Location(world, startx, starty, startz).toString();
-                qf.insertControl(tardis_id, 25, loc_str, 0);
+                plugin.getQueryFactory().insertControl(tardis_id, 25, loc_str, 0);
             }
             // remember village doors
             if (type.equals(Material.OAK_DOOR) && (room.equals("VILLAGE") || room.equals("SHELL"))) {
@@ -662,7 +660,7 @@ public class TARDISRoomRunnable implements Runnable {
                 set.put("rail", loc);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", tardis_id);
-                qf.doUpdate("tardis", set, where);
+                plugin.getQueryFactory().doUpdate("tardis", set, where);
             }
             // always replace bedrock (the door space in ARS rooms)
             if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
@@ -751,7 +749,7 @@ public class TARDISRoomRunnable implements Runnable {
                     setd.put("direction", 0);
                     setd.put("distance", 0);
                     setd.put("velocity", 0);
-                    qf.doInsert("gravity_well", setd);
+                    plugin.getQueryFactory().doInsert("gravity_well", setd);
                     plugin.getGeneralKeeper().getGravityDownList().add(loc);
                 }
                 if (type.equals(Material.LIME_WOOL)) {
@@ -763,7 +761,7 @@ public class TARDISRoomRunnable implements Runnable {
                     setu.put("direction", 1);
                     setu.put("distance", 16);
                     setu.put("velocity", 0.5);
-                    qf.doInsert("gravity_well", setu);
+                    plugin.getQueryFactory().doInsert("gravity_well", setu);
                     Double[] values = {1D, 16D, 0.5D};
                     plugin.getGeneralKeeper().getGravityUpList().put(loc, values);
                 }
@@ -796,7 +794,7 @@ public class TARDISRoomRunnable implements Runnable {
                             control_type = 0;
                             loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
                     }
-                    qf.insertControl(tardis_id, control_type, loc_str, secondary);
+                    plugin.getQueryFactory().insertControl(tardis_id, control_type, loc_str, secondary);
                 }
             }
             if (room.equals("ZERO")) {
@@ -804,7 +802,7 @@ public class TARDISRoomRunnable implements Runnable {
                 String loc_str;
                 if (type.equals(Material.OAK_BUTTON)) {
                     loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
-                    qf.insertControl(tardis_id, 17, loc_str, 0);
+                    plugin.getQueryFactory().insertControl(tardis_id, 17, loc_str, 0);
                 }
             }
             startz += 1;
@@ -830,13 +828,13 @@ public class TARDISRoomRunnable implements Runnable {
         }
     }
 
-    private void turnOnFarming(Player p, QueryFactory qf) {
+    private void turnOnFarming(Player p) {
         // update player prefs - turn on mob farming
         HashMap<String, Object> setpp = new HashMap<>();
         setpp.put("farm_on", 1);
         HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", p.getUniqueId().toString());
-        qf.doUpdate("player_prefs", setpp, wherepp);
+        plugin.getQueryFactory().doUpdate("player_prefs", setpp, wherepp);
         TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
     }
 

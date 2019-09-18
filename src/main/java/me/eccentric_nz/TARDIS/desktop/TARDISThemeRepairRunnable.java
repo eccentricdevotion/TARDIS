@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -90,7 +89,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private JSONArray arr;
     private Material wall_type;
     private Material floor_type;
-    private final QueryFactory qf;
     private HashMap<String, Object> set;
     private HashMap<String, Object> where;
     private boolean own_world;
@@ -106,7 +104,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
         this.uuid = uuid;
         this.tud = tud;
         this.clean = clean;
-        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -211,12 +208,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // clear existing lamp blocks
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", id);
-            qf.doDelete("lamps", whered);
+            plugin.getQueryFactory().doDelete("lamps", whered);
             // clear existing precious blocks
             HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("tardis_id", id);
             wherep.put("police_box", 0);
-            qf.doDelete("blocks", wherep);
+            plugin.getQueryFactory().doDelete("blocks", wherep);
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
@@ -225,7 +222,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // clear lamps table as we'll be adding the new lamp positions later
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
-            qf.doDelete("lamps", wherel);
+            plugin.getQueryFactory().doDelete("lamps", wherel);
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {
@@ -275,7 +272,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         cs.setLine(3, "");
                         cs.update();
                         String controlloc = psb.getLocation().toString();
-                        qf.insertSyncControl(id, 22, controlloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
                     }
                 }
                 s++;
@@ -300,7 +297,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // finished processing - update tardis table!
             if (set.size() > 0) {
                 where.put("tardis_id", id);
-                qf.doUpdate("tardis", set, where);
+                plugin.getQueryFactory().doUpdate("tardis", set, where);
             }
             if (!tud.getSchematic().getPermission().equals("archive")) {
                 // reset archive use back to 0
@@ -315,7 +312,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // add / remove chunks from the chunks table
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
-            qf.doDelete("chunks", wherec);
+            plugin.getQueryFactory().doDelete("chunks", wherec);
             List<Chunk> chunkList = plugin.getInteriorBuilder().getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
             // update chunks list in DB
             chunkList.forEach((hunk) -> {
@@ -324,7 +321,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 setc.put("world", world.getName());
                 setc.put("x", hunk.getX());
                 setc.put("z", hunk.getZ());
-                qf.doInsert("chunks", setc);
+                plugin.getQueryFactory().doInsert("chunks", setc);
             });
             // remove blocks from condenser table if necessary
             if (!clean && plugin.getGeneralKeeper().getRoomCondenserData().containsKey(uuid)) {
@@ -334,14 +331,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", c_data.getTardis_id());
                     whered.put("block_data", entry.getKey());
-                    qf.alterCondenserBlockCount(entry.getValue(), whered);
+                    plugin.getQueryFactory().alterCondenserBlockCount(entry.getValue(), whered);
                     amount += entry.getValue() * plugin.getCondensables().get(entry.getKey());
                 }
                 plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
                 if (amount > 0) {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
-                    qf.alterEnergyLevel("tardis", -amount, wheret, player);
+                    plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
                 }
             }
             // cancel the task
@@ -373,7 +370,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
                     String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    qf.insertSyncControl(id, 14, storage, 0);
+                    plugin.getQueryFactory().insertSyncControl(id, 14, storage, 0);
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
                     type = wall_type;
@@ -403,7 +400,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", id);
                         whered.put("door_type", 1);
-                        qf.doUpdate("doors", setd, whered);
+                        plugin.getQueryFactory().doUpdate("doors", setd, whered);
                         // if create_worlds is true, set the world spawn
                         if (own_world) {
                             world.setSpawnLocation(x, y, (z + 1));
@@ -413,12 +410,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.STONE_BUTTON)) { // random button
                     // remember the location of this button
                     String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    qf.insertSyncControl(id, 1, button, 0);
+                    plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
                 if (type.equals(Material.JUKEBOX)) {
                     // remember the location of this Advanced Console
                     String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    qf.insertSyncControl(id, 15, advanced, 0);
+                    plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);
                 }
                 if (type.equals(Material.CAKE)) {
                     /*
@@ -426,7 +423,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                      * but remember it so we can use it as the handbrake!
                      */
                     String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    qf.insertSyncControl(id, 0, handbrakeloc, 0);
+                    plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
                 }
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
@@ -437,7 +434,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     setlb.put("tardis_id", id);
                     setlb.put("location", lloc);
-                    qf.doInsert("lamps", setlb);
+                    plugin.getQueryFactory().doInsert("lamps", setlb);
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
@@ -460,14 +457,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                      * Remember it for the Artron Energy Capacitor.
                      */
                     String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    qf.insertSyncControl(id, 6, woodbuttonloc, 0);
+                    plugin.getQueryFactory().insertSyncControl(id, 6, woodbuttonloc, 0);
                 }
                 if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                     /*
                      * remember the telepathic circuit.
                      */
                     String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    qf.insertSyncControl(id, 23, telepathicloc, 0);
+                    plugin.getQueryFactory().insertSyncControl(id, 23, telepathicloc, 0);
                 }
                 if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
                     /*
@@ -483,7 +480,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     setpb.put("location", loc);
                     setpb.put("data", "minecraft:air");
                     setpb.put("police_box", 0);
-                    qf.doInsert("blocks", setpb);
+                    plugin.getQueryFactory().doInsert("blocks", setpb);
                     plugin.getGeneralKeeper().getProtectBlockMap().put(loc, id);
                 }
                 // if it's the door, don't set it just remember its block then do it at the end
@@ -517,25 +514,25 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                                 directional.setFacing(BlockFace.EAST);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                qf.insertSyncControl(id, 3, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
                                 break;
                             case 3:
                                 directional.setFacing(BlockFace.SOUTH);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                qf.insertSyncControl(id, 2, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
                                 break;
                             case 4:
                                 directional.setFacing(BlockFace.NORTH);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                qf.insertSyncControl(id, 5, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
                                 break;
                             default:
                                 directional.setFacing(BlockFace.WEST);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                qf.insertSyncControl(id, 4, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
                                 break;
                         }
                         j++;

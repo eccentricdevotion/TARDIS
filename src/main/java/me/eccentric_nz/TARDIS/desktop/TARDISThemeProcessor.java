@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -42,14 +41,12 @@ class TARDISThemeProcessor {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    private final QueryFactory qf;
     private Archive archive_next;
     private Archive archive_prev;
 
     TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        qf = new QueryFactory(this.plugin);
     }
 
     void changeDesktop() {
@@ -139,13 +136,13 @@ class TARDISThemeProcessor {
         setp.put("lanterns_on", (tud.getSchematic().hasLanterns()) ? 1 : 0);
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
-        qf.doUpdate("player_prefs", setp, wherep);
+        plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
         // update TARDIS
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
-        qf.doUpdate("tardis", sett, wheret);
+        plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
         // take the Artron Energy
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());
@@ -165,7 +162,7 @@ class TARDISThemeProcessor {
             }
             ttr = new TARDISFullThemeRunnable(plugin, uuid, tud);
         }
-        qf.alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
+        plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
         // start the rebuild
         long initial_delay = (master) ? 45L : 5L;
         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));

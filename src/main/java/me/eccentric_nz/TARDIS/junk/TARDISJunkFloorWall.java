@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -65,7 +64,6 @@ class TARDISJunkFloorWall {
             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
             return true;
         }
-        QueryFactory qf = new QueryFactory(plugin);
         // check if player_prefs record
         HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
@@ -79,12 +77,12 @@ class TARDISJunkFloorWall {
             setpp.put("player", "junk");
             setpp.put(pref, wall_mat);
             setpp.put(otherpref, otherset);
-            qf.doInsert("player_prefs", setpp);
+            plugin.getQueryFactory().doInsert("player_prefs", setpp);
         } else {
             setpp.put(pref, wall_mat);
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-            qf.doUpdate("player_prefs", setpp, where);
+            plugin.getQueryFactory().doUpdate("player_prefs", setpp, where);
         }
         TARDISMessage.send(sender, "PREF_MAT_SET", TARDISPrefsCommands.ucfirst(pref));
         return true;

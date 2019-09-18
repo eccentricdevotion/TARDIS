@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -67,7 +66,6 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
     private Material floor_type;
     private Material siege_wall_type;
     private Material siege_floor_type;
-    private final QueryFactory qf;
     private Player player;
     private int taskID;
     private Archive archive;
@@ -77,7 +75,6 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
         this.uuid = uuid;
         this.tud = tud;
         this.toSiege = toSiege;
-        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -132,7 +129,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
-                qf.alterEnergyLevel("tardis", amount, wherea, player);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();

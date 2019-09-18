@@ -89,7 +89,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     new TARDISCommandHelper(plugin).getCommand("tardistravel", sender);
                     return true;
                 }
-                QueryFactory qf = new QueryFactory(plugin);
                 // get tardis data
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
@@ -148,7 +147,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     set.put("y", l.getBlockY());
                     set.put("z", l.getBlockZ());
                     set.put("submarine", 0);
-                    qf.doSyncUpdate("next", set, tid);
+                    plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                     TARDISMessage.send(player, "TRAVEL_APPROVED", permArea);
                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                     plugin.getTrackerKeeper().getRescue().remove(id);
@@ -265,7 +264,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("submarine", 0);
                                 which = "Village";
                             }
-                            qf.doSyncUpdate("next", set, tid);
+                            plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                             TARDISMessage.send(player, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                             plugin.getTrackerKeeper().getRescue().remove(id);
@@ -466,7 +465,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("z", tb.getBlockZ());
                                     set.put("direction", rsc.getDirection().toString());
                                     set.put("submarine", 0);
-                                    qf.doSyncUpdate("next", set, tid);
+                                    plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                     TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     plugin.getTrackerKeeper().getRescue().remove(id);
@@ -531,7 +530,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         wherei.put("tardis_id", id);
                                         HashMap<String, Object> seti = new HashMap<>();
                                         seti.put("chameleon_preset", invisibility);
-                                        qf.doSyncUpdate("tardis", seti, wherei);
+                                        plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                     }
                                 }
                                 set.put("world", rsd.getWorld());
@@ -552,7 +551,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("direction", rsc.getDirection().toString());
                                 }
                                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
-                                qf.doSyncUpdate("next", set, tid);
+                                plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                 TARDISMessage.send(player, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                 plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                 plugin.getTrackerKeeper().getRescue().remove(id);
@@ -599,7 +598,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             wherei.put("tardis_id", id);
                             HashMap<String, Object> seti = new HashMap<>();
                             seti.put("chameleon_preset", invisibility);
-                            qf.doSyncUpdate("tardis", seti, wherei);
+                            plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                         }
                         Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
                         if (l == null) {
@@ -611,7 +610,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         set.put("y", l.getBlockY());
                         set.put("z", l.getBlockZ());
                         set.put("submarine", 0);
-                        qf.doSyncUpdate("next", set, tid);
+                        plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                         TARDISMessage.send(player, "TRAVEL_APPROVED", args[1]);
                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                         plugin.getTrackerKeeper().getRescue().remove(id);
@@ -651,7 +650,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                             set.put("y", l.getBlockY());
                                             set.put("z", l.getBlockZ());
                                             set.put("submarine", 0);
-                                            qf.doSyncUpdate("next", set, tid);
+                                            plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                             TARDISMessage.send(player, "LOC_SAVED", true);
                                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                             plugin.getTrackerKeeper().getRescue().remove(id);
@@ -706,7 +705,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         set.put("y", location.getBlockY());
                                         set.put("z", location.getBlockZ());
                                         set.put("submarine", 0);
-                                        qf.doSyncUpdate("next", set, tid);
+                                        plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                         TARDISMessage.send(player, "LOC_SAVED", true);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                         plugin.getTrackerKeeper().getRescue().remove(id);
@@ -729,7 +728,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                             set.put("y", determiney.getBlockY());
                                             set.put("z", determiney.getBlockZ());
                                             set.put("submarine", 0);
-                                            qf.doSyncUpdate("next", set, tid);
+                                            plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                             TARDISMessage.send(player, "LOC_SAVED", true);
                                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                             plugin.getTrackerKeeper().getRescue().remove(id);
@@ -756,7 +755,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         set.put("y", giveny.getBlockY());
                                         set.put("z", giveny.getBlockZ());
                                         set.put("submarine", 0);
-                                        qf.doSyncUpdate("next", set, tid);
+                                        plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                         TARDISMessage.send(player, "LOC_SAVED", true);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                         plugin.getTrackerKeeper().getRescue().remove(id);

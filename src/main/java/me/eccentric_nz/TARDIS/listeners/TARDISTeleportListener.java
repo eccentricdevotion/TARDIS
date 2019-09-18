@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,7 +57,7 @@ public class TARDISTeleportListener implements Listener {
                 Player p = event.getPlayer();
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
-                new QueryFactory(plugin).doDelete("travellers", where);
+                plugin.getQueryFactory().doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
                     TARDISMessage.send(p, "OCCUPY_AUTO");
                 }

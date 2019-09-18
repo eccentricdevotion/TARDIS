@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -107,7 +106,6 @@ public class TARDISAreaListener implements Listener {
                         maxz = TARDISNumberParsers.parseInt(firstblock[3]);
                     }
                     String n = plugin.getTrackerKeeper().getArea().get(uuid);
-                    QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("area_name", n);
                     set.put("world", firstblock[0]);
@@ -116,7 +114,7 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxx", maxx);
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
-                    qf.doInsert("areas", set);
+                    plugin.getQueryFactory().doInsert("areas", set);
                     TARDISMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
                     plugin.getTrackerKeeper().getArea().remove(uuid);
                     plugin.getTrackerKeeper().getBlock().remove(uuid);

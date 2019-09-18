@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -181,7 +180,7 @@ public class TARDISDeinstaPreset {
         }
         // if just hiding don't remove block protection
         if (!hide) {
-            plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
+            plugin.getPresetDestroyer().removeBlockProtection(id);
         }
         if (dd.isSiege()) {
             Block siege = dd.getLocation().getBlock();

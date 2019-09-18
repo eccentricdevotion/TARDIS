@@ -21,7 +21,10 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -85,7 +88,7 @@ class TARDISHandlesLandCommand {
                         plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
                     }
                     where_next.put("tardis_id", id);
-                    new QueryFactory(plugin).doSyncUpdate("next", set_next, where_next);
+                    plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                     plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
                     plugin.getTrackerKeeper().getHasRandomised().add(id);
                     new TARDISLand(plugin, id, player).exitVortex();
@@ -119,10 +122,9 @@ class TARDISHandlesLandCommand {
                             // Remove energy from TARDIS and sets database
                             TARDISMessage.send(player, "HANDBRAKE_ON");
                             int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-                            QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
-                            qf.alterEnergyLevel("tardis", amount, wheret, player);
+                            plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
                             new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -143,7 +145,7 @@ class TARDISHandlesLandCommand {
                             set.put("handbrake_on", 1);
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
-                            qf.doUpdate("tardis", set, whereb);
+                            plugin.getQueryFactory().doUpdate("tardis", set, whereb);
                         }
                     }, 400L); // TODO check delay
                 } else {

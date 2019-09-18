@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -43,13 +42,12 @@ class TARDISOccupyCommand {
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             String occupied;
-            QueryFactory qf = new QueryFactory(plugin);
             if (rst.resultSet()) {
                 // only if they're not in the TARDIS world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("uuid", player.getUniqueId().toString());
-                    qf.doDelete("travellers", whered);
+                    plugin.getQueryFactory().doDelete("travellers", whered);
                     occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
                 } else {
                     TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
@@ -65,7 +63,7 @@ class TARDISOccupyCommand {
                 HashMap<String, Object> wherei = new HashMap<>();
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());
-                qf.doInsert("travellers", wherei);
+                plugin.getQueryFactory().doInsert("travellers", wherei);
                 occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
             } else {
                 TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");

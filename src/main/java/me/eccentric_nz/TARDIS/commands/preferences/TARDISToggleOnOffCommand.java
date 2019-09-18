@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -41,7 +40,7 @@ class TARDISToggleOnOffCommand {
         was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "ctm", "difficulty", "dnd", "eps", "farm", "hads", "minecart", "renderer", "submarine", "travelbar", "telepathy");
     }
 
-    public boolean toggle(Player player, String[] args, QueryFactory qf) {
+    public boolean toggle(Player player, String[] args) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
             TARDISMessage.send(player, "AUTO_DISABLED");
@@ -88,7 +87,7 @@ class TARDISToggleOnOffCommand {
             String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
             TARDISMessage.send(player, grammar, pref);
         }
-        qf.doUpdate("player_prefs", setp, wherep);
+        plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
         return true;
     }
 }

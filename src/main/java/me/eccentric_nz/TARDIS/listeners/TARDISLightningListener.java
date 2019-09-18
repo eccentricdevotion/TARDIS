@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -80,13 +79,12 @@ public class TARDISLightningListener implements Listener {
                             Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                             // only recharge if the TARDIS is within range
                             if (plugin.getUtils().compareLocations(loc, loc)) {
-                                QueryFactory qf = new QueryFactory(plugin);
                                 int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtron_level();
                                 HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
-                                qf.doUpdate("tardis", set, where);
+                                plugin.getQueryFactory().doUpdate("tardis", set, where);
                             }
                         }
                     }

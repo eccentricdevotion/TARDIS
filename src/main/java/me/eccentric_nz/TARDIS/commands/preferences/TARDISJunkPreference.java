@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -40,7 +39,7 @@ class TARDISJunkPreference {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, String arg, QueryFactory qf) {
+    public boolean toggle(Player player, String arg) {
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
         // get TARDIS
@@ -93,13 +92,13 @@ class TARDISJunkPreference {
                     HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("uuid", ustr);
                     set.put("preset", current);
-                    qf.doSyncUpdate("junk", set, whereu);
+                    plugin.getQueryFactory().doSyncUpdate("junk", set, whereu);
                 } else {
                     // insert record
                     set.put("uuid", ustr);
                     set.put("tardis_id", id);
                     set.put("preset", current);
-                    qf.doSyncInsert("junk", set);
+                    plugin.getQueryFactory().doSyncInsert("junk", set);
                 }
                 // save JUNK_MODE preset
                 sett.put("chameleon_preset", "JUNK_MODE");
@@ -118,7 +117,7 @@ class TARDISJunkPreference {
             // update tardis table
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", ustr);
-            qf.doSyncUpdate("tardis", sett, whereu);
+            plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
             // set the Chameleon Circuit sign
             TARDISStaticUtils.setSign(chameleon, 3, cham_set, player);
             // rebuild

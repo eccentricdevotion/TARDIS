@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -101,7 +100,7 @@ public class TARDISQuitListener implements Listener {
                     wheret.put("tardis_id", id);
                     HashMap<String, Object> sett = new HashMap<>();
                     sett.put("powered_on", 0);
-                    new QueryFactory(plugin).doUpdate("tardis", sett, wheret);
+                    plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
                 }
             }
             // save arched status

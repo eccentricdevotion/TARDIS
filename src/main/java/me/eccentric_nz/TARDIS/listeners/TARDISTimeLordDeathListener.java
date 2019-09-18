@@ -171,7 +171,6 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
-                                        QueryFactory qf = new QueryFactory(plugin);
                                         COMPASS fd = (going_home) ? hd : cd;
                                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             // destroy police box
@@ -196,12 +195,12 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 // play tardis_takeoff sfx
                                                 TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
                                             } else {
-                                                plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                                                plugin.getPresetDestroyer().removeBlockProtection(id);
                                                 set.put("hidden", 0);
                                                 // restore biome
                                                 plugin.getUtils().restoreBiome(sl, rsc.getBiome());
                                             }
-                                            qf.doUpdate("tardis", set, tid);
+                                            plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                         }
                                         BuildData bd = new BuildData(plugin, uuid.toString());
                                         bd.setDirection(fd);
@@ -223,7 +222,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             seth.put("handbrake_on", 1);
                                             HashMap<String, Object> wheret = new HashMap<>();
                                             wheret.put("tardis_id", id);
-                                            qf.doUpdate("tardis", seth, wheret);
+                                            plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
                                         }, 500L);
                                         // set current
                                         HashMap<String, Object> setc = new HashMap<>();
@@ -235,7 +234,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         setc.put("submarine", (sub) ? 1 : 0);
                                         HashMap<String, Object> wherec = new HashMap<>();
                                         wherec.put("tardis_id", id);
-                                        qf.doUpdate("current", setc, wherec);
+                                        plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                         // set back
                                         HashMap<String, Object> setb = new HashMap<>();
                                         setb.put("world", rsc.getWorld().getName());
@@ -246,11 +245,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         setb.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                         HashMap<String, Object> whereb = new HashMap<>();
                                         whereb.put("tardis_id", id);
-                                        qf.doUpdate("back", setb, whereb);
+                                        plugin.getQueryFactory().doUpdate("back", setb, whereb);
                                         // take energy
                                         HashMap<String, Object> wherea = new HashMap<>();
                                         wherea.put("tardis_id", id);
-                                        qf.alterEnergyLevel("tardis", -amount, wherea, player);
+                                        plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
                                         // power down?
                                         if (plugin.getConfig().getBoolean("allow.power_down")) {
                                             HashMap<String, Object> wherep = new HashMap<>();
@@ -266,7 +265,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
                                             // if beacon is on turn it off
                                             new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
-                                            qf.doUpdate("tardis", setp, wherep);
+                                            plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                                         }
                                     }
                                 } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
@@ -337,7 +336,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         ttr.setTaskID(task);
                                     }
                                     // update the database
-                                    new QueryFactory(plugin).doUpdate("tardis", set, wheres);
+                                    plugin.getQueryFactory().doUpdate("tardis", set, wheres);
                                 } else if (player.isOnline()) {
                                     TARDISMessage.send(player, "ENERGY_NOT_AUTO");
                                 }
@@ -375,9 +374,6 @@ public class TARDISTimeLordDeathListener implements Listener {
     }
 
     private boolean compareCurrentToHome(ResultSetCurrentLocation c, ResultSetHomeLocation h) {
-        return (c.getWorld().equals(h.getWorld())
-                && c.getX() == h.getX()
-                && c.getY() == h.getY()
-                && c.getZ() == h.getZ());
+        return (c.getWorld().equals(h.getWorld()) && c.getX() == h.getX() && c.getY() == h.getY() && c.getZ() == h.getZ());
     }
 }

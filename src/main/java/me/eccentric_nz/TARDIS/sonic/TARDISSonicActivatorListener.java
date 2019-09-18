@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetSonic;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -115,14 +114,13 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
             ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
             HashMap<String, Object> set = new HashMap<>();
             set.put("activated", 1);
-            QueryFactory qf = new QueryFactory(plugin);
             if (rss.resultSet() && !rss.getSonic().isActivated()) {
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid);
-                qf.doUpdate("sonic", set, wherea);
+                plugin.getQueryFactory().doUpdate("sonic", set, wherea);
             } else {
                 set.put("uuid", uuid);
-                qf.doInsert("sonic", set);
+                plugin.getQueryFactory().doInsert("sonic", set);
             }
             TARDISMessage.send(p, "SONIC_ACTIVATED");
         } else {

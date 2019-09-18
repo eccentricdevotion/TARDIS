@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -64,7 +63,7 @@ public class TARDISPrefsMenuInventory {
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid.toString());
             set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
-            new QueryFactory(plugin).doInsert("player_prefs", set);
+            plugin.getQueryFactory().doInsert("player_prefs", set);
             // get the new record
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", uuid.toString());

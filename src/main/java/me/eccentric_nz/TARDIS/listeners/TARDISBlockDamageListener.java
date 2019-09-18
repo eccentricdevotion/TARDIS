@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
@@ -145,7 +148,6 @@ public class TARDISBlockDamageListener implements Listener {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            QueryFactory qf = new QueryFactory(plugin);
             BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(l);
@@ -161,7 +163,7 @@ public class TARDISBlockDamageListener implements Listener {
             whereh.put("tardis_id", id);
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
-            qf.doUpdate("tardis", seth, whereh);
+            plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
         }
     }
 }

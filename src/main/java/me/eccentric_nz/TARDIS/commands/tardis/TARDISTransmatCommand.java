@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -59,7 +58,6 @@ class TARDISTransmatCommand {
             TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
             return true;
         }
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("world", location.getWorld().getName());
         set.put("x", location.getX());
@@ -72,11 +70,11 @@ class TARDISTransmatCommand {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             where.put("name", args[1]);
-            qf.doUpdate("transmat", set, where);
+            plugin.getQueryFactory().doUpdate("transmat", set, where);
         } else {
             set.put("tardis_id", id);
             set.put("name", args[1]);
-            qf.doInsert("transmats", set);
+            plugin.getQueryFactory().doInsert("transmats", set);
         }
         TARDISMessage.send(player, "TRANSMAT_SAVED");
         return true;

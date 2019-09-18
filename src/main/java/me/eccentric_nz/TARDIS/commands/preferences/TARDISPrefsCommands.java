@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -131,38 +130,37 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     HashMap<String, Object> wherepp = new HashMap<>();
                     wherepp.put("uuid", player.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-                    QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<>();
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
-                        qf.doInsert("player_prefs", set);
+                        plugin.getQueryFactory().doInsert("player_prefs", set);
                     }
                     switch (pref) {
                         case "difficulty":
-                            return new TARDISSetDifficultyCommand(plugin).setDiff(player, args, qf);
+                            return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
                         case "eps_message":
-                            return new TARDISEPSMessageCommand().setMessage(player, args, qf);
+                            return new TARDISEPSMessageCommand().setMessage(player, args);
                         case "flight":
-                            return new TARDISSetFlightCommand().setMode(player, args, qf);
+                            return new TARDISSetFlightCommand().setMode(player, args);
                         case "hads_type":
-                            return new TARDISHadsTypeCommand().setHadsPref(player, args, qf);
+                            return new TARDISHadsTypeCommand().setHadsPref(player, args);
                         case "hum":
-                            return new TARDISHumCommand().setHumPref(player, args, qf);
+                            return new TARDISHumCommand().setHumPref(player, args);
                         case "isomorphic":
-                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, qf);
+                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
                         case "key":
-                            return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
+                            return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
                         case "lamp":
-                            return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);
+                            return new TARDISSetLampCommand(plugin).setLampPref(player, args);
                         case "language":
-                            return new TARDISSetLanguageCommand().setLanguagePref(player, args, qf);
+                            return new TARDISSetLanguageCommand().setLanguagePref(player, args);
                         case "wall":
                         case "floor":
                         case "siege_wall":
                         case "siege_floor":
-                            return new TARDISFloorCommand().setFloorOrWallBlock(player, args, qf);
+                            return new TARDISFloorCommand().setFloorOrWallBlock(player, args);
                         default:
                             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                                 TARDISMessage.send(player, "PREF_ON_OFF", pref);
@@ -172,9 +170,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                 case "build":
                                     return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
                                 case "junk":
-                                    return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
+                                    return new TARDISJunkPreference(plugin).toggle(player, args[1]);
                                 default:
-                                    return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
+                                    return new TARDISToggleOnOffCommand(plugin).toggle(player, args);
                             }
                     }
                 } else {

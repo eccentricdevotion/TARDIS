@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -91,7 +90,6 @@ public class TARDISHandlesTeleportCommand {
             // build current location
             Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // set new current
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> tid = new HashMap<>();
             tid.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
@@ -100,7 +98,7 @@ public class TARDISHandlesTeleportCommand {
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
             set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
-            qf.doUpdate("current", set, tid);
+            plugin.getQueryFactory().doUpdate("current", set, tid);
             plugin.getTrackerKeeper().getDamage().remove(id);
             long delay = 1L;
             plugin.getTrackerKeeper().getInVortex().add(id);

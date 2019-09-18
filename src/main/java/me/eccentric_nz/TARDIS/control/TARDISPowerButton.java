@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -120,7 +119,7 @@ public class TARDISPowerButton {
                 new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
             }
         }
-        new QueryFactory(plugin).doUpdate("tardis", setp, wherep);
+        plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
     }
 
     private boolean isTravelling(int id) {

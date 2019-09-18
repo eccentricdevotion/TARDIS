@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -147,7 +146,6 @@ public class TARDISShellRoomConstructor {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("blueprintData", jsonBlue);
             set.put("stainData", jsonStain);
@@ -168,21 +166,21 @@ public class TARDISShellRoomConstructor {
                 // update
                 HashMap<String, Object> whereu = new HashMap<>();
                 whereu.put("tardis_id", id);
-                qf.doUpdate("chameleon", set, whereu);
+                plugin.getQueryFactory().doUpdate("chameleon", set, whereu);
             } else {
                 // insert
                 set.put("tardis_id", id);
-                qf.doInsert("chameleon", set);
+                plugin.getQueryFactory().doInsert("chameleon", set);
             }
-            buildConstruct(tardis.getPreset().toString(), id, qf, tardis.getChameleon(), player);
+            buildConstruct(tardis.getPreset().toString(), id, tardis.getChameleon(), player);
         }
     }
 
-    private void buildConstruct(String preset, int id, QueryFactory qf, String location, Player player) {
+    private void buildConstruct(String preset, int id, String location, Player player) {
         // take their artron energy
         HashMap<String, Object> wheree = new HashMap<>();
         wheree.put("tardis_id", id);
-        qf.alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
+        plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
         TARDISMessage.send(player, "PRESET_CONSTRUCTED");
         // update tardis table
         HashMap<String, Object> sett = new HashMap<>();
@@ -190,7 +188,7 @@ public class TARDISShellRoomConstructor {
         sett.put("chameleon_demat", preset);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
-        qf.doUpdate("tardis", sett, wheret);
+        plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
         // update chameleon sign
         TARDISStaticUtils.setSign(location, 3, "CONSTRUCT", player);
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");

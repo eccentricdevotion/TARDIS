@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -30,7 +30,7 @@ import java.util.Locale;
  */
 class TARDISFloorCommand {
 
-    boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
+    boolean setFloorOrWallBlock(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
             TARDISMessage.send(player, "PREF_WALL", pref);
@@ -59,7 +59,7 @@ class TARDISFloorCommand {
         setw.put(pref, wall_mat);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", setw, where);
+        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
         TARDISMessage.send(player, "PREF_MAT_SET", TARDISPrefsCommands.ucfirst(pref));
         return true;
     }

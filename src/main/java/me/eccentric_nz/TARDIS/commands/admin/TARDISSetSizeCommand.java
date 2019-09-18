@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -56,7 +55,7 @@ class TARDISSetSizeCommand {
         where.put("uuid", uuid);
         HashMap<String, Object> set = new HashMap<>();
         set.put("size", type);
-        new QueryFactory(plugin).doUpdate("tardis", set, where);
+        plugin.getQueryFactory().doUpdate("tardis", set, where);
         TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
         return true;
     }

@@ -72,7 +72,7 @@ public class TARDISARSMethods {
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("ars_id", md.getId());
-        new QueryFactory(plugin).doUpdate("ars", set, wherea);
+        plugin.getQueryFactory().doUpdate("ars", set, wherea);
     }
 
     /**
@@ -87,7 +87,7 @@ public class TARDISARSMethods {
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("ars_id", sd.getId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new QueryFactory(plugin).doUpdate("ars", set, wherea), 6L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doUpdate("ars", set, wherea), 6L);
     }
 
     /**

@@ -81,7 +81,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
             Material blockType = block.getType();
             // only proceed if they are clicking an iron door with a TARDIS key!
             if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
-                QueryFactory qf = new QueryFactory(plugin);
                 Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
                     Action action = event.getAction();
@@ -169,7 +168,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     HashMap<String, Object> wherel = new HashMap<>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
                                     // always lock / unlock both doors
-                                    qf.doUpdate("doors", setl, wherel);
+                                    plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, "DOOR_LOCK", message);
                                 }
                             }
@@ -404,7 +403,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 HashMap<String, Object> set = new HashMap<>();
                                                 set.put("tardis_id", id);
                                                 set.put("uuid", playerUUID.toString());
-                                                qf.doSyncInsert("travellers", set);
+                                                plugin.getQueryFactory().doSyncInsert("travellers", set);
                                             }
                                             break;
                                         case 2:
@@ -445,11 +444,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             HashMap<String, Object> set = new HashMap<>();
                                             set.put("tardis_id", id);
                                             set.put("uuid", playerUUID.toString());
-                                            qf.doSyncInsert("travellers", set);
+                                            plugin.getQueryFactory().doSyncInsert("travellers", set);
                                             HashMap<String, Object> wheree = new HashMap<>();
                                             wheree.put("tardis_id", id);
                                             int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
-                                            qf.alterEnergyLevel("tardis", cost, wheree, player);
+                                            plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
                                             break;
                                         case 3:
                                             if (artron < required) {
@@ -492,7 +491,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             HashMap<String, Object> wherea = new HashMap<>();
                                             wherea.put("tardis_id", id);
                                             int costa = (0 - plugin.getArtronConfig().getInt("backdoor"));
-                                            qf.alterEnergyLevel("tardis", costa, wherea, player);
+                                            plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
                                             break;
                                         default:
                                             // do nothing

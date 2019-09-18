@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -34,7 +33,7 @@ class TARDISSetDifficultyCommand {
         this.plugin = plugin;
     }
 
-    boolean setDiff(Player player, String[] args, QueryFactory qf) {
+    boolean setDiff(Player player, String[] args) {
         if (!plugin.getConfig().getBoolean("allow.player_difficulty")) {
             TARDISMessage.send(player, "CMD_DISABLED");
             return true;
@@ -56,7 +55,7 @@ class TARDISSetDifficultyCommand {
         set.put("difficulty", diff);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", set, where);
+        plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         TARDISMessage.send(player, "DIFF_SAVED");
         return true;
     }

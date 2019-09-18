@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -59,7 +58,7 @@ class TARDISHandlesRemindCommand {
         data.put("uuid", player.getUniqueId().toString());
         data.put("reminder", message);
         data.put("time", when);
-        new QueryFactory(plugin).doInsert("reminders", data);
+        plugin.getQueryFactory().doInsert("reminders", data);
         return true;
     }
 }

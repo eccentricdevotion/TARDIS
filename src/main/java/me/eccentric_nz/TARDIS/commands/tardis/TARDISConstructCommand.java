@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -89,7 +88,7 @@ class TARDISConstructCommand {
             set.put("line" + l, raw);
         }
         // save it
-        new QueryFactory(plugin).doUpdate("chameleon", set, where);
+        plugin.getQueryFactory().doUpdate("chameleon", set, where);
         String message = (isAsym) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
         TARDISMessage.send(player, message);
         return true;

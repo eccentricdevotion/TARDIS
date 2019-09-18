@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -116,7 +115,6 @@ class TARDISBuildAbandoned {
         HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
         HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Location ender = null;
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         // calculate startx, starty, startz
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -141,7 +139,7 @@ class TARDISBuildAbandoned {
             setc.put("world", world.getName());
             setc.put("x", ch.getX());
             setc.put("z", ch.getZ());
-            qf.doInsert("chunks", setc);
+            plugin.getQueryFactory().doInsert("chunks", setc);
         });
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", dbID);
@@ -166,7 +164,7 @@ class TARDISBuildAbandoned {
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
                         String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 14, storage, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
                     }
                     if (Tag.WOOL.isTagged(type)) {
                         // determine 'use_clay' material
@@ -259,18 +257,18 @@ class TARDISBuildAbandoned {
                             setd.put("door_type", 1);
                             setd.put("door_location", doorloc);
                             setd.put("door_direction", "SOUTH");
-                            qf.doInsert("doors", setd);
+                            plugin.getQueryFactory().doInsert("doors", setd);
                         }
                     }
                     if (type.equals(Material.STONE_BUTTON) && !schm.getPermission().equals("junk")) { // random button
                         // remember the location of this button
                         String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 1, button, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 1, button, 0);
                     }
                     if (type.equals(Material.JUKEBOX)) {
                         // remember the location of this Advanced Console
                         String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 15, advanced, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                     }
                     if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                         /*
@@ -279,7 +277,7 @@ class TARDISBuildAbandoned {
                          * handbrake!
                          */
                         String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
                         // create default json for ARS
                         String[][][] empty = new String[3][9][9];
                         for (int ars_y = 0; ars_y < 3; ars_y++) {
@@ -308,7 +306,7 @@ class TARDISBuildAbandoned {
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("tardis_id", dbID);
                         seta.put("json", json.toString());
-                        qf.doInsert("ars", seta);
+                        plugin.getQueryFactory().doInsert("ars", seta);
                     }
                     if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                         // remember lamp blocks
@@ -319,7 +317,7 @@ class TARDISBuildAbandoned {
                         String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         setlb.put("tardis_id", dbID);
                         setlb.put("location", lloc);
-                        qf.doInsert("lamps", setlb);
+                        plugin.getQueryFactory().doInsert("lamps", setlb);
                     }
                     if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                         /*
@@ -343,14 +341,14 @@ class TARDISBuildAbandoned {
                          * Capacitor.
                          */
                         String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 6, woodbuttonloc, 0);
                     }
                     if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                         /*
                          * remember the telepathic circuit.
                          */
                         String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 23, telepathicloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 23, telepathicloc, 0);
                     }
                     if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
                         /*
@@ -366,7 +364,7 @@ class TARDISBuildAbandoned {
                         setpb.put("location", loc);
                         setpb.put("data", "minecraft:air");
                         setpb.put("police_box", 0);
-                        qf.doInsert("blocks", setpb);
+                        plugin.getQueryFactory().doInsert("blocks", setpb);
                         plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
                     }
                     // if it's the door, don't set it just remember its block then do it at the end
@@ -406,25 +404,25 @@ class TARDISBuildAbandoned {
                                     directional.setFacing(BlockFace.EAST);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 3, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
                                     break;
                                 case 3:
                                     directional.setFacing(BlockFace.SOUTH);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 2, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
                                     break;
                                 case 4:
                                     directional.setFacing(BlockFace.NORTH);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 5, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
                                     break;
                                 default:
                                     directional.setFacing(BlockFace.WEST);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 4, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
                                     break;
                             }
                             j++;
@@ -482,7 +480,7 @@ class TARDISBuildAbandoned {
                     cs.setLine(3, "");
                     cs.update();
                     String controlloc = psb.getLocation().toString();
-                    qf.insertSyncControl(dbID, 22, controlloc, 0);
+                    plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
                 }
             }
             s++;
@@ -504,7 +502,7 @@ class TARDISBuildAbandoned {
             ((EnderCrystal) ender_crystal).setShowingBottom(false);
         }
         // finished processing - update tardis table!
-        qf.doUpdate("tardis", set, where);
+        plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 
     /**

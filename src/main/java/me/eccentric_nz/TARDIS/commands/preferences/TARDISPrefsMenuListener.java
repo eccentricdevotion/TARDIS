@@ -22,7 +22,10 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetJunk;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -116,8 +119,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                     wheret.put("tardis_id", id);
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("handbrake_on", 1);
-                                    QueryFactory qf = new QueryFactory(plugin);
-                                    qf.doUpdate("tardis", set, wheret);
+                                    plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                                     im.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_ON")));
                                     is.setItemMeta(im);
                                     TARDISMessage.send(p, "HANDBRAKE_ON");
@@ -125,7 +127,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
                                         HashMap<String, Object> wheref = new HashMap<>();
                                         wheref.put("tardis_id", id);
-                                        qf.alterEnergyLevel("tardis", amount, wheref, p);
+                                        plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheref, p);
                                     }
                                     plugin.getTrackerKeeper().getHasDestination().remove(id);
                                     if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -214,7 +216,6 @@ public class TARDISPrefsMenuListener implements Listener {
                             wherep.put("uuid", uuid.toString());
                             ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
                             if (rsp.resultSet()) {
-                                QueryFactory qf = new QueryFactory(plugin);
                                 Tardis tardis = rsp.getTardis();
                                 String current = tardis.getPreset().toString();
                                 // make sure is opposite
@@ -235,13 +236,13 @@ public class TARDISPrefsMenuListener implements Listener {
                                     HashMap<String, Object> wherej = new HashMap<>();
                                     wherej.put("uuid", uuid.toString());
                                     setj.put("preset", current);
-                                    qf.doSyncUpdate("junk", setj, wherej);
+                                    plugin.getQueryFactory().doSyncUpdate("junk", setj, wherej);
                                 } else {
                                     // create a junk record
                                     setj.put("uuid", uuid.toString());
                                     setj.put("tardis_id", id);
                                     setj.put("preset", current);
-                                    qf.doSyncInsert("junk", setj);
+                                    plugin.getQueryFactory().doSyncInsert("junk", setj);
                                 }
                                 HashMap<String, Object> whereu = new HashMap<>();
                                 whereu.put("uuid", uuid.toString());
@@ -260,7 +261,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                     sett.put("chameleon_demat", current);
                                     cham_set = "JUNK_MODE";
                                 }
-                                qf.doSyncUpdate("tardis", sett, whereu);
+                                plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
                                 // set the Chameleon Circuit sign
                                 TARDISStaticUtils.setSign(chameleon, 3, cham_set, p);
                                 // rebuild
@@ -285,7 +286,7 @@ public class TARDISPrefsMenuListener implements Listener {
                             } else {
                                 set.put(lookup.get(im.getDisplayName()), b);
                             }
-                            new QueryFactory(plugin).doUpdate("player_prefs", set, where);
+                            plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                             break;
                         }
                     }

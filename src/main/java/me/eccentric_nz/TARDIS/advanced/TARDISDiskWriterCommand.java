@@ -145,7 +145,7 @@ public class TARDISDiskWriterCommand {
                     set.put("saves_one", serialized);
                     HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("uuid", uuid.toString());
-                    new QueryFactory(plugin).doUpdate("storage", set, whereu);
+                    plugin.getQueryFactory().doUpdate("storage", set, whereu);
                     return true;
                 } else {
                     ItemStack[] saves2 = TARDISSerializeInventory.itemStacksFromString(rs.getSavesTwo());
@@ -157,7 +157,7 @@ public class TARDISDiskWriterCommand {
                         set.put("saves_two", serialized);
                         HashMap<String, Object> whereu = new HashMap<>();
                         whereu.put("uuid", uuid.toString());
-                        new QueryFactory(plugin).doUpdate("storage", set, whereu);
+                        plugin.getQueryFactory().doUpdate("storage", set, whereu);
                         return true;
                     } else {
                         return false;

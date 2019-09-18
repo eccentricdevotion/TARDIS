@@ -22,7 +22,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetConstructSign;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -99,7 +102,6 @@ class TARDISInstaPreset {
         minusz = (bd.getLocation().getBlockZ() - 1);
         World world = bd.getLocation().getWorld();
         int signx = 0, signz = 0;
-        QueryFactory qf = new QueryFactory(plugin);
         // if configured and it's a Whovian preset set biome
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && bd.useTexture()) {
             List<Chunk> chunks = new ArrayList<>();
@@ -147,7 +149,7 @@ class TARDISInstaPreset {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", bd.getTardisID());
                 set.put("uuid", playerUUID.toString());
-                qf.doInsert("travellers", set);
+                plugin.getQueryFactory().doInsert("travellers", set);
             }
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
         }
@@ -235,7 +237,7 @@ class TARDISInstaPreset {
                 // update door location if invisible
                 if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && mat.equals(Material.AIR)) {
                     String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
-                    processDoor(invisible_door, qf);
+                    processDoor(invisible_door);
                     // if tardis is in the air add under door
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
@@ -327,7 +329,7 @@ class TARDISInstaPreset {
                             String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
                             String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
                             plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-                            processDoor(doorloc, qf);
+                            processDoor(doorloc);
                             // place block under door if block is in list of blocks an iron door cannot go on
                             if (yy == 0) {
                                 if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
@@ -541,7 +543,7 @@ class TARDISInstaPreset {
         }
     }
 
-    private void processDoor(String doorloc, QueryFactory qf) {
+    private void processDoor(String doorloc) {
         // should insert the door when tardis is first made, and then update the location there after!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
@@ -553,11 +555,11 @@ class TARDISInstaPreset {
         if (rsd.resultSet()) {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoor_id());
-            qf.doUpdate("doors", setd, whereid);
+            plugin.getQueryFactory().doUpdate("doors", setd, whereid);
         } else {
             setd.put("tardis_id", bd.getTardisID());
             setd.put("door_type", 0);
-            qf.doInsert("doors", setd);
+            plugin.getQueryFactory().doInsert("doors", setd);
         }
     }
 

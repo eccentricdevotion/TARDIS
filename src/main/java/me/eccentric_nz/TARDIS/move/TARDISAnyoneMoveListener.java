@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -103,7 +102,6 @@ public class TARDISAnyoneMoveListener implements Listener {
                 pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
             }
             // set travelling status
-            QueryFactory qf = new QueryFactory(plugin);
             if (exit) {
                 // unoccupied
                 plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
@@ -113,7 +111,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("uuid", uuid.toString());
-                qf.doSyncInsert("travellers", set);
+                plugin.getQueryFactory().doSyncInsert("travellers", set);
                 // if WorldGuard is on the server check for TARDIS region protection and add player as member
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     // get owner of TARDIS

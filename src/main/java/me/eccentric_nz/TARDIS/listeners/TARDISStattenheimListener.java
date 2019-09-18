@@ -24,7 +24,10 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -111,7 +114,6 @@ public class TARDISStattenheimListener implements Listener {
                     return;
                 }
                 boolean power = tardis.isPowered_on();
-                QueryFactory qf = new QueryFactory(plugin);
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
                     Material m = b.getType();
@@ -245,7 +247,7 @@ public class TARDISStattenheimListener implements Listener {
                             bset.put("z", remoteLocation.getZ());
                             bset.put("submarine", (sub) ? 1 : 0);
                         }
-                        qf.doUpdate("back", bset, bid);
+                        plugin.getQueryFactory().doUpdate("back", bset, bid);
                         // set current location
                         HashMap<String, Object> cid = new HashMap<>();
                         cid.put("tardis_id", id);
@@ -256,14 +258,14 @@ public class TARDISStattenheimListener implements Listener {
                         cset.put("z", remoteLocation.getBlockZ());
                         cset.put("direction", player_d.toString());
                         cset.put("submarine", (sub) ? 1 : 0);
-                        qf.doUpdate("current", cset, cid);
+                        plugin.getQueryFactory().doUpdate("current", cset, cid);
                         // update tardis
                         if (hidden) {
                             HashMap<String, Object> tid = new HashMap<>();
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("hidden", 0);
                             tid.put("tardis_id", id);
-                            qf.doUpdate("tardis", set, tid);
+                            plugin.getQueryFactory().doUpdate("tardis", set, tid);
                             // restore biome
                             plugin.getUtils().restoreBiome(oldSave, rsc.getBiome());
                         }
@@ -286,7 +288,7 @@ public class TARDISStattenheimListener implements Listener {
                                     plugin.getTrackerKeeper().getDematerialising().add(id);
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                 } else {
-                                    plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                                    plugin.getPresetDestroyer().removeBlockProtection(id);
                                 }
                             }, delay);
                         }
@@ -303,7 +305,7 @@ public class TARDISStattenheimListener implements Listener {
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
-                        qf.alterEnergyLevel("tardis", -ch, wheret, player);
+                        plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
                         plugin.getTrackerKeeper().getHasDestination().remove(id);
                         plugin.getTrackerKeeper().getRescue().remove(id);
                     } else {
@@ -338,7 +340,7 @@ public class TARDISStattenheimListener implements Listener {
                         if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
                             new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
                         }
-                        qf.doUpdate("tardis", setp, wherep);
+                        plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     }
                 }
             }

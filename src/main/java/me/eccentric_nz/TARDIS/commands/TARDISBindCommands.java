@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -97,13 +100,12 @@ public class TARDISBindCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("update")) {
                 type_1.forEach((s) -> {
-                    QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("tardis_id", id);
                     whereu.put("dest_name", s);
                     HashMap<String, Object> setu = new HashMap<>();
                     setu.put("type", 1);
-                    qf.doUpdate("destinations", setu, whereu);
+                    plugin.getQueryFactory().doUpdate("destinations", setu, whereu);
                 });
                 TARDISMessage.send(player, "BIND_SET");
                 return true;
@@ -144,22 +146,20 @@ public class TARDISBindCommands implements CommandExecutor {
                         did = rsmat.getDest_id();
                     }
                 }
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("dest_id", did);
                 if (dtype > 0) {
                     // delete the record
-                    qf.doDelete("destinations", whereb);
+                    plugin.getQueryFactory().doDelete("destinations", whereb);
                 } else {
                     // just remove the bind location
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("bind", "");
-                    qf.doUpdate("destinations", set, whereb);
+                    plugin.getQueryFactory().doUpdate("destinations", set, whereb);
                 }
                 TARDISMessage.send(player, "BIND_REMOVED", firstArgs.get(dtype));
                 return true;
             } else if (args[0].equalsIgnoreCase("transmat")) { // type 6
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 if (args.length > 1) {
@@ -169,7 +169,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 }
                 set.put("dest_name", "transmat");
                 set.put("type", 6);
-                int did = qf.doSyncInsert("destinations", set);
+                int did = plugin.getQueryFactory().doSyncInsert("destinations", set);
                 if (did != 0) {
                     plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
                     TARDISMessage.send(player, "BIND_CLICK");
@@ -182,7 +182,6 @@ public class TARDISBindCommands implements CommandExecutor {
                     return false;
                 }
                 int did = 0;
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 if (args[0].equalsIgnoreCase("save")) { // type 0
                     HashMap<String, Object> whered = new HashMap<>();
@@ -203,7 +202,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 1);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = plugin.getQueryFactory().doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("player")) { // type 2
                     // get player online or offline
@@ -217,7 +216,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1]);
                     set.put("type", 2);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = plugin.getQueryFactory().doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("area")) { // type 3
                     HashMap<String, Object> wherea = new HashMap<>();
@@ -233,7 +232,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 3);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = plugin.getQueryFactory().doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("biome")) { // type 4
                     // check valid biome
@@ -242,7 +241,7 @@ public class TARDISBindCommands implements CommandExecutor {
                         if (!upper.equals("HELL") && !upper.equals("SKY")) {
                             set.put("dest_name", upper);
                             set.put("type", 4);
-                            did = qf.doSyncInsert("destinations", set);
+                            did = plugin.getQueryFactory().doSyncInsert("destinations", set);
                         }
                     } catch (IllegalArgumentException iae) {
                         TARDISMessage.send(player, "BIOME_NOT_VALID");
@@ -265,7 +264,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     set.put("dest_name", which);
                     set.put("type", 5);
                     set.put("preset", which);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = plugin.getQueryFactory().doSyncInsert("destinations", set);
                 }
                 if (did != 0) {
                     plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);

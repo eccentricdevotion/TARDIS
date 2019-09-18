@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -198,13 +197,12 @@ public class TARDISDeleteCommand {
     }
 
     public static void cleanDatabase(int id) {
-        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            qf.doDelete(table, where);
+            TARDIS.plugin.getQueryFactory().doDelete(table, where);
         });
     }
 }

@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -50,13 +49,12 @@ public class TARDISRegenerationListener implements Listener {
                             return;
                         }
                         // transfer min
-                        QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> wheretl = new HashMap<>();
                         wheretl.put("uuid", uuid);
                         HashMap<String, Object> wherea = new HashMap<>();
                         wherea.put("tardis_id", id);
-                        qf.alterEnergyLevel("player_prefs", -min, wheretl, player);
-                        qf.alterEnergyLevel("tardis", min, wherea, player);
+                        plugin.getQueryFactory().alterEnergyLevel("player_prefs", -min, wheretl, player);
+                        plugin.getQueryFactory().alterEnergyLevel("tardis", min, wherea, player);
                         TARDISMessage.send(player, "SIEGE_TRANSFER", String.format("%s", min));
                     }
                 }

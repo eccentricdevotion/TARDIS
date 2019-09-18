@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -53,6 +52,6 @@ public class TARDISLightSwitch {
             new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
             setl.put("lights_on", 1);
         }
-        new QueryFactory(plugin).doUpdate("tardis", setl, wherel);
+        plugin.getQueryFactory().doUpdate("tardis", setl, wherel);
     }
 }

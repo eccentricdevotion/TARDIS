@@ -122,7 +122,6 @@ public class TARDISUpdateListener implements Listener {
             int id = tardis.getTardis_id();
             String preset = tardis.getPreset().toString();
             SCHEMATIC schm = tardis.getSchematic();
-            QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
@@ -194,7 +193,7 @@ public class TARDISUpdateListener implements Listener {
                     setd.put("door_type", type);
                     setd.put("door_location", blockLocStr);
                     setd.put("door_direction", d);
-                    qf.doInsert("doors", setd);
+                    plugin.getQueryFactory().doInsert("doors", setd);
                 }
             }
             // check they are still in the TARDIS world
@@ -204,7 +203,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if ((blockName.equalsIgnoreCase("button") || blockName.equalsIgnoreCase("artron")) && validBlocks.contains(blockType)) {
                 if (secondary) {
-                    qf.insertControl(id, CONTROL.getUPDATE_CONTROLS().get(blockName), blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(blockName), blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -218,7 +217,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 24);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 24, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 24, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -230,7 +229,7 @@ public class TARDISUpdateListener implements Listener {
                 whered.put("type", 28);
                 ResultSetControls rsc = new ResultSetControls(plugin, whered, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 28, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 28, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -247,10 +246,10 @@ public class TARDISUpdateListener implements Listener {
                 wheret.put("type", 23);
                 ResultSetControls rsc = new ResultSetControls(plugin, wheret, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 23, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 23, blockLocStr, 0);
                     secondary = true;
                 } else if (secondary) {
-                    qf.insertControl(id, 23, blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, 23, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -264,10 +263,10 @@ public class TARDISUpdateListener implements Listener {
                 whereh.put("type", 0);
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 0, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 0, blockLocStr, 0);
                     secondary = true;
                 } else if (secondary) {
-                    qf.insertControl(id, 0, blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, 0, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -301,7 +300,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 2);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
-                    qf.insertControl(id, 2, blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, 2, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -312,7 +311,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 3);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
-                    qf.insertControl(id, 3, blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, 3, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -323,7 +322,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 4);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
-                    qf.insertControl(id, 4, blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, 4, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -334,7 +333,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 5);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
-                    qf.insertControl(id, 5, blockLocStr, 1);
+                    plugin.getQueryFactory().insertControl(id, 5, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -369,7 +368,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 7);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 7, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 7, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -402,10 +401,10 @@ public class TARDISUpdateListener implements Listener {
                         setb.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
                         HashMap<String, Object> whereb = new HashMap<>();
                         whereb.put("tardis_id", id);
-                        qf.doUpdate("back", setb, whereb);
+                        plugin.getQueryFactory().doUpdate("back", setb, whereb);
                     }
                     // insert control
-                    qf.insertControl(id, 8, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 8, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -418,7 +417,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 9, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 9, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -440,7 +439,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 22, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 22, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -462,7 +461,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 10, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 10, blockLocStr, 0);
                     // check if they already have an ARS record (they may have used `/tardis arsremove`)
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("tardis_id", id);
@@ -497,7 +496,7 @@ public class TARDISUpdateListener implements Listener {
                         seta.put("tardis_id", id);
                         seta.put("uuid", playerUUID);
                         seta.put("json", json.toString());
-                        qf.doInsert("ars", seta);
+                        plugin.getQueryFactory().doInsert("ars", seta);
                     }
                     secondary = true;
                 } else {
@@ -520,7 +519,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 11, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 11, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -541,7 +540,7 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 13);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 13, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 13, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -563,13 +562,13 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 14, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 14, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerUUID, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id);
             }
             if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
                 HashMap<String, Object> wherel = new HashMap<>();
@@ -578,13 +577,13 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 15, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 15, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerUUID, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id);
             }
             if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType) || plates.contains(blockType))) {
                 HashMap<String, Object> wherez = new HashMap<>();
@@ -593,13 +592,13 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherez, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, 16, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerUUID, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id);
             }
             if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("siege") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherel = new HashMap<>();
@@ -608,7 +607,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
                 if (!rsc.resultSet()) {
                     // insert control
-                    qf.insertControl(id, CONTROL.getUPDATE_CONTROLS().get(blockName), blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(blockName), blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -616,7 +615,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
-                    qf.doUpdate(table, set, tid);
+                    plugin.getQueryFactory().doUpdate(table, set, tid);
                 }
                 TARDISMessage.send(player, "UPDATE_SET", blockName);
             } else {

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -104,7 +103,6 @@ class TARDISHostileDisplacement {
                     Location fl = (rsc.isSubmarine()) ? sub : l;
                     if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, FLAG.getNoMessageFlags()))) {
                         // set current
-                        QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<>();
@@ -113,7 +111,7 @@ class TARDISHostileDisplacement {
                         set.put("y", fl.getBlockY());
                         set.put("z", fl.getBlockZ());
                         set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
-                        qf.doUpdate("current", set, tid);
+                        plugin.getQueryFactory().doUpdate("current", set, tid);
                         plugin.getTrackerKeeper().getDamage().remove(id);
                         long delay = 1L;
                         // move TARDIS

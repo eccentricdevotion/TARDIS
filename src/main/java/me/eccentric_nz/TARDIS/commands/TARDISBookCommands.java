@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -120,8 +119,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", player.getUniqueId().toString());
                     set.put("name", first);
-                    QueryFactory qf = new QueryFactory(plugin);
-                    qf.doInsert("achievements", set);
+                    plugin.getQueryFactory().doInsert("achievements", set);
                     TARDISMessage.send(player, "ACHIEVE_STARTED", first);
                     return true;
                 }

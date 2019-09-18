@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -110,7 +109,6 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     }
 
     private void addCompanion(int id, String comps, String puid) {
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> tid = new HashMap<>();
         HashMap<String, Object> set = new HashMap<>();
         tid.put("tardis_id", id);
@@ -122,7 +120,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
             // make a list
             set.put("companions", puid);
         }
-        qf.doUpdate("tardis", set, tid);
+        plugin.getQueryFactory().doUpdate("tardis", set, tid);
     }
 
     private void addToRegion(String world, String owner, String player) {

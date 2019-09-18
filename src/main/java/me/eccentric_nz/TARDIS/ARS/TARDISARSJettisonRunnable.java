@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -52,7 +51,6 @@ class TARDISARSJettisonRunnable implements Runnable {
 
     @Override
     public void run() {
-        QueryFactory qf = new QueryFactory(plugin);
         String r = room.toString();
         // remove the room
         World w = slot.getChunk().getWorld();
@@ -70,7 +68,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("location", l);
                             where.put("tardis_id", id);
-                            qf.doDelete("gravity_well", where);
+                            plugin.getQueryFactory().doDelete("gravity_well", where);
                             // remove trackers
                             if (b.getType().equals(Material.LIME_WOOL)) {
                                 plugin.getGeneralKeeper().getGravityUpList().remove(l);
@@ -92,7 +90,7 @@ class TARDISARSJettisonRunnable implements Runnable {
             }
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
-            qf.alterEnergyLevel("tardis", amount, set, null);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
                 TARDISMessage.send(p, "ENERGY_RECOVERED", String.format("%d", amount));
             }
@@ -102,14 +100,14 @@ class TARDISARSJettisonRunnable implements Runnable {
                 HashMap<String, Object> del = new HashMap<>();
                 del.put("tardis_id", id);
                 del.put("secondary", secondary);
-                qf.doDelete("controls", del);
+                plugin.getQueryFactory().doDelete("controls", del);
             }
             // if it is a shell room remove the button control
             if (r.equals("SHELL")) {
                 HashMap<String, Object> del = new HashMap<>();
                 del.put("tardis_id", id);
                 del.put("type", 25);
-                qf.doDelete("controls", del);
+                plugin.getQueryFactory().doDelete("controls", del);
             }
             if (r.equals("RENDERER")) {
                 // remove stored location from the database
@@ -117,7 +115,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                 setd.put("renderer", "");
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
-                qf.doUpdate("tardis", setd, where);
+                plugin.getQueryFactory().doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     plugin.getWorldGuardUtils().removeRoomRegion(w, p.getName(), "renderer");
@@ -129,7 +127,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                 wheref.put("tardis_id", id);
                 HashMap<String, Object> setf = new HashMap<>();
                 setf.put(r.toLowerCase(Locale.ENGLISH), "");
-                qf.doUpdate("farming", setf, wheref);
+                plugin.getQueryFactory().doUpdate("farming", setf, wheref);
             }
         }
     }

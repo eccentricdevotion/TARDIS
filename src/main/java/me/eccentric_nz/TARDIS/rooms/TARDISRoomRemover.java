@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.rooms;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Location;
@@ -102,7 +101,6 @@ class TARDISRoomRemover {
         sy = l.getBlockY() + upy;
         ey = l.getBlockY() - downy;
         World w = l.getWorld();
-        QueryFactory qf = new QueryFactory(plugin);
         // loop through blocks and set them to air
         for (int y = sy; y >= ey; y--) {
             for (int x = sx; x <= ex; x++) {
@@ -116,7 +114,7 @@ class TARDISRoomRemover {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("location", loc);
                             where.put("tardis_id", id);
-                            qf.doDelete("gravity_well", where);
+                            plugin.getQueryFactory().doDelete("gravity_well", where);
                         }
                     }
                 }
@@ -128,7 +126,7 @@ class TARDISRoomRemover {
             set.put(r.toLowerCase(Locale.ENGLISH), "");
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            qf.doUpdate("farming", set, where);
+            plugin.getQueryFactory().doUpdate("farming", set, where);
         }
         return true;
     }

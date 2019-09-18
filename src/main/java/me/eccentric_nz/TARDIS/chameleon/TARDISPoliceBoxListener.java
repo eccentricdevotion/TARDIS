@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -79,7 +78,6 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
                             String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<>();
-                            QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
                             TARDISChameleonFrame tcf = new TARDISChameleonFrame(plugin);
@@ -256,7 +254,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             if (set.size() > 0) {
                                 set.put("adapti_on", 0);
                                 set.put("chameleon_demat", preset);
-                                qf.doUpdate("tardis", set, wherec);
+                                plugin.getQueryFactory().doUpdate("tardis", set, wherec);
                             }
                         }
                     }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -213,7 +212,7 @@ public class TARDISBeaconColouringListener implements Listener {
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());
         int energy = plugin.getCondensables().get("GLASS") * needed;
-        new QueryFactory(plugin).alterEnergyLevel("tardis", -energy, wherea, player);
+        plugin.getQueryFactory().alterEnergyLevel("tardis", -energy, wherea, player);
         plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
     }
 

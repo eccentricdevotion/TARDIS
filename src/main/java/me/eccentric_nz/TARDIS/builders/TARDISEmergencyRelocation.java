@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -60,7 +59,6 @@ public class TARDISEmergencyRelocation {
                 bd.setSubmarine(false);
                 Tardis tardis = rs.getTardis();
                 new TARDISInstaPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 HashMap<String, Object> setc = new HashMap<>();
@@ -70,7 +68,7 @@ public class TARDISEmergencyRelocation {
                 setc.put("z", emergency.getBlockZ());
                 setc.put("direction", "EAST");
                 setc.put("submarine", 0);
-                qf.doUpdate("current", setc, wherec);
+                plugin.getQueryFactory().doUpdate("current", setc, wherec);
                 HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("tardis_id", id);
                 HashMap<String, Object> setb = new HashMap<>();
@@ -80,11 +78,11 @@ public class TARDISEmergencyRelocation {
                 setb.put("z", emergency.getBlockZ());
                 setb.put("direction", "EAST");
                 setb.put("submarine", 0);
-                qf.doUpdate("current", setb, whereb);
+                plugin.getQueryFactory().doUpdate("current", setb, whereb);
                 TARDISMessage.send(p, "EMERGENCY_DONE");
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
-                qf.alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
             }
         }
     }

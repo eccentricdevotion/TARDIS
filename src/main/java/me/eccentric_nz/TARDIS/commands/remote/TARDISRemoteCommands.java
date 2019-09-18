@@ -225,7 +225,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             wherei.put("tardis_id", id);
                                             HashMap<String, Object> seti = new HashMap<>();
                                             seti.put("chameleon_preset", invisibility);
-                                            new QueryFactory(plugin).doSyncUpdate("tardis", seti, wherei);
+                                            plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                         }
                                         // get a landing spot
                                         Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
@@ -309,7 +309,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 }
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", id);
-                                new QueryFactory(plugin).doUpdate("next", set, wheret);
+                                plugin.getQueryFactory().doUpdate("next", set, wheret);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     OfflinePlayer player = plugin.getServer().getOfflinePlayer(uuid);
                                     String success = (new TARDISRemoteTravelCommand(plugin).doTravel(id, player, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");

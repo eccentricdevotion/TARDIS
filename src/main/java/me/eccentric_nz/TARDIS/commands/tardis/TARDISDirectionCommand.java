@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -110,18 +109,17 @@ public class TARDISDirectionCommand {
                 return true;
             }
             COMPASS old_d = rsc.getDirection();
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             set.put("direction", dir);
-            qf.doUpdate("current", set, tid);
+            plugin.getQueryFactory().doUpdate("current", set, tid);
             HashMap<String, Object> did = new HashMap<>();
             HashMap<String, Object> setd = new HashMap<>();
             did.put("door_type", 0);
             did.put("tardis_id", id);
             setd.put("door_direction", dir);
-            qf.doUpdate("doors", setd, did);
+            plugin.getQueryFactory().doUpdate("doors", setd, did);
             // close doors & therefore remove open portals...
             new TARDISDoorCloser(plugin, uuid, id).closeDoors();
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -156,7 +154,7 @@ public class TARDISDirectionCommand {
             }
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
-            qf.alterEnergyLevel("tardis", -amount, wherea, player);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
             if (hid) {
                 TARDISMessage.send(player, "DIRECTION_CHANGED");
             }

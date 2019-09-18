@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -109,7 +108,6 @@ public class TARDISRemoteKeyListener implements Listener {
                     return;
                 }
                 Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
@@ -121,7 +119,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     // always lock / unlock both doors
-                    qf.doUpdate("doors", setl, wherel);
+                    plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                     TARDISMessage.send(player, "DOOR_LOCK", message);
                     TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
@@ -70,19 +69,18 @@ public class TARDISCreeperDeathListener implements Listener {
                         HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("uuid", killerUUID);
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                        QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<>();
                         int amount = plugin.getArtronConfig().getInt("creeper_recharge");
                         if (!rsp.resultSet()) {
                             set.put("uuid", killerUUID);
                             set.put("artron_level", amount);
-                            qf.doInsert("player_prefs", set);
+                            plugin.getQueryFactory().doInsert("player_prefs", set);
                         } else {
                             int level = rsp.getArtronLevel() + amount;
                             HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", killerUUID);
                             set.put("artron_level", level);
-                            qf.doUpdate("player_prefs", set, wherea);
+                            plugin.getQueryFactory().doUpdate("player_prefs", set, wherea);
                         }
                         TARDISMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
                         // are we doing an achievement?

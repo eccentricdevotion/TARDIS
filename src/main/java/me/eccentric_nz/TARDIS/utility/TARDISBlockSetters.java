@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -267,13 +266,12 @@ public class TARDISBlockSetters {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
-        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
-        qf.doInsert("blocks", set);
+        TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setBlockData(data);
@@ -293,13 +291,12 @@ public class TARDISBlockSetters {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
-        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", l);
         set.put("data", b.getBlockData().getAsString());
         set.put("police_box", 1);
-        qf.doInsert("blocks", set);
+        TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setBlockData(material.createBlockData());
@@ -322,7 +319,7 @@ public class TARDISBlockSetters {
         BlockData data = b.getBlockData();
         set.put("data", data.getAsString());
         set.put("police_box", type);
-        new QueryFactory(TARDIS.plugin).doInsert("blocks", set);
+        TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
         // set the block
         b.setBlockData(m.createBlockData(), true);
     }
@@ -349,13 +346,12 @@ public class TARDISBlockSetters {
         if (ids.contains(blockData.getMaterial().toString())) {
             // remember replaced block location and BlockData so we can restore it later
             String l = b.getLocation().toString();
-            QueryFactory qf = new QueryFactory(TARDIS.plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             set.put("location", l);
             set.put("data", blockData.getAsString());
             set.put("police_box", 1);
-            qf.doInsert("blocks", set);
+            TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
             TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
             // set the block
             b.setBlockData(Material.BARRIER.createBlockData());

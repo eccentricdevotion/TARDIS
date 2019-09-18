@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -182,7 +181,7 @@ public class TARDISRandomButton {
                     }
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
-                    new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
+                    plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

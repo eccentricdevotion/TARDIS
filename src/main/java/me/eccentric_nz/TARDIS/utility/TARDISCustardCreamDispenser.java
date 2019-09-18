@@ -2,7 +2,6 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,7 +48,7 @@ public class TARDISCustardCreamDispenser {
             // take their artron energy
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            new QueryFactory(plugin).alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("custard_cream") * -1, where, player);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("custard_cream") * -1, where, player);
         }
     }
 }

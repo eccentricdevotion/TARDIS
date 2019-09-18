@@ -101,7 +101,7 @@ public class TARDISHandlesProcessor {
             set.put("parsed", event);
             HashMap<String, Object> where = new HashMap<>();
             where.put("program_id", pid);
-            new QueryFactory(plugin).doUpdate("programs", set, where);
+            plugin.getQueryFactory().doUpdate("programs", set, where);
             TARDISMessage.handlesSend(player, "HANDLES_RUNNING");
         } else {
             // TODO check conditions
@@ -149,7 +149,7 @@ public class TARDISHandlesProcessor {
                                                 HashMap<String, Object> wherel = new HashMap<>();
                                                 wherel.put("tardis_id", id);
                                                 // always lock / unlock both doors
-                                                new QueryFactory(plugin).doUpdate("doors", setl, wherel);
+                                                plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                                                 TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
                                             }
                                         }
@@ -447,7 +447,6 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 break;
                                         }
-                                        QueryFactory qf = new QueryFactory(plugin);
                                         if (goto_loc != null) {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                             plugin.getTrackerKeeper().getRescue().remove(id);
@@ -482,12 +481,12 @@ public class TARDISHandlesProcessor {
                                                     // play tardis_takeoff sfx
                                                     TARDISSounds.playTARDISSound(current, "tardis_takeoff");
                                                 } else {
-                                                    plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                                                    plugin.getPresetDestroyer().removeBlockProtection(id);
                                                     set.put("hidden", 0);
                                                     // restore biome
                                                     plugin.getUtils().restoreBiome(current, rsc.getBiome());
                                                 }
-                                                qf.doUpdate("tardis", set, tid);
+                                                plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                             }
                                             BuildData bd = new BuildData(plugin, uuid.toString());
                                             bd.setDirection(nextDirection);
@@ -509,7 +508,7 @@ public class TARDISHandlesProcessor {
                                                 seth.put("handbrake_on", 1);
                                                 HashMap<String, Object> wheret = new HashMap<>();
                                                 wheret.put("tardis_id", id);
-                                                qf.doUpdate("tardis", seth, wheret);
+                                                plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
                                             }, 500L);
                                             // set current
                                             HashMap<String, Object> setc = new HashMap<>();
@@ -521,7 +520,7 @@ public class TARDISHandlesProcessor {
                                             setc.put("submarine", (sub) ? 1 : 0);
                                             HashMap<String, Object> wherec = new HashMap<>();
                                             wherec.put("tardis_id", id);
-                                            qf.doUpdate("current", setc, wherec);
+                                            plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                             // set back
                                             HashMap<String, Object> setb = new HashMap<>();
                                             setb.put("world", rsc.getWorld().getName());
@@ -532,11 +531,11 @@ public class TARDISHandlesProcessor {
                                             setb.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                             HashMap<String, Object> whereb = new HashMap<>();
                                             whereb.put("tardis_id", id);
-                                            qf.doUpdate("back", setb, whereb);
+                                            plugin.getQueryFactory().doUpdate("back", setb, whereb);
                                             // take energy
                                             HashMap<String, Object> wherea = new HashMap<>();
                                             wherea.put("tardis_id", id);
-                                            qf.alterEnergyLevel("tardis", -travel, wherea, player);
+                                            plugin.getQueryFactory().alterEnergyLevel("tardis", -travel, wherea, player);
                                         }
                                     }
                                 }

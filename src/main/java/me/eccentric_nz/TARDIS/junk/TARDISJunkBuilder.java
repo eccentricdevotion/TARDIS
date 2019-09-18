@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -54,7 +53,6 @@ public class TARDISJunkBuilder implements Runnable {
     private final Location loc;
     private final Location effectsLoc;
     private final World world;
-    private final QueryFactory qf;
 
     public TARDISJunkBuilder(TARDIS plugin, BuildData bd) {
         this.plugin = plugin;
@@ -65,7 +63,6 @@ public class TARDISJunkBuilder implements Runnable {
         sy = loc.getBlockY();
         sz = loc.getBlockZ() - 2;
         world = loc.getWorld();
-        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -134,38 +131,38 @@ public class TARDISJunkBuilder implements Runnable {
                                      * so we can use it as the handbrake!
                                      */
                                     String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
                                 }
                                 if (type.equals(Material.STONE_BUTTON)) {
                                     // remember location 1
                                     String stone_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
                                 }
                                 if (type.equals(Material.OAK_BUTTON)) {
                                     // remember location 6
                                     String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
                                 }
                                 if (type.equals(Material.REPEATER)) {
                                     // remember location 3
                                     String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(bd.getTardisID(), 2, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 2, repeater, 0);
                                 }
                                 if (type.equals(Material.COMPARATOR)) {
                                     // remember location 2
                                     String comparator = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(bd.getTardisID(), 3, comparator, 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 3, comparator, 0);
                                 }
                                 if (TARDISMaterials.infested.contains(type)) {
                                     // insert / update control 9
-                                    qf.insertSyncControl(bd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
                                     // remember block
                                     postTerminalBlock = world.getBlockAt(x, y, z);
                                 }
                                 if (type.equals(Material.TRIPWIRE_HOOK)) {
                                     // remember location 4
                                     String trip = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(bd.getTardisID(), 4, trip, 0);
+                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 4, trip, 0);
                                 }
                                 switch (type) {
                                     case SPONGE:
@@ -230,7 +227,7 @@ public class TARDISJunkBuilder implements Runnable {
                 set.put("x", loc.getBlockX());
                 set.put("y", sy);
                 set.put("z", loc.getBlockZ());
-                qf.doUpdate("current", set, where);
+                plugin.getQueryFactory().doUpdate("current", set, where);
                 plugin.getGeneralKeeper().setJunkTime(System.currentTimeMillis());
             }
         }

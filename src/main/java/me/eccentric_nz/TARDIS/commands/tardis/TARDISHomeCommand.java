@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -107,7 +106,6 @@ class TARDISHomeCommand {
                 TARDISMessage.send(player, "TARDIS_NO_HOME");
                 return true;
             }
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
@@ -117,7 +115,7 @@ class TARDISHomeCommand {
             set.put("z", eyeLocation.getBlockZ());
             set.put("direction", player_d.toString());
             set.put("submarine", isSub(eyeLocation) ? 1 : 0);
-            qf.doUpdate("homes", set, tid);
+            plugin.getQueryFactory().doUpdate("homes", set, tid);
             TARDISMessage.send(player, "HOME_SET");
             return true;
         } else {

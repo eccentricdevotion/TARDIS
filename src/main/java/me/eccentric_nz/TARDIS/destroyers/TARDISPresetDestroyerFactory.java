@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -380,11 +379,11 @@ public class TARDISPresetDestroyerFactory {
         }
     }
 
-    public void removeBlockProtection(int id, QueryFactory qf) {
+    public void removeBlockProtection(int id) {
         HashMap<String, Object> whereb = new HashMap<>();
         whereb.put("tardis_id", id);
         whereb.put("police_box", 1);
-        qf.doDelete("blocks", whereb);
+        plugin.getQueryFactory().doDelete("blocks", whereb);
         // remove from protectBlockMap - remove(id) would only remove the first one
         plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
     }

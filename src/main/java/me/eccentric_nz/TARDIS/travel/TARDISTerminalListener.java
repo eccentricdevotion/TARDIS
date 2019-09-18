@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -154,7 +153,7 @@ public class TARDISTerminalListener implements Listener {
                                 set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
-                                new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
+                                plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
                                 plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
                                 plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 close(player);
@@ -387,7 +386,7 @@ public class TARDISTerminalListener implements Listener {
             set.put("submarine_on", tf);
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("pp_id", rsp.getPp_id());
-            new QueryFactory(plugin).doUpdate("player_prefs", set, wheret);
+            plugin.getQueryFactory().doUpdate("player_prefs", set, wheret);
         }
     }
 

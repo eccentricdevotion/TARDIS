@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -84,8 +87,7 @@ public class TARDISBindListener implements Listener {
                     plugin.getTrackerKeeper().getBinder().remove(uuid);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("bind", l);
-                    QueryFactory qf = new QueryFactory(plugin);
-                    qf.doUpdate("destinations", set, where);
+                    plugin.getQueryFactory().doUpdate("destinations", set, where);
                     TARDISMessage.send(player, "BIND_SAVE", m.toString());
                 } else {
                     // is player travelling in TARDIS
@@ -185,7 +187,7 @@ public class TARDISBindListener implements Listener {
                                                 break;
                                         }
                                         wherec.put("tardis_id", id);
-                                        new QueryFactory(plugin).doUpdate("tardis", set, wherec);
+                                        plugin.getQueryFactory().doUpdate("tardis", set, wherec);
                                         player.performCommand("tardis rebuild");
                                         plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis rebuild" + dest_name);
                                         break;

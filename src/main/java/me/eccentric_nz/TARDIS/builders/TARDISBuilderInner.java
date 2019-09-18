@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
@@ -119,7 +118,6 @@ public class TARDISBuilderInner {
         HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
         HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Location ender = null;
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         // calculate startx, starty, startz
         TARDISTIPSData pos = null;
@@ -166,7 +164,7 @@ public class TARDISBuilderInner {
             setc.put("world", world.getName());
             setc.put("x", c.getX());
             setc.put("z", c.getZ());
-            qf.doInsert("chunks", setc);
+            plugin.getQueryFactory().doInsert("chunks", setc);
         });
         // if for some reason this is not a TARDIS world, set the blocks to air first
         if (below) {
@@ -210,7 +208,7 @@ public class TARDISBuilderInner {
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
                         String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 14, storage, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
                     }
                     // determine 'use_clay' material
                     USE_CLAY use_clay;
@@ -299,7 +297,7 @@ public class TARDISBuilderInner {
                             setd.put("door_type", 1);
                             setd.put("door_location", doorloc);
                             setd.put("door_direction", "SOUTH");
-                            qf.doInsert("doors", setd);
+                            plugin.getQueryFactory().doInsert("doors", setd);
                             // if create_worlds is true, set the world spawn
                             if (own_world) {
                                 world.setSpawnLocation(x, y, (z + 1));
@@ -309,14 +307,14 @@ public class TARDISBuilderInner {
                     if (type.equals(Material.STONE_BUTTON) && !schm.getPermission().equals("junk")) { // random button
                         // remember the location of this button
                         String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 1, button, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 1, button, 0);
                     }
                     if (type.equals(Material.JUKEBOX)) {
                         // remember the location of this Advanced Console
                         String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 15, advanced, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                         // check if player has storage record, and update the tardis_id field
-                        plugin.getUtils().updateStorageId(playerUUID, dbID, qf);
+                        plugin.getUtils().updateStorageId(playerUUID, dbID);
                     }
                     if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                         /*
@@ -325,7 +323,7 @@ public class TARDISBuilderInner {
                          * handbrake!
                          */
                         String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
                         // create default json for ARS
                         String[][][] empty = new String[3][9][9];
                         for (int ars_y = 0; ars_y < 3; ars_y++) {
@@ -355,7 +353,7 @@ public class TARDISBuilderInner {
                         seta.put("tardis_id", dbID);
                         seta.put("uuid", playerUUID);
                         seta.put("json", json.toString());
-                        qf.doInsert("ars", seta);
+                        plugin.getQueryFactory().doInsert("ars", seta);
                     }
                     if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                         // remember lamp blocks
@@ -366,7 +364,7 @@ public class TARDISBuilderInner {
                         String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         setlb.put("tardis_id", dbID);
                         setlb.put("location", lloc);
-                        qf.doInsert("lamps", setlb);
+                        plugin.getQueryFactory().doInsert("lamps", setlb);
                     }
                     if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                         /*
@@ -390,14 +388,14 @@ public class TARDISBuilderInner {
                          * Capacitor.
                          */
                         String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 6, woodbuttonloc, 0);
                     }
                     if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                         /*
                          * remember the telepathic circuit.
                          */
                         String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                        qf.insertSyncControl(dbID, 23, telepathicloc, 0);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 23, telepathicloc, 0);
                     }
                     if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
                         /*
@@ -413,7 +411,7 @@ public class TARDISBuilderInner {
                         setpb.put("location", loc);
                         setpb.put("data", "minecraft:air");
                         setpb.put("police_box", 0);
-                        qf.doInsert("blocks", setpb);
+                        plugin.getQueryFactory().doInsert("blocks", setpb);
                         plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
                     }
                     // if it's the door, don't set it just remember its block then do it at the end
@@ -453,25 +451,25 @@ public class TARDISBuilderInner {
                                     directional.setFacing(BlockFace.EAST);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 3, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
                                     break;
                                 case 3:
                                     directional.setFacing(BlockFace.SOUTH);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 2, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
                                     break;
                                 case 4:
                                     directional.setFacing(BlockFace.NORTH);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 5, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
                                     break;
                                 default:
                                     directional.setFacing(BlockFace.WEST);
                                     data = directional;
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-                                    qf.insertSyncControl(dbID, 4, repeater, 0);
+                                    plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
                                     break;
                             }
                             j++;
@@ -536,7 +534,7 @@ public class TARDISBuilderInner {
                     cs.setLine(3, "");
                     cs.update();
                     String controlloc = psb.getLocation().toString();
-                    qf.insertSyncControl(dbID, 22, controlloc, 0);
+                    plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
                 }
             }
             s++;
@@ -588,7 +586,7 @@ public class TARDISBuilderInner {
             }
         }
         // finished processing - update tardis table!
-        qf.doUpdate("tardis", set, where);
+        plugin.getQueryFactory().doUpdate("tardis", set, where);
         // give kit?
         if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
             if (p.hasPermission("tardis.kit.create")) {
@@ -602,7 +600,7 @@ public class TARDISBuilderInner {
                     HashMap<String, Object> setk = new HashMap<>();
                     setk.put("uuid", playerUUID);
                     setk.put("name", "createkit");
-                    qf.doInsert("achievements", setk);
+                    plugin.getQueryFactory().doInsert("achievements", setk);
                     // give the join kit
                     String kit = plugin.getKitsConfig().getString("give.create.kit");
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisgive " + p.getName() + " kit " + kit);

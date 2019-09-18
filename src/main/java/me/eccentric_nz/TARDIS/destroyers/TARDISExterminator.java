@@ -313,13 +313,12 @@ public class TARDISExterminator {
     }
 
     public void cleanDatabase(int id) {
-        QueryFactory qf = new QueryFactory(plugin);
         List<String> tables = Arrays.asList("ars", "back", "blocks", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            qf.doDelete(table, where);
+            plugin.getQueryFactory().doDelete(table, where);
         });
     }
 

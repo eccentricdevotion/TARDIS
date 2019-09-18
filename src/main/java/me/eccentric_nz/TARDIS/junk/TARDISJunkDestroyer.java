@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -147,7 +146,7 @@ public class TARDISJunkDestroyer implements Runnable {
                     });
                 }
                 // remove block protection
-                plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID(), new QueryFactory(plugin));
+                plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID());
                 plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;

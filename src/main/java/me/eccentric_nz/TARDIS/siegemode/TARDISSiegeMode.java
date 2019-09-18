@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -205,7 +204,7 @@ public class TARDISSiegeMode {
             }
         }
         // update the database
-        new QueryFactory(plugin).doUpdate("tardis", set, wheres);
+        plugin.getQueryFactory().doUpdate("tardis", set, wheres);
     }
 
     void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {

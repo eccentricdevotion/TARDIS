@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -154,7 +153,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 where.put("uuid", playerUUID);
                 table = "player_prefs";
             }
-            new QueryFactory(plugin).alterEnergyLevel(table, -amount, where, player);
+            plugin.getQueryFactory().alterEnergyLevel(table, -amount, where, player);
             TARDISMessage.send(player, "CELL_CHARGED", String.format("%d", new_amount));
             return true;
         }

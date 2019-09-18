@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
@@ -211,7 +210,6 @@ public class TARDISGravityWellListener implements Listener {
                     return;
                 }
                 int id = rs.getTardis_id();
-                QueryFactory qf = new QueryFactory(plugin);
                 String loc = b.getLocation().toString();
                 if (values[0] == 6) {
                     // find record and delete it
@@ -222,7 +220,7 @@ public class TARDISGravityWellListener implements Listener {
                     if (rsg.resultSet()) {
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("g_id", rsg.getGravity_id());
-                        if (qf.doSyncDelete("gravity_well", whered)) {
+                        if (plugin.getQueryFactory().doSyncDelete("gravity_well", whered)) {
                             switch (rsg.getDirection()) {
                                 case 1:
                                     plugin.getGeneralKeeper().getGravityUpList().remove(loc);
@@ -264,7 +262,7 @@ public class TARDISGravityWellListener implements Listener {
                     set.put("direction", values[0].intValue());
                     set.put("distance", values[1].intValue());
                     set.put("velocity", values[2]);
-                    qf.doInsert("gravity_well", set);
+                    plugin.getQueryFactory().doInsert("gravity_well", set);
                     // add it to the block list
                     String dir;
                     switch (values[0].intValue()) {

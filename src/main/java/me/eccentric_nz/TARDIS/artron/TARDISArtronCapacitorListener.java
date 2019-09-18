@@ -20,7 +20,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -124,7 +127,6 @@ public class TARDISArtronCapacitorListener implements Listener {
                             Material item = player.getInventory().getItemInMainHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
                             Material cell = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Artron Storage Cell.result"));
-                            QueryFactory qf = new QueryFactory(plugin);
                             // determine key item
                             HashMap<String, Object> wherek = new HashMap<>();
                             wherek.put("uuid", player.getUniqueId().toString());
@@ -210,7 +212,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 // update charge
                                 HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
-                                qf.doUpdate("tardis", set, whereid);
+                                plugin.getQueryFactory().doUpdate("tardis", set, whereid);
                             } else if (item.equals(Material.getMaterial(key))) {
                                 // has the TARDIS been initialised?
                                 if (!init) {
@@ -238,14 +240,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     set.put("artron_level", half);
                                     set.put("tardis_init", 1);
                                     set.put("powered_on", 1);
-                                    qf.doUpdate("tardis", set, whereid);
+                                    plugin.getQueryFactory().doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else { // toggle power
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         boolean pu = true;
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
-                                            pu = qf.claimTARDIS(player, id);
+                                            pu = plugin.getQueryFactory().claimTARDIS(player, id);
                                             // make sure player is added as owner of interior WorldGuard region
                                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                                 plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());
@@ -316,11 +318,11 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     set.put("artron_level", 0);
                                     HashMap<String, Object> wherel = new HashMap<>();
                                     wherel.put("uuid", player.getUniqueId().toString());
-                                    qf.doUpdate("player_prefs", set, wherel);
+                                    plugin.getQueryFactory().doUpdate("player_prefs", set, wherel);
                                     // add player level to TARDIS level
                                     HashMap<String, Object> sett = new HashMap<>();
                                     sett.put("artron_level", new_level);
-                                    qf.doUpdate("tardis", sett, whereid);
+                                    plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
                                     int percent = Math.round((new_level * 100F) / fc);
                                     TARDISMessage.send(player, "ENERGY_CHARGED", String.format("%d", percent));
                                 } else {

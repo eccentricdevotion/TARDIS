@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -22,7 +21,7 @@ public class TARDISHandlesRemoveCommand {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", rs.getTardis_id());
             whereh.put("type", 26);
-            new QueryFactory(plugin).doDelete("controls", whereh);
+            plugin.getQueryFactory().doDelete("controls", whereh);
             TARDISMessage.send(player, "HANDLES_DELETED");
         } else {
             TARDISMessage.send(player, "NOT_A_TIMELORD");

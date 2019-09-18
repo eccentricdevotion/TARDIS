@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -135,15 +134,14 @@ public class TARDISRebuildCommand {
             TARDISMessage.send(player.getPlayer(), "TARDIS_REBUILT");
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
-            QueryFactory qf = new QueryFactory(plugin);
-            qf.alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
             // set hidden to false
             if (tardis.isHidden()) {
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 HashMap<String, Object> seth = new HashMap<>();
                 seth.put("hidden", 0);
-                qf.doUpdate("tardis", seth, whereh);
+                plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
             }
             return true;
         } else {

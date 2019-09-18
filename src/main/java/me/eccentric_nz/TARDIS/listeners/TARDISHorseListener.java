@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISHorse;
@@ -160,7 +159,7 @@ public class TARDISHorseListener implements Listener {
                             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
-                            new QueryFactory(plugin).doDelete("travellers", where);
+                            plugin.getQueryFactory().doDelete("travellers", where);
                             // set player as passenger
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> equine.addPassenger(p), 10L);
                         }

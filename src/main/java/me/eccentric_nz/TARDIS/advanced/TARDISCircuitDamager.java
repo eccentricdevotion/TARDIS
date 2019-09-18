@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -111,7 +110,7 @@ public class TARDISCircuitDamager {
                 set.put("console", serialized);
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
-                new QueryFactory(plugin).doUpdate("storage", set, wheret);
+                plugin.getQueryFactory().doUpdate("storage", set, wheret);
             } catch (IOException ex) {
                 plugin.debug("Could not get console items: " + ex);
             }

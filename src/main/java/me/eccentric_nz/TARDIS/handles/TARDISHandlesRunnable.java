@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetReminders;
 import me.eccentric_nz.TARDIS.database.data.Reminder;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -29,11 +28,9 @@ import java.util.HashMap;
 public class TARDISHandlesRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final QueryFactory qf;
 
     public TARDISHandlesRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -51,7 +48,7 @@ public class TARDISHandlesRunnable implements Runnable {
                         // remove the reminder...
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("reminder_id", r.getReminder_id());
-                        qf.doDelete("reminders", where);
+                        plugin.getQueryFactory().doDelete("reminders", where);
                     }
                 }
             }

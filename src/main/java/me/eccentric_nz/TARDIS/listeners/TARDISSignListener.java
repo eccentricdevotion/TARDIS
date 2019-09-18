@@ -195,7 +195,7 @@ public class TARDISSignListener implements Listener {
                                     // update next
                                     HashMap<String, Object> where_next = new HashMap<>();
                                     where_next.put("tardis_id", id);
-                                    new QueryFactory(plugin).doSyncUpdate("next", set_next, where_next);
+                                    plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                 }
                             } else {

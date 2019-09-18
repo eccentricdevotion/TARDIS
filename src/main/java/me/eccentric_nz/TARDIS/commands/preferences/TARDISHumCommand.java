@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.HUM;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ import java.util.Locale;
  */
 class TARDISHumCommand {
 
-    boolean setHumPref(Player player, String[] args, QueryFactory qf) {
+    boolean setHumPref(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "HUM_NEED");
             return false;
@@ -46,7 +46,7 @@ class TARDISHumCommand {
         set.put("hum", hum_set);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", set, where);
+        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         TARDISMessage.send(player, "HUM_SAVED");
         return true;
     }

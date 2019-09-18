@@ -19,7 +19,10 @@ package me.eccentric_nz.TARDIS.siegemode;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -215,7 +218,7 @@ public class TARDISSiegeListener implements Listener {
             set.put("y", loc.getBlockY());
             set.put("z", loc.getBlockZ());
             set.put("direction", d.toString());
-            new QueryFactory(plugin).doUpdate("current", set, where);
+            plugin.getQueryFactory().doUpdate("current", set, where);
         }, 10L);
     }
 
@@ -262,7 +265,7 @@ public class TARDISSiegeListener implements Listener {
         set.put("y", loc.getBlockY());
         set.put("z", loc.getBlockZ());
         set.put("direction", d.toString());
-        new QueryFactory(plugin).doUpdate("current", set, where);
+        plugin.getQueryFactory().doUpdate("current", set, where);
         // remove trackers
         plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
         plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
@@ -322,7 +325,6 @@ public class TARDISSiegeListener implements Listener {
             }
         }
         int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
-        QueryFactory qf = new QueryFactory(plugin);
         if (!p.isSneaking()) {
             // attempt to transfer Time Lord energy to the TARDIS
             // check player has a prefs record
@@ -343,8 +345,8 @@ public class TARDISSiegeListener implements Listener {
             wheretl.put("uuid", uuid.toString());
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
-            qf.alterEnergyLevel("player_prefs", -min, wheretl, p);
-            qf.alterEnergyLevel("tardis", min, wherea, p);
+            plugin.getQueryFactory().alterEnergyLevel("player_prefs", -min, wheretl, p);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", min, wherea, p);
             TARDISMessage.send(p, "SIEGE_TRANSFER", String.format("%s", min));
         } else {
             // attempt to unsiege the TARDIS
@@ -371,7 +373,7 @@ public class TARDISSiegeListener implements Listener {
             HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("tardis_id", id);
             // update the database
-            qf.doUpdate("tardis", set, wheres);
+            plugin.getQueryFactory().doUpdate("tardis", set, wheres);
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
             }

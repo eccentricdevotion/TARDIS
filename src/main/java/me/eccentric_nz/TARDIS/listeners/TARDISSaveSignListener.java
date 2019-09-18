@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
@@ -105,7 +108,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
                                 where.put("dest_name", save);
-                                new QueryFactory(plugin).doDelete("destinations", where);
+                                plugin.getQueryFactory().doDelete("destinations", where);
                                 player.setItemOnCursor(null);
                             }
                             event.setCancelled(true);
@@ -182,7 +185,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                             wherei.put("tardis_id", id);
                                             HashMap<String, Object> seti = new HashMap<>();
                                             seti.put("chameleon_preset", invisibility);
-                                            new QueryFactory(plugin).doSyncUpdate("tardis", seti, wherei);
+                                            plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                         }
                                     }
                                 }
@@ -203,17 +206,16 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                             set.put("submarine", 0);
                                         }
                                     }
-                                    QueryFactory qf = new QueryFactory(plugin);
                                     if (l_size >= 7 && !lore.get(6).equals(ChatColor.GOLD + "Current location")) {
                                         HashMap<String, Object> sett = new HashMap<>();
                                         sett.put("chameleon_preset", lore.get(6));
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
-                                        qf.doSyncUpdate("tardis", sett, wheret);
+                                        plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
                                     }
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
-                                    qf.doSyncUpdate("next", set, wheret);
+                                    plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
@@ -275,7 +277,6 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                QueryFactory qf = new QueryFactory(plugin);
                 ItemStack[] stack = event.getInventory().getContents();
                 for (int i = 1; i < 45; i++) {
                     if (stack[i] != null) {
@@ -286,7 +287,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         where.put("dest_name", save);
-                        qf.doUpdate("destinations", set, where);
+                        plugin.getQueryFactory().doUpdate("destinations", set, where);
                     }
                 }
             }

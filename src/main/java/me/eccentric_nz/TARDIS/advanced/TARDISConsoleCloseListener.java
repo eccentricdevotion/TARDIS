@@ -19,7 +19,10 @@ package me.eccentric_nz.TARDIS.advanced;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
@@ -275,17 +278,16 @@ public class TARDISConsoleCloseListener implements Listener {
                                         default:
                                             break;
                                     }
-                                    QueryFactory qf = new QueryFactory(plugin);
                                     if (set_next.size() > 0) {
                                         // update next
                                         where_next.put("tardis_id", id);
-                                        qf.doSyncUpdate("next", set_next, where_next);
+                                        plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                     }
                                     if (set_tardis.size() > 0) {
                                         // update tardis
                                         where_tardis.put("tardis_id", id);
-                                        qf.doUpdate("tardis", set_tardis, where_tardis);
+                                        plugin.getQueryFactory().doUpdate("tardis", set_tardis, where_tardis);
                                     }
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -320,7 +322,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
                                 }
                                 where_next.put("tardis_id", id);
-                                new QueryFactory(plugin).doSyncUpdate("next", set_next, where_next);
+                                plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                                 plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
                                 plugin.getTrackerKeeper().getHasRandomised().add(id);
                                 TARDISMessage.send(p, "RANDOMISER");
@@ -352,6 +354,6 @@ public class TARDISConsoleCloseListener implements Listener {
         set.put("console", serialized);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
-        new QueryFactory(plugin).doSyncUpdate("storage", set, where);
+        plugin.getQueryFactory().doSyncUpdate("storage", set, where);
     }
 }

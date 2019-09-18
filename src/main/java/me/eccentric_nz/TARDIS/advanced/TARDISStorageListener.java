@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
@@ -270,7 +269,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         set.put(column, serialized);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
-        new QueryFactory(plugin).doUpdate("storage", set, where);
+        plugin.getQueryFactory().doUpdate("storage", set, where);
     }
 
     private void loadInventory(String serialized, Player p, STORAGE s) {

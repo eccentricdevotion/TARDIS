@@ -150,6 +150,7 @@ public class TARDIS extends JavaPlugin {
     private WORLD_MANAGER worldManager;
     private BukkitTask recordingTask;
     private NamespacedKey customBlockKey;
+    private QueryFactory queryFactory;
 
     public TARDIS() {
         worldGuardOnServer = false;
@@ -211,6 +212,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
+            queryFactory = new QueryFactory(this);
             // update world names
             if (!getConfig().getBoolean("conversions.lowercase_world_names")) {
                 new TARDISWorldNameUpdate(this).replaceNames();
@@ -895,7 +897,7 @@ public class TARDIS extends JavaPlugin {
             set.put("player", getTagConfig().getString("it"));
             long time = System.currentTimeMillis() - getTagConfig().getLong("time");
             set.put("time", time);
-            new QueryFactory(this).doSyncInsert("tag", set);
+            getQueryFactory().doSyncInsert("tag", set);
         }
     }
 
@@ -1172,6 +1174,10 @@ public class TARDIS extends JavaPlugin {
 
     public NamespacedKey getCustomBlockKey() {
         return customBlockKey;
+    }
+
+    public QueryFactory getQueryFactory() {
+        return queryFactory;
     }
 
     public void savePlanetsConfig() {

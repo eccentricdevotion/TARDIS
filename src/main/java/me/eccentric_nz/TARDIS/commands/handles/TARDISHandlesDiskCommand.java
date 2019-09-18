@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -65,7 +64,7 @@ class TARDISHandlesDiskCommand {
                 set.put("name", name);
                 HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("program_id", pid);
-                new QueryFactory(plugin).doUpdate("programs", set, wherep);
+                plugin.getQueryFactory().doUpdate("programs", set, wherep);
                 List<String> lore = dim.getLore();
                 lore.set(0, name);
                 dim.setLore(lore);

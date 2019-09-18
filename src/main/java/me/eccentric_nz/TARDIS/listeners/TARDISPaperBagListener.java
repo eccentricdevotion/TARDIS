@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPaperBag;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -39,7 +38,6 @@ public class TARDISPaperBagListener implements Listener {
                 if (is != null && is.getType().equals(Material.PAPER) && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName() && im.getDisplayName().equals("Paper Bag")) {
-                        QueryFactory qf = new QueryFactory(plugin);
                         if (event.isRightClick()) {
                             event.setCancelled(true);
                             ResultSetPaperBag rs = new ResultSetPaperBag(plugin, player.getUniqueId());
@@ -64,7 +62,7 @@ public class TARDISPaperBagListener implements Listener {
                                 if (!rs.resultSet()) {
                                     HashMap<String, Object> bag = new HashMap<>();
                                     bag.put("uuid", player.getUniqueId().toString());
-                                    qf.doSyncInsert("paper_bag", bag);
+                                    plugin.getQueryFactory().doSyncInsert("paper_bag", bag);
                                 }
                                 // message player
                                 TARDISMessage.send(player, "PAPER_BAG_EMPTY");
@@ -99,7 +97,7 @@ public class TARDISPaperBagListener implements Listener {
                                     // create a new record if one doesn't exist
                                     HashMap<String, Object> bag = new HashMap<>();
                                     bag.put("uuid", player.getUniqueId().toString());
-                                    bagId = qf.doSyncInsert("paper_bag", bag);
+                                    bagId = plugin.getQueryFactory().doSyncInsert("paper_bag", bag);
                                 }
                                 HashMap<Integer, ItemStack> babies = (HashMap<Integer, ItemStack>) inv.all(Material.MELON_SLICE);
                                 HashMap<Integer, Integer> adjustments = new HashMap<>();
@@ -167,7 +165,7 @@ public class TARDISPaperBagListener implements Listener {
                                 set.put("amount_3", amount3);
                                 set.put("flavour_4", flavour4);
                                 set.put("amount_4", amount4);
-                                qf.doSyncUpdate("paper_bag", set, where);
+                                plugin.getQueryFactory().doSyncUpdate("paper_bag", set, where);
                                 // update inventory
                                 for (Map.Entry<Integer, Integer> entry : adjustments.entrySet()) {
                                     if (entry.getValue() == 0) {

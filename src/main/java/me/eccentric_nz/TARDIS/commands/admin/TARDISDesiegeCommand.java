@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -54,13 +53,12 @@ class TARDISDesiegeCommand {
                 return true;
             }
             int id = rs.getTardis_id();
-            QueryFactory qf = new QueryFactory(plugin);
             // turn off siege mode
             HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("tardis_id", id);
             HashMap<String, Object> sets = new HashMap<>();
             sets.put("siege_on", 0);
-            qf.doUpdate("tardis", sets, wheres);
+            plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
             // clear trackers
             plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
             plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
@@ -80,7 +78,7 @@ class TARDISDesiegeCommand {
                 setc.put("z", rsh.getZ());
                 setc.put("direction", rsh.getDirection().toString());
                 setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
-                qf.doUpdate("current", setc, wherec);
+                plugin.getQueryFactory().doUpdate("current", setc, wherec);
                 // rebuild the TARDIS
                 BuildData bd = new BuildData(plugin, uuid.toString());
                 bd.setDirection(rsh.getDirection());

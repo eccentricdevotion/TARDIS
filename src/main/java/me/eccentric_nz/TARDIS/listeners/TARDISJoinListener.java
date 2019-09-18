@@ -60,7 +60,6 @@ public class TARDISJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         String uuid = player.getUniqueId().toString();
-        QueryFactory qf = new QueryFactory(plugin);
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
             if (player.hasPermission("tardis.kit.join")) {
                 // check if they have the tardis kit
@@ -73,7 +72,7 @@ public class TARDISJoinListener implements Listener {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", uuid);
                     set.put("name", "joinkit");
-                    qf.doInsert("achievements", set);
+                    plugin.getQueryFactory().doInsert("achievements", set);
                     // give the join kit
                     String kit = plugin.getKitsConfig().getString("give.join.kit");
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisgive " + player.getName() + " kit " + kit);
@@ -92,7 +91,7 @@ public class TARDISJoinListener implements Listener {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", uuid);
                     set.put("name", "tardis");
-                    qf.doInsert("achievements", set);
+                    plugin.getQueryFactory().doInsert("achievements", set);
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
                     book.writeBook("Get transport", "Rassilon", "tardis", player);
@@ -106,7 +105,7 @@ public class TARDISJoinListener implements Listener {
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("uuid", uuid);
                 setc.put("player", player.getName());
-                qf.doInsert("t_count", setc);
+                plugin.getQueryFactory().doInsert("t_count", setc);
             }
         }
         if (plugin.getConfig().getBoolean("allow.tp_switch") && player.hasPermission("tardis.texture")) {
@@ -168,7 +167,7 @@ public class TARDISJoinListener implements Listener {
             }
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
-            qf.doUpdate("tardis", set, wherel);
+            plugin.getQueryFactory().doUpdate("tardis", set, wherel);
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -36,7 +35,7 @@ class TARDISIsomorphicCommand {
         this.plugin = plugin;
     }
 
-    boolean toggleIsomorphicControls(Player player, QueryFactory qf) {
+    boolean toggleIsomorphicControls(Player player) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -50,7 +49,7 @@ class TARDISIsomorphicCommand {
             seti.put("iso_on", iso);
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
-            qf.doUpdate("tardis", seti, wheret);
+            plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
             TARDISMessage.send(player, onoff);
             return true;
         } else {

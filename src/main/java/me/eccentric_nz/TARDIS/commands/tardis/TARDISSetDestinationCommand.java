@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -111,7 +110,6 @@ class TARDISSetDestinationCommand {
                 int dx = l.getBlockX();
                 int dy = l.getBlockY() + 1;
                 int dz = l.getBlockZ();
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("dest_name", args[1]);
@@ -119,7 +117,7 @@ class TARDISSetDestinationCommand {
                 set.put("x", dx);
                 set.put("y", dy);
                 set.put("z", dz);
-                if (qf.doSyncInsert("destinations", set) < 0) {
+                if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
                     TARDISMessage.send(player, "DEST_SAVED", args[1]);

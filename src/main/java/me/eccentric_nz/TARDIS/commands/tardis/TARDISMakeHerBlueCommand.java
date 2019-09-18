@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -108,7 +107,6 @@ class TARDISMakeHerBlueCommand {
             return true;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        QueryFactory qf = new QueryFactory(plugin);
         int level = tardis.getArtron_level();
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
@@ -121,7 +119,7 @@ class TARDISMakeHerBlueCommand {
         wherep.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", "NEW");
-        qf.doUpdate("tardis", set, wherep);
+        plugin.getQueryFactory().doUpdate("tardis", set, wherep);
         BuildData bd = new BuildData(plugin, uuid.toString());
         bd.setDirection(rsc.getDirection());
         bd.setLocation(l);
@@ -137,7 +135,7 @@ class TARDISMakeHerBlueCommand {
         TARDISMessage.send(player.getPlayer(), message);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
-        qf.alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
+        plugin.getQueryFactory().alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
         return true;
     }
 }

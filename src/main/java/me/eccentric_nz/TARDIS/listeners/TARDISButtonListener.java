@@ -24,7 +24,10 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.control.*;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.database.ResultSetProgram;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -156,7 +159,6 @@ public class TARDISButtonListener implements Listener {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }
-                        QueryFactory qf = new QueryFactory(plugin);
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             switch (type) {
                                 case 1: // random location button
@@ -290,14 +292,14 @@ public class TARDISButtonListener implements Listener {
                                         HashMap<String, Object> setstore = new HashMap<>();
                                         setstore.put("uuid", player.getUniqueId().toString());
                                         setstore.put("tardis_id", id);
-                                        qf.doInsert("storage", setstore);
+                                        plugin.getQueryFactory().doInsert("storage", setstore);
                                     }
                                     Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
                                     break;
                                 case 16: // enter zero room
-                                    doZero(level, player, tardis.getZero(), id, qf);
+                                    doZero(level, player, tardis.getZero(), id);
                                     break;
                                 case 17:
                                     // exit zero room
@@ -368,7 +370,7 @@ public class TARDISButtonListener implements Listener {
                                                     set.put("checked", 0);
                                                     HashMap<String, Object> wherep = new HashMap<>();
                                                     wherep.put("program_id", pid);
-                                                    new QueryFactory(plugin).doUpdate("programs", set, wherep);
+                                                    plugin.getQueryFactory().doUpdate("programs", set, wherep);
                                                     player.getInventory().setItemInMainHand(null);
                                                 }
                                             }
@@ -384,7 +386,7 @@ public class TARDISButtonListener implements Listener {
                                     break;
                             }
                         } else if (action.equals(Action.PHYSICAL) && type == 16) {
-                            doZero(level, player, tardis.getZero(), id, qf);
+                            doZero(level, player, tardis.getZero(), id);
                         }
                     }
                 }
@@ -392,7 +394,7 @@ public class TARDISButtonListener implements Listener {
         }
     }
 
-    private void doZero(int level, Player player, String z, int id, QueryFactory qf) {
+    private void doZero(int level, Player player, String z, int id) {
         int zero_amount = plugin.getArtronConfig().getInt("zero");
         if (level < zero_amount) {
             TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
@@ -408,7 +410,7 @@ public class TARDISButtonListener implements Listener {
             plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             HashMap<String, Object> wherez = new HashMap<>();
             wherez.put("tardis_id", id);
-            qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
         } else {
             TARDISMessage.send(player, "NO_ZERO");
         }

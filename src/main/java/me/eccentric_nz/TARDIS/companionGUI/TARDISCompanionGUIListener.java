@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -111,7 +110,6 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
     private void removeCompanion(int id, String comps, String uuid) {
         HashMap<String, Object> tid = new HashMap<>();
         HashMap<String, Object> set = new HashMap<>();
-        QueryFactory qf = new QueryFactory(plugin);
         String newList = "";
         String[] split = comps.split(":");
         StringBuilder buf = new StringBuilder();
@@ -132,7 +130,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
             set.put("companions", "");
         }
         tid.put("tardis_id", id);
-        qf.doUpdate("tardis", set, tid);
+        plugin.getQueryFactory().doUpdate("tardis", set, tid);
     }
 
     private void removeFromRegion(String world, String owner, String player) {

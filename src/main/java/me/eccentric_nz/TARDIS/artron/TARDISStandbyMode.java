@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetStandby;
 import me.eccentric_nz.TARDIS.database.ResultSetStandby.StandbyData;
@@ -46,7 +45,6 @@ public class TARDISStandbyMode implements Runnable {
     public void run() {
         // get TARDISes that are powered on
         HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
-        QueryFactory qf = new QueryFactory(plugin);
         ids.forEach((key, value) -> {
             int id = key;
             int level = value.getLevel();
@@ -55,7 +53,7 @@ public class TARDISStandbyMode implements Runnable {
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
-                qf.alterEnergyLevel("tardis", -amount, where, null);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, where, null);
             } else if (level <= amount) {
                 // power down!
                 HashMap<String, Object> wherep = new HashMap<>();
@@ -87,7 +85,7 @@ public class TARDISStandbyMode implements Runnable {
                 // if beacon is on turn it off
                 new TARDISBeaconToggler(plugin).flickSwitch(value.getUuid(), id, false);
                 // update database
-                qf.doUpdate("tardis", setp, wherep);
+                plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
             }
         });
     }

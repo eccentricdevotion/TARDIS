@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISExitEvent;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -110,14 +109,13 @@ public class TARDISDoorListener {
             if (exit) {
                 plugin.getPM().callEvent(new TARDISExitEvent(p, to));
                 // give some artron energy
-                QueryFactory qf = new QueryFactory(plugin);
-                // add energy to player
+// add energy to player
                 HashMap<String, Object> where = new HashMap<>();
                 UUID uuid = p.getUniqueId();
                 where.put("uuid", uuid.toString());
                 if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
                     int player_artron = plugin.getArtronConfig().getInt("player");
-                    qf.alterEnergyLevel("player_prefs", player_artron, where, p);
+                    plugin.getQueryFactory().alterEnergyLevel("player_prefs", player_artron, where, p);
                     plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
                 }
                 if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
@@ -444,6 +442,6 @@ public class TARDISDoorListener {
     void removeTraveller(UUID u) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", u.toString());
-        new QueryFactory(plugin).doSyncDelete("travellers", where);
+        plugin.getQueryFactory().doSyncDelete("travellers", where);
     }
 }

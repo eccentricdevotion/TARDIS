@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -38,12 +37,10 @@ public class TARDISSiegeRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int deplete;
-    private final QueryFactory qf;
 
     public TARDISSiegeRunnable(TARDIS plugin) {
         this.plugin = plugin;
         deplete = 0 - this.plugin.getArtronConfig().getInt("siege_deplete");
-        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -60,7 +57,7 @@ public class TARDISSiegeRunnable implements Runnable {
                     // remove some energy
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
-                    qf.alterEnergyLevel("tardis", deplete, whered, null);
+                    plugin.getQueryFactory().alterEnergyLevel("tardis", deplete, whered, null);
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
                     Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                     // spawn an entity so we can check for the creeper
@@ -78,7 +75,7 @@ public class TARDISSiegeRunnable implements Runnable {
                         // give some energy
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
-                        qf.alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
+                        plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
                     }
                 }
             }

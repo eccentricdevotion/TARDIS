@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
@@ -81,7 +80,7 @@ class TARDISBuildCommand {
             plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
             TARDISMessage.send(player, "ANTIBUILD_OFF");
         }
-        new QueryFactory(plugin).doUpdate("player_prefs", setp, wherep);
+        plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
         return true;
     }
 }

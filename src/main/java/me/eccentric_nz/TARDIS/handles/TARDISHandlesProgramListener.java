@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -286,7 +285,7 @@ public class TARDISHandlesProgramListener implements Listener {
                 set.put("name", "Untitled Disk");
                 set.put("inventory", serialized);
                 set.put("checked", 1);
-                pid = new QueryFactory(plugin).doSyncInsert("programs", set);
+                pid = plugin.getQueryFactory().doSyncInsert("programs", set);
             } else {
                 // not valid so reset pid
                 pid = -1;

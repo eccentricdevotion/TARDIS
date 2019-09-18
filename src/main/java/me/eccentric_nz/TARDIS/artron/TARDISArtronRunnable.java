@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import org.bukkit.Location;
@@ -35,12 +34,10 @@ class TARDISArtronRunnable implements Runnable {
     private final TARDIS plugin;
     private final int id;
     private int task;
-    private final QueryFactory qf;
 
     TARDISArtronRunnable(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        qf = new QueryFactory(plugin);
     }
 
     /**
@@ -57,12 +54,12 @@ class TARDISArtronRunnable implements Runnable {
             task = 0;
             HashMap<String, Object> set = new HashMap<>();
             set.put("recharging", 0);
-            qf.doUpdate("tardis", set, where);
+            plugin.getQueryFactory().doUpdate("tardis", set, where);
         } else if (near) {
             // calculate percentage
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level
-            qf.alterEnergyLevel("tardis", onepercent, where, null);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", onepercent, where, null);
         }
     }
 

@@ -70,10 +70,10 @@ public class TARDISItemFrameListener implements Listener {
                         HashMap<String, Object> whereu = new HashMap<>();
                         whereu.put("tardis_id", id);
                         whereu.put("type", control.equals("direction") ? 18 : 27);
-                        new QueryFactory(plugin).doUpdate("controls", set, whereu);
+                        plugin.getQueryFactory().doUpdate("controls", set, whereu);
                     } else {
                         // add control
-                        new QueryFactory(plugin).insertControl(id, control.equals("direction") ? 18 : 27, l, 0);
+                        plugin.getQueryFactory().insertControl(id, control.equals("direction") ? 18 : 27, l, 0);
                     }
                     plugin.getTrackerKeeper().getPlayers().remove(uuid);
                     TARDISMessage.send(player, control.equals("direction") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -99,7 +98,7 @@ class TARDISRemoteTravelCommand {
                 } else {
                     // set hidden false!
                     set.put("hidden", 0);
-                    plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
+                    plugin.getPresetDestroyer().removeBlockProtection(id);
                     // restore biome
                     plugin.getUtils().restoreBiome(l, biome);
                 }
@@ -159,15 +158,14 @@ class TARDISRemoteTravelCommand {
             HashMap<String, Object> wheredoor = new HashMap<>();
             wheredoor.put("tardis_id", id);
             wheredoor.put("door_type", 0);
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             if (set.size() > 0) {
-                qf.doUpdate("tardis", set, whereh);
+                plugin.getQueryFactory().doUpdate("tardis", set, whereh);
             }
-            qf.doUpdate("current", setcurrent, wherecurrent);
-            qf.doUpdate("back", setback, whereback);
-            qf.doUpdate("doors", setdoor, wheredoor);
+            plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
+            plugin.getQueryFactory().doUpdate("back", setback, whereback);
+            plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
             return true;
         }
         return false;

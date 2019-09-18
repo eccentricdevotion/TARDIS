@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -95,8 +94,7 @@ public class TARDISRescue {
         set.put("submarine", 0);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        QueryFactory qf = new QueryFactory(plugin);
-        qf.doSyncUpdate("next", set, where);
+        plugin.getQueryFactory().doSyncUpdate("next", set, where);
         if (!rescue) {
             TARDISMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -131,16 +130,15 @@ public class TARDISHideCommand {
             plugin.getPresetDestroyer().destroyPreset(dd);
             plugin.getTrackerKeeper().getInVortex().add(id);
             TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET);
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
-            qf.alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
             // set hidden to true
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 1);
-            qf.doUpdate("tardis", seth, whereh);
+            plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
             return true;
         } else {
             TARDISMessage.send(player.getPlayer(), "NO_PERMS");

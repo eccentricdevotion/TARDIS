@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -95,7 +94,7 @@ class TARDISVaultCommand {
         set.put("x", x);
         set.put("y", y);
         set.put("z", z);
-        new QueryFactory(plugin).doInsert("vaults", set);
+        plugin.getQueryFactory().doInsert("vaults", set);
         TARDISMessage.send(player, "VAULT_SORTER_SET");
         return true;
     }

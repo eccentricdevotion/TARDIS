@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -183,6 +182,6 @@ public class TARDISTagListener implements Listener {
         HashMap<String, Object> set = new HashMap<>();
         set.put("player", p);
         set.put("time", t);
-        new QueryFactory(plugin).doSyncInsert("tag", set);
+        plugin.getQueryFactory().doSyncInsert("tag", set);
     }
 }

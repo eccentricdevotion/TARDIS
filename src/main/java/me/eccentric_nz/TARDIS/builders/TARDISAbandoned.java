@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -52,7 +51,6 @@ public class TARDISAbandoned {
         // save data to database (tardis table)
         String biome = l.getBlock().getBiome().toString();
         String chun = cw + ":" + cx + ":" + cz;
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
@@ -62,7 +60,7 @@ public class TARDISAbandoned {
         set.put("lastuse", Long.MAX_VALUE);
         set.put("chameleon_preset", p.toString());
         set.put("chameleon_demat", p.toString());
-        int lastInsertId = qf.doSyncInsert("tardis", set);
+        int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
@@ -71,7 +69,7 @@ public class TARDISAbandoned {
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());
         setlocs.put("direction", d.toString());
-        qf.insertLocations(setlocs, biome, lastInsertId);
+        plugin.getQueryFactory().insertLocations(setlocs, biome, lastInsertId);
         // turn the block stack into a TARDIS
         BuildData bd = new BuildData(plugin, null);
         bd.setDirection(d);

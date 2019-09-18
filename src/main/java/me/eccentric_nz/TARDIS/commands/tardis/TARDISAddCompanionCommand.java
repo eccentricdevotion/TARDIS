@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
@@ -87,7 +86,6 @@ class TARDISAddCompanionCommand {
             } else {
                 UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
                 if (oluuid != null) {
-                    QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> tid = new HashMap<>();
                     HashMap<String, Object> set = new HashMap<>();
                     tid.put("tardis_id", id);
@@ -99,7 +97,7 @@ class TARDISAddCompanionCommand {
                         // make a list
                         set.put("companions", oluuid.toString());
                     }
-                    qf.doUpdate("tardis", set, tid);
+                    plugin.getQueryFactory().doUpdate("tardis", set, tid);
                     TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {

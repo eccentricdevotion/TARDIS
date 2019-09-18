@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -71,15 +70,14 @@ class TARDISRemoteBackCommand {
             return true;
         }
         // set hidden false
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("hidden", 0);
         HashMap<String, Object> ttid = new HashMap<>();
         ttid.put("tardis_id", id);
-        qf.doUpdate("tardis", sett, ttid);
+        plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
-        qf.doUpdate("current", set, tid);
+        plugin.getQueryFactory().doUpdate("current", set, tid);
         plugin.getTrackerKeeper().getInVortex().add(id);
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             // destroy the police box

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -51,7 +50,6 @@ public class TARDISVaultChecker implements Runnable {
         Statement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "vaults";
-        QueryFactory qf = new QueryFactory(plugin);
         int i = 0;
         try {
             service.testConnection(connection);
@@ -64,7 +62,7 @@ public class TARDISVaultChecker implements Runnable {
                         int id = rs.getInt("v_id");
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("v_id", id);
-                        qf.doDelete("vaults", where);
+                        plugin.getQueryFactory().doDelete("vaults", where);
                         i++;
                     }
                 }

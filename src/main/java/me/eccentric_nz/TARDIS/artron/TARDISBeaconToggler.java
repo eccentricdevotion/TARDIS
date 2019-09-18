@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
@@ -92,7 +91,7 @@ public class TARDISBeaconToggler {
             set.put("beacon", check.getBeacon());
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
-            new QueryFactory(plugin).doUpdate("tardis", set, where);
+            plugin.getQueryFactory().doUpdate("tardis", set, where);
         }
     }
 }

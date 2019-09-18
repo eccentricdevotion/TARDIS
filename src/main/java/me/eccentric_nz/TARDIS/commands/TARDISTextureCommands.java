@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -76,12 +75,11 @@ public class TARDISTextureCommands implements CommandExecutor {
                 HashMap<String, Object> wherepp = new HashMap<>();
                 wherepp.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 // if no prefs record found, make one
                 if (!rsp.resultSet()) {
                     set.put("uuid", playerUUID);
-                    qf.doInsert("player_prefs", set);
+                    plugin.getQueryFactory().doInsert("player_prefs", set);
                 }
                 HashMap<String, Object> upd = new HashMap<>();
                 if (pref.equals("on")) {
@@ -114,7 +112,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 if (upd.size() > 0) {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", playerUUID);
-                    qf.doUpdate("player_prefs", upd, where);
+                    plugin.getQueryFactory().doUpdate("player_prefs", upd, where);
                     TARDISMessage.send(player, "PREF_TEXTURE");
                     return true;
                 }

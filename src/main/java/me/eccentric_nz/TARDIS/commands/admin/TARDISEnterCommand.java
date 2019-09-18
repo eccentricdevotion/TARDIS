@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -141,11 +140,10 @@ class TARDISEnterCommand {
                 World playerWorld = player.getLocation().getWorld();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("uuid", player.getUniqueId().toString());
-                qf.doInsert("travellers", set);
+                plugin.getQueryFactory().doInsert("travellers", set);
                 return true;
             }
         } else {

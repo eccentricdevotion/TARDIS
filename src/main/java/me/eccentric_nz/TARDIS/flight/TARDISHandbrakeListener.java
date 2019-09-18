@@ -157,7 +157,6 @@ public class TARDISHandbrakeListener implements Listener {
                                 beac_on = rsp.isBeaconOn();
                                 bar = rsp.isTravelbarOn();
                             }
-                            QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
                                     if (preset.equals(PRESET.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
@@ -202,7 +201,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
-                                        qf.alterEnergyLevel("tardis", amount, wheret, player);
+                                        plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
                                         if (!uuid.equals(ownerUUID)) {
                                             Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
@@ -224,7 +223,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     set.put("handbrake_on", 1);
                                     HashMap<String, Object> whereh = new HashMap<>();
                                     whereh.put("tardis_id", id);
-                                    qf.doUpdate("tardis", set, whereh);
+                                    plugin.getQueryFactory().doUpdate("tardis", set, whereh);
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_ON_ERR");
                                 }

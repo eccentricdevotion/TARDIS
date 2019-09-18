@@ -430,7 +430,7 @@ public class TARDII implements TardisAPI {
             set.put("z", location.getBlockZ());
             set.put("direction", rs.getDirection().toString());
             set.put("submarine", 0);
-            new QueryFactory(TARDIS.plugin).doUpdate("next", set, where);
+            TARDIS.plugin.getQueryFactory().doUpdate("next", set, where);
             if (travel) {
                 // get TARDIS data
                 HashMap<String, Object> wheret = new HashMap<>();
@@ -510,7 +510,7 @@ public class TARDII implements TardisAPI {
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", preset.toString());
-        new QueryFactory(TARDIS.plugin).doSyncUpdate("tardis", set, where);
+        TARDIS.plugin.getQueryFactory().doSyncUpdate("tardis", set, where);
         if (rebuild) {
             // rebuild exterior
             HashMap<String, Object> wherecl = new HashMap<>();
@@ -541,7 +541,7 @@ public class TARDII implements TardisAPI {
                 whereh.put("tardis_id", id);
                 HashMap<String, Object> seth = new HashMap<>();
                 seth.put("hidden", 0);
-                new QueryFactory(TARDIS.plugin).doUpdate("tardis", seth, whereh);
+                TARDIS.plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
             } else {
                 return false;
             }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 class TARDISEPSMessageCommand {
 
-    boolean setMessage(Player player, String[] args, QueryFactory qf) {
+    boolean setMessage(Player player, String[] args) {
         String message;
         int count = args.length;
         ItemStack bq = player.getInventory().getItemInMainHand();
@@ -57,7 +57,7 @@ class TARDISEPSMessageCommand {
         sete.put("eps_message", message);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", sete, where);
+        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", sete, where);
         TARDISMessage.send(player, "EP1_SET");
         return true;
     }

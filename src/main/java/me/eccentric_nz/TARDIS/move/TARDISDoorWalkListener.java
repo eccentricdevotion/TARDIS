@@ -115,7 +115,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             TARDISMessage.send(player, "LOST_IN_VORTEX");
                             return;
                         }
-                        QueryFactory qf = new QueryFactory(plugin);
                         COMPASS dd = rsd.getDoor_direction();
                         int doortype = rsd.getDoor_type();
                         int end_doortype;
@@ -178,7 +177,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     HashMap<String, Object> wherel = new HashMap<>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
                                     // always lock / unlock both doors
-                                    qf.doUpdate("doors", setl, wherel);
+                                    plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, "DOOR_LOCK", message);
                                 } else if (material.equals(Material.AIR) && rs.getTardis_id() != id) { // knock with hand if it's not their TARDIS
                                     // only outside the TARDIS
@@ -460,7 +459,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             HashMap<String, Object> set = new HashMap<>();
                                             set.put("tardis_id", id);
                                             set.put("uuid", playerUUID.toString());
-                                            qf.doSyncInsert("travellers", set);
+                                            plugin.getQueryFactory().doSyncInsert("travellers", set);
                                         }
                                         break;
                                     case 2:
@@ -501,11 +500,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         HashMap<String, Object> set = new HashMap<>();
                                         set.put("tardis_id", id);
                                         set.put("uuid", playerUUID.toString());
-                                        qf.doSyncInsert("travellers", set);
+                                        plugin.getQueryFactory().doSyncInsert("travellers", set);
                                         HashMap<String, Object> wheree = new HashMap<>();
                                         wheree.put("tardis_id", id);
                                         int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
-                                        qf.alterEnergyLevel("tardis", cost, wheree, player);
+                                        plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
                                         break;
                                     case 3:
                                         if (artron < required) {
@@ -548,7 +547,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         HashMap<String, Object> wherea = new HashMap<>();
                                         wherea.put("tardis_id", id);
                                         int costa = (0 - plugin.getArtronConfig().getInt("backdoor"));
-                                        qf.alterEnergyLevel("tardis", costa, wherea, player);
+                                        plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
                                         break;
                                     default:
                                         // do nothing

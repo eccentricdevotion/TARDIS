@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -59,7 +58,7 @@ class TARDISRepairCommand {
         where.put("uuid", uuid);
         HashMap<String, Object> set = new HashMap<>();
         set.put("repair", r);
-        new QueryFactory(plugin).doUpdate("t_count", set, where);
+        plugin.getQueryFactory().doUpdate("t_count", set, where);
         TARDISMessage.send(sender, "REPAIR_SET", args[1], args[2]);
         return true;
     }

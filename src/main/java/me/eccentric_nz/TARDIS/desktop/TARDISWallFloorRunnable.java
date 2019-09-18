@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -64,14 +63,12 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     private JSONArray arr;
     private Material wall_type;
     private Material floor_type;
-    private final QueryFactory qf;
     private Player player;
 
     public TARDISWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
-        qf = new QueryFactory(this.plugin);
     }
 
     @Override
@@ -102,7 +99,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
-                qf.alterEnergyLevel("tardis", amount, wherea, player);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();

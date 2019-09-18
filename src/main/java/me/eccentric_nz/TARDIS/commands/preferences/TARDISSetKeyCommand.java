@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,7 +45,7 @@ class TARDISSetKeyCommand {
         });
     }
 
-    boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
+    boolean setKeyPref(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "KEY_NEED");
             return false;
@@ -72,7 +71,7 @@ class TARDISSetKeyCommand {
         setk.put(field, setMaterial);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", setk, where);
+        plugin.getQueryFactory().doUpdate("player_prefs", setk, where);
         TARDISMessage.send(player, "KEY_SAVED");
         return true;
     }

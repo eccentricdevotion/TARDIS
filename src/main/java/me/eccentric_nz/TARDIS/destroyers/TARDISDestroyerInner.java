@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -141,10 +140,9 @@ public class TARDISDestroyerInner {
             wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        qf.doDelete("blocks", where);
+        plugin.getQueryFactory().doDelete("blocks", where);
         // remove from protectBlockMap - remove(id) would only remove the first one
         plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
         if (plugin.isWorldGuardOnServer()) {

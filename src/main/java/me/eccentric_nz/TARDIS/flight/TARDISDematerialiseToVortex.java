@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -66,7 +69,6 @@ class TARDISDematerialiseToVortex implements Runnable {
             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
             String resetw = "";
             Location l = null;
-            QueryFactory qf = new QueryFactory(plugin);
             if (!rscl.resultSet()) {
                 hidden = true;
             } else {
@@ -82,7 +84,7 @@ class TARDISDematerialiseToVortex implements Runnable {
                 bset.put("z", rscl.getZ());
                 bset.put("direction", rscl.getDirection().toString());
                 bset.put("submarine", rscl.isSubmarine());
-                qf.doUpdate("back", bset, bid);
+                plugin.getQueryFactory().doUpdate("back", bset, bid);
             }
             COMPASS cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
@@ -134,8 +136,8 @@ class TARDISDematerialiseToVortex implements Runnable {
                 set.put("hidden", 0);
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
-                qf.doUpdate("tardis", set, whereh);
-                plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                plugin.getPresetDestroyer().removeBlockProtection(id);
                 // restore biome
                 plugin.getUtils().restoreBiome(l, biome);
             }

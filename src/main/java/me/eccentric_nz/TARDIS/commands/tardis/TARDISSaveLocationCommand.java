@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -78,7 +77,6 @@ class TARDISSaveLocationCommand {
                     TARDISMessage.send(player, "SAVE_NO_TARDIS");
                     return true;
                 }
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("dest_name", args[1]);
@@ -91,7 +89,7 @@ class TARDISSaveLocationCommand {
                 if (args.length > 2 && args[2].equalsIgnoreCase("true")) {
                     set.put("preset", rs.getTardis().getPreset().toString());
                 }
-                if (qf.doSyncInsert("destinations", set) < 0) {
+                if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
                     TARDISMessage.send(player, "SAVE_SET", args[1]);

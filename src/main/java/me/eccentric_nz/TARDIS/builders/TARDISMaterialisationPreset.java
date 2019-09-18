@@ -143,7 +143,6 @@ class TARDISMaterialisationPreset implements Runnable {
                             break;
                     }
                 }
-                QueryFactory qf = new QueryFactory(plugin);
                 // rescue player?
                 if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
                     UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
@@ -157,7 +156,7 @@ class TARDISMaterialisationPreset implements Runnable {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", bd.getTardisID());
                         set.put("uuid", playerUUID.toString());
-                        qf.doInsert("travellers", set);
+                        plugin.getQueryFactory().doInsert("travellers", set);
                     }
                     plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
                 }
@@ -314,7 +313,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     if (door) {
                                         // remember the door location
-                                        saveDoorLocation(world, xx, y, yy, zz, qf);
+                                        saveDoorLocation(world, xx, y, yy, zz);
                                     } else {
                                         String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
@@ -650,7 +649,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                 if (preset.isColoured()) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     // remember the door location
-                                    saveDoorLocation(world, xx, y, yy, zz, qf);
+                                    saveDoorLocation(world, xx, y, yy, zz);
                                 }
                                 // else don't change the door
                                 break;
@@ -780,7 +779,7 @@ class TARDISMaterialisationPreset implements Runnable {
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", bd.getTardisID());
                         whered.put("police_box", 2);
-                        new QueryFactory(plugin).doDelete("blocks", whered);
+                        plugin.getQueryFactory().doDelete("blocks", whered);
                     }
                 }
             }
@@ -832,10 +831,10 @@ class TARDISMaterialisationPreset implements Runnable {
         wherej.put("tardis_id", bd.getTardisID());
         HashMap<String, Object> setj = new HashMap<>();
         setj.put(field, location);
-        new QueryFactory(plugin).doUpdate("junk", setj, wherej);
+        plugin.getQueryFactory().doUpdate("junk", setj, wherej);
     }
 
-    private void saveDoorLocation(World world, int xx, int y, int yy, int zz, QueryFactory qf) {
+    private void saveDoorLocation(World world, int xx, int y, int yy, int zz) {
         // remember the door location
         String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
         String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
@@ -851,11 +850,11 @@ class TARDISMaterialisationPreset implements Runnable {
         if (rsd.resultSet()) {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoor_id());
-            qf.doUpdate("doors", setd, whereid);
+            plugin.getQueryFactory().doUpdate("doors", setd, whereid);
         } else {
             setd.put("tardis_id", bd.getTardisID());
             setd.put("door_type", 0);
-            qf.doInsert("doors", setd);
+            plugin.getQueryFactory().doInsert("doors", setd);
         }
     }
 

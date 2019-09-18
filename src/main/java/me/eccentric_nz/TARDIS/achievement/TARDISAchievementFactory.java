@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.achievement;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -58,7 +57,6 @@ public class TARDISAchievementFactory {
 
     public void doAchievement(Object obj) {
         if (plugin.getConfig().getBoolean("allow.achievements")) {
-            QueryFactory qf = new QueryFactory(plugin);
             // have they started the achievement?
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("uuid", player.getUniqueId().toString());
@@ -103,16 +101,16 @@ public class TARDISAchievementFactory {
                     }
                     // set achievement as done
                     seta.put("completed", 1);
-                    qf.doUpdate("achievements", seta, wherem);
+                    plugin.getQueryFactory().doUpdate("achievements", seta, wherem);
                 } else {
                     if (obj.getClass().equals(String.class)) {
                         if (data != null && !data.contains(obj)) {
                             seta.put("amount", amount + ":" + obj);
-                            qf.doUpdate("achievements", seta, wherem);
+                            plugin.getQueryFactory().doUpdate("achievements", seta, wherem);
                         }
                     } else {
                         seta.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
-                        qf.doUpdate("achievements", seta, wherem);
+                        plugin.getQueryFactory().doUpdate("achievements", seta, wherem);
                     }
                 }
             } else {
@@ -123,7 +121,7 @@ public class TARDISAchievementFactory {
                     seta.put("name", advancement.getConfigName());
                     seta.put("amount", obj);
                     seta.put("completed", 0);
-                    qf.doInsert("achievements", seta);
+                    plugin.getQueryFactory().doInsert("achievements", seta);
                 }
             }
         }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -57,10 +56,9 @@ class TARDISRemoveSavedLocationCommand {
                 return false;
             }
             int destID = rsd.getDest_id();
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> did = new HashMap<>();
             did.put("dest_id", destID);
-            qf.doDelete("destinations", did);
+            plugin.getQueryFactory().doDelete("destinations", did);
             TARDISMessage.send(player, "DEST_DELETED", args[1]);
             return true;
         } else {

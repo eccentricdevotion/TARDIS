@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
@@ -67,7 +66,7 @@ public class TARDISFastReturnButton {
                     set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
-                    new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
+                    plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -84,9 +83,6 @@ public class TARDISFastReturnButton {
     }
 
     private boolean compareCurrentToBack(ResultSetCurrentLocation c, ResultSetBackLocation b) {
-        return (c.getWorld().equals(b.getWorld())
-                && c.getX() == b.getX()
-                && c.getY() == b.getY()
-                && c.getZ() == b.getZ());
+        return (c.getWorld().equals(b.getWorld()) && c.getX() == b.getX() && c.getY() == b.getY() && c.getZ() == b.getZ());
     }
 }

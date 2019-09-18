@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -115,7 +114,6 @@ public class TARDISCondenserListener implements Listener {
                 }
                 if (isCondenser) {
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
-                    QueryFactory qf = new QueryFactory(plugin);
                     int amount = 0;
                     // get the stacks in the inventory
                     HashMap<String, Integer> item_counts = new HashMap<>();
@@ -155,12 +153,12 @@ public class TARDISCondenserListener implements Listener {
                             HashMap<String, Object> setc = new HashMap<>();
                             if (rsc.resultSet()) {
                                 int new_stack_size = value + rsc.getBlock_count();
-                                qf.updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
+                                plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
                             } else {
                                 setc.put("tardis_id", tardis.getTardis_id());
                                 setc.put("block_data", key);
                                 setc.put("block_count", value);
-                                qf.doInsert("condenser", setc);
+                                plugin.getQueryFactory().doInsert("condenser", setc);
                             }
                         });
                     }
@@ -168,7 +166,7 @@ public class TARDISCondenserListener implements Listener {
                     amount = Math.round(amount / 2.0F);
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", tardis.getTardis_id());
-                    qf.alterEnergyLevel("tardis", amount, wheret, player);
+                    plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
                     if (amount > 0) {
                         // are we doing an achievement?
                         if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {

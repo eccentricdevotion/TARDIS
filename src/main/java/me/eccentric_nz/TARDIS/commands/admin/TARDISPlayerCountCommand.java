@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -54,8 +53,7 @@ class TARDISPlayerCountCommand {
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("uuid", uuid);
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.doUpdate("t_count", setc, wherec);
+                plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
                 TARDISMessage.send(sender, "COUNT_SET", args[1], count, max_count);
             } else {
                 // display count

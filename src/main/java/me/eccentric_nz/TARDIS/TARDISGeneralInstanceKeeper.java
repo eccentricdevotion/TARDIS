@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -69,9 +68,6 @@ public class TARDISGeneralInstanceKeeper {
     private final List<Block> artronFurnaces = new ArrayList<>();
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
-    private final List<Chunk> roomChunkList = new ArrayList<>();
-    private final List<Chunk> tardisChunkList = new ArrayList<>();
-    private final List<Chunk> railChunkList = new ArrayList<>();
     private final List<Location> rechargers = new ArrayList<>();
     private final List<Material> doors = Arrays.asList(Material.IRON_DOOR, Material.OAK_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAIL, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
@@ -125,18 +121,6 @@ public class TARDISGeneralInstanceKeeper {
     public List<BlockFace> getSurrounding() {
         return surrounding;
     }
-
-//    public List<Chunk> getTardisChunkList() {
-//        return tardisChunkList;
-//    }
-
-//    public List<Chunk> getRoomChunkList() {
-//        return roomChunkList;
-//    }
-
-//    public List<Chunk> getRailChunkList() {
-//        return railChunkList;
-//    }
 
     public List<Material> getDoors() {
         return doors;

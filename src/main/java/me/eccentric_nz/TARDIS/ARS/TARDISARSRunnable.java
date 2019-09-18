@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -102,7 +101,6 @@ class TARDISARSRunnable implements Runnable {
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
-            QueryFactory qf = new QueryFactory(plugin);
             // remove BLOCKS from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
@@ -110,14 +108,14 @@ class TARDISARSRunnable implements Runnable {
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", tardis_id);
                     wherec.put("block_data", key);
-                    qf.alterCondenserBlockCount(value, wherec);
+                    plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
                 });
             }
             // take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", p.getUniqueId().toString());
-            qf.alterEnergyLevel("tardis", -amount, set, p);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
                 TARDISMessage.send(p, "ARS_CANCEL", whichroom, String.format("%d", taskID));
             }

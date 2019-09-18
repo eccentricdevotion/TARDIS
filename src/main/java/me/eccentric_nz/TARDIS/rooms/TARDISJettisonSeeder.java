@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -110,17 +109,16 @@ public class TARDISJettisonSeeder implements Listener {
                         l.getWorld().playEffect(l, Effect.POTION_BREAK, 9);
                         // ok they clicked it, so give them their energy!
                         int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
-                        QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("uuid", player.getUniqueId().toString());
-                        qf.alterEnergyLevel("tardis", amount, set, player);
+                        plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, player);
                         // if it is a secondary console room remove the controls
                         if (r.equals("BAKER") || r.equals("WOOD")) {
                             int secondary = (r.equals("BAKER")) ? 1 : 2;
                             HashMap<String, Object> del = new HashMap<>();
                             del.put("tardis_id", id);
                             del.put("secondary", secondary);
-                            qf.doDelete("controls", del);
+                            plugin.getQueryFactory().doDelete("controls", del);
                         }
                         if (r.equals("RENDERER")) {
                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {

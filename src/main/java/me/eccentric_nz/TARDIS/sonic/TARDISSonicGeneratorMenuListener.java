@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -242,7 +241,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
             List<String> lore = im.getLore();
             fields.forEach((key, value) -> set.put(value, (lore.contains(key)) ? 1 : 0));
         }
-        new QueryFactory(plugin).doUpdate("sonic", set, where);
+        plugin.getQueryFactory().doUpdate("sonic", set, where);
         plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
         if (close) {
             close(p);
@@ -263,7 +262,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                 // remove the Artron energy
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
-                new QueryFactory(plugin).alterEnergyLevel("tardis", -cost, where, p);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -cost, where, p);
             } else {
                 TARDISMessage.send(p, "UPGRADE_ABORT_ENERGY");
             }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -68,7 +67,7 @@ class TARDISARSRemoveCommand {
                 HashMap<String, Object> del = new HashMap<>();
                 del.put("tardis_id", id);
                 del.put("type", 10);
-                new QueryFactory(plugin).doDelete("controls", del);
+                plugin.getQueryFactory().doDelete("controls", del);
                 TARDISMessage.send(player, "ARS_REMOVED");
             }
             return true;

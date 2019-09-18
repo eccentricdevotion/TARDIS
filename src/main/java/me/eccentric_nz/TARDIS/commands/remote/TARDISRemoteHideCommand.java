@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
@@ -88,7 +87,7 @@ class TARDISRemoteHideCommand {
         whereh.put("tardis_id", id);
         HashMap<String, Object> seth = new HashMap<>();
         seth.put("hidden", 1);
-        new QueryFactory(plugin).doUpdate("tardis", seth, whereh);
+        plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
         return true;
     }
 }

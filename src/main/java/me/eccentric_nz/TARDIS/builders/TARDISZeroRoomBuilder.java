@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -52,12 +51,11 @@ public class TARDISZeroRoomBuilder {
         if (tips == -1) {
             slot = tintpos.getFreeSlot();
             // uodate TARDIS table with new slot number
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("tips", slot);
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            qf.doUpdate("tardis", set, where);
+            plugin.getQueryFactory().doUpdate("tardis", set, where);
         }
         TARDISTIPSData pos = tintpos.getTIPSData(slot);
         int x = pos.getCentreX();
@@ -74,10 +72,9 @@ public class TARDISZeroRoomBuilder {
             UUID uuid = p.getUniqueId();
             // ok, room growing was successful, so take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms.ZERO.cost");
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", p.getUniqueId().toString());
-            qf.alterEnergyLevel("tardis", -amount, set, p);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
@@ -85,7 +82,7 @@ public class TARDISZeroRoomBuilder {
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", c_data.getTardis_id());
                     wherec.put("block_data", key);
-                    qf.alterCondenserBlockCount(value, wherec);
+                    plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
                 });
                 plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
             }

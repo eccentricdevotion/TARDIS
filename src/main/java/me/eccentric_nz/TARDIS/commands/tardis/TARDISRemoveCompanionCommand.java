@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -101,8 +100,7 @@ class TARDISRemoveCompanionCommand {
                 HashMap<String, Object> set = new HashMap<>();
                 tid.put("tardis_id", id);
                 set.put("companions", newList);
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.doUpdate("tardis", set, tid);
+                plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 // if using WorldGuard, remove them from the region membership
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     World w = TARDISStaticLocationGetters.getWorld(data);

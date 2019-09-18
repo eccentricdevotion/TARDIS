@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.arch;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,7 +51,7 @@ public class TARDISRespawnListener implements Listener {
         if (rs.resultSet() && !plugin.getUtils().inTARDISWorld(player)) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
-            new QueryFactory(plugin).doDelete("travellers", wheret);
+            plugin.getQueryFactory().doDelete("travellers", wheret);
         }
     }
 }

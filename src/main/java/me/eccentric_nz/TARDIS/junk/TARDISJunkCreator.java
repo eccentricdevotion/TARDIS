@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -65,7 +64,6 @@ class TARDISJunkCreator {
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
         // save a tardis record
         String cw = plugin.getConfig().getString("creation.default_world_name");
-        QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");
@@ -76,7 +74,7 @@ class TARDISJunkCreator {
         set.put("chameleon_preset", "JUNK");
         set.put("chameleon_demat", "JUNK");
         set.put("lastuse", System.currentTimeMillis());
-        int lastInsertId = qf.doSyncInsert("tardis", set);
+        int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
         // get wall floor prefs
         Material wall_type = Material.ORANGE_WOOL;
         Material floor_type = Material.GRAY_WOOL;
@@ -95,7 +93,7 @@ class TARDISJunkCreator {
             setpp.put("wall", "ORANGE_WOOL");
             setpp.put("floor", "LIGHT_GRAY_WOOL");
             setpp.put("lamp", "REDSTONE_LAMP");
-            qf.doInsert("player_prefs", setpp);
+            plugin.getQueryFactory().doInsert("player_prefs", setpp);
         }
         World chunkworld = plugin.getServer().getWorld(cw);
         // populate home, current, next and back tables
@@ -106,7 +104,7 @@ class TARDISJunkCreator {
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());
         setlocs.put("direction", "SOUTH");
-        qf.insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
+        plugin.getQueryFactory().insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
         // build the TARDIS at the location
         BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
         bd.setDirection(COMPASS.SOUTH);

@@ -21,7 +21,10 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -72,7 +75,6 @@ class TARDISMaterialseFromVortex implements Runnable {
             return;
         }
         Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
-        QueryFactory qf = new QueryFactory(plugin);
         boolean is_next_sub = rsn.isSubmarine();
         boolean malfunction = (plugin.getTrackerKeeper().getMalfunction().containsKey(id) && plugin.getTrackerKeeper().getMalfunction().get(id));
         HashMap<String, Object> wherei = new HashMap<>();
@@ -100,12 +102,12 @@ class TARDISMaterialseFromVortex implements Runnable {
                         setsave.put("y", exit.getBlockY());
                         setsave.put("z", exit.getBlockZ());
                         setsave.put("submarine", 0);
-                        qf.doSyncUpdate("next", setsave, wheress);
+                        plugin.getQueryFactory().doSyncUpdate("next", setsave, wheress);
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
-                            qf.alterEnergyLevel("tardis", amount, wheret, player);
+                            plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
                             TARDISMessage.send(player, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
@@ -237,9 +239,9 @@ class TARDISMaterialseFromVortex implements Runnable {
                         wheredoor.put("tardis_id", id);
                         wheredoor.put("door_type", 0);
                         if (setcurrent.size() > 0) {
-                            qf.doUpdate("current", setcurrent, wherecurrent);
-                            qf.doUpdate("back", setback, whereback);
-                            qf.doUpdate("doors", setdoor, wheredoor);
+                            plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
+                            plugin.getQueryFactory().doUpdate("back", setback, whereback);
+                            plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }
                         if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
                             if (l.getWorld().equals(final_location.getWorld())) {
@@ -267,7 +269,7 @@ class TARDISMaterialseFromVortex implements Runnable {
                     set.put("lastuse", now);
                     HashMap<String, Object> whereh = new HashMap<>();
                     whereh.put("tardis_id", id);
-                    qf.doUpdate("tardis", set, whereh);
+                    plugin.getQueryFactory().doUpdate("tardis", set, whereh);
                 }
             }
         }

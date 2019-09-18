@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -101,7 +100,6 @@ class TARDISArchiveCommand {
                 }
             }
         }
-        QueryFactory qf = new QueryFactory(plugin);
         if (sub.equals("scan") || sub.equals("add") || sub.equals("update")) {
             // get TARDIS player is in
             HashMap<String, Object> wheret = new HashMap<>();
@@ -211,7 +209,7 @@ class TARDISArchiveCommand {
                             // save json to database
                             set.put("uuid", uuid);
                             set.put("name", name);
-                            qf.doInsert("archive", set);
+                            plugin.getQueryFactory().doInsert("archive", set);
                             TARDISMessage.send(player, "ARCHIVE_ADD", name);
                             return true;
                         }
@@ -220,7 +218,7 @@ class TARDISArchiveCommand {
                             HashMap<String, Object> whereu = new HashMap<>();
                             whereu.put("uuid", uuid);
                             whereu.put("name", name);
-                            qf.doUpdate("archive", set, whereu);
+                            plugin.getQueryFactory().doUpdate("archive", set, whereu);
                             TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
                             return true;
                         }
@@ -253,7 +251,7 @@ class TARDISArchiveCommand {
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", uuid);
             whereu.put("name", name);
-            qf.doUpdate("archive", set, whereu);
+            plugin.getQueryFactory().doUpdate("archive", set, whereu);
             TARDISMessage.send(player, "ARCHIVE_DESC", name);
             return true;
         }
@@ -262,7 +260,7 @@ class TARDISArchiveCommand {
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", uuid);
             whereu.put("name", name);
-            qf.doDelete("archive", whereu);
+            plugin.getQueryFactory().doDelete("archive", whereu);
             TARDISMessage.send(player, "ARCHIVE_REMOVE", name);
         }
         return true;

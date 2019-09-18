@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.*;
@@ -76,7 +75,7 @@ public class TARDISBlockBreakListener implements Listener {
                 String loc = block.getLocation().toString();
                 wherep.put("location", loc);
                 wherep.put("police_box", 0);
-                new QueryFactory(plugin).doDelete("blocks", wherep);
+                plugin.getQueryFactory().doDelete("blocks", wherep);
                 plugin.getGeneralKeeper().getProtectBlockMap().remove(loc);
             }
             return;

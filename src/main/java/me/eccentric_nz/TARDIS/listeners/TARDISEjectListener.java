@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISLlama;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -104,7 +103,7 @@ public class TARDISEjectListener implements Listener {
                 TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
-                new QueryFactory(plugin).doDelete("travellers", where);
+                plugin.getQueryFactory().doDelete("travellers", where);
                 break;
             case CHICKEN:
                 Chicken k = (Chicken) ent;

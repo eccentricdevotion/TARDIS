@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.builders;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
@@ -100,7 +99,7 @@ public class TARDISPresetBuilderFactory {
             bd.setBiome(biome);
             if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {
                 // remember the current biome (unless rebuilding)
-                new QueryFactory(plugin).saveBiome(tardis.getTardis_id(), biome.toString());
+                plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.toString());
             }
             if (tardis.getAdaption().equals(ADAPTION.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());
@@ -172,7 +171,7 @@ public class TARDISPresetBuilderFactory {
             whered.put("tardis_id", bd.getTardisID());
             HashMap<String, Object> set = new HashMap<>();
             set.put("chameleon_demat", preset.toString());
-            new QueryFactory(plugin).doUpdate("tardis", set, whered);
+            plugin.getQueryFactory().doUpdate("tardis", set, whered);
         }
     }
 

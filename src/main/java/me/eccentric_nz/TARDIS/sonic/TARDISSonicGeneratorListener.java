@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetSonic;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -158,7 +161,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 // remove the Artron energy
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
-                new QueryFactory(plugin).alterEnergyLevel("tardis", -cost, where, p);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -cost, where, p);
             } else {
                 TARDISMessage.send(p, "UPGRADE_ABORT_ENERGY");
             }
@@ -223,8 +226,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
                 // add/update control and activate it
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.insertSyncControl(rs.getTardis_id(), 24, l, 0);
+                plugin.getQueryFactory().insertSyncControl(rs.getTardis_id(), 24, l, 0);
                 // do they have a sonic record?
                 HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", event.getPlayer().getUniqueId().toString());
@@ -236,11 +238,11 @@ public class TARDISSonicGeneratorListener implements Listener {
                         // update it to activated
                         HashMap<String, Object> wherea = new HashMap<>();
                         wherea.put("uuid", uuid);
-                        qf.doUpdate("sonic", set, wherea);
+                        plugin.getQueryFactory().doUpdate("sonic", set, wherea);
                     }
                 } else {
                     set.put("uuid", uuid);
-                    qf.doInsert("sonic", set);
+                    plugin.getQueryFactory().doInsert("sonic", set);
                 }
             } else {
                 event.setCancelled(true);

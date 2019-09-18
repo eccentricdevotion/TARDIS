@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -305,12 +304,11 @@ public class TARDISGiveCommand implements CommandExecutor {
                         set_level = level + amount;
                     }
                 }
-                QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("artron_level", set_level);
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
-                qf.doUpdate("tardis", set, wheret);
+                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                 sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
             }
             return true;

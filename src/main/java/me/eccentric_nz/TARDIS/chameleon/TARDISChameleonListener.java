@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.chameleon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -209,7 +208,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                             }
                             if (set.size() > 0) {
                                 //set.put("chameleon_demat", preset);
-                                new QueryFactory(plugin).doUpdate("tardis", set, wherec);
+                                plugin.getQueryFactory().doUpdate("tardis", set, wherec);
                             }
                         }
                     }

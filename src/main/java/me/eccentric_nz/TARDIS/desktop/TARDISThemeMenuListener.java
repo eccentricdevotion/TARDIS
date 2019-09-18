@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -173,7 +172,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                 where.put("uuid", uuid);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("repair", rsc.getRepair() - 1);
-                new QueryFactory(plugin).doUpdate("t_count", set, where);
+                plugin.getQueryFactory().doUpdate("t_count", set, where);
                 repair = true;
             } else {
                 // scan console and check condensed blocks

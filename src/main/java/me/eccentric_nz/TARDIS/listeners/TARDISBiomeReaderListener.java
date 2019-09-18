@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -94,7 +93,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                     set.put("biomes_one", serialized);
                                     HashMap<String, Object> whereu = new HashMap<>();
                                     whereu.put("uuid", uuid.toString());
-                                    new QueryFactory(plugin).doUpdate("storage", set, whereu);
+                                    plugin.getQueryFactory().doUpdate("storage", set, whereu);
                                     TARDISMessage.send(player, "BIOME_READER_ADDED", biome.toString(), "1");
                                 } else {
                                     slot = getNextFreeSlot(disks2);
@@ -105,7 +104,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                         set.put("biomes_two", serialized);
                                         HashMap<String, Object> whereu = new HashMap<>();
                                         whereu.put("uuid", uuid.toString());
-                                        new QueryFactory(plugin).doUpdate("storage", set, whereu);
+                                        plugin.getQueryFactory().doUpdate("storage", set, whereu);
                                         TARDISMessage.send(player, "BIOME_READER_ADDED", biome.toString(), "2");
                                     } else {
                                         TARDISMessage.send(player, "BIOME_READER_FULL");

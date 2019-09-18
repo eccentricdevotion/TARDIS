@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,7 +35,7 @@ class TARDISSetLampCommand {
         this.plugin = plugin;
     }
 
-    boolean setLampPref(Player player, String[] args, QueryFactory qf) {
+    boolean setLampPref(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "LAMP_NEED");
             return false;
@@ -58,7 +57,7 @@ class TARDISSetLampCommand {
         setl.put("lamp", lamp.toString());
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        qf.doUpdate("player_prefs", setl, where);
+        plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
         TARDISMessage.send(player, "LAMP_SAVED");
         return true;
     }

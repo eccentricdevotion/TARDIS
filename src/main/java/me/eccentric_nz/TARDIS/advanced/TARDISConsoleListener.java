@@ -116,7 +116,7 @@ public class TARDISConsoleListener implements Listener {
                             HashMap<String, Object> setstore = new HashMap<>();
                             setstore.put("uuid", p.getUniqueId().toString());
                             setstore.put("tardis_id", id);
-                            new QueryFactory(plugin).doInsert("storage", setstore);
+                            plugin.getQueryFactory().doInsert("storage", setstore);
                         }
                         // open gui
                         p.openInventory(inv);
