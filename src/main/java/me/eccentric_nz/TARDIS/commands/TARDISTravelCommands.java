@@ -692,6 +692,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     int x = rsc.getX() + rx;
                                     int y = rsc.getY() + ry;
                                     int z = rsc.getZ() + rz;
+                                    if (y < 0 || y > 256) {
+                                        TARDISMessage.send(player, "Y_NOT_VALID");
+                                        return true;
+                                    }
                                     // make location
                                     Location location = new Location(rsc.getWorld(), x, y, z);
                                     // check location
@@ -868,7 +872,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         if (args.length > 3) {
             x = TARDISNumberParsers.parseInt(args[args.length - 3]);
             y = TARDISNumberParsers.parseInt(args[args.length - 2]);
-            if (y == 0 || y > 250) {
+            if (y < 0 || y > 250) {
                 TARDISMessage.send(player, "Y_NOT_VALID");
                 return null;
             }
