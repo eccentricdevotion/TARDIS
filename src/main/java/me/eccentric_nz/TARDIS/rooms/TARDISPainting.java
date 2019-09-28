@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.rooms;
 
-import net.minecraft.server.v1_14_R1.EntityHanging;
 import org.bukkit.Art;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -8,7 +7,6 @@ import org.bukkit.block.BlockFace;
 public class TARDISPainting {
 
     public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
-        EntityHanging entityHanging;
         switch (art) {
             // 1x2
             case GRAHAM:
