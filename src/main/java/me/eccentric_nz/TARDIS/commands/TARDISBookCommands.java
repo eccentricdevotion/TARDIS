@@ -65,9 +65,13 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                 if (first.equals("list")) {
                     int b = 1;
                     TARDISMessage.send(sender, "BOOK_RASS");
-                    for (Map.Entry<String, String> entry : books.entrySet()) {
-                        sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
-                        b++;
+                    if (books.size() > 0) {
+                        for (Map.Entry<String, String> entry : books.entrySet()) {
+                            sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
+                            b++;
+                        }
+                    } else {
+                        sender.sendMessage(plugin.getLanguage().getString("BOOK_NONE"));
                     }
                     return true;
                 }
