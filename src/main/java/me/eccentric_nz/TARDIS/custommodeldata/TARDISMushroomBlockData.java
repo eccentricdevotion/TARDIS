@@ -194,7 +194,7 @@ public class TARDISMushroomBlockData {
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
             // master
-            put(39, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=true}]");
+            put(39, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=true]");
             // creative (atomic elements)
             put(40, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]");
             // chemical compounds
