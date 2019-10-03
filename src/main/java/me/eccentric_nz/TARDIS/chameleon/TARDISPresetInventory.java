@@ -303,7 +303,14 @@ class TARDISPresetInventory {
         can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{box, jungle, nether, def, swamp, tent, village, yellow, tel, ang, sub, flo, stone, chal, desert, well, win, rub, mine, cre, pea, lamp, candy, toi, rob, tor, pine, pun, por, cake, grave, topsy, mush, fen, gaz, app, lig, lib, sno, jail, pan, dou, pris, cho, and, dio, gra, null, custom, null, null, page, back, close};
+        return new ItemStack[]{
+                box, jungle, nether, def, swamp, tent, village, yellow, tel,
+                ang, sub, flo, stone, chal, desert, well, win, rub,
+                mine, cre, pea, lamp, candy, toi, rob, tor, pine,
+                pun, por, cake, grave, topsy, mush, fen, gaz, app,
+                lig, lib, sno, jail, pan, dou, pris, cho, and,
+                dio, gra, null, custom, null, null, back, page, close
+        };
     }
 
     public ItemStack[] getPresets() {

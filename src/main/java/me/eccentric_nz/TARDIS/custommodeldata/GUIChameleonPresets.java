@@ -6,7 +6,7 @@ import org.bukkit.Material;
 public enum GUIChameleonPresets {
 
     // Chameleon Presets
-    GO_TO_PAGE_2(4, 51, Material.ARROW),
+    GO_TO_PAGE_2(12, 51, Material.ARROW),
     BACK(8, 52, Material.BOWL),
     CLOSE(1, 53, Material.BOWL);
 
