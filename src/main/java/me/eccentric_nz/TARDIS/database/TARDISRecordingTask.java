@@ -27,9 +27,11 @@ import java.util.HashMap;
 public class TARDISRecordingTask implements Runnable {
 
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISRecordingTask(TARDIS plugin) {
         this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
     }
 
     private void save() {
@@ -64,7 +66,7 @@ public class TARDISRecordingTask implements Runnable {
                 }
                 // Connection valid, proceed
                 connection.setAutoCommit(false);
-                s = connection.prepareStatement("INSERT INTO blocks (tardis_id,location,data,police_box) VALUES (?,?,?,1)");
+                s = connection.prepareStatement("INSERT INTO " + prefix + "blocks (tardis_id, location, data, police_box) VALUES (?, ?, ?, 1)");
                 int i = 0;
                 while (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
                     if (connection.isClosed()) {
