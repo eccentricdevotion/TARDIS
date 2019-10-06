@@ -35,7 +35,7 @@ public class PoliceBoxMagentaNorthPreset extends PoliceBoxPreset {
             }
         }
         blueprintData[8][0] = "minecraft:oak_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]";
-        blueprintData[8][1] = "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]";
+        blueprintData[8][1] = "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=false]";
         setBlueprintData(blueprintData);
         // set stained data strings
         String[][] stainedData = new String[10][4];

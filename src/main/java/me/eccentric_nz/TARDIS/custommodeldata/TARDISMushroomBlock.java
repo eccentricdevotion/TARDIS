@@ -43,7 +43,8 @@ public class TARDISMushroomBlock {
 			"minecraft:red_mushroom_block[down=false,east=true,north=false,south=true,up=true,west=false]",
 			"minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=false]",
 			"minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=false]",
-			"minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]"
+			"minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]",
+			"minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]"
 	);
 
     public static boolean isVanillaRedMushroomState(MultipleFacing multipleFacing) {

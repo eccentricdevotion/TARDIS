@@ -118,7 +118,7 @@ public class TARDISMushroomBlockData {
     public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<Integer, String>() {
         {
             // tardis_magenta_north
-            put(1, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]");
+            put(1, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=false]");
             // tardis_light_blue_north
             put(2, "minecraft:red_mushroom_block[down=false,east=false,north=true,south=true,up=false,west=false]");
             // tardis_yellow_north
