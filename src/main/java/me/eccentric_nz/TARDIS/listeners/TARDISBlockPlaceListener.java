@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,20 +74,33 @@ public class TARDISBlockPlaceListener implements Listener {
             TARDISMessage.send(player, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
-        if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
-                MultipleFacing multipleFacing;
-                if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
-                } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
-                } else {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
+        if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
+            if (is.hasItemMeta()) {
+                ItemMeta im = is.getItemMeta();
+                if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                    int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
+                    MultipleFacing multipleFacing;
+                    if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
+                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
+                    } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
+                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                    } else {
+                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
+                    }
+                    event.getBlockPlaced().setBlockData(multipleFacing);
+                    return;
                 }
-                Block block = event.getBlockPlaced();
-                block.setBlockData(multipleFacing);
+            } else {
+                BlockData data;
+                if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA_ALL);
+                } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA_ALL);
+                } else {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
+                }
+                event.getBlockPlaced().setBlockData(data);
+                setNextToMushroomBlock(player, event.getBlockPlaced());
                 return;
             }
         }
@@ -119,6 +134,18 @@ public class TARDISBlockPlaceListener implements Listener {
             plugin.getConfig().set("rechargers." + name + ".uuid", player.getUniqueId().toString());
             plugin.saveConfig();
             TARDISMessage.send(player, "RIFT_SUCCESS");
+        }
+    }
+
+    private void setNextToMushroomBlock(Player player, Block block) {
+        Material material = block.getType();
+        for (int i = 0; i < 6; i++) {
+            for (BlockFace face : BlockFace.values()) {
+                Block b = block.getRelative(face, i);
+                if (b.getType().equals(material)) {
+                    player.sendBlockChange(b.getLocation(), b.getBlockData());
+                }
+            }
         }
     }
 }

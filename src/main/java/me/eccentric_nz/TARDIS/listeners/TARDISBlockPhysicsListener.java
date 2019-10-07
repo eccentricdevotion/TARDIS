@@ -17,14 +17,12 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
 import me.eccentric_nz.TARDIS.database.TARDISRecordingQueue;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.event.EventHandler;
@@ -76,21 +74,8 @@ public class TARDISBlockPhysicsListener implements Listener {
                     event.setCancelled(true);
                 }
             }
-        } else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-            MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
-            if (!TARDISMushroomBlock.isVanillaBrownMushroomState(multipleFacing)) {
-                event.setCancelled(true);
-            }
-        } else if (block.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-            MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
-            if (!TARDISMushroomBlock.isVanillaRedMushroomState(multipleFacing)) {
-                event.setCancelled(true);
-            }
-        } else if (block.getType().equals(Material.MUSHROOM_STEM)) {
-            MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
-            if (!TARDISMushroomBlock.isVanillaMushroomStemState(multipleFacing)) {
-                event.setCancelled(true);
-            }
+        } else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || block.getType().equals(Material.RED_MUSHROOM_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+            event.setCancelled(true);
         }
     }
 

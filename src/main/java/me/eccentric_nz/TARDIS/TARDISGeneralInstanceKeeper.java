@@ -67,6 +67,7 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
     private final List<Block> artronFurnaces = new ArrayList<>();
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
+    private final List<BlockFace> blockFaces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
     private final List<Location> rechargers = new ArrayList<>();
     private final List<Material> doors = Arrays.asList(Material.IRON_DOOR, Material.OAK_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
@@ -116,6 +117,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<BlockFace> getFaces() {
         return faces;
+    }
+
+    public List<BlockFace> getBlockFaces() {
+        return blockFaces;
     }
 
     public List<BlockFace> getSurrounding() {

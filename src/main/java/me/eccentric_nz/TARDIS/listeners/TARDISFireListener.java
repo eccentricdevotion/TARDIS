@@ -26,9 +26,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The Tenth Doctor once commented that fire was "so fun to look at! But bad for the skin!"
  *
@@ -37,16 +34,9 @@ import java.util.List;
 public class TARDISFireListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<BlockFace> faces = new ArrayList<>();
 
     public TARDISFireListener(TARDIS plugin) {
         this.plugin = plugin;
-        faces.add(BlockFace.UP);
-        faces.add(BlockFace.DOWN);
-        faces.add(BlockFace.NORTH);
-        faces.add(BlockFace.SOUTH);
-        faces.add(BlockFace.EAST);
-        faces.add(BlockFace.WEST);
     }
 
     /**
@@ -58,7 +48,7 @@ public class TARDISFireListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockIgnite(BlockIgniteEvent event) {
         Block b = event.getBlock();
-        for (BlockFace bf : faces) {
+        for (BlockFace bf : plugin.getGeneralKeeper().getBlockFaces()) {
             Block chkBlock = b.getRelative(bf);
             String l = chkBlock.getLocation().toString();
             if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {

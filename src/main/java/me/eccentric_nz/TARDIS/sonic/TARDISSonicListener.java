@@ -73,7 +73,6 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> doors = new ArrayList<>();
     private final List<Material> redstone = new ArrayList<>();
     private final List<UUID> frozenPlayers = new ArrayList<>();
-    private final List<BlockFace> faces = new ArrayList<>();
     private final List<Material> paintable = new ArrayList<>();
 
     public TARDISSonicListener(TARDIS plugin) {
@@ -122,12 +121,6 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.POWERED_RAIL);
         redstone.add(Material.REDSTONE_LAMP);
         redstone.add(Material.REDSTONE_WIRE);
-        faces.add(BlockFace.NORTH);
-        faces.add(BlockFace.SOUTH);
-        faces.add(BlockFace.EAST);
-        faces.add(BlockFace.WEST);
-        faces.add(BlockFace.UP);
-        faces.add(BlockFace.DOWN);
         paintable.add(Material.BLACK_CARPET);
         paintable.add(Material.BLACK_STAINED_GLASS);
         paintable.add(Material.BLACK_STAINED_GLASS_PANE);
@@ -469,7 +462,7 @@ public class TARDISSonicListener implements Listener {
                                 // find the direction the piston is facing
                                 if (plugin.getGeneralKeeper().getSonicPistons().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicPistons().remove(b.getLocation().toString());
-                                    for (BlockFace f : faces) {
+                                    for (BlockFace f : plugin.getGeneralKeeper().getBlockFaces()) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
                                             // force a block update
                                             b.getRelative(f).setBlockData(TARDISConstants.VOID_AIR, true);
@@ -488,7 +481,7 @@ public class TARDISSonicListener implements Listener {
                                 Lightable lightable = (Lightable) b.getBlockData();
                                 if (!lightable.isLit()) {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
-                                    for (BlockFace f : faces) {
+                                    for (BlockFace f : plugin.getGeneralKeeper().getBlockFaces()) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
                                             // force a block update
                                             b.getRelative(f).setBlockData(TARDISConstants.POWER, true);
@@ -509,7 +502,7 @@ public class TARDISSonicListener implements Listener {
                                 if (plugin.getGeneralKeeper().getSonicWires().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicWires().remove(b.getLocation().toString());
                                     wire.setPower(0);
-                                    faces.forEach((f) -> {
+                                    plugin.getGeneralKeeper().getBlockFaces().forEach((f) -> {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
                                             wire.setPower(0);
                                         }
@@ -518,7 +511,7 @@ public class TARDISSonicListener implements Listener {
                                 } else {
                                     plugin.getGeneralKeeper().getSonicWires().add(b.getLocation().toString());
                                     wire.setPower(15);
-                                    faces.forEach((f) -> {
+                                    plugin.getGeneralKeeper().getBlockFaces().forEach((f) -> {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
                                             wire.setPower(13);
                                         }

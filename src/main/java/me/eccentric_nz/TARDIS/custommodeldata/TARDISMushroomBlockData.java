@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 public class TARDISMushroomBlockData {
 
+    public static final String BROWN_MUSHROOM_DATA_ALL = "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]";
+    public static final String RED_MUSHROOM_DATA_ALL = "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]";
+    public static final String MUSHROOM_STEM_DATA_ALL = "minecraft:mushroom_stem[down=true,east=true,north=true,south=true,up=true,west=true]";
+
     public static final HashMap<Integer, String> BROWN_MUSHROOM_DATA = new HashMap<Integer, String>() {
         {
             // the_moment
