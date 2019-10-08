@@ -147,7 +147,7 @@ class TARDISHandlesLandCommand {
                             whereb.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, whereb);
                         }
-                    }, 400L); // TODO check delay
+                    }, 400L);
                 } else {
                     TARDISMessage.handlesSend(player, "HANDLES_NO_LOCATION");
                 }

@@ -53,7 +53,6 @@ public class TARDISControlInventory {
      */
     private ItemStack[] getItemStack() {
 
-        // TODO loop through GUIControlCentre values
         // get player prefs
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
