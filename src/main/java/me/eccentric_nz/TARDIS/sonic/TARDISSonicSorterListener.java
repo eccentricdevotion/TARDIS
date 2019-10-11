@@ -42,7 +42,9 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.yi.acru.bukkit.Lockette.Lockette;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Borrowed from the SimpleSort plugin. http://dev.bukkit.org/bukkit-plugins/simplesort/
@@ -54,9 +56,30 @@ import java.util.Arrays;
 public class TARDISSonicSorterListener implements Listener {
 
     private final TARDIS plugin;
+    private final List<Material> sortables = new ArrayList<>();
 
     public TARDISSonicSorterListener(TARDIS plugin) {
         this.plugin = plugin;
+        sortables.add(Material.BARREL);
+        sortables.add(Material.BLACK_SHULKER_BOX);
+        sortables.add(Material.BLUE_SHULKER_BOX);
+        sortables.add(Material.BROWN_SHULKER_BOX);
+        sortables.add(Material.CHEST);
+        sortables.add(Material.CYAN_SHULKER_BOX);
+        sortables.add(Material.GRAY_SHULKER_BOX);
+        sortables.add(Material.GREEN_SHULKER_BOX);
+        sortables.add(Material.LIGHT_BLUE_SHULKER_BOX);
+        sortables.add(Material.LIGHT_GRAY_SHULKER_BOX);
+        sortables.add(Material.LIME_SHULKER_BOX);
+        sortables.add(Material.MAGENTA_SHULKER_BOX);
+        sortables.add(Material.ORANGE_SHULKER_BOX);
+        sortables.add(Material.PINK_SHULKER_BOX);
+        sortables.add(Material.PURPLE_SHULKER_BOX);
+        sortables.add(Material.RED_SHULKER_BOX);
+        sortables.add(Material.SHULKER_BOX);
+        sortables.add(Material.TRAPPED_CHEST);
+        sortables.add(Material.WHITE_SHULKER_BOX);
+        sortables.add(Material.YELLOW_SHULKER_BOX);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -71,7 +94,7 @@ public class TARDISSonicSorterListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                     Block block = event.getClickedBlock();
-                    if (block != null && (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST)) {
+                    if (block != null && sortables.contains(block.getType())) {
                         boolean allow = true;
                         // is Lockette on the server?
                         if (plugin.getPM().isPluginEnabled("Lockette")) {
