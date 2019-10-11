@@ -541,7 +541,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
                     Block tmp = world.getBlockAt(x, y, z);
-                    if (clean && !tmp.getType().equals(type) && !plugin.getUtils().isAir(tmp.getType())) {
+                    if (clean && !tmp.getType().equals(type) && !tmp.getType().isAir()) {
                         TARDISBlockSetters.setBlock(world, x, y, z, data);
                     } else if (!tmp.getType().equals(type)) {
                         TARDISBlockSetters.setBlock(world, x, y, z, data);

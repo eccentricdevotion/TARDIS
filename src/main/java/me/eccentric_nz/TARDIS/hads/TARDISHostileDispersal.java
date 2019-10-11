@@ -163,7 +163,7 @@ class TARDISHostileDispersal {
                             TARDISBlockSetters.setUnderDoorBlock(w, (sbx + xx), (sby + yy) - 1, (sbz + zz), id, false);
                         }
                     }
-                    if (!plugin.getUtils().isAir(b.getType())) {
+                    if (!b.getType().isAir()) {
                         float v = (float) -0.5 + (float) (Math.random() * ((0.5 - -0.5) + 1));
                         Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType());
                         if (yy == 1 && xx == 0 && zz == 0) {

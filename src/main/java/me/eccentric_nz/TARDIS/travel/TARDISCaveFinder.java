@@ -127,47 +127,32 @@ public class TARDISCaveFinder {
         Check ret = new Check();
         ret.setSafe(false);
         for (int y = 35; y > 14; y--) {
-            if (plugin.getUtils().isAir(w.getBlockAt(x, y, z).getType())) {
+            if (w.getBlockAt(x, y, z).getType().isAir()) {
                 int yy = getLowestAirBlock(w, x, y, z);
                 // check there is enough height for the police box
                 if (yy <= y - 3 && !w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
                     // check there is room for the police box
-                    if (plugin.getUtils().isAir(w.getBlockAt(x - 1, yy, z - 1).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x - 1, yy, z).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x - 1, yy, z + 1).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x, yy, z - 1).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x, yy, z + 1).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x + 1, yy, z - 1).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x + 1, yy, z).getType())
-                            && plugin.getUtils().isAir(w.getBlockAt(x + 1, yy, z + 1).getType())) {
+                    if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir() && w.getBlockAt(x - 1, yy, z).getType().isAir() && w.getBlockAt(x - 1, yy, z + 1).getType().isAir() && w.getBlockAt(x, yy, z - 1).getType().isAir() && w.getBlockAt(x, yy, z + 1).getType().isAir() && w.getBlockAt(x + 1, yy, z - 1).getType().isAir() && w.getBlockAt(x + 1, yy, z).getType().isAir() && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
                         // finally check there is space to exit the police box
                         boolean safe = false;
                         switch (d) {
                             case NORTH:
-                                if (plugin.getUtils().isAir(w.getBlockAt(x - 1, yy, z + 2).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x, yy, z + 2).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x + 1, yy, z + 2).getType())) {
+                                if (w.getBlockAt(x - 1, yy, z + 2).getType().isAir() && w.getBlockAt(x, yy, z + 2).getType().isAir() && w.getBlockAt(x + 1, yy, z + 2).getType().isAir()) {
                                     safe = true;
                                 }
                                 break;
                             case WEST:
-                                if (plugin.getUtils().isAir(w.getBlockAt(x + 2, yy, z - 1).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x + 2, yy, z).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x + 2, yy, z + 1).getType())) {
+                                if (w.getBlockAt(x + 2, yy, z - 1).getType().isAir() && w.getBlockAt(x + 2, yy, z).getType().isAir() && w.getBlockAt(x + 2, yy, z + 1).getType().isAir()) {
                                     safe = true;
                                 }
                                 break;
                             case SOUTH:
-                                if (plugin.getUtils().isAir(w.getBlockAt(x - 1, yy, z - 2).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x, yy, z - 2).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x + 1, yy, z - 2).getType())) {
+                                if (w.getBlockAt(x - 1, yy, z - 2).getType().isAir() && w.getBlockAt(x, yy, z - 2).getType().isAir() && w.getBlockAt(x + 1, yy, z - 2).getType().isAir()) {
                                     safe = true;
                                 }
                                 break;
                             default:
-                                if (plugin.getUtils().isAir(w.getBlockAt(x - 2, yy, z - 1).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x - 2, yy, z).getType())
-                                        && plugin.getUtils().isAir(w.getBlockAt(x - 2, yy, z + 1).getType())) {
+                                if (w.getBlockAt(x - 2, yy, z - 1).getType().isAir() && w.getBlockAt(x - 2, yy, z).getType().isAir() && w.getBlockAt(x - 2, yy, z + 1).getType().isAir()) {
                                     safe = true;
                                 }
                                 break;
@@ -185,7 +170,7 @@ public class TARDISCaveFinder {
 
     private int getLowestAirBlock(World w, int x, int y, int z) {
         int yy = y;
-        while (plugin.getUtils().isAir(w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType()) && yy > 7) {
+        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir() && yy > 7) {
             yy--;
         }
         return yy;
@@ -196,7 +181,7 @@ public class TARDISCaveFinder {
         int y = w.getHighestBlockYAt(spawn);
         if (y < 15) {
             return false;
-        } else if (plugin.getUtils().isAir(w.getBlockAt(spawn.getBlockX(), 0, spawn.getBlockZ()).getType())) {
+        } else if (w.getBlockAt(spawn.getBlockX(), 0, spawn.getBlockZ()).getType().isAir()) {
             return false;
         } else {
             // move 20 blocks north

@@ -61,7 +61,7 @@ class TARDISRoomRemover {
      */
     public boolean remove() {
         int check_distance = (r.equals("ARBORETUM")) ? 5 : 7;
-        if (plugin.getUtils().isAir(l.getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.valueOf(d.toString()), check_distance).getType())) {
+        if (l.getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.valueOf(d.toString()), check_distance).getType().isAir()) {
             return false;
         }
         // get start locations

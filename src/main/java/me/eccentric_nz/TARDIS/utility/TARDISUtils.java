@@ -51,10 +51,6 @@ public class TARDISUtils {
         this.plugin = plugin;
     }
 
-    public boolean isAir(Material material) {
-        return material == Material.AIR || material == Material.CAVE_AIR || material == Material.VOID_AIR;
-    }
-
     public boolean compareLocations(Location a, Location b) {
         if (a.getWorld().equals(b.getWorld())) {
             double rd = plugin.getArtronConfig().getDouble("recharge_distance");

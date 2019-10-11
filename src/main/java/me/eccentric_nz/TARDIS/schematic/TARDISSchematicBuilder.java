@@ -145,7 +145,7 @@ public class TARDISSchematicBuilder {
                     BlockData data = b.getBlockData();
                     Material m = data.getMaterial();
                     // set ARS block
-                    if (ars && plugin.getUtils().isAir(m)) {
+                    if (ars && m.isAir()) {
                         data = Material.INFESTED_COBBLESTONE.createBlockData();
                         ars = false;
                     }

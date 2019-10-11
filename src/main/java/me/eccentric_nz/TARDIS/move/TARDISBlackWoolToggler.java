@@ -42,7 +42,7 @@ public class TARDISBlackWoolToggler {
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
             BlockData mat;
-            if (plugin.getUtils().isAir(b.getType())) {
+            if (b.getType().isAir()) {
                 mat = TARDISConstants.BLACK;
             } else {
                 mat = TARDISConstants.AIR;
@@ -61,7 +61,7 @@ public class TARDISBlackWoolToggler {
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
         if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
-            return (plugin.getUtils().isAir(b.getType()));
+            return b.getType().isAir();
         } else {
             return false;
         }

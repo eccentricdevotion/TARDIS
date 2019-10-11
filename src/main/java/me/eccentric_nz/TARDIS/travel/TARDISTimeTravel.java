@@ -433,11 +433,11 @@ public class TARDISTimeTravel {
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;
         Block startBlock = nether.getBlockAt(wherex, wherey, wherez);
-        while (!plugin.getUtils().isAir(startBlock.getType())) {
+        while (!startBlock.getType().isAir()) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
         }
         int air = 0;
-        while (plugin.getUtils().isAir(startBlock.getType()) && startBlock.getLocation().getBlockY() > 30) {
+        while (startBlock.getType().isAir() && startBlock.getLocation().getBlockY() > 30) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
             air++;
         }

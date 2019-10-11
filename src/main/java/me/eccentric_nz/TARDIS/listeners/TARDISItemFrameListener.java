@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -150,7 +153,7 @@ public class TARDISItemFrameListener implements Listener {
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else // are they placing a tripwire hook?
-                    if (plugin.getUtils().isAir(frame.getItem().getType()) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+                    if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
                         // get current tardis direction
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
