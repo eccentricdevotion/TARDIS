@@ -143,6 +143,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISHomeCommand(plugin).setHome(player, args);
                 case inside:
                     return new TARDISInsideCommand(plugin).whosInside(player, args);
+                case item:
+                    return new TARDISItemCommand().update(player, args);
                 case jettison:
                     return new TARDISJettisonCommand(plugin).startJettison(player, args);
                 case lamps:

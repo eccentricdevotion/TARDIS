@@ -46,6 +46,7 @@ public enum TARDIS_COMMAND {
     hide,
     home,
     inside,
+    item,
     jettison,
     lamps,
     list,
