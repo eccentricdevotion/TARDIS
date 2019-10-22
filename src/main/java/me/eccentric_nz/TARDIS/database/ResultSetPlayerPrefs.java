@@ -138,6 +138,9 @@ public class ResultSetPlayerPrefs {
                 beaconOn = rs.getBoolean("beacon_on");
                 hadsOn = rs.getBoolean("hads_on");
                 hadsType = HADS.valueOf(rs.getString("hads_type"));
+                if (rs.wasNull()) {
+                    hadsType = HADS.DISPLACEMENT;
+                }
                 submarineOn = rs.getBoolean("submarine_on");
                 artronLevel = rs.getInt("artron_level");
                 String trylamp = rs.getString("lamp");
