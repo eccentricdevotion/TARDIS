@@ -122,9 +122,10 @@ public class TARDISSiegeListener implements Listener {
             }
         }
         String tl = tardis.getOwner();
-        ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1, (byte) 14);
+        ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
+        im.setCustomModelData(10000002);
         List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
         lore.add("ID: " + id);
