@@ -86,7 +86,7 @@ public class TARDISBuilderInner {
         int starty;
         if (below) {
             starty = 15;
-        } else if (schm.getPermission().equals("redstone")) {
+        } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
             starty = 65;
         } else {
             starty = 64;
