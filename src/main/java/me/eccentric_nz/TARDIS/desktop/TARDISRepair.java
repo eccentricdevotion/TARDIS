@@ -166,22 +166,20 @@ class TARDISRepair {
                             }
                             if (bid.equals("ORANGE_WOOL")) {
                                 if (!world.getBlockAt(x, y, z).getType().equals(wall_type)) {
-                                    String bstr = bid + ":" + c.getByte("data");
-                                    if (blockIDs.containsKey(bstr)) {
-                                        Integer count = blockIDs.get(bstr) + 1;
-                                        blockIDs.put(bstr, count);
+                                    if (blockIDs.containsKey(bid)) {
+                                        Integer count = blockIDs.get(bid) + 1;
+                                        blockIDs.put(bid, count);
                                     } else {
-                                        blockIDs.put(bstr, 1);
+                                        blockIDs.put(bid, 1);
                                     }
                                 }
                             } else if (bid.equals("LIGHT_GRAY_WOOL")) {
                                 if (!world.getBlockAt(x, y, z).getType().equals(floor_type)) {
-                                    String bstr = bid + ":" + c.getByte("data");
-                                    if (blockIDs.containsKey(bstr)) {
-                                        Integer count = blockIDs.get(bstr) + 1;
-                                        blockIDs.put(bstr, count);
+                                    if (blockIDs.containsKey(bid)) {
+                                        Integer count = blockIDs.get(bid) + 1;
+                                        blockIDs.put(bid, count);
                                     } else {
-                                        blockIDs.put(bstr, 1);
+                                        blockIDs.put(bid, 1);
                                     }
                                 }
                             } else if (!world.getBlockAt(x, y, z).getType().toString().equals(bid)) {

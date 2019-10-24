@@ -473,22 +473,6 @@ public class JSONObject {
     }
 
     /**
-     * Get the byte value associated with a key.
-     *
-     * @param key A key string.
-     * @return The byte value.
-     * @throws JSONException if the key is not found or if the value cannot be converted to an integer.
-     */
-    public byte getByte(String key) throws JSONException {
-        Object object = get(key);
-        try {
-            return object instanceof Number ? ((Number) object).byteValue() : Byte.parseByte((String) object);
-        } catch (NumberFormatException e) {
-            throw new JSONException("JSONObject[" + quote(key) + "] is not an byte.");
-        }
-    }
-
-    /**
      * Get the JSONArray value associated with a key.
      *
      * @param key A key string.
