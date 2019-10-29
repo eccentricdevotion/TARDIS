@@ -44,7 +44,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
 
     public TARDISGallifreyChunkPopulateListener(TARDIS plugin) {
         this.plugin = plugin;
-        timeCheck = System.currentTimeMillis() + 15000;
+        timeCheck = System.currentTimeMillis() + 5000;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -64,7 +64,6 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
                     if (chunk.getBlock(x, y, z).getType().equals(Material.GOLD_ORE)) {
                         int hy = chunk.getWorld().getHighestBlockYAt(x, z);
                         if (System.currentTimeMillis() < timeCheck) {
-                            plugin.debug("< 15 seconds");
                             return;
                         }
                         buildStructure(chunk, x, hy, z);
@@ -76,8 +75,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
     }
 
     private void buildStructure(Chunk chunk, int x, int y, int z) {
-        timeCheck = System.currentTimeMillis() + 15000;
-        plugin.debug("reset time check...");
+        timeCheck = System.currentTimeMillis() + 5000;
         isBuilding = true;
         chunks.add(chunk);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
