@@ -345,7 +345,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.6.1</version>
+            <version>1.7</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
@@ -361,7 +361,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>9.8.2-SNAPSHOT</version>
+            <version>9.8.4</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/LibsDisguises.jar</systemPath>
