@@ -159,7 +159,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Citizens", "2.0.25");
         versions.put("Factions", "2.8.19");
         versions.put("GriefPrevention", "16.11");
-        versions.put("LibsDisguises", "9.8.2");
+        versions.put("LibsDisguises", "9.8.4");
         versions.put("MultiWorld", "5.2");
         versions.put("Multiverse-Adventure", "2.5");
         versions.put("Multiverse-Core", "3.0");
@@ -183,7 +183,7 @@ public class TARDIS extends JavaPlugin {
         customBlockKey = new NamespacedKey(this, "customBlock");
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.14.1");
+        Version minversion = new Version("1.14.4");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // TARDISChunkGenerator needs to be enabled
