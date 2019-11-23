@@ -40,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 public class TARDISTagListener implements Listener {
 
     private final TARDIS plugin;
+    private final Calendar eggcal = Calendar.getInstance();
 
     public TARDISTagListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -55,7 +56,6 @@ public class TARDISTagListener implements Listener {
      */
     @EventHandler
     public void onPlayerTagJoin(PlayerJoinEvent event) {
-        Calendar eggcal = Calendar.getInstance();
         if (eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
             if (eggcal.get(Calendar.MONTH) == Calendar.NOVEMBER && eggcal.get(Calendar.DATE) == 23) { // zero based month
                 int age = ((eggcal.get(Calendar.YEAR)) - 1963);
@@ -77,8 +77,7 @@ public class TARDISTagListener implements Listener {
      * @param event a player leaving a server
      */
     @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent event) {
-        Calendar eggcal = Calendar.getInstance();
+    public void onPlayerTagLeave(PlayerQuitEvent event) {
         if (eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
             Player p = event.getPlayer();
             if (p.getName().equals(plugin.getTagConfig().getString("it"))) {
@@ -103,8 +102,8 @@ public class TARDISTagListener implements Listener {
      * @param event a player right-clicking another player
      */
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteractPlayer(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked() instanceof Player) {
+    public void onTagPlayerInteractTagPlayer(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked() instanceof Player && eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
             Player clicked = (Player) event.getRightClicked();
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
