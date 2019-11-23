@@ -378,6 +378,9 @@ permissions:
   tardis.formula.show:
     description: Allow a player to view a compound or product formula.
     default: op
+  tardis.tag:
+    description: Allow a player to broadcast Tag The Ood messages.
+    default: true
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
@@ -566,6 +569,7 @@ commands:
     tagtheood:
       description: Display the 'Tag the Ood' game statistics.
       usage: /<command> tagtheood
+      permission: tardis.tag
     transmat:
       description: Sets an internal TARDIS transmat location.
       usage: /<command> transmat [name]
