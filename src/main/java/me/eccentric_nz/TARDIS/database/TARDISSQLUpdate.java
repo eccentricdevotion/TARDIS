@@ -75,6 +75,7 @@ class TARDISSQLUpdate implements Runnable {
         updates = sbu.toString().substring(0, sbu.length() - 1);
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + prefix + table + " SET " + updates + " WHERE " + wheres;
+//        plugin.debug(query);
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);
@@ -91,6 +92,8 @@ class TARDISSQLUpdate implements Runnable {
                     ps.setFloat(s, (Float) entry.getValue());
                 } else if (entry.getValue() instanceof Long) {
                     ps.setLong(s, (Long) entry.getValue());
+                } else {
+                    ps.setObject(s, entry.getValue());
                 }
                 s++;
             }
