@@ -373,7 +373,7 @@ public class TARDIS extends JavaPlugin {
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
-                Version ver = new Version(split[0]);
+                Version ver = new Version("0");
                 if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
                     ver = new Version("1");
                 } else if (plg.equals("Factions")) {
@@ -391,6 +391,8 @@ public class TARDIS extends JavaPlugin {
                     // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
                     ver = new Version(space[0]);
+                } else {
+                    ver = new Version(split[0]);
                 }
                 return (ver.compareTo(minver) >= 0);
             } catch (IllegalArgumentException e) {
