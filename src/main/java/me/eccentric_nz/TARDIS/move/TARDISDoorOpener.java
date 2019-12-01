@@ -203,7 +203,6 @@ public class TARDISDoorOpener {
                             plugin.getTrackerKeeper().getInvisibleDoors().put(tardis.getUuid(), other);
                         }
                     }
-                    plugin.debug("Tracking inportal @: " + inportal.toString());
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                 }
             }

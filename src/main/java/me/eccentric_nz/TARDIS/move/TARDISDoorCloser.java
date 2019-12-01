@@ -97,7 +97,6 @@ public class TARDISDoorCloser {
             if (rs.getTardis().getPreset().equals(PRESET.SWAMP)) {
                 exportal.add(0.0d, 1.0d, 0.0d);
             }
-            plugin.debug("Checking exportal @: " + exportal.toString());
             // unset trackers
             if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 // players
