@@ -73,9 +73,6 @@ public class TARDISChameleonCircuit {
                 case IRON_BLOCK:
                     wall_block = Material.YELLOW_WOOL;
                     break;
-                case TNT:
-                    wall_block = Material.RED_WOOL;
-                    break;
                 case DIAMOND_BLOCK:
                     wall_block = Material.LIGHT_BLUE_WOOL;
                     break;
@@ -83,6 +80,7 @@ public class TARDISChameleonCircuit {
                     wall_block = Material.LIME_WOOL;
                     break;
                 case REDSTONE_BLOCK:
+                case TNT:
                     wall_block = Material.RED_WOOL;
                     break;
                 case COAL_BLOCK:

@@ -131,8 +131,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         setDefault(view, player, tardis.getChameleon());
                                     } else {
                                         toggleOthers(CHAMELEON_OPTION.ADAPTIVE, view);
-                                        tcf.updateChameleonFrame(id, PRESET.FACTORY);
-                                        set.put("chameleon_preset", "FACTORY");
+                                        PRESET adaptive = (tardis.getPreset().equals(PRESET.SUBMERGED)) ? PRESET.SUBMERGED : PRESET.FACTORY;
+                                        tcf.updateChameleonFrame(id, adaptive);
+                                        set.put("chameleon_preset", adaptive.toString());
                                     }
                                     set.put("adapti_on", ca);
                                     ItemStack arb = view.getItem(21);
