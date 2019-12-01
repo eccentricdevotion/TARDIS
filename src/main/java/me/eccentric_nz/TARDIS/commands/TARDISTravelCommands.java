@@ -243,7 +243,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "TRAVEL_NO_PERM_VILLAGE");
                                     return true;
                                 }
-                                // find a village
+                                // find a village / nether fortress / end city
                                 Location village = new TARDISVillageTravel(plugin).getRandomVillage(player, id);
                                 if (village == null) {
                                     TARDISMessage.send(player, "VILLAGE_NOT_FOUND");
@@ -262,7 +262,17 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("y", village.getBlockY());
                                 set.put("z", village.getBlockZ());
                                 set.put("submarine", 0);
-                                which = "Village";
+                                switch (village.getWorld().getEnvironment()) {
+                                    case THE_END:
+                                        which = "End City";
+                                        break;
+                                    case NETHER:
+                                        which = "Nether Fortress";
+                                        break;
+                                    default:
+                                        which = "Village";
+                                        break;
+                                }
                             }
                             plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                             TARDISMessage.send(player, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));

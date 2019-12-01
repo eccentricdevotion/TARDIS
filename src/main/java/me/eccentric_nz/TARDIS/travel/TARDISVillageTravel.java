@@ -50,15 +50,20 @@ public class TARDISVillageTravel {
             World world = rs.getWorld();
             Location location = new Location(world, rs.getX(), rs.getY(), rs.getZ());
             Environment env = world.getEnvironment();
-            if (env.equals(Environment.NETHER)) {
-                TARDISMessage.send(p, "VILLAGE_NO_NETHER");
-                return null;
+            Location loc;
+            switch (env) {
+                case NETHER:
+                    loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
+                    break;
+                case THE_END:
+                    loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
+                    int highesty = world.getHighestBlockYAt(loc);
+                    loc.setY(highesty);
+                    break;
+                default: // NORMAL
+                    loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
+                    break;
             }
-            if (env.equals(Environment.THE_END)) {
-                TARDISMessage.send(p, "VILLAGE_NO_END");
-                return null;
-            }
-            Location loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
             if (loc == null) {
                 return null;
             }

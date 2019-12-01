@@ -229,6 +229,9 @@ class TARDISInstaPreset {
                         change = false;
                         TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisID());
                     }
+                    if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END)) {
+                        TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+                    }
                 }
                 if (yy == 0 && i == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
@@ -241,6 +244,7 @@ class TARDISInstaPreset {
                     // if tardis is in the air add under door
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
+                boolean isPoliceBox = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
                 switch (mat) {
                     case GRASS_BLOCK:
                     case DIRT:
@@ -274,7 +278,7 @@ class TARDISInstaPreset {
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
                         }
-                        if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                        if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && isPoliceBox && plugin.getConfig().getBoolean("police_box.set_biome")) {
                             // set an observer block instead
                             Directional directional = (Directional) Material.OBSERVER.createBlockData();
                             directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
@@ -288,7 +292,7 @@ class TARDISInstaPreset {
                         if (bd.isSubmarine() && mat.equals(Material.TORCH)) {
                             light = Material.GLOWSTONE.createBlockData();
                         } else {
-                            light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? bd.getLamp().createBlockData() : colData[yy];
+                            light = isPoliceBox ? bd.getLamp().createBlockData() : colData[yy];
                         }
                         if (mat.equals(Material.TORCH)) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
@@ -472,7 +476,7 @@ class TARDISInstaPreset {
                         }
                         break;
                     case REDSTONE_BLOCK:
-                        if (!bd.getLamp().equals(Material.REDSTONE_LAMP) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                        if (!bd.getLamp().equals(Material.REDSTONE_LAMP) && isPoliceBox) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, Material.BLUE_WOOL, bd.getTardisID());
                         } else {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());

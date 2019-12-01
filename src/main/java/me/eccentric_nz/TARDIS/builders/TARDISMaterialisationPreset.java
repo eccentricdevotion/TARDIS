@@ -261,6 +261,9 @@ class TARDISMaterialisationPreset implements Runnable {
                                 } else if (preset.equals(PRESET.SUBMERGED)) {
                                     change = false;
                                 }
+                                if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END)) {
+                                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+                                }
                             }
                             if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                                 TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
