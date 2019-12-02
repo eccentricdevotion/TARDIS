@@ -31,7 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * Teleport to the spawn point of worlds on the server
@@ -206,7 +205,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
         return false;
     }
 
-    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
+//    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {

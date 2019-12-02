@@ -87,8 +87,6 @@ public class TARDISWorlds {
         plugin.savePlanetsConfig();
     }
 
-//    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
-
     private boolean worldFolderExists(String world) {
         File container = plugin.getServer().getWorldContainer();
         File[] dirs = container.listFiles();
