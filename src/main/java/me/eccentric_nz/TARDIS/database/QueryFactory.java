@@ -278,6 +278,17 @@ public class QueryFactory {
     }
 
     /**
+     * Updates data in an SQLite database table. This method executes the SQL in a separate thread.
+     *
+     * @param data a HashMap&lt;String, Object&gt; of table fields and values to update.
+     * @param id   the tardis_id
+     */
+    public void updateLocations(HashMap<String, Object> data, String biome, int id) {
+        TARDISSQLUpdateLocations locate = new TARDISSQLUpdateLocations(plugin, data, biome, id);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
+    }
+
+    /**
      * Updates the Artron condenser block count for a specific block.
      *
      * @param new_size   the newly calculated total number of blocks condensed

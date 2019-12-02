@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -103,6 +104,56 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "SIEGE_NO_CMD");
                     return true;
                 }
+                HashMap<String, Object> tid = new HashMap<>();
+                tid.put("tardis_id", id);
+                HashMap<String, Object> set = new HashMap<>();
+                if (args.length == 1 && args[0].equalsIgnoreCase("stop")) {
+                    // remove trackers
+                    plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(id));
+                    plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
+                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    plugin.getTrackerKeeper().getMalfunction().remove(id);
+                    if (plugin.getTrackerKeeper().getDidDematToVortex().contains(id)) {
+                        plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(id));
+                    }
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(id);
+                        plugin.getServer().getScheduler().cancelTask(taskID);
+                        plugin.getTrackerKeeper().getDestinationVortex().remove(id);
+                    }
+                    // get home location
+                    HashMap<String, Object> wherehl = new HashMap<>();
+                    wherehl.put("tardis_id", id);
+                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
+                    if (!rsh.resultSet()) {
+                        TARDISMessage.send(player, "HOME_NOT_FOUND");
+                        return true;
+                    }
+                    // update current, next and back tables
+                    HashMap<String, Object> setlocs = new HashMap<>();
+                    setlocs.put("world", rsh.getWorld().getName());
+                    setlocs.put("x", rsh.getX());
+                    setlocs.put("y", rsh.getY());
+                    setlocs.put("z", rsh.getZ());
+                    setlocs.put("direction", rsh.getDirection().toString());
+                    setlocs.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
+                    Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
+                    Biome biome = l.getBlock().getBiome();
+                    plugin.getQueryFactory().updateLocations(setlocs, biome.toString(), id);
+                    // rebuild the exterior
+                    BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+                    bd.setDirection(rsh.getDirection());
+                    bd.setLocation(l);
+                    bd.setMalfunction(false);
+                    bd.setOutside(true);
+                    bd.setPlayer(player);
+                    bd.setRebuild(true);
+                    bd.setSubmarine(rsh.isSubmarine());
+                    bd.setTardisID(id);
+                    bd.setBiome(biome);
+                    plugin.getPresetBuilder().buildPreset(bd);
+                    return true;
+                }
                 int level = tardis.getArtron_level();
                 boolean powered = tardis.isPowered_on();
                 if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -130,9 +181,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
-                HashMap<String, Object> tid = new HashMap<>();
-                HashMap<String, Object> set = new HashMap<>();
-                tid.put("tardis_id", id);
                 if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
                     String permArea = plugin.getTardisArea().getExileArea(player);

@@ -623,6 +623,10 @@ commands:
       description: Removes the currently set travel destination.
       usage: /<command> cancel
       permission: tardis.timetravel
+    stop:
+      description: Stops travelling / materialising and returns to the home location. Use in an emergency only!
+      usage: /<command> stop
+      permission: tardis.timetravel
   tardisadmin:
     aliases: tadmin
     description: Set TARDIS configuration options and perform TARDIS administration tasks.

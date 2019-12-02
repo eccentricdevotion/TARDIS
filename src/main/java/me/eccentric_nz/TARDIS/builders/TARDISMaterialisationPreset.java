@@ -127,6 +127,7 @@ class TARDISMaterialisationPreset implements Runnable {
             World world = bd.getLocation().getWorld();
             int signx = 0, signz = 0;
             boolean hasDodgyDoor = preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL);
+            boolean isJunkOrToilet = preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET);
             if (i < loops) {
                 i++;
                 if (preset.equals(PRESET.JUNK_MODE)) {
@@ -666,7 +667,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                 break;
                             case LEVER:
                                 // remember this block and do at end
-                                if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
+                                if (isJunkOrToilet) {
                                     // remember its location
                                     handbrake = world.getBlockAt(xx, (y + yy), zz);
                                     h_data = coldatas[yy];
@@ -733,7 +734,7 @@ class TARDISMaterialisationPreset implements Runnable {
                         TARDISBlockSetters.setBlockAndRemember(world, swampSlab.getX(), swampSlab.getY(), swampSlab.getZ(), slab_data, bd.getTardisID());
                     }
                 }
-                if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
+                if (isJunkOrToilet) {
                     handbrake.setBlockData(h_data);
                     // remember its location
                     String location = handbrake.getLocation().toString();
@@ -749,7 +750,6 @@ class TARDISMaterialisationPreset implements Runnable {
                 task = 0;
                 // tardis has moved so remove HADS damage count
                 plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
-                plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
                 if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
                     plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
@@ -757,6 +757,7 @@ class TARDISMaterialisationPreset implements Runnable {
                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
                     int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
                     plugin.getServer().getScheduler().cancelTask(taskID);
+                    plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 }
                 // message travellers in tardis
                 if (loops > 3) {
