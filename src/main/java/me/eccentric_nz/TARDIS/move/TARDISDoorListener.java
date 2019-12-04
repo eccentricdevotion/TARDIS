@@ -50,9 +50,11 @@ public class TARDISDoorListener {
 
     final TARDIS plugin;
     public final float[][] adjustYaw = new float[4][4];
+    private final int player_artron;
 
     public TARDISDoorListener(TARDIS plugin) {
         this.plugin = plugin;
+        player_artron = this.plugin.getArtronConfig().getInt("player");
         // yaw adjustments if inner and outer door directions are different
         adjustYaw[0][0] = 0;
         adjustYaw[0][1] = 90;
@@ -108,13 +110,11 @@ public class TARDISDoorListener {
             }
             if (exit) {
                 plugin.getPM().callEvent(new TARDISExitEvent(p, to));
-                // give some artron energy
-// add energy to player
+                // give some artron energy to player
                 HashMap<String, Object> where = new HashMap<>();
                 UUID uuid = p.getUniqueId();
                 where.put("uuid", uuid.toString());
                 if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
-                    int player_artron = plugin.getArtronConfig().getInt("player");
                     plugin.getQueryFactory().alterEnergyLevel("player_prefs", player_artron, where, p);
                     plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
                 }
@@ -155,7 +155,7 @@ public class TARDISDoorListener {
                 }
                 break;
             case NONE:
-                bool = plugin.getPlanetsConfig().getString("planets." + w.getName() + ".gamemode").equalsIgnoreCase("CREATIVE");
+                bool = plugin.getPlanetsConfig().getString("planets." + w.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
                 break;
         }
         return bool;
@@ -260,26 +260,28 @@ public class TARDISDoorListener {
      * @param p the player to give the key to
      */
     private void giveKey(Player p) {
-        String key;
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", p.getUniqueId().toString());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
-        if (rsp.resultSet()) {
-            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
-        } else {
-            key = plugin.getConfig().getString("preferences.key");
-        }
-        if (plugin.getConfig().getBoolean("travel.give_key") && !key.equals("AIR")) {
-            PlayerInventory inv = p.getInventory();
-            Material m = Material.valueOf(key);
-            ItemStack oh = inv.getItemInOffHand();
-            if (!inv.contains(m) && (oh != null && !oh.getType().equals(m))) {
-                ItemStack is = new ItemStack(m, 1);
-                TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                ir.setName("TARDIS Key", true);
-                inv.addItem(is);
-                p.updateInventory();
-                TARDISMessage.send(p, "KEY_REMIND");
+        if (plugin.getConfig().getBoolean("travel.give_key")) {
+            String key;
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", p.getUniqueId().toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+            } else {
+                key = plugin.getConfig().getString("preferences.key");
+            }
+            if (!key.equals("AIR")) {
+                PlayerInventory inv = p.getInventory();
+                Material m = Material.valueOf(key);
+                ItemStack oh = inv.getItemInOffHand();
+                if (!inv.contains(m) && (oh != null && !oh.getType().equals(m))) {
+                    ItemStack is = new ItemStack(m, 1);
+                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                    ir.setName("TARDIS Key", true);
+                    inv.addItem(is);
+                    p.updateInventory();
+                    TARDISMessage.send(p, "KEY_REMIND");
+                }
             }
         }
     }
