@@ -77,7 +77,12 @@ public class TARDISSeedBlockListener implements Listener {
         if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
-                MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                MultipleFacing multipleFacing;
+                if (which == 45) {
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(45));
+                } else {
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                }
                 event.getBlockPlaced().setBlockData(multipleFacing);
             }
             List<String> lore = im.getLore();
@@ -111,13 +116,19 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISBuildData data = trackTARDISSeed.get(l);
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
-                ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+//                ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+                ItemStack is = new ItemStack(event.getBlock().getType(), 1);
                 ItemMeta im = is.getItemMeta();
                 if (im == null) {
                     return;
                 }
                 String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
-                int model = TARDISSeedModel.modelByString(console);
+                int model;
+                if (TARDISSeedModel.consoleMap.containsKey(console)) {
+                    model = TARDISSeedModel.modelByString(console);
+                } else {
+                    model = 45;
+                }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
                 im.setCustomModelData(10000000 + model);

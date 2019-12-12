@@ -304,6 +304,8 @@ public class TARDISMushroomBlockData {
             put(43, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
             // red_torch
             put(44, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
+            // custom seed block
+            put(45, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=true,west=false]");
         }
     };
 }

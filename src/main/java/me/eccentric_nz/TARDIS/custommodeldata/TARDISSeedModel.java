@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class TARDISSeedModel {
 
-    private static final HashMap<Material, Integer> materialMap = new HashMap<Material, Integer>() {
+    public static final HashMap<Material, Integer> materialMap = new HashMap<Material, Integer>() {
         {
             // ars
             put(Material.QUARTZ_BLOCK, 14);
@@ -52,10 +52,16 @@ public class TARDISSeedModel {
             put(Material.RED_GLAZED_TERRACOTTA, 37);
             // master
             put(Material.NETHER_BRICKS, 39);
+//            // custom
+//            put(Material.OBSIDIAN, 45);
+//            // templates
+//            put(Material.COBBLESTONE, 41);
+//            // archive
+//            put(Material.BONE_BLOCK, 42);
         }
     };
 
-    private static final HashMap<String, Integer> consoleMap = new HashMap<String, Integer>() {
+    public static final HashMap<String, Integer> consoleMap = new HashMap<String, Integer>() {
         {
             put("ARS", 14);
             put("BIGGER", 15);
@@ -79,6 +85,7 @@ public class TARDISSeedModel {
             put("LEGACY_ELEVENTH", 36);
             put("LEGACY_REDSTONE", 37);
             put("MASTER", 39);
+            put("CUSTOM", 26);
         }
     };
 

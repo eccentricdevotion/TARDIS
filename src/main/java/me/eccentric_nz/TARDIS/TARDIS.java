@@ -52,6 +52,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
 import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
+import me.eccentric_nz.TARDIS.recipes.TARDISSeedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
@@ -119,6 +120,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISChameleonPoliceBox boxes;
     private TARDISPerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
+    private TARDISSeedRecipe seeds;
     private TARDISShapedRecipe figura;
     private TARDISShapelessRecipe incomposita;
     private TARDISUtils utils;
@@ -248,6 +250,10 @@ public class TARDIS extends JavaPlugin {
                 difficulty = DIFFICULTY.EASY;
             }
             // register recipes
+            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                seeds = new TARDISSeedRecipe(this);
+                seeds.addSeedRecipes();
+            }, 60L);
             figura = new TARDISShapedRecipe(this);
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
