@@ -53,6 +53,7 @@ class TARDISLazarusExtraInventory {
         disguises.add(Material.RAVAGER_SPAWN_EGG);
         disguises.add(Material.TRADER_LLAMA_SPAWN_EGG);
         disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
+        disguises.add(Material.BEE_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
         disguises.add(Material.SKELETON_HORSE_SPAWN_EGG);
         terminal = getItemStack();
