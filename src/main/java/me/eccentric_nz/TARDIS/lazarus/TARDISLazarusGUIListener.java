@@ -23,8 +23,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.tardischunkgenerator.disguise.AGE;
-import me.eccentric_nz.tardischunkgenerator.disguise.MUSHROOM_COW;
+import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -266,7 +265,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getGene(view), false, getBaby(view)).createDisguise();
                                     } else {
-                                        options = new Object[]{getGene(view), AGE.getFromBoolean(getBaby(view))};
+                                        options = new Object[]{GENE.getFromPandaGene(getGene(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
                                     break;
                                 case DONKEY:
@@ -337,7 +336,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getProfession(view), false, getBaby(view)).createDisguise();
                                     } else {
-                                        options = new Object[]{getProfession(view), AGE.getFromBoolean(getBaby(view))};
+                                        options = new Object[]{PROFESSION.getFromVillagerProfression(getProfession(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
                                     break;
                                 case SLIME:
@@ -351,6 +350,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 case COW:
                                 case TURTLE:
                                 case ZOMBIE:
+                                case BEE:
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, null, false, getBaby(view)).createDisguise();
                                     } else {
@@ -382,14 +382,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
                                     } else {
-                                        options = new Object[]{MUSHROOM_COW.valueOf(getCowVariant(view).toString()), AGE.getFromBoolean(getBaby(view))};
+                                        options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(getCowVariant(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
                                     break;
                                 case FOX:
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getFoxType(view), false, getBaby(view)).createDisguise();
                                     } else {
-                                        options = new Object[]{getFoxType(view), AGE.getFromBoolean(getBaby(view))};
+                                        options = new Object[]{FOX.getFromFoxType(getFoxType(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
                                     break;
                                 default:
