@@ -2,10 +2,10 @@
 
 ## Next version `4.2`
 1. New features
-   * Foxes?
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
+   * Beehive room
    * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures?
 2. Make TARDIS circuits not maps
 3. Test player preference to bypass `tardis rescue accept`
