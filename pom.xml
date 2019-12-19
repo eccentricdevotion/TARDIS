@@ -183,7 +183,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>me.eccentric_nz.TARDIS.databasetool.Main</Main-Class>
+                            <Main-Class>me.eccentric_nz.TARDIS.database.tool.Main</Main-Class>
                             <Implementation-Title>${project.name}</Implementation-Title>
                             <Implementation-Version>${project.version}</Implementation-Version>
                         </manifestEntries>
