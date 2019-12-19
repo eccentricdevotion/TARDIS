@@ -198,6 +198,7 @@ permissions:
     description: Allow players to grow extra rooms.
     children:
       tardis.room.antigravity: true
+      tardis.room.apiary: true
       tardis.room.aquarium: true
       tardis.room.arboretum: true
       tardis.room.baker: true

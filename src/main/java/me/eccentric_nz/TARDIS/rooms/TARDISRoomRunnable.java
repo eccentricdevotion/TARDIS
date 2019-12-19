@@ -448,6 +448,13 @@ public class TARDISRoomRunnable implements Runnable {
                 Block sign = world.getBlockAt(startx, starty, startz);
                 signblocks.add(sign);
             }
+            if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
+                HashMap<String, Object> seta = new HashMap<>();
+                seta.put("apiary", world.getName() + ":" + startx + ":" + (starty + 1) + ":" + startz);
+                HashMap<String, Object> wherea = new HashMap<>();
+                wherea.put("tardis_id", tardis_id);
+                plugin.getQueryFactory().doUpdate("farming", seta, wherea);
+            }
             // set condenser
             if (type.equals(Material.CHEST) && room.equals("HARMONY")) {
                 HashMap<String, Object> setc = new HashMap<>();

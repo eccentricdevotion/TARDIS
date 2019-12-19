@@ -42,6 +42,8 @@ public class TARDISRoomsUpdater {
         // boolean
         booleanOptions.put("rooms.ANTIGRAVITY.enabled", true);
         booleanOptions.put("rooms.ANTIGRAVITY.user", false);
+        booleanOptions.put("rooms.APIARY.enabled", true);
+        booleanOptions.put("rooms.APIARY.user", false);
         booleanOptions.put("rooms.AQUARIUM.enabled", true);
         booleanOptions.put("rooms.AQUARIUM.user", false);
         booleanOptions.put("rooms.ARBORETUM.enabled", true);
@@ -107,6 +109,8 @@ public class TARDISRoomsUpdater {
         // integer
         integerOptions.put("rooms.ANTIGRAVITY.cost", 625);
         integerOptions.put("rooms.ANTIGRAVITY.offset", -4);
+        integerOptions.put("rooms.APIARY.cost", 450);
+        integerOptions.put("rooms.APIARY.offset", -4);
         integerOptions.put("rooms.AQUARIUM.cost", 450);
         integerOptions.put("rooms.AQUARIUM.offset", -4);
         integerOptions.put("rooms.ARBORETUM.cost", 325);
@@ -171,6 +175,7 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.ZERO.offset", -4);
         // string
         stringOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
+        stringOptions.put("rooms.APIARY.seed", "BEE_NEST");
         stringOptions.put("rooms.AQUARIUM.seed", "TUBE_CORAL_BLOCK");
         stringOptions.put("rooms.ARBORETUM.seed", "OAK_LEAVES");
         stringOptions.put("rooms.BAKER.seed", "END_STONE");

@@ -12,6 +12,12 @@ rooms:
     offset: -4
     seed: TUBE_CORAL_BLOCK
     user: false
+  APIARY:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: BEE_NEST
+    user: false
   ARBORETUM:
     enabled: true
     cost: 325

@@ -262,6 +262,14 @@ class TARDISMySQLDatabaseUpdater {
                 String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD model int(11) DEFAULT '10000011'";
                 statement.executeUpdate(arrow_alter);
             }
+            // add apiary to farming
+            String apiary_query = "SHOW COLUMNS FROM " + prefix + "farming LIKE 'apiary'";
+            ResultSet rsapiary = statement.executeQuery(apiary_query);
+            if (!rsapiary.next()) {
+                i++;
+                String arrow_alter = "ALTER TABLE " + prefix + "farming ADD apiary varchar(512) DEFAULT ''";
+                statement.executeUpdate(arrow_alter);
+            }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
             ResultSet rsvoid = statement.executeQuery(voidQuery);

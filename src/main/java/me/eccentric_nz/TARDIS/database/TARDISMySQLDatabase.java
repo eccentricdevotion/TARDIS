@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.databasetool.SQL;
+import me.eccentric_nz.TARDIS.database.tool.SQL;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -59,7 +59,6 @@ public class TARDISMySQLDatabase {
             // update tables
             TARDISMySQLDatabaseUpdater dbu = new TARDISMySQLDatabaseUpdater(plugin, statement);
             dbu.updateTables();
-
         } catch (SQLException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);
         } finally {

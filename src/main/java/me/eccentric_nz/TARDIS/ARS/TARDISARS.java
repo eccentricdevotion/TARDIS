@@ -24,6 +24,7 @@ import java.util.HashMap;
 public enum TARDISARS implements ARS {
 
     ANTIGRAVITY("SANDSTONE", "Anti-gravity Well", 1),
+    APIARY("BEE_NEST", "Apiary", 1),
     AQUARIUM("TUBE_CORAL_BLOCK", "Aquarium", 1),
     ARBORETUM("OAK_LEAVES", "Arboretum", 1),
     BAKER("END_STONE", "4th Doctor's Secondary Console", 1),

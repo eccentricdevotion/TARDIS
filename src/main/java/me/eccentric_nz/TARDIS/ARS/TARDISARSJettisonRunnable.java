@@ -122,7 +122,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                 }
             }
             // remove mob farming locations
-            if (r.equals("FARM") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM")) {
+            if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM")) {
                 HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", id);
                 HashMap<String, Object> setf = new HashMap<>();

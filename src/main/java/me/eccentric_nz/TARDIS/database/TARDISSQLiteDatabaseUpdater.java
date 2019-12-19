@@ -313,8 +313,16 @@ class TARDISSQLiteDatabaseUpdater {
             ResultSet rsmodel = statement.executeQuery(model_query);
             if (!rsmodel.next()) {
                 i++;
-                String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD model INTEGER DEFAULT 10000011";
-                statement.executeUpdate(arrow_alter);
+                String model_alter = "ALTER TABLE " + prefix + "sonic ADD model INTEGER DEFAULT 10000011";
+                statement.executeUpdate(model_alter);
+            }
+            // add apiary to farming
+            String apiary_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "farming' AND sql LIKE '%apiary%'";
+            ResultSet rsapiary = statement.executeQuery(apiary_query);
+            if (!rsapiary.next()) {
+                i++;
+                String apiary_alter = "ALTER TABLE " + prefix + "farming ADD apiary TEXT DEFAULT ''";
+                statement.executeUpdate(apiary_alter);
             }
             // add tardis_id to dispersed
             String dispersed_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "dispersed' AND sql LIKE '%tardis_id%'";
