@@ -71,6 +71,7 @@ public class ResultSetFarming {
                 rs.next();
                 data = new Farm(
                         rs.getInt("tardis_id"),
+                        rs.getString("apiary"),
                         rs.getString("aquarium"),
                         rs.getString("birdcage"),
                         rs.getString("farm"),

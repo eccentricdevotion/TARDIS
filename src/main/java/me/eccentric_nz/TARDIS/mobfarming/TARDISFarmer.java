@@ -99,12 +99,15 @@ public class TARDISFarmer {
             List<TARDISPig> old_macd_had_a_pig = new ArrayList<>();
             List<TARDISMob> old_macd_had_a_polarbear = new ArrayList<>();
             List<TARDISRabbit> old_macd_had_a_rabbit = new ArrayList<>();
+            List<TARDISBee> old_macd_had_a_bee = new ArrayList<>();
             List<TARDISVillager> old_macd_had_a_villager = new ArrayList<>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
                 taf = new TARDISAchievementFactory(plugin, p, ADVANCEMENT.FARM, 5);
             }
+            // count total bees
+            int apiarytotal = 0;
             // count total farm mobs
             int farmtotal = 0;
             // count total horses
@@ -125,6 +128,7 @@ public class TARDISFarmer {
             ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
                 Farm farming = rs.getFarming();
+                String apiary = farming.getApiary();
                 String aquarium = farming.getAquarium();
                 String birdcage = farming.getBirdcage();
                 String farm = farming.getFarm();
@@ -136,6 +140,23 @@ public class TARDISFarmer {
                 // collate the mobs
                 for (Entity e : mobs) {
                     switch (e.getType()) {
+                        case BEE:
+                            TARDISBee tmbee = new TARDISBee();
+                            tmbee.setHasNectar(((Bee) e).hasNectar());
+                            tmbee.setHasStung(((Bee) e).hasStung());
+                            tmbee.setAnger(((Bee) e).getAnger());
+                            tmbee.setAge(((Bee) e).getAge());
+                            tmbee.setBaby(!((Bee) e).isAdult());
+                            tmbee.setName(e.getCustomName());
+                            old_macd_had_a_bee.add(tmbee);
+                            if (!apiary.isEmpty() || (apiary.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                e.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("BEE");
+                            }
+                            apiarytotal++;
+                            break;
                         case CHICKEN:
                             TARDISMob tmchk = new TARDISMob();
                             tmchk.setAge(((Chicken) e).getAge());
@@ -456,7 +477,7 @@ public class TARDISFarmer {
                         old_macd_had_a_fish.setPatternColour(fbim.getPatternColor());
                     }
                 }
-                if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0 || old_macd_had_a_fish != null) {
+                if (apiarytotal > 0 || farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0 || old_macd_had_a_fish != null) {
                     boolean canfarm;
                     switch (plugin.getInvManager()) {
                         case MULTIVERSE:
@@ -475,6 +496,33 @@ public class TARDISFarmer {
                         TARDISMessage.send(p, "WORLD_NO_FARM");
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                         return null;
+                    }
+                }
+                if (!apiary.isEmpty()) {
+                    // get location of farm room
+                    World world = TARDISStaticLocationGetters.getWorld(apiary);
+                    if (old_macd_had_a_bee.size() > 0) {
+                        Location beehive = TARDISStaticLocationGetters.getSpawnLocationFromDB(apiary);
+                        while (!world.getChunkAt(beehive).isLoaded()) {
+                            world.getChunkAt(beehive).load();
+                        }
+                        old_macd_had_a_bee.forEach((e) -> {
+                            plugin.setTardisSpawn(true);
+                            Entity bee = world.spawnEntity(beehive, EntityType.BEE);
+                            Bee buzzy = (Bee) bee;
+                            buzzy.setHasNectar(e.hasNectar());
+                            buzzy.setHasStung(e.hasStung());
+                            buzzy.setAnger(e.getAnger());
+                            buzzy.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                buzzy.setBaby();
+                            }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                buzzy.setCustomName(name);
+                            }
+                            buzzy.setRemoveWhenFarAway(false);
+                        });
                     }
                 }
                 if (!aquarium.isEmpty() && old_macd_had_a_fish != null) {

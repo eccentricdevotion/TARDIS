@@ -22,6 +22,7 @@ package me.eccentric_nz.TARDIS.database.data;
 public class Farm {
 
     private final int tardis_id;
+    private final String apiary;
     private final String aquarium;
     private final String birdcage;
     private final String farm;
@@ -31,8 +32,9 @@ public class Farm {
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String aquarium, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
+    public Farm(int tardis_id, String apiary, String aquarium, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
+        this.apiary = apiary;
         this.aquarium = aquarium;
         this.birdcage = birdcage;
         this.farm = farm;
@@ -53,10 +55,20 @@ public class Farm {
     }
 
     /**
+     * Returns a String representation of the Apiary room bee spawn location in this TARDIS. It is in the form of {@code
+     * World name:x:y:z}
+     *
+     * @return the Apiary room bee spawn location string, or an empty string if the room does not exist
+     */
+    public String getApiary() {
+        return apiary;
+    }
+
+    /**
      * Returns a String representation of the Aquarium room fish spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
-     * @return the Birdcage room parrot spawn location string, or an empty string if the room does not exist
+     * @return the Aquarium room fish spawn location string, or an empty string if the room does not exist
      */
     public String getAquarium() {
         return aquarium;
