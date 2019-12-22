@@ -22,22 +22,19 @@ public class TARDISBeeWaker implements Runnable {
         if (world != null) {
             long ticks = world.getTime();
             if (ticks > 0 && ticks < 600) {
-                plugin.debug("Releasing BEEs");
-                setBeeTicks();
+                wakeBees();
             }
         }
     }
 
-    private void setBeeTicks() {
+    private void wakeBees() {
         // get apiaries
         ResultSetApiaries rsa = new ResultSetApiaries(plugin);
         if (rsa.resultSet()) {
             for (Location location : rsa.getData()) {
-                plugin.debug("Found an apiary");
                 // scan chunk for beehives and bee nests
                 Chunk chunk = location.getChunk();
                 if (chunk.isLoaded()) {
-                    plugin.debug("Chunk is loaded");
                     int cx = chunk.getX() << 4; // chunks x
                     int cz = chunk.getZ() << 4; // chunks z
                     for (int x = cx; x < cx + 16; x++) {
@@ -46,7 +43,6 @@ public class TARDISBeeWaker implements Runnable {
                                 Block block = chunk.getWorld().getBlockAt(x, y, z);
                                 Material material = block.getType();
                                 if (material.equals(Material.BEE_NEST) || material.equals(Material.BEEHIVE)) {
-                                    plugin.debug("Found beehive/nest");
                                     plugin.getTardisHelper().releaseBees(block);
                                 }
                             }
