@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Bee;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -88,6 +89,7 @@ public class TARDISSpawnListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntitySpawn(CreatureSpawnEvent event) {
+        SpawnReason spawnReason = event.getSpawnReason();
         Location l = event.getLocation();
         if (l.getWorld().getName().contains("TARDIS")) {
             if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
@@ -97,11 +99,14 @@ public class TARDISSpawnListener implements Listener {
                 plugin.setTardisSpawn(false);
                 return;
             }
+            if (spawnReason.equals(SpawnReason.BEEHIVE) || (spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
+                plugin.getTardisHelper().setBeeTicks((Bee) event.getEntity());
+            }
             // if not an allowable TARDIS spawn reason, cancel
-            if (!good_spawns.contains(event.getSpawnReason())) {
+            if (!good_spawns.contains(spawnReason)) {
                 event.setCancelled(true);
             }
-            if (event.getSpawnReason().equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
                 if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
@@ -118,7 +123,7 @@ public class TARDISSpawnListener implements Listener {
                 return;
             }
             // only natural spawning
-            if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
+            if (!spawnReason.equals(SpawnReason.NATURAL)) {
                 return;
             }
             // only in DEEP_OCEAN, MUSHROOM_ISLAND, NETHER & THE END

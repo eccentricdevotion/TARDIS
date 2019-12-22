@@ -96,6 +96,7 @@ preferences:
   no_coords: false
   no_creative_condense: false
   vortex_fall: kill
+  wake_bees: true
 # desktop theme
 desktop:
   check_blocks_before_upgrade: false

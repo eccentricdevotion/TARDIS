@@ -112,6 +112,7 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.use_default_condensables", true);
         booleanOptions.put("preferences.use_worldguard", true);
         booleanOptions.put("preferences.walk_in_tardis", true);
+        booleanOptions.put("preferences.wake_bees", true);
         booleanOptions.put("siege.butcher", false);
         booleanOptions.put("siege.creeper", false);
         booleanOptions.put("siege.enabled", true);
