@@ -118,6 +118,7 @@ public class TARDISConfiguration {
         booleanOptions.put("siege.enabled", true);
         booleanOptions.put("siege.healing", false);
         booleanOptions.put("siege.texture", false);
+        booleanOptions.put("storage.mysql.useSSL", false);
         booleanOptions.put("travel.exile", false);
         booleanOptions.put("travel.give_key", false);
         booleanOptions.put("travel.include_default_world", false);

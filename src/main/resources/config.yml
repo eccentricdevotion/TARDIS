@@ -8,6 +8,7 @@ storage:
     user: bukkit
     password: mysecurepassword
     prefix: ""
+    useSSL: false
 # inner TARDIS
 creation:
   create_worlds: false
