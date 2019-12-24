@@ -5,7 +5,6 @@
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Bamboo room to farm Pandas?
-   * Beehive room
    * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures?
 2. Make TARDIS circuits not maps
 3. Test player preference to bypass `tardis rescue accept`
@@ -35,7 +34,7 @@
 2. Update existing monsters with persistent data if they don't have it.
 3. Custom Entity models using Optifine (when they can be applied to named entities)
 4. Rare armour drops
-5. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
+5. Something with an invisible Shulker passenger - or an invisible bee with a Shulker passenger (Toclafane?)
 6. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
@@ -51,8 +50,6 @@
    * Judoon
    * Clockwork Droid
 7. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
-8. Rename resource pack to 'TARDIS-Optifine'?
-9. Custom time rotor model
 
 ## Minecraft API if ever available
 1. Recreate everything with the new API :)

@@ -64,7 +64,7 @@ public class TARDISMalfunction {
 
     public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
-        // get cuurent TARDIS preset location
+        // get current TARDIS preset location
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);

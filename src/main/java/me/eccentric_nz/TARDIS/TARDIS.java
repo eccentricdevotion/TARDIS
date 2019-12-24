@@ -660,7 +660,6 @@ public class TARDIS extends JavaPlugin {
      */
     private void startBeeTicks() {
         if (getConfig().getBoolean("preferences.wake_bees")) {
-            plugin.debug("Starting BEE scheduler");
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISBeeWaker(this), 40L, 500L);
         }
     }
