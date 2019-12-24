@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.database.data;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -176,7 +178,15 @@ public class Tardis {
      * @return the companion UUIDs, or an empty string if there are none
      */
     public String getCompanions() {
-        return companions;
+        if (companions.equalsIgnoreCase("everyone")) {
+            StringBuilder sb = new StringBuilder();
+            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                sb.append(p.getUniqueId().toString()).append(":");
+            }
+            return sb.substring(0, sb.length() - 1);
+        } else {
+            return companions;
+        }
     }
 
     /**

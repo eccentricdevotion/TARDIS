@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,8 +75,15 @@ public class ResultSetCompanions {
                 String comps = rs.getString("companions");
                 if (!rs.wasNull() && !comps.isEmpty()) {
                     // add companions
-                    for (String c : rs.getString("companions").split(":")) {
-                        companions.add(UUID.fromString(c));
+                    String compStr = rs.getString("companions");
+                    if (compStr.equalsIgnoreCase("everyone")) {
+                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                            companions.add(p.getUniqueId());
+                        }
+                    } else {
+                        for (String c : rs.getString("companions").split(":")) {
+                            companions.add(UUID.fromString(c));
+                        }
                     }
                 }
             }

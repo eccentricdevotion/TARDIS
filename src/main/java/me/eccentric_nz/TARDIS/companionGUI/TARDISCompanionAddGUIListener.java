@@ -65,6 +65,25 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                         case 47: // list
                             list(player);
                             break;
+                        case 49: // add everyone
+                            HashMap<String, Object> wherea = new HashMap<>();
+                            wherea.put("uuid", player.getUniqueId().toString());
+                            ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
+                            if (rsa.resultSet()) {
+                                Tardis tardis = rsa.getTardis();
+                                int id = tardis.getTardis_id();
+                                String comps = tardis.getCompanions();
+                                addCompanion(id, comps, "everyone");
+                                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                                    // remove all members
+                                    String[] data = tardis.getChunk().split(":");
+                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(plugin.getServer().getWorld(data[0]), player.getName());
+                                    // set entry and exit flags to allow
+                                    plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
+                                }
+                                list(player);
+                            }
+                            break;
                         case 53: // close
                             close(player);
                             break;
@@ -84,6 +103,8 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                     String[] data = tardis.getChunk().split(":");
                                     addToRegion(data[0], tardis.getOwner(), m.getDisplayName());
+                                    // set entry and exit flags to allow
+                                    plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), false);
                                 }
                                 list(player);
                             }
@@ -100,7 +121,12 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
             ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
             if (rs.fromUUID(player.getUniqueId().toString())) {
                 String comps = rs.getCompanions();
-                ItemStack[] items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
+                ItemStack[] items;
+                if (comps.equalsIgnoreCase("everyone")) {
+                    items = new TARDISEveryoneCompanionInventory(plugin).getSkulls();
+                } else {
+                    items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
+                }
                 Inventory cominv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
                 cominv.setContents(items);
                 player.openInventory(cominv);
@@ -112,7 +138,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
         HashMap<String, Object> tid = new HashMap<>();
         HashMap<String, Object> set = new HashMap<>();
         tid.put("tardis_id", id);
-        if (comps != null && !comps.isEmpty()) {
+        if (comps != null && !comps.isEmpty() && !puid.equalsIgnoreCase("everyone")) {
             // add to the list
             String newList = comps + ":" + puid;
             set.put("companions", newList);

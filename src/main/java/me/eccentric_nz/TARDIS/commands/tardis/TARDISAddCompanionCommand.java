@@ -84,38 +84,57 @@ class TARDISAddCompanionCommand {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
                 return true;
             } else {
-                UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-                if (oluuid != null) {
-                    HashMap<String, Object> tid = new HashMap<>();
-                    HashMap<String, Object> set = new HashMap<>();
+                boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
+                HashMap<String, Object> tid = new HashMap<>();
+                HashMap<String, Object> set = new HashMap<>();
+                if (addAll) {
                     tid.put("tardis_id", id);
-                    if (comps != null && !comps.isEmpty()) {
-                        // add to the list
-                        String newList = comps + ":" + oluuid.toString();
-                        set.put("companions", newList);
+                    set.put("companions", "everyone");
+                } else {
+                    // get player from name
+                    UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+                    if (oluuid != null) {
+                        tid.put("tardis_id", id);
+                        if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
+                            // add to the list
+                            String newList = comps + ":" + oluuid.toString();
+                            set.put("companions", newList);
+                            plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                            TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                            TARDISMessage.send(player, "COMPANIONS_EVERYONE");
+                        } else {
+                            // make a list
+                            set.put("companions", oluuid.toString());
+                        }
+                        // are we doing an achievement?
+                        if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
+                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.FRIENDS, 1);
+                            taf.doAchievement(1);
+                        }
                     } else {
-                        // make a list
-                        set.put("companions", oluuid.toString());
+                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        return true;
                     }
-                    plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
-                    // are we doing an achievement?
-                    if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.FRIENDS, 1);
-                        taf.doAchievement(1);
-                    }
-                    // if using WorldGuard, add them to the region membership
-                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                        World w = TARDISStaticLocationGetters.getWorld(data);
-                        if (w != null) {
+                }
+                // if using WorldGuard, add them to the region membership
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    World w = TARDISStaticLocationGetters.getWorld(data);
+                    if (w != null) {
+                        if (addAll) {
+                            // remove all members
+                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, player.getName());
+                            // set entry and exit flags to allow
+                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), true);
+                        } else {
                             plugin.getWorldGuardUtils().addMemberToRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
+                            // set entry and exit flags to allow
+                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
                         }
                     }
-                    return true;
-                } else {
-                    TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
-                    return true;
                 }
+                plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + (addAll ? "everyone" : args[1]) + ChatColor.RESET);
+                return true;
             }
         } else {
             TARDISMessage.send(player, "NO_PERMS");

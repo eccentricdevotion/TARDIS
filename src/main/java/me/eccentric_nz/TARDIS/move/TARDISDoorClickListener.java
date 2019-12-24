@@ -349,11 +349,15 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             if (!playerUUID.equals(tlUUID)) {
                                                 if (companions != null && !companions.isEmpty()) {
                                                     // is the player in the companion list
-                                                    String[] companionData = companions.split(":");
-                                                    for (String c : companionData) {
-                                                        if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
-                                                            chkCompanion = true;
-                                                            break;
+                                                    if (companions.equalsIgnoreCase("everyone")) {
+                                                        chkCompanion = true;
+                                                    } else {
+                                                        String[] companionData = companions.split(":");
+                                                        for (String c : companionData) {
+                                                            if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
+                                                                chkCompanion = true;
+                                                                break;
+                                                            }
                                                         }
                                                     }
                                                 }

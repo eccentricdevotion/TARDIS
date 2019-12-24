@@ -90,6 +90,11 @@ public class TARDISCompanionAddInventory {
         ll.setDisplayName("List companions");
         list.setItemMeta(ll);
         heads[47] = list;
+        ItemStack every = new ItemStack(Material.WRITABLE_BOOK, 1);
+        ItemMeta one = every.getItemMeta();
+        one.setDisplayName("Add all online players");
+        every.setItemMeta(one);
+        heads[49] = every;
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();

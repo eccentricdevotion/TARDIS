@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -86,10 +87,12 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                                     ItemMeta m = h.getItemMeta();
                                     List<String> l = m.getLore();
                                     String u = l.get(0);
-                                    removeCompanion(id, comps, u);
+                                    removeCompanion(id, comps, u, player);
                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                        String[] data = tardis.getChunk().split(":");
-                                        removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
+                                        if (!comps.equalsIgnoreCase("everyone")) {
+                                            String[] data = tardis.getChunk().split(":");
+                                            removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
+                                        }
                                     }
                                     close(player);
                                 }
@@ -107,30 +110,34 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
         }
     }
 
-    private void removeCompanion(int id, String comps, String uuid) {
-        HashMap<String, Object> tid = new HashMap<>();
-        HashMap<String, Object> set = new HashMap<>();
-        String newList = "";
-        String[] split = comps.split(":");
-        StringBuilder buf = new StringBuilder();
-        if (split.length > 1) {
-            // recompile string without the specified player
-            for (String c : split) {
-                if (!c.equals(uuid)) {
-                    // add to new string
-                    buf.append(c).append(":");
-                }
-            }
-            // remove trailing colon
-            if (buf.length() > 0) {
-                newList = buf.toString().substring(0, buf.length() - 1);
-            }
-            set.put("companions", newList);
+    private void removeCompanion(int id, String comps, String uuid, Player player) {
+        if (comps.equalsIgnoreCase("everyone")) {
+            TARDISMessage.send(player, "COMPANIONS_ALL");
         } else {
-            set.put("companions", "");
+            HashMap<String, Object> tid = new HashMap<>();
+            HashMap<String, Object> set = new HashMap<>();
+            String newList = "";
+            String[] split = comps.split(":");
+            StringBuilder buf = new StringBuilder();
+            if (split.length > 1) {
+                // recompile string without the specified player
+                for (String c : split) {
+                    if (!c.equals(uuid)) {
+                        // add to new string
+                        buf.append(c).append(":");
+                    }
+                }
+                // remove trailing colon
+                if (buf.length() > 0) {
+                    newList = buf.toString().substring(0, buf.length() - 1);
+                }
+                set.put("companions", newList);
+            } else {
+                set.put("companions", "");
+            }
+            tid.put("tardis_id", id);
+            plugin.getQueryFactory().doUpdate("tardis", set, tid);
         }
-        tid.put("tardis_id", id);
-        plugin.getQueryFactory().doUpdate("tardis", set, tid);
     }
 
     private void removeFromRegion(String world, String owner, String player) {

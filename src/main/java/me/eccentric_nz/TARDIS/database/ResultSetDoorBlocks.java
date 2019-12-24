@@ -49,7 +49,7 @@ public class ResultSetDoorBlocks {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
      *
      * @param plugin an instance of the main class.
-     * @param id     the TARDIS id to get the companions for.
+     * @param id     the TARDIS id to get the doors for.
      */
     public ResultSetDoorBlocks(TARDIS plugin, int id) {
         this.plugin = plugin;

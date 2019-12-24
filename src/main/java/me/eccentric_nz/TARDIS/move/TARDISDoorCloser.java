@@ -21,9 +21,11 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,13 +80,19 @@ public class TARDISDoorCloser {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                    String[] companions = rs.getTardis().getCompanions().split(":");
-                    for (String c : companions) {
-                        if (!c.isEmpty()) {
-                            uuids.add(UUID.fromString(c));
+                    if (rs.getTardis().getCompanions().equalsIgnoreCase("everyone")) {
+                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                            uuids.add(p.getUniqueId());
                         }
+                    } else {
+                        String[] companions = rs.getTardis().getCompanions().split(":");
+                        for (String c : companions) {
+                            if (!c.isEmpty()) {
+                                uuids.add(UUID.fromString(c));
+                            }
+                        }
+                        uuids.add(uuid);
                     }
-                    uuids.add(uuid);
                 }
             }
             // get locations

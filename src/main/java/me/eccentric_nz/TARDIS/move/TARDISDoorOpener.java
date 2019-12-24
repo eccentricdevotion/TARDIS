@@ -25,10 +25,12 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Openable;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,10 +89,16 @@ public class TARDISDoorOpener {
                     preset = tardis.getPreset();
                     abandoned = tardis.isAbandoned();
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                        String[] companions = tardis.getCompanions().split(":");
-                        for (String c : companions) {
-                            if (!c.isEmpty()) {
-                                uuids.add(UUID.fromString(c));
+                        if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                uuids.add(p.getUniqueId());
+                            }
+                        } else {
+                            String[] companions = tardis.getCompanions().split(":");
+                            for (String c : companions) {
+                                if (!c.isEmpty()) {
+                                    uuids.add(UUID.fromString(c));
+                                }
                             }
                         }
                     }

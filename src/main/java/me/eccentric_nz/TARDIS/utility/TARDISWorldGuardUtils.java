@@ -376,6 +376,22 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
+     * Removes all members from a region's membership.
+     *
+     * @param w     the world the region is located in
+     * @param owner the player whose region it is
+     */
+    public void removeAllMembersFromRegion(World w, String owner) {
+        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
+        if (rm.hasRegion("TARDIS_" + owner)) {
+            // remove all with the -a flag
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember -a TARDIS_" + owner + " -w " + w.getName());
+            // add the owner back in
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + owner + " -w " + w.getName());
+        }
+    }
+
+    /**
      * Updates the TARDIS WorldGuard region when the player name has changed.
      *
      * @param w     the world the region is located in
@@ -536,5 +552,29 @@ public class TARDISWorldGuardUtils {
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         return ars.testState(null, Flags.MOB_SPAWNING);
+    }
+
+    /**
+     * Sets the entry and exit flags for a region.
+     *
+     * @param world the world in which the region is located
+     * @param owner the player who owns the region
+     * @param allow whether the flag state should be set to allow or deny
+     */
+    public void setEntryExitFlags(String world, String owner, boolean allow) {
+        World w = plugin.getServer().getWorld(world);
+        if (w != null) {
+            RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
+            ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
+            Map<Flag<?>, Object> flags = region.getFlags();
+            flags.put(Flags.ENTRY, (allow) ? State.ALLOW : State.DENY);
+            flags.put(Flags.EXIT, (allow) ? State.ALLOW : State.DENY);
+            region.setFlags(flags);
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+            }
+        }
     }
 }
