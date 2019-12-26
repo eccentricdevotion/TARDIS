@@ -35,7 +35,7 @@ class TARDISSonicReplant implements Runnable {
     private final Block under;
     private final Material type;
     private final Material air = Material.AIR;
-    private final List<Material> dirt = Arrays.asList(Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.GRASS_BLOCK);
+    private final List<Material> dirt = Arrays.asList(Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.GRASS_BLOCK, Material.SAND);
     private final Material log = Material.JUNGLE_LOG;
     private final Material soil = Material.FARMLAND;
     private final Material soul = Material.SOUL_SAND;
@@ -60,6 +60,13 @@ class TARDISSonicReplant implements Runnable {
                     block.setBlockData(Material.BEETROOTS.createBlockData());
                 } else {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.BEETROOT));
+                }
+                break;
+            case CACTUS:
+                if (dirt.contains(under.getType()) || Tag.SAND.isTagged(under.getType()) && block.getType().equals(air)) {
+                    block.setBlockData(Material.CACTUS.createBlockData());
+                } else {
+                    block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.CACTUS));
                 }
                 break;
             case CARROT:

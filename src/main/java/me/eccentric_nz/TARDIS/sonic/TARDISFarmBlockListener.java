@@ -45,6 +45,7 @@ public class TARDISFarmBlockListener implements Listener {
     private final Material sc = Material.SUGAR_CANE;
     private final Material ss = Material.WHEAT_SEEDS;
     private final Material sb = Material.SWEET_BERRIES;
+    private final Material ca = Material.CACTUS;
     private final Material sonic;
 
     public TARDISFarmBlockListener(TARDIS plugin) {
@@ -60,19 +61,24 @@ public class TARDISFarmBlockListener implements Listener {
             return;
         }
         Block block = event.getBlock();
-        if (!TARDISMaterials.crops.contains(block.getType())) {
+        Material material = block.getType();
+        if (!TARDISMaterials.crops.contains(material)) {
             return;
         }
         ItemStack stack = player.getInventory().getItemInMainHand();
         if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
             ItemMeta im = stack.getItemMeta();
             if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
-                if (block.getType().equals(Material.SUGAR_CANE) && player.getInventory().contains(sc)) {
+                if ((material.equals(sc)) && player.getInventory().contains(sc)) {
+                    // SUGAR_CANE
                     processHarvest(player, sc, block);
+                } else if (material.equals(ca) && player.getInventory().contains(ca)) {
+                    // CACTUS
+                    processHarvest(player, ca, block);
                 } else {
                     Ageable ageable = (Ageable) block.getBlockData();
                     if (ageable.getAge() == ageable.getMaximumAge()) {
-                        switch (block.getType()) {
+                        switch (material) {
                             case BEETROOTS:
                                 if (player.getInventory().contains(bs)) {
                                     processHarvest(player, bs, block);
