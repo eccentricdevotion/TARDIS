@@ -120,6 +120,10 @@ public class TARDISSonicUpgradeListener implements Listener {
                     ci.setResult(null);
                 } else {
                     ItemMeta sim = sonic.getItemMeta();
+                    int cmd = 10000011;
+                    if (sim.hasCustomModelData()) {
+                        cmd = sim.getCustomModelData();
+                    }
                     String dn = sim.getDisplayName();
                     List<String> lore;
                     if (sim.hasLore()) {
@@ -133,6 +137,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                     // if they don't already have the upgrade
                     if (!lore.contains(upgrade)) {
                         im.setDisplayName(dn);
+                        im.setCustomModelData(cmd);
                         lore.add(upgrade);
                         im.setLore(lore);
                         is.setItemMeta(im);
