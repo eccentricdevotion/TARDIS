@@ -544,7 +544,7 @@ public class TARDISSonicListener implements Listener {
                             if (player.hasPermission("tardis.sonic.silktouch")) {
                                 Location l = b.getLocation();
                                 if (mat.equals(Material.SNOW)) {
-                                    Snow snow = (Snow) b;
+                                    Snow snow = (Snow) b.getBlockData();
                                     b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOWBALL, 1 + snow.getLayers()));
                                 } else {
                                     l.getWorld().dropItemNaturally(l, new ItemStack(b.getType(), 1));
@@ -558,7 +558,7 @@ public class TARDISSonicListener implements Listener {
                                 if (mat.equals(Material.SNOW_BLOCK)) {
                                     balls = 4;
                                 } else {
-                                    Snow snow = (Snow) b;
+                                    Snow snow = (Snow) b.getBlockData();
                                     balls = 1 + snow.getLayers();
                                 }
                                 b.setBlockData(TARDISConstants.AIR);
