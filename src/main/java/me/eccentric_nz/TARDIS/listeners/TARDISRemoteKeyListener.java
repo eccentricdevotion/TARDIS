@@ -67,10 +67,10 @@ public class TARDISRemoteKeyListener implements Listener {
             return;
         }
         Action action = event.getAction();
-        if (!action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_AIR)) {
+        Player player = event.getPlayer();
+        if ((!action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_AIR)) || player.isSneaking()) {
             return;
         }
-        Player player = event.getPlayer();
         // check item in hand
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is == null || !is.getType().equals(rkey)) {
@@ -99,7 +99,6 @@ public class TARDISRemoteKeyListener implements Listener {
             }
             boolean hidden = tardis.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
-
                 // get the TARDIS current location
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
