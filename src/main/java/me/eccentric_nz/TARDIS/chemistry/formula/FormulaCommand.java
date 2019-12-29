@@ -5,18 +5,17 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
 import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
 import me.eccentric_nz.TARDIS.chemistry.product.Product;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-public class FormulaCommand implements CommandExecutor, TabCompleter {
+public class FormulaCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
     private final List<String> ROOT_SUBS = new ArrayList<>();
@@ -81,9 +80,5 @@ public class FormulaCommand implements CommandExecutor, TabCompleter {
             return partial(args[0], ROOT_SUBS);
         }
         return ImmutableList.of();
-    }
-
-    protected List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<>(from.size()));
     }
 }

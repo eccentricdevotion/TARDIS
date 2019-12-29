@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.chemistry.creative;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,11 +12,12 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.StringUtil;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
-public class ChemistryCommand implements CommandExecutor, TabCompleter {
+public class ChemistryCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
     private final List<String> ROOT_SUBS = Arrays.asList("elements", "compounds", "products", "lab");
@@ -80,9 +82,5 @@ public class ChemistryCommand implements CommandExecutor, TabCompleter {
             return partial(args[0], ROOT_SUBS);
         }
         return ImmutableList.of();
-    }
-
-    protected List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<>(from.size()));
     }
 }
