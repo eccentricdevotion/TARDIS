@@ -164,7 +164,7 @@ class TARDISHostileDispersal {
                         }
                     }
                     if (!b.getType().isAir()) {
-                        float v = (float) -0.5 + (float) (Math.random() * ((0.5 - -0.5) + 1));
+                        float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 - -0.5) + 1));
                         Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType());
                         if (yy == 1 && xx == 0 && zz == 0) {
                             tmp = colour;
