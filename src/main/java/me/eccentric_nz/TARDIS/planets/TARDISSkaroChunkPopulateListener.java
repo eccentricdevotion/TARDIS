@@ -39,9 +39,11 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
     private final TARDIS plugin;
     private final List<Chunk> chunks = new ArrayList<>();
     private boolean isBuilding = false;
+    private long timeCheck;
 
     public TARDISSkaroChunkPopulateListener(TARDIS plugin) {
         this.plugin = plugin;
+        timeCheck = System.currentTimeMillis() + 3000;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -60,6 +62,9 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
                 for (int y = 45; y < 66; y++) {
                     if (chunk.getBlock(x, y, z).getType().equals(Material.COAL_ORE)) {
                         int hy = chunk.getWorld().getHighestBlockYAt(x, z);
+                        if (System.currentTimeMillis() < timeCheck) {
+                            return;
+                        }
                         buildStructure(chunk, x, hy, z);
                         return;
                     }
@@ -69,6 +74,7 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
     }
 
     private void buildStructure(Chunk chunk, int x, int y, int z) {
+        timeCheck = System.currentTimeMillis() + 3000;
         isBuilding = true;
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             chunks.add(chunk);
