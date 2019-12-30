@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -498,7 +499,11 @@ class TARDISMaterialisationPreset implements Runnable {
                                     break;
                                 default: // everything else
                                     if (change) {
-                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                        if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
+                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
+                                        } else {
+                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                        }
                                     }
                                     break;
                             }
@@ -720,7 +725,11 @@ class TARDISMaterialisationPreset implements Runnable {
                                 break;
                             default: // everything else
                                 if (change) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
+                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)));
+                                    } else {
+                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    }
                                 }
                                 break;
                         }

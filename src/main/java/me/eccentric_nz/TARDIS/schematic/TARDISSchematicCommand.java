@@ -127,7 +127,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     TARDISMessage.send(player, "SCHM_SQUARE");
                     return true;
                 }
-                if ((width % 16 != 0 || length % 16 != 0) && !args[1].equals("zero")) {
+                if ((width % 16 != 0 || length % 16 != 0) && !args[1].equals("zero") && !args[1].equals("junk")) {
                     TARDISMessage.send(player, "SCHM_MULTIPLE");
                     return true;
                 }

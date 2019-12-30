@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -177,7 +178,13 @@ public class TARDISJunkBuilder implements Runnable {
                                         TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
                                         break;
                                     case ORANGE_WOOL:
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, wall_type, bd.getTardisID());
+                                        BlockData stem;
+                                        if (wall_type.equals(Material.ORANGE_WOOL)) {
+                                            stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                        } else {
+                                            stem = wall_type.createBlockData();
+                                        }
+                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
                                         break;
                                     case LIGHT_GRAY_WOOL:
                                         TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());

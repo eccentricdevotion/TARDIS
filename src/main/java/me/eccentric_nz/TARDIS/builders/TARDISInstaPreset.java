@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -284,6 +285,9 @@ class TARDISInstaPreset {
                             Directional directional = (Directional) Material.OBSERVER.createBlockData();
                             directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisID());
+                        }
+                        if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
                         }
                         break;
                     case TORCH: // lamps, glowstone and torches
