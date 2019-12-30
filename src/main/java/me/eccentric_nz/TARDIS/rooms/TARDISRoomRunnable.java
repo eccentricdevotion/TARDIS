@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
@@ -432,7 +433,11 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (type.equals(Material.ORANGE_WOOL)) {
                 if (wall_type.equals(Material.ORANGE_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wall_type.equals(Material.LIME_WOOL) || wall_type.equals(Material.PINK_WOOL)))) {
-                    data = ow.createBlockData();
+                    if (ow.equals(Material.ORANGE_WOOL)) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                    } else {
+                        data = ow.createBlockData();
+                    }
                 } else {
                     data = wall_type.createBlockData();
                 }
@@ -674,7 +679,8 @@ public class TARDISRoomRunnable implements Runnable {
                 if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                     data = TARDISConstants.AIR;
                 } else {
-                    data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
+                    BlockData wall = (ow.equals(Material.ORANGE_WOOL)) ? plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)) : ow.createBlockData();
+                    data = (wall_type.equals(Material.ORANGE_WOOL)) ? wall : wall_type.createBlockData();
                 }
             }
             // always clear the door blocks on the north and west sides of adjacent spaces

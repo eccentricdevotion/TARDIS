@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -180,18 +181,19 @@ class TARDISBuildAbandoned {
                                     case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Terracotta
                                         switch (use_clay) {
                                             case TERRACOTTA:
-                                                type = Material.ORANGE_TERRACOTTA;
+                                                data = Material.ORANGE_TERRACOTTA.createBlockData();
                                                 break;
                                             case CONCRETE:
-                                                type = Material.ORANGE_CONCRETE;
+                                                data = Material.ORANGE_CONCRETE.createBlockData();
                                                 break;
                                             default:
-                                                type = Material.ORANGE_WOOL;
+//                                                type = Material.ORANGE_WOOL;
+                                                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                                                 break;
                                         }
                                         break;
                                     default:
-                                        type = wall_type;
+                                        data = wall_type.createBlockData();
                                 }
                                 break;
                             case LIGHT_GRAY_WOOL:
@@ -200,18 +202,18 @@ class TARDISBuildAbandoned {
                                         case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Terracotta
                                             switch (use_clay) {
                                                 case TERRACOTTA:
-                                                    type = Material.LIGHT_GRAY_TERRACOTTA;
+                                                    data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
                                                     break;
                                                 case CONCRETE:
-                                                    type = Material.LIGHT_GRAY_CONCRETE;
+                                                    data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
                                                     break;
                                                 default:
-                                                    type = Material.LIGHT_GRAY_WOOL;
+                                                    data = Material.LIGHT_GRAY_WOOL.createBlockData();
                                                     break;
                                             }
                                             break;
                                         default:
-                                            type = floor_type;
+                                            data = floor_type.createBlockData();
                                     }
                                 } else {
                                     String[] split = type.toString().split("_");
@@ -221,7 +223,7 @@ class TARDISBuildAbandoned {
                                     } else {
                                         m = split[0] + "_" + use_clay.toString();
                                     }
-                                    type = Material.getMaterial(m);
+                                    data = Material.getMaterial(m).createBlockData();
                                 }
                                 break;
                             default:
@@ -232,8 +234,14 @@ class TARDISBuildAbandoned {
                                 } else {
                                     m = split[0] + "_" + use_clay.toString();
                                 }
-                                type = Material.getMaterial(m);
+                                data = Material.getMaterial(m).createBlockData();
                         }
+                    }
+                    if (type.equals(Material.WHITE_STAINED_GLASS)) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                    }
+                    if (type.equals(Material.WHITE_TERRACOTTA)) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button
                         /*

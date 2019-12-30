@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -423,7 +424,17 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getQueryFactory().insertSyncControl(id, 14, storage, 0);
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
-                    data = wall_type.createBlockData();
+                    if (wall_type == Material.ORANGE_WOOL) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                    } else {
+                        data = wall_type.createBlockData();
+                    }
+                }
+                if (type.equals(Material.WHITE_STAINED_GLASS)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                }
+                if (type.equals(Material.WHITE_TERRACOTTA)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     data = floor_type.createBlockData();

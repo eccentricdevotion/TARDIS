@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
@@ -229,7 +230,8 @@ public class TARDISBuilderInner {
                                             data = Material.ORANGE_CONCRETE.createBlockData();
                                             break;
                                         default:
-                                            data = Material.ORANGE_WOOL.createBlockData();
+//                                            data = Material.ORANGE_WOOL.createBlockData();
+                                            data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                                             break;
                                     }
                                 } else {
@@ -274,6 +276,12 @@ public class TARDISBuilderInner {
                                 }
                                 data = Material.getMaterial(m).createBlockData();
                         }
+                    }
+                    if (type.equals(Material.WHITE_STAINED_GLASS)) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                    }
+                    if (type.equals(Material.WHITE_TERRACOTTA)) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button
                         /*

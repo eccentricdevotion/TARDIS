@@ -45,6 +45,7 @@ public class TARDISSchematicBuilder {
     private final int id, sx, ex, sy, ey, sz, ez;
     private final int[] controls = {0, 2, 3, 4, 5};
     private Location h;
+    private final HashMap<String, Material> mushroom_stem = new HashMap<>();
 
     public TARDISSchematicBuilder(TARDIS plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
         this.plugin = plugin;
@@ -56,6 +57,12 @@ public class TARDISSchematicBuilder {
         this.ey = ey;
         this.sz = sz;
         this.ez = ez;
+        // orange hexagon
+        mushroom_stem.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=true,west=true]", Material.ORANGE_WOOL);
+        // white roundel
+        mushroom_stem.put("minecraft:mushroom_stem[down=true,east=true,north=false,south=false,up=false,west=false]", Material.WHITE_STAINED_GLASS);
+        // white roundel offset
+        mushroom_stem.put("minecraft:mushroom_stem[down=true,east=true,north=false,south=false,up=false,west=true]", Material.WHITE_TERRACOTTA);
     }
 
     public ArchiveData build() {
@@ -170,6 +177,10 @@ public class TARDISSchematicBuilder {
                                 data = Material.CAKE.createBlockData();
                             }
                             break;
+                        case MUSHROOM_STEM:
+                            if (mushroom_stem.containsKey(data.getAsString())) {
+                                data = mushroom_stem.get(data.getAsString()).createBlockData();
+                            }
                         default:
                             break;
                     }

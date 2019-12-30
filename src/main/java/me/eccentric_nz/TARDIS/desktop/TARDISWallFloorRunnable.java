@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -148,8 +149,12 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {
-                    type = wall_type;
-                    TARDISBlockSetters.setBlock(world, x, y, z, type);
+                    if (wall_type == Material.ORANGE_WOOL) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                    } else {
+                        data = wall_type.createBlockData();
+                    }
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     type = floor_type;
