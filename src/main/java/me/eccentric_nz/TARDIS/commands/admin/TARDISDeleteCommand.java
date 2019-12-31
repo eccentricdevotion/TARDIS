@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
@@ -197,6 +198,8 @@ public class TARDISDeleteCommand {
     }
 
     public static void cleanDatabase(int id) {
+        TARDISBlockLoader bl = new TARDISBlockLoader(TARDIS.plugin);
+        bl.unloadProtectedBlocks(id);
         List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {

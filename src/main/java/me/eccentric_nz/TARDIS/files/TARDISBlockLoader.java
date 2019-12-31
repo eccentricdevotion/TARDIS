@@ -51,10 +51,22 @@ public class TARDISBlockLoader {
      * Loads Police Box and precious TARDIS blocks for protection from griefing and harvesting. This speeds the looking
      * up of block locations, as no database interaction is required.
      */
-    public void loadProtectBlocks() {
+    public void loadProtectedBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
         if (rsb.resultSet()) {
-            rsb.getData().forEach((rp) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rp.getStrLocation(), rp.getTardis_id()));
+            rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardis_id()));
+        }
+    }
+
+    /**
+     * Unloads Police Box and precious TARDIS blocks from protection. Called when a TARDIS is deleted.
+     */
+    public void unloadProtectedBlocks(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, true);
+        if (rsb.resultSet()) {
+            rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().remove(rb.getStrLocation()));
         }
     }
 

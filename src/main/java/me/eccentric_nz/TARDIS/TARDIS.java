@@ -286,7 +286,7 @@ public class TARDIS extends JavaPlugin {
             }
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();
-            bl.loadProtectBlocks();
+            bl.loadProtectedBlocks();
             if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
                 bl.loadAntiBuild();
             }
