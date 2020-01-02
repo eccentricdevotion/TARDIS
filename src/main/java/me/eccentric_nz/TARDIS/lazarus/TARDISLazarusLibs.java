@@ -64,7 +64,7 @@ public class TARDISLazarusLibs {
                     break;
                 case PILLAGER:
                     PillagerWatcher pillagerWatcher = (PillagerWatcher) livingWatcher;
-                    pillagerWatcher.setAimimgBow(hasOption);
+                    pillagerWatcher.setAimingBow(hasOption);
                     break;
                 case SHEEP:
                     SheepWatcher sheepWatcher = (SheepWatcher) livingWatcher;
