@@ -120,7 +120,7 @@ class TARDISRoomRemover {
                 }
             }
         }
-        if (r.equals("FARM") || r.equals("STABLE") || r.equals("STALL") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("AQUARIUM")) {
+        if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
             // remove stored location from the database
             HashMap<String, Object> set = new HashMap<>();
             set.put(r.toLowerCase(Locale.ENGLISH), "");

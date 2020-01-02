@@ -26,6 +26,7 @@ public enum ROOM {
     AQUARIUM,
     ARBORETUM,
     BAKER,
+    BAMBOO,
     BEDROOM,
     BIRDCAGE,
     CHEMISTRY,

@@ -28,6 +28,7 @@ public enum TARDISARS implements ARS {
     AQUARIUM("TUBE_CORAL_BLOCK", "Aquarium", 1),
     ARBORETUM("OAK_LEAVES", "Arboretum", 1),
     BAKER("END_STONE", "4th Doctor's Secondary Console", 1),
+    BAMBOO("BAMBOO", "Bamboo", 1),
     BEDROOM("GLOWSTONE", "Bedroom", 1),
     BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "Bird Cage", 1),
     CHEMISTRY("BLAST_FURNACE", "Chemistry Lab", 1),

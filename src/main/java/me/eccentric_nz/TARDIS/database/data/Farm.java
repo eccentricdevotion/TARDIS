@@ -24,6 +24,7 @@ public class Farm {
     private final int tardis_id;
     private final String apiary;
     private final String aquarium;
+    private final String bamboo;
     private final String birdcage;
     private final String farm;
     private final String hutch;
@@ -32,10 +33,11 @@ public class Farm {
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String apiary, String aquarium, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
+    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.apiary = apiary;
         this.aquarium = aquarium;
+        this.bamboo = bamboo;
         this.birdcage = birdcage;
         this.farm = farm;
         this.hutch = hutch;
@@ -72,6 +74,16 @@ public class Farm {
      */
     public String getAquarium() {
         return aquarium;
+    }
+
+    /**
+     * Returns a String representation of the Bamboo room panda spawn location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
+     *
+     * @return the Bamboo room panda spawn location string, or an empty string if the room does not exist
+     */
+    public String getBamboo() {
+        return bamboo;
     }
 
     /**

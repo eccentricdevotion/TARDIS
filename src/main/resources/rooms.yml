@@ -24,6 +24,12 @@ rooms:
     offset: -4
     seed: OAK_LEAVES
     user: false
+  BAMBOO:
+    enabled: true
+    cost: 475
+    offset: -4
+    seed: BAMBOO
+    user: false
   BEDROOM:
     enabled: true
     cost: 475

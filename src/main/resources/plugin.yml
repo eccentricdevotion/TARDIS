@@ -202,6 +202,7 @@ permissions:
       tardis.room.aquarium: true
       tardis.room.arboretum: true
       tardis.room.baker: true
+      tardis.room.bamboo: true
       tardis.room.bedroom: true
       tardis.room.birdcage: true
       tardis.room.chemistry: true

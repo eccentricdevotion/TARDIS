@@ -45,6 +45,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> tardisupdates = new ArrayList<>();
     private final List<String> inventoryupdates = new ArrayList<>();
     private final List<String> chameleonupdates = new ArrayList<>();
+    private final List<String> farmingupdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
     private final TARDIS plugin;
@@ -137,6 +138,8 @@ class TARDISSQLiteDatabaseUpdater {
         chameleonupdates.add("line3 TEXT DEFAULT ''");
         chameleonupdates.add("line4 TEXT DEFAULT ''");
         chameleonupdates.add("asymmetric INTEGER DEFAULT 0");
+        farmingupdates.add("apiary TEXT DEFAULT ''");
+        farmingupdates.add("bamboo TEXT DEFAULT ''");
     }
 
     /**
@@ -284,6 +287,16 @@ class TARDISSQLiteDatabaseUpdater {
                     statement.executeUpdate(h_alter);
                 }
             }
+            for (String f : farmingupdates) {
+                String[] fsplit = f.split(" ");
+                String f_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "farming' AND sql LIKE '%" + fsplit[0] + "%'";
+                ResultSet rsf = statement.executeQuery(f_query);
+                if (!rsf.next()) {
+                    i++;
+                    String f_alter = "ALTER TABLE " + prefix + "farming ADD " + f;
+                    statement.executeUpdate(f_alter);
+                }
+            }
             // add biome to current location
             String bio_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "current' AND sql LIKE '%biome%'";
             ResultSet rsbio = statement.executeQuery(bio_query);
@@ -315,14 +328,6 @@ class TARDISSQLiteDatabaseUpdater {
                 i++;
                 String model_alter = "ALTER TABLE " + prefix + "sonic ADD model INTEGER DEFAULT 10000011";
                 statement.executeUpdate(model_alter);
-            }
-            // add apiary to farming
-            String apiary_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "farming' AND sql LIKE '%apiary%'";
-            ResultSet rsapiary = statement.executeQuery(apiary_query);
-            if (!rsapiary.next()) {
-                i++;
-                String apiary_alter = "ALTER TABLE " + prefix + "farming ADD apiary TEXT DEFAULT ''";
-                statement.executeUpdate(apiary_alter);
             }
             // add tardis_id to dispersed
             String dispersed_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "dispersed' AND sql LIKE '%tardis_id%'";

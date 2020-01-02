@@ -101,10 +101,11 @@ public class TARDISFarmer {
             List<TARDISRabbit> old_macd_had_a_rabbit = new ArrayList<>();
             List<TARDISBee> old_macd_had_a_bee = new ArrayList<>();
             List<TARDISVillager> old_macd_had_a_villager = new ArrayList<>();
+            List<TARDISPanda> old_macd_had_a_panda = new ArrayList<>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
-                taf = new TARDISAchievementFactory(plugin, p, ADVANCEMENT.FARM, 5);
+                taf = new TARDISAchievementFactory(plugin, p, ADVANCEMENT.FARM, 14);
             }
             // count total bees
             int apiarytotal = 0;
@@ -124,12 +125,15 @@ public class TARDISFarmer {
             int llamatotal = 0;
             // count total parrots
             int parrottotal = 0;
+            // count total parrots
+            int pandatotal = 0;
             // is there a farm room?
             ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
                 Farm farming = rs.getFarming();
                 String apiary = farming.getApiary();
                 String aquarium = farming.getAquarium();
+                String bamboo = farming.getBamboo();
                 String birdcage = farming.getBirdcage();
                 String farm = farming.getFarm();
                 String hutch = farming.getHutch();
@@ -139,6 +143,7 @@ public class TARDISFarmer {
                 String village = farming.getVillage();
                 // collate the mobs
                 for (Entity e : mobs) {
+                    plugin.debug("farming a: " + e.getType().toString());
                     switch (e.getType()) {
                         case BEE:
                             TARDISBee tmbee = new TARDISBee();
@@ -335,6 +340,23 @@ public class TARDISFarmer {
                             }
                             parrottotal++;
                             break;
+                        case PANDA:
+                            TARDISPanda tmpanda = new TARDISPanda();
+                            tmpanda.setAge(((Panda) e).getAge());
+                            tmpanda.setBaby(!((Panda) e).isAdult());
+                            tmpanda.setName(e.getCustomName());
+                            tmpanda.setMainGene(((Panda) e).getMainGene());
+                            tmpanda.setHiddenGene(((Panda) e).getHiddenGene());
+                            old_macd_had_a_panda.add(tmpanda);
+                            if (!bamboo.isEmpty() || (bamboo.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                plugin.debug("Removed entity because bamboo is not empty");
+                                e.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("PANDA");
+                            }
+                            pandatotal++;
+                            break;
                         case PIG:
                             TARDISPig tmpig = new TARDISPig();
                             tmpig.setAge(((Pig) e).getAge());
@@ -466,7 +488,7 @@ public class TARDISFarmer {
                             break;
                     }
                 }
-                ItemStack fishBucket = p.getInventory().getItemInMainHand();
+                ItemStack fishBucket = p.getInventory().getItemInOffHand();
                 if (fishBucket != null && TARDISMaterials.fish_buckets.contains(fishBucket.getType())) {
                     old_macd_had_a_fish = new TARDISFish();
                     old_macd_had_a_fish.setType(TARDISMaterials.fishMap.get(fishBucket.getType()));
@@ -477,7 +499,7 @@ public class TARDISFarmer {
                         old_macd_had_a_fish.setPatternColour(fbim.getPatternColor());
                     }
                 }
-                if (apiarytotal > 0 || farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0 || old_macd_had_a_fish != null) {
+                if (apiarytotal > 0 || farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0 || beartotal > 0 || llamatotal > 0 || parrottotal > 0 || pandatotal > 0 || old_macd_had_a_fish != null) {
                     boolean canfarm;
                     switch (plugin.getInvManager()) {
                         case MULTIVERSE:
@@ -524,6 +546,14 @@ public class TARDISFarmer {
                             buzzy.setRemoveWhenFarAway(false);
                         });
                     }
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_bee.size() > 0) {
+                    // give spawn eggs
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.BEE_SPAWN_EGG, old_macd_had_a_bee.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (apiarytotal > 0) {
+                    TARDISMessage.send(p, "FARM_APIARY");
                 }
                 if (!aquarium.isEmpty() && old_macd_had_a_fish != null) {
                     // get location of farm room
@@ -557,6 +587,40 @@ public class TARDISFarmer {
                     // change fish bucket to empty bucket
                     p.getInventory().getItemInMainHand().setType(Material.BUCKET);
                     p.updateInventory();
+                }
+                if (!bamboo.isEmpty()) {
+                    // get location of bamboo room
+                    World world = TARDISStaticLocationGetters.getWorld(bamboo);
+                    if (old_macd_had_a_panda.size() > 0) {
+                        Location forest = TARDISStaticLocationGetters.getSpawnLocationFromDB(bamboo);
+                        while (!world.getChunkAt(forest).isLoaded()) {
+                            world.getChunkAt(forest).load();
+                        }
+                        old_macd_had_a_panda.forEach((e) -> {
+                            plugin.setTardisSpawn(true);
+                            Entity bear = world.spawnEntity(forest, EntityType.PANDA);
+                            Panda panda = (Panda) bear;
+                            panda.setMainGene(e.getMainGene());
+                            panda.setHiddenGene(e.getHiddenGene());
+                            panda.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                panda.setBaby();
+                            }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                panda.setCustomName(name);
+                            }
+                            panda.setRemoveWhenFarAway(false);
+                        });
+                    }
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_panda.size() > 0) {
+                    // give spawn eggs
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.PANDA_SPAWN_EGG, old_macd_had_a_panda.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (pandatotal > 0) {
+                    TARDISMessage.send(p, "FARM_BAMBOO");
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
@@ -899,7 +963,7 @@ public class TARDISFarmer {
                     TARDISMessage.send(p, "FARM_IGLOO");
                 }
                 if (!birdcage.isEmpty() && old_macd_had_a_parrot.size() > 0) {
-                    // get location of igloo room
+                    // get location of birdcage room
                     World world = TARDISStaticLocationGetters.getWorld(birdcage);
                     Location b_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(birdcage);
                     while (!world.getChunkAt(b_room).isLoaded()) {
@@ -927,6 +991,8 @@ public class TARDISFarmer {
                     ItemStack is = new ItemStack(Material.PARROT_SPAWN_EGG, old_macd_had_a_parrot.size());
                     inv.addItem(is);
                     p.updateInventory();
+                } else if (parrottotal > 0) {
+                    TARDISMessage.send(p, "FARM_BIRDCAGE");
                 }
             }
         }

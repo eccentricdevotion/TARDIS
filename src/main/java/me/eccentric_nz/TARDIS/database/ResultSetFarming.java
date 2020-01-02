@@ -73,6 +73,7 @@ public class ResultSetFarming {
                         rs.getInt("tardis_id"),
                         rs.getString("apiary"),
                         rs.getString("aquarium"),
+                        rs.getString("bamboo"),
                         rs.getString("birdcage"),
                         rs.getString("farm"),
                         rs.getString("hutch"),

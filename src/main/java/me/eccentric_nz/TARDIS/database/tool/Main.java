@@ -181,7 +181,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case farming:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
                                     bw.write(str);
                                     break;
                                 case gravity_well:

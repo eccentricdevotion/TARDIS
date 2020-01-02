@@ -43,6 +43,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> portalsupdates = new ArrayList<>();
     private final List<String> inventoryupdates = new ArrayList<>();
     private final List<String> chameleonupdates = new ArrayList<>();
+    private final List<String> farmingupdates = new ArrayList<>();
     private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
     private final TARDIS plugin;
@@ -102,6 +103,8 @@ class TARDISMySQLDatabaseUpdater {
         chameleonupdates.add("line3 varchar(48) DEFAULT ''");
         chameleonupdates.add("line4 varchar(48) DEFAULT ''");
         chameleonupdates.add("asymmetric int(1) DEFAULT '0'");
+        farmingupdates.add("apiary varchar(512) DEFAULT ''");
+        farmingupdates.add("bamboo varchar(512) DEFAULT ''");
     }
 
     /**
@@ -199,6 +202,16 @@ class TARDISMySQLDatabaseUpdater {
                     statement.executeUpdate(h_alter);
                 }
             }
+            for (String f : farmingupdates) {
+                String[] fsplit = f.split(" ");
+                String f_query = "SHOW COLUMNS FROM " + prefix + "farming LIKE '" + fsplit[0] + "'";
+                ResultSet fsa = statement.executeQuery(f_query);
+                if (!fsa.next()) {
+                    i++;
+                    String f_alter = "ALTER TABLE " + prefix + "farming ADD " + f;
+                    statement.executeUpdate(f_alter);
+                }
+            }
             // update data type for `lamp` in player_prefs
             String lamp_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "player_prefs' AND COLUMN_NAME = 'lamp'";
             ResultSet rslc = statement.executeQuery(lamp_check);
@@ -260,14 +273,6 @@ class TARDISMySQLDatabaseUpdater {
             if (!rsmodel.next()) {
                 i++;
                 String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD model int(11) DEFAULT '10000011'";
-                statement.executeUpdate(arrow_alter);
-            }
-            // add apiary to farming
-            String apiary_query = "SHOW COLUMNS FROM " + prefix + "farming LIKE 'apiary'";
-            ResultSet rsapiary = statement.executeQuery(apiary_query);
-            if (!rsapiary.next()) {
-                i++;
-                String arrow_alter = "ALTER TABLE " + prefix + "farming ADD apiary varchar(512) DEFAULT ''";
                 statement.executeUpdate(arrow_alter);
             }
             // transfer `void` data to `thevoid`, then remove `void` table
