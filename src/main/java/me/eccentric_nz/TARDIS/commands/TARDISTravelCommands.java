@@ -940,7 +940,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             while (!chunk.isLoaded()) {
                 chunk.load();
             }
-            y = w.getHighestBlockYAt(x, z);
+            y = getHighestYin4x4(w, x, z);
         }
         int max = Math.min(plugin.getConfig().getInt("travel.max_distance"), (int) (w.getWorldBorder().getSize() / 2) - 17);
         if (x > max || x < -max || z > max || z < -max) {
@@ -948,6 +948,19 @@ public class TARDISTravelCommands implements CommandExecutor {
             return null;
         }
         return new Location(w, x, y, z);
+    }
+
+    private final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
+
+    private int getHighestYin4x4(World world, int x, int z) {
+        int y = 0;
+        for (int xx : fourByFour) {
+            for (int zz : fourByFour) {
+                int tmp = world.getHighestBlockYAt(x + xx, z + zz);
+                y = Math.max(tmp, y);
+            }
+        }
+        return y;
     }
 
     public Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
