@@ -114,6 +114,10 @@ public class TARDISWorlds {
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
             }
+            boolean hardcore = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
+            if (hardcore) {
+                worldCreator.hardcore(true);
+            }
             World w = worldCreator.createWorld();
             if (w != null) {
                 String gm = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
