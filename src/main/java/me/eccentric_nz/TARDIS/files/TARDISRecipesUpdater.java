@@ -241,8 +241,8 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "BLACK_DYE");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "PURPLE_DYE");
-            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "RED_DYE");
-            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "RED_DYE");
+            recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "SWEET_BERRIES");
+            recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "SWEET_BERRIES");
             recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "BLUE_DYE");
             recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
             recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
@@ -475,7 +475,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Biome Reader.lore", "");
             i++;
         }
-        if (!recipes_config.contains("shaped.Jammy Dodger")) {
+        if (!recipes_config.contains("shaped.Jammy Dodger") || recipes_config.getString("shaped.Jammy Dodger.easy_ingredients.R").equals("RED_DYE")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "SWEET_BERRIES");
@@ -532,7 +532,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Bowl of Custard.lore", "");
             i++;
         }
-        if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") || recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe").contains(":") || recipes_config.getString("shapeless.Vanilla Jelly Baby.result").equals("MELON")) {
+        if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") || recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe").contains(":") || recipes_config.getString("shapeless.Vanilla Jelly Baby.result").equals("MELON") || recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe").equals("SUGAR,SLIME_BALL,BONE_MEAL")) {
             for (Map.Entry<String, String> map : flavours.entrySet()) {
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.recipe", "SUGAR,SLIME_BALL," + map.getValue());
                 recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.result", "MELON_SLICE");
