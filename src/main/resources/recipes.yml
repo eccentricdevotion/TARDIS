@@ -14,10 +14,10 @@ shaped:
     hard_ingredients:
       O: OBSIDIAN
       I: IRON_INGOT
-      C: 'FILLED_MAP:1965'
+      C: FILLED_MAP:1965
     result: COMPASS
     amount: 1
-    lore: ""
+    lore: ''
   Stattenheim Remote:
     easy_shape: OBO,-L-,RRR
     easy_ingredients:
@@ -29,11 +29,11 @@ shaped:
     hard_ingredients:
       O: OBSIDIAN
       B: STONE_BUTTON
-      L: 'FILLED_MAP:1963'
+      L: FILLED_MAP:1963
       R: REDSTONE
     result: FLINT
     amount: 1
-    lore: "Right-click block~to call TARDIS"
+    lore: Right-click block~to call TARDIS
   TARDIS Remote Key:
     easy_shape: RCR,-K-,-T-
     easy_ingredients:
@@ -46,10 +46,10 @@ shaped:
       R: REDSTONE
       C: COMPARATOR
       K: GOLD_NUGGET
-      T: 'FILLED_MAP:1964'
+      T: FILLED_MAP:1964
     result: GOLD_NUGGET
     amount: 1
-    lore: "Deadlock & unlock~Hide & rebuild"
+    lore: Deadlock & unlock~Hide & rebuild
   TARDIS Locator Circuit:
     easy_shape: RQR,RIR,DRL
     easy_ingredients:
@@ -65,9 +65,9 @@ shaped:
       I: IRON_INGOT
       D: REPEATER
       L: BLUE_DYE
-    result: 'FILLED_MAP:1965'
+    result: FILLED_MAP:1965
     amount: 1
-    lore: ""
+    lore: ''
   TARDIS Materialisation Circuit:
     easy_shape: IDI,-L-,QRQ
     easy_ingredients:
@@ -82,25 +82,25 @@ shaped:
       R: REDSTONE
       L: BLUE_DYE
       Q: QUARTZ
-    result: 'FILLED_MAP:1964'
+    result: FILLED_MAP:1964
     amount: 1
-    lore: "Uses left~50"
+    lore: Uses left~50
   TARDIS Stattenheim Circuit:
-    easy_shape: ---,LRM,QQQ
+    easy_shape: '---,LRM,QQQ'
     easy_ingredients:
-      L: 'FILLED_MAP:1965'
+      L: FILLED_MAP:1965
       R: REDSTONE
-      M: 'FILLED_MAP:1964'
+      M: FILLED_MAP:1964
       Q: QUARTZ
-    hard_shape: ---,LRM,QQQ
+    hard_shape: '---,LRM,QQQ'
     hard_ingredients:
-      L: 'FILLED_MAP:1965'
+      L: FILLED_MAP:1965
       R: REDSTONE
-      M: 'FILLED_MAP:1964'
+      M: FILLED_MAP:1964
       Q: QUARTZ
-    result: 'FILLED_MAP:1963'
+    result: FILLED_MAP:1963
     amount: 1
-    lore: ""
+    lore: ''
   TARDIS Chameleon Circuit:
     easy_shape: -G-,RER,-G-
     easy_ingredients:
@@ -113,10 +113,10 @@ shaped:
       G: GOLD_INGOT
       E: DETECTOR_RAIL
       R: REDSTONE
-      M: 'FILLED_MAP:1964'
-    result: 'FILLED_MAP:1966'
+      M: FILLED_MAP:1964
+    result: FILLED_MAP:1966
     amount: 1
-    lore: "Uses left~25"
+    lore: Uses left~25
   TARDIS ARS Circuit:
     easy_shape: SSS,T-T,RRR
     easy_ingredients:
@@ -130,9 +130,9 @@ shaped:
       P: PISTON
       T: REDSTONE_TORCH
       R: REDSTONE
-    result: 'FILLED_MAP:1973'
+    result: FILLED_MAP:1973
     amount: 1
-    lore: "Uses left~20"
+    lore: Uses left~20
   TARDIS Temporal Circuit:
     easy_shape: -I-,RWR,-I-
     easy_ingredients:
@@ -145,9 +145,9 @@ shaped:
       R: REDSTONE
       W: CLOCK
       Q: QUARTZ
-    result: 'FILLED_MAP:1974'
+    result: FILLED_MAP:1974
     amount: 1
-    lore: "Uses left~20"
+    lore: Uses left~20
   TARDIS Memory Circuit:
     easy_shape: -T-,TCT,-T-
     easy_ingredients:
@@ -158,9 +158,9 @@ shaped:
       R: RED_SAND
       T: REDSTONE_TORCH
       C: TRAPPED_CHEST
-    result: 'FILLED_MAP:1975'
+    result: FILLED_MAP:1975
     amount: 1
-    lore: "Uses left~20"
+    lore: Uses left~20
   TARDIS Input Circuit:
     easy_shape: -R-,-S-,-R-
     easy_ingredients:
@@ -170,9 +170,9 @@ shaped:
     hard_ingredients:
       R: REDSTONE
       S: OAK_SIGN
-    result: 'FILLED_MAP:1976'
+    result: FILLED_MAP:1976
     amount: 1
-    lore: "Uses left~50"
+    lore: Uses left~50
   TARDIS Scanner Circuit:
     easy_shape: GRG,RGR,GRG
     easy_ingredients:
@@ -183,9 +183,9 @@ shaped:
       G: GLASS
       E: SPIDER_EYE
       R: REDSTONE
-    result: 'FILLED_MAP:1977'
+    result: FILLED_MAP:1977
     amount: 1
-    lore: "Uses left~20"
+    lore: Uses left~20
   TARDIS Randomiser Circuit:
     easy_shape: -D-,NCE,-W-
     easy_ingredients:
@@ -201,25 +201,25 @@ shaped:
       C: COMPASS
       E: END_STONE
       W: WATER_BUCKET
-    result: 'FILLED_MAP:1980'
+    result: FILLED_MAP:1980
     amount: 1
-    lore: "Uses left~50"
+    lore: Uses left~50
   TARDIS Invisibility Circuit:
     easy_shape: -D-,P-E,-W-
     easy_ingredients:
       D: DIAMOND
-      P: 'FILLED_MAP:1978'
+      P: FILLED_MAP:1978
       E: EMERALD
-      W: 'POTION'
+      W: POTION
     hard_shape: -D-,P-E,-W-
     hard_ingredients:
       D: DIAMOND
-      P: 'FILLED_MAP:1978'
+      P: FILLED_MAP:1978
       E: EMERALD
-      W: 'POTION'
-    result: 'FILLED_MAP:1981'
+      W: POTION
+    result: FILLED_MAP:1981
     amount: 1
-    lore: "Uses left~5"
+    lore: Uses left~5
   TARDIS Telepathic Circuit:
     easy_shape: -S-,SES,-S-
     easy_ingredients:
@@ -228,11 +228,11 @@ shaped:
     hard_shape: -S-,SPS,ESE
     hard_ingredients:
       S: SLIME_BALL
-      P: 'POTION'
+      P: POTION
       E: EMERALD
     result: DAYLIGHT_DETECTOR
     amount: 1
-    lore: "Allow companions to~use TARDIS commands"
+    lore: Allow companions to~use TARDIS commands
   Perception Filter:
     easy_shape: S-S,-S-,RGC
     easy_ingredients:
@@ -245,10 +245,10 @@ shaped:
       S: STRING
       R: REDSTONE
       G: GOLD_NUGGET
-      C: 'FILLED_MAP:1978'
+      C: FILLED_MAP:1978
     result: GOLD_NUGGET
     amount: 1
-    lore: ""
+    lore: ''
   Perception Circuit:
     easy_shape: IGI,CEC,DTD
     easy_ingredients:
@@ -266,21 +266,21 @@ shaped:
       E: FERMENTED_SPIDER_EYE
       D: REPEATER
       T: REDSTONE_TORCH
-    result: 'FILLED_MAP:1978'
+    result: FILLED_MAP:1978
     amount: 1
-    lore: ""
+    lore: ''
   TARDIS Key:
-    easy_shape: ---,-R-,-G-
+    easy_shape: '---,-R-,-G-'
     easy_ingredients:
       R: REDSTONE
       G: GOLD_NUGGET
-    hard_shape: ---,-C-,-G-
+    hard_shape: '---,-C-,-G-'
     hard_ingredients:
       C: COMPARATOR
       G: GOLD_NUGGET
     result: GOLD_NUGGET
     amount: 1
-    lore: "Enter and exit your TARDIS"
+    lore: Enter and exit your TARDIS
   Blank Storage Disk:
     easy_shape: QQQ,Q-Q,QQQ
     easy_ingredients:
@@ -290,7 +290,7 @@ shaped:
       Q: QUARTZ
     result: MUSIC_DISC_STRAD
     amount: 1
-    lore: ""
+    lore: ''
   Sonic Oscillator:
     easy_shape: RQR,R-R,RQR
     easy_ingredients:
@@ -301,9 +301,9 @@ shaped:
       Q: QUARTZ
       R: REDSTONE
       B: STONE_BUTTON
-    result: 'FILLED_MAP:1967'
+    result: FILLED_MAP:1967
     amount: 1
-    lore: ""
+    lore: ''
   Sonic Screwdriver:
     easy_shape: -Q-,-I-,-I-
     easy_ingredients:
@@ -313,18 +313,18 @@ shaped:
     hard_ingredients:
       Q: QUARTZ
       I: IRON_INGOT
-      O: 'FILLED_MAP:1967'
+      O: FILLED_MAP:1967
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Sonic Generator:
-    easy_shape: GRG,-F-,-S-
+    easy_shape: -S-,-F-,GRG
     easy_ingredients:
       G: GOLD_NUGGET
       R: REDSTONE
       F: FLOWER_POT
       S: BLAZE_ROD
-    hard_shape: GRG,-F-,-S-
+    hard_shape: -S-,-F-,GRG
     hard_ingredients:
       G: GOLD_INGOT
       R: REDSTONE_BLOCK
@@ -332,19 +332,19 @@ shaped:
       S: BLAZE_ROD
     result: FLOWER_POT
     amount: 1
-    lore: ""
+    lore: ''
   Server Admin Circuit:
     easy_shape: BBB,BOB,BBB
     easy_ingredients:
       B: BEDROCK
-      O: 'FILLED_MAP:1967'
+      O: FILLED_MAP:1967
     hard_shape: BBB,BOB,BBB
     hard_ingredients:
       B: BEDROCK
-      O: 'FILLED_MAP:1967'
-    result: 'FILLED_MAP:1968'
+      O: FILLED_MAP:1967
+    result: FILLED_MAP:1968
     amount: 1
-    lore: ""
+    lore: ''
   Bio-scanner Circuit:
     easy_shape: -E-,BRB,-E-
     easy_ingredients:
@@ -356,9 +356,9 @@ shaped:
       R: REPEATER
       E: SPIDER_EYE
       B: BONE
-    result: 'FILLED_MAP:1969'
+    result: FILLED_MAP:1969
     amount: 1
-    lore: ""
+    lore: ''
   Redstone Activator Circuit:
     easy_shape: RCR,-I-,RCR
     easy_ingredients:
@@ -370,9 +370,9 @@ shaped:
       R: REPEATER
       C: COMPARATOR
       I: IRON_INGOT
-    result: 'FILLED_MAP:1970'
+    result: FILLED_MAP:1970
     amount: 1
-    lore: ""
+    lore: ''
   Diamond Disruptor Circuit:
     easy_shape: -R-,DSD,-R-
     easy_ingredients:
@@ -384,9 +384,9 @@ shaped:
       O: OBSIDIAN
       D: DIAMOND
       S: SHEARS
-    result: 'FILLED_MAP:1971'
+    result: FILLED_MAP:1971
     amount: 1
-    lore: ""
+    lore: ''
   Emerald Environment Circuit:
     easy_shape: -D-,LEL,-D-
     easy_ingredients:
@@ -398,9 +398,9 @@ shaped:
       E: EMERALD
       L: OAK_LEAVES
       S: STONE
-    result: 'FILLED_MAP:1972'
+    result: FILLED_MAP:1972
     amount: 1
-    lore: ""
+    lore: ''
   Painter Circuit:
     easy_shape: -I-,DGD,-I-
     easy_ingredients:
@@ -412,9 +412,9 @@ shaped:
       I: BLACK_DYE
       D: PURPLE_DYE
       G: GOLD_BLOCK
-    result: 'FILLED_MAP:1979'
+    result: FILLED_MAP:1979
     amount: 1
-    lore: ""
+    lore: ''
   Ignite Circuit:
     easy_shape: -N-,NFN,-N-
     easy_ingredients:
@@ -425,9 +425,9 @@ shaped:
       N: NETHERRACK
       F: FLINT_AND_STEEL
       L: LAVA_BUCKET
-    result: 'FILLED_MAP:1982'
+    result: FILLED_MAP:1982
     amount: 1
-    lore: ""
+    lore: ''
   Pickup Arrows Circuit:
     easy_shape: -A-,ARA,-A-
     easy_ingredients:
@@ -437,9 +437,9 @@ shaped:
     hard_ingredients:
       S: SPECTRAL_ARROW
       R: REDSTONE_BLOCK
-    result: 'FILLED_MAP:1984'
+    result: FILLED_MAP:1984
     amount: 1
-    lore: ""
+    lore: ''
   Artron Storage Cell:
     easy_shape: -B-,-R-,-L-
     easy_ingredients:
@@ -453,33 +453,33 @@ shaped:
       R: REDSTONE_BLOCK
     result: BUCKET
     amount: 1
-    lore: "Charge Level~0"
+    lore: Charge Level~0
   TARDIS Artron Furnace:
-    easy_shape: ---,OFO,RRR
+    easy_shape: '---,OFO,RRR'
     easy_ingredients:
       O: OBSIDIAN
       F: FURNACE
       R: REDSTONE
-    hard_shape: ---,OFO,RRR
+    hard_shape: '---,OFO,RRR'
     hard_ingredients:
       O: OBSIDIAN
       F: FURNACE
       R: REDSTONE
     result: FURNACE
     amount: 1
-    lore: ""
+    lore: ''
   Jammy Dodger:
-    easy_shape: ---,WRW,---
+    easy_shape: '---,WRW,---'
     easy_ingredients:
       W: WHEAT
-      R: RED_DYE
-    hard_shape: ---,WRW,---
+      R: SWEET_BERRIES
+    hard_shape: '---,WRW,---'
     hard_ingredients:
       W: WHEAT
-      R: RED_DYE
+      R: SWEET_BERRIES
     result: COOKIE
     amount: 8
-    lore: ""
+    lore: ''
   Fish Finger:
     easy_shape: -B-,-F-,-B-
     easy_ingredients:
@@ -491,19 +491,19 @@ shaped:
       F: COD
     result: COOKED_COD
     amount: 3
-    lore: "Best eaten with custard!"
+    lore: Best eaten with custard!
   Custard Cream:
-    easy_shape: ---,WYW,---
+    easy_shape: '---,WYW,---'
     easy_ingredients:
       W: WHEAT
       Y: YELLOW_DYE
-    hard_shape: ---,WYW,---
+    hard_shape: '---,WYW,---'
     hard_ingredients:
       W: WHEAT
       Y: YELLOW_DYE
     result: COOKIE
     amount: 8
-    lore: ""
+    lore: ''
   White Bow Tie:
     easy_shape: '---,SWS,---'
     easy_ingredients:
@@ -729,7 +729,7 @@ shaped:
     amount: 1
     lore: Bow ties are cool!
   3-D Glasses:
-    easy_shape: ---,P-P,CPM
+    easy_shape: '---,P-P,CPM'
     easy_ingredients:
       P: PAPER
       C: CYAN_STAINED_GLASS_PANE
@@ -743,32 +743,32 @@ shaped:
       M: MAGENTA_STAINED_GLASS_PANE
     result: LEATHER_HELMET
     amount: 1
-    lore: ""
+    lore: ''
   Fob Watch:
     easy_shape: -C-,-W-,R-R
     easy_ingredients:
-      C: 'FILLED_MAP:1966'
+      C: FILLED_MAP:1966
       W: CLOCK
       R: REDSTONE
     hard_shape: -C-,IWI,R-R
     hard_ingredients:
-      C: 'FILLED_MAP:1966'
+      C: FILLED_MAP:1966
       I: IRON_INGOT
       W: CLOCK
       R: REDSTONE
     result: CLOCK
     amount: 1
-    lore: ""
+    lore: ''
   TARDIS Biome Reader:
-    easy_shape: ---,-C-,SDT
+    easy_shape: '---,-C-,SDT'
     easy_ingredients:
-      C: 'FILLED_MAP:1972'
+      C: FILLED_MAP:1972
       S: SAND
       D: DIRT
       T: STONE
     hard_shape: -C-,SDT,LWN
     hard_ingredients:
-      C: 'FILLED_MAP:1972'
+      C: FILLED_MAP:1972
       S: SAND
       D: DIRT
       T: STONE
@@ -777,7 +777,7 @@ shaped:
       N: NETHERRACK
     result: BRICK
     amount: 1
-    lore: ""
+    lore: ''
   Acid Battery:
     easy_shape: -A-,ARA,-A-
     easy_ingredients:
@@ -789,7 +789,7 @@ shaped:
       R: REDSTONE_BLOCK
     result: NETHER_BRICK
     amount: 1
-    lore: ""
+    lore: ''
   Rift Circuit:
     easy_shape: -D-,DND,-D-
     easy_ingredients:
@@ -799,23 +799,23 @@ shaped:
     hard_ingredients:
       D: DIAMOND
       N: NETHER_STAR
-    result: 'FILLED_MAP:1983'
+    result: FILLED_MAP:1983
     amount: 1
-    lore: ""
+    lore: ''
   Rift Manipulator:
     easy_shape: -A-,ACA,RAR
     easy_ingredients:
       A: NETHER_BRICK=Acid Battery
-      C: 'FILLED_MAP:1983'
+      C: FILLED_MAP:1983
       R: REDSTONE
     hard_shape: -A-,ACA,NAN
     hard_ingredients:
       A: NETHER_BRICK=Acid Battery
-      C: 'FILLED_MAP:1983'
+      C: FILLED_MAP:1983
       N: NETHER_STAR
     result: BEACON
     amount: 1
-    lore: ""
+    lore: ''
   Rust Plague Sword:
     easy_shape: RIR,RIR,-S-
     easy_ingredients:
@@ -845,7 +845,7 @@ shaped:
       R: REDSTONE
     result: BIRCH_BUTTON
     amount: 1
-    lore: "Cyberhead from the~Maldovar Market"
+    lore: Cyberhead from the~Maldovar Market
   TARDIS Communicator:
     easy_shape: N--,IIH,--I
     easy_ingredients:
@@ -860,9 +860,9 @@ shaped:
       D: DIAMOND
     result: LEATHER_HELMET
     amount: 1
-    lore: ""
+    lore: ''
   Paper Bag:
-    easy_shape: ---,PLP,-P-
+    easy_shape: '---,PLP,-P-'
     easy_ingredients:
       P: PAPER
       L: LAPIS_BLOCK
@@ -874,19 +874,19 @@ shaped:
       S: SHULKER_SHELL
     result: PAPER
     amount: 1
-    lore: "Smaller on the outside"
+    lore: Smaller on the outside
   TARDIS Keyboard Editor:
-    easy_shape: ---,RSR,-R-
+    easy_shape: '---,RSR,-R-'
     easy_ingredients:
       R: REDSTONE
       S: OAK_SIGN
-    hard_shape: ---,RSR,-R-
+    hard_shape: '---,RSR,-R-'
     hard_ingredients:
       R: REDSTONE
       S: OAK_SIGN
     result: OAK_SIGN
     amount: 1
-    lore: ""
+    lore: ''
 # -------------------
 # these are the shapeless recipes
 # -------------------
@@ -895,72 +895,72 @@ shapeless:
     recipe: BONE,REDSTONE
     result: BONE
     amount: 1
-    lore: "Right-click start~Left-click end"
+    lore: Right-click start~Left-click end
   Save Storage Disk:
     recipe: MUSIC_DISC_STRAD,REDSTONE
     result: MUSIC_DISC_CHIRP
     amount: 1
-    lore: "Blank"
+    lore: Blank
   Player Storage Disk:
     recipe: MUSIC_DISC_STRAD,LAPIS_BLOCK
     result: MUSIC_DISC_WAIT
     amount: 1
-    lore: "Blank"
+    lore: Blank
   Biome Storage Disk:
     recipe: MUSIC_DISC_STRAD,EMERALD
     result: MUSIC_DISC_CAT
     amount: 1
-    lore: "Blank"
+    lore: Blank
   Preset Storage Disk:
-    recipe: 'MUSIC_DISC_STRAD,FILLED_MAP:1966'
+    recipe: MUSIC_DISC_STRAD,FILLED_MAP:1966
     result: MUSIC_DISC_MALL
     amount: 1
-    lore: "Blank"
+    lore: Blank
   Admin Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1968'
+    recipe: BLAZE_ROD,FILLED_MAP:1968
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Bio-scanner Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1969'
+    recipe: BLAZE_ROD,FILLED_MAP:1969
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Redstone Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1970'
+    recipe: BLAZE_ROD,FILLED_MAP:1970
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Diamond Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1971'
+    recipe: BLAZE_ROD,FILLED_MAP:1971
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Emerald Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1972'
+    recipe: BLAZE_ROD,FILLED_MAP:1972
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Painter Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1979'
+    recipe: BLAZE_ROD,FILLED_MAP:1979
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Ignite Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1982'
+    recipe: BLAZE_ROD,FILLED_MAP:1982
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Pickup Arrows Upgrade:
-    recipe: 'BLAZE_ROD,FILLED_MAP:1984'
+    recipe: BLAZE_ROD,FILLED_MAP:1984
     result: BLAZE_ROD
     amount: 1
-    lore: ""
+    lore: ''
   Bowl of Custard:
     recipe: BOWL,MILK_BUCKET,EGG
     result: MUSHROOM_STEW
     amount: 1
-    lore: ""
+    lore: ''
   Vanilla Jelly Baby:
     recipe: SUGAR,SLIME_BALL,WHITE_DYE
     result: MELON_SLICE
@@ -1050,4 +1050,4 @@ furnace:
     result: BLACK_WOOL
     experience: 0
     cooktime: 200
-    lore: "Done to a crisp"
+    lore: Done to a crisp
