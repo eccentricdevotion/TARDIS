@@ -69,9 +69,16 @@
         <p>The server admin may have restricted the list of items that may be used for the TARDIS Key. Use auto-completion to see a list of available items e.g. type <code>/tardisprefs key</code> then press the TAB key.</p>
         <p>To change the look of your TARDIS Key, type:</p>
         <pre><code>/tardisprefs key_menu</code></pre>
-        <p>This requires the TARDIS Resource Pack and Custom Item Textures Mod (included in MCPatcher and Optifine).  Players without the mod will see no change in the appearance of their key.</p>
+        <p>This requires the <a href="http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/" target="_blank">TARDIS Resource Pack</a> to see the different key textures. Use the command to open the TARDIS Key GUI.</p>
+        <p>To change the look of your Sonic Screwdriver, type:</p>
+        <pre><code>/tardisprefs sonic</code></pre>
+        <p>This requires the <a href="http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/" target="_blank">TARDIS Resource Pack</a> to see the different sonic textures. Use the command to open the Sonic Screwdriver GUI.</p>
         <p>To toggle the TARDIS sound effects on or off, type:</p>
         <pre><code>/tardisprefs sfx [on|off]</code></pre>
+        <p>To toggle the Emergency Program One on or off, type:</p>
+        <pre><code>/tardisprefs eps [on|off]</code></pre>
+        <p>To set the message that Emergency Program One gives, type:</p>
+        <pre><code>/tardisprefs eps_message [message]</code></pre>
         <p>To choose the TARDIS interior hum sound effect that you want to hear, type:</p>
         <pre><code>/tardisprefs hum [sound]</code></pre>
         <p>The sounds are called:</p>
@@ -102,6 +109,8 @@
         <p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
         <p>To toggle HADS on or off, type:</p>
         <pre><code>/tardisprefs hads [on|off]</code></pre>
+        <p>To set the HADS type, use:</p>
+        <pre><code>/tardisprefs hads_type [dispersal|displacement]</code></pre>
         <p>To toggle the Isomorphic controls on or off, type:</p>
         <pre><code>/tardisprefs isomorphic [on|off]</code></pre>
         <p>To toggle whether the TARDIS console beacon is on or off during time travel, type:</p>
@@ -144,11 +153,20 @@
         <pre><code>/tardisprefs lanterns [on|off]</code></pre>
         <p>ON means that the console will use sea lanterns, toggle the lights off and on to see the change.</p>
         <h2>Other preferences</h2>
-        <h3><code>/tardis chameleon</code></h3>
-        <p>You can toggle the Chameleon Circuit on or off with this command, type:</p>
-        <pre><code>/tardis chameleon [on|off]</code></pre>
         <p>You can toggle Junk Mode on or off with this command, type:</p>
         <pre><code>/tardisprefs junk [on|off]</code></pre>
+        <p>To toggle the plain TARDIS on and off (no sign or lamp), type:</p>
+        <pre><code>/tardisprefs plain [on|off]</code></pre>
+        <p>To toggle submarine landings on and off, type:</p>
+        <pre><code>/tardisprefs submarine [on|off]</code></pre>
+        <p>To toggle automatic Siege Mode on and off (when a Time Lord dies), type:</p>
+        <pre><code>/tardisprefs auto_siege [on|off]</code></pre>
+        <p>To set the TARDIS flight mode, type:</p>
+        <pre><code>/tardisprefs flight [normal|regulator|manual]</code></pre>
+        <p>To set the language used in the '/tardis say' command, type (with auto-complete):</p>
+        <pre><code>/tardisprefs language [language]</code></pre>
+        <p>To toggle Police Box textures on and off (biome for CTM is set / not set at the TARDIS' location), type:</p>
+        <pre><code>/tardisprefs policebox_textures [on|off]</code></pre>
     </section>
 </div>
 <footer>
