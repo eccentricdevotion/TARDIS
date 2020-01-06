@@ -1010,31 +1010,31 @@ commands:
     description: These commands are used by the console to enable the Handles companion.
     usage: /<command> disk [disk name]
     takeoff:
-      description: Make the TARDIS enter the Time Vortex
+      description: Make the TARDIS enter the Time Vortex - for internal use only - use "hey handles takeoff" instead
       permission: tardis.admin
     land:
-      description: Make the TARDIS leave the Time Vortex
+      description: Make the TARDIS leave the Time Vortex - for internal use only - use "hey handles land" instead
       permission: tardis.admin
     scan:
-      description: Make Handles scan the environment around the player
+      description: Make Handles scan the environment around the player - for internal use only - use "hey handles scan" instead
       permission: tardis.admin
     lock:
-      description: Make Handles lock the TARDIS door
+      description: Make Handles lock the TARDIS door - for internal use only - use "hey handles lock the door" instead
       permission: tardis.admin
     unlock:
-      description: Make Handles unlock the TARDIS door
+      description: Make Handles unlock the TARDIS door - for internal use only - use "hey handles unlock the door" instead
       permission: tardis.admin
     remind:
-      description: Add a Handles reminder
+      description: Add a Handles reminder - for internal use only - use "hey handles remind me to do [something] in 5" instead
       permission: tardis.admin
     say:
-      description: Make Handles say a phrase
+      description: Make Handles say a phrase - for internal use only - use "hey handles say [something]" instead
       permission: tardis.admin
     name:
-      description: Make Handles tell a player their in-game name
+      description: Make Handles tell a player their in-game name - for internal use only - use "hey handles what is my name" instead
       permission: tardis.admin
     time:
-      description: Make Handles say the time
+      description: Make Handles say the time - for internal use only - use "hey handles what is the time" instead
       permission: tardis.admin
     disk:
       description: Name a Handles Program Disk
