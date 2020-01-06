@@ -1067,7 +1067,7 @@ commands:
   construct:
     description: Open the 'Element constructor' GUI.
     usage: /<command>
-    permission: tardis.compound.create
+    permission: tardis.construct.build
     permission-message: You don't have the permission <permission> to use this command
   compound:
     description: Open the 'Chemical compounds' creation GUI.

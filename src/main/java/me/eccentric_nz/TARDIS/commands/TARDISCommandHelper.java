@@ -123,7 +123,17 @@ public class TARDISCommandHelper {
         tardisschematic("https://goo.gl/BG4TtW"),
         tardisnetherportal("https://goo.gl/B2M36Y"),
         tardisjunk("https://goo.gl/xNcBd5"),
-        handles("Not yet available");
+        handles("https://tardis.page.link/handles"),
+        tardisteleport("Not yet available"),
+        tardisworld("Not yet available"),
+        tardisgamemode("Not yet available"),
+        chemistry("Not yet available"),
+        construct("Not yet available"),
+        compound("Not yet available"),
+        reduce("Not yet available"),
+        product("Not yet available"),
+        lab("Not yet available"),
+        formula("Not yet available");
 
         final String URL;
 
