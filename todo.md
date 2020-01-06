@@ -4,8 +4,7 @@
 1. New features
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
-   * Bamboo room to farm Pandas?
-   * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures?
+   * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures? CHange commands to one command with subcommands.
 2. Make TARDIS circuits not maps
 3. Test player preference to bypass `tardis rescue accept`
 4. Test `invisibility` setting in TARDIS areas
@@ -24,7 +23,6 @@
 
 ## Future version `?+`
 * TARDISSonicBlaster addon? - _unlikely_
-* Slimmer TARDIS option via Optifine's CEM mod? - _maybe_
 * Add more API Events that other plugins can listen for? - _unlikely_
    * Sonic Screwdriver events
    * Mob farming / ejection events
@@ -34,11 +32,10 @@
 2. Update existing monsters with persistent data if they don't have it.
 3. Custom Entity models using Optifine (when they can be applied to named entities)
 4. Rare armour drops
-5. Something with an invisible Shulker passenger - or an invisible bee with a Shulker passenger (Toclafane?)
 6. Re-skin mobs for Resource pack, and add new mob sounds
-   * Villagers -> Ood - _started texture_
-   * Villagers -> Hath
-   * Illagers -> Red-eyed Ood - _started_
+   * Clockwork Droid
+   * Hath
+   * K-9 -> Change to armour stand.
    * Endermen -> The Silence - _implemented, but texture needs to be finished_
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
@@ -47,8 +44,6 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
-   * Judoon
-   * Clockwork Droid
 7. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
 ## Minecraft API if ever available

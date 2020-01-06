@@ -353,12 +353,23 @@ class TARDISMaterialisationPreset implements Runnable {
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                                     }
                                     break;
+                                case ACACIA_SIGN:
+                                case BIRCH_SIGN:
+                                case DARK_OAK_SIGN:
+                                case JUNGLE_SIGN:
                                 case OAK_SIGN:
+                                case SPRUCE_SIGN:
                                     if (preset.equals(PRESET.APPERTURE)) {
                                         TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                     }
                                     break;
-                                case OAK_WALL_SIGN: // sign - if there is one
+                                case ACACIA_WALL_SIGN:
+                                case BIRCH_WALL_SIGN:
+                                case DARK_OAK_WALL_SIGN:
+                                case JUNGLE_WALL_SIGN:
+                                case OAK_WALL_SIGN:
+                                case SPRUCE_WALL_SIGN:
+                                    // sign - if there is one
                                     if (preset.equals(PRESET.JUNK_MODE)) {
                                         // add a sign
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
@@ -368,7 +379,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                         saveJunkControl(location, "save_sign");
                                         // make it a save_sign
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
-                                        if (sign.getType().equals(Material.OAK_WALL_SIGN)) {
+                                        if (Tag.WALL_SIGNS.isTagged(sign.getType())) {
                                             Sign s = (Sign) sign.getState();
                                             s.setLine(0, "TARDIS");
                                             s.setLine(1, plugin.getSigns().getStringList("saves").get(0));

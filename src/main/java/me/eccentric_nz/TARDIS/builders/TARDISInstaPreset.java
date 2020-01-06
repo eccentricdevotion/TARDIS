@@ -360,12 +360,23 @@ class TARDISInstaPreset {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
                         break;
+                    case ACACIA_SIGN:
+                    case BIRCH_SIGN:
+                    case DARK_OAK_SIGN:
+                    case JUNGLE_SIGN:
                     case OAK_SIGN:
+                    case SPRUCE_SIGN:
                         if (preset.equals(PRESET.APPERTURE)) {
                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                         }
                         break;
-                    case OAK_WALL_SIGN: // sign - if there is one
+                    case ACACIA_WALL_SIGN:
+                    case BIRCH_WALL_SIGN:
+                    case DARK_OAK_WALL_SIGN:
+                    case JUNGLE_WALL_SIGN:
+                    case OAK_WALL_SIGN:
+                    case SPRUCE_WALL_SIGN:
+                        // sign - if there is one
                         if (bd.shouldAddSign()) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                             Block sign = world.getBlockAt(xx, (y + yy), zz);
