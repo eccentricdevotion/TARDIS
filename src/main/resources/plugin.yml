@@ -638,6 +638,18 @@ commands:
     list:
       description: List all TARDISs and their locations.
       usage: /<command> list
+    reload:
+      description: Reload the TARDIS config from disk.
+      usage: /<command> reload
+    chunks:
+      description: List chunks that are being kept loaded by TARDIS.
+      usage: /<command> chunks
+    recharger:
+      description: Set the beacon block you are looking at, as a TARDIS recharge station.
+      usage: /<command> recharger [name]
+    decharge:
+      description: Remove the specified beacon recharger from the config.
+      usage: /<command> decharge [name]
     enter:
       description: Enter a player's TARDIS.
       usage: /<command> enter [player]
@@ -791,7 +803,7 @@ commands:
       description: Open the TARDIS Key preferences GUI.
       usage: /<command> key_menu
     language:
-      description: Set the langiuage used in the '/tardis say' command.
+      description: Set the language used in the '/tardis say' command.
       usage: /<command> language [language]
     lanterns:
       description: Toggle Sea Lanterns for lights on and off.
@@ -813,10 +825,22 @@ commands:
       usage: /<command> siege_wall [block type]
     sign:
       description: Toggle the Police Box 'name' sign on and off.
-      usage: /<command> sugn [on|off]
+      usage: /<command> sign [on|off]
     sonic:
       description: Open the Sonic Screwdriver preferences GUI.
       usage: /<command> sonic
+    hum:
+      description: Sets the TARDIS interior hum sound.
+      usage: /<command> hum [sound]
+    wool_lights:
+      description: Toggle the wool for lights off setting on and off.
+      usage: /<command> wool_lights [on|off]
+    travelbar:
+      description: Toggle the travel remaining progress bar on and off.
+      usage: /<command> travelbar [on|off]
+    chameleon:
+      description: Toggle the chameleon circuit on and off.
+      usage: /<command> chameleon [on|off]
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.
@@ -844,6 +868,11 @@ commands:
     parking:
       description: Set a TARDIS area's parking space.
       usage: /<command> parking [name] [number of blocks between]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+    yard:
+      description: Visually mark the area with parking spots, where the first [material] is the block to use as the floor, and the second [material] is the block to use to mark the parking spot.
+      usage: /<command> yard [name] [material] [material]
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
   tardisartron:
