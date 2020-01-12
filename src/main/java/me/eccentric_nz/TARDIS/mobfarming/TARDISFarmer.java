@@ -143,7 +143,6 @@ public class TARDISFarmer {
                 String village = farming.getVillage();
                 // collate the mobs
                 for (Entity e : mobs) {
-                    plugin.debug("farming a: " + e.getType().toString());
                     switch (e.getType()) {
                         case BEE:
                             TARDISBee tmbee = new TARDISBee();
