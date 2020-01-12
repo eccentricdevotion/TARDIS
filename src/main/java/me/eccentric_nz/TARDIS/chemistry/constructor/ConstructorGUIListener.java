@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.chemistry.constructor;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.element.Element;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementBuilder;
 import org.bukkit.ChatColor;
@@ -16,12 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ConstructorGUIListener implements Listener {
 
-    private final TARDIS plugin;
-
-    public ConstructorGUIListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
     @EventHandler(ignoreCancelled = true)
     public void onElementMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
@@ -31,7 +24,7 @@ public class ConstructorGUIListener implements Listener {
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 switch (slot) {
-                    case 4:
+                    case 5:
                         event.setCancelled(true);
                         int pminus = getCount(view, 0);
                         if (pminus > 0) {
@@ -39,7 +32,7 @@ public class ConstructorGUIListener implements Listener {
                             setElement(view);
                         }
                         break;
-                    case 5:
+                    case 6:
                         event.setCancelled(true);
                         int pplus = getCount(view, 0);
                         if (pplus < 118) {
@@ -47,7 +40,7 @@ public class ConstructorGUIListener implements Listener {
                             setElement(view);
                         }
                         break;
-                    case 13:
+                    case 14:
                         event.setCancelled(true);
                         int nminus = getCount(view, 9);
                         if (nminus > 0) {
@@ -55,7 +48,7 @@ public class ConstructorGUIListener implements Listener {
                             setElement(view);
                         }
                         break;
-                    case 14:
+                    case 15:
                         event.setCancelled(true);
                         int nplus = getCount(view, 9);
                         if (nplus < 176) {
@@ -63,7 +56,7 @@ public class ConstructorGUIListener implements Listener {
                             setElement(view);
                         }
                         break;
-                    case 22:
+                    case 23:
                         event.setCancelled(true);
                         int eminus = getCount(view, 18);
                         if (eminus > 0) {
@@ -71,7 +64,7 @@ public class ConstructorGUIListener implements Listener {
                             setElement(view);
                         }
                         break;
-                    case 23:
+                    case 24:
                         event.setCancelled(true);
                         int eplus = getCount(view, 18);
                         if (eplus < 118) {
@@ -79,10 +72,10 @@ public class ConstructorGUIListener implements Listener {
                             setElement(view);
                         }
                         break;
-                    case 16:
+                    case 17:
                         event.setCancelled(true);
                         // get clicked ItemStack
-                        ItemStack choice = view.getItem(16).clone();
+                        ItemStack choice = view.getItem(17).clone();
                         choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
                         // add ItemStack to inventory if there is room
                         p.getInventory().addItem(choice);
@@ -102,15 +95,15 @@ public class ConstructorGUIListener implements Listener {
 
     private int getCount(InventoryView view, int offset) {
         int oneInt, tenInt = 0, hundredInt = 0;
-        ItemStack ones = view.getItem(2 + offset);
+        ItemStack ones = view.getItem(3 + offset);
         ItemMeta oneMeta = ones.getItemMeta();
         oneInt = Integer.parseInt(oneMeta.getDisplayName());
-        ItemStack tens = view.getItem(1 + offset);
+        ItemStack tens = view.getItem(2 + offset);
         if (tens != null) {
             ItemMeta tenMeta = tens.getItemMeta();
             tenInt = Integer.parseInt(tenMeta.getDisplayName()) * 10;
         }
-        ItemStack hundreds = view.getItem(0 + offset);
+        ItemStack hundreds = view.getItem(1 + offset);
         if (hundreds != null) {
             ItemMeta hundredMeta = hundreds.getItemMeta();
             hundredInt = Integer.parseInt(hundredMeta.getDisplayName()) * 100;
@@ -122,12 +115,12 @@ public class ConstructorGUIListener implements Listener {
         int oneInt = amount % 10;
         int tenInt = (amount / 10) % 10;
         int hundredInt = (amount / 100) % 10;
-        ItemStack ones = view.getItem(2 + offset);
+        ItemStack ones = view.getItem(3 + offset);
         ItemMeta oneMeta = ones.getItemMeta();
         oneMeta.setDisplayName("" + oneInt);
         oneMeta.setCustomModelData(26 + oneInt);
         ones.setItemMeta(oneMeta);
-        ItemStack tens = view.getItem(1 + offset);
+        ItemStack tens = view.getItem(2 + offset);
         if (tenInt > 0) {
             if (tens == null) {
                 tens = new ItemStack(Material.PAPER, 1);
@@ -136,11 +129,11 @@ public class ConstructorGUIListener implements Listener {
             tenMeta.setDisplayName("" + tenInt);
             tenMeta.setCustomModelData(26 + tenInt);
             tens.setItemMeta(tenMeta);
-            view.setItem(1 + offset, tens);
+            view.setItem(2 + offset, tens);
         } else {
-            view.setItem(1 + offset, null);
+            view.setItem(2 + offset, null);
         }
-        ItemStack hundreds = view.getItem(0 + offset);
+        ItemStack hundreds = view.getItem(1 + offset);
         if (hundredInt > 0) {
             if (hundreds == null) {
                 hundreds = new ItemStack(Material.PAPER, 1);
@@ -149,9 +142,9 @@ public class ConstructorGUIListener implements Listener {
             hundredMeta.setDisplayName("" + hundredInt);
             hundredMeta.setCustomModelData(26 + hundredInt);
             hundreds.setItemMeta(hundredMeta);
-            view.setItem(0 + offset, hundreds);
+            view.setItem(1 + offset, hundreds);
         } else {
-            view.setItem(0 + offset, null);
+            view.setItem(1 + offset, null);
         }
     }
 
@@ -162,10 +155,10 @@ public class ConstructorGUIListener implements Listener {
         for (Element element : Element.values()) {
             if (protons == element.getAtomicNumber() && neutrons == element.getNeutrons() && electrons == element.getAtomicNumber()) {
                 ItemStack is = ElementBuilder.getElement(element);
-                view.setItem(16, is);
+                view.setItem(17, is);
                 return;
             }
         }
-        view.setItem(16, null);
+        view.setItem(17, null);
     }
 }

@@ -297,7 +297,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new ChemistryBlockListener(plugin), plugin);
             plugin.getPM().registerEvents(new CreativeGUIListener(plugin), plugin);
             plugin.getPM().registerEvents(new ElementGUIListener(plugin), plugin);
-            plugin.getPM().registerEvents(new ConstructorGUIListener(plugin), plugin);
+            plugin.getPM().registerEvents(new ConstructorGUIListener(), plugin);
             plugin.getPM().registerEvents(new CompoundGUIListener(plugin), plugin);
             plugin.getPM().registerEvents(new ReducerGUIListener(plugin), plugin);
             plugin.getPM().registerEvents(new ProductGUIListener(plugin), plugin);
