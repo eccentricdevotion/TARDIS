@@ -65,8 +65,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "DALEK", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
-    private final List<String> twaHelmets = Arrays.asList("Weeping Angel Head", "Cyberman Head", "Dalek Head", "Ice Warrior Head", "Empty Child Head", "Silurian Head", "Sontaran Head", "Strax Head", "Vashta Nerada Head", "Zygon Head");
+    private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "DALEK", "EMPTY CHILD", "ICE WARRIOR", "JUDOON", "K9", "OOD", "SILENT", "SILURIAN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "ZYGON");
+    private final List<String> twaHelmets = Arrays.asList("Weeping Angel Head", "Cyberman Head", "Dalek Head", "Empty Child Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Ood Head", "Silent Head", "Silurian Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Zygon Head");
     private final int max_slot = 45;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
@@ -221,34 +221,49 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         twaOff(player);
                         if (twaMonsters.contains(disguise)) {
                             if (disguise.equals("WEEPING ANGEL")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL on " + player.getUniqueId());
                             }
                             if (disguise.equals("CYBERMAN")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad CYBERMAN on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise CYBERMAN on " + player.getUniqueId());
                             }
                             if (disguise.equals("DALEK")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad DALEK on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("ICE WARRIOR")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ICE on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise DALEK on " + player.getUniqueId());
                             }
                             if (disguise.equals("EMPTY CHILD")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad EMPTY on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise EMPTY_CHILD on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("ICE WARRIOR")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise ICE_WARRIOR on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("JUDOON")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise JUDOON on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("K9")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise K9 on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("OOD")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise OOD on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("SILENT")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SILENT on " + player.getUniqueId());
                             }
                             if (disguise.equals("SILURIAN")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SILURIAN on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SILURIAN on " + player.getUniqueId());
                             }
                             if (disguise.equals("SONTARAN")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SONTARAN on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SONTARAN on " + player.getUniqueId());
                             }
                             if (disguise.equals("STRAX")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad STRAX on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise STRAX on " + player.getUniqueId());
+                            }
+                            if (disguise.equals("TOCLAFANE")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise TOCLAFANE on " + player.getUniqueId());
                             }
                             if (disguise.equals("VASHTA NERADA")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad VASHTA on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise VASHTA on " + player.getUniqueId());
                             }
                             if (disguise.equals("ZYGON")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ZYGON on " + player.getUniqueId());
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise ZYGON on " + player.getUniqueId());
                             }
                         } else {
                             EntityType dt = EntityType.valueOf(disguise);
@@ -730,7 +745,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
             String metaName = helmet.getItemMeta().getDisplayName();
             if (twaHelmets.contains(metaName)) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL off " + player.getUniqueId());
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + player.getUniqueId());
             }
         }
     }

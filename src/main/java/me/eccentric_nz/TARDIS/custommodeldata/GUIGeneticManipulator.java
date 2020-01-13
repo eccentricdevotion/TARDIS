@@ -16,11 +16,16 @@ public enum GUIGeneticManipulator {
     ANGEL(1, 1, Material.BRICK),
     CYBERMAN(1, 1, Material.IRON_INGOT),
     DALEK(1, 1, Material.SLIME_BALL),
-    ICE_WARRIOR(1, 1, Material.SNOWBALL),
     EMPTY_CHILD(1, 1, Material.SUGAR),
+    ICE_WARRIOR(1, 1, Material.SNOWBALL),
+    K9(6, 1, Material.BONE),
+    JUDOON(1, 1, Material.YELLOW_DYE),
+    OOD(1, 1, Material.ROTTEN_FLESH),
+    SILENT(4, 1, Material.END_STONE),
     SILURIAN(1, 1, Material.FEATHER),
     SONTARAN(1, 1, Material.POTATO),
     STRAX(1, 1, Material.BAKED_POTATO),
+    TOCLAFANE(3, 1, Material.GUNPOWDER),
     VASHTA_NERADA(2, 1, Material.BOOK),
     ZYGON(1, 1, Material.PAINTING);
 
