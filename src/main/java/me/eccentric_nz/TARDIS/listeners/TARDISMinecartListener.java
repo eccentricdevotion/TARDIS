@@ -59,21 +59,27 @@ public class TARDISMinecartListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
         if (event.getVehicle() instanceof StorageMinecart || event.getVehicle() instanceof HopperMinecart) {
-            Block b = event.getBlock();
-            Material mat = b.getType();
-            if (mat.equals(Material.IRON_DOOR) || mat.equals(Material.OAK_FENCE)) {
+            Block block = event.getBlock(); // currently the block in opposite direction of collision!
+            Material material = block.getType();
+//            Bukkit.getLogger().info("event block: " + material.toString());
+//            Block minecartBlock = event.getVehicle().getLocation().getBlock();
+//            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
+//                Block bb = minecartBlock.getRelative(face);
+//                Bukkit.getLogger().info(face.toString() + ": " + bb.getType().toString());
+//            }
+            if (material.equals(Material.IRON_DOOR) || material.equals(Material.OAK_FENCE)) {
                 Vehicle minecart = event.getVehicle();
                 String[] data = null;
                 UUID playerUUID = null;
                 int id = 0;
                 COMPASS d = COMPASS.SOUTH;
-                Location block_loc = b.getLocation();
+                Location block_loc = block.getLocation();
                 String bw = block_loc.getWorld().getName();
                 int bx = block_loc.getBlockX();
                 int by = block_loc.getBlockY();
                 int bz = block_loc.getBlockZ();
                 String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
-                switch (mat) {
+                switch (material) {
                     case IRON_DOOR: // is it a TARDIS door?
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", db_loc);
@@ -144,7 +150,7 @@ public class TARDISMinecartListener implements Listener {
                             int y = TARDISNumberParsers.parseInt(data[2]);
                             int z = TARDISNumberParsers.parseInt(data[3]);
                             Location in_out = new Location(w, x, y, z);
-                            if (plugin.getGeneralKeeper().getDoors().contains(mat)) {
+                            if (plugin.getGeneralKeeper().getDoors().contains(material)) {
                                 d = getDirection(in_out);
                                 w.getChunkAt(in_out).setForceLoaded(true);
                             } else {
