@@ -76,6 +76,7 @@ public class TARDISBlockPhysicsListener implements Listener {
             }
         } else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || block.getType().equals(Material.RED_MUSHROOM_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
             event.setCancelled(true);
+            event.getBlock().getState().update(true, false);
         }
     }
 

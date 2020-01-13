@@ -87,7 +87,7 @@ public class TARDISBlockPlaceListener implements Listener {
                     } else {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
                     }
-                    event.getBlockPlaced().setBlockData(multipleFacing);
+                    event.getBlockPlaced().setBlockData(multipleFacing, false);
                     return;
                 }
             } else {
@@ -99,7 +99,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 } else {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
                 }
-                event.getBlockPlaced().setBlockData(data);
+                event.getBlockPlaced().setBlockData(data, false);
                 setNextToMushroomBlock(player, event.getBlockPlaced());
                 return;
             }
