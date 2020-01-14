@@ -4,7 +4,9 @@ debug: false
 storage:
   database: sqlite
   mysql:
-    url: mysql://localhost:3306/TARDIS
+    host: localhost
+    port: 3306
+    database: TARDIS
     user: bukkit
     password: mysecurepassword
     prefix: ""

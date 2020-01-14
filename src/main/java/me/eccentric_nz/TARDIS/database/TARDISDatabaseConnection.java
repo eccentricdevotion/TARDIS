@@ -58,14 +58,15 @@ public class TARDISDatabaseConnection {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Cannot find the driver in the classpath!", e);
         }
-        String host = "jdbc:" + TARDIS.plugin.getConfig().getString("storage.mysql.url") + "?autoReconnect=true";
-        if (TARDIS.plugin.getConfig().getBoolean("storage.mysql.useSSL") == false) {
-            host += "&useSSL=false";
+        String jdbc = "jdbc:mysql://" + TARDIS.plugin.getConfig().getString("storage.mysql.host") + ":" + TARDIS.plugin.getConfig().getString("storage.mysql.port") + "/" + TARDIS.plugin.getConfig().getString("storage.mysql.database") + "?autoReconnect=true";
+        if (!TARDIS.plugin.getConfig().getBoolean("storage.mysql.useSSL")) {
+            jdbc += "&useSSL=false";
         }
+        System.out.println(jdbc);
         String user = TARDIS.plugin.getConfig().getString("storage.mysql.user");
         String pass = TARDIS.plugin.getConfig().getString("storage.mysql.password");
         try {
-            connection = DriverManager.getConnection(host, user, pass);
+            connection = DriverManager.getConnection(jdbc, user, pass);
             connection.setAutoCommit(true);
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect the database! ", e);

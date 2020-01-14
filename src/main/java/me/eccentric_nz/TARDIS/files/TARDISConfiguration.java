@@ -194,7 +194,9 @@ public class TARDISConfiguration {
         stringOptions.put("preferences.respect_worldguard", "build");
         stringOptions.put("preferences.vortex_fall", "kill");
         stringOptions.put("storage.database", "sqlite");
-        stringOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
+        stringOptions.put("storage.mysql.host", "localhost");
+        stringOptions.put("storage.mysql.port", "3306");
+        stringOptions.put("storage.mysql.database", "TARDIS");
         stringOptions.put("storage.mysql.user", "bukkit");
         stringOptions.put("storage.mysql.password", "mysecurepassword");
         stringOptions.put("storage.mysql.prefix", "");
@@ -246,6 +248,20 @@ public class TARDISConfiguration {
                 plugin.getConfig().set(entry.getKey(), entry.getValue());
                 i++;
             }
+        }
+        // check mysql settings
+        if (config.contains("storage.mysql.url")) {
+            // mysql://localhost:3306/TARDIS
+            String[] firstSplit = config.getString("storage.mysql.url").split(":");
+            String host = firstSplit[1].substring(2);
+            String[] secondSplit = firstSplit[2].split("/");
+            String port = secondSplit[0];
+            String database = secondSplit[1];
+            plugin.getConfig().set("storage.mysql.host", host);
+            plugin.getConfig().set("storage.mysql.port", port);
+            plugin.getConfig().set("storage.mysql.database", database);
+            plugin.getConfig().set("storage.mysql.url", null);
+            i++;
         }
         if (i > 0) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
