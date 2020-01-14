@@ -54,28 +54,33 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
             if (sender instanceof Player) {
                 player = (Player) sender;
             }
-            if (player == null) {
-                // must be a player
-                return true;
-            } else {
-                if (args.length < 1) {
-                    TARDISMessage.send(player, "");
-                    return false;
-                }
-                World world = plugin.getServer().getWorld(args[0]);
-                if (world != null) {
-                    Location spawn = world.getSpawnLocation();
-                    float yaw = player.getLocation().getYaw();
-                    float pitch = player.getLocation().getPitch();
-                    spawn.setYaw(yaw);
-                    spawn.setPitch(pitch);
-                    player.teleport(spawn);
-                    return true;
-                } else {
-                    TARDISMessage.send(player, "WORLD_NOT_FOUND");
+            if (args.length == 2) {
+                // get for player from argument
+                player = plugin.getServer().getPlayer(args[1]);
+                if (player == null || !player.isOnline()) {
+                    TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                     return true;
                 }
             }
+            if (player == null) {
+                return true;
+            }
+            if (args.length < 1) {
+                TARDISMessage.send(player, "ARG_TP");
+                return false;
+            }
+            World world = plugin.getServer().getWorld(args[0]);
+            if (world != null) {
+                Location spawn = world.getSpawnLocation();
+                float yaw = player.getLocation().getYaw();
+                float pitch = player.getLocation().getPitch();
+                spawn.setYaw(yaw);
+                spawn.setPitch(pitch);
+                player.teleport(spawn);
+            } else {
+                TARDISMessage.send(player, "WORLD_NOT_FOUND");
+            }
+            return true;
         }
         return false;
     }
@@ -86,6 +91,8 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
         if (args.length <= 1) {
             List<String> part = partial(args[0], ROOT_SUBS);
             return (part.size() > 0) ? part : null;
+        } else if (args.length == 2) {
+            return null;
         }
         return ImmutableList.of();
     }
