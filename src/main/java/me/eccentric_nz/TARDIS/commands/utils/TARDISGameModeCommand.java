@@ -114,17 +114,19 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
         player.setGameMode(gm);
         if (thirdperson) {
             TARDISMessage.send(sender, "CMD_GAMEMODE_CONSOLE", player.getName(), gm.toString());
-            TARDISMessage.send(player, "CMD_GAMEMODE_PLAYER", gm.toString());
-        } else {
-            TARDISMessage.send(player, "CMD_GAMEMODE_PLAYER", gm.toString());
         }
+        TARDISMessage.send(player, "CMD_GAMEMODE_PLAYER", gm.toString());
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
+            if (label.equalsIgnoreCase("tgms") || label.equalsIgnoreCase("tgmc") || label.equalsIgnoreCase("tgma") || label.equalsIgnoreCase("tgmsp")) {
+                return null;
+            } else {
+                return partial(args[0], ROOT_SUBS);
+            }
         }
         if (args.length == 2) {
             return null;
