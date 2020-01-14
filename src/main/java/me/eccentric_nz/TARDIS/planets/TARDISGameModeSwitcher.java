@@ -39,11 +39,13 @@ public class TARDISGameModeSwitcher implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGameModeWorldChange(PlayerChangedWorldEvent event) {
+        plugin.debug("PlayerChangedWorldEvent");
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
-        if ((plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled")) && !player.hasPermission("tardis.gamemode.bypass")) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && !player.hasPermission("tardis.gamemode.bypass")) {
             // TARDIS is managing worlds so switch player GameMode if necessary
             try {
+                plugin.debug("try change gamemode");
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
                 player.setGameMode(gm);
             } catch (IllegalArgumentException e) {
@@ -56,7 +58,7 @@ public class TARDISGameModeSwitcher implements Listener {
     public void onGameModeJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
-        if ((plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled")) && !player.hasPermission("tardis.gamemode.bypass")) {
+        if (plugin.getWorldManager().equals(WORLD_MANAGER.NONE) && !player.hasPermission("tardis.gamemode.bypass")) {
             try {
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
                 player.setGameMode(gm);
