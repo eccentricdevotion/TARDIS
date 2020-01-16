@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
@@ -62,6 +63,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("assemble", "");
         firstsStr.put("condenser", "");
         firstsStr.put("config", "");
+        firstsStr.put("convert_database", "");
         firstsStr.put("custom_schematic_seed", "creation");
         firstsStr.put("database", "storage");
         firstsStr.put("decharge", "");
@@ -241,6 +243,15 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("add_regions")) {
                         return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                    }
+                    if (first.equals("convert_database")) {
+                        try {
+                            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
+                            return true;
+                        } catch (Exception e) {
+                            TARDISMessage.message(sender, "Database conversion failed! " + e.getMessage());
+                            return true;
+                        }
                     }
                 }
                 if (first.equals("adv")) {

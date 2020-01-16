@@ -185,7 +185,6 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron);
         newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron);
-        newList.add("handbrake");
         return newList;
     }
 }
