@@ -683,10 +683,13 @@ commands:
     assemble:
       description: Make a player's TARDIS reassemble itself after a HADS dispersal.
       usage: /<command> assemble [player]
+    convert_database:
+      description: Convert an SQLite database to MySQL.
+      usage: /<command> convert_database
   tardisgive:
     aliases: tgive
-    description: Give TARDIS items to a player.
-    usage: /<command> [player] [item] [amount]
+    description: Give TARDIS items or Artron energy to a player.
+    usage: /<command> [player] [item|artron] [amount]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisroom:
