@@ -154,6 +154,9 @@ public class TARDIS extends JavaPlugin {
     private BukkitTask recordingTask;
     private NamespacedKey customBlockKey;
     private QueryFactory queryFactory;
+    private boolean updateFound = false;
+    private int buildNumber = 0;
+    private int updateNumber = 0;
 
     public TARDIS() {
         worldGuardOnServer = false;
@@ -350,6 +353,9 @@ public class TARDIS extends JavaPlugin {
                     getServer().dispatchCommand(getConsole(), "minecraft:reload");
                 }
             }, 199L);
+            if (getConfig().getBoolean("preferences.notify_update")) {
+                getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this));
+            }
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
@@ -1197,6 +1203,30 @@ public class TARDIS extends JavaPlugin {
 
     public QueryFactory getQueryFactory() {
         return queryFactory;
+    }
+
+    public boolean isUpdateFound() {
+        return updateFound;
+    }
+
+    public void setUpdateFound(boolean updateFound) {
+        this.updateFound = updateFound;
+    }
+
+    public int getBuildNumber() {
+        return buildNumber;
+    }
+
+    public void setBuildNumber(int buildNumber) {
+        this.buildNumber = buildNumber;
+    }
+
+    public int getUpdateNumber() {
+        return updateNumber;
+    }
+
+    public void setUpdateNumber(int updateNumber) {
+        this.updateNumber = updateNumber;
     }
 
     public void savePlanetsConfig() {

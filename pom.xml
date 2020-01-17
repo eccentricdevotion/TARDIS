@@ -143,6 +143,10 @@
                             <token>maven-version-number</token>
                             <value>${project.version}-b${project.build.number}</value>
                         </replacement>
+                        <replacement>
+                            <token>maven-build-number</token>
+                            <value>${project.build.number}</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>

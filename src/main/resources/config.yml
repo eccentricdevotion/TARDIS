@@ -67,6 +67,7 @@ travel:
   no_destination_malfunctions: true
 # general preferences
 preferences:
+  notify_update: true
   language: en
   key: GOLD_NUGGET
   walk_in_tardis: true
