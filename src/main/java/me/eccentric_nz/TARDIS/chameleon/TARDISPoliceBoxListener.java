@@ -125,7 +125,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                         TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIGHTBLUE", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_BLUE);
                                     }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Swamp Hut");
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Blue Police Box");
                                     break;
                                 case 5:
                                     // yellow
