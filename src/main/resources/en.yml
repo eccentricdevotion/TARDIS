@@ -765,7 +765,7 @@ SAVE_NAME_NOT_VALID: "That doesn't appear to be a valid save name (it may be too
 SAVE_NO_TARDIS: "You cannot save a location inside the TARDIS!"
 SAVE_NO_WORLD: "Could not get the world for this save!"
 SAVE_NOT_FOUND: "Could not find a save with that name! Try using %s first."
-SAVE_RESERVED: "That is a reserved destination name!"
+SAVE_RESERVED: "That is a reserved destination name! Use /tardis home to save a new 'home' location."
 SAVE_SET: "The location '%s' was saved successfully."
 SAVE_STORAGE_FULL: "There is no more space in the Save Storage Disk containers!"
 SAVES: "Saves"

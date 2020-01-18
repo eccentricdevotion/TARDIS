@@ -52,6 +52,9 @@ class TARDISSaveLocationCommand {
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                 TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                 return false;
+            } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+                TARDISMessage.send(player, "SAVE_RESERVED");
+                return false;
             } else {
                 int id = rs.getTardis().getTardis_id();
                 // check has unique name
