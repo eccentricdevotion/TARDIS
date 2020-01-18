@@ -52,22 +52,22 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-class TARDISInstaPreset {
+public class TARDISInstaPreset {
 
     private final TARDIS plugin;
     private final BuildData bd;
-    private final BlockData data;
+    private final BlockData chameleonBlockData;
     private final boolean rebuild;
     private final PRESET preset;
     private final Material random_colour;
     private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<>();
 
-    TARDISInstaPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, boolean rebuild) {
+    public TARDISInstaPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData chameleonBlockData, boolean rebuild) {
         this.plugin = plugin;
         this.bd = bd;
         this.preset = preset;
-        this.data = data;
+        this.chameleonBlockData = chameleonBlockData;
         this.rebuild = rebuild;
         Material[] colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         random_colour = colours[TARDISConstants.RANDOM.nextInt(13)];
@@ -250,7 +250,7 @@ class TARDISInstaPreset {
                 switch (mat) {
                     case GRASS_BLOCK:
                     case DIRT:
-                        BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? this.data : colData[yy];
+                        BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
                         break;
                     case BEDROCK:
@@ -514,7 +514,7 @@ class TARDISInstaPreset {
                     case GREEN_TERRACOTTA:
                     case RED_TERRACOTTA:
                     case BLACK_TERRACOTTA:
-                        BlockData chai = (preset.equals(PRESET.FACTORY)) ? this.data : colData[yy];
+                        BlockData chai = (preset.equals(PRESET.FACTORY)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
                         break;
                     default: // everything else
