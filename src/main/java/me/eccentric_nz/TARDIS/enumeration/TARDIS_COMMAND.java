@@ -63,6 +63,7 @@ public enum TARDIS_COMMAND {
     secondary,
     section,
     setdest,
+    sethome,
     tagtheood,
     theme,
     transmat,
@@ -84,6 +85,7 @@ public enum TARDIS_COMMAND {
             case exterminate:
             case hide:
             case home:
+            case sethome:
             case lamps:
             case make_her_blue:
             case rebuild:

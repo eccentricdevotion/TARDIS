@@ -88,14 +88,15 @@ public class TARDISVortexPersister {
                 int id = rs.getInt("tardis_id");
                 int task = rs.getInt("task");
                 if (task < 0) {
-                    // get Time Lord UUID?
+                    // get Time Lord UUID
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                     if (rs.resultSet()) {
                         UUID uuid = rs.getTardis().getUuid();
                         if (task == -1) {
-                            // get previous location & next destination and land
+                            // interrupted dematerialisation
+                            // get previous location and destroy tardis
                             // previous location = 'back' table
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
@@ -116,6 +117,9 @@ public class TARDISVortexPersister {
                                 new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, false, rs.getTardis().getDemat());
                             }
                         }
+                        // interrupted materialisation
+                        // get next destination and land
+                        // next location = 'current' table
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
