@@ -62,7 +62,6 @@ public class TARDISDatabaseConnection {
         if (!TARDIS.plugin.getConfig().getBoolean("storage.mysql.useSSL")) {
             jdbc += "&useSSL=false";
         }
-        System.out.println(jdbc);
         String user = TARDIS.plugin.getConfig().getString("storage.mysql.user");
         String pass = TARDIS.plugin.getConfig().getString("storage.mysql.password");
         try {
