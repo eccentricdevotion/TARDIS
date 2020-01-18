@@ -216,7 +216,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryVoid);
 
             // Table structure for table 'vortex'
-            String queryVortex = "CREATE TABLE IF NOT EXISTS " + prefix + "vortex (tardis_id INTEGER PRIMARY KEY NOT NULL)";
+            String queryVortex = "CREATE TABLE IF NOT EXISTS " + prefix + "vortex (tardis_id INTEGER PRIMARY KEY NOT NULL, task INTEGER DEFAULT 0)";
             statement.executeUpdate(queryVortex);
 
             // delete old submerged, gravity and levers tables

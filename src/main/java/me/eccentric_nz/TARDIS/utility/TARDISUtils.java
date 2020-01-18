@@ -208,7 +208,7 @@ public class TARDISUtils {
     }
 
     public boolean restoreBiome(Location l, Biome biome) {
-        if (l != null) {
+        if (l != null && biome != null) {
             int sbx = l.getBlockX() - 1;
             int sbz = l.getBlockZ() - 1;
             World w = l.getWorld();

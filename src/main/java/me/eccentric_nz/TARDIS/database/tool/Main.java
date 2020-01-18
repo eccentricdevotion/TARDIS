@@ -288,7 +288,7 @@ public class Main {
                                         break;
                                     case thevoid:
                                     case vortex:
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getInt("task")) + end;
                                         bw.write(str);
                                         break;
                                     default:

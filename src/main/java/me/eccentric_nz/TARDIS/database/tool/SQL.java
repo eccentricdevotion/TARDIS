@@ -144,7 +144,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sthevoid (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
+            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
 
     );
 
@@ -225,7 +225,7 @@ public class SQL {
 
             "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
 
-            "INSERT INTO `%svortex` (`tardis_id`) VALUES "
+            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES "
 
     );
 
@@ -306,7 +306,7 @@ public class SQL {
 
             "(%s)",
 
-            "(%s)"
+            "(%s, %s)"
 
     );
 

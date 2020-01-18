@@ -272,8 +272,16 @@ class TARDISMySQLDatabaseUpdater {
             ResultSet rsmodel = statement.executeQuery(model_query);
             if (!rsmodel.next()) {
                 i++;
-                String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD model int(11) DEFAULT '10000011'";
-                statement.executeUpdate(arrow_alter);
+                String model_alter = "ALTER TABLE " + prefix + "sonic ADD model int(11) DEFAULT '10000011'";
+                statement.executeUpdate(model_alter);
+            }
+            // add task to vortex
+            String vortex_query = "SHOW COLUMNS FROM " + prefix + "vortex LIKE 'task'";
+            ResultSet rsvortex = statement.executeQuery(vortex_query);
+            if (!rsvortex.next()) {
+                i++;
+                String vortex_alter = "ALTER TABLE " + prefix + "voretx ADD task int(11) DEFAULT '0'";
+                statement.executeUpdate(vortex_alter);
             }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";

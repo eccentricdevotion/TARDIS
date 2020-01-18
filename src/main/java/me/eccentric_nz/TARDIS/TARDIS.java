@@ -424,6 +424,16 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hasVersion) {
+            // force TARDISes to materialise (next restart) if interrupted
+            for (int id : getTrackerKeeper().getDematerialising()) {
+                if (getTrackerKeeper().getHasDestination().containsKey(id)) {
+                    getTrackerKeeper().getDestinationVortex().put(id, -1);
+                }
+            }
+            for (int id : getTrackerKeeper().getMaterialising()) {
+                getTrackerKeeper().getDestinationVortex().put(id, -2);
+            }
+            // TODO persist any room growing
             TARDISPerceptionFilter.removePerceptionFilter();
             debug("Perception Filters removed");
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {

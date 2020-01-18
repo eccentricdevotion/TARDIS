@@ -352,6 +352,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String delVoid = "DROP TABLE '" + prefix + "void'";
                 statement.executeUpdate(delVoid);
             }
+            // add task to vortex
+            String vortex_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "vortex' AND sql LIKE '%task%'";
+            ResultSet rsvortex = statement.executeQuery(vortex_query);
+            if (!rsvortex.next()) {
+                i++;
+                String vortex_alter = "ALTER TABLE " + prefix + "vortex ADD task INTEGER DEFAULT 0";
+                statement.executeUpdate(vortex_alter);
+            }
             // transfer farming locations from `tardis` table to `farming` table - only if updating!
             String farmCheckQuery = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%farm TEXT%'";
             ResultSet rsfc = statement.executeQuery(farmCheckQuery);
