@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
@@ -53,6 +54,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
+    private final HashMap<Integer, TARDISRoomData> roomTasks = new HashMap<>();
     private final HashMap<Integer, UUID> rescue = new HashMap<>();
     private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<>();
     private final HashMap<String, Sign> sign = new HashMap<>();
@@ -160,6 +162,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<Integer, TARDISAntiBuild> getAntiBuild() {
         return antiBuild;
+    }
+
+    public HashMap<Integer, TARDISRoomData> getRoomTasks() {
+        return roomTasks;
     }
 
     public HashMap<UUID, Block> getExterminate() {

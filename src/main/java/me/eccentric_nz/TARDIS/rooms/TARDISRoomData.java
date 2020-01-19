@@ -38,8 +38,17 @@ public class TARDISRoomData {
     private Block block;
     private JSONObject schematic;
     private int tardis_id;
+    private int row;
+    private int column;
+    private int level;
     private Material middleType;
     private Material floorType;
+
+    public TARDISRoomData() {
+        row = 0;
+        column = 0;
+        level = 0;
+    }
 
     public COMPASS getDirection() {
         return direction;
@@ -103,5 +112,29 @@ public class TARDISRoomData {
 
     public void setTardis_id(int tardis_id) {
         this.tardis_id = tardis_id;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

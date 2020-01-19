@@ -56,6 +56,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.TARDISSeedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
@@ -356,6 +357,8 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("preferences.notify_update")) {
                 getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this));
             }
+            // resume any room growing
+            new TARDISRoomPersister(this).resume();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
@@ -433,7 +436,8 @@ public class TARDIS extends JavaPlugin {
             for (int id : getTrackerKeeper().getMaterialising()) {
                 getTrackerKeeper().getDestinationVortex().put(id, -2);
             }
-            // TODO persist any room growing
+            // persist any room growing
+            new TARDISRoomPersister(this).saveProgress();
             TARDISPerceptionFilter.removePerceptionFilter();
             debug("Perception Filters removed");
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {

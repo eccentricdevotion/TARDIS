@@ -200,6 +200,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("reminder_id"), rs.getString("uuid"), rs.getString("reminder"), rs.getLong("time")) + end;
                                         sb.append(str);
                                         break;
+                                    case room_progress:
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("progress_id"), rs.getString("direction"), rs.getString("room"), rs.getInt("tardis_id"), rs.getInt("progress_row"), rs.getInt("progress_column"), rs.getInt("progress_level"), rs.getString("middle_type"), rs.getString("floor_type")) + end;
+                                        sb.append(str);
+                                        break;
                                     case siege:
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("siege_id"), rs.getString("uuid"), rs.getInt("tardis_id")) + end;
                                         sb.append(str);

@@ -96,11 +96,13 @@ class TARDISARSRunnable implements Runnable {
             roomData.setLocation(l);
             roomData.setRoom(whichroom);
             roomData.setSchematic(obj);
+            // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, tardis, slot, roomData));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
+            plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
             // remove BLOCKS from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());

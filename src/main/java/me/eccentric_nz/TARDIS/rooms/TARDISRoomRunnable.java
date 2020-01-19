@@ -57,6 +57,9 @@ public class TARDISRoomRunnable implements Runnable {
     private final JSONObject s;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int tardis_id;
+    private final int progressLevel;
+    private final int progressRow;
+    private final int progressColumn;
     private final Material wall_type, floor_type;
     private final String room;
     private boolean running;
@@ -95,6 +98,9 @@ public class TARDISRoomRunnable implements Runnable {
         floor_type = roomData.getFloorType();
         room = roomData.getRoom();
         tardis_id = roomData.getTardis_id();
+        progressLevel = roomData.getLevel();
+        progressRow = roomData.getRow();
+        progressColumn = roomData.getColumn();
         running = false;
         this.p = p;
         repeaterData[0] = BlockFace.NORTH;
@@ -142,20 +148,20 @@ public class TARDISRoomRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-            level = 0;
-            row = 0;
-            col = 0;
+            level = progressLevel;
+            row = progressRow;
+            col = progressColumn;
             JSONObject dim = s.getJSONObject("dimensions");
             arr = s.getJSONArray("input");
             h = dim.getInt("height") - 1;
             w = dim.getInt("width") - 1;
             c = dim.getInt("length");
-            startx = l.getBlockX();
-            starty = l.getBlockY();
-            startz = l.getBlockZ();
-            resetx = startx;
-            resety = starty;
-            resetz = startz;
+            startx = l.getBlockX() + progressRow;
+            starty = l.getBlockY() + progressLevel;
+            startz = l.getBlockZ() + progressColumn;
+            resetx = l.getBlockX();
+            resety = l.getBlockY();
+            resetz = l.getBlockZ();
             world = l.getWorld();
             running = true;
             String grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
@@ -188,6 +194,13 @@ public class TARDISRoomRunnable implements Runnable {
                 }
             }
             if (room.equals("AQUARIUM")) {
+                if (aqua_spawn == null) {
+                    ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
+                    if (rsf.resultSet()) {
+                        // resuming room growing...
+                        aqua_spawn = TARDISStaticLocationGetters.getSpawnLocationFromDB(rsf.getFarming().getAquarium());
+                    }
+                }
                 // add some underwater flora
                 int plusx = aqua_spawn.getBlockX() + 2;
                 int minusx = aqua_spawn.getBlockX() - 2;
@@ -391,6 +404,7 @@ public class TARDISRoomRunnable implements Runnable {
                     ch.setForceLoaded(false);
                 });
             }
+            plugin.getTrackerKeeper().getRoomTasks().remove(task);
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
@@ -839,6 +853,11 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 level++;
             }
+            TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
+            rd.setRow(row);
+            rd.setColumn(col);
+            rd.setLevel(level);
+            plugin.getTrackerKeeper().getRoomTasks().put(task, rd);
         }
     }
 
