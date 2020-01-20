@@ -280,8 +280,16 @@ class TARDISMySQLDatabaseUpdater {
             ResultSet rsvortex = statement.executeQuery(vortex_query);
             if (!rsvortex.next()) {
                 i++;
-                String vortex_alter = "ALTER TABLE " + prefix + "voretx ADD task int(11) DEFAULT '0'";
+                String vortex_alter = "ALTER TABLE " + prefix + "vortex ADD task int(11) DEFAULT '0'";
                 statement.executeUpdate(vortex_alter);
+            }
+            // add post_blocks to room_progress
+            String post_query = "SHOW COLUMNS FROM " + prefix + "room_progress LIKE 'post_blocks'";
+            ResultSet rspost = statement.executeQuery(post_query);
+            if (!rspost.next()) {
+                i++;
+                String post_alter = "ALTER TABLE " + prefix + "room_progress ADD post_blocks text NULL";
+                statement.executeUpdate(post_alter);
             }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
