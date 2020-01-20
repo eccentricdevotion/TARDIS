@@ -22,6 +22,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import java.util.List;
+
 /**
  * Data storage class for room building. We can just create a new instance and pass this around to the various methods
  * instead of a whole bunch of parameters.
@@ -43,6 +45,7 @@ public class TARDISRoomData {
     private int level;
     private Material middleType;
     private Material floorType;
+    private List<String> postBlocks;
 
     public TARDISRoomData() {
         row = 0;
@@ -136,5 +139,13 @@ public class TARDISRoomData {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public List<String> getPostBlocks() {
+        return postBlocks;
+    }
+
+    public void setPostBlocks(List<String> postBlocks) {
+        this.postBlocks = postBlocks;
     }
 }

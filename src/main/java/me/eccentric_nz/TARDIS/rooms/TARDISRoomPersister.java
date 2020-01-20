@@ -14,6 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class TARDISRoomPersister {
@@ -32,7 +35,7 @@ public class TARDISRoomPersister {
 
     public void saveProgress() {
         try {
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "room_progress (`direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "room_progress (`direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             for (TARDISRoomData rd : plugin.getTrackerKeeper().getRoomTasks().values()) {
                 ps.setString(1, rd.getDirection().toString());
                 ps.setString(2, rd.getRoom());
@@ -45,6 +48,7 @@ public class TARDISRoomPersister {
                 ps.setInt(7, rd.getLevel());
                 ps.setString(8, rd.getMiddleType().toString());
                 ps.setString(9, rd.getFloorType().toString());
+                ps.setString(10, String.join("@", rd.getPostBlocks()));
                 count += ps.executeUpdate();
             }
             if (count > 0) {
@@ -89,6 +93,8 @@ public class TARDISRoomPersister {
                     rd.setDirection(COMPASS.valueOf(rs.getString("direction")));
                     rd.setMiddleType(Material.valueOf(rs.getString("middle_type")));
                     rd.setFloorType(Material.valueOf(rs.getString("floor_type")));
+                    List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
+                    rd.setPostBlocks(postBlocks);
                     long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
                     // resume the room growing
                     TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, null);
