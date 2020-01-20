@@ -165,7 +165,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryReminders);
 
             // Table structure for table 'room_progress'
-            String queryRoomProgress = "CREATE TABLE IF NOT EXISTS " + prefix + "room_progress (progress_id INTEGER PRIMARY KEY NOT NULL, direction TEXT DEFAULT '', room TEXT DEFAULT '', location TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0, progress_row INTEGER DEFAULT 0, progress_column INTEGER DEFAULT 0, progress_level INTEGER DEFAULT 0, middle_type TEXT DEFAULT '', floor_type TEXT DEFAULT '')";
+            String queryRoomProgress = "CREATE TABLE IF NOT EXISTS " + prefix + "room_progress (progress_id INTEGER PRIMARY KEY NOT NULL, direction TEXT DEFAULT '', room TEXT DEFAULT '', location TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0, progress_row INTEGER DEFAULT 0, progress_column INTEGER DEFAULT 0, progress_level INTEGER DEFAULT 0, middle_type TEXT DEFAULT '', floor_type TEXT DEFAULT '', post_blocks TEXT DEFAULT '')";
             statement.executeUpdate(queryRoomProgress);
 
             // Table structure for table 'siege'

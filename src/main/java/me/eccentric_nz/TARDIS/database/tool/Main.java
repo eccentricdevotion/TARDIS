@@ -243,7 +243,7 @@ public class Main {
                                         bw.write(str);
                                         break;
                                     case room_progress:
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("progress_id"), rs.getString("direction"), rs.getString("room"), rs.getInt("tardis_id"), rs.getInt("progress_row"), rs.getInt("progress_column"), rs.getInt("progress_level"), rs.getString("middle_type"), rs.getString("floor_type")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("progress_id"), rs.getString("direction"), rs.getString("room"), rs.getInt("tardis_id"), rs.getInt("progress_row"), rs.getInt("progress_column"), rs.getInt("progress_level"), rs.getString("middle_type"), rs.getString("floor_type"), rs.getString("post_blocks")) + end;
                                         bw.write(str);
                                         break;
                                     case siege:

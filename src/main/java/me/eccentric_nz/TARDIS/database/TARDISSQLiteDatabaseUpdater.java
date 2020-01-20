@@ -360,6 +360,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String vortex_alter = "ALTER TABLE " + prefix + "vortex ADD task INTEGER DEFAULT 0";
                 statement.executeUpdate(vortex_alter);
             }
+            // add post_blocks to room_progress
+            String post_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "room_progress' AND sql LIKE '%post_blocks%'";
+            ResultSet rspost = statement.executeQuery(post_query);
+            if (!rspost.next()) {
+                i++;
+                String post_alter = "ALTER TABLE " + prefix + "room_progress ADD post_blocks TEXT DEFAULT ''";
+                statement.executeUpdate(post_alter);
+            }
             // transfer farming locations from `tardis` table to `farming` table - only if updating!
             String farmCheckQuery = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%farm TEXT%'";
             ResultSet rsfc = statement.executeQuery(farmCheckQuery);
