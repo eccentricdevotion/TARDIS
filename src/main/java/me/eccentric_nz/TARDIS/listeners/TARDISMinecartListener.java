@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.*;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -59,14 +56,8 @@ public class TARDISMinecartListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
         if (event.getVehicle() instanceof StorageMinecart || event.getVehicle() instanceof HopperMinecart) {
-            Block block = event.getBlock(); // currently the block in opposite direction of collision!
+            Block block = event.getBlock();
             Material material = block.getType();
-//            Bukkit.getLogger().info("event block: " + material.toString());
-//            Block minecartBlock = event.getVehicle().getLocation().getBlock();
-//            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
-//                Block bb = minecartBlock.getRelative(face);
-//                Bukkit.getLogger().info(face.toString() + ": " + bb.getType().toString());
-//            }
             if (material.equals(Material.IRON_DOOR) || material.equals(Material.OAK_FENCE)) {
                 Vehicle minecart = event.getVehicle();
                 String[] data = null;
@@ -223,19 +214,15 @@ public class TARDISMinecartListener implements Listener {
         Block block;
         for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
-            if (isTrack(block)) {
+            if (isTrack(block.getType())) {
                 return block.getLocation();
             }
         }
         return null;
     }
 
-    private boolean isTrack(Block block) {
-        return isTrack(block.getType());
-    }
-
     private boolean isTrack(Material mat) {
-        return (plugin.getGeneralKeeper().getRails().contains(mat));
+        return (Tag.RAILS.isTagged(mat));
     }
 
     private COMPASS getDirection(Location l) {
@@ -243,7 +230,7 @@ public class TARDISMinecartListener implements Listener {
         Block block;
         for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
-            if (isTrack(block)) {
+            if (isTrack(block.getType())) {
                 return COMPASS.valueOf(f.toString());
             }
         }

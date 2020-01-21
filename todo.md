@@ -18,6 +18,7 @@
     * Update Disk Storage defaults
 11. Set Master button to ON (In Lazarus GUI) when it is in use
 12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS.
+13. Fix TARDIS Genetic Manipulator disguises so that the different options take effect.
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

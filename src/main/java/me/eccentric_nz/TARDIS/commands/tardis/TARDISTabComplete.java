@@ -19,12 +19,14 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,6 +44,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
     private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "frame", "generator", "handbrake", "igloo", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "stall", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
     private final List<String> RECHARGER_SUBS;
+    private final List<String> PRESET_SUBS;
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -51,6 +54,10 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         }
         ROOT_SUBS = ImmutableList.copyOf(tcs);
         RECHARGER_SUBS = getPublicRechargers();
+        PRESET_SUBS = new ArrayList<>();
+        for (PRESET preset : PRESET.values()) {
+            PRESET_SUBS.add(preset.toString());
+        }
     }
 
     @Override
@@ -61,7 +68,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
-            String sub = args[0];
+            String sub = args[0].toLowerCase();
             switch (sub) {
                 case "add":
                 case "remove":
@@ -72,6 +79,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                     return partial(lastArg, CHAM_SUBS);
                 case "direction":
                     return partial(lastArg, DIR_SUBS);
+                case "home":
+                    return partial(lastArg, Collections.singletonList("set"));
                 case "list":
                     return partial(lastArg, LIST_SUBS);
                 case "rescue":
@@ -88,15 +97,18 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                     break;
             }
         } else if (args.length == 3) {
-            String sub = args[1];
+            String sub = args[1].toLowerCase();
             if (sub.equals("rechargers")) {
                 return partial(lastArg, RECHARGER_SUBS);
             }
             if (sub.equals("scan")) {
                 return partial(lastArg, CONSOLE_SIZE_SUBS);
             }
+            if (sub.equals("set")) {
+                return partial(lastArg, PRESET_SUBS);
+            }
         } else if (args.length == 4) {
-            String sub = args[1];
+            String sub = args[1].toLowerCase();
             if (sub.equals("add") || sub.equals("update")) {
                 return partial(lastArg, CONSOLE_SIZE_SUBS);
             }

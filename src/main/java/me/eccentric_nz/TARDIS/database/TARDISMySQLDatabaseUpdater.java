@@ -241,6 +241,14 @@ class TARDISMySQLDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add preset to homes
+            String preset_query = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'biome'";
+            ResultSet rspreset = statement.executeQuery(preset_query);
+            if (!rspreset.next()) {
+                i++;
+                String preset_alter = "ALTER TABLE " + prefix + "homes ADD preset varchar(64) DEFAULT ''";
+                statement.executeUpdate(preset_alter);
+            }
             // add tardis_id to dispersed
             String dispersed_query = "SHOW COLUMNS FROM " + prefix + "dispersed LIKE 'tardis_id'";
             ResultSet rsdispersed = statement.executeQuery(dispersed_query);

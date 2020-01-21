@@ -298,6 +298,14 @@ public class TARDISHandlesProcessor {
                                                 goto_loc = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                                                 nextDirection = rsh.getDirection();
                                                 sub = rsh.isSubmarine();
+                                                if (!rsh.getPreset().isEmpty()) {
+                                                    // set the chameleon preset
+                                                    HashMap<String, Object> wherep = new HashMap<>();
+                                                    wherep.put("tardis_id", id);
+                                                    HashMap<String, Object> setp = new HashMap<>();
+                                                    setp.put("chameleon_preset", rsh.getPreset());
+                                                    plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                                }
                                                 break;
                                             case RECHARGER:
                                                 Location recharger = getRecharger(rsc.getWorld(), player);

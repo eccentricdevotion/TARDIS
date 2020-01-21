@@ -22,7 +22,10 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
@@ -189,6 +192,14 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         set.put("z", rsh.getZ());
                                         set.put("direction", rsh.getDirection().toString());
                                         set.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
+                                        if (!rsh.getPreset().isEmpty()) {
+                                            // set the chameleon preset
+                                            HashMap<String, Object> wherep = new HashMap<>();
+                                            wherep.put("tardis_id", id);
+                                            HashMap<String, Object> setp = new HashMap<>();
+                                            setp.put("chameleon_preset", rsh.getPreset());
+                                            plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                        }
                                         break;
                                     case "area":
                                         // check area name
