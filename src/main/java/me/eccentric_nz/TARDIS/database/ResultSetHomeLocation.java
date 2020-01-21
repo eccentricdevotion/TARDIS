@@ -47,6 +47,7 @@ public class ResultSetHomeLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
+    private String preset;
     private final String prefix;
 
     /**
@@ -103,6 +104,7 @@ public class ResultSetHomeLocation {
                     z = rs.getInt("z");
                     direction = COMPASS.valueOf(rs.getString("direction"));
                     submarine = rs.getBoolean("submarine");
+                    preset = rs.getString("preset");
                 }
             } else {
                 return false;
@@ -155,5 +157,9 @@ public class ResultSetHomeLocation {
 
     public boolean isSubmarine() {
         return submarine;
+    }
+
+    public String getPreset() {
+        return preset;
     }
 }

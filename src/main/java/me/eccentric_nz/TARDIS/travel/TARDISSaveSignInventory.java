@@ -68,8 +68,9 @@ public class TARDISSaveSignInventory {
             hlore.add("" + rsh.getY());
             hlore.add("" + rsh.getZ());
             hlore.add(rsh.getDirection().toString());
-            if (rsh.isSubmarine()) {
-                hlore.add("true");
+            hlore.add((rsh.isSubmarine()) ? "true" : "false");
+            if (!rsh.getPreset().isEmpty()) {
+                hlore.add(rsh.getPreset());
             }
         } else {
             hlore.add("Not found!");

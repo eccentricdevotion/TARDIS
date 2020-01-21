@@ -151,6 +151,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                     bd.setSubmarine(rsh.isSubmarine());
                     bd.setTardisID(id);
                     bd.setBiome(biome);
+                    if (!rsh.getPreset().isEmpty()) {
+                        // set the chameleon preset
+                        HashMap<String, Object> wherep = new HashMap<>();
+                        wherep.put("tardis_id", id);
+                        HashMap<String, Object> setp = new HashMap<>();
+                        setp.put("chameleon_preset", rsh.getPreset());
+                        plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                    }
                     plugin.getPresetBuilder().buildPreset(bd);
                     return true;
                 }
@@ -241,6 +249,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("direction", rsh.getDirection().toString());
                                 set.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                                 which = "Home";
+                                if (!rsh.getPreset().isEmpty()) {
+                                    // set the chameleon preset
+                                    HashMap<String, Object> wherep = new HashMap<>();
+                                    wherep.put("tardis_id", id);
+                                    HashMap<String, Object> setp = new HashMap<>();
+                                    setp.put("chameleon_preset", rsh.getPreset());
+                                    plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                }
                             } else if (args[0].equalsIgnoreCase("back")) {
                                 // get fast return location
                                 HashMap<String, Object> wherebl = new HashMap<>();

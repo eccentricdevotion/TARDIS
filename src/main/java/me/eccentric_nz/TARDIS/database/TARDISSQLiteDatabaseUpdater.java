@@ -292,6 +292,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome TEXT DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add preset to homes
+            String preset_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "homes' AND sql LIKE '%preset%'";
+            ResultSet rspreset = statement.executeQuery(preset_query);
+            if (!rspreset.next()) {
+                i++;
+                String preset_alter = "ALTER TABLE " + prefix + "homes ADD preset TEXT DEFAULT ''";
+                statement.executeUpdate(preset_alter);
+            }
             // add repair to t_count
             String rep_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "t_count' AND sql LIKE '%repair%'";
             ResultSet rsrep = statement.executeQuery(rep_query);
