@@ -38,7 +38,7 @@ import java.util.List;
 public class TARDISGallifreyChunkPopulateListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Chunk> chunks = new ArrayList<>();
+    private final List<ChunkInfo> chunks = new ArrayList<>();
     private boolean isBuilding = false;
     private long timeCheck;
 
@@ -54,7 +54,8 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
         if (!chunk.getWorld().getName().equalsIgnoreCase("Gallifrey")) {
             return;
         }
-        if (chunks.contains(chunk) || isBuilding) {
+        ChunkInfo chunkInfo = new ChunkInfo("Gallifrey", chunk.getX(), chunk.getZ());
+        if (chunks.contains(chunkInfo) || isBuilding) {
             return;
         }
         // scan chunk for GOLD_ORE between y = 50 , 70
@@ -66,7 +67,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
                         if (System.currentTimeMillis() < timeCheck) {
                             return;
                         }
-                        buildStructure(chunk, x, hy, z);
+                        buildStructure(chunk, chunkInfo, x, hy, z);
                         return;
                     }
                 }
@@ -74,10 +75,10 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
         }
     }
 
-    private void buildStructure(Chunk chunk, int x, int y, int z) {
+    private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
         timeCheck = System.currentTimeMillis() + 5000;
         isBuilding = true;
-        chunks.add(chunk);
+        chunks.add(chunkInfo);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // create structure
             if (TARDISConstants.RANDOM.nextBoolean()) {

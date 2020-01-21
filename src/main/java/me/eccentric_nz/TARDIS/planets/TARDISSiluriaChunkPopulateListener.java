@@ -39,7 +39,7 @@ import java.util.List;
 public class TARDISSiluriaChunkPopulateListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Chunk> chunks = new ArrayList<>();
+    private final List<ChunkInfo> chunks = new ArrayList<>();
     private boolean isBuilding = false;
 
     public TARDISSiluriaChunkPopulateListener(TARDIS plugin) {
@@ -53,7 +53,8 @@ public class TARDISSiluriaChunkPopulateListener implements Listener {
         if (!chunk.getWorld().getName().equalsIgnoreCase("Siluria")) {
             return;
         }
-        if (chunks.contains(chunk) || isBuilding) {
+        ChunkInfo chunkInfo = new ChunkInfo("Siluria", chunk.getX(), chunk.getZ());
+        if (chunks.contains(chunkInfo) || isBuilding) {
             return;
         }
         // find water
@@ -68,14 +69,14 @@ public class TARDISSiluriaChunkPopulateListener implements Listener {
             hy = water.getLocation().getBlockY() - 1;
         }
         if (water.getType().equals(Material.WATER)) {
-            buildStructure(chunk, cx, hy, cz);
+            buildStructure(chunkInfo, cx, hy, cz);
         }
     }
 
-    private void buildStructure(Chunk chunk, int x, int y, int z) {
+    private void buildStructure(ChunkInfo chunkInfo, int x, int y, int z) {
         isBuilding = true;
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            chunks.add(chunk);
+            chunks.add(chunkInfo);
             // create structure
             isBuilding = new TARDISBuildSilurianStructure(plugin).buildCity(x, y, z);
         }, 2L);
