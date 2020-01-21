@@ -261,7 +261,7 @@
         <dependency>
             <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
-            <version>3.0.1-SNAPHOT</version>
+            <version>4.0.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Multiverse-Inventories.jar</systemPath>
