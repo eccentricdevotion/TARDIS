@@ -44,7 +44,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
 
     public TARDISGallifreyChunkPopulateListener(TARDIS plugin) {
         this.plugin = plugin;
-        timeCheck = System.currentTimeMillis() + 5000;
+        timeCheck = System.currentTimeMillis() + 3000;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -76,7 +76,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
     }
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
-        timeCheck = System.currentTimeMillis() + 5000;
+        timeCheck = System.currentTimeMillis() + 3000;
         isBuilding = true;
         chunks.add(chunkInfo);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

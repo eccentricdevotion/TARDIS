@@ -43,7 +43,7 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
 
     public TARDISSkaroChunkPopulateListener(TARDIS plugin) {
         this.plugin = plugin;
-        timeCheck = System.currentTimeMillis() + 3000;
+        timeCheck = System.currentTimeMillis() + 2000;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -75,7 +75,7 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
     }
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
-        timeCheck = System.currentTimeMillis() + 3000;
+        timeCheck = System.currentTimeMillis() + 2000;
         isBuilding = true;
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             chunks.add(chunkInfo);
