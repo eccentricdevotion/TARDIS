@@ -51,8 +51,7 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
             KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));
         } else {
             List<String> keys = new ArrayList<>();
-            Material[] materialValues = Material.values();
-            for (Material key : materialValues) {
+            for (Material key : Material.values()) {
                 if (!key.isBlock()) {
                     keys.add(key.toString());
                 }
