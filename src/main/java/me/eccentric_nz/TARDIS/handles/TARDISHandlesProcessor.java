@@ -304,6 +304,8 @@ public class TARDISHandlesProcessor {
                                                     wherep.put("tardis_id", id);
                                                     HashMap<String, Object> setp = new HashMap<>();
                                                     setp.put("chameleon_preset", rsh.getPreset());
+                                                    // set chameleon adaption to OFF
+                                                    setp.put("adapti_on", 0);
                                                     plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                                 }
                                                 break;

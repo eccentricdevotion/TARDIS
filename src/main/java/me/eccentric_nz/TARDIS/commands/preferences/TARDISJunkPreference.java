@@ -103,6 +103,8 @@ class TARDISJunkPreference {
                 // save JUNK_MODE preset
                 sett.put("chameleon_preset", "JUNK_MODE");
                 sett.put("chameleon_demat", current);
+                // set chameleon adaption to OFF
+                sett.put("adapti_on", 0);
                 TARDISMessage.send(player, "JUNK_PRESET_ON");
                 cham_set = "JUNK_MODE";
             }
