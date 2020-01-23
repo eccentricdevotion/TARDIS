@@ -600,7 +600,7 @@ public class TARDISUpdateListener implements Listener {
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, id);
             }
-            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("siege") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
+            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("siege") || blockName.equalsIgnoreCase("toggle_wool") || blockName.equalsIgnoreCase("flight") || blockName.equalsIgnoreCase("forcefield")) && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherel = new HashMap<>();
                 wherel.put("tardis_id", id);
                 wherel.put("type", CONTROL.getUPDATE_CONTROLS().get(blockName));

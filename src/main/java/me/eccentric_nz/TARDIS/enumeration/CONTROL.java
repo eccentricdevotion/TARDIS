@@ -52,7 +52,8 @@ public enum CONTROL {
     HANDLES(26, "handles"),
     FRAME(27, "frame"),
     DISPENSER(28, "dispenser"),
-    FORCE_FIELD(29, "forcefield");
+    FORCE_FIELD(29, "forcefield"),
+    FLIGHT(30, "flight");
 
     private final int id;
     private final String update;

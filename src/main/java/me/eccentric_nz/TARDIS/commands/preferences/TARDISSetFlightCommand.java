@@ -62,8 +62,29 @@ public class TARDISSetFlightCommand {
 
     public enum FlightMode {
 
-        NORMAL,
-        REGULATOR,
-        MANUAL
+        NORMAL(1),
+        REGULATOR(2),
+        MANUAL(3);
+
+        private final int mode;
+        private static final HashMap<Integer, FlightMode> byMode = new HashMap<>();
+
+        FlightMode(int mode) {
+            this.mode = mode;
+        }
+
+        static {
+            for (FlightMode fm : values()) {
+                byMode.put(fm.mode, fm);
+            }
+        }
+
+        public int getMode() {
+            return mode;
+        }
+
+        public static HashMap<Integer, FlightMode> getByMode() {
+            return byMode;
+        }
     }
 }

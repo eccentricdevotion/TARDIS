@@ -23,11 +23,9 @@ import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISSetFlightCommand;
 import me.eccentric_nz.TARDIS.control.*;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetProgram;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -393,6 +391,23 @@ public class TARDISButtonListener implements Listener {
                                             TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
                                         }
                                     }
+                                    break;
+                                case 30:
+                                    // flight mode button
+                                    // get current flight mode
+                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
+                                    int mode = rsp.getFlightMode() + 1;
+                                    if (mode > 3) {
+                                        mode = 1;
+                                    }
+                                    // set flight mode
+                                    HashMap<String, Object> setf = new HashMap<>();
+                                    setf.put("flying_mode", mode);
+                                    HashMap<String, Object> wheref = new HashMap<>();
+                                    wheref.put("uuid", player.getUniqueId().toString());
+                                    TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
+                                    TARDISMessage.send(player, "FLIGHT_TOGGLED", TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
+
                                     break;
                                 default:
                                     break;
