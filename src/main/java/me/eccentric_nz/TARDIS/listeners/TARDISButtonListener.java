@@ -68,9 +68,9 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30);
     private final List<Integer> allow_unpowered = Arrays.asList(13, 17, 22);
-    private final List<Integer> no_siege = Arrays.asList(0, 10, 12, 16, 19, 20);
+    private final List<Integer> no_siege = Arrays.asList(0, 10, 12, 16, 19, 20, 25, 29);
 
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
