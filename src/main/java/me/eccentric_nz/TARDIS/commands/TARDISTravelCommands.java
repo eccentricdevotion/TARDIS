@@ -157,6 +157,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                         wherep.put("tardis_id", id);
                         HashMap<String, Object> setp = new HashMap<>();
                         setp.put("chameleon_preset", rsh.getPreset());
+                        // set chameleon adaption to OFF
+                        setp.put("adapti_on", 0);
                         plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                     }
                     plugin.getPresetBuilder().buildPreset(bd);
@@ -255,6 +257,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     wherep.put("tardis_id", id);
                                     HashMap<String, Object> setp = new HashMap<>();
                                     setp.put("chameleon_preset", rsh.getPreset());
+                                    // set chameleon adaption to OFF
+                                    setp.put("adapti_on", 0);
                                     plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                 }
                             } else if (args[0].equalsIgnoreCase("back")) {
@@ -604,6 +608,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         wherei.put("tardis_id", id);
                                         HashMap<String, Object> seti = new HashMap<>();
                                         seti.put("chameleon_preset", invisibility);
+                                        // set chameleon adaption to OFF
+                                        seti.put("adapti_on", 0);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                     }
                                 }
@@ -625,6 +631,16 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("direction", rsc.getDirection().toString());
                                 }
                                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
+                                if (!rsd.getPreset().isEmpty()) {
+                                    // set the chameleon preset
+                                    HashMap<String, Object> seti = new HashMap<>();
+                                    seti.put("chameleon_preset", rsd.getPreset());
+                                    // set chameleon adaption to OFF
+                                    seti.put("adapti_on", 0);
+                                    HashMap<String, Object> wherei = new HashMap<>();
+                                    wherei.put("tardis_id", id);
+                                    plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                }
                                 plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                                 TARDISMessage.send(player, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                 plugin.getTrackerKeeper().getHasDestination().put(id, travel);
@@ -672,6 +688,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                             wherei.put("tardis_id", id);
                             HashMap<String, Object> seti = new HashMap<>();
                             seti.put("chameleon_preset", invisibility);
+                            // set chameleon adaption to OFF
+                            seti.put("adapti_on", 0);
                             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                         }
                         Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());

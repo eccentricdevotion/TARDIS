@@ -259,6 +259,8 @@ public class TARDISPrefsMenuListener implements Listener {
                                     // save JUNK_MODE preset
                                     sett.put("chameleon_preset", "JUNK_MODE");
                                     sett.put("chameleon_demat", current);
+                                    // set chameleon adaption to OFF
+                                    sett.put("adapti_on", 0);
                                     cham_set = "JUNK_MODE";
                                 }
                                 plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);

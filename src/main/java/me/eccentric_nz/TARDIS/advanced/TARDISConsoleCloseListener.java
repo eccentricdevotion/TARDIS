@@ -244,6 +244,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                             if (!ignore) {
                                                 // apply the preset
                                                 set_tardis.put("chameleon_preset", first);
+                                                // set chameleon adaption to OFF
+                                                set_tardis.put("adapti_on", 0);
                                             }
                                             break;
                                         case MUSIC_DISC_CHIRP: // save
@@ -266,6 +268,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 try {
                                                     PRESET.valueOf(lore.get(5));
                                                     set_tardis.put("chameleon_preset", lore.get(5));
+                                                    // set chameleon adaption to OFF
+                                                    set_tardis.put("adapti_on", 0);
                                                 } catch (IllegalArgumentException e) {
                                                     plugin.debug("Invalid PRESET value: " + lore.get(5));
                                                 }

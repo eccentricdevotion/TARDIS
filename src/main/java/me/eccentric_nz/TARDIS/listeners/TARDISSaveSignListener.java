@@ -185,6 +185,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                             wherei.put("tardis_id", id);
                                             HashMap<String, Object> seti = new HashMap<>();
                                             seti.put("chameleon_preset", invisibility);
+                                            // set chameleon adaption to OFF
+                                            seti.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                         }
                                     }
@@ -209,6 +211,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     if (l_size >= 7 && !lore.get(6).equals(ChatColor.GOLD + "Current location")) {
                                         HashMap<String, Object> sett = new HashMap<>();
                                         sett.put("chameleon_preset", lore.get(6));
+                                        // set chameleon adaption to OFF
+                                        sett.put("adapti_on", 0);
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);

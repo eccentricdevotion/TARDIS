@@ -186,9 +186,9 @@ public class TARDISHandlesProcessor {
                                         HashMap<String, Object> whereh = new HashMap<>();
                                         whereh.put("tardis_id", id);
                                         whereh.put("type", 26);
-                                        ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
-                                        if (rsh.resultSet()) {
-                                            Location handles = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
+                                        ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+                                        if (rsc.resultSet()) {
+                                            Location handles = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                                             Block block = handles.getBlock();
                                             Powerable button = (Powerable) block.getBlockData();
                                             if (!button.isPowered()) {
@@ -298,6 +298,16 @@ public class TARDISHandlesProcessor {
                                                 goto_loc = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                                                 nextDirection = rsh.getDirection();
                                                 sub = rsh.isSubmarine();
+                                                if (!rsh.getPreset().isEmpty()) {
+                                                    // set the chameleon preset
+                                                    HashMap<String, Object> wherep = new HashMap<>();
+                                                    wherep.put("tardis_id", id);
+                                                    HashMap<String, Object> setp = new HashMap<>();
+                                                    setp.put("chameleon_preset", rsh.getPreset());
+                                                    // set chameleon adaption to OFF
+                                                    setp.put("adapti_on", 0);
+                                                    plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                                }
                                                 break;
                                             case RECHARGER:
                                                 Location recharger = getRecharger(rsc.getWorld(), player);

@@ -198,6 +198,8 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             wherep.put("tardis_id", id);
                                             HashMap<String, Object> setp = new HashMap<>();
                                             setp.put("chameleon_preset", rsh.getPreset());
+                                            // set chameleon adaption to OFF
+                                            setp.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                         }
                                         break;
@@ -236,6 +238,8 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             wherei.put("tardis_id", id);
                                             HashMap<String, Object> seti = new HashMap<>();
                                             seti.put("chameleon_preset", invisibility);
+                                            // set chameleon adaption to OFF
+                                            seti.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                         }
                                         // get a landing spot
