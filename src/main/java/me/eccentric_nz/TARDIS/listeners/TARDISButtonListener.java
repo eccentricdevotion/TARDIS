@@ -383,31 +383,35 @@ public class TARDISButtonListener implements Listener {
                                 case 29:
                                     // force field
                                     if (player.hasPermission("tardis.forcefield")) {
+                                        String onoff = "ON";
                                         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                                             plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-                                            TARDISSounds.playTARDISSound(block.getLocation(), "power_down");
+                                            TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_down");
+                                            onoff = "OFF";
                                         } else {
                                             TARDISForceField.addToTracker(player);
-                                            TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
+                                            TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_up");
                                         }
+                                        TARDISMessage.send(player, "FORCE_FIELD", onoff);
                                     }
                                     break;
                                 case 30:
                                     // flight mode button
                                     // get current flight mode
                                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
-                                    int mode = rsp.getFlightMode() + 1;
-                                    if (mode > 3) {
-                                        mode = 1;
+                                    if (rsp.resultSet()) {
+                                        int mode = rsp.getFlightMode() + 1;
+                                        if (mode > 3) {
+                                            mode = 1;
+                                        }
+                                        // set flight mode
+                                        HashMap<String, Object> setf = new HashMap<>();
+                                        setf.put("flying_mode", mode);
+                                        HashMap<String, Object> wheref = new HashMap<>();
+                                        wheref.put("uuid", player.getUniqueId().toString());
+                                        plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
+                                        TARDISMessage.send(player, "FLIGHT_TOGGLED", TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
                                     }
-                                    // set flight mode
-                                    HashMap<String, Object> setf = new HashMap<>();
-                                    setf.put("flying_mode", mode);
-                                    HashMap<String, Object> wheref = new HashMap<>();
-                                    wheref.put("uuid", player.getUniqueId().toString());
-                                    TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
-                                    TARDISMessage.send(player, "FLIGHT_TOGGLED", TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
-
                                     break;
                                 default:
                                     break;

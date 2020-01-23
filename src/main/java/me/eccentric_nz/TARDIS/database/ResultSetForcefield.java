@@ -24,8 +24,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -39,8 +37,7 @@ public class ResultSetForcefield {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
-    private int tardis_id;
+    private final String where;
     private World world;
     private int x;
     private int y;
@@ -55,7 +52,7 @@ public class ResultSetForcefield {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetForcefield(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetForcefield(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -70,31 +67,13 @@ public class ResultSetForcefield {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
         String currentTable = prefix + "current";
         String tardisTable = prefix + "tardis";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            sbw.append(tardisTable).append(".tardis_id = ").append(currentTable).append(".tardis_id");
-            wheres = " WHERE " + sbw.toString();
-        }
-        String query = "SELECT " + tardisTable + ".uuid, current.* FROM " + tardisTable + ", " + tardisTable + " " + wheres;
+        String query = String.format("SELECT %s.uuid, %s.* FROM %s, %s WHERE %s.uuid = ? AND %s.tardis_id = %s.tardis_id", tardisTable, currentTable, tardisTable, currentTable, tardisTable, tardisTable, currentTable);
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, (Integer) entry.getValue());
-                    }
-                    s++;
-                }
-                where.clear();
-            }
+            statement.setString(1, where);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {

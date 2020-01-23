@@ -9,7 +9,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -79,9 +78,7 @@ public class TARDISForceField implements Runnable {
     }
 
     public static void addToTracker(Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetForcefield rsff = new ResultSetForcefield(TARDIS.plugin, where);
+        ResultSetForcefield rsff = new ResultSetForcefield(TARDIS.plugin, player.getUniqueId().toString());
         if (rsff.resultSet()) {
             TARDIS.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
         }
