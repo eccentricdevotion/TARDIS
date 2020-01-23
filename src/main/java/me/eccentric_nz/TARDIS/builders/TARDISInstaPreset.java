@@ -561,6 +561,9 @@ public class TARDISInstaPreset {
             int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
             plugin.getServer().getScheduler().cancelTask(taskID);
         }
+        if (!bd.isRebuild() && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
+            plugin.getTrackerKeeper().getActiveForceFields().put(bd.getPlayer().getPlayer().getUniqueId(), bd.getLocation());
+        }
     }
 
     private void processDoor(String doorloc) {

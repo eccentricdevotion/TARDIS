@@ -779,6 +779,9 @@ class TARDISMaterialisationPreset implements Runnable {
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 }
+                if (!bd.isRebuild() && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
+                    plugin.getTrackerKeeper().getActiveForceFields().put(bd.getPlayer().getPlayer().getUniqueId(), bd.getLocation());
+                }
                 // message travellers in tardis
                 if (loops > 3) {
                     HashMap<String, Object> where = new HashMap<>();
