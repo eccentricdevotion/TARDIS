@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Openable;
@@ -70,7 +71,7 @@ public class TARDISDoorOpener {
      * Open the door.
      */
     private void open(Block block, Block other, boolean add) {
-        if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
+        if (Tag.DOORS.isTagged(block.getType())) {
             Openable openable = (Openable) block.getBlockData();
             openable.setOpen(true);
             block.setBlockData(openable, true);

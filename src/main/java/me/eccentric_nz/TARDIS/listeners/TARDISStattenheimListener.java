@@ -42,6 +42,7 @@ import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -117,7 +118,7 @@ public class TARDISStattenheimListener implements Listener {
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
                     Material m = b.getType();
-                    if (b.getState() instanceof InventoryHolder || plugin.getGeneralKeeper().getDoors().contains(m)) {
+                    if (b.getState() instanceof InventoryHolder || Tag.DOORS.isTagged(m)) {
                         return;
                     }
                     if (player.hasPermission("tardis.timetravel")) {

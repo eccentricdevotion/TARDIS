@@ -141,7 +141,7 @@ public class TARDISMinecartListener implements Listener {
                             int y = TARDISNumberParsers.parseInt(data[2]);
                             int z = TARDISNumberParsers.parseInt(data[3]);
                             Location in_out = new Location(w, x, y, z);
-                            if (plugin.getGeneralKeeper().getDoors().contains(material)) {
+                            if (Tag.DOORS.isTagged(material)) {
                                 d = getDirection(in_out);
                                 w.getChunkAt(in_out).setForceLoaded(true);
                             } else {

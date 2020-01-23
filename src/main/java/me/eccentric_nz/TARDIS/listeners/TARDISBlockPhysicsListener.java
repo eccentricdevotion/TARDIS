@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISRecordingQueue;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -64,7 +65,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                     if (state instanceof Door) {
                         Block blockBelow = getBlockBelow(block);
                         if (blockBelow != null) {
-                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                                 event.setCancelled(true);
                             }
                         }

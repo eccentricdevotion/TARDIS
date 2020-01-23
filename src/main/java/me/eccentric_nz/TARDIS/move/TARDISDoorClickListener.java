@@ -27,11 +27,11 @@ import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.*;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -80,7 +80,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking an iron door with a TARDIS key!
-            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
+            if (Tag.DOORS.isTagged(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
                 Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
                     Action action = event.getAction();
@@ -91,7 +91,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
-                    if (!TARDISMaterials.trapdoors.contains(blockType)) {
+                    if (!Tag.TRAPDOORS.isTagged(blockType)) {
                         Bisected bisected = (Bisected) block.getBlockData();
                         if (bisected.getHalf().equals(Bisected.Half.TOP)) {
                             by = (by - 1);
@@ -193,7 +193,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     if (rsc.getCompanions().contains(playerUUID)) {
                                         if (!rsd.isLocked()) {
                                             // toogle the door open/closed
-                                            if (plugin.getGeneralKeeper().getDoors().contains(blockType)) {
+                                            if (Tag.DOORS.isTagged(blockType)) {
                                                 if (doortype == 0 || doortype == 1) {
                                                     boolean open = TARDISStaticUtils.isDoorOpen(block);
                                                     if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
@@ -204,7 +204,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     // toggle the doors
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 }
-                                            } else if (TARDISMaterials.trapdoors.contains(blockType)) {
+                                            } else if (Tag.TRAPDOORS.isTagged(blockType)) {
                                                 TrapDoor door_data = (TrapDoor) block.getBlockData();
                                                 door_data.setOpen(!door_data.isOpen());
                                             }

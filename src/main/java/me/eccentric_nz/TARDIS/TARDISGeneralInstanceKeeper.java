@@ -70,8 +70,6 @@ public class TARDISGeneralInstanceKeeper {
     private final List<BlockFace> blockFaces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
     private final List<Location> rechargers = new ArrayList<>();
-    private final List<Material> doors = Arrays.asList(Material.IRON_DOOR, Material.OAK_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
-    private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAIL, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
     private final List<String> gravityDownList = new ArrayList<>();
     private final List<String> roomArgs;
@@ -125,14 +123,6 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<BlockFace> getSurrounding() {
         return surrounding;
-    }
-
-    public List<Material> getDoors() {
-        return doors;
-    }
-
-    public List<Material> getRails() {
-        return rails;
     }
 
     public List<Material> getGoodNether() {

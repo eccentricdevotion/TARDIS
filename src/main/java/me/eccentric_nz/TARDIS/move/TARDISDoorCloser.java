@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
@@ -67,7 +68,7 @@ public class TARDISDoorCloser {
      * @param inportal the location of the interior door portal
      */
     private void close(Block block, Location inportal) {
-        if (block != null && plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
+        if (block != null && Tag.DOORS.isTagged(block.getType())) {
             Openable closeable = (Openable) block.getBlockData();
             closeable.setOpen(false);
             block.setBlockData(closeable, true);
