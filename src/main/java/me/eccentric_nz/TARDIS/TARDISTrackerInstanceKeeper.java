@@ -131,6 +131,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> temporallyLocated = new ArrayList<>();
     private final List<UUID> renderRoomOccupants = new ArrayList<>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<>();
+    private final HashMap<UUID, Location> activeForceFields = new HashMap<>();
 
     public HashMap<Integer, Boolean> getMalfunction() {
         return malfunction;
@@ -475,5 +476,9 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Integer> getSiegeCarrying() {
         return siegeCarrying;
+    }
+
+    public HashMap<UUID, Location> getActiveForceFields() {
+        return activeForceFields;
     }
 }

@@ -326,6 +326,9 @@ public class TARDIS extends JavaPlugin {
                 new ChemistryBlockRecipes(this).addRecipes();
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200L, 200L);
             }
+            if (getConfig().getInt("allow.force_field") > 0) {
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISForceField(this), 20L, 5L);
+            }
             new TARDISVortexPersister(this).load();
             new TARDISJunkPlayerPersister(this).load();
             setDates();

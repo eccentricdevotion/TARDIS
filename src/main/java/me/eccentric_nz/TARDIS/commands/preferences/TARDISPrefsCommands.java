@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISForceField;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -64,6 +65,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("farm");
         firstArgs.add("flight");
         firstArgs.add("floor");
+        firstArgs.add("forcefield");
         firstArgs.add("hads");
         firstArgs.add("hads_type");
         firstArgs.add("hum");
@@ -163,6 +165,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             return new TARDISFloorCommand().setFloorOrWallBlock(player, args);
                         default:
                             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+                                if (pref.equals("forcefield") && player.hasPermission("tardis.forcefield")) {
+                                    // add tardis + location
+                                    if (args[1].equalsIgnoreCase("on")) {
+                                        TARDISForceField.addToTracker(player);
+                                    } else {
+                                        plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
+                                    }
+                                }
                                 TARDISMessage.send(player, "PREF_ON_OFF", pref);
                                 return false;
                             }

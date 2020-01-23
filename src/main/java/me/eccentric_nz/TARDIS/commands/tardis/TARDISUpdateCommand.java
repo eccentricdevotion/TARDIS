@@ -41,7 +41,7 @@ import java.util.Locale;
 class TARDISUpdateCommand {
 
     private final TARDIS plugin;
-    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "dispenser", "door", "eps", "farm", "frame", "generator", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "dispenser", "door", "eps", "farm", "frame", "forcefield", "generator", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
 
     TARDISUpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -101,6 +101,10 @@ class TARDISUpdateCommand {
             }
             if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");
+                return true;
+            }
+            if (tardis_block.equals("forcefield") && !player.hasPermission("tardis.forcefield")) {
+                TARDISMessage.send(player, "NO_PERM_FF");
                 return true;
             }
             if (tardis_block.equals("storage") && !player.hasPermission("tardis.storage")) {

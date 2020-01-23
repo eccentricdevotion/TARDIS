@@ -384,6 +384,9 @@ permissions:
   tardis.tag:
     description: Allow a player to broadcast Tag The Ood messages.
     default: true
+  tardis.forcefield:
+    description: Allow a player to turn on the TARDIS force field.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
@@ -845,6 +848,9 @@ commands:
     chameleon:
       description: Toggle the chameleon circuit on and off.
       usage: /<command> chameleon [on|off]
+    forcefield:
+      description: Toggle the TARDIS forcefield on and off.
+      usage: /<command> forcefield [on|off]
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.

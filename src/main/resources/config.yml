@@ -144,6 +144,7 @@ allow:
   perception_filter: true
   repair: true
   chemistry: true
+  force_field: 8
 # room related
 growth:
   gravity_max_distance: 15

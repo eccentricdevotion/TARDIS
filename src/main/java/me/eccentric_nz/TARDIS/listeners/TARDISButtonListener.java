@@ -382,6 +382,18 @@ public class TARDISButtonListener implements Listener {
                                     event.setCancelled(true);
                                     new TARDISCustardCreamDispenser(plugin, player, block, id).dispense();
                                     break;
+                                case 29:
+                                    // force field
+                                    if (player.hasPermission("tardis.forcefield")) {
+                                        if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
+                                            plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
+                                            TARDISSounds.playTARDISSound(block.getLocation(), "power_down");
+                                        } else {
+                                            TARDISForceField.addToTracker(player);
+                                            TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
+                                        }
+                                    }
+                                    break;
                                 default:
                                     break;
                             }

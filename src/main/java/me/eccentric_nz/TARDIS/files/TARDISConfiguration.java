@@ -130,6 +130,7 @@ public class TARDISConfiguration {
         booleanOptions.put("travel.terminal.redefine", false);
         booleanOptions.put("travel.the_end", false);
         // integer
+        integerOptions.put("allow.force_field", 8);
         integerOptions.put("arch.min_time", 20);
         integerOptions.put("archive.limit", 3);
         integerOptions.put("circuits.uses.ars", 20);
