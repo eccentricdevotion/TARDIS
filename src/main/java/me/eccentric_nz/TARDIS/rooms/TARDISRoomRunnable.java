@@ -636,7 +636,7 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                         break;
                 }
-                if (!room.equals("ZERO")) {
+                if (!room.equals("ZERO") && !room.equals("RENDERER")) {
                     // update player prefs - turn on mob farming
                     turnOnFarming(player);
                 }
