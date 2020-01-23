@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -75,9 +78,7 @@ public class TARDISConsoleListener implements Listener {
                     event.setCancelled(true);
                     int id = rsc.getTardis_id();
                     // determine key item
-                    HashMap<String, Object> wherek = new HashMap<>();
-                    wherek.put("uuid", p.getUniqueId().toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                     String key;
                     if (rsp.resultSet()) {
                         key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");

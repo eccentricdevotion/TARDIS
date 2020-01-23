@@ -85,9 +85,7 @@ public class TARDISJunkBuilder implements Runnable {
                     // get wall and floor prefs
                     Material floor_type;
                     Material wall_type;
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                     if (rsp.resultSet()) {
                         floor_type = Material.valueOf(rsp.getFloor());
                         wall_type = Material.valueOf(rsp.getWall());

@@ -47,9 +47,7 @@ public class TARDISHostileAction {
             UUID uuid = tardis.getUuid();
             boolean poweredOn = tardis.isPowered_on();
             PRESET preset = tardis.getPreset();
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn() && poweredOn) {
                     switch (rsp.getHadsType()) {

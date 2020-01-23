@@ -30,7 +30,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -67,9 +66,7 @@ public class TARDISRoomBuilder {
     public boolean build() {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(p.getUniqueId().toString())) {
-            HashMap<String, Object> wherepp = new HashMap<>();
-            wherepp.put("uuid", p.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
             // get wall data, default to orange wool if not set

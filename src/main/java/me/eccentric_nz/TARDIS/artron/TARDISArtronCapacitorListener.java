@@ -128,9 +128,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
                             Material cell = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Artron Storage Cell.result"));
                             // determine key item
-                            HashMap<String, Object> wherek = new HashMap<>();
-                            wherek.put("uuid", player.getUniqueId().toString());
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                             String key;
                             boolean hasPrefs = false;
                             if (rsp.resultSet()) {

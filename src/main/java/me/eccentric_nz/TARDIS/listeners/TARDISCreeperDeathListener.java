@@ -66,9 +66,7 @@ public class TARDISCreeperDeathListener implements Listener {
                     where.put("uuid", killerUUID);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                     if (rs.resultSet()) {
-                        HashMap<String, Object> wherep = new HashMap<>();
-                        wherep.put("uuid", killerUUID);
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, killerUUID);
                         HashMap<String, Object> set = new HashMap<>();
                         int amount = plugin.getArtronConfig().getInt("creeper_recharge");
                         if (!rsp.resultSet()) {

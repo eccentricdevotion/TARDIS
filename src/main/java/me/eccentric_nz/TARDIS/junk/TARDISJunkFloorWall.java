@@ -65,9 +65,7 @@ class TARDISJunkFloorWall {
             return true;
         }
         // check if player_prefs record
-        HashMap<String, Object> wherepp = new HashMap<>();
-        wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
         HashMap<String, Object> setpp = new HashMap<>();
         if (!rsp.resultSet()) {
             String otherpref = (pref.equals("floor")) ? "wall" : "floor";

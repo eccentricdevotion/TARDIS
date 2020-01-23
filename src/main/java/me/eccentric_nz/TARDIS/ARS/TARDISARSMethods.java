@@ -466,10 +466,8 @@ public class TARDISARSMethods {
         boolean hasRequired = true;
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GRAY_WOOL";
-        HashMap<String, Object> wherepp = new HashMap<>();
         boolean hasPrefs = false;
-        wherepp.put("uuid", uuid);
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rsp.resultSet()) {
             hasPrefs = true;
             wall = rsp.getWall();

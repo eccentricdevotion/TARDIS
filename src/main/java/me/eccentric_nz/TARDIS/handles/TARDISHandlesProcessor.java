@@ -405,9 +405,7 @@ public class TARDISHandlesProcessor {
                                                     }
                                                     UUID toUUID = to.getUniqueId();
                                                     // check the to player's DND status
-                                                    HashMap<String, Object> wherednd = new HashMap<>();
-                                                    wherednd.put("uuid", toUUID.toString());
-                                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
+                                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
                                                     if (rspp.resultSet() && rspp.isDND()) {
                                                         TARDISMessage.handlesSend(player, "DND", first);
                                                         continue;

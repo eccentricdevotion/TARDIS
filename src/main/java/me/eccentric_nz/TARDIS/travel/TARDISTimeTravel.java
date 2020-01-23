@@ -202,9 +202,7 @@ public class TARDISTimeTravel {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
                             // check if submarine is on
-                            HashMap<String, Object> wheres = new HashMap<>();
-                            wheres.put("uuid", p.getUniqueId().toString());
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                             if (rsp.resultSet()) {
                                 if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location

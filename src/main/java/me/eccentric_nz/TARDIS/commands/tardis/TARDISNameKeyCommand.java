@@ -24,8 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 /**
  * @author eccentric_nz
  */
@@ -40,9 +38,7 @@ class TARDISNameKeyCommand {
     boolean nameKey(Player player, String[] args) {
         // determine key item
         String key;
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
         if (rsp.resultSet()) {
             key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
         } else {

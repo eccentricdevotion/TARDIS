@@ -54,9 +54,7 @@ public class TARDISPrefsMenuInventory {
 
     private ItemStack[] getItemStack() {
         // get player prefs
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
         List<Boolean> values = new ArrayList<>();
         if (!rsp.resultSet()) {
             // make a new record
@@ -65,9 +63,7 @@ public class TARDISPrefsMenuInventory {
             set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
             plugin.getQueryFactory().doInsert("player_prefs", set);
             // get the new record
-            HashMap<String, Object> whereu = new HashMap<>();
-            whereu.put("uuid", uuid.toString());
-            rsp = new ResultSetPlayerPrefs(plugin, whereu);
+            rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             rsp.resultSet();
         }
         values.add(rsp.isAutoOn());

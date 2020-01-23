@@ -23,7 +23,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,14 +50,12 @@ public class TARDISHumSounds {
         data.forEach((u) -> {
             Player player = Bukkit.getServer().getPlayer(u);
             if (player != null) {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", u.toString());
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         Prefs p = new Prefs(player, true, "tardis_hum");
                         // All the MySQL stuff and what not
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, u.toString());
                         if (rsp.resultSet()) {
                             p.setSfx(rsp.isSfxOn());
                             p.setHum((rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum());

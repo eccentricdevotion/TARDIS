@@ -369,9 +369,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 return true;
                             }
                             // check the to player's DND status
-                            HashMap<String, Object> wherednd = new HashMap<>();
-                            wherednd.put("uuid", saved.getUniqueId().toString());
-                            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
+                            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
                             if (rspp.resultSet() && rspp.isDND()) {
                                 TARDISMessage.send(player, "DND", args[0]);
                                 return true;
@@ -394,9 +392,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         // check the to player's DND status
-                        HashMap<String, Object> wherednd = new HashMap<>();
-                        wherednd.put("uuid", requested.getUniqueId().toString());
-                        ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
+                        ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, requested.getUniqueId().toString());
                         if (rspp.resultSet() && rspp.isDND()) {
                             TARDISMessage.send(player, "DND", args[0]);
                             return true;

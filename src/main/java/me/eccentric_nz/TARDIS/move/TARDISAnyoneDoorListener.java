@@ -135,9 +135,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         ItemStack stack = player.getInventory().getItemInMainHand();
                         Material material = stack.getType();
                         // get key material
-                        HashMap<String, Object> wherepp = new HashMap<>();
-                        wherepp.put("uuid", playerUUID.toString());
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID.toString());
                         String key;
                         boolean hasPrefs = false;
                         boolean willFarm = false;

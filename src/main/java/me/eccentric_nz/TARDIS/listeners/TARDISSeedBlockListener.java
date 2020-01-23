@@ -161,9 +161,7 @@ public class TARDISSeedBlockListener implements Listener {
             if (trackTARDISSeed.containsKey(l)) {
                 Player player = event.getPlayer();
                 String key;
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (rsp.resultSet()) {
                     key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                 } else {

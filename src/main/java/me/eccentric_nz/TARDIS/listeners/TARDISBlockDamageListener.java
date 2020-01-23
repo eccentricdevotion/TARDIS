@@ -122,9 +122,7 @@ public class TARDISBlockDamageListener implements Listener {
                 return false;
             }
             UUID ownerUUID = tardis.getUuid();
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("uuid", ownerUUID.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
             boolean hads_on = true;
             if (rsp.resultSet()) {
                 hads_on = rsp.isHadsOn();

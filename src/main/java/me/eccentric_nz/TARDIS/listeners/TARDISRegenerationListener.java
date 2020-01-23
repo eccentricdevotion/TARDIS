@@ -36,9 +36,7 @@ public class TARDISRegenerationListener implements Listener {
                     if (rs.getTardis().getArtron_level() < min) {
                         // attempt to transfer Time Lord energy to the TARDIS
                         // check player has a prefs record
-                        HashMap<String, Object> wherepp = new HashMap<>();
-                        wherepp.put("uuid", uuid);
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                         if (!rsp.resultSet()) {
                             return;
                         }

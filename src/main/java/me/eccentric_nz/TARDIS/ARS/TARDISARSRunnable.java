@@ -68,9 +68,7 @@ class TARDISARSRunnable implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             World w = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
-            HashMap<String, Object> wherepp = new HashMap<>();
-            wherepp.put("uuid", p.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(tardis.getTardis_id());
             // get middle data, default to orange wool if not set
@@ -129,10 +127,8 @@ class TARDISARSRunnable implements Runnable {
         HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GRAY_WOOL";
-        HashMap<String, Object> wherepp = new HashMap<>();
         boolean hasPrefs = false;
-        wherepp.put("uuid", uuid);
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rsp.resultSet()) {
             hasPrefs = true;
             wall = rsp.getWall();

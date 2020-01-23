@@ -329,9 +329,7 @@ public class TARDISSiegeListener implements Listener {
         if (!p.isSneaking()) {
             // attempt to transfer Time Lord energy to the TARDIS
             // check player has a prefs record
-            HashMap<String, Object> wherepp = new HashMap<>();
-            wherepp.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (!rsp.resultSet()) {
                 return;
             }

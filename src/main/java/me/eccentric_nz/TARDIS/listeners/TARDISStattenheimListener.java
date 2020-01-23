@@ -314,9 +314,7 @@ public class TARDISStattenheimListener implements Listener {
                 } else if (action.equals(Action.RIGHT_CLICK_AIR) && plugin.getConfig().getBoolean("allow.power_down")) {
                     // is the power off?
                     if (!power) {
-                        HashMap<String, Object> wherek = new HashMap<>();
-                        wherek.put("uuid", uuid.toString());
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                         boolean beacon_on = true;
                         if (rsp.resultSet()) {
                             beacon_on = rsp.isBeaconOn();

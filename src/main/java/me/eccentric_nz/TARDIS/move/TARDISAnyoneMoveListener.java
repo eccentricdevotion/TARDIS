@@ -87,9 +87,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
             }
             to.setYaw(yaw);
-            HashMap<String, Object> wherepp = new HashMap<>();
-            wherepp.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             boolean hasPrefs = rsp.resultSet();
             boolean minecart = (hasPrefs) && rsp.isMinecartOn();
             boolean userQuotes = (hasPrefs) && rsp.isQuotesOn();

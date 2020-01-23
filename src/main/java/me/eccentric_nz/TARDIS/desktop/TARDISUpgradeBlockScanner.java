@@ -95,9 +95,7 @@ public class TARDISUpgradeBlockScanner {
             Material wall_type;
             Material floor_type;
             // get wall/floor block prefs from database...
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {
                 wall_type = Material.getMaterial(rsp.getWall());
                 floor_type = Material.getMaterial(rsp.getFloor());

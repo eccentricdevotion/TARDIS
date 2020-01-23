@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-
 /**
  * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
  * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
@@ -40,9 +38,7 @@ public class TARDISSounds {
      * @param p the player to play the sound to
      */
     public static void playTARDISHum(Player p) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", p.getUniqueId().toString());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, p.getUniqueId().toString());
         boolean userSFX;
         String hum;
         if (rsp.resultSet()) {

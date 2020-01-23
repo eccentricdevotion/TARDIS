@@ -215,9 +215,7 @@ public class TARDISTerminalListener implements Listener {
                     return;
                 }
             }
-            HashMap<String, Object> wherepp = new HashMap<>();
-            wherepp.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
@@ -372,9 +370,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void toggleSubmarine(InventoryView view, Player p) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", p.getUniqueId().toString());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
         if (rsp.resultSet()) {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = view.getItem(44);

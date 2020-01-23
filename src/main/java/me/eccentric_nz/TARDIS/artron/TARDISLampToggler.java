@@ -44,9 +44,7 @@ public class TARDISLampToggler {
         wherel.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
         if (rsl.resultSet()) {
-            HashMap<String, Object> wherepp = new HashMap<>();
-            wherepp.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             boolean use_wool = false;
             if (rsp.resultSet()) {
                 use_wool = rsp.isWoolLightsOn();

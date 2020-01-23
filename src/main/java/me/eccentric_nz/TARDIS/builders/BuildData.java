@@ -19,8 +19,6 @@ package me.eccentric_nz.TARDIS.builders;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 
-import java.util.HashMap;
-
 /**
  * Data class for building the TARDIS exterior.
  *
@@ -86,9 +84,7 @@ public final class BuildData extends MaterialisationData {
             CTM = true;
             minecartSounds = false;
         } else {
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("uuid", uuid);
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, uuid);
             if (rsp.resultSet()) {
                 super.setLamp(rsp.getLamp());
                 texture = rsp.isPoliceboxTexturesOn();

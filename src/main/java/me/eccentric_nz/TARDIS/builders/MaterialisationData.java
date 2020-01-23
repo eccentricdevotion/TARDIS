@@ -24,8 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 
-import java.util.HashMap;
-
 /**
  * Data class for building the TARDIS exterior.
  *
@@ -123,9 +121,7 @@ public class MaterialisationData {
     }
 
     public void setPlayerDefaults(String uuid) {
-        HashMap<String, Object> wherep = new HashMap<>();
-        wherep.put("uuid", uuid);
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rsp.resultSet()) {
             lamp = rsp.getLamp();
         }

@@ -179,9 +179,7 @@ public class TARDISMalfunction {
                 }
             }
             // get player prefs
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("uuid", p.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rsp.resultSet()) {
                 if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                     // schedule the NPC to appear

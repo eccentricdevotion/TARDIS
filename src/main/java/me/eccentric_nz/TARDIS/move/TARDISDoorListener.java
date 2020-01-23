@@ -262,9 +262,7 @@ public class TARDISDoorListener {
     private void giveKey(Player p) {
         if (plugin.getConfig().getBoolean("travel.give_key")) {
             String key;
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", p.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rsp.resultSet()) {
                 key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
             } else {

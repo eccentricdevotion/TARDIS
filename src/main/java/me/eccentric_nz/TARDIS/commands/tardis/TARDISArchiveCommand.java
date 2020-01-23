@@ -198,9 +198,7 @@ class TARDISArchiveCommand {
                         set.put("beacon", ad.getBeacon());
                         // get lanterns preference
                         int lanterns = 0;
-                        HashMap<String, Object> wherep = new HashMap<>();
-                        wherep.put("uuid", uuid);
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                         if (rsp.resultSet() && rsp.isLanternsOn()) {
                             lanterns = 1;
                         }

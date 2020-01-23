@@ -24,8 +24,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -39,7 +37,7 @@ public class ResultSetPlayerPrefs {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
+    private final String where;
     private int pp_id;
     private UUID uuid;
     private boolean autoOn;
@@ -86,9 +84,9 @@ public class ResultSetPlayerPrefs {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the player_prefs table.
      *
      * @param plugin an instance of the main class.
-     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
+     * @param where  the UUID to select the preferences for.
      */
-    public ResultSetPlayerPrefs(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetPlayerPrefs(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -103,28 +101,11 @@ public class ResultSetPlayerPrefs {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            where.forEach((key1, value) -> sbw.append(key1).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
-        }
-        String query = "SELECT * FROM " + prefix + "player_prefs" + wheres;
+        String query = "SELECT * FROM " + prefix + "player_prefs WHERE uuid = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, (Integer) entry.getValue());
-                    }
-                    s++;
-                }
-                where.clear();
-            }
+            statement.setString(1, where);
             rs = statement.executeQuery();
             if (rs.next()) {
                 pp_id = rs.getInt("pp_id");

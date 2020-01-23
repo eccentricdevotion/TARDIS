@@ -79,9 +79,7 @@ class TARDISJunkCreator {
         Material wall_type = Material.ORANGE_WOOL;
         Material floor_type = Material.GRAY_WOOL;
         // check if player_prefs record
-        HashMap<String, Object> wherepp = new HashMap<>();
-        wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
         if (rsp.resultSet()) {
             floor_type = Material.valueOf(rsp.getFloor());
             wall_type = Material.valueOf(rsp.getWall());

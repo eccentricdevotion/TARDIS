@@ -148,9 +148,7 @@ public class TARDISHandbrakeListener implements Listener {
                         } else {
                             Action action = event.getAction();
                             // should the beacon turn on
-                            HashMap<String, Object> wherek = new HashMap<>();
-                            wherek.put("uuid", uuid.toString());
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                             boolean beac_on = true;
                             boolean bar = false;
                             if (rsp.resultSet()) {

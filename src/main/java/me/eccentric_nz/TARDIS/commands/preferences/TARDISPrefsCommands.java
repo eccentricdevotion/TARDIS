@@ -129,9 +129,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return true;
                     }
                     // get the players preferences
-                    HashMap<String, Object> wherepp = new HashMap<>();
-                    wherepp.put("uuid", player.getUniqueId().toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                     HashMap<String, Object> set = new HashMap<>();
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {

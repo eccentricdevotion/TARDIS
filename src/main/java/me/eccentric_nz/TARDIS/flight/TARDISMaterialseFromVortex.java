@@ -134,9 +134,7 @@ class TARDISMaterialseFromVortex implements Runnable {
                     }
                     PRESET preset = tardis.getPreset();
                     COMPASS sd = rsn.getDirection();
-                    HashMap<String, Object> wherek = new HashMap<>();
-                    wherek.put("uuid", uuid.toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     boolean minecart = false;
                     boolean set_biome = true;
                     boolean bar = false;

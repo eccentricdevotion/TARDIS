@@ -112,9 +112,7 @@ class TARDISDematerialiseToVortex implements Runnable {
             }
             plugin.getPM().callEvent(new TARDISDematerialisationEvent(player, tardis, l));
             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
-                HashMap<String, Object> wherek = new HashMap<>();
-                wherek.put("uuid", uuid.toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                 boolean minecart = (rsp.resultSet()) && rsp.isMinecartOn();
                 // play demat sfx
                 if (!minecart) {

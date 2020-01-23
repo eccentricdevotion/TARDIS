@@ -634,9 +634,7 @@ public class TARDII implements TardisAPI {
             long delay = Math.round(20 / TARDIS.plugin.getConfig().getDouble("growth.room_speed"));
             int task = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, ttr, 5L, delay);
             ttr.setTaskID(task);
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("uuid", uuid.toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, uuid.toString());
             if (rsp.resultSet()) {
                 return rsp.getWall() + "," + rsp.getFloor();
             } else {

@@ -76,9 +76,7 @@ public class TARDISJettisonSeeder implements Listener {
             Material blockType = block.getType();
             Material inhand = player.getInventory().getItemInMainHand().getType();
             String key;
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             if (rsp.resultSet()) {
                 key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
             } else {

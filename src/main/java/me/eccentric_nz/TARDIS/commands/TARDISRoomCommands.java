@@ -104,9 +104,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         String wall = "ORANGE WOOL";
                         String floor = "LIGHT GREY WOOL";
                         if (sender instanceof Player) {
-                            HashMap<String, Object> wherepp = new HashMap<>();
-                            wherepp.put("uuid", ((Player) sender).getUniqueId().toString());
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ((Player) sender).getUniqueId().toString());
                             if (rsp.resultSet()) {
                                 hasPrefs = true;
                                 wall = rsp.getWall();
@@ -148,9 +146,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     boolean hasPrefs = false;
                     String wall = "ORANGE_WOOL";
                     String floor = "LIGHT_GRAY_WOOL";
-                    HashMap<String, Object> wherepp = new HashMap<>();
-                    wherepp.put("uuid", ((Player) sender).getUniqueId().toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ((Player) sender).getUniqueId().toString());
                     if (rsp.resultSet()) {
                         hasPrefs = true;
                         wall = rsp.getWall();

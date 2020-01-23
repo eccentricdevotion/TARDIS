@@ -27,7 +27,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -58,10 +57,8 @@ public class TARDISSayCommand implements CommandExecutor {
                 return false;
             }
             String preferedLang = "ENGLISH";
-            HashMap<String, Object> where = new HashMap<>();
             if (sender instanceof Player) {
-                where.put("uuid", ((Player) sender).getUniqueId().toString());
-                ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);
+                ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, ((Player) sender).getUniqueId().toString());
                 if (rs.resultSet() && !rs.getLanguage().isEmpty()) {
                     if (!rs.getLanguage().equalsIgnoreCase("AUTO_DETECT")) {
                         preferedLang = rs.getLanguage();

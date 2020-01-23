@@ -72,9 +72,7 @@ public class TARDISTextureCommands implements CommandExecutor {
             if (player.hasPermission("tardis.texture")) {
                 // get the players preferences
                 String playerUUID = player.getUniqueId().toString();
-                HashMap<String, Object> wherepp = new HashMap<>();
-                wherepp.put("uuid", playerUUID);
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID);
                 HashMap<String, Object> set = new HashMap<>();
                 // if no prefs record found, make one
                 if (!rsp.resultSet()) {

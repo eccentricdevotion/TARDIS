@@ -179,9 +179,7 @@ public class TARDISUtils {
                     }
                 } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
                     // check player difficulty preference
-                    HashMap<String, Object> wherep = new HashMap<>();
-                    wherep.put("uuid", p.getUniqueId().toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                     if (rsp.resultSet()) {
                         inGracePeriod = rsp.isEasyDifficulty();
                     }
@@ -189,9 +187,7 @@ public class TARDISUtils {
             }
         } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
             // check player difficulty preference
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("uuid", p.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rsp.resultSet()) {
                 inGracePeriod = rsp.isEasyDifficulty();
             }

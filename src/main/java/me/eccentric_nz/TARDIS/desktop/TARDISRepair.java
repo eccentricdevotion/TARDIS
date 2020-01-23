@@ -77,9 +77,7 @@ class TARDISRepair {
             } else {
                 tud.setSchematic(tud.getPrevious());
                 // get player prefs
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("uuid", uuid.toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                 if (rsp.resultSet()) {
                     wall = rsp.getWall();
                     floor = rsp.getFloor();
@@ -133,10 +131,8 @@ class TARDISRepair {
                 String floor = "LIGHT_GRAY_WOOL";
                 Material wall_type = Material.ORANGE_WOOL;
                 Material floor_type = Material.LIGHT_GRAY_WOOL;
-                HashMap<String, Object> wherepp = new HashMap<>();
                 boolean hasPrefs = false;
-                wherepp.put("uuid", uuid);
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                 if (rsp.resultSet()) {
                     hasPrefs = true;
                     wall_type = Material.getMaterial(rsp.getWall());

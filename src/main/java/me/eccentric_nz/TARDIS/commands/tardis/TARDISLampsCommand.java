@@ -89,9 +89,7 @@ class TARDISLampsCommand {
                 SCHEMATIC schm = tardis.getSchematic();
                 Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // player preference
-                HashMap<String, Object> wherepp = new HashMap<>();
-                wherepp.put("uuid", owner.getUniqueId().toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner.getUniqueId().toString());
                 if (rsp.resultSet() && rsp.isLanternsOn()) {
                     lampon = Material.SEA_LANTERN;
                 }

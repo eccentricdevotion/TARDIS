@@ -86,9 +86,7 @@ public class TARDISTakeoff {
         if (rs.resultSet()) {
             Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
             // should the beacon turn on
-            HashMap<String, Object> wherek = new HashMap<>();
-            wherek.put("uuid", player.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             boolean beac_on = true;
             boolean bar = false;
             if (rsp.resultSet()) {

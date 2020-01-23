@@ -108,9 +108,7 @@ class TARDISHandlesLandCommand {
                             // Check if it's at a recharge point
                             TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                             tal.recharge(id);
-                            HashMap<String, Object> wherek = new HashMap<>();
-                            wherek.put("uuid", uuid);
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                             boolean beac_on = true;
                             String beacon = tardis.getBeacon();
                             if (rsp.resultSet()) {

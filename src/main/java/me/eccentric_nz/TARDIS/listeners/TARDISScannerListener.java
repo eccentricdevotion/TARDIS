@@ -129,9 +129,7 @@ public class TARDISScannerListener implements Listener {
                     TARDISScannerData data = scan(player, id, bsched);
                     if (data != null) {
                         boolean extrend = true;
-                        HashMap<String, Object> wherer = new HashMap<>();
-                        wherer.put("uuid", player.getUniqueId().toString());
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                         if (rsp.resultSet()) {
                             extrend = rsp.isRendererOn();
                         }

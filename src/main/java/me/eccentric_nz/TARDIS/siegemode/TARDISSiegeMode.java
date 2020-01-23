@@ -208,9 +208,7 @@ public class TARDISSiegeMode {
     }
 
     void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
-        HashMap<String, Object> wherepp = new HashMap<>();
-        wherepp.put("uuid", uuid);
-        ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);
+        ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rspp.resultSet()) {
             String wall = rspp.getWall();
             String floor = rspp.getFloor();

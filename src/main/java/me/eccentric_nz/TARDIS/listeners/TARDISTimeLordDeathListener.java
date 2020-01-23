@@ -89,9 +89,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                         int id = tardis.getTardis_id();
                         String eps = tardis.getEps();
                         String creeper = tardis.getCreeper();
-                        HashMap<String, Object> whereu = new HashMap<>();
-                        whereu.put("uuid", uuid.toString());
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, whereu);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                         if (rsp.resultSet()) {
                             // do they have the autonomous circuit on?
                             if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {

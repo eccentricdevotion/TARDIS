@@ -89,9 +89,7 @@ class TARDISHandlesTakeoffCommand {
                         }
                         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                         Block handbrake = location.getBlock();
-                        HashMap<String, Object> wherek = new HashMap<>();
-                        wherek.put("uuid", args[1]);
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
                         boolean beac_on = true;
                         boolean bar = false;
                         if (rsp.resultSet()) {

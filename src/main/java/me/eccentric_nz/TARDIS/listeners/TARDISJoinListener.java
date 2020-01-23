@@ -116,9 +116,7 @@ public class TARDISJoinListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 // is texture switching on?
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("uuid", player.getUniqueId().toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (rsp.resultSet()) {
                     if (rsp.isTextureOn()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn()), 50L);

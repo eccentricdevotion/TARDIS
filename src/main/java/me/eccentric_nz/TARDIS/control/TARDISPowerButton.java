@@ -103,9 +103,7 @@ public class TARDISPowerButton {
                 new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
             }
             // determine beacon prefs
-            HashMap<String, Object> wherek = new HashMap<>();
-            wherek.put("uuid", player.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             boolean beacon_on = true;
             if (rsp.resultSet()) {
                 beacon_on = rsp.isBeaconOn();

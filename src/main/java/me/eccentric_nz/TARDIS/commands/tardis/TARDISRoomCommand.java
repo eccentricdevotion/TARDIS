@@ -112,10 +112,8 @@ class TARDISRoomCommand {
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
             String floor = "LIGHT_GRAY_WOOL";
-            HashMap<String, Object> wherepp = new HashMap<>();
             boolean hasPrefs = false;
-            wherepp.put("uuid", player.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             if (rsp.resultSet()) {
                 hasPrefs = true;
                 wall = rsp.getWall();
