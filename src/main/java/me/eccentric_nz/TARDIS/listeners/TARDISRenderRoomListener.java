@@ -30,6 +30,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
 
@@ -49,7 +50,7 @@ public class TARDISRenderRoomListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            if (event.getHand().equals(EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
                 // tp the player back to the TARDIS console
                 transmat(player);
                 player.updateInventory();
