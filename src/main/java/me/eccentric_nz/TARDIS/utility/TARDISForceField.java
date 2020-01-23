@@ -46,33 +46,26 @@ public class TARDISForceField implements Runnable {
                 while (entity.getVehicle() != null) {
                     entity = entity.getVehicle();
                 }
-                velocity(entity, getTrajectory2d(player, entity), 1.6d, true, 0.8d, 0.0d, 10.0d);
+                velocity(entity, getTrajectory2d(map.getValue(), entity), 0.5d);
                 other.getWorld().playSound(other.getLocation(), "tardis_force_field", 1.0f, 1.0f);
             }
         }
     }
 
     private double offset(Entity entity, Location location) {
-        return entity.getLocation().toVector().subtract(location.toVector()).length();
+        return (entity.getWorld() != location.getWorld()) ? range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
     }
 
-    private Vector getTrajectory2d(Entity from, Entity to) {
-        return to.getLocation().toVector().subtract(from.getLocation().toVector()).setY(0).normalize();
+    private Vector getTrajectory2d(Location from, Entity to) {
+        return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
     }
 
-    private void velocity(Entity ent, Vector vec, double str, boolean ySet, double yBase, double yAdd, double yMax) {
+    private void velocity(Entity ent, Vector vec, double strength) {
         if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0.0D) {
             return;
         }
-        if (ySet) {
-            vec.setY(yBase);
-        }
         vec.normalize();
-        vec.multiply(str);
-        vec.setY(vec.getY() + yAdd);
-        if (vec.getY() > yMax) {
-            vec.setY(yMax);
-        }
+        vec.multiply(strength);
         ent.setFallDistance(0.0F);
         ent.setVelocity(vec);
     }
