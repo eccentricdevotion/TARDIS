@@ -223,6 +223,10 @@ public class TARDISRoomRunnable implements Runnable {
                             break;
                     }
                 }
+            } else {
+                TARDISRoomData trd = plugin.getTrackerKeeper().getRoomTasks().get(task);
+                trd.setPostBlocks(new ArrayList<>());
+                plugin.getTrackerKeeper().getRoomTasks().put(task, trd);
             }
             running = true;
             String grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
@@ -839,6 +843,18 @@ public class TARDISRoomRunnable implements Runnable {
             if (type.equals(Material.REDSTONE_LAMP)) {
                 Block lamp = world.getBlockAt(startx, starty, startz);
                 lampblocks.add(lamp);
+                if (rd == null) {
+                    plugin.debug("Room Data NULL");
+                    plugin.getServer().getScheduler().cancelTask(task);
+                    task = 0;
+                    return;
+                }
+                if (rd.getPostBlocks() == null) {
+                    plugin.debug("Post Blocks NULL");
+                    plugin.getServer().getScheduler().cancelTask(task);
+                    task = 0;
+                    return;
+                }
                 rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAMP.getAsString());
             }
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
