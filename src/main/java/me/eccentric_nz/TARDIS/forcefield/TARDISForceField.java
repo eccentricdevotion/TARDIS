@@ -48,10 +48,6 @@ public class TARDISForceField implements Runnable {
                 }
                 velocity(entity, getTrajectory2d(map.getValue(), entity), 0.5d);
                 other.getWorld().playSound(other.getLocation(), "tardis_force_field", 1.0f, 1.0f);
-                plugin.getTardisHelper().setWorldBorder(player, range, map.getValue());
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    plugin.getTardisHelper().resetWorldBorder(player);
-                }, 50L);
             }
         }
     }
