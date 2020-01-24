@@ -116,6 +116,10 @@ public class TARDISSQLiteDatabase {
             String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
             statement.executeUpdate(queryFarming);
 
+            // Table structure for table 'forcefield'
+            String queryForce = "CREATE TABLE IF NOT EXISTS " + prefix + "forcefield (uuid TEXT DEFAULT '', location TEXT DEFAULT '')";
+            statement.executeUpdate(queryForce);
+
             // Table structure for table 'gravity_well'
             String queryGravity = "CREATE TABLE IF NOT EXISTS " + prefix + "gravity_well (g_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', direction INTEGER, distance INTEGER DEFAULT 11, velocity REAL DEFAULT 0.5)";
             statement.executeUpdate(queryGravity);

@@ -194,6 +194,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
                                         bw.write(str);
                                         break;
+                                    case forcefield:
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("location")) + end;
+                                        bw.write(str);
+                                        break;
                                     case gravity_well:
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("g_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("direction"), rs.getInt("distance"), rs.getFloat("velocity")) + end;
                                         bw.write(str);

@@ -42,6 +42,8 @@ import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
+import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
 import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
@@ -362,6 +364,9 @@ public class TARDIS extends JavaPlugin {
             }
             // resume any room growing
             new TARDISRoomPersister(this).resume();
+            if (getConfig().getInt("allow.force_field") > 0) {
+                new TARDISForceFieldPersister(this).load();
+            }
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
@@ -456,6 +461,9 @@ public class TARDIS extends JavaPlugin {
                 new TARDISHadsPersister(this).save();
             }
             new TARDISVortexPersister(this).save();
+            if (getConfig().getInt("allow.force_field") > 0) {
+                new TARDISForceFieldPersister(this).save();
+            }
             updateTagStats();
             debug("Updated Tag stats");
             getServer().getScheduler().cancelTasks(this);
