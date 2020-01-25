@@ -205,7 +205,6 @@ public class TARDISDoorOpener {
                     }
                     // locations
                     if (tardis != null && preset != null && preset.hasPortal()) {
-                        plugin.debug("Tracking exportal @: " + exportal.toString());
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
                         if (preset.equals(PRESET.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
                             // remember door location

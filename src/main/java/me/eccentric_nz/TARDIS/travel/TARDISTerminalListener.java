@@ -120,16 +120,20 @@ public class TARDISTerminalListener implements Listener {
                             setSlots(view, 28, 34, true, "Multiplier", false, uuid);
                             break;
                         case 36:
+                            // current world
                             setCurrent(view, player, 36);
                             break;
                         case 38:
+                            // normal
                             terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 38);
                             break;
                         case 40:
+                            // nether
                             setCurrent(view, player, 40);
                             break;
                         case 42:
+                            // the end
                             setCurrent(view, player, 42);
                             break;
                         case 44:
@@ -137,6 +141,7 @@ public class TARDISTerminalListener implements Listener {
                             toggleSubmarine(view, player);
                             break;
                         case 46:
+                            // check destination
                             checkSettings(view, player);
                             break;
                         case 49:
@@ -450,7 +455,7 @@ public class TARDISTerminalListener implements Listener {
                     World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
                     if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
-                        e.equals(Environment.NETHER);
+                        e = Environment.NETHER;
                     }
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     if (world.equals(terminalUsers.get(uuid).getWorld().getName())) {

@@ -4,7 +4,7 @@
 1. New features
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
-   * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures? CHange commands to one command with subcommands.
+   * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - super fertiliser [one shot full growth of plants] - heat block - bleach - ice bombs [freeze water blocks] - coloured torches [mushroom block models with custom lighting? maybe too hard] - custom models for compounds - cures? Change commands to one command with subcommands.
 2. Make TARDIS circuits not maps
 3. Test player preference to bypass `tardis rescue accept`
 4. Test `invisibility` setting in TARDIS areas
@@ -18,7 +18,6 @@
     * Update Disk Storage defaults
 11. Set Master button to ON (In Lazarus GUI) when it is in use
 12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS.
-13. Fix TARDIS Genetic Manipulator disguises so that the different options take effect.
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
