@@ -91,6 +91,7 @@ public class Smelter {
             case IRON_ORE:
             case JUNGLE_WOOD:
             case JUNGLE_LOG:
+            case KELP:
             case LIGHT_BLUE_TERRACOTTA:
             case LIGHT_GRAY_TERRACOTTA:
             case LIME_TERRACOTTA:
@@ -104,13 +105,18 @@ public class Smelter {
             case PORKCHOP:
             case POTATO:
             case PURPLE_TERRACOTTA:
+            case QUARTZ_BLOCK:
             case RABBIT:
+            case RED_SANDSTONE:
             case RED_TERRACOTTA:
             case SALMON:
             case SAND:
+            case SANDSTONE:
+            case SEA_PICKLE:
             case SPONGE:
             case SPRUCE_WOOD:
             case SPRUCE_LOG:
+            case STONE:
             case STONE_BRICKS:
             case STRIPPED_ACACIA_LOG:
             case STRIPPED_ACACIA_WOOD:
@@ -127,183 +133,6 @@ public class Smelter {
             case WET_SPONGE:
             case WHITE_TERRACOTTA:
             case YELLOW_TERRACOTTA:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public static boolean isFuel(Material material) {
-        switch (material) {
-            case ACACIA_BOAT:
-            case ACACIA_BUTTON:
-            case ACACIA_DOOR:
-            case ACACIA_FENCE:
-            case ACACIA_FENCE_GATE:
-            case ACACIA_LOG:
-            case ACACIA_PLANKS:
-            case ACACIA_PRESSURE_PLATE:
-            case ACACIA_SAPLING:
-            case ACACIA_SIGN:
-            case ACACIA_SLAB:
-            case ACACIA_STAIRS:
-            case ACACIA_TRAPDOOR:
-            case ACACIA_WOOD:
-            case BIRCH_BOAT:
-            case BIRCH_BUTTON:
-            case BIRCH_DOOR:
-            case BIRCH_FENCE:
-            case BIRCH_FENCE_GATE:
-            case BIRCH_LOG:
-            case BIRCH_PLANKS:
-            case BIRCH_PRESSURE_PLATE:
-            case BIRCH_SAPLING:
-            case BIRCH_SIGN:
-            case BIRCH_SLAB:
-            case BIRCH_STAIRS:
-            case BIRCH_TRAPDOOR:
-            case BIRCH_WOOD:
-            case BLACK_BANNER:
-            case BLACK_CARPET:
-            case BLACK_WOOL:
-            case BLAZE_ROD:
-            case BLUE_BANNER:
-            case BLUE_CARPET:
-            case BLUE_WOOL:
-            case BOOKSHELF:
-            case BOW:
-            case BOWL:
-            case BROWN_BANNER:
-            case BROWN_CARPET:
-            case BROWN_MUSHROOM_BLOCK:
-            case BROWN_WOOL:
-            case CHARCOAL:
-            case CHEST:
-            case COAL:
-            case COAL_BLOCK:
-            case CRAFTING_TABLE:
-            case CYAN_BANNER:
-            case CYAN_CARPET:
-            case CYAN_WOOL:
-            case DARK_OAK_BOAT:
-            case DARK_OAK_BUTTON:
-            case DARK_OAK_DOOR:
-            case DARK_OAK_FENCE:
-            case DARK_OAK_FENCE_GATE:
-            case DARK_OAK_LOG:
-            case DARK_OAK_PLANKS:
-            case DARK_OAK_PRESSURE_PLATE:
-            case DARK_OAK_SAPLING:
-            case DARK_OAK_SIGN:
-            case DARK_OAK_SLAB:
-            case DARK_OAK_STAIRS:
-            case DARK_OAK_TRAPDOOR:
-            case DARK_OAK_WOOD:
-            case DAYLIGHT_DETECTOR:
-            case FISHING_ROD:
-            case GRAY_BANNER:
-            case GRAY_CARPET:
-            case GRAY_WOOL:
-            case GREEN_BANNER:
-            case GREEN_CARPET:
-            case GREEN_WOOL:
-            case JUKEBOX:
-            case JUNGLE_BOAT:
-            case JUNGLE_BUTTON:
-            case JUNGLE_DOOR:
-            case JUNGLE_FENCE:
-            case JUNGLE_FENCE_GATE:
-            case JUNGLE_LOG:
-            case JUNGLE_PLANKS:
-            case JUNGLE_PRESSURE_PLATE:
-            case JUNGLE_SAPLING:
-            case JUNGLE_SIGN:
-            case JUNGLE_SLAB:
-            case JUNGLE_STAIRS:
-            case JUNGLE_TRAPDOOR:
-            case JUNGLE_WOOD:
-            case LADDER:
-            case LAVA_BUCKET:
-            case LIGHT_BLUE_BANNER:
-            case LIGHT_BLUE_CARPET:
-            case LIGHT_BLUE_WOOL:
-            case LIGHT_GRAY_BANNER:
-            case LIGHT_GRAY_CARPET:
-            case LIGHT_GRAY_WOOL:
-            case LIME_BANNER:
-            case LIME_CARPET:
-            case LIME_WOOL:
-            case MAGENTA_BANNER:
-            case MAGENTA_CARPET:
-            case MAGENTA_WOOL:
-            case MUSHROOM_STEM:
-            case NOTE_BLOCK:
-            case OAK_BOAT:
-            case OAK_BUTTON:
-            case OAK_DOOR:
-            case OAK_FENCE:
-            case OAK_FENCE_GATE:
-            case OAK_LOG:
-            case OAK_PLANKS:
-            case OAK_PRESSURE_PLATE:
-            case OAK_SAPLING:
-            case OAK_SIGN:
-            case OAK_SLAB:
-            case OAK_STAIRS:
-            case OAK_TRAPDOOR:
-            case OAK_WOOD:
-            case ORANGE_BANNER:
-            case ORANGE_CARPET:
-            case ORANGE_WOOL:
-            case PINK_BANNER:
-            case PINK_CARPET:
-            case PINK_WOOL:
-            case PURPLE_BANNER:
-            case PURPLE_CARPET:
-            case PURPLE_WOOL:
-            case RED_BANNER:
-            case RED_CARPET:
-            case RED_MUSHROOM_BLOCK:
-            case RED_WOOL:
-            case SPRUCE_BOAT:
-            case SPRUCE_BUTTON:
-            case SPRUCE_DOOR:
-            case SPRUCE_FENCE:
-            case SPRUCE_FENCE_GATE:
-            case SPRUCE_LOG:
-            case SPRUCE_PLANKS:
-            case SPRUCE_PRESSURE_PLATE:
-            case SPRUCE_SAPLING:
-            case SPRUCE_SIGN:
-            case SPRUCE_SLAB:
-            case SPRUCE_STAIRS:
-            case SPRUCE_TRAPDOOR:
-            case SPRUCE_WOOD:
-            case STICK:
-            case STRIPPED_ACACIA_LOG:
-            case STRIPPED_ACACIA_WOOD:
-            case STRIPPED_BIRCH_LOG:
-            case STRIPPED_BIRCH_WOOD:
-            case STRIPPED_DARK_OAK_LOG:
-            case STRIPPED_DARK_OAK_WOOD:
-            case STRIPPED_JUNGLE_LOG:
-            case STRIPPED_JUNGLE_WOOD:
-            case STRIPPED_OAK_LOG:
-            case STRIPPED_OAK_WOOD:
-            case STRIPPED_SPRUCE_LOG:
-            case STRIPPED_SPRUCE_WOOD:
-            case TRAPPED_CHEST:
-            case WHITE_BANNER:
-            case WHITE_CARPET:
-            case WHITE_WOOL:
-            case WOODEN_AXE:
-            case WOODEN_HOE:
-            case WOODEN_PICKAXE:
-            case WOODEN_SHOVEL:
-            case WOODEN_SWORD:
-            case YELLOW_BANNER:
-            case YELLOW_CARPET:
-            case YELLOW_WOOL:
                 return true;
             default:
                 return false;
