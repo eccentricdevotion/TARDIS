@@ -99,9 +99,6 @@ class TARDISAddCompanionCommand {
                             // add to the list
                             String newList = comps + ":" + oluuid.toString();
                             set.put("companions", newList);
-                            plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                            TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
-                            TARDISMessage.send(player, "COMPANIONS_EVERYONE");
                         } else {
                             // make a list
                             set.put("companions", oluuid.toString());
@@ -133,7 +130,12 @@ class TARDISAddCompanionCommand {
                     }
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + (addAll ? "everyone" : args[1]) + ChatColor.RESET);
+                if (addAll) {
+                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                    TARDISMessage.send(player, "COMPANIONS_EVERYONE");
+                } else {
+                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
+                }
                 return true;
             }
         } else {
