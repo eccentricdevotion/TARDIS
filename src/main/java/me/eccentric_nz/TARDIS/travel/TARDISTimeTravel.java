@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.MultipleFacing;
@@ -128,124 +127,50 @@ public class TARDISTimeTravel {
         listlen = allowedWorlds.size();
         // random world
         randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
-        if (randworld.getEnvironment().equals(Environment.NETHER) || plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".false_nether")) {
-            for (int n = 0; n < attempts; n++) {
-                wherex = randomX(range, quarter, rx, ry, e, current);
-                wherez = randomZ(range, quarter, rz, ry, e, current);
-                if (safeNether(randworld, wherex, wherez, d, p)) {
-                    break;
-                }
-            }
-        }
-        if (randworld.getEnvironment().equals(Environment.THE_END)) {
-            if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
-                // any location will do!
-                int voidx = randomX(range, quarter, rx, ry, e, current);
-                int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
-                int voidz = randomZ(range, quarter, rz, ry, e, current);
-                return new Location(randworld, voidx, voidy, voidz);
-            }
-            for (int n = 0; n < attempts; n++) {
-                wherex = TARDISConstants.RANDOM.nextInt(240);
-                wherez = TARDISConstants.RANDOM.nextInt(240);
-                wherex -= 120;
-                wherez -= 120;
-                // get the spawn point
-                Location endSpawn = randworld.getSpawnLocation();
-                highest = randworld.getHighestBlockYAt(endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
-                if (highest > 40) {
-                    Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                    Location chunk_loc = currentBlock.getLocation();
-                    if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
-                        while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
-                            randworld.getChunkAt(chunk_loc).load();
-                        }
-                        // get start location for checking there is enough space
-                        int gsl[] = getStartLocation(chunk_loc, d);
-                        startx = gsl[0];
-                        resetx = gsl[1];
-                        starty = chunk_loc.getBlockY() + 1;
-                        startz = gsl[2];
-                        resetz = gsl[3];
-                        count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
-                    } else {
-                        count = 1;
-                    }
-                } else {
-                    count = 1;
-                }
-                if (count == 0) {
-                    break;
-                }
-            }
-            dest = (highest > 0) ? new Location(randworld, wherex, highest, wherez) : null;
-        }
-        // Assume every non-nether/non-END world qualifies as NORMAL.
-        if (!randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
-            if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
-                // any location will do!
-                int voidx = randomX(range, quarter, rx, ry, e, current);
-                int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
-                int voidz = randomZ(range, quarter, rz, ry, e, current);
-                return new Location(randworld, voidx, voidy, voidz);
-            }
-            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
-            while (true) {
-                if (System.currentTimeMillis() < timeout) {
-                    // reset count
-                    count = 0;
-                    // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
+
+        switch (randworld.getEnvironment()) {
+            case NETHER:
+                for (int n = 0; n < attempts; n++) {
                     wherex = randomX(range, quarter, rx, ry, e, current);
                     wherez = randomZ(range, quarter, rz, ry, e, current);
-                    highest = randworld.getHighestBlockYAt(wherex, wherez);
-                    if (highest > 3) {
+                    if (safeNether(randworld, wherex, wherez, d, p)) {
+                        break;
+                    }
+                }
+                break;
+            case THE_END:
+                if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
+                    // any location will do!
+                    int voidx = randomX(range, quarter, rx, ry, e, current);
+                    int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
+                    int voidz = randomZ(range, quarter, rz, ry, e, current);
+                    return new Location(randworld, voidx, voidy, voidz);
+                }
+                for (int n = 0; n < attempts; n++) {
+                    wherex = TARDISConstants.RANDOM.nextInt(240);
+                    wherez = TARDISConstants.RANDOM.nextInt(240);
+                    wherex -= 120;
+                    wherez -= 120;
+                    // get the spawn point
+                    Location endSpawn = randworld.getSpawnLocation();
+                    highest = randworld.getHighestBlockYAt(endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+                    if (highest > 40) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
-                            // check if submarine is on
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-                            if (rsp.resultSet()) {
-                                if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(currentBlock.getBiome())) {
-                                    // get submarine location
-                                    TARDISMessage.send(p, "SUB_SEARCH");
-                                    Location underwater = submarine(currentBlock, d);
-                                    if (underwater != null) {
-                                        // get TARDIS id
-                                        HashMap<String, Object> wherep = new HashMap<>();
-                                        wherep.put("uuid", p.getUniqueId().toString());
-                                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-                                        if (rst.resultSet()) {
-                                            plugin.getTrackerKeeper().getSubmarine().add(rst.getTardis_id());
-                                        }
-                                        return underwater;
-                                    } else {
-                                        count = 1;
-                                    }
-                                } else if (!rsp.isSubmarineOn()) {
-                                    count = 1;
-                                }
-                            } else {
-                                count = 1;
+                        Location chunk_loc = currentBlock.getLocation();
+                        if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
+                            while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                                randworld.getChunkAt(chunk_loc).load();
                             }
+                            // get start location for checking there is enough space
+                            int gsl[] = getStartLocation(chunk_loc, d);
+                            startx = gsl[0];
+                            resetx = gsl[1];
+                            starty = chunk_loc.getBlockY() + 1;
+                            startz = gsl[2];
+                            resetz = gsl[3];
+                            count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
                         } else {
-                            if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
-                                currentBlock = currentBlock.getRelative(BlockFace.DOWN);
-                            }
-                            Location chunk_loc = currentBlock.getLocation();
-                            if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
-                                while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
-                                    randworld.getChunkAt(chunk_loc).load();
-                                }
-                                // get start location for checking there is enough space
-                                int gsl[] = getStartLocation(chunk_loc, d);
-                                startx = gsl[0];
-                                resetx = gsl[1];
-                                starty = chunk_loc.getBlockY() + 1;
-                                startz = gsl[2];
-                                resetz = gsl[3];
-                                count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
-                            } else {
-                                count = 1;
-                            }
+                            count = 1;
                         }
                     } else {
                         count = 1;
@@ -253,16 +178,103 @@ public class TARDISTimeTravel {
                     if (count == 0) {
                         break;
                     }
-                } else {
-                    if (!plugin.getPluginRespect().getRespect(new Location(randworld, wherex, highest, wherez), new Parameters(p, FLAG.getNoMessageFlags()))) {
-                        return null;
-                    } else {
-                        highest = plugin.getConfig().getInt("travel.timeout_height");
-                        break;
-                    }
                 }
-            }
-            dest = new Location(randworld, wherex, highest, wherez);
+                dest = (highest > 0) ? new Location(randworld, wherex, highest, wherez) : null;
+                break;
+            default:
+                // Assume every non-nether/non-END world qualifies as NORMAL.
+                if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".false_nether")) {
+                    for (int n = 0; n < attempts; n++) {
+                        wherex = randomX(range, quarter, rx, ry, e, current);
+                        wherez = randomZ(range, quarter, rz, ry, e, current);
+                        if (safeNether(randworld, wherex, wherez, d, p)) {
+                            break;
+                        }
+                    }
+                } else {
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
+                        // any location will do!
+                        int voidx = randomX(range, quarter, rx, ry, e, current);
+                        int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
+                        int voidz = randomZ(range, quarter, rz, ry, e, current);
+                        return new Location(randworld, voidx, voidy, voidz);
+                    }
+                    long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
+                    while (true) {
+                        if (System.currentTimeMillis() < timeout) {
+                            // reset count
+                            count = 0;
+                            // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
+                            wherex = randomX(range, quarter, rx, ry, e, current);
+                            wherez = randomZ(range, quarter, rz, ry, e, current);
+                            highest = randworld.getHighestBlockYAt(wherex, wherez);
+                            if (highest > 3) {
+                                Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
+                                if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
+                                    // check if submarine is on
+                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+                                    if (rsp.resultSet()) {
+                                        if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(currentBlock.getBiome())) {
+                                            // get submarine location
+                                            TARDISMessage.send(p, "SUB_SEARCH");
+                                            Location underwater = submarine(currentBlock, d);
+                                            if (underwater != null) {
+                                                // get TARDIS id
+                                                HashMap<String, Object> wherep = new HashMap<>();
+                                                wherep.put("uuid", p.getUniqueId().toString());
+                                                ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
+                                                if (rst.resultSet()) {
+                                                    plugin.getTrackerKeeper().getSubmarine().add(rst.getTardis_id());
+                                                }
+                                                return underwater;
+                                            } else {
+                                                count = 1;
+                                            }
+                                        } else if (!rsp.isSubmarineOn()) {
+                                            count = 1;
+                                        }
+                                    } else {
+                                        count = 1;
+                                    }
+                                } else {
+                                    if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
+                                        currentBlock = currentBlock.getRelative(BlockFace.DOWN);
+                                    }
+                                    Location chunk_loc = currentBlock.getLocation();
+                                    if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
+                                        while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                                            randworld.getChunkAt(chunk_loc).load();
+                                        }
+                                        // get start location for checking there is enough space
+                                        int gsl[] = getStartLocation(chunk_loc, d);
+                                        startx = gsl[0];
+                                        resetx = gsl[1];
+                                        starty = chunk_loc.getBlockY() + 1;
+                                        startz = gsl[2];
+                                        resetz = gsl[3];
+                                        count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
+                                    } else {
+                                        count = 1;
+                                    }
+                                }
+                            } else {
+                                count = 1;
+                            }
+                            if (count == 0) {
+                                break;
+                            }
+                        } else {
+                            if (!plugin.getPluginRespect().getRespect(new Location(randworld, wherex, highest, wherez), new Parameters(p, FLAG.getNoMessageFlags()))) {
+                                return null;
+                            } else {
+                                highest = plugin.getConfig().getInt("travel.timeout_height");
+                                break;
+                            }
+                        }
+                    }
+                    dest = new Location(randworld, wherex, highest, wherez);
+                }
+                break;
         }
         return dest;
     }
@@ -440,10 +452,9 @@ public class TARDISTimeTravel {
             air++;
         }
         Material mat = startBlock.getType();
-        if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4 || plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether")) {
+        if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether"))) {
             Location netherLocation = startBlock.getLocation();
-            int netherLocY = netherLocation.getBlockY();
-            netherLocation.setY(netherLocY + 1);
+            netherLocation.setY(netherLocation.getY() + 1);
             if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 // get start location for checking there is enough space
                 int gsl[] = getStartLocation(netherLocation, d);

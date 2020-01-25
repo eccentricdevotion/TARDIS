@@ -152,7 +152,7 @@ public class TARDISUtils {
             air++;
         }
         Material mat = startBlock.getType();
-        if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4) {
+        if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether"))) {
             y = startBlock.getLocation().getBlockY() + 1;
         }
         return y;
