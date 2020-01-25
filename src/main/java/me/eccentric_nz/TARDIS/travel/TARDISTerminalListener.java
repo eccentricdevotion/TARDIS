@@ -417,7 +417,6 @@ public class TARDISTerminalListener implements Listener {
         });
         // next world in list
         if (allowedWorlds.size() > 0) {
-//            int rw = TARDISConstants.RANDOM.nextInt(allowedWorlds.size());
             int rw = terminalWorlds.get(p.getUniqueId());
             if (rw > allowedWorlds.size() - 1) {
                 rw = 0;
@@ -450,6 +449,9 @@ public class TARDISTerminalListener implements Listener {
                     found = true;
                     World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
+                        e.equals(Environment.NETHER);
+                    }
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     if (world.equals(terminalUsers.get(uuid).getWorld().getName())) {
                         // add current co-ords

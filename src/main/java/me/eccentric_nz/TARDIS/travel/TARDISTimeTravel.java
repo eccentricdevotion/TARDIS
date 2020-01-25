@@ -128,7 +128,7 @@ public class TARDISTimeTravel {
         listlen = allowedWorlds.size();
         // random world
         randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
-        if (randworld.getEnvironment().equals(Environment.NETHER)) {
+        if (randworld.getEnvironment().equals(Environment.NETHER) || plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".false_nether")) {
             for (int n = 0; n < attempts; n++) {
                 wherex = randomX(range, quarter, rx, ry, e, current);
                 wherez = randomZ(range, quarter, rz, ry, e, current);
