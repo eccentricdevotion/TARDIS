@@ -57,7 +57,7 @@ class TARDISListTardisesCommand {
                                     TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
-                                String line = "Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                                String line = "ID: " + t.getTardis_id() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                                 bw.write(line);
                                 bw.newLine();
                             }
@@ -95,7 +95,7 @@ class TARDISListTardisesCommand {
                         TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    sender.sendMessage("Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
+                    sender.sendMessage("ID: " + t.getTardis_id() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
                 }
                 TARDISMessage.send(sender, "TARDIS_LOCS_INFO");
             } else {

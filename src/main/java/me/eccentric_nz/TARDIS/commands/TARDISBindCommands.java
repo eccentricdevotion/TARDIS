@@ -99,25 +99,35 @@ public class TARDISBindCommands implements CommandExecutor {
                 return false;
             }
             if (args[0].equalsIgnoreCase("update")) {
-                type_1.forEach((s) -> {
+                for (String s : type_1) {
                     HashMap<String, Object> whereu = new HashMap<>();
                     whereu.put("tardis_id", id);
                     whereu.put("dest_name", s);
                     HashMap<String, Object> setu = new HashMap<>();
                     setu.put("type", 1);
                     plugin.getQueryFactory().doUpdate("destinations", setu, whereu);
-                });
+                }
                 TARDISMessage.send(player, "BIND_SET");
                 return true;
             }
             if (args[0].equalsIgnoreCase("remove")) {
-                if (args.length < 2) {
+                if (args.length < 3) {
                     TARDISMessage.send(player, "TOO_FEW_ARGS");
                     return false;
                 }
+                String dest = args[1].toLowerCase(Locale.ENGLISH);
+                if (dest.equals("area") || dest.equals("cmd")) {
+                    dest = args[2].toLowerCase(Locale.ENGLISH);
+                }
                 HashMap<String, Object> whered = new HashMap<>();
+                if (args.length == 4) {
+                    try {
+                        id = Integer.parseInt(args[3]);
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
                 whered.put("tardis_id", id);
-                whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
+                whered.put("dest_name", dest);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
                     TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET);
@@ -130,21 +140,16 @@ public class TARDISBindCommands implements CommandExecutor {
                 int dtype = rsd.getType();
                 int did = rsd.getDest_id();
                 if (rsd.getDest_name().equals("transmat")) {
-                    if (args.length < 3) {
-                        TARDISMessage.send(player, "TOO_FEW_ARGS");
-                        return false;
-                    } else {
-                        HashMap<String, Object> wheremat = new HashMap<>();
-                        wheremat.put("tardis_id", id);
-                        wheremat.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
-                        wheremat.put("preset", args[2]);
-                        ResultSetDestinations rsmat = new ResultSetDestinations(plugin, wheremat, false);
-                        if (!rsmat.resultSet()) {
-                            TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
-                            return true;
-                        }
-                        did = rsmat.getDest_id();
+                    HashMap<String, Object> wheremat = new HashMap<>();
+                    wheremat.put("tardis_id", id);
+                    wheremat.put("dest_name", dest);
+                    wheremat.put("preset", args[2]);
+                    ResultSetDestinations rsmat = new ResultSetDestinations(plugin, wheremat, false);
+                    if (!rsmat.resultSet()) {
+                        TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                        return true;
                     }
+                    did = rsmat.getDest_id();
                 }
                 HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("dest_id", did);
@@ -200,6 +205,7 @@ public class TARDISBindCommands implements CommandExecutor {
                         TARDISMessage.send(player, "BIND_CMD_NOT_VALID");
                         return true;
                     }
+                    set.put("tardis_id", id);
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 1);
                     did = plugin.getQueryFactory().doSyncInsert("destinations", set);
@@ -214,6 +220,7 @@ public class TARDISBindCommands implements CommandExecutor {
                             return true;
                         }
                     }
+                    set.put("tardis_id", id);
                     set.put("dest_name", args[1]);
                     set.put("type", 2);
                     did = plugin.getQueryFactory().doSyncInsert("destinations", set);
@@ -230,6 +237,7 @@ public class TARDISBindCommands implements CommandExecutor {
                         TARDISMessage.send(player, "BIND_NO_AREA_PERM", args[1]);
                         return true;
                     }
+                    set.put("tardis_id", id);
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 3);
                     did = plugin.getQueryFactory().doSyncInsert("destinations", set);
@@ -239,6 +247,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     try {
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
                         if (!upper.equals("HELL") && !upper.equals("SKY")) {
+                            set.put("tardis_id", id);
                             set.put("dest_name", upper);
                             set.put("type", 4);
                             did = plugin.getQueryFactory().doSyncInsert("destinations", set);
