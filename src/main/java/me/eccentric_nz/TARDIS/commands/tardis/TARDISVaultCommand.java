@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.ResultSetVault;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -94,6 +95,15 @@ class TARDISVaultCommand {
         set.put("x", x);
         set.put("y", y);
         set.put("z", z);
+        // is there an existing drop chest record?
+        ResultSetVault rsv = new ResultSetVault(plugin, id);
+        if (rsv.resultSet()) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("v_id", rsv.getVault_id());
+            plugin.getQueryFactory().doUpdate("vaults", set, where);
+        } else {
+            plugin.getQueryFactory().doInsert("vaults", set);
+        }
         plugin.getQueryFactory().doInsert("vaults", set);
         TARDISMessage.send(player, "VAULT_SORTER_SET");
         return true;
