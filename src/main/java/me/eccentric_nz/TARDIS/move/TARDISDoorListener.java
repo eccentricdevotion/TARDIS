@@ -390,11 +390,6 @@ public class TARDISDoorListener {
         }
     }
 
-//    public boolean isDoorOpen(Block door) {
-//        Openable openable = (Openable) door.getBlockData();
-//        return openable.isOpen();
-//    }
-
     /**
      * Set a player's time relative to the server time. Based on Essentials /ptime command.
      *

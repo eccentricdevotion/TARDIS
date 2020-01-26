@@ -105,7 +105,7 @@ public class TARDISInstaPreset {
         World world = bd.getLocation().getWorld();
         int signx = 0, signz = 0;
         // if configured and it's a Whovian preset set biome
-        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && bd.useTexture()) {
+        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.useTexture()) {
             List<Chunk> chunks = new ArrayList<>();
             Chunk chunk = bd.getLocation().getChunk();
             chunks.add(chunk);
@@ -330,7 +330,7 @@ public class TARDISInstaPreset {
                             Bisected bisected = (Bisected) colData[yy];
                             door = bisected.getHalf().equals(Half.BOTTOM);
                         }
-                        if (mat.equals(Material.OAK_TRAPDOOR) || mat.equals(Material.BIRCH_TRAPDOOR) || mat.equals(Material.SPRUCE_TRAPDOOR) || mat.equals(Material.JUNGLE_TRAPDOOR) || mat.equals(Material.ACACIA_TRAPDOOR) || mat.equals(Material.DARK_OAK_TRAPDOOR)) {
+                        if (Tag.TRAPDOORS.isTagged(mat)) {
                             door = true;
                         }
                         if (door) {
