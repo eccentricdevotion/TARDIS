@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -65,7 +66,7 @@ public class TARDISSonicEntityListener implements Listener {
                 Entity ent = event.getRightClicked();
                 if (ent instanceof Player) {
                     Player scanned = (Player) ent;
-                    plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
+                    TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
                         TARDISMessage.send(player, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

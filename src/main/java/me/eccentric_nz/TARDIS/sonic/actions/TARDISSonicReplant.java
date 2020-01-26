@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-class TARDISSonicReplant implements Runnable {
+public class TARDISSonicReplant implements Runnable {
 
     private final TARDIS plugin;
     private final Block block;
@@ -41,7 +41,7 @@ class TARDISSonicReplant implements Runnable {
     private final Material soul = Material.SOUL_SAND;
     private final HashMap<BlockFace, BlockFace> c_data = new HashMap<>();
 
-    TARDISSonicReplant(TARDIS plugin, Block block, Material type) {
+    public TARDISSonicReplant(TARDIS plugin, Block block, Material type) {
         this.plugin = plugin;
         this.block = block;
         under = block.getRelative(BlockFace.DOWN);

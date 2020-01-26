@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicReplant;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

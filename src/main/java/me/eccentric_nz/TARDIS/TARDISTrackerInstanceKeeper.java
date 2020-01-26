@@ -132,6 +132,8 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> renderRoomOccupants = new ArrayList<>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<>();
     private final HashMap<UUID, Location> activeForceFields = new HashMap<>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
+    private final List<UUID> frozenPlayers = new ArrayList<>();
 
     public HashMap<Integer, Boolean> getMalfunction() {
         return malfunction;
@@ -480,5 +482,13 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Location> getActiveForceFields() {
         return activeForceFields;
+    }
+
+    public HashMap<UUID, Long> getCooldown() {
+        return cooldown;
+    }
+
+    public List<UUID> getFrozenPlayers() {
+        return frozenPlayers;
     }
 }
