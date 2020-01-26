@@ -319,7 +319,7 @@ class TARDISMaterialisationPreset implements Runnable {
                                         Bisected bisected = (Bisected) colData[yy];
                                         door = bisected.getHalf().equals(Bisected.Half.BOTTOM);
                                     }
-                                    if (mat.equals(Material.OAK_TRAPDOOR) || mat.equals(Material.BIRCH_TRAPDOOR) || mat.equals(Material.SPRUCE_TRAPDOOR) || mat.equals(Material.JUNGLE_TRAPDOOR) || mat.equals(Material.ACACIA_TRAPDOOR) || mat.equals(Material.DARK_OAK_TRAPDOOR)) {
+                                    if (Tag.TRAPDOORS.isTagged(mat)) {
                                         door = true;
                                     }
                                     if (door) {
@@ -658,7 +658,7 @@ class TARDISMaterialisationPreset implements Runnable {
                             case JUNGLE_TRAPDOOR:
                             case ACACIA_TRAPDOOR:
                             case DARK_OAK_TRAPDOOR:
-                                if (preset.isColoured()) {
+                                if (preset.isColoured() || preset.equals(PRESET.PANDORICA)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     // remember the door location
                                     saveDoorLocation(world, xx, y, yy, zz);
