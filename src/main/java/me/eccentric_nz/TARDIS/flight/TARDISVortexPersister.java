@@ -105,7 +105,6 @@ public class TARDISVortexPersister {
                                 DestroyData dd = new DestroyData(plugin, uuid.toString());
                                 Location location = new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ());
                                 dd.setLocation(location);
-                                dd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
                                 dd.setDirection(rsb.getDirection());
                                 dd.setSubmarine(rsb.isSubmarine());
                                 dd.setTardisID(id);

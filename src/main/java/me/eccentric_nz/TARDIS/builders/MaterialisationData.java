@@ -121,6 +121,7 @@ public class MaterialisationData {
     }
 
     public void setPlayerDefaults(String uuid) {
+        player = plugin.getServer().getOfflinePlayer(uuid);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rsp.resultSet()) {
             lamp = rsp.getLamp();
