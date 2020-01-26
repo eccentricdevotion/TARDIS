@@ -159,6 +159,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         boolean minecart = rsp.isMinecartOn();
                         Material m = Material.getMaterial(key);
                         if (action == Action.LEFT_CLICK_BLOCK) {
+                            if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+                                return;
+                            }
                             // must be the owner
                             ResultSetTardisID rs = new ResultSetTardisID(plugin);
                             if (rs.fromUUID(player.getUniqueId().toString())) {

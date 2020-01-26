@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -134,7 +133,6 @@ public class TARDISRemoteKeyListener implements Listener {
                 if (rsd.resultSet()) {
                     // get inner door block
                     Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location()).getBlock();
-                    COMPASS dd = rsd.getDoor_direction();
                     boolean open = TARDISStaticUtils.isDoorOpen(block);
                     // toggle door / portals
                     new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();
