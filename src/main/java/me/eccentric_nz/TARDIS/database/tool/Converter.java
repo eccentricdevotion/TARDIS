@@ -39,6 +39,10 @@ public class Converter implements Runnable {
 
     /**
      * Reads an SQLite database and inserts the records into a MySQL database.
+     *
+     * @param plugin an instance of the TARDIS JavaPlugin class
+     * @param sender the player using the /tadmin convert_database command
+     * @throws SQLException
      **/
     public Converter(TARDIS plugin, CommandSender sender) throws Exception {
         this.plugin = plugin;
