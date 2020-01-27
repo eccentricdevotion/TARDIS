@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 eccentric_nz
+ * Copyright (C) 2020 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public Lstainnse as published by

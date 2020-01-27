@@ -1,5 +1,3 @@
-package me.eccentric_nz.TARDIS.utility;
-
 /*
  * Freeze players
  *
@@ -18,6 +16,7 @@ package me.eccentric_nz.TARDIS.utility;
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
+package me.eccentric_nz.TARDIS.utility;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

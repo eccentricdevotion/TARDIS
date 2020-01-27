@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 eccentric_nz
+ * Copyright (C) 2020 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -313,7 +313,7 @@ public class TARDISExterminator {
     }
 
     public void cleanDatabase(int id) {
-        List<String> tables = Arrays.asList("ars", "back", "blocks", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = Arrays.asList("ars", "back", "blocks", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();

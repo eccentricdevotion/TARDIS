@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2020 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,14 +74,7 @@ public class ResultSetProgram {
                 if (rs.wasNull()) {
                     parsed = "";
                 }
-                program = new Program(
-                        rs.getInt("program_id"),
-                        rs.getString("uuid"),
-                        rs.getString("name"),
-                        rs.getString("inventory"),
-                        parsed,
-                        rs.getBoolean("checked")
-                );
+                program = new Program(rs.getInt("program_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("inventory"), parsed, rs.getBoolean("checked"));
             } else {
                 return false;
             }

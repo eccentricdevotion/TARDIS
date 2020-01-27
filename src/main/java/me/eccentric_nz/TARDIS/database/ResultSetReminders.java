@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 eccentric_nz
+ * Copyright (C) 2020 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,11 +28,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
  * <p>
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
- * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
+ * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -45,8 +44,7 @@ public class ResultSetReminders {
     private final List<Reminder> reminders;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the reminders table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the reminders table.
      *
      * @param plugin an instance of the main class.
      */
@@ -57,9 +55,8 @@ public class ResultSetReminders {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the reminders table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the reminders table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -74,12 +71,7 @@ public class ResultSetReminders {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    Reminder reminder = new Reminder(
-                            rs.getInt("reminder_id"),
-                            UUID.fromString(rs.getString("uuid")),
-                            rs.getString("reminder"),
-                            rs.getLong("time")
-                    );
+                    Reminder reminder = new Reminder(rs.getInt("reminder_id"), UUID.fromString(rs.getString("uuid")), rs.getString("reminder"), rs.getLong("time"));
                     reminders.add(reminder);
                 }
             } else {

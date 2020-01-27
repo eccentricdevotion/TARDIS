@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 eccentric_nz
+ * Copyright (C) 2020 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,6 @@ class TARDISAddCompanionCommand {
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
-                return true;
             } else {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
                 HashMap<String, Object> tid = new HashMap<>();
@@ -136,11 +135,10 @@ class TARDISAddCompanionCommand {
                 } else {
                     TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                 }
-                return true;
             }
         } else {
             TARDISMessage.send(player, "NO_PERMS");
-            return true;
         }
+        return true;
     }
 }
