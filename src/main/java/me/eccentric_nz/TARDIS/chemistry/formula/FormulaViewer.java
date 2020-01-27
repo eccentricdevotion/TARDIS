@@ -120,10 +120,10 @@ public class FormulaViewer {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
-        close_im.setCustomModelData(10000002);
+        close_im.setCustomModelData(1);
         close.setItemMeta(close_im);
         stack[26] = close;
-        Inventory viewer = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + formula + " Formula");
+        Inventory viewer = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + formula.replace("_", " ") + " Formula");
         viewer.setContents(stack);
         player.openInventory(viewer);
     }

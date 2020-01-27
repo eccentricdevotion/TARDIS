@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -9,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Lightable;
+import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.Piston;
 import org.bukkit.block.data.type.RedstoneRail;
@@ -131,6 +133,20 @@ public class TARDISSonicRedstone {
                     });
                     block.setBlockData(wire, true);
                 }
+                break;
+            case MUSHROOM_STEM:
+                // check the block is a chemistry lamp block
+                MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
+                if (TARDISMushroomBlock.isChemistryStemOn(multipleFacing)) {
+                    multipleFacing = TARDISMushroomBlock.getChemistryStemOff(multipleFacing);
+                    // delete light source
+                    plugin.getTardisHelper().deleteLight(block.getLocation());
+                } else if (TARDISMushroomBlock.isChemistryStemOff(multipleFacing)) {
+                    multipleFacing = TARDISMushroomBlock.getChemistryStemOn(multipleFacing);
+                    // create light source
+                    plugin.getTardisHelper().createLight(block.getLocation());
+                }
+                block.setBlockData(multipleFacing,true);
                 break;
             default:
                 break;

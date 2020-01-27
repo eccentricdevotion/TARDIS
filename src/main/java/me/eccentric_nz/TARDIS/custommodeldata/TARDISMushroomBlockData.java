@@ -216,14 +216,22 @@ public class TARDISMushroomBlockData {
 
     public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<Integer, String>() {
         {
-            // blue_torch
-            put(41, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
-            // green_torch
-            put(42, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]");
-            // purple_torch
-            put(43, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
-            // red_torch
-            put(44, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
+            // blue_lamp_on
+            put(20000001, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");
+            // green_lamp_on
+            put(20000004, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]");
+            // purple_lamp_on
+            put(20000003, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
+            // red_lamp_on
+            put(20000002, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]");
+            // blue_lamp
+            put(10000001, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
+            // green_lamp
+            put(10000004, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]");
+            // purple_lamp
+            put(10000003, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
+            // red_lamp
+            put(10000002, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
             // custom seed block
             put(45, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=true,west=false]");
             // orange hexagon

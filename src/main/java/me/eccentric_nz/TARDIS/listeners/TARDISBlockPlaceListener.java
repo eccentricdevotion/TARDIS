@@ -77,8 +77,10 @@ public class TARDISBlockPlaceListener implements Listener {
         if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                boolean light = false;
                 if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                     int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
+                    plugin.debug("which: " + which);
                     MultipleFacing multipleFacing;
                     if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
@@ -86,8 +88,12 @@ public class TARDISBlockPlaceListener implements Listener {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
                     } else {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
+                        light = (which > 20000001 && which < 20000005);
                     }
-                    event.getBlockPlaced().setBlockData(multipleFacing, false);
+                    event.getBlockPlaced().setBlockData(multipleFacing, light);
+                    if (light) {
+                        plugin.getTardisHelper().createLight(event.getBlockPlaced().getLocation());
+                    }
                     return;
                 }
             } else {

@@ -79,6 +79,7 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.IRON_DOOR);
         redstone.add(Material.IRON_TRAPDOOR);
+        redstone.add(Material.MUSHROOM_STEM);
         redstone.add(Material.PISTON);
         redstone.add(Material.STICKY_PISTON);
         redstone.add(Material.POWERED_RAIL);

@@ -1,8 +1,10 @@
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.data.MultipleFacing;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class TARDISMushroomBlock {
@@ -60,4 +62,46 @@ public class TARDISMushroomBlock {
     public static boolean isVanillaMushroomStemState(MultipleFacing multipleFacing) {
         return (vanillaStem.contains(multipleFacing.getAsString()));
     }
+
+	private static final HashMap<String, String> chemistryStemOn = new HashMap<String, String>() {
+		{
+			// blue_lamp_on
+			put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
+			// red_lamp_on
+			put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]");
+			// purple_lamp_on
+			put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
+			// green_lamp_on
+			put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
+		}
+	};
+
+	public static MultipleFacing getChemistryStemOff(MultipleFacing multipleFacing) {
+		return (MultipleFacing) Bukkit.createBlockData(chemistryStemOn.get(multipleFacing.getAsString()));
+	}
+
+	public static boolean isChemistryStemOn(MultipleFacing multipleFacing) {
+		return (chemistryStemOn.containsKey(multipleFacing.getAsString()));
+	}
+
+	private static final HashMap<String, String> chemistryStemOff = new HashMap<String, String>() {
+		{
+			// blue_lamp
+			put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]", "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");
+			// red_lamp
+			put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]", "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]");
+			// purple_lamp
+			put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
+			// green_lamp
+			put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]");
+		}
+	};
+
+	public static MultipleFacing getChemistryStemOn(MultipleFacing multipleFacing) {
+		return (MultipleFacing) Bukkit.createBlockData(chemistryStemOff.get(multipleFacing.getAsString()));
+	}
+
+	public static boolean isChemistryStemOff(MultipleFacing multipleFacing) {
+		return (chemistryStemOff.containsKey(multipleFacing.getAsString()));
+	}
 }
