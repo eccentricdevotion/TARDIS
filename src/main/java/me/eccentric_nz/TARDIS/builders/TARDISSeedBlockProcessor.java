@@ -94,7 +94,7 @@ public class TARDISSeedBlockProcessor {
                 SCHEMATIC schm = seed.getSchematic();
                 // check perms
                 if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
-                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase(Locale.ENGLISH));
+                    TARDISMessage.send(player, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
                     return false;
                 }
                 int cx;
