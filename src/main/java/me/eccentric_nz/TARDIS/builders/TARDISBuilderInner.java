@@ -117,6 +117,7 @@ public class TARDISBuilderInner {
         HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
         HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
         HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+        List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
         HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
         Location ender = null;
         HashMap<String, Object> set = new HashMap<>();
@@ -230,8 +231,8 @@ public class TARDISBuilderInner {
                                             data = Material.ORANGE_CONCRETE.createBlockData();
                                             break;
                                         default:
-//                                            data = Material.ORANGE_WOOL.createBlockData();
                                             data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                            postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
                                             break;
                                     }
                                 } else {
@@ -279,9 +280,11 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.WHITE_STAINED_GLASS)) {
                         data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                        postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
                     }
                     if (type.equals(Material.WHITE_TERRACOTTA)) {
                         data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
+                        postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button
                         /*
@@ -593,6 +596,20 @@ public class TARDISBuilderInner {
                 ent.setArt(art, true);
             }
         }
+        // reset mushroom stem blocks
+        if (postMushroomBlocks.size() > 0) {
+            TARDISMushroomRunnable runnable = new TARDISMushroomRunnable(plugin, postMushroomBlocks);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 400L, 1L);
+            runnable.setTask(taskID);
+        }
+        // remove dropped items
+        chunkList.forEach((chink) -> {
+            for (Entity e : chink.getEntities()) {
+                if (e instanceof Item) {
+                    e.remove();
+                }
+            }
+        });
         // finished processing - update tardis table!
         plugin.getQueryFactory().doUpdate("tardis", set, where);
         // give kit?
