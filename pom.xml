@@ -111,7 +111,7 @@
     </profiles>
     <build>
         <defaultGoal>clean package</defaultGoal>
-        <finalName>TARDIS</finalName>
+        <finalName>TARDIS_1.14.4</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
