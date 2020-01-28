@@ -83,29 +83,54 @@ public class ChemistryBlockListener implements Listener {
                         if (player.hasPermission("tardis.chemistry.creative")) {
                             menu = new ElementInventory().getMenu();
                         } else {
-                            TARDISMessage.send(player, "NO_PERM_CHEM");
+                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
                     case "Chemical compounds":
                         // compound
-                        menu = new CompoundInventory().getMenu();
+                        if (player.hasPermission("tardis.compound.create")) {
+                            menu = new CompoundInventory().getMenu();
+                        } else {
+                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            return;
+                        }
                         break;
                     case "Material reducer":
                         // reducer
-                        menu = new ReducerInventory().getMenu();
+                        if (player.hasPermission("tardis.reducer.use")) {
+                            menu = new ReducerInventory().getMenu();
+                        } else {
+                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            return;
+                        }
                         break;
                     case "Element constructor":
                         // constructor
-                        menu = new ConstructorInventory().getMenu();
+                        if (player.hasPermission("tardis.construct.build")) {
+                            menu = new ConstructorInventory().getMenu();
+                        } else {
+                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            return;
+                        }
                         break;
                     case "Lab table":
                         // lab
-                        menu = new LabInventory().getMenu();
+                        if (player.hasPermission("tardis.lab.combine")) {
+                            menu = new LabInventory().getMenu();
+                        } else {
+                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            return;
+                        }
                         break;
                     default:
                         // product
-                        menu = new ProductInventory().getMenu();
+                        if (player.hasPermission("tardis.products.craft")) {
+                            menu = new ProductInventory().getMenu();
+                        } else {
+                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            return;
+                        }
                         break;
                 }
                 inventory = plugin.getServer().createInventory(player, (name.equals("Atomic elements") ? 54 : 27), ChatColor.DARK_RED + name);

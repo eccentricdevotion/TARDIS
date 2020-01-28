@@ -18,13 +18,6 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundCommand;
-import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructCommand;
-import me.eccentric_nz.TARDIS.chemistry.creative.ChemistryCommand;
-import me.eccentric_nz.TARDIS.chemistry.formula.FormulaCommand;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabCommand;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductCommand;
-import me.eccentric_nz.TARDIS.chemistry.reducer.ReduceCommand;
 import me.eccentric_nz.TARDIS.commands.*;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
@@ -111,17 +104,8 @@ class TARDISCommandSetter {
         plugin.getCommand("handles").setExecutor(new TARDISHandlesCommand(plugin));
         plugin.getCommand("handles").setTabCompleter(new TARDISHandlesTabComplete());
         if (plugin.getConfig().getBoolean("allow.chemistry")) {
-            ChemistryCommand chemistryCommand = new ChemistryCommand(plugin);
-            plugin.getCommand("chemistry").setExecutor(chemistryCommand);
-            plugin.getCommand("chemistry").setTabCompleter(chemistryCommand);
-            plugin.getCommand("construct").setExecutor(new ConstructCommand(plugin));
-            plugin.getCommand("compound").setExecutor(new CompoundCommand(plugin));
-            plugin.getCommand("reduce").setExecutor(new ReduceCommand(plugin));
-            plugin.getCommand("product").setExecutor(new ProductCommand(plugin));
-            plugin.getCommand("lab").setExecutor(new LabCommand(plugin));
-            FormulaCommand formulaCommand = new FormulaCommand(plugin);
-            plugin.getCommand("formula").setExecutor(formulaCommand);
-            plugin.getCommand("formula").setTabCompleter(formulaCommand);
+            plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
+            plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
         }
     }
 }

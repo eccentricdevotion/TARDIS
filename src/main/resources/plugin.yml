@@ -1069,38 +1069,39 @@ commands:
     description: Set a player's gamemode
     usage: /<command> [GameMode] <player>
     permission: tardis.admin
-  chemistry:
-    description: Open a Chemistry creative GUI.
-    usage: /<command> [elements|compounds|lab|products]
-    permission: tardis.chemistry.creative
-    permission-message: You don't have the permission <permission> to use this command
-  construct:
-    description: Open the 'Element constructor' GUI.
-    usage: /<command>
-    permission: tardis.construct.build
-    permission-message: You don't have the permission <permission> to use this command
-  compound:
-    description: Open the 'Chemical compounds' creation GUI.
-    usage: /<command>
-    permission: tardis.compound.create
-    permission-message: You don't have the permission <permission> to use this command
-  reduce:
-    description: Open the 'Material reducer' GUI.
-    usage: /<command>
-    permission: tardis.reducer.use
-    permission-message: You don't have the permission <permission> to use this command
-  product:
-    description: Open the 'Product crafting' GUI.
-    usage: /<command>
-    permission: tardis.product.craft
-    permission-message: You don't have the permission <permission> to use this command
-  lab:
-    description: Open the 'Lab table' GUI.
-    usage: /<command>
-    permission: tardis.lab.combine
-    permission-message: You don't have the permission <permission> to use this command
-  formula:
-    description: Show a compound or product formula.
-    usage: /<command> [compound|product]
-    permission: tardis.formula.show
+  tardischemistry:
+    aliases: [chemistry, chem, tchemistry, tchem]
+    description: Open a Chemistry creative GUI or show a chemical formula.
+    usage: /<command> [gui|formula] [which]
+    gui:
+      description: Show a chemistry GUI.
+      usage: /<command> gui [creative|construct|compound|reduce|product|lab]
+      creative:
+        description: Open the 'Chemistry creative' GUI.
+        usage: /<command> gui creative [elements|compounds|products|lab]
+        permission: tardis.chemistry.creative
+      construct:
+        description: Open the 'Element constructor' GUI.
+        usage: /<command> gui construct
+        permission: tardis.construct.build
+      compound:
+        description: Open the 'Chemical compounds' creation GUI.
+        usage: /<command> gui compound
+        permission: tardis.compound.create
+      reduce:
+        description: Open the 'Material reducer' GUI.
+        usage: /<command> gui reduce
+        permission: tardis.reducer.use
+      product:
+        description: Open the 'Product crafting' GUI.
+        usage: /<command> gui product
+        permission: tardis.product.craft
+      lab:
+        description: Open the 'Lab table' GUI.
+        usage: /<command> gui lab
+        permission: tardis.lab.combine
+    formula:
+      description: Show a compound or product formula.
+      usage: /<command> formula [compound|product]
+      permission: tardis.formula.show
     permission-message: You don't have the permission <permission> to use this command

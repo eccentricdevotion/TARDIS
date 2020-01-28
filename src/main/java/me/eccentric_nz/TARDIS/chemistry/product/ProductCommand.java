@@ -17,15 +17,13 @@
 package me.eccentric_nz.TARDIS.chemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class ProductCommand implements CommandExecutor {
+public class ProductCommand {
 
     private final TARDIS plugin;
 
@@ -33,28 +31,16 @@ public class ProductCommand implements CommandExecutor {
         this.plugin = plugin;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("product")) {
-            Player player = null;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
-                return true;
-            }
-            if (!player.hasPermission("chemistry.command")) {
-                sender.sendMessage(plugin.getPluginName() + "You don't have permission to open Chemistry GUIs by command!");
-                return true;
-            }
-            // do stuff
-            ItemStack[] menu = new ProductInventory().getMenu();
-            Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Product crafting");
-            products.setContents(menu);
-            player.openInventory(products);
+    public boolean craft(Player player) {
+        if (!player.hasPermission("tardis.product.craft")) {
+            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Product");
             return true;
         }
-        return false;
+        // do stuff
+        ItemStack[] menu = new ProductInventory().getMenu();
+        Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Product crafting");
+        products.setContents(menu);
+        player.openInventory(products);
+        return true;
     }
 }

@@ -26,8 +26,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.UUID;
-
 public class CreativeGUIListener implements Listener {
 
     private final TARDIS plugin;
@@ -42,7 +40,6 @@ public class CreativeGUIListener implements Listener {
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Molecular compounds") || name.equals(ChatColor.DARK_RED + "Products")) {
             Player p = (Player) event.getWhoClicked();
-            UUID uuid = p.getUniqueId();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
