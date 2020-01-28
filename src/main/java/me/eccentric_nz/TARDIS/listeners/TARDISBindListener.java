@@ -114,17 +114,17 @@ public class TARDISBindListener implements Listener {
                                     TARDISMessage.send(player, "ISO_HANDS_OFF");
                                     return;
                                 }
-                                if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                int type = rsd.getType();
+                                if (type != 6 && !tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                     return;
                                 }
                                 // make sure TARDIS is not dispersed
-                                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                if (type != 6 && plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                     TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
                                     return;
                                 }
                                 // what bind type is it?
-                                int type = rsd.getType();
                                 String dest_name = rsd.getDest_name();
                                 switch (type) {
                                     case 1: // command
