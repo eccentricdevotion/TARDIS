@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
 import me.eccentric_nz.TARDIS.chemistry.lab.LabBuilder;
 import me.eccentric_nz.TARDIS.chemistry.product.Product;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductBuilder;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -136,7 +137,7 @@ public class FormulaViewer {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
-        close_im.setCustomModelData(1);
+        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
         Inventory viewer = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + formula.replace("_", " ") + " Formula");
