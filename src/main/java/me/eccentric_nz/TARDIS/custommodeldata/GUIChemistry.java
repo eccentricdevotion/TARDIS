@@ -33,7 +33,10 @@ public enum GUIChemistry {
     SCROLL_DOWN(7, 1, Material.ARROW),
     SCROLL_UP(8, 1, Material.ARROW),
     PLUS(9, 1, Material.ARROW),
-    MINUS(10, 1, Material.ARROW);
+    MINUS(10, 1, Material.ARROW),
+    ELEMENTS(10000999, 1, Material.FEATHER),
+    COMPOUNDS(1, 1, Material.GLASS_BOTTLE),
+    PRODUCTS(1, 1, Material.CRAFTING_TABLE);
 
     private final int customModelData;
     private final int slot;

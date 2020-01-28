@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.chemistry.element;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chemistry.creative.CompoundsCreativeInventory;
+import me.eccentric_nz.TARDIS.chemistry.creative.ProductsCreativeInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +26,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
@@ -65,11 +68,6 @@ public class ElementGUIListener implements Listener {
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
-                    case 17:
-                    case 26:
-                    case 44:
-                        event.setCancelled(true);
-                        break;
                     case 8:
                         // scroll up
                         event.setCancelled(true);
@@ -78,13 +76,38 @@ public class ElementGUIListener implements Listener {
                             scroll(view, scroll.get(uuid) + 1, true, uuid);
                         }
                         break;
-                    case 35:
+                    case 17:
                         // scroll down
                         event.setCancelled(true);
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) - 1, false, uuid);
                         }
+                        break;
+                    case 26:
+                        event.setCancelled(true);
+                        break;
+                    case 35:
+                        event.setCancelled(true);
+                        // switch to compounds
+                        close(p);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] cmenu = new CompoundsCreativeInventory().getMenu();
+                            Inventory compounds = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Molecular compounds");
+                            compounds.setContents(cmenu);
+                            p.openInventory(compounds);
+                        }, 2L);
+                        break;
+                    case 44:
+                        event.setCancelled(true);
+                        // switch to products
+                        close(p);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] lmenu = new ProductsCreativeInventory().getMenu();
+                            Inventory lab = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Products");
+                            lab.setContents(lmenu);
+                            p.openInventory(lab);
+                        }, 2L);
                         break;
                     case 53:
                         // close

@@ -58,7 +58,21 @@ public class ElementInventory {
         dim.setDisplayName("Scroll down");
         dim.setCustomModelData(GUIChemistry.SCROLL_DOWN.getCustomModelData());
         scroll_down.setItemMeta(dim);
-        stack[35] = scroll_down;
+        stack[17] = scroll_down;
+        // compounds
+        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
+        ItemMeta cim = compounds.getItemMeta();
+        cim.setDisplayName("Compounds");
+        cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
+        compounds.setItemMeta(cim);
+        stack[35] = compounds;
+        // products
+        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
+        ItemMeta pim = products.getItemMeta();
+        pim.setDisplayName("Products");
+        pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
+        products.setItemMeta(pim);
+        stack[44] = products;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();

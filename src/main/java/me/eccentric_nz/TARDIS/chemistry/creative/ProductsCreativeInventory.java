@@ -42,7 +42,11 @@ public class ProductsCreativeInventory {
             }
             ItemStack is = ProductBuilder.getProduct(entry);
             stack[i] = is;
-            i++;
+            if (i % 9 == 7) {
+                i += 2;
+            } else {
+                i++;
+            }
         }
         for (Lab entry : Lab.values()) {
             if (i > 52) {
@@ -50,8 +54,26 @@ public class ProductsCreativeInventory {
             }
             ItemStack is = LabBuilder.getLabProduct(entry);
             stack[i] = is;
-            i++;
+            if (i % 9 == 7) {
+                i += 2;
+            } else {
+                i++;
+            }
         }
+        // elements
+        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+        ItemMeta eim = elements.getItemMeta();
+        eim.setDisplayName("Elements");
+        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+        elements.setItemMeta(eim);
+        stack[35] = elements;
+        // compounds
+        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
+        ItemMeta cim = compounds.getItemMeta();
+        cim.setDisplayName("Compounds");
+        cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
+        compounds.setItemMeta(cim);
+        stack[44] = compounds;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();

@@ -17,12 +17,14 @@
 package me.eccentric_nz.TARDIS.chemistry.creative;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,6 +45,29 @@ public class CreativeGUIListener implements Listener {
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
+                    case 35:
+                        event.setCancelled(true);
+                        // switch to elements
+                        close(p);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] emenu = new ElementInventory().getMenu();
+                            Inventory elements = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Atomic elements");
+                            elements.setContents(emenu);
+                            p.openInventory(elements);
+                        }, 2L);
+                        break;
+                    case 44:
+                        event.setCancelled(true);
+                        boolean molecular = (name.equals(ChatColor.DARK_RED + "Molecular compounds"));
+                        close(p);
+                        // switch to compounds or products
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] stacks = (molecular) ? new ProductsCreativeInventory().getMenu() : new CompoundsCreativeInventory().getMenu();
+                            Inventory inventory = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + (molecular ? "Products" : "Molecular compounds"));
+                            inventory.setContents(stacks);
+                            p.openInventory(inventory);
+                        }, 2L);
+                        break;
                     case 53:
                         // close
                         event.setCancelled(true);
