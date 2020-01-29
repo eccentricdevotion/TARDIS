@@ -30,7 +30,9 @@ import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructorGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.creative.CreativeGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.formula.FormulaViewerListener;
+import me.eccentric_nz.TARDIS.chemistry.lab.IceBombListener;
 import me.eccentric_nz.TARDIS.chemistry.lab.LabGUIListener;
+import me.eccentric_nz.TARDIS.chemistry.lab.SuperFertisliserListener;
 import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
@@ -305,6 +307,8 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new FormulaViewerListener(plugin), plugin);
             plugin.getPM().registerEvents(new GlowStickListener(plugin), plugin);
             plugin.getPM().registerEvents(new SparklerListener(plugin), plugin);
+            plugin.getPM().registerEvents(new IceBombListener(plugin), plugin);
+            plugin.getPM().registerEvents(new SuperFertisliserListener(plugin), plugin);
         }
     }
 
