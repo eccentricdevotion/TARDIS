@@ -25,12 +25,26 @@ import java.util.Arrays;
 public class CompoundBuilder {
 
     public static ItemStack getCompound(Compound compound) {
-        ItemStack is = new ItemStack(Material.GLASS_BOTTLE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(compound.toString().replace("_", " "));
-        im.setLore(Arrays.asList(compound.getSymbol()));
-        im.setCustomModelData(10000001 + compound.ordinal());
-        is.setItemMeta(im);
+        ItemStack is;
+        switch (compound) {
+            case Ink:
+                is = new ItemStack(Material.INK_SAC, 1);
+                break;
+            case Charcoal:
+                is = new ItemStack(Material.CHARCOAL, 1);
+                break;
+            case Sugar:
+                is = new ItemStack(Material.SUGAR, 1);
+                break;
+            default:
+                is = new ItemStack(Material.GLASS_BOTTLE, 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName(compound.toString().replace("_", " "));
+                im.setLore(Arrays.asList(compound.getSymbol()));
+                im.setCustomModelData(10000001 + compound.ordinal());
+                is.setItemMeta(im);
+                break;
+        }
         return is;
     }
 }

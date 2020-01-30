@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Material;
 
 import java.sql.*;
@@ -960,7 +961,7 @@ public class TARDISMaterialIDConverter {
                         } else {
                             plugin.debug("Could not convert legacy material, defaulting to AIR!");
                             // update the record
-                            ps.setString(1, Material.AIR.createBlockData().getAsString());
+                            ps.setString(1, TARDISConstants.AIR.getAsString());
                             ps.setInt(2, b_id);
                             ps.addBatch();
                             i++;
