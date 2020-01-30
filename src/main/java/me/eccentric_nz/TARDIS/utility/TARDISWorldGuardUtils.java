@@ -566,14 +566,16 @@ public class TARDISWorldGuardUtils {
         if (w != null) {
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
             ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
-            Map<Flag<?>, Object> flags = region.getFlags();
-            flags.put(Flags.ENTRY, (allow) ? State.ALLOW : State.DENY);
-            flags.put(Flags.EXIT, (allow) ? State.ALLOW : State.DENY);
-            region.setFlags(flags);
-            try {
-                rm.save();
-            } catch (StorageException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+            if (region != null) {
+                Map<Flag<?>, Object> flags = region.getFlags();
+                flags.put(Flags.ENTRY, (allow) ? State.ALLOW : State.DENY);
+                flags.put(Flags.EXIT, (allow) ? State.ALLOW : State.DENY);
+                region.setFlags(flags);
+                try {
+                    rm.save();
+                } catch (StorageException e) {
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+                }
             }
         }
     }
