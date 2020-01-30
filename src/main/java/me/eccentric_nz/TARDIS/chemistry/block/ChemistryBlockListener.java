@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.block;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chemistry.compound.CompoundInventory;
 import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructorInventory;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
@@ -56,12 +57,14 @@ public class ChemistryBlockListener implements Listener {
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=true]", "Element constructor");
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=false]", "Lab table");
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=true]", "Product crafting");
+        blocks.put("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]", "Heat Block");
         models.put("Atomic elements", 40);
         models.put("Chemical compounds", 41);
         models.put("Material reducer", 42);
         models.put("Element constructor", 43);
         models.put("Lab table", 44);
         models.put("Product crafting", 45);
+        models.put("Heat Block", 5);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -147,20 +150,23 @@ public class ChemistryBlockListener implements Listener {
             return;
         }
         Block block = event.getBlock();
-        if (!event.getBlock().getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-            return;
-        }
-        String name = blocks.get(block.getBlockData().getAsString());
-        if (name != null) {
-            ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(blocks.get(block.getType()));
-            int cmd = models.get(name);
-            im.setCustomModelData(10000000 + cmd);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
-            is.setItemMeta(im);
-            block.setBlockData(Material.AIR.createBlockData());
-            block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
+        Material mush = event.getBlock().getType();
+        if (mush.equals(Material.RED_MUSHROOM_BLOCK) || mush.equals(Material.MUSHROOM_STEM)) {
+            String name = blocks.get(block.getBlockData().getAsString());
+            if (name != null) {
+                ItemStack is = new ItemStack(mush, 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName(name);
+                int cmd = models.get(name);
+                im.setCustomModelData(10000000 + cmd);
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+                is.setItemMeta(im);
+                block.setBlockData(TARDISConstants.AIR);
+                block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
+                if (cmd == 5) {
+                    plugin.getTrackerKeeper().getHeatBlocks().remove(block.getLocation().toString());
+                }
+            }
         }
     }
 }

@@ -114,6 +114,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<Integer> submarine = new ArrayList<>();
     private final List<Integer> keyboard = new ArrayList<>();
     private final List<String> reset = new ArrayList<>();
+    private final List<String> heatBlocks = new ArrayList<>();
     private final List<UUID> arrangers = new ArrayList<>();
     private final List<UUID> beaconColouring = new ArrayList<>();
     private final List<UUID> constructors = new ArrayList<>();
@@ -306,6 +307,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<String> getArtronFurnaces() {
         return artronFurnaces;
+    }
+
+    public List<String> getHeatBlocks() {
+        return heatBlocks;
     }
 
     public List<Integer> getDematerialising() {

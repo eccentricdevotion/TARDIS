@@ -232,6 +232,8 @@ public class TARDISMushroomBlockData {
 
     public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<Integer, String>() {
         {
+            // heat_block
+            put(5, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]");
             // blue_lamp_on
             put(20000001, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");
             // green_lamp_on
