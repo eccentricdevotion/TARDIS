@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -41,7 +43,7 @@ import java.util.Locale;
 class TARDISUpdateCommand {
 
     private final TARDIS plugin;
-    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "dispenser", "door", "eps", "farm", "frame", "generator", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "dispenser", "door", "eps", "farm", "frame", "generator", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "stall", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
 
     TARDISUpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -121,22 +123,52 @@ class TARDISUpdateCommand {
             }
             // must grow a room first
             if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("stall") || tardis_block.equals("village")) {
+                // check ARS for room type
+                boolean hasFarm = false;
+                boolean hasStable = false;
+                boolean hasStall = false;
+                boolean hasVillage = false;
+                HashMap<String, Object> wherea = new HashMap<>();
+                wherea.put("tardis_id", ownerid);
+                ResultSetARS rsa = new ResultSetARS(plugin, wherea);
+                if (rsa.resultSet()) {
+                    // check for rooms
+                    String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                    for (String[][] level : json) {
+                        for (String[] row : level) {
+                            for (String col : row) {
+                                if (col.equals("DIRT")) {
+                                    hasFarm = true;
+                                }
+                                if (col.equals("HAY_BLOCK")) {
+                                    hasStable = true;
+                                }
+                                if (col.equals("NETHER_WART_BLOCK")) {
+                                    hasStall = true;
+                                }
+                                if (col.equals("OAK_LOG")) {
+                                    hasVillage = true;
+                                }
+                            }
+                        }
+                    }
+                }
                 ResultSetFarming rsf = new ResultSetFarming(plugin, ownerid);
                 if (rsf.resultSet()) {
                     Farm farming = rsf.getFarming();
-                    if (tardis_block.equals("farm") && farming.getFarm().isEmpty()) {
+                    if (tardis_block.equals("farm") && farming.getFarm().isEmpty() && !hasFarm) {
                         TARDISMessage.send(player, "UPDATE_FARM");
                         return true;
                     }
-                    if (tardis_block.equals("stable") && farming.getStable().isEmpty()) {
+                    if (tardis_block.equals("stable") && farming.getStable().isEmpty() && !hasStable) {
                         TARDISMessage.send(player, "UPDATE_STABLE");
                         return true;
                     }
-                    if (tardis_block.equals("stall") && farming.getStall().isEmpty()) {
+                    if (tardis_block.equals("stall") && farming.getStall().isEmpty() && !hasStall) {
                         TARDISMessage.send(player, "UPDATE_STALL");
                         return true;
                     }
-                    if (tardis_block.equals("village") && farming.getVillage().isEmpty()) {
+                    if (tardis_block.equals("village") && farming.getVillage().isEmpty() && !hasVillage) {
                         TARDISMessage.send(player, "UPDATE_VILLAGE");
                         return true;
                     }
