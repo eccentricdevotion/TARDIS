@@ -144,9 +144,15 @@ public class TARDISBindCommands implements CommandExecutor {
                     wheremat.put("tardis_id", id);
                     wheremat.put("dest_name", dest);
                     wheremat.put("preset", args[2]);
-                    ResultSetDestinations rsmat = new ResultSetDestinations(plugin, wheremat, false);
+                    ResultSetDestinations rsmat = new ResultSetDestinations(plugin, wheremat, true);
                     if (!rsmat.resultSet()) {
                         TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                        return true;
+                    }
+                    if (rsmat.getData().size() > 1) {
+                        // must click transmat sign
+                        plugin.getTrackerKeeper().getTransmatRemoval().put(player.getUniqueId(), args[2]);
+                        TARDISMessage.send(player, "TRANSMAT_CLICK_BLOCK");
                         return true;
                     }
                     did = rsmat.getDest_id();

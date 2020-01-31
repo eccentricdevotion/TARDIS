@@ -89,6 +89,21 @@ public class TARDISBindListener implements Listener {
                     set.put("bind", l);
                     plugin.getQueryFactory().doUpdate("destinations", set, where);
                     TARDISMessage.send(player, "BIND_SAVE", m.toString());
+                } else if (plugin.getTrackerKeeper().getTransmatRemoval().containsKey(uuid)) {
+                    // check that this block is the right one for the name
+                    HashMap<String, Object> whereb = new HashMap<>();
+                    whereb.put("preset", plugin.getTrackerKeeper().getBinder().get(uuid));
+                    whereb.put("bind", l);
+                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
+                    if (rsd.resultSet()) {
+                        where.put("preset", plugin.getTrackerKeeper().getBinder().get(uuid));
+                        where.put("bind", l);
+                        plugin.getTrackerKeeper().getTransmatRemoval().remove(uuid);
+                        plugin.getQueryFactory().doDelete("destinations", where);
+                        TARDISMessage.send(player, "TRANSMAT_REMOVED");
+                    } else {
+                        TARDISMessage.send(player, "TRANSMAT_NO_MATCH");
+                    }
                 } else {
                     // is player travelling in TARDIS
                     where.put("uuid", player.getUniqueId().toString());

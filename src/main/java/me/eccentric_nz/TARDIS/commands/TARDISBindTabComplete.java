@@ -32,9 +32,6 @@ public class TARDISBindTabComplete extends TARDISCompleter implements TabComplet
     private final ImmutableList<String> T1_SUBS = ImmutableList.of("hide", "rebuild", "home", "cave", "make_her_blue", "occupy");
     private final ImmutableList<String> CHAM_SUBS = ImmutableList.of("off", "adapt", "invisible");
 
-    public TARDISBindTabComplete() {
-    }
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         // Remember that we can return null to default to online player name matching

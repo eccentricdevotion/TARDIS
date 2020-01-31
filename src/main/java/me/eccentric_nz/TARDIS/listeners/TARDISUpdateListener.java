@@ -73,7 +73,7 @@ public class TARDISUpdateListener implements Listener {
 
     /**
      * Listens for player interaction with the TARDIS console and other specific items. If the block is clicked and
-     * players name is contained in the appropriate HashMap, then the blocks position is recorded in the database.
+     * players name is contained in the appropriate HashMap, then the block's position is recorded in the database.
      *
      * @param event a player clicking on a block
      */
