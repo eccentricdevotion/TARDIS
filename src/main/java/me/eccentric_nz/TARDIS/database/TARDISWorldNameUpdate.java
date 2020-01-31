@@ -137,14 +137,14 @@ public class TARDISWorldNameUpdate {
             }
             // farming
             connection.setAutoCommit(false);
-            query = "UPDATE " + prefix + "farming SET aquarium = ?, birdcage = ?, farm = ?, hutch = ?, igloo = ?, stable = ?, stall = ?, village = ? WHERE farm_id = ?";
+            query = "UPDATE " + prefix + "farming SET apiary = ?, aquarium = ?, bamboo = ?, birdcage = ?, farm = ?, hutch = ?, igloo = ?, stable = ?, stall = ?, village = ? WHERE farm_id = ?";
             ps = connection.prepareStatement(query);
             select = "SELECT * FROM " + prefix + "farming";
             rs = statement.executeQuery(select);
             i = 0;
             while (rs.next()) {
                 boolean has = false;
-                List<String> columns = Arrays.asList("farm", "aquarium", "birdcage", "hutch", "igloo", "stable", "stall", "village");
+                List<String> columns = Arrays.asList("apiary", "bamboo", "farm", "aquarium", "birdcage", "hutch", "igloo", "stable", "stall", "village");
                 for (String f : columns) {
                     if (rs.getString(f).contains("tardis_time_vortex")) {
                         has = true;
@@ -152,15 +152,17 @@ public class TARDISWorldNameUpdate {
                     }
                 }
                 if (has) {
-                    ps.setString(1, rs.getString("aquarium").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(2, rs.getString("birdcage").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(3, rs.getString("farm").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(4, rs.getString("hutch").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(5, rs.getString("igloo").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(6, rs.getString("stable").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(7, rs.getString("stall").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(8, rs.getString("village").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setInt(9, rs.getInt("farm_id"));
+                    ps.setString(1, rs.getString("apiary").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(2, rs.getString("aquarium").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(3, rs.getString("bamboo").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(4, rs.getString("birdcage").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(5, rs.getString("farm").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(6, rs.getString("hutch").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(7, rs.getString("igloo").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(8, rs.getString("stable").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(9, rs.getString("stall").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setString(10, rs.getString("village").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
+                    ps.setInt(11, rs.getInt("farm_id"));
                     ps.addBatch();
                     i++;
                 }
