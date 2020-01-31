@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPoliceBox;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
+import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
 import me.eccentric_nz.TARDIS.chemistry.lab.HeatBlockRunnable;
 import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
@@ -327,6 +328,7 @@ public class TARDIS extends JavaPlugin {
             }
             if (getConfig().getBoolean("allow.chemistry")) {
                 new ChemistryBlockRecipes(this).addRecipes();
+                new BleachRecipe(this).setRecipes();
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200L, 200L);
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeatBlockRunnable(this), 200L, 80L);
             }
