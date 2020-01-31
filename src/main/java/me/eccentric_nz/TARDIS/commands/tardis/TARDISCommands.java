@@ -184,7 +184,7 @@ public class TARDISCommands implements CommandExecutor {
                 case tagtheood:
                     return new TARDISTagCommand(plugin).getStats(player);
                 case transmat:
-                    return new TARDISTransmatCommand(plugin).setLocation(player, args);
+                    return new TARDISTransmatCommand(plugin).teleportOrProcess(player, args);
                 case update:
                     return new TARDISUpdateCommand(plugin).startUpdate(player, args);
                 case abort:

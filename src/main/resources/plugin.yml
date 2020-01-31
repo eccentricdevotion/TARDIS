@@ -577,8 +577,8 @@ commands:
       usage: /<command> tagtheood
       permission: tardis.tag
     transmat:
-      description: Sets an internal TARDIS transmat location.
-      usage: /<command> transmat [name]
+      description: Teleports to or sets an internal TARDIS transmat location.
+      usage: /<command> transmat [tp|add|update|remove|list] [name]
       permission: tardis.transmat
   tardistravel:
     aliases: ttravel

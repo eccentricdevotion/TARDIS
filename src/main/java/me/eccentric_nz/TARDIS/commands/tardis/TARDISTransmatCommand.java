@@ -19,9 +19,13 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
+import me.eccentric_nz.TARDIS.database.ResultSetTransmatList;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -34,8 +38,8 @@ class TARDISTransmatCommand {
         this.plugin = plugin;
     }
 
-    public boolean setLocation(Player player, String[] args) {
-        if (args.length < 2) {
+    public boolean teleportOrProcess(Player player, String[] args) {
+        if (args.length < 3) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
@@ -63,36 +67,101 @@ class TARDISTransmatCommand {
             TARDISMessage.send(player, "CMD_ONLY_TL");
             return false;
         }
-        Location location = player.getLocation();
-        // must be in their TARDIS
-        if (!plugin.getUtils().inTARDISWorld(location)) {
-            TARDISMessage.send(player, "CMD_IN_WORLD");
+        if (args[1].equalsIgnoreCase("tp")) {
+            // transmat to specified location
+            if (args[2].equalsIgnoreCase("console")) {
+                // get internal door location
+                plugin.getGeneralKeeper().getRendererListener().transmat(player);
+            } else {
+                ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
+                if (rsm.resultSet()) {
+                    TARDISMessage.send(player, "TRANSMAT");
+                    Location tp_loc = rsm.getLocation();
+                    tp_loc.setYaw(rsm.getYaw());
+                    tp_loc.setPitch(player.getLocation().getPitch());
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                        player.teleport(tp_loc);
+                    }, 10L);
+                } else {
+                    TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                }
+            }
             return true;
-        }
-        // get the transmat name
-        if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-            TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
-            return true;
-        }
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("world", location.getWorld().getName());
-        set.put("x", location.getX());
-        set.put("y", location.getY());
-        set.put("z", location.getZ());
-        set.put("yaw", location.getYaw());
-        // check if transmat name exists
-        ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[1]);
-        if (rsm.resultSet()) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            where.put("name", args[1]);
-            plugin.getQueryFactory().doUpdate("transmat", set, where);
         } else {
-            set.put("tardis_id", id);
-            set.put("name", args[1]);
-            plugin.getQueryFactory().doInsert("transmats", set);
+            Location location = player.getLocation();
+            if (args[1].equalsIgnoreCase("add")) {
+                // must be in their TARDIS
+                if (!plugin.getUtils().inTARDISWorld(location)) {
+                    TARDISMessage.send(player, "CMD_IN_WORLD");
+                    return true;
+                }
+                // get the transmat name
+                if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
+                    TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+                    return true;
+                }
+                // check if transmat name exists
+                ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
+                if (rsm.resultSet()) {
+                    TARDISMessage.send(player, "TRANSMAT_EXISTS");
+                    return true;
+                } else {
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("tardis_id", id);
+                    set.put("name", args[2]);
+                    set.put("world", location.getWorld().getName());
+                    set.put("x", location.getX());
+                    set.put("y", location.getY());
+                    set.put("z", location.getZ());
+                    set.put("yaw", location.getYaw());
+                    plugin.getQueryFactory().doInsert("transmats", set);
+                    TARDISMessage.send(player, "TRANSMAT_SAVED");
+                }
+                return true;
+            } else if (args[1].equalsIgnoreCase("update")) {
+                // check if transmat name exists
+                ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
+                if (rsm.resultSet()) {
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("world", location.getWorld().getName());
+                    set.put("x", location.getX());
+                    set.put("y", location.getY());
+                    set.put("z", location.getZ());
+                    set.put("yaw", location.getYaw());
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    where.put("name", args[2]);
+                    plugin.getQueryFactory().doUpdate("transmats", set, where);
+                    TARDISMessage.send(player, "TRANSMAT_SAVED");
+                } else {
+                    TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                }
+                return true;
+            } else if (args[1].equalsIgnoreCase("remove")) {
+                ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
+                if (rsm.resultSet()) {
+                    HashMap<String, Object> wherer = new HashMap<>();
+                    wherer.put("transmat_id", rsm.getTransmat_id());
+                    plugin.getQueryFactory().doDelete("transmats", wherer);
+                    TARDISMessage.send(player, "TRANSMAT_REMOVED");
+                } else {
+                    TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                }
+            } else if (args[1].equalsIgnoreCase("list")) {
+                ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
+                if (rslist.resultSet()) {
+                    TARDISMessage.send(player, "TRANSMAT_LIST");
+                    for (Transmat t : rslist.getData()) {
+                        String entry = String.format(" %s, %.2f, %.2f, %.2f, yaw %.2f", t.getWorld(), t.getX(), t.getY(), t.getZ(), t.getYaw());
+                        player.sendMessage(ChatColor.GREEN + t.getName() + ChatColor.RESET + entry);
+                    }
+                } else {
+                    TARDISMessage.send(player, "TRANSMAT_NO_LIST");
+                }
+                return true;
+            }
         }
-        TARDISMessage.send(player, "TRANSMAT_SAVED");
-        return true;
+        return false;
     }
 }
