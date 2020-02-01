@@ -39,7 +39,7 @@ class TARDISTransmatCommand {
     }
 
     public boolean teleportOrProcess(Player player, String[] args) {
-        if (args.length < 3) {
+        if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
@@ -65,6 +65,23 @@ class TARDISTransmatCommand {
         int thisid = rst.getTardis_id();
         if (thisid != id) {
             TARDISMessage.send(player, "CMD_ONLY_TL");
+            return false;
+        }
+        if (args[1].equalsIgnoreCase("list")) {
+            ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
+            if (rslist.resultSet()) {
+                TARDISMessage.send(player, "TRANSMAT_LIST");
+                for (Transmat t : rslist.getData()) {
+                    String entry = String.format(plugin.getJsonKeeper().getTransmatLocation(), t.getName(), t.getWorld(), t.getX(), t.getY(), t.getZ(), t.getYaw(), t.getName());
+                    TARDISUpdateChatGUI.sendJSON(entry, player);
+                }
+            } else {
+                TARDISMessage.send(player, "TRANSMAT_NO_LIST");
+            }
+            return true;
+        }
+        if (args.length < 3) {
+            TARDISMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
         if (args[1].equalsIgnoreCase("tp")) {
@@ -148,18 +165,6 @@ class TARDISTransmatCommand {
                 } else {
                     TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
                 }
-            } else if (args[1].equalsIgnoreCase("list")) {
-                ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
-                if (rslist.resultSet()) {
-                    TARDISMessage.send(player, "TRANSMAT_LIST");
-                    for (Transmat t : rslist.getData()) {
-                        String entry = String.format(plugin.getJsonKeeper().getTransmatLocation(), t.getName(), t.getWorld(), t.getX(), t.getY(), t.getZ(), t.getYaw(), t.getName());
-                        TARDISUpdateChatGUI.sendJSON(entry, player);
-                    }
-                } else {
-                    TARDISMessage.send(player, "TRANSMAT_NO_LIST");
-                }
-                return true;
             }
         }
         return false;
