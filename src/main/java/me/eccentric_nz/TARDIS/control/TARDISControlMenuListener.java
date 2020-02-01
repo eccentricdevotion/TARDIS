@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.transmat.TARDISTransmatInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
@@ -340,6 +341,12 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         return;
                                     }
                                     new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                                    break;
+                                case 33:
+                                    ItemStack[] tran = new TARDISTransmatInventory(plugin, id).getMenu();
+                                    Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
+                                    smat.setContents(tran);
+                                    player.openInventory(smat);
                                     break;
                                 case 36:
                                     // destination terminal

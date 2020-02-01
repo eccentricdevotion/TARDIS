@@ -231,6 +231,12 @@ public class TARDISControlInventory {
         sys.setDisplayName(plugin.getLanguage().getString("BUTTON_INFO"));
         sys.setCustomModelData(GUIControlCentre.BUTTON_INFO.getCustomModelData());
         info.setItemMeta(sys);
+        // transmats
+        ItemStack tran = new ItemStack(Material.BOWL, 1);
+        ItemMeta smat = tran.getItemMeta();
+        smat.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
+        smat.setCustomModelData(GUIControlCentre.BUTTON_TRANSMAT.getCustomModelData());
+        tran.setItemMeta(smat);
         /*
          * ***** OTHER *****
          */
@@ -259,7 +265,14 @@ public class TARDISControlInventory {
         can.setCustomModelData(GUIControlCentre.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{ran, null, ars, null, cham, null, art, null, zero, save, null, upg, null, siege, null, scan, null, player, fast, null, pow, null, hide, null, info, null, companion, area, null, lig, null, reb, null, null, null, null, ter, null, tog, null, dir, null, null, null, null, null, null, map, null, temp, null, null, null, close};
+        return new ItemStack[]{
+                ran, null, ars, null, cham, null, art, null, zero,
+                save, null, upg, null, siege, null, scan, null, player,
+                fast, null, pow, null, hide, null, info, null, companion,
+                area, null, lig, null, reb, null, tran, null, null,
+                ter, null, tog, null, dir, null, null, null, null,
+                null, null, map, null, temp, null, null, null, close
+        };
     }
 
     public ItemStack[] getControls() {

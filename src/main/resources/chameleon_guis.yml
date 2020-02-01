@@ -1,16 +1,16 @@
 ABORT: Abort
 ADAPT: Adaptive
 ADAPT_LORE:
-- The Chameleon Circuit
-- will choose a preset
-- that blends in with
-- the environment.
-- Use BIOME or BLOCK mode.
+  - The Chameleon Circuit
+  - will choose a preset
+  - that blends in with
+  - the environment.
+  - Use BIOME or BLOCK mode.
 APPLY: Apply now
 APPLY_LORE:
-- Rebuild the TARDIS
-- exterior with the
-- current settings.
+  - Rebuild the TARDIS
+  - exterior with the
+  - current settings.
 BACK_CONSTRUCT: Back to construction
 BACK_HELP: Back to help
 BACK_PRESETS: Back to presets
@@ -25,67 +25,71 @@ COL_F_MIDDLE: Front middle (with door) column
 COL_C_LAMP: Centre (with lamp) column
 CONSTRUCT: Construct
 CONSTRUCT_LORE:
-- Build your own custom
-- Chameleon preset.
+  - Build your own custom
+  - Chameleon preset.
 DISABLED: DISABLED
 DISABLED_LORE:
-- Disable the Chameleon
-- Circuit and revert
-- to the FACTORY preset.
+  - Disable the Chameleon
+  - Circuit and revert
+  - to the FACTORY preset.
 GO_CONSTRUCT: Go to construction...
 HELP: Help
 INFO: Info
 INFO_CONSTRUCT:
-- Click the lamp slot to switch
-- between all available lamps.
-- Click the door slots to switch
-- between all available doors.
+  - Click the lamp slot to switch
+  - between all available lamps.
+  - Click the door slots to switch
+  - between all available doors.
 INFO_HELP_1:
-- A custom chameleon preset
-- is made up of 9 columns of
-- 4 blocks.
-- We need to roll the columns
-- out flat just like a map of
-- the (Earth's) globe.
+  - A custom chameleon preset
+  - is made up of 9 columns of
+  - 4 blocks.
+  - We need to roll the columns
+  - out flat just like a map of
+  - the (Earth's) globe.
 INFO_HELP_2:
-- The order of the columns before
-- they are 'unrolled' is shown below left.
-- Click the 'View example template'
-- button to see what they look like
-- unrolled, ready for construction.
+  - The order of the columns before
+  - they are 'unrolled' is shown below left.
+  - Click the 'View example template'
+  - button to see what they look like
+  - unrolled, ready for construction.
 INFO_HELP_3:
-- Position of chameleon columns
-- looking down from above.
+  - Position of chameleon columns
+  - looking down from above.
 INFO_HELP_4:
-- One chameleon column
-- looking from the side.
+  - One chameleon column
+  - looking from the side.
 INFO_TEMPLATE:
-- This shows the default template
-- for the Police Box preset.
-- Hover over the numbers to see
-- where the column is positioned.
+  - This shows the default template
+  - for the Police Box preset.
+  - Hover over the numbers to see
+  - where the column is positioned.
 INVISIBLE: Invisible
 INVISIBLE_LORE:
-- Engages the TARDIS
-- Invisiblity Circuit.
+  - Engages the TARDIS
+  - Invisiblity Circuit.
 PB_DOOR:
-- Police Box door
-- Click this block to switch
-- between available door blocks.
+  - Police Box door
+  - Click this block to switch
+  - between available door blocks.
 PB_LAMP:
-- Police Box lamp
-- Click this block to switch
-- between available lamp blocks.
+  - Police Box lamp
+  - Click this block to switch
+  - between available lamp blocks.
 PB_SIGN: Police Box sign (slab)
 PB_WALL: Police Box wall
 POWER: (Optional) power block
 SAVE: Save construct
 SHORT: Shorted out
 SHORT_LORE:
-- Make the Chameleon
-- Circuit malfunction and
-- always choose the
-- same appearance.
+  - Make the Chameleon
+  - Circuit malfunction and
+  - always choose the
+  - same appearance.
 USE_PREV: Use last saved construct
 VIEW_TEMP: View example template
 BACK_CHAM_OPTS: Back to Chameleon Circuit
+INFO_TRANSMAT:
+  - Click on a transmat
+  - location, then choose
+  - an action button.

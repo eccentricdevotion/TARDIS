@@ -99,6 +99,7 @@ public class TARDISMenuListener {
         map.put(ChatColor.DARK_RED + "TARDIS Wall Menu", 54);
         map.put(ChatColor.DARK_RED + "TARDIS areas", 90);
         map.put(ChatColor.DARK_RED + "TARDIS saves", 90);
+        map.put(ChatColor.DARK_RED + "TARDIS transmats", 90);
         map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
         for (STORAGE s : STORAGE.values()) {
             map.put(s.getTitle(), 54);

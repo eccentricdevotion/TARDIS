@@ -58,7 +58,6 @@ public class TARDISThemeInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;

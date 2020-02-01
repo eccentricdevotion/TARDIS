@@ -102,7 +102,7 @@ public class TARDISDoorListener {
                 p.setAllowFlight(true);
             }
             if (quotes) {
-                if (TARDISConstants.RANDOM.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
                 } else {
                     p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));

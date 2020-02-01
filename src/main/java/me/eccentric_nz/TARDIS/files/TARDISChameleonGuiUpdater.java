@@ -46,6 +46,7 @@ public class TARDISChameleonGuiUpdater {
         chameleonListOptions.put("DISABLED_LORE", Arrays.asList("Disable the Chameleon", "Circuit and revert", "to the FACTORY preset."));
         chameleonListOptions.put("INVISIBLE_LORE", Arrays.asList("Engages the TARDIS", "Invisiblity Circuit."));
         chameleonListOptions.put("SHORT_LORE", Arrays.asList("Make the Chameleon", "Circuit malfunction and", "always choose the", "same appearance."));
+        chameleonListOptions.put("INFO_TRANSMAT", Arrays.asList("Click on a transmat", "location, then choose", "an action button."));
         chameleonOptions.put("ADAPT", "Adaptive");
         chameleonOptions.put("APPLY", "Apply");
         chameleonOptions.put("BACK_CHAM_OPTS", "Back to Chameleon Circuit");
