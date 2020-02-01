@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,6 +48,8 @@ import java.util.UUID;
  */
 public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 
+    private final HashMap<UUID, String> selectedLocation = new HashMap<>();
+
     public TARDISARSMapListener(TARDIS plugin) {
         super(plugin);
     }
@@ -65,7 +68,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
-            ids.put(uuid, getTardisId(player.getUniqueId().toString()));
+            ids.put(uuid, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && slot != 45 && !hasLoadedMap.contains(uuid)) {
                 TARDISMessage.send(player, "ARS_LOAD");
@@ -105,7 +108,39 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
                         break;
+                    case 46:
+                        if (map_data.containsKey(uuid)) {
+                            // transmat
+                            if (!selectedLocation.containsKey(uuid)) {
+                                TARDISMessage.send(player, "TRANSMAT_SELECT");
+                            } else {
+                                Location tp_loc = getRoomLocation(player);
+                                if (tp_loc != null) {
+                                    TARDISMessage.send(player, "TRANSMAT");
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                                        player.teleport(tp_loc);
+                                    }, 10L);
+                                    close(player);
+                                }
+                            }
+                        } else {
+                            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
+                        }
+                        break;
                     default:
+                        if (map_data.containsKey(uuid)) {
+                            ItemStack is = view.getItem(slot);
+                            if (is != null) {
+                                ItemMeta im = is.getItemMeta();
+                                String dn = im.getDisplayName();
+                                if (!dn.equals("Empty slot")) {
+                                    selectedLocation.put(uuid, is.getType().toString());
+                                }
+                            }
+                        } else {
+                            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
+                        }
                         break;
                 }
             }
@@ -161,7 +196,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 setMap(level - 27, east, south, uuid, view);
                 setLore(view, level, null);
                 map_data.put(uuid, md);
-                // get itemstack to enchant and change lore
+                // get itemstack to change lore
                 int slot = ((row - south) * 9) + 4 + (col - east);
                 ItemStack is = view.getItem(slot);
                 is.setType(Material.ARROW);
@@ -173,6 +208,39 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         } else {
             setLore(view, 47, plugin.getLanguage().getString("ARS_LOAD"));
         }
+    }
+
+    private Location getRoomLocation(Player p) {
+        if (map_data.containsKey(p.getUniqueId())) {
+            UUID uuid = p.getUniqueId();
+            int id = ids.get(uuid);
+            // determine row and col
+            String room = selectedLocation.get(uuid);
+            TARDISARSMapData md = map_data.get(uuid);
+            TARDISARSSlot a = null;
+            for (int l = 0; l < 3; l++) {
+                if (l != md.getY()) {
+                    // skip levels that are not currently showing on the map because they can't be selected
+                    continue;
+                }
+                for (int r = 0; r < 9; r++) {
+                    for (int c = 0; c < 9; c++) {
+                        if (md.getData()[l][r][c].equals(room)) {
+                            // will always get the first room of this type on this level
+                            a = new TARDISARSSlot();
+                            a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
+                            a.setY(l);
+                            a.setX(r);
+                            a.setZ(c);
+                            break;
+                        }
+                    }
+                }
+            }
+            return (a != null) ? new Location(a.getChunk().getWorld(), a.getX(), a.getY(), a.getZ()).add(3.5d, 5.0d, 8.5d) : null;
+        }
+        // should never get here
+        return null;
     }
 
     private int getOffset(double d) {
@@ -195,10 +263,11 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     @Override
     public void close(Player p) {
         UUID uuid = p.getUniqueId();
+        hasLoadedMap.remove(uuid);
+        map_data.remove(uuid);
+        ids.remove(uuid);
+        selectedLocation.remove(uuid);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            hasLoadedMap.remove(uuid);
-            map_data.remove(uuid);
-            ids.remove(uuid);
             p.closeInventory();
         }, 1L);
     }

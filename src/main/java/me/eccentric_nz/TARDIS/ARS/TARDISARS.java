@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+
 import java.util.HashMap;
 
 /**
@@ -58,7 +60,8 @@ public enum TARDISARS implements ARS {
     WORKSHOP("RED_NETHER_BRICKS", "Workshop", 1),
     ZERO("GRASS_BLOCK", "Zero Room", 0),
     JETTISON("TNT", "Jettison", 0),
-    SLOT("STONE", "Empty slot", 0);
+    SLOT("STONE", "Empty slot", 0),
+    CONSOLE("", "Console", 0);
 
     private final String material;
     private final String descriptiveName;
@@ -114,7 +117,11 @@ public enum TARDISARS implements ARS {
      * @return ARS if found, or null
      */
     public static ARS ARSFor(String mat) {
-        return EXTENDED_MATERIAL.getOrDefault(mat, SLOT);
+        if (CONSOLES.getBY_MATERIALS().containsKey(mat)) {
+            return CONSOLE;
+        } else {
+            return EXTENDED_MATERIAL.getOrDefault(mat, SLOT);
+        }
     }
 
     public static void addNewARS(ARS room) {

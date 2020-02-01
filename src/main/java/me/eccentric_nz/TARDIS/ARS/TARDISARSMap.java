@@ -102,9 +102,15 @@ public class TARDISARSMap {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta gui = close.getItemMeta();
-        gui.setDisplayName("Close");
+        gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         gui.setCustomModelData(GUIMap.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(gui);
+        // transmat
+        ItemStack tran = new ItemStack(Material.BOWL, 1);
+        ItemMeta smat = tran.getItemMeta();
+        smat.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
+        smat.setCustomModelData(GUIMap.BUTTON_TRANSMAT.getCustomModelData());
+        tran.setItemMeta(smat);
         // where am I?
         ItemStack where = new ItemStack(Material.COMPASS, 1);
         ItemMeta ami = where.getItemMeta();
@@ -118,7 +124,7 @@ public class TARDISARSMap {
                 null, pad_down, null, null, black, black, black, black, black,
                 level_bot, level_sel, level_top, null, black, black, black, black, black,
                 null, null, null, null, black, black, black, black, black,
-                close, null, where, null, null, null, null, null, null
+                close, tran, where, null, null, null, null, null, null
         };
     }
 
