@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIInteriorSounds;
 import me.eccentric_nz.TARDIS.enumeration.HUM;
 import org.bukkit.Material;
@@ -33,9 +34,11 @@ import java.util.List;
  */
 class TARDISHumInventory {
 
+    private final TARDIS plugin;
     private final ItemStack[] sounds;
 
-    TARDISHumInventory() {
+    TARDISHumInventory(TARDIS plugin) {
+        this.plugin = plugin;
         sounds = getItemStack();
     }
 
@@ -76,7 +79,7 @@ class TARDISHumInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta c_im = close.getItemMeta();
-        c_im.setDisplayName("Close");
+        c_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         c_im.setCustomModelData(GUIInteriorSounds.CLOSE.getCustomModelData());
         close.setItemMeta(c_im);
         stack[17] = close;

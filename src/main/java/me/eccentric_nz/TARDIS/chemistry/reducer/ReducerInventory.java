@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.reducer;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -25,9 +26,11 @@ import java.util.Arrays;
 
 public class ReducerInventory {
 
+    private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public ReducerInventory() {
+    public ReducerInventory(TARDIS plugin) {
+        this.plugin = plugin;
         menu = getItemStack();
     }
 
@@ -51,7 +54,7 @@ public class ReducerInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName("Close");
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;

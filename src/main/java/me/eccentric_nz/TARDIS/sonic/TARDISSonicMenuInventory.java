@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicPreferences;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -33,9 +34,11 @@ import java.util.List;
  */
 public class TARDISSonicMenuInventory {
 
+    private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public TARDISSonicMenuInventory() {
+    public TARDISSonicMenuInventory(TARDIS plugin) {
+        this.plugin = plugin;
         menu = getItemStack();
     }
 
@@ -72,7 +75,7 @@ public class TARDISSonicMenuInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName("Close");
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUISonicPreferences.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.compound;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -26,9 +27,11 @@ import java.util.Arrays;
 
 public class CompoundInventory {
 
+    private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public CompoundInventory() {
+    public CompoundInventory(TARDIS plugin) {
+        this.plugin = plugin;
         menu = getItemStack();
     }
 
@@ -52,7 +55,7 @@ public class CompoundInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName("Close");
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;

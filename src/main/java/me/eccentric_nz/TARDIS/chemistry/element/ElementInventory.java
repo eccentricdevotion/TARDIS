@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.element;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -23,9 +24,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ElementInventory {
 
+    private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public ElementInventory() {
+    public ElementInventory(TARDIS plugin) {
+        this.plugin = plugin;
         menu = getItemStack();
     }
 
@@ -76,7 +79,7 @@ public class ElementInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName("Close");
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;

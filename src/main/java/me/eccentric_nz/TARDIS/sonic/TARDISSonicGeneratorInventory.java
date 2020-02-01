@@ -168,7 +168,7 @@ class TARDISSonicGeneratorInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName("Close");
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setLore(Arrays.asList("Close the menu without", "saving or generating."));
         close_im.setCustomModelData(GUISonicGenerator.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);

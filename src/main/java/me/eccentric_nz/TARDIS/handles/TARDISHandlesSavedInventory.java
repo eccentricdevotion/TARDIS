@@ -114,7 +114,7 @@ class TARDISHandlesSavedInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta cm = close.getItemMeta();
-        cm.setDisplayName("Close");
+        cm.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         cm.setCustomModelData(GUISavedPrograms.CLOSE.getCustomModelData());
         close.setItemMeta(cm);
         stack[53] = close;

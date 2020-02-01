@@ -37,7 +37,7 @@ public class LabCommand {
             return true;
         }
         // do stuff
-        ItemStack[] menu = new LabInventory().getMenu();
+        ItemStack[] menu = new LabInventory(plugin).getMenu();
         Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Lab table");
         products.setContents(menu);
         player.openInventory(products);

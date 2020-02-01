@@ -37,7 +37,7 @@ public class ReduceCommand {
             return true;
         }
         // do stuff
-        ItemStack[] menu = new ReducerInventory().getMenu();
+        ItemStack[] menu = new ReducerInventory(plugin).getMenu();
         Inventory reductions = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Material reducer");
         reductions.setContents(menu);
         player.openInventory(reductions);

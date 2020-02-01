@@ -37,7 +37,7 @@ public class ProductCommand {
             return true;
         }
         // do stuff
-        ItemStack[] menu = new ProductInventory().getMenu();
+        ItemStack[] menu = new ProductInventory(plugin).getMenu();
         Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Product crafting");
         products.setContents(menu);
         player.openInventory(products);

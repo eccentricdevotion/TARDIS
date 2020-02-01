@@ -50,7 +50,7 @@ public class CreativeGUIListener implements Listener {
                         // switch to elements
                         close(p);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] emenu = new ElementInventory().getMenu();
+                            ItemStack[] emenu = new ElementInventory(plugin).getMenu();
                             Inventory elements = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Atomic elements");
                             elements.setContents(emenu);
                             p.openInventory(elements);
@@ -62,7 +62,7 @@ public class CreativeGUIListener implements Listener {
                         close(p);
                         // switch to compounds or products
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] stacks = (molecular) ? new ProductsCreativeInventory().getMenu() : new CompoundsCreativeInventory().getMenu();
+                            ItemStack[] stacks = (molecular) ? new ProductsCreativeInventory(plugin).getMenu() : new CompoundsCreativeInventory(plugin).getMenu();
                             Inventory inventory = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + (molecular ? "Products" : "Molecular compounds"));
                             inventory.setContents(stacks);
                             p.openInventory(inventory);

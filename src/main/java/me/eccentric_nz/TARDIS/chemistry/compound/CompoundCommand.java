@@ -37,7 +37,7 @@ public class CompoundCommand {
             return true;
         }
         // do stuff
-        ItemStack[] menu = new CompoundInventory().getMenu();
+        ItemStack[] menu = new CompoundInventory(plugin).getMenu();
         Inventory compounds = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemical compounds");
         compounds.setContents(menu);
         player.openInventory(compounds);

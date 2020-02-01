@@ -59,7 +59,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                             // back to seeds
                             close(p);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] seeds = new TARDISSeedsInventory(p).getMenu();
+                                ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
                                 Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
                                 gui.setContents(seeds);
                                 p.openInventory(gui);

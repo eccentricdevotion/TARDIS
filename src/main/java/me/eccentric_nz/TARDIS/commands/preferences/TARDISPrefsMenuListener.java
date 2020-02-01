@@ -99,7 +99,7 @@ public class TARDISPrefsMenuListener implements Listener {
                             // close inventory
                             p.closeInventory();
                             // open new inventory
-                            hum_inv.setContents(new TARDISHumInventory().getSounds());
+                            hum_inv.setContents(new TARDISHumInventory(plugin).getSounds());
                             p.openInventory(hum_inv);
                         }, 1L);
                         return;

@@ -114,7 +114,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 if (player.hasPermission("tardis.timetravel")) {
                     if (pref.equals("sonic")) {
                         // open sonic prefs menu
-                        ItemStack[] sonics = new TARDISSonicMenuInventory().getMenu();
+                        ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
                         Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Sonic Prefs Menu");
                         sim.setContents(sonics);
                         player.openInventory(sim);

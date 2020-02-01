@@ -58,7 +58,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
                     close(p);
                     if (slot != 26) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] recipe = new TARDISSeedRecipeInventory(is.getType()).getMenu();
+                            ItemStack[] recipe = new TARDISSeedRecipeInventory(plugin, is.getType()).getMenu();
                             Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seed Recipe");
                             gui.setContents(recipe);
                             p.openInventory(gui);

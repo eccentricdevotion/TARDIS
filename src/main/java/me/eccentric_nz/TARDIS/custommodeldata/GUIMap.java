@@ -31,6 +31,7 @@ public enum GUIMap {
     BUTTON_LEVEL(1, 28, Material.YELLOW_WOOL),
     BUTTON_LEVEL_T(1, 29, Material.WHITE_WOOL),
     BUTTON_CLOSE(1, 45, Material.BOWL),
+    BUTTON_TRANSMAT(133, 46, Material.BOWL),
     BUTTON_WHERE(2, 47, Material.COMPASS),
     BUTTON_MAP_ON(1, -1, Material.BLACK_WOOL),
     EMPTY_SLOT(1, -1, Material.STONE),

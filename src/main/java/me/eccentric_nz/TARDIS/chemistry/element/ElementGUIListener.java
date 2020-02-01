@@ -92,7 +92,7 @@ public class ElementGUIListener implements Listener {
                         // switch to compounds
                         close(p);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] cmenu = new CompoundsCreativeInventory().getMenu();
+                            ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
                             Inventory compounds = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Molecular compounds");
                             compounds.setContents(cmenu);
                             p.openInventory(compounds);
@@ -103,7 +103,7 @@ public class ElementGUIListener implements Listener {
                         // switch to products
                         close(p);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] lmenu = new ProductsCreativeInventory().getMenu();
+                            ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
                             Inventory lab = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Products");
                             lab.setContents(lmenu);
                             p.openInventory(lab);
