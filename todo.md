@@ -1,6 +1,6 @@
 # TODO
 
-## Next version `4.2`
+## Next version `4.3`
 1. New features
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
