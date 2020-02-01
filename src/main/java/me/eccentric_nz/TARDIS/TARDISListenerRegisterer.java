@@ -73,6 +73,7 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
 import me.eccentric_nz.TARDIS.sonic.*;
+import me.eccentric_nz.TARDIS.transmat.TARDISTransmatGUIListener;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 
@@ -235,6 +236,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISArchiveMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTerminalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTimeLordDeathListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISTransmatGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISUpdateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISVaultListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISWallMenuListener(plugin), plugin);
