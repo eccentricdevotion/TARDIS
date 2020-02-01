@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmatList;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -153,8 +153,8 @@ class TARDISTransmatCommand {
                 if (rslist.resultSet()) {
                     TARDISMessage.send(player, "TRANSMAT_LIST");
                     for (Transmat t : rslist.getData()) {
-                        String entry = String.format(" %s, %.2f, %.2f, %.2f, yaw %.2f", t.getWorld(), t.getX(), t.getY(), t.getZ(), t.getYaw());
-                        player.sendMessage(ChatColor.GREEN + t.getName() + ChatColor.RESET + entry);
+                        String entry = String.format(plugin.getJsonKeeper().getTransmatLocation(), t.getName(), t.getWorld(), t.getX(), t.getY(), t.getZ(), t.getYaw(), t.getName());
+                        TARDISUpdateChatGUI.sendJSON(entry, player);
                     }
                 } else {
                     TARDISMessage.send(player, "TRANSMAT_NO_LIST");

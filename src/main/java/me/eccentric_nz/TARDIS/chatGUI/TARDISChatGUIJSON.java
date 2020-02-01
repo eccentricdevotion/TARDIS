@@ -24,7 +24,9 @@ import java.util.List;
  */
 public class TARDISChatGUIJSON {
 
-    private static final String EGG = "{\"text\":\"[TARDIS] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
+    private final String EGG = "{\"text\":\"[TARDIS] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
+
+    private final String TRANSMAT_LOCATION = "{\"text\":\"%s \",\"color\":\"green\",\"extra\":[{\"text\":\"%s, %.2f, %.2f, %.2f, yaw %.2f\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis transmat tp %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Transmat to this location\"}}}]}";
 
     private final List<String> sections = Arrays.asList(
             "{\"text\":\"1. TARDIS Controls\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section controls\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
@@ -32,6 +34,7 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"3. TARDIS Internal Spawn Locations\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section locations\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"4. Others\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section others\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
+
     private final List<String> controls = Arrays.asList(
             "{\"text\":\"1. Artron Energy Capacitor button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update artron\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"2. Previous Location button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update back\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
@@ -42,6 +45,7 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"7. Distance multipler\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update y-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"8. Random z coordinate setter\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update z-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
+
     private final List<String> interfaces = Arrays.asList(
             "{\"text\":\"1. TARDIS Advanced Console\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update advanced\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"2. Architectural Reconfiguration System\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update ars\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
@@ -55,6 +59,7 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"10. Siege Mode button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update siege\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"11. Destination Terminal\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update terminal\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
+
     private final List<String> locations = Arrays.asList(
             "{\"text\":\"1. Artron Charged Creeper\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update creeper\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"2. Emergency Programme One\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update eps\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
@@ -65,6 +70,7 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"7. Igloo room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update igloo\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"8. Beacon toggle block\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update beacon\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
+
     private final List<String> others = Arrays.asList(
             "{\"text\":\"1. Artron Energy Condenser\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update condenser\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"2. TARDIS Interior Door\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update door\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
@@ -102,5 +108,9 @@ public class TARDISChatGUIJSON {
 
     public String getEgg() {
         return EGG;
+    }
+
+    public String getTransmatLocation() {
+        return TRANSMAT_LOCATION;
     }
 }
