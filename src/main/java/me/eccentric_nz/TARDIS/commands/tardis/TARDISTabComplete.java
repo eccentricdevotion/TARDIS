@@ -91,9 +91,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 case "jettison":
                     return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
                 case "transmat":
-                    return partial(lastArg, SEC_SUBS);
-                case "secondary":
                     return partial(lastArg, TRANSMAT_SUBS);
+                case "secondary":
+                    return partial(lastArg, SEC_SUBS);
                 case "update":
                     return partial(lastArg, UPD_SUBS);
                 default:
