@@ -39,6 +39,9 @@ class TARDISAbortCommand {
         try {
             int task = Integer.parseInt(args[1]);
             plugin.getServer().getScheduler().cancelTask(task);
+            if (plugin.getTrackerKeeper().getRoomTasks().containsKey(task)) {
+                plugin.getTrackerKeeper().getRoomTasks().remove(task);
+            }
             TARDISMessage.send(player, "TASK_ABORT");
             return true;
         } catch (NumberFormatException nfe) {
