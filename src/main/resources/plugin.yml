@@ -553,7 +553,7 @@ commands:
       usage: /<command> excite
       permission: tardis.atmospheric
     ep1:
-      description: Allows a player to make Emergency Program One appear.
+      description: Allows a player to make Emergency Programme One appear.
       usage: /<command> abandon
       permission: tardis.use
     erase:
@@ -792,7 +792,7 @@ commands:
       description: Toggle whether other players can request travel/rescue to you.
       usage: /<command> dnd [on|off]
     eps_message:
-      description: Set the Emergency Program One message.
+      description: Set the Emergency Programme One message.
       usage: /<command> eps_message [message]
     farm:
       description: Toggle mob farming on and off.

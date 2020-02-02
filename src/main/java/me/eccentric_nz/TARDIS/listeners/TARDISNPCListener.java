@@ -40,7 +40,7 @@ public class TARDISNPCListener implements Listener {
     }
 
     /**
-     * Listens for player clicking on an NPC. If the NPC is an Emergency Program One NPC then it is removed.
+     * Listens for player clicking on an NPC. If the NPC is an Emergency Programme One NPC then it is removed.
      *
      * @param event a player clicking an inventory slot
      */
