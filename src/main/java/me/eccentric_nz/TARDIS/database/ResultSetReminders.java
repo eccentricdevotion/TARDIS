@@ -71,7 +71,12 @@ public class ResultSetReminders {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    Reminder reminder = new Reminder(rs.getInt("reminder_id"), UUID.fromString(rs.getString("uuid")), rs.getString("reminder"), rs.getLong("time"));
+                    Reminder reminder = new Reminder(
+                            rs.getInt("reminder_id"),
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getString("reminder"),
+                            rs.getLong("time")
+                    );
                     reminders.add(reminder);
                 }
             } else {

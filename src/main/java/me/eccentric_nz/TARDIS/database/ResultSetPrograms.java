@@ -74,7 +74,14 @@ public class ResultSetPrograms {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    Program program = new Program(rs.getInt("program_id"), "", rs.getString("name"), "", "", rs.getBoolean("checked"));
+                    Program program = new Program(
+                            rs.getInt("program_id"),
+                            "",
+                            rs.getString("name"),
+                            "",
+                            "",
+                            rs.getBoolean("checked")
+                    );
                     programs.add(program);
                 }
             } else {

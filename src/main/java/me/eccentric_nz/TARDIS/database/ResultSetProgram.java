@@ -74,7 +74,14 @@ public class ResultSetProgram {
                 if (rs.wasNull()) {
                     parsed = "";
                 }
-                program = new Program(rs.getInt("program_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("inventory"), parsed, rs.getBoolean("checked"));
+                program = new Program(
+                        rs.getInt("program_id"),
+                        rs.getString("uuid"),
+                        rs.getString("name"),
+                        rs.getString("inventory"),
+                        parsed,
+                        rs.getBoolean("checked")
+                );
             } else {
                 return false;
             }
