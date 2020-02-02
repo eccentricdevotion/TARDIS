@@ -72,7 +72,7 @@ class TARDISTransmatCommand {
             if (rslist.resultSet()) {
                 TARDISMessage.send(player, "TRANSMAT_LIST");
                 for (Transmat t : rslist.getData()) {
-                    String entry = String.format(plugin.getJsonKeeper().getTransmatLocation(), t.getName(), t.getWorld(), t.getX(), t.getY(), t.getZ(), t.getYaw(), t.getName());
+                    String entry = String.format(plugin.getJsonKeeper().getTransmatLocation(), t.getName(), t.getX(), t.getY(), t.getZ(), t.getYaw(), t.getName());
                     TARDISUpdateChatGUI.sendJSON(entry, player);
                 }
             } else {
