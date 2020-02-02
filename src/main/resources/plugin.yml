@@ -387,6 +387,9 @@ permissions:
   tardis.chemistry.cure:
     description: Allow a player to cure poison, weakness, blindness and nausea effects.
     default: op
+  tardis.chemistry.glue:
+    description: Allow a player to turn pistons into sticky pistons with glue.
+    default: op
   tardis.tag:
     description: Allow a player to broadcast Tag The Ood messages.
     default: true
