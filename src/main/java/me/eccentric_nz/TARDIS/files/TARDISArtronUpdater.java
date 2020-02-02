@@ -75,6 +75,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("sonic_generator.redstone", 10);
         integerOptions.put("sonic_generator.painter", 10);
         integerOptions.put("sonic_generator.ignite", 10);
+        integerOptions.put("sonic_generator.arrow", 10);
         integerOptions.put("shell", 500);
         integerOptions.put("standby", 5);
         integerOptions.put("standby_time", 6000);

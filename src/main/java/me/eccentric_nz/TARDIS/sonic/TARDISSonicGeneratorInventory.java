@@ -159,10 +159,10 @@ class TARDISSonicGeneratorInventory {
         // arrow upgrade
         if (player.hasPermission("tardis.sonic.arrow")) {
             ItemStack arr = new ItemStack(Material.BOWL, 1);
-            ItemMeta ita = arr.getItemMeta();
-            ita.setDisplayName("Pickup Arrows Upgrade");
-            ita.setCustomModelData(GUISonicGenerator.PICKUP_ARROWS_UPGRADE.getCustomModelData());
-            arr.setItemMeta(ita);
+            ItemMeta ow = arr.getItemMeta();
+            ow.setDisplayName("Pickup Arrows Upgrade");
+            ow.setCustomModelData(GUISonicGenerator.PICKUP_ARROWS_UPGRADE.getCustomModelData());
+            arr.setItemMeta(ow);
             stack[35] = arr;
         }
         // close
@@ -221,6 +221,10 @@ class TARDISSonicGeneratorInventory {
         if (data.hasIgnite()) {
             upgrades.add("Ignite Upgrade");
             artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
+        }
+        if (data.hasArrow()) {
+            upgrades.add("Pickup Arrows Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
         }
         // cost
         ItemStack cost = new ItemStack(Material.BOWL, 1);
