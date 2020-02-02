@@ -294,6 +294,8 @@ public class TARDISPrefsMenuListener implements Listener {
                     }
                     lore.set(0, value);
                     im.setLore(lore);
+                    int cmd = im.getCustomModelData();
+                    im.setCustomModelData((cmd > 100) ? cmd - 100 : cmd + 100);
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
                         // get tardis id
