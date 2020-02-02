@@ -381,6 +381,12 @@ permissions:
   tardis.formula.show:
     description: Allow a player to view a compound or product formula.
     default: op
+  tardis.chemistry.brew:
+    description: Allow a player to brew potions and cures using a cauldron.
+    default: op
+  tardis.chemistry.cure:
+    description: Allow a player to cure poison, weakness, blindness and nausea effects.
+    default: op
   tardis.tag:
     description: Allow a player to broadcast Tag The Ood messages.
     default: true
