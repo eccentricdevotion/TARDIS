@@ -62,6 +62,7 @@ public class TARDISPowerButton {
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("tardis_id", id);
         HashMap<String, Object> setp = new HashMap<>();
+        boolean isNewOrOld = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
         if (powered) {
             if (isTravelling(id)) {
                 TARDISMessage.send(player, "POWER_NO");
@@ -79,7 +80,7 @@ public class TARDISPowerButton {
                 delay = 20L;
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
-            if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+            if (isNewOrOld) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
             }
             // if lights are on, turn them off
@@ -113,7 +114,7 @@ public class TARDISPowerButton {
                 new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, true);
             }
             // police box lamp
-            if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+            if (isNewOrOld) {
                 new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
             }
         }

@@ -390,6 +390,11 @@ public class TARDISButtonListener implements Listener {
                                             TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_down");
                                             onoff = "OFF";
                                         } else {
+                                            // check there is enough artron
+                                            if (level <= plugin.getArtronConfig().getInt("standby")) {
+                                                TARDISMessage.send(player, "POWER_LOW");
+                                                return;
+                                            }
                                             TARDISForceField.addToTracker(player);
                                             TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_up");
                                         }

@@ -50,10 +50,15 @@ public class TARDISStandbyMode implements Runnable {
             int level = value.getLevel();
             // not while travelling or recharging and only until they hit zero
             if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
+                int remove = amount;
+                // if TARDIS force field is on drain more power
+                if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(value.getUuid())) {
+                    remove *= 3;
+                }
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
-                plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, where, null);
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -remove, where, null);
             } else if (level <= amount) {
                 // power down!
                 HashMap<String, Object> wherep = new HashMap<>();
@@ -86,6 +91,10 @@ public class TARDISStandbyMode implements Runnable {
                 new TARDISBeaconToggler(plugin).flickSwitch(value.getUuid(), id, false);
                 // update database
                 plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+                // if force field is on, disable it
+                if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(value.getUuid())) {
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(value.getUuid());
+                }
             }
         });
     }

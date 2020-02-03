@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
@@ -128,12 +129,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         player.openInventory(sim);
                         return true;
                     }
+                    String uuid = player.getUniqueId().toString();
                     // get the players preferences
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                     HashMap<String, Object> set = new HashMap<>();
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
-                        set.put("uuid", player.getUniqueId().toString());
+                        set.put("uuid", uuid);
                         set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
                         plugin.getQueryFactory().doInsert("player_prefs", set);
                     }
@@ -169,7 +171,18 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             if (pref.equals("forcefield") && player.hasPermission("tardis.forcefield")) {
                                 // add tardis + location
                                 if (args[1].equalsIgnoreCase("on")) {
-                                    TARDISForceField.addToTracker(player);
+                                    // check power
+                                    ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid);
+                                    if (rsal.resultset()) {
+                                        if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
+                                            TARDISMessage.send(player, "POWER_LOW");
+                                            return true;
+                                        }
+                                        TARDISForceField.addToTracker(player);
+                                    } else {
+                                        TARDISMessage.send(player, "POWER_LEVEL");
+                                        return true;
+                                    }
                                 } else {
                                     plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
                                 }

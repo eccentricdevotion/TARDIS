@@ -18,13 +18,17 @@ package me.eccentric_nz.TARDIS.forcefield;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetForcefield;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisCompanions;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,11 +36,43 @@ public class TARDISForceField implements Runnable {
 
     private final TARDIS plugin;
     private final int range;
+    private final int doubleRange;
 
     public TARDISForceField(TARDIS plugin) {
         this.plugin = plugin;
         range = this.plugin.getConfig().getInt("allow.force_field");
+        doubleRange = range * 2;
     }
+
+//    @Override
+//    public void run() {
+//        for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
+//            Player player = plugin.getServer().getPlayer(map.getKey());
+//            if (player == null || !player.isOnline()) {
+//                continue;
+//            }
+//            for (Player other : Bukkit.getServer().getOnlinePlayers()) {
+//                if (player.equals(other)) {
+//                    continue;
+//                }
+//                if (offset(other, map.getValue()) > range) {
+//                    continue;
+//                }
+//                if (other.getGameMode() == GameMode.SPECTATOR) {
+//                    continue;
+//                }
+//                if (other.hasPermission("tardis.admin")) {
+//                    continue;
+//                }
+//                Entity entity = other;
+//                while (entity.getVehicle() != null) {
+//                    entity = entity.getVehicle();
+//                }
+//                velocity(entity, getTrajectory2d(map.getValue(), entity), 0.5d);
+//                other.getWorld().playSound(other.getLocation(), "tardis_force_field", 1.0f, 1.0f);
+//            }
+//        }
+//    }
 
     @Override
     public void run() {
@@ -45,26 +81,36 @@ public class TARDISForceField implements Runnable {
             if (player == null || !player.isOnline()) {
                 continue;
             }
-            for (Player other : Bukkit.getServer().getOnlinePlayers()) {
-                if (player.equals(other)) {
+            Location location = map.getValue().add(0.5, 0.5, 0.5);
+            Entity unknown = location.getWorld().spawnEntity(location, EntityType.DROPPED_ITEM);
+            for (Entity other : unknown.getNearbyEntities(doubleRange, doubleRange, doubleRange)) {
+                if (!(other instanceof LivingEntity)) {
                     continue;
+                }
+                if (other instanceof Player) {
+                    if (player.equals(other)) {
+                        continue;
+                    }
+                    if (((Player) other).getGameMode() == GameMode.SPECTATOR) {
+                        continue;
+                    }
+                    if (other.hasPermission("tardis.admin")) {
+                        continue;
+                    }
+                    if (isCompanion((Player) other, player)) {
+                        continue;
+                    }
                 }
                 if (offset(other, map.getValue()) > range) {
                     continue;
                 }
-                if (other.getGameMode() == GameMode.SPECTATOR) {
-                    continue;
+                while (other.getVehicle() != null) {
+                    other = other.getVehicle();
                 }
-                if (other.hasPermission("tardis.admin")) {
-                    continue;
-                }
-                Entity entity = other;
-                while (entity.getVehicle() != null) {
-                    entity = entity.getVehicle();
-                }
-                velocity(entity, getTrajectory2d(map.getValue(), entity), 0.5d);
+                velocity(other, getTrajectory2d(map.getValue(), other), 0.5d);
                 other.getWorld().playSound(other.getLocation(), "tardis_force_field", 1.0f, 1.0f);
             }
+            unknown.remove();
         }
     }
 
@@ -91,5 +137,19 @@ public class TARDISForceField implements Runnable {
         if (rsff.resultSet()) {
             TARDIS.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
         }
+    }
+
+    private boolean isCompanion(Player other, Player player) {
+        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
+        if (rs.fromUUID(player.getUniqueId().toString())) {
+            List<String> comps;
+            if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
+                comps = Arrays.asList(rs.getCompanions().split(":"));
+                if (comps.contains(other.getUniqueId().toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
