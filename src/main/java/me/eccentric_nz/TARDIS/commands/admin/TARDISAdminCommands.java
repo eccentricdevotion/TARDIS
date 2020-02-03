@@ -182,6 +182,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("chameleon_uses", "circuits.uses");
         firstsInt.put("input", "circuits.uses");
         firstsInt.put("invisibility_uses", "circuits.uses");
+        firstsInt.put("force_field", "allow.force_field");
         firstsInt.put("materialisation", "circuits.uses");
         firstsInt.put("memory", "circuits.uses");
         firstsInt.put("randomiser", "circuits.uses");
