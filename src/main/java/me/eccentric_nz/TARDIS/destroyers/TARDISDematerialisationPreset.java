@@ -231,12 +231,6 @@ class TARDISDematerialisationPreset implements Runnable {
                     }
                     for (int yy = 0; yy < 4; yy++) {
                         boolean change = true;
-                        if (yy == 0 && n == 9) {
-                            Block rail = world.getBlockAt(xx, y, zz);
-                            if (rail.getType().equals(Material.RAIL) || rail.getType().equals(Material.POWERED_RAIL)) {
-                                change = false;
-                            }
-                        }
                         Material mat = coldatas[yy].getMaterial();
                         switch (mat) {
                             case GRASS_BLOCK:
@@ -245,9 +239,6 @@ class TARDISDematerialisationPreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                                 break;
                             case WHITE_WOOL:
-                                BlockData chad = (preset.equals(PRESET.FLOWER)) ? the_colour : coldatas[yy];
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
-                                break;
                             case LIME_WOOL:
                                 BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
