@@ -17,10 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -42,46 +39,39 @@ public class TARDISMushroomCommand {
         this.plugin = plugin;
     }
 
-    public boolean give(CommandSender sender, String[] args) {
-        Player player;
-        if (sender instanceof Player) {
-            player = (Player) sender;
-            int which = 0;
-            Material mushroom = Material.RED_MUSHROOM_BLOCK;
-            String displayName = "";
-            if (redSubs.contains(args[1])) {
-                which = redSubs.indexOf(args[1]);
-                mushroom = Material.RED_MUSHROOM_BLOCK;
-                displayName = redBlockNames.get(which);
-            } else if (brownSubs.contains(args[1])) {
-                which = brownSubs.indexOf(args[1]);
-                mushroom = Material.BROWN_MUSHROOM_BLOCK;
-                displayName = brownBlockNames.get(which);
-            } else if (stemSubs.contains(args[1])) {
-                which = stemSubs.indexOf(args[1]);
-                mushroom = Material.MUSHROOM_STEM;
-                displayName = stemBlockNames.get(which);
-                if (which > 4 && which < 9) {
-                    which += 9999996;
-                } else if (which == 9) {
-                    which = 5;
-                } else if (which > 9) {
-                    which += 36;
-                }
+    public ItemStack getStack(String[] args) {
+        int which = 0;
+        Material mushroom = Material.RED_MUSHROOM_BLOCK;
+        String displayName = "";
+        if (redSubs.contains(args[3])) {
+            which = redSubs.indexOf(args[3]);
+            mushroom = Material.RED_MUSHROOM_BLOCK;
+            displayName = redBlockNames.get(which);
+        } else if (brownSubs.contains(args[3])) {
+            which = brownSubs.indexOf(args[3]);
+            mushroom = Material.BROWN_MUSHROOM_BLOCK;
+            displayName = brownBlockNames.get(which);
+        } else if (stemSubs.contains(args[3])) {
+            which = stemSubs.indexOf(args[3]);
+            mushroom = Material.MUSHROOM_STEM;
+            displayName = stemBlockNames.get(which);
+            if (which > 4 && which < 9) {
+                which += 9999996;
+            } else if (which == 9) {
+                which = 5;
+            } else if (which > 9) {
+                which += 35;
             }
-            if (which != 0) {
-                ItemStack is = new ItemStack(mushroom, 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(displayName);
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
-                im.setCustomModelData(10000000 + which);
-                is.setItemMeta(im);
-                player.getInventory().addItem(is);
-                player.updateInventory();
-            }
-        } else {
-            TARDISMessage.send(sender, "CMD_PLAYER");
         }
-        return true;
+        if (which != 0) {
+            ItemStack is = new ItemStack(mushroom, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName(displayName);
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
+            im.setCustomModelData(10000000 + which);
+            is.setItemMeta(im);
+            return is;
+        }
+        return null;
     }
 }

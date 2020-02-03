@@ -88,6 +88,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("locator", "TARDIS Locator");
         items.put("m-circuit", "TARDIS Materialisation Circuit");
         items.put("memory-circuit", "TARDIS Memory Circuit");
+        items.put("mushroom", "");
         items.put("oscillator", "Sonic Oscillator");
         items.put("p-circuit", "Perception Circuit");
         items.put("pad", "Landing Pad");
@@ -126,7 +127,8 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 3) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS", " /tardisgive [player] [item] [amount]");
+                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                    TARDISMessage.message(sender, "/tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase(Locale.ENGLISH);
@@ -173,6 +175,23 @@ public class TARDISGiveCommand implements CommandExecutor {
                             return true;
                         }
                         break;
+                }
+                if (item.equals("mushroom")) {
+                    if (args.length < 4) {
+                        TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                        TARDISMessage.message(sender, "/tardisgive [player] mushroom [amount] [type]");
+                        return true;
+                    }
+                    Player p = plugin.getServer().getPlayer(args[0]);
+                    if (p == null) { // player must be online
+                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                        return true;
+                    }
+                    ItemStack mushroom = new TARDISMushroomCommand(plugin).getStack(args);
+                    p.getInventory().addItem(mushroom);
+                    p.updateInventory();
+                    TARDISMessage.send(p, "GIVE_ITEM", sender.getName(), amount + " " + args[3]);
+                    return true;
                 }
                 if (item.equals("handles")) {
                     Player p = plugin.getServer().getPlayer(args[0]);
