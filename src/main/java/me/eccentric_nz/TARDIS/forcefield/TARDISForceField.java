@@ -144,9 +144,13 @@ public class TARDISForceField implements Runnable {
         if (rs.fromUUID(player.getUniqueId().toString())) {
             List<String> comps;
             if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
-                comps = Arrays.asList(rs.getCompanions().split(":"));
-                if (comps.contains(other.getUniqueId().toString())) {
+                if (rs.getCompanions().equalsIgnoreCase("everyone")) {
                     return true;
+                } else {
+                    comps = Arrays.asList(rs.getCompanions().split(":"));
+                    if (comps.contains(other.getUniqueId().toString())) {
+                        return true;
+                    }
                 }
             }
         }
