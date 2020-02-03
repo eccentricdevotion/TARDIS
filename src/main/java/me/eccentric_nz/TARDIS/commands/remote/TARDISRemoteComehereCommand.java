@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import nl.rutgerkok.blocklocker.BlockLockerAPI;
+import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -138,7 +138,7 @@ class TARDISRemoteComehereCommand {
             }
         }
         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-            if (BlockLockerAPI.isProtected(eyeLocation.getBlock()) || BlockLockerAPI.isProtected(under)) {
+            if (BlockLockerAPIv2.isProtected(eyeLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
                 count = 1;
             }
         }

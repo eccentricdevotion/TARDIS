@@ -38,7 +38,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import nl.rutgerkok.blocklocker.BlockLockerAPI;
+import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -213,7 +213,7 @@ public class TARDISStattenheimListener implements Listener {
                             }
                         }
                         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-                            if (BlockLockerAPI.isProtected(remoteLocation.getBlock()) || BlockLockerAPI.isProtected(under)) {
+                            if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
                                 count = 1;
                             }
                         }

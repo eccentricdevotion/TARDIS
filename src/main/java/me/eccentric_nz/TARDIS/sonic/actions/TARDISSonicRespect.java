@@ -20,7 +20,7 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
-import nl.rutgerkok.blocklocker.BlockLockerAPI;
+import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.yi.acru.bukkit.Lockette.Lockette;
@@ -51,7 +51,7 @@ public class TARDISSonicRespect {
         }
         // BlockLocker
         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-            bll = BlockLockerAPI.isProtected(block);
+            bll = BlockLockerAPIv2.isProtected(block);
         }
         // Towny
         if (plugin.getPM().isPluginEnabled("Towny")) {
