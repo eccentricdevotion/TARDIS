@@ -40,7 +40,7 @@ public class TARDISSonicRespect {
         }
         // WorldGuard
         if (plugin.isWorldGuardOnServer()) {
-            wgu = !plugin.getWorldGuardUtils().canBuild(player, block.getLocation());
+            wgu = plugin.getWorldGuardUtils().canBuild(player, block.getLocation());
         }
         // Lockette
         if (plugin.getPM().isPluginEnabled("Lockette")) {
@@ -55,8 +55,8 @@ public class TARDISSonicRespect {
         }
         // Towny
         if (plugin.getPM().isPluginEnabled("Towny")) {
-            tny = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
+            tny = new TARDISTownyChecker(plugin).playerHasPermission(player, block);
         }
-        return (gpr || wgu || lke || pro || bll || tny);
+        return (gpr || !wgu || lke || pro || bll || !tny);
     }
 }

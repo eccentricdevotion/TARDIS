@@ -17,16 +17,17 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.TownyUniverse;
+import com.palmergames.bukkit.towny.object.TownyPermission;
+import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * A country or nation is a governing entity that is generally smaller than a planetary government. It is composed of
@@ -50,6 +51,10 @@ public class TARDISTownyChecker {
         }
     }
 
+    public boolean playerHasPermission(Player player, Block block) {
+        return PlayerCacheUtil.getCachePermission(player, block.getLocation(), block.getType(), TownyPermission.ActionType.DESTROY);
+    }
+
     /**
      * Checks whether a player can land in a location that may be in a Towny town. If the player is a resident of the
      * town or nation, then it will be allowed.
@@ -64,7 +69,7 @@ public class TARDISTownyChecker {
             switch (tr) {
                 case wilderness:
                     // allow if wilderness, deny if a claimed town
-                    bool = TownyUniverse.isWilderness(l.getBlock());
+                    bool = TownyAPI.getInstance().isWilderness(l.getBlock());
                     break;
                 case town:
                     // allow wilderness and the player's own town
@@ -93,7 +98,7 @@ public class TARDISTownyChecker {
 
         TownyData td = new TownyData();
 
-        TownBlock tb = TownyUniverse.getTownBlock(l);
+        TownBlock tb = TownyAPI.getInstance().getTownBlock(l);
         if (tb == null) {
             // allow, location is not within a town
             td.setCanTravel(true);
@@ -102,7 +107,7 @@ public class TARDISTownyChecker {
         td.setTownBlock(tb);
         Resident res;
         try {
-            res = TownyUniverse.getDataSource().getResident(p.getName());
+            res = TownyAPI.getInstance().getDataSource().getResident(p.getName());
             td.setResident(res);
         } catch (NotRegisteredException ex) {
             // deny, player is not a resident
@@ -111,8 +116,7 @@ public class TARDISTownyChecker {
         }
         if (res != null) {
             try {
-                List<Resident> residents = tb.getTown().getResidents();
-                if (residents.contains(res)) {
+                if (res.getTown().equals(tb.getTown())) {
                     // allow, player is resident
                     td.setCanTravel(true);
                     return td;
@@ -123,7 +127,7 @@ public class TARDISTownyChecker {
                 return td;
             }
         }
-        td.setCanTravel(TownyUniverse.isWilderness(l.getBlock()));
+        td.setCanTravel(TownyAPI.getInstance().isWilderness(l.getBlock()));
         return td;
     }
 
@@ -161,7 +165,8 @@ public class TARDISTownyChecker {
 
         wilderness,
         town,
-        nation}
+        nation
+    }
 
     /**
      * Data class to store check results so we can reuse them again if needed.
