@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
-import me.eccentric_nz.TARDIS.database.ResultSetTransmatList;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -161,6 +158,15 @@ class TARDISTransmatCommand {
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("transmat_id", rsm.getTransmat_id());
                     plugin.getQueryFactory().doDelete("transmats", wherer);
+                    // check for bound transmats
+                    HashMap<String, Object> whered = new HashMap<>();
+                    whered.put("tardis_id", id);
+                    whered.put("dest_name", "transmat");
+                    whered.put("preset", args[2]);
+                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, true);
+                    if (rsd.resultSet()) {
+                        new BoundTransmatRemoval(plugin, rsd.getData()).unbind();
+                    }
                     TARDISMessage.send(player, "TRANSMAT_REMOVED");
                 } else {
                     TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
