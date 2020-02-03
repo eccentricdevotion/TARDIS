@@ -95,6 +95,11 @@ public class TARDISPresetBuilderFactory {
                 biome = bd.getLocation().getWorld().getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getBiome();
             } else {
                 biome = bd.getLocation().getWorld().getBiome(bd.getLocation().getBlockX(), bd.getLocation().getBlockZ());
+                // disable force field
+                if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(tardis.getUuid())) {
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(tardis.getUuid());
+                    TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "off");
+                }
             }
             bd.setBiome(biome);
             if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {

@@ -82,7 +82,7 @@ public class TARDISForceField implements Runnable {
                 continue;
             }
             Location location = map.getValue().add(0.5, 0.5, 0.5);
-            Entity unknown = location.getWorld().spawnEntity(location, EntityType.DROPPED_ITEM);
+            Entity unknown = location.getWorld().spawnEntity(location, EntityType.EXPERIENCE_ORB);
             for (Entity other : unknown.getNearbyEntities(doubleRange, doubleRange, doubleRange)) {
                 if (!(other instanceof LivingEntity)) {
                     continue;
