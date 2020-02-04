@@ -50,7 +50,7 @@ public class TARDISAdminMenuInventory {
         Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
         config.forEach((c) -> {
             String value = plugin.getConfig().getString(c);
-            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("abandon") && !c.startsWith("circuits") && !c.startsWith("conversions") && !c.startsWith("debug") && !c.startsWith("desktop") && !c.startsWith("junk") && !c.startsWith("siege") && !c.startsWith("travel") && !c.startsWith("worlds")) {
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("abandon") && !c.startsWith("circuits") && !c.startsWith("conversions") && !c.startsWith("debug") && !c.startsWith("desktop") && !c.startsWith("junk") && !c.startsWith("siege") && !c.startsWith("travel") && !c.startsWith("worlds") && !c.startsWith("storage")) {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
