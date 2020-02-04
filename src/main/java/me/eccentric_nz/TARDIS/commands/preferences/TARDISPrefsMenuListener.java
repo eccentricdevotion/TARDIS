@@ -22,13 +22,12 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
-import me.eccentric_nz.TARDIS.database.ResultSetJunk;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -49,12 +48,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISPrefsMenuListener implements Listener {
+public class TARDISPrefsMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
     private final HashMap<String, String> lookup = new HashMap<>();
 
     public TARDISPrefsMenuListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
         lookup.put("Auto Power Up", "auto_powerup_on");
         lookup.put("Autonomous", "auto_on");
@@ -77,6 +77,9 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Police Box Textures", "policebox_textures_on");
         lookup.put("Mob Farming", "farm_on");
         lookup.put("Telepathic Circuit", "telepathy_on");
+        lookup.put("Easy Difficulty", "difficulty");
+        lookup.put("Minecart Sounds", "minecart_on");
+        lookup.put("Lanterns", "lanterns_on");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -86,13 +89,61 @@ public class TARDISPrefsMenuListener implements Listener {
         if (name.equals(ChatColor.DARK_RED + "Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
+            if (slot >= 0 && slot < 36) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
                     Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 23 && im.getDisplayName().equals("Interior hum sound")) {
+                    if (slot == 23 && im.getDisplayName().equals("Force Field")) {
+                        // toggle force field on / off
+                        if (p.hasPermission("tardis.forcefield")) {
+                            List<String> lore = im.getLore();
+                            boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF")));
+                            if (bool) {
+                                // check power
+                                ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
+                                if (rsal.resultset()) {
+                                    if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
+                                        TARDISMessage.send(p, "POWER_LOW");
+                                        return;
+                                    }
+                                    TARDISForceField.addToTracker(p);
+                                } else {
+                                    TARDISMessage.send(p, "POWER_LEVEL");
+                                    return;
+                                }
+                            } else {
+                                plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
+                            }
+                            String grammar = (bool) ? "PREF_WAS_ON" : "PREF_WAS_OFF";
+                            TARDISMessage.send(p, grammar, "The TARDIS force field");
+                            close(p);
+                        } else {
+                            TARDISMessage.send(p, "NO_PERMS");
+                        }
+                        return;
+                    }
+                    if (slot == 27 && im.getDisplayName().equals("Flight Mode")) {
+                        List<String> lore = im.getLore();
+                        // cycle through flight modes
+                        TARDISSetFlightCommand.FlightMode flight = TARDISSetFlightCommand.FlightMode.valueOf(lore.get(0));
+                        int mode = flight.getMode() + 1;
+                        if (mode > 3) {
+                            mode = 1;
+                        }
+                        lore.set(0, TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
+                        im.setLore(lore);
+                        is.setItemMeta(im);
+                        // set flight mode
+                        HashMap<String, Object> setf = new HashMap<>();
+                        setf.put("flying_mode", mode);
+                        HashMap<String, Object> wheref = new HashMap<>();
+                        wheref.put("uuid", p.getUniqueId().toString());
+                        plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
+                        return;
+                    }
+                    if (slot == 29 && im.getDisplayName().equals("Interior Hum Sound")) {
                         // close this gui and load the sounds GUI
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Interior Sounds");
@@ -104,7 +155,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         }, 1L);
                         return;
                     }
-                    if (slot == 24 && im.getDisplayName().equals("Handbrake")) {
+                    if (slot == 31 && im.getDisplayName().equals("Handbrake")) {
                         // you can only set it to ON!
                         List<String> lore = im.getLore();
                         if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
@@ -155,7 +206,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         }
                         return;
                     }
-                    if (slot == 25 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 33 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", uuid.toString());
@@ -175,7 +226,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         }
                         return;
                     }
-                    if (slot == 26 && im.getDisplayName().equals("Admin Menu")) {
+                    if (slot == 35 && im.getDisplayName().equals("Admin Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
@@ -232,7 +283,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                 String cham_set;
                                 HashMap<String, Object> setj = new HashMap<>();
                                 if (has) {
-                                    // update rcord with current preset
+                                    // update record with current preset
                                     HashMap<String, Object> wherej = new HashMap<>();
                                     wherej.put("uuid", uuid.toString());
                                     setj.put("preset", current);
@@ -276,7 +327,7 @@ public class TARDISPrefsMenuListener implements Listener {
                             String[] args = new String[2];
                             args[0] = "";
                             args[1] = value;
-                            new TARDISBuildCommand(plugin).toggleCompanionBuilding(((Player) event.getWhoClicked()), args);
+                            new TARDISBuildCommand(plugin).toggleCompanionBuilding(p, args);
                             break;
                         default: {
                             HashMap<String, Object> set = new HashMap<>();

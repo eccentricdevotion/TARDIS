@@ -89,6 +89,11 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isTelepathyOn());
         values.add(rsp.isAutoOn());
         values.add(rsp.isAutoPowerUp());
+        values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid));
+        values.add(rsp.isLanternsOn());
+        values.add(rsp.isMinecartOn());
+        values.add(rsp.isEasyDifficulty());
+
         // get TARDIS preset
         Tardis tardis = null;
         HashMap<String, Object> wherej = new HashMap<>();
@@ -98,7 +103,7 @@ public class TARDISPrefsMenuInventory {
             tardis = rs.getTardis();
         }
         // make a stack
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[36];
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = new ItemStack(pref.getMaterial(), 1);
@@ -121,15 +126,24 @@ public class TARDISPrefsMenuInventory {
                 stack[pref.getSlot()] = is;
             }
         }
+        // flight mode
+        ItemStack fli = new ItemStack(Material.ELYTRA, 1);
+        ItemMeta ght_im = fli.getItemMeta();
+        ght_im.setDisplayName("Flight Mode");
+        String mode_value = TARDISSetFlightCommand.FlightMode.getByMode().get(rsp.getFlightMode()).toString();
+        ght_im.setLore(Collections.singletonList(mode_value));
+        ght_im.setCustomModelData(GUIPlayerPreferences.FLIGHT_MODE.getCustomModelData());
+        fli.setItemMeta(ght_im);
+        stack[27] = fli;
         // interior hum sound
         ItemStack hum = new ItemStack(Material.BOWL, 1);
         ItemMeta hum_im = hum.getItemMeta();
-        hum_im.setDisplayName("Interior hum sound");
+        hum_im.setDisplayName("Interior Hum Sound");
         String hum_value = (rsp.getHum().isEmpty()) ? "random" : rsp.getHum();
         hum_im.setLore(Collections.singletonList(hum_value));
         hum_im.setCustomModelData(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getCustomModelData());
         hum.setItemMeta(hum_im);
-        stack[23] = hum;
+        stack[29] = hum;
         // handbrake
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
@@ -137,14 +151,14 @@ public class TARDISPrefsMenuInventory {
         brake.setLore(Collections.singletonList((tardis != null && tardis.isHandbrake_on()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
         brake.setCustomModelData(GUIPlayerPreferences.HANDBRAKE.getCustomModelData());
         hand.setItemMeta(brake);
-        stack[24] = hand;
+        stack[31] = hand;
         // map
         ItemStack tt = new ItemStack(Material.MAP, 1);
         ItemMeta map = tt.getItemMeta();
         map.setDisplayName("TARDIS Map");
         map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
         tt.setItemMeta(map);
-        stack[25] = tt;
+        stack[33] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
@@ -152,7 +166,7 @@ public class TARDISPrefsMenuInventory {
             min.setDisplayName("Admin Menu");
             min.setCustomModelData(GUIPlayerPreferences.ADMIN_MENU.getCustomModelData());
             ad.setItemMeta(min);
-            stack[26] = ad;
+            stack[35] = ad;
         }
         return stack;
     }

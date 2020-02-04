@@ -79,7 +79,7 @@ public class TARDISAdminMenuListener implements Listener {
                     Player p = (Player) event.getWhoClicked();
                     // close this gui and load the Player Prefs Menu
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        Inventory ppm = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Player Prefs Menu");
+                        Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
                         ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
                         p.openInventory(ppm);
                     }, 1L);

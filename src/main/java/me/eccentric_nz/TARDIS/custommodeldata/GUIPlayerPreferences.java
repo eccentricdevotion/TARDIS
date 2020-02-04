@@ -45,10 +45,15 @@ public enum GUIPlayerPreferences {
     TELEPATHIC_CIRCUIT(40, 20, Material.REPEATER),
     JUNK_TARDIS(41, 21, Material.REPEATER),
     AUTO_POWER_UP(42, 22, Material.REPEATER),
-    INTERIOR_HUM_SOUND(58, 23, Material.BOWL),
-    HANDBRAKE(1, 24, Material.LEVER),
-    TARDIS_MAP(3, 25, Material.MAP),
-    ADMIN_MENU(1, 26, Material.NETHER_STAR);
+    FORCE_FIELD(43, 23, Material.REPEATER),
+    LANTERNS(44, 24, Material.REPEATER),
+    MINECART_SOUNDS(45, 25, Material.REPEATER),
+    EASY_DIFFICULTY(46, 26, Material.REPEATER),
+    FLIGHT_MODE(1, 27, Material.ELYTRA),
+    INTERIOR_HUM_SOUND(58, 29, Material.BOWL),
+    HANDBRAKE(1, 31, Material.LEVER),
+    TARDIS_MAP(3, 33, Material.MAP),
+    ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;
     private final int slot;

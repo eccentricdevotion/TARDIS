@@ -254,7 +254,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 17:
                                     //player prefs
-                                    Inventory ppm = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Player Prefs Menu");
+                                    Inventory ppm = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Player Prefs Menu");
                                     ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
                                     player.openInventory(ppm);
                                     break;
