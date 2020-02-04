@@ -57,7 +57,7 @@ public class TARDISSonic {
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
             // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
-            if (!TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
+            if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
                 switch (blockType) {
                     case ACACIA_DOOR:
                     case BIRCH_DOOR:
@@ -81,28 +81,26 @@ public class TARDISSonic {
                         if (rs.resultSet()) {
                             return;
                         }
-                        // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
-                        boolean allow = !TARDISSonicRespect.checkBlockRespect(plugin, player, lowerdoor);
-                        if (allow) {
-                            if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
-                                Openable openable = (Openable) lowerdoor.getBlockData();
-                                boolean open = !openable.isOpen();
-                                openable.setOpen(open);
-                                lowerdoor.setBlockData(openable, true);
-                                if (blockType.equals(Material.IRON_DOOR)) {
-                                    plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
-                                    // return the door to its previous state after 3 seconds
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        openable.setOpen(!open);
-                                        lowerdoor.setBlockData(openable, true);
-                                        plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
-                                    }, 60L);
-                                }
+                        if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
+                            Openable openable = (Openable) lowerdoor.getBlockData();
+                            boolean open = !openable.isOpen();
+                            openable.setOpen(open);
+                            lowerdoor.setBlockData(openable, true);
+                            if (blockType.equals(Material.IRON_DOOR)) {
+                                plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
+                                // return the door to its previous state after 3 seconds
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    openable.setOpen(!open);
+                                    lowerdoor.setBlockData(openable, true);
+                                    plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
+                                }, 60L);
                             }
                         }
                         break;
                     case LEVER:
+                        plugin.debug("Lever");
                         Powerable lever = (Powerable) targetBlock.getBlockData();
+                        plugin.debug("powered: " + lever.isPowered());
                         lever.setPowered(!lever.isPowered());
                         targetBlock.setBlockData(lever, true);
                         break;

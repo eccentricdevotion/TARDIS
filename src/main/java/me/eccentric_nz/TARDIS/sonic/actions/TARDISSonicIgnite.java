@@ -28,7 +28,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 public class TARDISSonicIgnite {
 
     public static void ignite(TARDIS plugin, Block b, Player p) {
-        if (!TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
+        if (TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
             Block above = b.getRelative(BlockFace.UP);
             if (b.getType().equals(Material.TNT)) {
                 b.setBlockData(TARDISConstants.AIR);

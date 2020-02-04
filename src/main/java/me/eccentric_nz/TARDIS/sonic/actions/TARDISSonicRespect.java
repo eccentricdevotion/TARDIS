@@ -27,36 +27,39 @@ import org.yi.acru.bukkit.Lockette.Lockette;
 
 public class TARDISSonicRespect {
 
+    /**
+     * Check whether a player can alter a block with their Sonic Screwdriver
+     *
+     * @param plugin an instance of the TARDIS plugin
+     * @param player the player to check
+     * @param block  the block to check
+     * @return true if the player has permission to alter the block, otherwise false
+     */
     public static boolean checkBlockRespect(TARDIS plugin, Player player, Block block) {
-        boolean gpr = false;
-        boolean wgu = false;
-        boolean lke = false;
-        boolean pro = false;
-        boolean bll = false;
-        boolean tny = false;
-        // GriefPrevention
-        if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
-            gpr = new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation());
-        }
         // WorldGuard
-        if (plugin.isWorldGuardOnServer()) {
-            wgu = plugin.getWorldGuardUtils().canBuild(player, block.getLocation());
-        }
-        // Lockette
-        if (plugin.getPM().isPluginEnabled("Lockette")) {
-            lke = Lockette.isProtected(block);
-        }
-        if (plugin.getPM().isPluginEnabled("LockettePro")) {
-            pro = LocketteProAPI.isProtected(block);
-        }
-        // BlockLocker
-        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-            bll = BlockLockerAPIv2.isProtected(block);
+        if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
+            return false;
         }
         // Towny
-        if (plugin.getPM().isPluginEnabled("Towny")) {
-            tny = new TARDISTownyChecker(plugin).playerHasPermission(player, block);
+        if (plugin.getPM().isPluginEnabled("Towny") && !(new TARDISTownyChecker(plugin).playerHasPermission(player, block))) {
+            return false;
         }
-        return (gpr || !wgu || lke || pro || bll || !tny);
+        // GriefPrevention
+        if (plugin.getPM().isPluginEnabled("GriefPrevention") && new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation())) {
+            return false;
+        }
+        // LockettePro
+        if (plugin.getPM().isPluginEnabled("LockettePro") && LocketteProAPI.isProtected(block)) {
+            return false;
+        }
+        // BlockLocker
+        if (plugin.getPM().isPluginEnabled("BlockLocker") && BlockLockerAPIv2.isProtected(block)) {
+            return false;
+        }
+        // Lockette
+        if (plugin.getPM().isPluginEnabled("Lockette") && Lockette.isProtected(block)) {
+            return false;
+        }
+        return true;
     }
 }
