@@ -42,7 +42,6 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -162,8 +161,11 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBuild(BlockPlaceEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
-        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
+        Player p = event.getPlayer();
+        if (!plugin.getUtils().inTARDISWorld(p)) {
+            return;
+        }
+        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
             return;
         }
@@ -171,14 +173,17 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "ANTIBUILD_TIMELORD", tab.getTimelord());
+            TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBreak(BlockBreakEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
-        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
+        Player p = event.getPlayer();
+        if (!plugin.getUtils().inTARDISWorld(p)) {
+            return;
+        }
+        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
             return;
         }
@@ -186,7 +191,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "ANTIBUILD_TIMELORD", tab.getTimelord());
+            TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
         }
     }
 
@@ -196,8 +201,11 @@ public class TARDISAntiBuildListener implements Listener {
         if (event.getAction().equals(Action.PHYSICAL)) {
             return;
         }
-        UUID uuid = event.getPlayer().getUniqueId();
-        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
+        Player p = event.getPlayer();
+        if (!plugin.getUtils().inTARDISWorld(p)) {
+            return;
+        }
+        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
             return;
         }
@@ -205,7 +213,7 @@ public class TARDISAntiBuildListener implements Listener {
         if (hand == null) {
             return;
         }
-        ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? event.getPlayer().getInventory().getItemInMainHand() : event.getPlayer().getInventory().getItemInOffHand();
+        ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? p.getInventory().getItemInMainHand() : p.getInventory().getItemInOffHand();
         Material m;
         if (t != null) {
             m = t.getType();
@@ -215,7 +223,7 @@ public class TARDISAntiBuildListener implements Listener {
         if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(event.getClickedBlock().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "ANTIBUILD");
+            TARDISMessage.send(p, "ANTIBUILD");
         }
         if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
             event.setUseItemInHand(Result.DENY);
@@ -229,14 +237,17 @@ public class TARDISAntiBuildListener implements Listener {
                     break;
                 }
             }
-            TARDISMessage.send(event.getPlayer(), "ANTIBUILD");
+            TARDISMessage.send(p, "ANTIBUILD");
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionEntityClick(PlayerInteractEntityEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
-        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
+        Player p = event.getPlayer();
+        if (!plugin.getUtils().inTARDISWorld(p)) {
+            return;
+        }
+        ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
             return;
         }
@@ -244,7 +255,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "ANTIBUILD_TIMELORD", tab.getTimelord());
+            TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
         }
     }
 
@@ -252,6 +263,9 @@ public class TARDISAntiBuildListener implements Listener {
     public void onCompanionDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player p = (Player) event.getDamager();
+            if (!plugin.getUtils().inTARDISWorld(p)) {
+                return;
+            }
             ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
             if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
                 return;
@@ -266,9 +280,12 @@ public class TARDISAntiBuildListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onCompanionPaint(HangingBreakByEntityEvent event) {
+    public void onCompanionBreakHanging(HangingBreakByEntityEvent event) {
         if (event.getRemover() instanceof Player) {
             Player p = (Player) event.getRemover();
+            if (!plugin.getUtils().inTARDISWorld(p)) {
+                return;
+            }
             ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
             if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
                 return;
