@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -76,13 +77,17 @@ public class ResultSetForcefield {
             statement.setString(1, where);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    uuid = UUID.fromString(rs.getString("uuid"));
-                    world = plugin.getServer().getWorld(rs.getString("world"));
-                    x = rs.getInt("x");
-                    y = rs.getInt("y");
-                    z = rs.getInt("z");
-                    location = new Location(world, x, y, z);
+                rs.next();
+                uuid = UUID.fromString(rs.getString("uuid"));
+                world = plugin.getServer().getWorld(rs.getString("world"));
+                x = rs.getInt("x");
+                y = rs.getInt("y");
+                z = rs.getInt("z");
+                location = new Location(world, x, y, z);
+                // check location is not in a TARDIS area
+                if (plugin.getTardisArea().areaCheckInExisting(location)) {
+                    TARDISMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
+                    return false;
                 }
             } else {
                 return false;
