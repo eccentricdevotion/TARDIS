@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Lightable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -29,6 +30,15 @@ public class TARDISSonicIgnite {
 
     public static void ignite(TARDIS plugin, Block b, Player p) {
         if (TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
+            if (b.getType().equals(Material.CAMPFIRE)) {
+                Lightable lightable = (Lightable) b.getBlockData();
+                if (!lightable.isLit()) {
+                    lightable.setLit(true);
+                    b.setBlockData(lightable);
+                    plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                }
+                return;
+            }
             Block above = b.getRelative(BlockFace.UP);
             if (b.getType().equals(Material.TNT)) {
                 b.setBlockData(TARDISConstants.AIR);

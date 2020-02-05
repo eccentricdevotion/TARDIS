@@ -52,6 +52,7 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> diamond = new ArrayList<>();
     private final List<Material> doors = new ArrayList<>();
     private final List<Material> redstone = new ArrayList<>();
+    private final List<Material> ignite = new ArrayList<>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -85,6 +86,9 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.POWERED_RAIL);
         redstone.add(Material.REDSTONE_LAMP);
         redstone.add(Material.REDSTONE_WIRE);
+        ignite.add(Material.CAMPFIRE);
+        ignite.add(Material.NETHERRACK);
+        ignite.add(Material.OBSIDIAN);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -160,7 +164,7 @@ public class TARDISSonicListener implements Listener {
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {
                     Block block = event.getClickedBlock();
                     if (!player.isSneaking()) {
-                        if ((block.getType().isBurnable() || block.getType().equals(Material.NETHERRACK)) && player.hasPermission("tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
+                        if ((block.getType().isBurnable() || ignite.contains(block.getType())) && player.hasPermission("tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
                             TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_short");
                             // ignite block
                             TARDISSonicIgnite.ignite(plugin, block, player);
