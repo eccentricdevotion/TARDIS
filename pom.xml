@@ -341,7 +341,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.12.0</version>
+            <version>16.13.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
