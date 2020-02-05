@@ -28,6 +28,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -63,6 +64,7 @@ public class TARDISPowerButton {
         wherep.put("tardis_id", id);
         HashMap<String, Object> setp = new HashMap<>();
         boolean isNewOrOld = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
+        UUID uuid = player.getUniqueId();
         if (powered) {
             if (isTravelling(id)) {
                 TARDISMessage.send(player, "POWER_NO");
@@ -85,10 +87,15 @@ public class TARDISPowerButton {
             }
             // if lights are on, turn them off
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
+                new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, lanterns);
             }
             // if beacon is on turn it off
-            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
+            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+            // turn force field off
+            if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
+                plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
+                TARDISMessage.send(player, "FORCE_FIELD", "OFF");
+            }
         } else {
             // don't power up if there is no power
             if (level <= plugin.getArtronConfig().getInt("standby")) {
@@ -101,17 +108,17 @@ public class TARDISPowerButton {
             TARDISMessage.send(player, "POWER_ON");
             // if lights are off, turn them on
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
+                new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, lanterns);
             }
             // determine beacon prefs
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             boolean beacon_on = true;
             if (rsp.resultSet()) {
                 beacon_on = rsp.isBeaconOn();
             }
             // if beacon is off turn it on
             if (beacon_on) {
-                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, true);
+                new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
             }
             // police box lamp
             if (isNewOrOld) {

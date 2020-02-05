@@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -71,7 +72,8 @@ class TARDISRemoteHideCommand {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }
-        DestroyData dd = new DestroyData(plugin, olp.getUniqueId().toString());
+        UUID uuid = olp.getUniqueId();
+        DestroyData dd = new DestroyData(plugin, uuid.toString());
         dd.setDirection(rsc.getDirection());
         dd.setLocation(l);
         dd.setPlayer(olp);
@@ -88,6 +90,11 @@ class TARDISRemoteHideCommand {
         HashMap<String, Object> seth = new HashMap<>();
         seth.put("hidden", 1);
         plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+        // turn force field off
+        if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
+            plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
+            TARDISMessage.send(sender, "FORCE_FIELD", "OFF");
+        }
         return true;
     }
 }

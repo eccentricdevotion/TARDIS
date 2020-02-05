@@ -98,7 +98,7 @@ public class TARDISPresetBuilderFactory {
                 // disable force field
                 if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(tardis.getUuid())) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(tardis.getUuid());
-                    TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "off");
+                    TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "OFF");
                 }
             }
             bd.setBiome(biome);

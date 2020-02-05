@@ -59,7 +59,7 @@ public class TARDISHideCommand {
             plugin.getTrackerKeeper().getHideCooldown().put(uuid, System.currentTimeMillis());
             int id;
             HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
+            where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
@@ -85,7 +85,7 @@ public class TARDISHideCommand {
                 return true;
             }
             HashMap<String, Object> wherein = new HashMap<>();
-            wherein.put("uuid", player.getUniqueId().toString());
+            wherein.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
             if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 TARDISMessage.send(player.getPlayer(), "TARDIS_NO_HIDE");
@@ -118,7 +118,7 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_HIDE");
                 return false;
             }
-            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            DestroyData dd = new DestroyData(plugin, uuid.toString());
             dd.setDirection(rsc.getDirection());
             dd.setLocation(l);
             dd.setPlayer(player.getPlayer());
@@ -139,6 +139,11 @@ public class TARDISHideCommand {
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 1);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+            // turn force field off
+            if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
+                plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
+                TARDISMessage.send(player.getPlayer(), "FORCE_FIELD", "OFF");
+            }
             return true;
         } else {
             TARDISMessage.send(player.getPlayer(), "NO_PERMS");

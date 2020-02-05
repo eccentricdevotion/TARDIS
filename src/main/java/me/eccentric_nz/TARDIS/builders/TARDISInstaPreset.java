@@ -562,7 +562,7 @@ public class TARDISInstaPreset {
             plugin.getServer().getScheduler().cancelTask(taskID);
         }
         if (!bd.isRebuild() && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
-            plugin.getTrackerKeeper().getActiveForceFields().put(bd.getPlayer().getPlayer().getUniqueId(), bd.getLocation());
+            plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
         }
     }
 
