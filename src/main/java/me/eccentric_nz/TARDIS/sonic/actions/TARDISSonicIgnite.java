@@ -47,9 +47,12 @@ public class TARDISSonicIgnite {
                 return;
             }
             if (above.getType().equals(Material.AIR)) {
-                above.setBlockData(TARDISConstants.FIRE);
-                // call a block ignite event
-                plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                // delay 2 ticks as player may have clicked top of block automatically extinguishing the fire
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    above.setBlockData(TARDISConstants.FIRE);
+                    // call a block ignite event
+                    plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                }, 2L);
             }
         }
     }
