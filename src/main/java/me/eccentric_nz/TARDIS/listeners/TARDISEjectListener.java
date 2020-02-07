@@ -105,6 +105,16 @@ public class TARDISEjectListener implements Listener {
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().doDelete("travellers", where);
                 break;
+            case BEE:
+                Bee b = (Bee) ent;
+                Bee bee = (Bee) l.getWorld().spawnEntity(l, EntityType.BEE);
+                bee.setTicksLived(b.getTicksLived());
+                String beename = ent.getCustomName();
+                if (beename != null && !beename.isEmpty()) {
+                    bee.setCustomName(beename);
+                }
+                ent.remove();
+                break;
             case CHICKEN:
                 Chicken k = (Chicken) ent;
                 Chicken chicken = (Chicken) l.getWorld().spawnEntity(l, EntityType.CHICKEN);
@@ -241,15 +251,15 @@ public class TARDISEjectListener implements Listener {
                 ent.remove();
                 break;
             case POLAR_BEAR:
-                PolarBear b = (PolarBear) ent;
-                PolarBear polarbear = (PolarBear) l.getWorld().spawnEntity(l, EntityType.POLAR_BEAR);
-                polarbear.setTicksLived(b.getTicksLived());
-                if ((!b.isAdult())) {
-                    polarbear.setBaby();
+                PolarBear polar = (PolarBear) ent;
+                PolarBear bear = (PolarBear) l.getWorld().spawnEntity(l, EntityType.POLAR_BEAR);
+                bear.setTicksLived(polar.getTicksLived());
+                if ((!polar.isAdult())) {
+                    bear.setBaby();
                 }
                 String bearname = ent.getCustomName();
                 if (bearname != null && !bearname.isEmpty()) {
-                    polarbear.setCustomName(bearname);
+                    bear.setCustomName(bearname);
                 }
                 ent.remove();
                 break;
