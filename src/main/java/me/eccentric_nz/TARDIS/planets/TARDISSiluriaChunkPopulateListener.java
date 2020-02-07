@@ -60,7 +60,7 @@ public class TARDISSiluriaChunkPopulateListener implements Listener {
         // find water
         int cx = chunk.getX() * 16;
         int cz = chunk.getZ() * 16;
-        int hy = chunk.getWorld().getHighestBlockYAt(cx + 8, cz + 8);
+        int hy = chunk.getWorld().getHighestBlockYAt(cx + 8, cz + 8) + 1;
         Block water = chunk.getWorld().getBlockAt(cx + 8, hy, cz + 8);
         if (water.getType() == Material.AIR) {
             while (water.getType() == Material.AIR) {

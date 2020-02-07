@@ -186,7 +186,7 @@ public class TARDISArea {
                 if (w != null) {
                     int y = a.getY();
                     if (y == 0) {
-                        y = w.getHighestBlockYAt(xx, zz);
+                        y = w.getHighestBlockYAt(xx, zz) + 1;
                     }
                     location = w.getBlockAt(xx, y, zz).getLocation();
                 }

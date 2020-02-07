@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
 import org.bukkit.World;
@@ -57,7 +58,7 @@ public class TARDISVillageTravel {
                     break;
                 case THE_END:
                     loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
-                    int highesty = world.getHighestBlockYAt(loc);
+                    int highesty = TARDISStaticLocationGetters.getHighestYin4x4(world, rs.getX(), rs.getZ());
                     loc.setY(highesty);
                     break;
                 default: // NORMAL

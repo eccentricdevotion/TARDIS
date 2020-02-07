@@ -63,7 +63,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
             for (int z = 0; z < 16; z++) {
                 for (int y = 45; y < 66; y++) {
                     if (chunk.getBlock(x, y, z).getType().equals(Material.GOLD_ORE)) {
-                        int hy = chunk.getWorld().getHighestBlockYAt(x, z);
+                        int hy = chunk.getWorld().getHighestBlockYAt(x, z) + 1;
                         if (System.currentTimeMillis() < timeCheck) {
                             return;
                         }

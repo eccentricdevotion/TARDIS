@@ -104,7 +104,20 @@ public class TARDISStaticLocationGetters {
     }
 
     /**
-     * Create a TARDIS v2.3 location string from block coordinates.
+     * Create a Bukkit location string from block coordinates.
+     *
+     * @param w the block's world
+     * @param x the x coordinate of the block's location
+     * @param y the y coordinate of the block's location
+     * @param z the z coordinate of the block's location
+     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     */
+    public static String makeLocationStr(String w, String x, String y, String z) {
+        return "Location{world=CraftWorld{name=" + w + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
+    }
+
+    /**
+     * Create a Bukkit location string from block coordinates.
      *
      * @param w the block's world
      * @param x the x coordinate of the block's location
@@ -128,5 +141,19 @@ public class TARDISStaticLocationGetters {
         int cx = TARDISNumberParsers.parseInt(split[1]);
         int cz = TARDISNumberParsers.parseInt(split[2]);
         return cw.getChunkAt(cx, cz);
+    }
+
+    private static final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
+
+    public static int getHighestYin4x4(World world, int x, int z) {
+        int y = 0;
+        for (int xx : fourByFour) {
+            for (int zz : fourByFour) {
+                // need to +1 due to Spigot change
+                int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
+                y = Math.max(tmp, y);
+            }
+        }
+        return y;
     }
 }

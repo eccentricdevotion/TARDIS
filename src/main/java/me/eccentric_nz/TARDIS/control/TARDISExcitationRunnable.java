@@ -63,7 +63,7 @@ class TARDISExcitationRunnable implements Runnable {
             });
             if (i % 5 == 0) {
                 Location s = calculateLocationInCircle(location);
-                s.setY(location.getWorld().getHighestBlockYAt(s));
+                s.setY(location.getWorld().getHighestBlockYAt(s) + 1);
                 Block b = s.getBlock();
                 if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
                     b.setBlockData(TARDISConstants.SNOW);

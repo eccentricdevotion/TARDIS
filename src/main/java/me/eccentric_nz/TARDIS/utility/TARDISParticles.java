@@ -51,7 +51,7 @@ public class TARDISParticles {
             double z = randomDouble();
             l.add(x, y, z);
             if (l.getBlock().isEmpty()) {
-                if (l.getWorld().getHighestBlockYAt(l) < l.getY()) {
+                if (l.getWorld().getHighestBlockYAt(l) + 1 < l.getY()) {
                     p.spawnParticle(Particle.CLOUD, l, 10);
                 }
             }

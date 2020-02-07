@@ -23,10 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -153,7 +150,7 @@ public class TARDISTimeTravel {
                     wherez -= 120;
                     // get the spawn point
                     Location endSpawn = randworld.getSpawnLocation();
-                    highest = randworld.getHighestBlockYAt(endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+                    highest = TARDISStaticLocationGetters.getHighestYin4x4(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
                     if (highest > 40) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         Location chunk_loc = currentBlock.getLocation();
@@ -207,7 +204,7 @@ public class TARDISTimeTravel {
                             // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
                             wherex = randomX(range, quarter, rx, ry, e, current);
                             wherez = randomZ(range, quarter, rz, ry, e, current);
-                            highest = randworld.getHighestBlockYAt(wherex, wherez);
+                            highest = TARDISStaticLocationGetters.getHighestYin4x4(randworld, wherex, wherez);
                             if (highest > 3) {
                                 Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                                 if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {

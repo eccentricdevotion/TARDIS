@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -970,7 +971,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             while (!chunk.isLoaded()) {
                 chunk.load();
             }
-            y = getHighestYin4x4(w, x, z);
+            y = TARDISStaticLocationGetters.getHighestYin4x4(w, x, z);
         }
         int max = Math.min(plugin.getConfig().getInt("travel.max_distance"), (int) (w.getWorldBorder().getSize() / 2) - 17);
         if (x > max || x < -max || z > max || z < -max) {
@@ -978,19 +979,6 @@ public class TARDISTravelCommands implements CommandExecutor {
             return null;
         }
         return new Location(w, x, y, z);
-    }
-
-    private final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
-
-    private int getHighestYin4x4(World world, int x, int z) {
-        int y = 0;
-        for (int xx : fourByFour) {
-            for (int zz : fourByFour) {
-                int tmp = world.getHighestBlockYAt(x + xx, z + zz);
-                y = Math.max(tmp, y);
-            }
-        }
-        return y;
     }
 
     public Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
@@ -1033,7 +1021,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(east, startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_E", b.toString());
-                                return new Location(w, east, w.getHighestBlockYAt(east, startz), startz);
+                                return new Location(w, east, TARDISStaticLocationGetters.getHighestYin4x4(w, east, startz), startz);
                             }
                         }
                         break;
@@ -1043,7 +1031,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(startx, south);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_S", b.toString());
-                                return new Location(w, startx, w.getHighestBlockYAt(startx, south), south);
+                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin4x4(w, startx, south), south);
                             }
                         }
                         break;
@@ -1053,7 +1041,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(west, startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_W", b.toString());
-                                return new Location(w, west, w.getHighestBlockYAt(west, startz), startz);
+                                return new Location(w, west, TARDISStaticLocationGetters.getHighestYin4x4(w, west, startz), startz);
                             }
                         }
                         break;
@@ -1063,7 +1051,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(startx, north);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_N", b.toString());
-                                return new Location(w, startx, w.getHighestBlockYAt(startx, north), north);
+                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin4x4(w, startx, north), north);
                             }
                         }
                         break;
