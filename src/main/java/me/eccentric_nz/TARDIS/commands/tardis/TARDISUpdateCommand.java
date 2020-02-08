@@ -25,16 +25,16 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Farm;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -43,7 +43,6 @@ import java.util.Locale;
 class TARDISUpdateCommand {
 
     private final TARDIS plugin;
-    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "dispenser", "door", "eps", "farm", "flight", "forcefield", "frame", "generator", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "stall", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
 
     TARDISUpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -66,20 +65,23 @@ class TARDISUpdateCommand {
             }
             Tardis tardis = rs.getTardis();
             int ownerid = tardis.getTardis_id();
-            String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
-            if (!validBlockNames.contains(tardis_block)) {
+            String tardis_block = TARDISStringUtils.toScoredUppercase(args[1]);
+            UPDATEABLE updateable;
+            try {
+                updateable = UPDATEABLE.valueOf(tardis_block);
+            } catch (IllegalArgumentException e) {
                 new TARDISUpdateLister(player).list();
                 return true;
             }
-            if (tardis_block.equals("siege") && !plugin.getConfig().getBoolean("siege.enabled")) {
+            if (updateable.equals(UPDATEABLE.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
                 TARDISMessage.send(player, "SIEGE_DISABLED");
                 return true;
             }
-            if (tardis_block.equals("beacon") && !tardis.isPowered_on()) {
+            if (updateable.equals("beacon") && !tardis.isPowered_on()) {
                 TARDISMessage.send(player, "UPDATE_BEACON");
                 return true;
             }
-            if (tardis_block.equals("hinge")) {
+            if (updateable.equals("hinge")) {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     Door door = (Door) block.getBlockData();
@@ -98,35 +100,35 @@ class TARDISUpdateCommand {
                 }
                 return true;
             }
-            if (tardis_block.equals("vault")) {
+            if (updateable.equals(UPDATEABLE.VAULT)) {
                 return new TARDISVaultCommand(plugin).addDropChest(player);
             }
-            if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
+            if (updateable.equals(UPDATEABLE.ADVANCED) && !player.hasPermission("tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");
                 return true;
             }
-            if (tardis_block.equals("forcefield") && !player.hasPermission("tardis.forcefield")) {
+            if (updateable.equals(UPDATEABLE.FORCEFIELD) && !player.hasPermission("tardis.forcefield")) {
                 TARDISMessage.send(player, "NO_PERM_FF");
                 return true;
             }
-            if (tardis_block.equals("storage") && !player.hasPermission("tardis.storage")) {
+            if (updateable.equals(UPDATEABLE.STORAGE) && !player.hasPermission("tardis.storage")) {
                 TARDISMessage.send(player, "NO_PERM_DISK");
                 return true;
             }
-            if (tardis_block.equals("backdoor") && !player.hasPermission("tardis.backdoor")) {
+            if (updateable.equals(UPDATEABLE.BACKDOOR) && !player.hasPermission("tardis.backdoor")) {
                 TARDISMessage.send(player, "NO_PERM_BACKDOOR");
                 return true;
             }
-            if (tardis_block.equals("temporal") && !player.hasPermission("tardis.temporal")) {
+            if (updateable.equals(UPDATEABLE.TEMPORAL) && !player.hasPermission("tardis.temporal")) {
                 TARDISMessage.send(player, "NO_PERM_TEMPORAL");
                 return true;
             }
-            if ((tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("stall")) && !player.hasPermission("tardis.farm")) {
+            if ((updateable.equals(UPDATEABLE.FARM) || updateable.equals(UPDATEABLE.STABLE) || updateable.equals(UPDATEABLE.VILLAGE) || updateable.equals(UPDATEABLE.STALL)) && !player.hasPermission("tardis.farm")) {
                 TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
                 return true;
             }
             // must grow a room first
-            if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("stall") || tardis_block.equals("village")) {
+            if (updateable.equals(UPDATEABLE.FARM) || updateable.equals(UPDATEABLE.STABLE) || updateable.equals(UPDATEABLE.STALL) || updateable.equals(UPDATEABLE.VILLAGE)) {
                 // check ARS for room type
                 boolean hasFarm = false;
                 boolean hasStable = false;
@@ -160,35 +162,35 @@ class TARDISUpdateCommand {
                 ResultSetFarming rsf = new ResultSetFarming(plugin, ownerid);
                 if (rsf.resultSet()) {
                     Farm farming = rsf.getFarming();
-                    if (tardis_block.equals("farm") && farming.getFarm().isEmpty() && !hasFarm) {
+                    if (updateable.equals(UPDATEABLE.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
                         TARDISMessage.send(player, "UPDATE_FARM");
                         return true;
                     }
-                    if (tardis_block.equals("stable") && farming.getStable().isEmpty() && !hasStable) {
+                    if (updateable.equals(UPDATEABLE.STABLE) && farming.getStable().isEmpty() && !hasStable) {
                         TARDISMessage.send(player, "UPDATE_STABLE");
                         return true;
                     }
-                    if (tardis_block.equals("stall") && farming.getStall().isEmpty() && !hasStall) {
+                    if (updateable.equals(UPDATEABLE.STALL) && farming.getStall().isEmpty() && !hasStall) {
                         TARDISMessage.send(player, "UPDATE_STALL");
                         return true;
                     }
-                    if (tardis_block.equals("village") && farming.getVillage().isEmpty() && !hasVillage) {
+                    if (updateable.equals(UPDATEABLE.VILLAGE) && farming.getVillage().isEmpty() && !hasVillage) {
                         TARDISMessage.send(player, "UPDATE_VILLAGE");
                         return true;
                     }
                 }
             }
-            if (tardis_block.equals("rail") || tardis_block.equals("zero")) {
-                if (tardis_block.equals("rail") && tardis.getRail().isEmpty()) {
+            if (updateable.equals(UPDATEABLE.RAIL) || updateable.equals(UPDATEABLE.ZERO)) {
+                if (updateable.equals(UPDATEABLE.RAIL) && tardis.getRail().isEmpty()) {
                     TARDISMessage.send(player, "UPDATE_RAIL");
                     return true;
                 }
-                if (tardis_block.equals("zero") && tardis.getZero().isEmpty()) {
+                if (updateable.equals(UPDATEABLE.ZERO) && tardis.getZero().isEmpty()) {
                     TARDISMessage.send(player, "UPDATE_ZERO");
                     return true;
                 }
             }
-            if (tardis_block.equals("ars")) {
+            if (updateable.equals(UPDATEABLE.ARS)) {
                 if (!player.hasPermission("tardis.architectural")) {
                     TARDISMessage.send(player, "NO_PERM_ARS");
                     return true;
@@ -198,7 +200,7 @@ class TARDISUpdateCommand {
                     return true;
                 }
             }
-            if (!tardis_block.equals("backdoor")) {
+            if (!updateable.equals(UPDATEABLE.BACKDOOR)) {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -214,7 +216,7 @@ class TARDISUpdateCommand {
             }
             plugin.getTrackerKeeper().getPlayers().put(player.getUniqueId(), tardis_block);
             TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
-            if (tardis_block.equals("direction")) {
+            if (updateable.equals(UPDATEABLE.DIRECTION)) {
                 TARDISMessage.send(player, "HOOK_REMIND");
             }
             return true;

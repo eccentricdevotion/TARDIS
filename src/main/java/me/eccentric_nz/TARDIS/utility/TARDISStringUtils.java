@@ -55,4 +55,12 @@ public class TARDISStringUtils {
         return String.format("%s", numbers.indexOf(s));
         // "-1" if not found
     }
+
+    public static String toDashedLowercase(String s) {
+        return s.toLowerCase().replace("_", "-");
+    }
+
+    public static String toScoredUppercase(String s) {
+        return s.toUpperCase().replace("-", "_");
+    }
 }

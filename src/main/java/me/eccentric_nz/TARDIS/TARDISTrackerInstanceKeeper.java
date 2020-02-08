@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.enumeration.BIND;
+import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -88,8 +90,8 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> perm = new HashMap<>();
     private final HashMap<UUID, String> players = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
-    private final HashMap<UUID, String> secondary = new HashMap<>();
-    private final HashMap<UUID, String> transmatRemoval = new HashMap<>();
+    private final HashMap<UUID, UPDATEABLE> secondary = new HashMap<>();
+    private final HashMap<UUID, BIND> bindRemoval = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
@@ -277,12 +279,12 @@ public class TARDISTrackerInstanceKeeper {
         return preset;
     }
 
-    public HashMap<UUID, String> getSecondary() {
+    public HashMap<UUID, UPDATEABLE> getSecondary() {
         return secondary;
     }
 
-    public HashMap<UUID, String> getTransmatRemoval() {
-        return transmatRemoval;
+    public HashMap<UUID, BIND> getBindRemoval() {
+        return bindRemoval;
     }
 
     public HashMap<UUID, String> getTelepathicPlacements() {

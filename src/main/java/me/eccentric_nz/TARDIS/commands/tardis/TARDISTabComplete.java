@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
+import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,29 +36,32 @@ import java.util.List;
 public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS;
+    private final List<String> ROOT_SUBS = new ArrayList<>();
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update");
     private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL");
-    private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
     private final List<String> TRANSMAT_SUBS = ImmutableList.of("tp", "add", "remove", "update", "list");
-    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "flight", "forcefield", "frame", "generator", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "stall", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> UPD_SUBS = new ArrayList<>();
+    private final List<String> SEC_SUBS = new ArrayList<>();
     private final List<String> RECHARGER_SUBS;
-    private final List<String> PRESET_SUBS;
+    private final List<String> PRESET_SUBS = new ArrayList<>();
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
-        List<String> tcs = new ArrayList<>();
         for (TARDIS_COMMAND tc : TARDIS_COMMAND.values()) {
-            tcs.add(tc.toString());
+            ROOT_SUBS.add(tc.toString());
         }
-        ROOT_SUBS = ImmutableList.copyOf(tcs);
         RECHARGER_SUBS = getPublicRechargers();
-        PRESET_SUBS = new ArrayList<>();
         for (PRESET preset : PRESET.values()) {
             PRESET_SUBS.add(preset.toString());
+        }
+        for (UPDATEABLE u : UPDATEABLE.values()) {
+            UPD_SUBS.add(u.getName());
+            if (u.isSecondary()) {
+                SEC_SUBS.add(u.getName());
+            }
         }
     }
 

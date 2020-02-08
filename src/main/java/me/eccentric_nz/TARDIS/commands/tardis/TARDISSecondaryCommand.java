@@ -19,12 +19,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -39,13 +39,18 @@ class TARDISSecondaryCommand {
 
     boolean startSecondary(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back"};
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
-            if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
+            UPDATEABLE updateable;
+            try {
+                updateable = UPDATEABLE.valueOf(TARDISStringUtils.toScoredUppercase(args[1]));
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(player, "UPDATE_NOT_VALID");
+                return false;
+            }
+            if (!updateable.isSecondary()) {
                 TARDISMessage.send(player, "UPDATE_NOT_VALID");
                 return false;
             }
@@ -63,8 +68,8 @@ class TARDISSecondaryCommand {
                 TARDISMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
-            plugin.getTrackerKeeper().getSecondary().put(player.getUniqueId(), tardis_block);
-            TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
+            plugin.getTrackerKeeper().getSecondary().put(player.getUniqueId(), updateable);
+            TARDISMessage.send(player, "UPDATE_CLICK", updateable.getName());
             return true;
         } else {
             TARDISMessage.send(player, "NO_PERMS");
