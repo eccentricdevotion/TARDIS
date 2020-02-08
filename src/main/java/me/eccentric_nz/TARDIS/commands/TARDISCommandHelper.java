@@ -127,13 +127,7 @@ public class TARDISCommandHelper {
         tardisteleport("Not yet available"),
         tardisworld("Not yet available"),
         tardisgamemode("Not yet available"),
-        chemistry("Not yet available"),
-        construct("Not yet available"),
-        compound("Not yet available"),
-        reduce("Not yet available"),
-        product("Not yet available"),
-        lab("Not yet available"),
-        formula("Not yet available");
+        tardischemistry("Not yet available");
 
         final String URL;
 
