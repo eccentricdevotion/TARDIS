@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -75,18 +77,31 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
                             String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
                             TARDISChameleonFrame tcf = new TARDISChameleonFrame(plugin);
+                            String chameleon = "";
+                            // set the Chameleon Circuit sign(s)
+                            HashMap<String, Object> whereh = new HashMap<>();
+                            whereh.put("tardis_id", id);
+                            whereh.put("type", 31);
+                            ResultSetControls rsc = new ResultSetControls(plugin, whereh, true);
+                            boolean hasChameleonSign = false;
+                            if (rsc.resultSet()) {
+                                hasChameleonSign = true;
+                                for (HashMap<String, String> map : rsc.getData()) {
+                                    chameleon = map.get("location");
+                                }
+                            }
+                            String last_line = TARDISStaticUtils.getLastLine(chameleon);
                             switch (slot) {
                                 case 0:
                                     // blue
                                     if (!last_line.equals("BLUE")) {
                                         set.put("chameleon_preset", "POLICE_BOX_BLUE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "BLUE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "BLUE", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLUE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Blue Police Box");
@@ -95,7 +110,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // white
                                     if (!last_line.equals("WHITE")) {
                                         set.put("chameleon_preset", "POLICE_BOX_WHITE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "WHITE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "WHITE", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_WHITE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "White Police Box");
@@ -104,7 +119,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // orange
                                     if (!last_line.equals("ORANGE")) {
                                         set.put("chameleon_preset", "POLICE_BOX_ORANGE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "ORANGE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "ORANGE", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_ORANGE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Orange Police Box");
@@ -113,7 +128,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // magenta
                                     if (!last_line.equals("MAGENTA")) {
                                         set.put("chameleon_preset", "POLICE_BOX_MAGENTA");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "MAGENTA", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "MAGENTA", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_MAGENTA);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Magenta Police Box");
@@ -122,7 +137,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // light blue
                                     if (!last_line.equals("LIGHTBLUE")) {
                                         set.put("chameleon_preset", "POLICE_BOX_LIGHT_BLUE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIGHTBLUE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIGHTBLUE", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_BLUE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Blue Police Box");
@@ -131,7 +146,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // yellow
                                     if (!last_line.equals("YELLOW")) {
                                         set.put("chameleon_preset", "POLICE_BOX_YELLOW");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "YELLOW", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "YELLOW", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_YELLOW);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Yellow Police Box");
@@ -140,7 +155,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // lime
                                     if (!last_line.equals("LIME")) {
                                         set.put("chameleon_preset", "POLICE_BOX_LIME");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIME", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIME", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIME);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Lime Police Box");
@@ -149,7 +164,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // pink
                                     if (!last_line.equals("PINK")) {
                                         set.put("chameleon_preset", "POLICE_BOX_PINK");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PINK", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PINK", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_PINK);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pink Police Box");
@@ -158,7 +173,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // gray
                                     if (!last_line.equals("GRAY")) {
                                         set.put("chameleon_preset", "POLICE_BOX_GRAY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GRAY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GRAY", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_GRAY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gray Police Box");
@@ -167,7 +182,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // light gray
                                     if (!last_line.equals("LIGHTGRAY")) {
                                         set.put("chameleon_preset", "POLICE_BOX_LIGHT_GRAY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIGHTGRAY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIGHTGRAY", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_GRAY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Gray Police Box");
@@ -176,7 +191,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // cyan
                                     if (!last_line.equals("CYAN")) {
                                         set.put("chameleon_preset", "POLICE_BOX_CYAN");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CYAN", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CYAN", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_CYAN);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Cyan Police Box");
@@ -185,7 +200,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // purple
                                     if (!last_line.equals("PURPLE")) {
                                         set.put("chameleon_preset", "POLICE_BOX_PURPLE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PURPLE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PURPLE", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_PURPLE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Purple Police Box");
@@ -194,7 +209,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // brown
                                     if (!last_line.equals("BROWN")) {
                                         set.put("chameleon_preset", "POLICE_BOX_BROWN");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "BROWN", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "BROWN", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BROWN);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Brown Police Box");
@@ -203,7 +218,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // green
                                     if (!last_line.equals("GREEN")) {
                                         set.put("chameleon_preset", "POLICE_BOX_GREEN");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GREEN", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GREEN", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_GREEN);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Green Police Box");
@@ -212,7 +227,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // red
                                     if (!last_line.equals("RED")) {
                                         set.put("chameleon_preset", "POLICE_BOX_RED");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "RED", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "RED", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_RED);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Red Police Box");
@@ -221,7 +236,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // black
                                     if (!last_line.equals("BLACK")) {
                                         set.put("chameleon_preset", "POLICE_BOX_BLACK");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "BLACK", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "BLACK", player);
                                         tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLACK);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Black Police Box");
@@ -241,9 +256,9 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     // return to Chameleon Circuit GUI
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        ItemStack[] chameleon = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                        ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                        gui.setContents(chameleon);
+                                        gui.setContents(stacks);
                                         player.openInventory(gui);
                                     }, 2L);
                                     break;
@@ -259,6 +274,14 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void updateChameleonSign(boolean update, ArrayList<HashMap<String, String>> map, String preset, Player player) {
+        if (update) {
+            for (HashMap<String, String> entry : map) {
+                TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
             }
         }
     }

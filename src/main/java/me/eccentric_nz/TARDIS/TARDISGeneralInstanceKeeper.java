@@ -21,10 +21,8 @@ import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -55,8 +53,6 @@ public class TARDISGeneralInstanceKeeper {
     private TARDISAdminCommands tardisAdminCommand;
     private final TARDISDoorListener doorListener;
     private TARDISRenderRoomListener rendererListener;
-    private TARDISScannerListener scannerListener;
-    private TARDISSonicListener sonicListener;
     private TARDISTravelCommands tardisTravelCommand;
     private final HashMap<String, Double[]> gravityEastList = new HashMap<>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<>();
@@ -191,22 +187,6 @@ public class TARDISGeneralInstanceKeeper {
 
     void setRendererListener(TARDISRenderRoomListener rendererListener) {
         this.rendererListener = rendererListener;
-    }
-
-    public TARDISScannerListener getScannerListener() {
-        return scannerListener;
-    }
-
-    void setScannerListener(TARDISScannerListener scannerListener) {
-        this.scannerListener = scannerListener;
-    }
-
-    public TARDISSonicListener getSonicListener() {
-        return sonicListener;
-    }
-
-    void setSonicListener(TARDISSonicListener sonicListener) {
-        this.sonicListener = sonicListener;
     }
 
     public TARDISTravelCommands getTardisTravelCommand() {

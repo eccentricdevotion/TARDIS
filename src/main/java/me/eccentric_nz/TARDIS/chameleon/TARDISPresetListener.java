@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -75,7 +77,20 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
+                            String chameleon = "";
+                            // set the Chameleon Circuit sign(s)
+                            HashMap<String, Object> whereh = new HashMap<>();
+                            whereh.put("tardis_id", id);
+                            whereh.put("type", 31);
+                            ResultSetControls rsc = new ResultSetControls(plugin, whereh, true);
+                            boolean hasChameleonSign = false;
+                            if (rsc.resultSet()) {
+                                hasChameleonSign = true;
+                                for (HashMap<String, String> map : rsc.getData()) {
+                                    chameleon = map.get("location");
+                                }
+                            }
+                            String last_line = TARDISStaticUtils.getLastLine(chameleon);
                             String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();
@@ -86,7 +101,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // new Police Box
                                     if (!last_line.equals("NEW")) {
                                         set.put("chameleon_preset", "NEW");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "NEW", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "NEW", player);
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "New Police Box");
@@ -95,7 +110,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // jungle temple
                                     if (!last_line.equals("JUNGLE")) {
                                         set.put("chameleon_preset", "JUNGLE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "JUNGLE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "JUNGLE", player);
                                         tcf.updateChameleonFrame(id, PRESET.JUNGLE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Jungle Temple");
@@ -104,7 +119,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // nether fortress
                                     if (!last_line.equals("NETHER")) {
                                         set.put("chameleon_preset", "NETHER");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "NETHER", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "NETHER", player);
                                         tcf.updateChameleonFrame(id, PRESET.NETHER);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Nether Fortress");
@@ -113,7 +128,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // old police box
                                     if (!last_line.equals("OLD")) {
                                         set.put("chameleon_preset", "OLD");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "OLD", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "OLD", player);
                                         tcf.updateChameleonFrame(id, PRESET.OLD);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Old Police Box");
@@ -122,7 +137,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // swamp
                                     if (!last_line.equals("SWAMP")) {
                                         set.put("chameleon_preset", "SWAMP");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SWAMP", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "SWAMP", player);
                                         tcf.updateChameleonFrame(id, PRESET.SWAMP);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Swamp Hut");
@@ -131,7 +146,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // party tent
                                     if (!last_line.equals("PARTY")) {
                                         set.put("chameleon_preset", "PARTY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PARTY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PARTY", player);
                                         tcf.updateChameleonFrame(id, PRESET.PARTY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Party Tent");
@@ -140,7 +155,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // village house
                                     if (!last_line.equals("VILLAGE")) {
                                         set.put("chameleon_preset", "VILLAGE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "VILLAGE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "VILLAGE", player);
                                         tcf.updateChameleonFrame(id, PRESET.VILLAGE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Village House");
@@ -149,7 +164,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // yellow submarine
                                     if (!last_line.equals("YELLOW")) {
                                         set.put("chameleon_preset", "YELLOW");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "YELLOW", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "YELLOW", player);
                                         tcf.updateChameleonFrame(id, PRESET.YELLOW);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Yellow Submarine");
@@ -158,7 +173,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // telephone
                                     if (!last_line.equals("TELEPHONE")) {
                                         set.put("chameleon_preset", "TELEPHONE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "TELEPHONE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "TELEPHONE", player);
                                         tcf.updateChameleonFrame(id, PRESET.TELEPHONE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Red Telephone Box");
@@ -167,7 +182,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // weeping angel
                                     if (!last_line.equals("ANGEL")) {
                                         set.put("chameleon_preset", "ANGEL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "ANGEL", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "ANGEL", player);
                                         tcf.updateChameleonFrame(id, PRESET.ANGEL);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Weeping Angel");
@@ -176,7 +191,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // submerged
                                     if (!last_line.equals("SUBMERGED")) {
                                         set.put("chameleon_preset", "SUBMERGED");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SUBMERGED", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "SUBMERGED", player);
                                         tcf.updateChameleonFrame(id, PRESET.SUBMERGED);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Submerged");
@@ -185,7 +200,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // flower
                                     if (!last_line.equals("FLOWER")) {
                                         set.put("chameleon_preset", "FLOWER");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FLOWER", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "FLOWER", player);
                                         tcf.updateChameleonFrame(id, PRESET.FLOWER);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Daisy Flower");
@@ -194,7 +209,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // stone brick column
                                     if (!last_line.equals("STONE")) {
                                         set.put("chameleon_preset", "STONE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "STONE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "STONE", player);
                                         tcf.updateChameleonFrame(id, PRESET.STONE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Stone Brick Column");
@@ -203,7 +218,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // chalice
                                     if (!last_line.equals("CHALICE")) {
                                         set.put("chameleon_preset", "CHALICE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CHALICE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CHALICE", player);
                                         tcf.updateChameleonFrame(id, PRESET.CHALICE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Quartz Chalice");
@@ -212,7 +227,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // desert temple
                                     if (!last_line.equals("DESERT")) {
                                         set.put("chameleon_preset", "DESERT");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "DESERT", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "DESERT", player);
                                         tcf.updateChameleonFrame(id, PRESET.DESERT);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Desert Temple");
@@ -221,7 +236,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // mossy well
                                     if (!last_line.equals("WELL")) {
                                         set.put("chameleon_preset", "WELL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "WELL", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "WELL", player);
                                         tcf.updateChameleonFrame(id, PRESET.WELL);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Mossy Well");
@@ -230,7 +245,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // windmill
                                     if (!last_line.equals("WINDMILL")) {
                                         set.put("chameleon_preset", "WINDMILL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "WINDMILL", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "WINDMILL", player);
                                         tcf.updateChameleonFrame(id, PRESET.WINDMILL);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Windmill");
@@ -239,7 +254,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Rubber Duck
                                     if (!last_line.equals("DUCK")) {
                                         set.put("chameleon_preset", "DUCK");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "DUCK", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "DUCK", player);
                                         tcf.updateChameleonFrame(id, PRESET.DUCK);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Rubber Duck");
@@ -248,7 +263,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Mineshaft
                                     if (!last_line.equals("MINESHAFT")) {
                                         set.put("chameleon_preset", "MINESHAFT");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "MINESHAFT", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "MINESHAFT", player);
                                         tcf.updateChameleonFrame(id, PRESET.MINESHAFT);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Mineshaft");
@@ -257,7 +272,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Creepy
                                     if (!last_line.equals("CREEPY")) {
                                         set.put("chameleon_preset", "CREEPY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CREEPY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CREEPY", player);
                                         tcf.updateChameleonFrame(id, PRESET.CREEPY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Creepy");
@@ -266,7 +281,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Peanut Butter Jar
                                     if (!last_line.equals("PEANUT")) {
                                         set.put("chameleon_preset", "PEANUT");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PEANUT", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PEANUT", player);
                                         tcf.updateChameleonFrame(id, PRESET.PEANUT);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Peanut Butter Jar");
@@ -275,7 +290,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Lamp Post
                                     if (!last_line.equals("LAMP")) {
                                         set.put("chameleon_preset", "LAMP");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LAMP", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LAMP", player);
                                         tcf.updateChameleonFrame(id, PRESET.LAMP);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Lamp Post");
@@ -284,7 +299,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Candy Cane
                                     if (!last_line.equals("CANDY")) {
                                         set.put("chameleon_preset", "CANDY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CANDY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CANDY", player);
                                         tcf.updateChameleonFrame(id, PRESET.CANDY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Candy Cane");
@@ -293,7 +308,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Toilet
                                     if (!last_line.equals("TOILET")) {
                                         set.put("chameleon_preset", "TOILET");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "TOILET", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "TOILET", player);
                                         tcf.updateChameleonFrame(id, PRESET.TOILET);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Water Closet");
@@ -302,7 +317,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Robot
                                     if (!last_line.equals("ROBOT")) {
                                         set.put("chameleon_preset", "ROBOT");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "ROBOT", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "ROBOT", player);
                                         tcf.updateChameleonFrame(id, PRESET.ROBOT);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Robot");
@@ -311,7 +326,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Flaming Torch
                                     if (!last_line.equals("TORCH")) {
                                         set.put("chameleon_preset", "TORCH");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "TORCH", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "TORCH", player);
                                         tcf.updateChameleonFrame(id, PRESET.TORCH);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Flaming Torch");
@@ -320,7 +335,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Pine Tree
                                     if (!last_line.equals("PINE")) {
                                         set.put("chameleon_preset", "PINE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PINE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PINE", player);
                                         tcf.updateChameleonFrame(id, PRESET.PINE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pine Tree");
@@ -329,7 +344,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Steam Punked
                                     if (!last_line.equals("PUNKED")) {
                                         set.put("chameleon_preset", "PUNKED");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PUNKED", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PUNKED", player);
                                         tcf.updateChameleonFrame(id, PRESET.PUNKED);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Steam Punked");
@@ -338,7 +353,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Nether Portal
                                     if (!last_line.equals("PORTAL")) {
                                         set.put("chameleon_preset", "PORTAL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PORTAL", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PORTAL", player);
                                         tcf.updateChameleonFrame(id, PRESET.PORTAL);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Nether Portal");
@@ -347,7 +362,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Cake
                                     if (!last_line.equals("CAKE")) {
                                         set.put("chameleon_preset", "CAKE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CAKE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CAKE", player);
                                         tcf.updateChameleonFrame(id, PRESET.CAKE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Birthday Cake");
@@ -356,7 +371,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Gravestone
                                     if (!last_line.equals("GRAVESTONE")) {
                                         set.put("chameleon_preset", "GRAVESTONE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GRAVESTONE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GRAVESTONE", player);
                                         tcf.updateChameleonFrame(id, PRESET.GRAVESTONE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gravestone");
@@ -365,7 +380,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Topsy-turvey
                                     if (!last_line.equals("TOPSYTURVEY")) {
                                         set.put("chameleon_preset", "TOPSYTURVEY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "TOPSYTURVEY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "TOPSYTURVEY", player);
                                         tcf.updateChameleonFrame(id, PRESET.TOPSYTURVEY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Topsy-turvey");
@@ -374,7 +389,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Mushroom
                                     if (!last_line.equals("SHROOM")) {
                                         set.put("chameleon_preset", "SHROOM");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SHROOM", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "SHROOM", player);
                                         tcf.updateChameleonFrame(id, PRESET.SHROOM);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Mushroom");
@@ -383,7 +398,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Random Fence
                                     if (!last_line.equals("FENCE")) {
                                         set.put("chameleon_preset", "FENCE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FENCE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "FENCE", player);
                                         tcf.updateChameleonFrame(id, PRESET.FENCE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Random Fence");
@@ -392,7 +407,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Gazebo
                                     if (!last_line.equals("GAZEBO")) {
                                         set.put("chameleon_preset", "GAZEBO");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GAZEBO", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GAZEBO", player);
                                         tcf.updateChameleonFrame(id, PRESET.GAZEBO);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gazebo");
@@ -401,7 +416,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Apperture Science
                                     if (!last_line.equals("APPERTURE")) {
                                         set.put("chameleon_preset", "APPERTURE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "APPERTURE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "APPERTURE", player);
                                         tcf.updateChameleonFrame(id, PRESET.APPERTURE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Apperture Science");
@@ -410,7 +425,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Lighthouse
                                     if (!last_line.equals("LIGHTHOUSE")) {
                                         set.put("chameleon_preset", "LIGHTHOUSE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIGHTHOUSE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIGHTHOUSE", player);
                                         tcf.updateChameleonFrame(id, PRESET.LIGHTHOUSE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Tiny Lighthouse");
@@ -419,7 +434,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Library
                                     if (!last_line.equals("LIBRARY")) {
                                         set.put("chameleon_preset", "LIBRARY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIBRARY", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIBRARY", player);
                                         tcf.updateChameleonFrame(id, PRESET.LIBRARY);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Library");
@@ -428,7 +443,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Snowman
                                     if (!last_line.equals("SNOWMAN")) {
                                         set.put("chameleon_preset", "SNOWMAN");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SNOWMAN", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "SNOWMAN", player);
                                         tcf.updateChameleonFrame(id, PRESET.SNOWMAN);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Snowman");
@@ -437,7 +452,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Jail Cell
                                     if (!last_line.equals("JAIL")) {
                                         set.put("chameleon_preset", "JAIL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "JAIL", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "JAIL", player);
                                         tcf.updateChameleonFrame(id, PRESET.JAIL);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Jail Cell");
@@ -446,7 +461,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Pandorica
                                     if (!last_line.equals("PANDORICA")) {
                                         set.put("chameleon_preset", "PANDORICA");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PANDORICA", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PANDORICA", player);
                                         tcf.updateChameleonFrame(id, PRESET.PANDORICA);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pandorica");
@@ -455,7 +470,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // double helix
                                     if (!last_line.equals("HELIX")) {
                                         set.put("chameleon_preset", "HELIX");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "HELIX", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "HELIX", player);
                                         tcf.updateChameleonFrame(id, PRESET.HELIX);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Double Helix");
@@ -464,7 +479,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Prismarine
                                     if (!last_line.equals("PRISMARINE")) {
                                         set.put("chameleon_preset", "PRISMARINE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PRISMARINE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PRISMARINE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Guardian Temple");
                                     tcf.updateChameleonFrame(id, PRESET.PRISMARINE);
@@ -473,7 +488,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Chorus
                                     if (!last_line.equals("CHORUS")) {
                                         set.put("chameleon_preset", "CHORUS");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CHORUS", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CHORUS", player);
                                         tcf.updateChameleonFrame(id, PRESET.CHORUS);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Chorus Flower");
@@ -482,7 +497,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Andesite
                                     if (!last_line.equals("ANDESITE")) {
                                         set.put("chameleon_preset", "ANDESITE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "ANDESITE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "ANDESITE", player);
                                         tcf.updateChameleonFrame(id, PRESET.ANDESITE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Andesite Box");
@@ -491,7 +506,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Diorite
                                     if (!last_line.equals("DIORITE")) {
                                         set.put("chameleon_preset", "DIORITE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "DIORITE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "DIORITE", player);
                                         tcf.updateChameleonFrame(id, PRESET.DIORITE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Diorite Box");
@@ -500,7 +515,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // Granite
                                     if (!last_line.equals("GRANITE")) {
                                         set.put("chameleon_preset", "GRANITE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GRANITE", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GRANITE", player);
                                         tcf.updateChameleonFrame(id, PRESET.GRANITE);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Granite Box");
@@ -509,7 +524,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // custom
                                     if (!last_line.equals("CUSTOM")) {
                                         set.put("chameleon_preset", "CUSTOM");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CUSTOM", player);
+                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CUSTOM", player);
                                         tcf.updateChameleonFrame(id, PRESET.CUSTOM);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
@@ -518,9 +533,9 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // return to Chameleon Circuit GUI
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        ItemStack[] chameleon = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                        ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                        gui.setContents(chameleon);
+                                        gui.setContents(stacks);
                                         player.openInventory(gui);
                                     }, 2L);
                                     break;
@@ -546,6 +561,14 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void updateChameleonSign(boolean update, ArrayList<HashMap<String, String>> map, String preset, Player player) {
+        if (update) {
+            for (HashMap<String, String> entry : map) {
+                TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
             }
         }
     }

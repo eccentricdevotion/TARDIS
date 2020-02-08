@@ -38,8 +38,6 @@ public class Tardis {
     private final SCHEMATIC schematic;
     private final boolean abandoned;
     private final String companions;
-    private final String save_sign;
-    private final String chameleon;
     private final PRESET preset;
     private final PRESET demat;
     private final ADAPTION adaption;
@@ -50,7 +48,6 @@ public class Tardis {
     private final boolean handbrake_on;
     private final boolean tardis_init;
     private final boolean recharging;
-    private final String scanner;
     private final boolean hidden;
     private final long lastuse;
     private final boolean iso_on;
@@ -63,7 +60,7 @@ public class Tardis {
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, String save_sign, String chameleon, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -73,8 +70,6 @@ public class Tardis {
         this.schematic = schematic;
         this.abandoned = abandoned;
         this.companions = companions;
-        this.save_sign = save_sign;
-        this.chameleon = chameleon;
         this.preset = preset;
         this.demat = demat;
         adaption = ADAPTION.values()[adapt];
@@ -85,7 +80,6 @@ public class Tardis {
         this.handbrake_on = handbrake_on;
         this.tardis_init = tardis_init;
         this.recharging = recharging;
-        this.scanner = scanner;
         this.hidden = hidden;
         this.lastuse = lastuse;
         this.iso_on = iso_on;
@@ -190,26 +184,6 @@ public class Tardis {
     }
 
     /**
-     * Returns a String representation of the Save Sign location in this TARDIS. It is in the form of {@code World
-     * name:x:y:z}
-     *
-     * @return the Save Sign location string, or an empty string if the sign does not exist
-     */
-    public String getSave_sign() {
-        return save_sign;
-    }
-
-    /**
-     * Returns a String representation of the Chameleon Sign location in this TARDIS. It is in the form of {@code World
-     * name:x:y:z}
-     *
-     * @return the Chameleon Sign location string, or an empty string if the sign does not exist
-     */
-    public String getChameleon() {
-        return chameleon;
-    }
-
-    /**
      * Returns the exterior PRESET the Chameleon Circuit will use when next materialising.
      *
      * @return the exterior PRESET
@@ -300,16 +274,6 @@ public class Tardis {
      */
     public boolean isRecharging() {
         return recharging;
-    }
-
-    /**
-     * Returns a String representation of the Scanner button location in this TARDIS. It is in the form of {@code World
-     * name:x:y:z}
-     *
-     * @return the Scanner button location string, or an empty string if the scanner does not exist
-     */
-    public String getScanner() {
-        return scanner;
     }
 
     /**

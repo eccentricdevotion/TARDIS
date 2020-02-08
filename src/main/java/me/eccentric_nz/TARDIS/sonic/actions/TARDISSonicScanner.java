@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
+import static me.eccentric_nz.TARDIS.control.TARDISScanner.getNearbyEntities;
 
 public class TARDISSonicScanner {
 

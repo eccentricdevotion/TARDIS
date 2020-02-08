@@ -238,6 +238,14 @@ public class TARDIS extends JavaPlugin {
                 new ConstructsConverter(this).convertConstructs();
                 getConfig().set("conversions.constructs", true);
             }
+            if (!getConfig().getBoolean("conversions.controls")) {
+                new TARDISControlsConverter(this).update();
+                getConfig().set("conversions.controls", true);
+            }
+            if (!getConfig().getBoolean("conversions.bind")) {
+                new TARDISBindConverter(this).update();
+                getConfig().set("conversions.bind", true);
+            }
             loadMultiverse();
             loadInventoryManager();
             checkTCG();
@@ -291,6 +299,7 @@ public class TARDIS extends JavaPlugin {
             }
             if (!getConfig().getBoolean("conversions.block_wall_signs")) {
                 new TARDISWallSignConverter(this).convertSignBlocks();
+                getConfig().set("conversions.block_wall_signs", true);
             }
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();

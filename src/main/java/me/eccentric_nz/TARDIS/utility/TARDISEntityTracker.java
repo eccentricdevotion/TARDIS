@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
+import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -40,7 +40,7 @@ public class TARDISEntityTracker {
     }
 
     public void addNPCs(Location exterior, Location interior, UUID uuid) {
-        List<Entity> ents = TARDISScannerListener.getNearbyEntities(exterior, 6);
+        List<Entity> ents = TARDISScanner.getNearbyEntities(exterior, 6);
         List<Integer> npcids = new ArrayList<>();
         for (Entity e : ents) {
             if (e instanceof LivingEntity) {

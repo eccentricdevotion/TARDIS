@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
+import me.eccentric_nz.TARDIS.control.TARDISControlListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISArchiveMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
@@ -78,6 +79,7 @@ import me.eccentric_nz.TARDIS.sonic.*;
 import me.eccentric_nz.TARDIS.transmat.TARDISTransmatGUIListener;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
+import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
 
 /**
  * Registers all the listeners for the various events required to use the TARDIS.
@@ -111,15 +113,11 @@ class TARDISListenerRegisterer {
         }
         TARDISSonicListener sonicListener = new TARDISSonicListener(plugin);
         plugin.getPM().registerEvents(sonicListener, plugin);
-        plugin.getGeneralKeeper().setSonicListener(sonicListener);
         TARDISRenderRoomListener rendererListener = new TARDISRenderRoomListener(plugin);
         plugin.getPM().registerEvents(rendererListener, plugin);
         plugin.getGeneralKeeper().setRendererListener(rendererListener);
-        TARDISButtonListener buttonListener = new TARDISButtonListener(plugin);
+        TARDISControlListener buttonListener = new TARDISControlListener(plugin);
         plugin.getPM().registerEvents(buttonListener, plugin);
-        TARDISScannerListener scannerListener = new TARDISScannerListener(plugin);
-        plugin.getPM().registerEvents(scannerListener, plugin);
-        plugin.getGeneralKeeper().setScannerListener(scannerListener);
         plugin.getPM().registerEvents(new TARDISARSListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISARSMapListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAdminMenuListener(plugin), plugin);
@@ -216,7 +214,6 @@ class TARDISListenerRegisterer {
                 plugin.getPM().registerEvents(new TARDISGrowthListener(plugin), plugin);
             }
         }
-        plugin.getPM().registerEvents(new TARDISSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSleepListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSmelterListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);

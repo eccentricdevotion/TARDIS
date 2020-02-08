@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.advanced;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -109,7 +110,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                             stack = new TARDISTerminalInventory(plugin).getTerminal();
                                             break;
                                         default: // scanner circuit
-                                            plugin.getGeneralKeeper().getScannerListener().scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
+                                            TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
                                             break;
                                     }
                                     // close inventory

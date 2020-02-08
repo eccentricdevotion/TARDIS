@@ -178,20 +178,22 @@ public class TARDISStaticUtils {
      * @param p    the player to message (if the Chameleon control is not a sign)
      */
     public static void setSign(String loc, int line, String text, Player p) {
-        // get sign block so we can update it
-        Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
-        if (l != null) {
-            Chunk chunk = l.getChunk();
-            while (!chunk.isLoaded()) {
-                chunk.load();
-            }
-            Block cc = l.getBlock();
-            if (Tag.SIGNS.isTagged(cc.getType())) {
-                Sign sign = (Sign) cc.getState();
-                sign.setLine(line, text);
-                sign.update();
-            } else {
-                TARDISMessage.send(p, "CHAM", " " + text);
+        if (!loc.isEmpty()) {
+            // get sign block so we can update it
+            Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
+            if (l != null) {
+                Chunk chunk = l.getChunk();
+                while (!chunk.isLoaded()) {
+                    chunk.load();
+                }
+                Block cc = l.getBlock();
+                if (Tag.SIGNS.isTagged(cc.getType())) {
+                    Sign sign = (Sign) cc.getState();
+                    sign.setLine(line, text);
+                    sign.update();
+                } else {
+                    TARDISMessage.send(p, "CHAM", " " + text);
+                }
             }
         }
     }

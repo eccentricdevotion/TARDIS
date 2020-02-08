@@ -197,3 +197,5 @@ conversions:
   block_wall_signs: true
   custom_preset: true
   constructs: true
+  controls: true
+  bind: true

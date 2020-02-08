@@ -220,7 +220,7 @@ public class QueryFactory {
      * @param id   the database table name to insert the data into.
      * @param type the type of control to insert.
      * @param l    the string location of the control
-     * @param s    what level the control is (1 primary, 2 secondary, 3 tertiary)
+     * @param s    what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
      */
     public void insertControl(int id, int type, String l, int s) {
         TARDISSQLInsertControl control = new TARDISSQLInsertControl(plugin, id, type, l, s);
@@ -233,7 +233,7 @@ public class QueryFactory {
      * @param id   the database table name to insert the data into.
      * @param type the type of control to insert.
      * @param l    the string location of the control
-     * @param s    what level the control is (1 primary, 2 secondary, 3 tertiary)
+     * @param s    what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
      */
     public void insertSyncControl(int id, int type, String l, int s) {
         Statement statement = null;

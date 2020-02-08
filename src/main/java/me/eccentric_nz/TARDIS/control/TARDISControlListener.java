@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -24,16 +24,13 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISSetFlightCommand;
-import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
+import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
@@ -65,24 +62,23 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISButtonListener implements Listener {
+public class TARDISControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30);
-    private final List<Integer> allow_unpowered = Arrays.asList(13, 17, 22);
-    private final List<Integer> no_siege = Arrays.asList(0, 10, 12, 16, 19, 20, 25, 29);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33);
 
-    public TARDISButtonListener(TARDIS plugin) {
+    public TARDISControlListener(TARDIS plugin) {
         this.plugin = plugin;
         validBlocks.add(Material.COMPARATOR);
         validBlocks.add(Material.DISPENSER);
         validBlocks.add(Material.JUKEBOX);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.NOTE_BLOCK);
-        validBlocks.addAll(Tag.WALL_SIGNS.getValues());
+        validBlocks.add(Material.STONE_PRESSURE_PLATE);
+        validBlocks.addAll(Tag.SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
-        validBlocks.addAll(TARDISMaterials.pressure_plates);
+        validBlocks.addAll(Tag.WOODEN_PRESSURE_PLATES.getValues());
     }
 
     /**
@@ -92,7 +88,7 @@ public class TARDISButtonListener implements Listener {
      * @param event the player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onButtonInteract(PlayerInteractEvent event) {
+    public void onControlInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || TARDISKeyboardListener.isKeyboardEditor(event.getPlayer().getInventory().getItemInMainHand())) {
             return;
         }
@@ -101,7 +97,7 @@ public class TARDISButtonListener implements Listener {
         if (block != null) {
             Material blockType = block.getType();
             Action action = event.getAction();
-            // only proceed if they are clicking a type of a button or a lever!
+            // only proceed if they are clicking a valid block type!
             if (validBlocks.contains(blockType)) {
                 // get clicked block location
                 String buttonloc = block.getLocation().toString();
@@ -119,6 +115,7 @@ public class TARDISButtonListener implements Listener {
                     if (!onlythese.contains(type)) {
                         return;
                     }
+                    CONTROL control = CONTROL.getById().get(type);
                     HashMap<String, Object> whereid = new HashMap<>();
                     whereid.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
@@ -137,11 +134,11 @@ public class TARDISButtonListener implements Listener {
                             TARDISMessage.send(player, "ISO_HANDS_OFF");
                             return;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !allow_unpowered.contains(type)) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !control.allowUnpowered()) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
-                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id) && no_siege.contains(type)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id) && control.isNoSiege()) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
@@ -168,7 +165,7 @@ public class TARDISButtonListener implements Listener {
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         plugin.getTrackerKeeper().getHasRandomised().add(id);
                                     }
-                                    new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
+                                    new TARDISRandomButton(plugin, player, id, level, rsc.getSecondary(), tardis.getCompanions(), tardis.getUuid()).clickButton();
                                     break;
                                 case 8: // fast return button
                                     if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -419,6 +416,17 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "FLIGHT_TOGGLED", TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
                                     }
                                     break;
+                                case 31:
+                                    // chameleon sign
+                                    new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset());
+                                    break;
+                                case 32:
+                                    // save_sign
+                                    new TARDISSaveSign(plugin).openGUI(player, id);
+                                    break;
+                                case 33:
+                                    // scanner
+                                    new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), level);
                                 default:
                                     break;
                             }

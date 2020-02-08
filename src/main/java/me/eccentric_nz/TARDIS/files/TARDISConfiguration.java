@@ -80,6 +80,8 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.block_materials", false);
         booleanOptions.put("conversions.block_wall_signs", false);
         booleanOptions.put("conversions.constructs", false);
+        booleanOptions.put("conversions.controls", false);
+        booleanOptions.put("conversions.bind", false);
         booleanOptions.put("conversions.custom_preset", false);
         booleanOptions.put("creation.add_perms", true);
         booleanOptions.put("creation.create_worlds_with_perms", false);

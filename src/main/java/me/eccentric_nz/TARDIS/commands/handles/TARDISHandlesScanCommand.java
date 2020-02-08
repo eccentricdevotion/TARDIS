@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
+import static me.eccentric_nz.TARDIS.control.TARDISScanner.getNearbyEntities;
 
 /**
  * @author eccentric_nz

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -51,7 +52,6 @@ class TARDISJunkPreference {
             int id = tardis.getTardis_id();
             // get current preset
             String current = tardis.getPreset().toString();
-            String chameleon = tardis.getChameleon();
             // must be outside of the TARDIS
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", ustr);
@@ -121,7 +121,15 @@ class TARDISJunkPreference {
             whereu.put("uuid", ustr);
             plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
             // set the Chameleon Circuit sign
-            TARDISStaticUtils.setSign(chameleon, 3, cham_set, player);
+            HashMap<String, Object> whereh = new HashMap<>();
+            whereh.put("tardis_id", id);
+            whereh.put("type", 31);
+            ResultSetControls rsc = new ResultSetControls(plugin, whereh, true);
+            if (rsc.resultSet()) {
+                for (HashMap<String, String> map : rsc.getData()) {
+                    TARDISStaticUtils.setSign(map.get("location"), 3, cham_set, player);
+                }
+            }
             // rebuild
             player.performCommand("tardis rebuild");
             return true;

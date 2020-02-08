@@ -279,7 +279,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                     return;
                                 }
                                 int id = tardis.getTardis_id();
-                                String chameleon = tardis.getChameleon();
                                 String cham_set;
                                 HashMap<String, Object> setj = new HashMap<>();
                                 if (has) {
@@ -315,8 +314,16 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                     cham_set = "JUNK_MODE";
                                 }
                                 plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
-                                // set the Chameleon Circuit sign
-                                TARDISStaticUtils.setSign(chameleon, 3, cham_set, p);
+                                // set the Chameleon Circuit sign(s)
+                                HashMap<String, Object> wherec = new HashMap<>();
+                                wherec.put("tardis_id", id);
+                                wherec.put("type", 31);
+                                ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
+                                if (rsc.resultSet()) {
+                                    for (HashMap<String, String> map : rsc.getData()) {
+                                        TARDISStaticUtils.setSign(map.get("location"), 3, cham_set, p);
+                                    }
+                                }
                                 // rebuild
                                 TARDISMessage.send(p, message);
                                 p.performCommand("tardis rebuild");

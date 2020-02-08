@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -150,7 +151,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         TARDISMessage.send(player, "CHAM_NO_SAVE");
                                         return;
                                     }
-                                    buildConstruct(tardis.getPreset().toString(), id, tardis.getChameleon(), player);
+                                    buildConstruct(tardis.getPreset().toString(), id, player);
                                     break;
                                 case 8:
                                     String air = TARDISConstants.AIR.getAsString();
@@ -260,7 +261,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         set.put("tardis_id", id);
                                         plugin.getQueryFactory().doInsert("chameleon", set);
                                     }
-                                    buildConstruct(tardis.getPreset().toString(), id, tardis.getChameleon(), player);
+                                    buildConstruct(tardis.getPreset().toString(), id, player);
                                     break;
                                 case 26:
                                     // set lamp
@@ -315,7 +316,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         currentDoor.put(uuid, d);
     }
 
-    private void buildConstruct(String preset, int id, String location, Player player) {
+    private void buildConstruct(String preset, int id, Player player) {
         // update tardis table
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
@@ -323,8 +324,16 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
-        // update chameleon sign
-        TARDISStaticUtils.setSign(location, 3, "CONSTRUCT", player);
+        // update the Chameleon Circuit sign(s)
+        HashMap<String, Object> wherec = new HashMap<>();
+        wherec.put("tardis_id", id);
+        wherec.put("type", 31);
+        ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
+        if (rsc.resultSet()) {
+            for (HashMap<String, String> map : rsc.getData()) {
+                TARDISStaticUtils.setSign(map.get("location"), 3, "CONSTRUCT", player);
+            }
+        }
         new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT);
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild

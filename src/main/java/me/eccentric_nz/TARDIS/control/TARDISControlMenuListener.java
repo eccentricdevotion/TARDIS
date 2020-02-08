@@ -250,7 +250,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 case 15:
                                     // scanner
                                     close(player);
-                                    plugin.getGeneralKeeper().getScannerListener().scan(player, id, plugin.getServer().getScheduler());
+                                    TARDISScanner.scan(player, id, plugin.getServer().getScheduler());
                                     break;
                                 case 17:
                                     //player prefs
