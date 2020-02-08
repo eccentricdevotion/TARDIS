@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -465,10 +466,13 @@ public class TARDISTravelCommands implements CommandExecutor {
                             BIOME_SUBS.forEach((bi) -> buf.append(bi).append(", "));
                             String b = buf.toString().substring(0, buf.length() - 2);
                             TARDISMessage.send(player, "BIOMES", b);
-                            return true;
                         } else {
                             try {
                                 Biome biome = Biome.valueOf(upper);
+                                if (TARDISConstants.ILLEGAL_BIOMES.contains(biome)) {
+                                    TARDISMessage.send(player, "BIOME_TRAVEL_NOT_VALID");
+                                    return true;
+                                }
                                 TARDISMessage.send(player, "BIOME_SEARCH");
                                 World w;
                                 int x;
@@ -500,8 +504,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     x = 0;
                                     z = 0;
                                 } else {
-                                    if (rsc.getWorld().getName().equalsIgnoreCase("Skaro")) {
-                                        TARDISMessage.send(player, "BIOME_NOT_SKARO");
+                                    if (rsc.getWorld().getName().equalsIgnoreCase("Gallifrey") || rsc.getWorld().getName().equalsIgnoreCase("Siluria") || rsc.getWorld().getName().equalsIgnoreCase("Skaro")) {
+                                        TARDISMessage.send(player, "BIOME_NOT_PLANET", rsc.getWorld().getName());
                                         return true;
                                     }
                                     w = rsc.getWorld();
@@ -552,8 +556,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "BIOME_NOT_VALID");
                                 return true;
                             }
-                            return true;
                         }
+                        return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                         // we're thinking this is a saved destination name
