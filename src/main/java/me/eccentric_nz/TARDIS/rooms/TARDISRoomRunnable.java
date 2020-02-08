@@ -386,10 +386,14 @@ public class TARDISRoomRunnable implements Runnable {
                     Art art = Art.valueOf(painting.getString("art"));
                     BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
                     Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, resety + py, resetz + pz));
-                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                    ent.teleport(pl);
-                    ent.setFacingDirection(facing, true);
-                    ent.setArt(art, true);
+                    try {
+                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                        ent.teleport(pl);
+                        ent.setFacingDirection(facing, true);
+                        ent.setArt(art, true);
+                    } catch (IllegalArgumentException e) {
+                        plugin.debug("Could not spawn painting! " + e.getMessage());
+                    }
                 }
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
