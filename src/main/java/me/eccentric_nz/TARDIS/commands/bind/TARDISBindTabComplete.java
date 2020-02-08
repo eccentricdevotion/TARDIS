@@ -14,13 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.TARDIS.commands.bind;
 
 import com.google.common.collect.ImmutableList;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +32,21 @@ import java.util.List;
  */
 public class TARDISBindTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("save", "cmd", "player", "area", "biome", "remove", "update", "chameleon", "transmat");
-    private final ImmutableList<String> T1_SUBS = ImmutableList.of("hide", "rebuild", "home", "cave", "make_her_blue", "occupy");
-    private final ImmutableList<String> CHAM_SUBS = ImmutableList.of("off", "adapt", "invisible");
+    private final List<String> ROOT_SUBS = ImmutableList.of("add", "remove");
+    private final ImmutableList<String> FIRST_SUBS = ImmutableList.of("save", "player", "area", "biome", "hide", "rebuild", "home", "cave", "make_her_blue", "occupy", "chameleon", "transmat");
+    private final List<String> CHAM_SUBS = new ArrayList<>();
+    private final List<String> BIOME_SUBS = new ArrayList<>();
+
+    public TARDISBindTabComplete() {
+        CHAM_SUBS.add("OFF");
+        CHAM_SUBS.add("ADAPT");
+        for (PRESET p : PRESET.values()) {
+            CHAM_SUBS.add(p.toString());
+        }
+        for (Biome b : Biome.values()) {
+            BIOME_SUBS.add(b.toString());
+        }
+    }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -39,14 +55,16 @@ public class TARDISBindTabComplete extends TARDISCompleter implements TabComplet
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
-            String sub = args[0];
+            return partial(args[1], FIRST_SUBS);
+        } else if (args.length == 3) {
+            String sub = args[1];
             switch (sub) {
                 case "player":
                     return null;
-                case "cmd":
-                    return partial(lastArg, T1_SUBS);
                 case "chameleon":
                     return partial(lastArg, CHAM_SUBS);
+                case "biome":
+                    return partial(lastArg, BIOME_SUBS);
             }
         }
         return ImmutableList.of();

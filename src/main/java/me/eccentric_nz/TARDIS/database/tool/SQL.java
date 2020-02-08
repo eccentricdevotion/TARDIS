@@ -32,6 +32,7 @@ public class SQL {
         areas,
         ars,
         back,
+        bind,
         blocks,
         chameleon,
         chunks,
@@ -81,6 +82,8 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %sars (ars_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', ars_x_east int(2) DEFAULT '2', ars_z_south int(2) DEFAULT '2', ars_y_layer int(1) DEFAULT '1', json text, PRIMARY KEY (ars_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sback (back_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (back_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %sbindk (bind_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', `type` int(1) DEFAULT '0', location varchar(512) DEFAULT '', name varchar(32) DEFAULT '', PRIMARY KEY (bind_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sblocks (b_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', `data` text, police_box int(1) DEFAULT '0', PRIMARY KEY (b_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -167,6 +170,8 @@ public class SQL {
 
             "INSERT INTO `%sback` (`back_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
 
+            "INSERT INTO `%sbind` (`bind_id`, `tardis_id`, `type`, `location`, `name`) VALUES ",
+
             "INSERT INTO `%sblocks` (`b_id`, `tardis_id`, `location`, `data`, `police_box`) VALUES ",
 
             "INSERT INTO `%schameleon` (`chameleon_id`, `tardis_id`, `blueprintData`, `stainData`, `glassData`, `line1`, `line2`, `line3`, `line4`, `asymmetric`) VALUES ",
@@ -251,6 +256,8 @@ public class SQL {
             "(%s, %s, '%s', '%s', %s, %s, %s, '%s')",
 
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
+
+            "(%s, %s, %s, '%s', %s)",
 
             "(%s, %s, '%s', '%s', %s)",
 

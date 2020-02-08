@@ -905,27 +905,48 @@ commands:
     description: Bind TARDIS commands to buttons and other controls
     permission: tardis.update
     permission-message: You don't have the permission <permission> to use this command
-    save:
-      description: Bind a saved location to a button.
-      usage: /<command> save [save name]
-    cmd:
-      description: Bind the 'home', 'hide' or 'rebuild' commands to a button.
-      usage: /<command> cmd [home|hide|rebuild|cave|make_her_blue|occupy]
-    player:
-      description: Bind a player location to a button.
-      usage: /<command> player [player]
-    area:
-      description: Bind a TARDIS area to a button.
-      usage: /<command> area [area name]
-    biome:
-      description: Bind a biome to a button.
-      usage: /<command> biome [biome]
+    add:
+      description: Bind something to a button
+      usage: /<command> add [save|player|area|biome|chameleon|transmat|hide|rebuild|home|cave|make_her_blue|occupy] [which]
+      save:
+        description: Bind a saved location to a button.
+        usage: /<command> add save [save name]
+      player:
+        description: Bind a player location to a button.
+        usage: /<command> add player [player]
+      area:
+        description: Bind a TARDIS area to a button.
+        usage: /<command> add area [area name]
+      biome:
+        description: Bind a biome to a button.
+        usage: /<command> add biome [biome]
+      chameleon:
+        description: Bind a chameleon preset to a button.
+        usage: /<command> add chameleon [off|adapt|preset]
+      transmat:
+        description: Bind a internal TARDIS transmat location to a button.
+        usage: /<command> add transmat [name]
+      hide:
+        description: Bind the '/tardis hide' command to a button.
+        usage: /<command> add hide
+      rebuild:
+        description: Bind the '/tardis rebuild' command to a button.
+        usage: /<command> add rebuild
+      home:
+        description: Bind the '/tardistravel home' command to a button.
+        usage: /<command> add home
+      cave:
+        description: Bind the '/tardistravel cave' command to a button.
+        usage: /<command> add cave
+      make_her_blue:
+        description: Bind the '/tardis occupy' command to a button.
+        usage: /<command> add make_her_blue
+      occupy:
+        description: Bind the '/tardis make_her_blue' command to a button.
+        usage: /<command> add occupy
     remove:
-      description: Remove a 'bound' saved location, command, player or area from a button.
-      usage: /<command> remove [save name|cmd|player|area]
-    transmat:
-      description: Bind a internal TARDIS transmat location to a button.
-      usage: /<command> transmat [name]
+      description: Remove a 'bound' saved location, command, player, chameleon preset, transmat or area from a button. You will need to click the bound block to remove the record.
+      usage: /<command> remove [bind type]
   tardisgravity:
     aliases: tgravity
     description: Add or remove gravity well blocks.

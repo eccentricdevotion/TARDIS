@@ -23,6 +23,8 @@ import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveCommand;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveTabComplete;
+import me.eccentric_nz.TARDIS.commands.bind.TARDISBindCommands;
+import me.eccentric_nz.TARDIS.commands.bind.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesCommand;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTabComplete;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
