@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -42,9 +41,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -58,19 +55,9 @@ import java.util.UUID;
 public class TARDISUpdateListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Material> validSigns = new ArrayList<>();
-    private final List<Material> plates = new ArrayList<>();
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
-        validBlocks.add(Material.COMPARATOR);
-        validBlocks.add(Material.LEVER);
-        validBlocks.addAll(Tag.BUTTONS.getValues());
-        validSigns.add(Material.COMPARATOR);
-        validSigns.addAll(Tag.SIGNS.getValues());
-        plates.add(Material.STONE_PRESSURE_PLATE);
-        plates.addAll(Tag.WOODEN_PRESSURE_PLATES.getValues());
     }
 
     /**
@@ -136,53 +123,31 @@ public class TARDISUpdateListener implements Listener {
             } else {
                 plugin.getTrackerKeeper().getPlayers().remove(uuid);
             }
+            if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
+                TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
+                return;
+            }
             switch (updateable) {
                 case BACKDOOR:
                 case DOOR:
-                    if (blockType.equals(updateable.getMaterial())) {
-                        new UpdateDoor(plugin).process(updateable, block, secondary, id, player);
-                    }
+                    new UpdateDoor(plugin).process(updateable, block, secondary, id, player);
                     break;
                 case GENERATOR:
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 24, blockLocStr, 0);
                     break;
                 case DISPENSER:
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 28, blockLocStr, 0);
                     break;
                 case TELEPATHIC:
-                    if (!plugin.getTrackerKeeper().getTelepathicPlacements().containsKey(uuid)) {
-                        TARDISMessage.send(player, "TELEPATHIC_PLACE");
-                        return;
-                    }
                     plugin.getTrackerKeeper().getTelepathicPlacements().remove(uuid);
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 23, blockLocStr, secondary ? 1 : 0);
                     Block detector = block;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setBlockData(TARDISConstants.DAYLIGHT), 3L);
                     break;
                 case HANDBRAKE:
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 0, blockLocStr, secondary ? 1 : 0);
                     break;
                 case BEACON:
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                     break;
@@ -203,18 +168,10 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                     break;
                 case RAIL:
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     set.put("rail", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                     break;
                 case CHAMELEON:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 31, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign cs = (Sign) block.getState();
@@ -225,10 +182,6 @@ public class TARDISUpdateListener implements Listener {
                     cs.update();
                     break;
                 case KEYBOARD:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 7, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ks = (Sign) block.getState();
@@ -239,10 +192,6 @@ public class TARDISUpdateListener implements Listener {
                     ks.update();
                     break;
                 case SAVE_SIGN:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 32, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ss = (Sign) block.getState();
@@ -253,10 +202,6 @@ public class TARDISUpdateListener implements Listener {
                     ss.update();
                     break;
                 case TERMINAL:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 9, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ts = (Sign) block.getState();
@@ -267,10 +212,6 @@ public class TARDISUpdateListener implements Listener {
                     ts.update();
                     break;
                 case CONTROL:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 22, blockLocStr, 0);
                     // add text to sign
                     Sign os = (Sign) block.getState();
@@ -281,17 +222,9 @@ public class TARDISUpdateListener implements Listener {
                     os.update();
                     break;
                 case ARS:
-                    if (!updateable.getMaterial().equals(Material.ELYTRA)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     new UpdateARS(plugin).process(block, tardis.getSchematic(), id, playerUUID);
                     break;
                 case BACK:
-                    if (!updateable.getMaterial().equals(Material.ELYTRA)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 8, blockLocStr, secondary ? 1 : 0);
                     // insert current into back
                     HashMap<String, Object> wherecl = new HashMap<>();
@@ -311,10 +244,6 @@ public class TARDISUpdateListener implements Listener {
                     }
                     break;
                 case TEMPORAL:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 11, blockLocStr, 0);
                     // add text to sign
                     Sign es = (Sign) block.getState();
@@ -326,19 +255,11 @@ public class TARDISUpdateListener implements Listener {
                     break;
                 case ADVANCED:
                 case STORAGE:
-                    if (!blockType.equals(updateable.getMaterial())) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, 0);
                     // check if player has storage record, and update the tardis_id field
                     plugin.getUtils().updateStorageId(playerUUID, id);
                     break;
                 case INFO:
-                    if (!Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 13, blockLocStr, 0);
                     // add text to sign
                     Sign s = (Sign) block.getState();
@@ -349,17 +270,9 @@ public class TARDISUpdateListener implements Listener {
                     s.update();
                     break;
                 case ZERO:
-                    if (!plates.contains(blockType) && !validBlocks.contains(blockType) && !Tag.SIGNS.isTagged(blockType)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
                     break;
                 default:
-                    if (!updateable.getMaterial().equals(Material.ELYTRA)) {
-                        TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
-                        return;
-                    }
                     plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     break;
             }

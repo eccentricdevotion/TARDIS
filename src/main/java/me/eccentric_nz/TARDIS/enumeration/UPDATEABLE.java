@@ -2,63 +2,79 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.inventory.RecipeChoice;
 
 public enum UPDATEABLE {
 
-    // "artron", "back", "button", "chameleon", "control", "direction", "door", "forcefield", "handbrake", "save-sign", "scanner", "terminal", "world-repeater", "x-repeater", "y-repeater", "z-repeater"
-
-    ADVANCED(false, true, Material.JUKEBOX),
-    ARS(true, true, Material.ELYTRA),
-    ARTRON(false, true, Material.ELYTRA),
-    BACK(true, true, Material.ELYTRA),
-    BACKDOOR(false, false, Material.IRON_DOOR),
-    BEACON(false, false, Material.BEACON),
-    BUTTON(true, true, Material.ELYTRA),
-    CHAMELEON(true, true, Material.OAK_WALL_SIGN),
-    CONDENSER(true, true, Material.CHEST),
-    CONTROL(true, true, Material.ELYTRA),
-    CREEPER(false, false, Material.ELYTRA),
-    DIRECTION(false, true, Material.ELYTRA),
-    DISPENSER(true, true, Material.DISPENSER),
-    DOOR(false, true, Material.IRON_DOOR),
-    EPS(false, false, Material.SPAWNER),
-    FARM(false, false, Material.ELYTRA),
-    FLIGHT(true, true, Material.ELYTRA),
-    FORCEFIELD(true, true, Material.ELYTRA),
-    FRAME(false, true, Material.ELYTRA),
-    GENERATOR(false, true, Material.FLOWER_POT),
-    HANDBRAKE(false, true, Material.LEVER),
-    HINGE(false, false, Material.ELYTRA),
-    INFO(true, true, Material.ELYTRA),
-    KEYBOARD(false, false, Material.OAK_WALL_SIGN),
-    LIGHT(true, true, Material.ELYTRA),
-    RAIL(false, false, Material.OAK_FENCE),
-    SAVE_SIGN(true, true, Material.OAK_WALL_SIGN),
-    SCANNER(true, true, Material.ELYTRA),
-    SIEGE(true, false, Material.ELYTRA),
-    STABLE(false, false, Material.ELYTRA),
-    STALL(false, false, Material.ELYTRA),
-    STORAGE(true, false, Material.NOTE_BLOCK),
-    TELEPATHIC(false, true, Material.DAYLIGHT_DETECTOR),
-    TEMPORAL(true, true, Material.ELYTRA),
-    TERMINAL(true, true, Material.ELYTRA),
-    TOGGLE_WOOL(true, true, Material.ELYTRA),
-    VAULT(false, false, Material.CHEST),
-    VILLAGE(false, false, Material.ELYTRA),
-    WORLD_REPEATER(false, true, Material.REPEATER),
-    X_REPEATER(false, true, Material.REPEATER),
-    Y_REPEATER(false, true, Material.REPEATER),
-    Z_REPEATER(false, true, Material.REPEATER),
-    ZERO(true, false, Material.ELYTRA);
+    ADVANCED(false, true, new RecipeChoice.MaterialChoice(Material.JUKEBOX)),
+    ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    ARTRON(false, true),
+    BACK(true, true),
+    BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR)),
+    BEACON(false, false, new RecipeChoice.MaterialChoice(Material.BEACON)),
+    BUTTON(true, true),
+    CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    CONDENSER(true, true, new RecipeChoice.MaterialChoice(Material.CHEST)),
+    CONTROL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    CREEPER(false, false, true),
+    DIRECTION(false, true),
+    DISPENSER(true, true, new RecipeChoice.MaterialChoice(Material.DISPENSER)),
+    DOOR(false, true, new RecipeChoice.MaterialChoice(Material.IRON_DOOR)),
+    EPS(false, false, true),
+    FARM(false, false, true),
+    FLIGHT(true, true),
+    FORCEFIELD(true, true),
+    FRAME(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME)),
+    GENERATOR(false, true, new RecipeChoice.MaterialChoice(Material.FLOWER_POT)),
+    HANDBRAKE(false, true, new RecipeChoice.MaterialChoice(Material.LEVER)),
+    HINGE(false, false),
+    INFO(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    KEYBOARD(false, false, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    LIGHT(true, true),
+    RAIL(false, false, new RecipeChoice.MaterialChoice(Tag.FENCES)),
+    SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    SCANNER(true, true),
+    SIEGE(true, false),
+    STABLE(false, false, true),
+    STALL(false, false, true),
+    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.NOTE_BLOCK)),
+    TELEPATHIC(false, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR)),
+    TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    TOGGLE_WOOL(true, true),
+    VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST)),
+    VILLAGE(false, false, true),
+    WORLD_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
+    X_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
+    Y_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
+    Z_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
+    ZERO(true, false);
 
     private final boolean control;
     private final boolean secondary;
-    private final Material material;
+    private final boolean anyBlock;
+    private final RecipeChoice.MaterialChoice materialChoice;
 
-    UPDATEABLE(boolean control, boolean secondary, Material material) {
+    UPDATEABLE(boolean control, boolean secondary) {
         this.control = control;
         this.secondary = secondary;
-        this.material = material;
+        anyBlock = false;
+        materialChoice = new RecipeChoice.MaterialChoice(Material.COMPARATOR, Material.LEVER, Material.OAK_BUTTON, Material.DARK_OAK_BUTTON, Material.SPRUCE_BUTTON, Material.BIRCH_BUTTON, Material.ACACIA_BUTTON, Material.JUNGLE_BUTTON, Material.STONE_BUTTON, Material.OAK_PRESSURE_PLATE, Material.DARK_OAK_PRESSURE_PLATE, Material.SPRUCE_PRESSURE_PLATE, Material.BIRCH_PRESSURE_PLATE, Material.ACACIA_PRESSURE_PLATE, Material.JUNGLE_PRESSURE_PLATE, Material.STONE_PRESSURE_PLATE, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.JUNGLE_WALL_SIGN);
+    }
+
+    UPDATEABLE(boolean control, boolean secondary, boolean anyBlock) {
+        this.control = control;
+        this.secondary = secondary;
+        this.anyBlock = anyBlock;
+        materialChoice = new RecipeChoice.MaterialChoice(Material.SPAWNER);
+    }
+
+    UPDATEABLE(boolean control, boolean secondary, RecipeChoice.MaterialChoice materialChoice) {
+        this.control = control;
+        this.secondary = secondary;
+        anyBlock = false;
+        this.materialChoice = materialChoice;
     }
 
     public String getName() {
@@ -73,7 +89,11 @@ public enum UPDATEABLE {
         return secondary;
     }
 
-    public Material getMaterial() {
-        return material;
+    public boolean isAnyBlock() {
+        return anyBlock;
+    }
+
+    public RecipeChoice.MaterialChoice getMaterialChoice() {
+        return materialChoice;
     }
 }
