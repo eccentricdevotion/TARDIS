@@ -546,11 +546,7 @@ public class TARDISRoomRunnable implements Runnable {
             }
             // set condenser
             if (type.equals(Material.CHEST) && room.equals("HARMONY")) {
-                HashMap<String, Object> setc = new HashMap<>();
-                setc.put("condenser", world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", tardis_id);
-                plugin.getQueryFactory().doUpdate("tardis", setc, wherec);
+                plugin.getQueryFactory().insertControl(tardis_id, 34, new Location(world, startx, starty, startz).toString(), 1);
             }
             // set drop chest
             if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player.hasPermission("tardis.vault")) {
