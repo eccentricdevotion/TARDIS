@@ -48,7 +48,7 @@ public class TARDISAccessoryListener implements Listener {
                     if (im.hasCustomModelData()) {
                         int cmd = im.getCustomModelData();
                         if (cmd > 10000022 && cmd < 10000041) {
-                            ItemStack accessory = new ItemStack(Material.MUSHROOM_STEM, 1);
+                            ItemStack accessory = new ItemStack(Material.BIRCH_BUTTON, 1);
                             ItemMeta bim = accessory.getItemMeta();
                             bim.setDisplayName(im.getDisplayName());
                             bim.setCustomModelData(cmd);
@@ -59,7 +59,7 @@ public class TARDISAccessoryListener implements Listener {
                             }, 1L);
                         }
                     }
-                } else if (isNullOrAir(cursor) && event.getCurrentItem().getType() == Material.MUSHROOM_STEM && event.getCurrentItem().hasItemMeta()) {
+                } else if (isNullOrAir(cursor) && event.getCurrentItem().getType() == Material.BIRCH_BUTTON && event.getCurrentItem().hasItemMeta()) {
                     ItemStack current = event.getCurrentItem();
                     ItemMeta im = current.getItemMeta();
                     if (im.hasCustomModelData()) {
