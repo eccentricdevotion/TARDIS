@@ -145,7 +145,6 @@ public class ResultSetTardis {
                         rs.getInt("adapti_on"),
                         rs.getInt("artron_level"),
                         rs.getString("creeper"),
-                        rs.getString("condenser"),
                         rs.getString("beacon"),
                         rs.getBoolean("handbrake_on"),
                         rs.getBoolean("tardis_init"),

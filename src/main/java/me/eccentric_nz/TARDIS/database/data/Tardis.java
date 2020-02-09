@@ -43,7 +43,6 @@ public class Tardis {
     private final ADAPTION adaption;
     private final int artron_level;
     private final String creeper;
-    private final String condenser;
     private final String beacon;
     private final boolean handbrake_on;
     private final boolean tardis_init;
@@ -60,7 +59,7 @@ public class Tardis {
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -75,7 +74,6 @@ public class Tardis {
         adaption = ADAPTION.values()[adapt];
         this.artron_level = artron_level;
         this.creeper = creeper;
-        this.condenser = condenser;
         this.beacon = beacon;
         this.handbrake_on = handbrake_on;
         this.tardis_init = tardis_init;
@@ -227,16 +225,6 @@ public class Tardis {
      */
     public String getCreeper() {
         return creeper;
-    }
-
-    /**
-     * Returns a String representation of the Artron Condenser chest location in this TARDIS. It is in the form of
-     * {@code World name:x:y:z}
-     *
-     * @return the Artron Condenser chest location string
-     */
-    public String getCondenser() {
-        return condenser;
     }
 
     /**

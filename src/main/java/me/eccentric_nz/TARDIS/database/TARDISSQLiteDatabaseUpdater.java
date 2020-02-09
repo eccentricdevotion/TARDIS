@@ -111,7 +111,6 @@ class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("beacon TEXT DEFAULT ''");
         tardisupdates.add("chameleon_demat TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("chameleon_preset TEXT DEFAULT 'FACTORY'");
-        tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
@@ -126,7 +125,6 @@ class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("renderer TEXT DEFAULT ''");
-        tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("siege_on INTEGER DEFAULT 0");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
