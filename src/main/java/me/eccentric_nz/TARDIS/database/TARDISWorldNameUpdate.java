@@ -50,16 +50,13 @@ public class TARDISWorldNameUpdate {
             select = "SELECT * FROM " + prefix + "tardis";
             rs = statement.executeQuery(select);
             // tardis table
-            query = "UPDATE " + prefix + "tardis SET chunk = ?, chameleon = ?, creeper = ?, condenser = ?, scanner = ?, beacon = ?, eps = ?, rail = ?, renderer = ?, zero = ? WHERE tardis_id = ?";
+            query = "UPDATE " + prefix + "tardis SET chunk = ?, creeper = ?, beacon = ?, eps = ?, rail = ?, renderer = ?, zero = ? WHERE tardis_id = ?";
             ps = connection.prepareStatement(query);
             int i = 0;
             while (rs.next()) {
                 if (rs.getString("chunk").contains("tardis_time_vortex")) {
                     ps.setString(1, rs.getString("chunk").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(2, rs.getString("chameleon").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
                     ps.setString(3, rs.getString("creeper").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(4, rs.getString("condenser").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
-                    ps.setString(5, rs.getString("scanner").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
                     ps.setString(6, rs.getString("beacon").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
                     ps.setString(7, rs.getString("eps").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
                     ps.setString(8, rs.getString("rail").replace("tardis_time_vortex", "TARDIS_TimeVortex"));
