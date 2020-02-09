@@ -46,8 +46,6 @@ public class ResultSetDestinations {
     private int z;
     private String direction;
     private String preset;
-    private String bind;
-    private int type;
     private boolean submarine;
     private int slot;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
@@ -120,8 +118,6 @@ public class ResultSetDestinations {
                     direction = rs.getString("direction");
                     preset = rs.getString("preset");
                     submarine = rs.getBoolean("submarine");
-                    bind = rs.getString("bind");
-                    type = rs.getInt("type");
                     slot = rs.getInt("slot");
                 }
             } else {
@@ -183,14 +179,6 @@ public class ResultSetDestinations {
 
     public boolean isSubmarine() {
         return submarine;
-    }
-
-    public String getBind() {
-        return bind;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public int getSlot() {
