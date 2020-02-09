@@ -253,8 +253,8 @@ class TARDISBuildAbandoned {
                     }
                     if (type.equals(Material.CHEST)) {
                         // remember the location of the condenser chest
-                        String chest = world.getName() + ":" + x + ":" + y + ":" + z;
-                        set.put("condenser", chest);
+                        String condenser = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 34, condenser, 0);
                     }
                     if (type.equals(Material.IRON_DOOR)) {
                         Bisected bisected = (Bisected) data;
