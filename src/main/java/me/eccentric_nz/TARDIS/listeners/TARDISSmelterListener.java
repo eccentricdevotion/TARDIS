@@ -85,7 +85,16 @@ public class TARDISSmelterListener implements Listener {
                     remainders.put(key, remainder);
                 }
                 int distrib = value / fsize;
-                fuelChests.forEach((fc) -> fc.getInventory().addItem(new ItemStack(key, distrib)));
+                fuelChests.forEach((fc) -> {
+                    HashMap<Integer, ItemStack> leftoverfuel = fc.getInventory().addItem(new ItemStack(key, distrib));
+                    if (!leftoverfuel.isEmpty()) {
+                        for (ItemStack f : leftoverfuel.values()) {
+                            Material fm = f.getType();
+                            int amount = (remainders.containsKey(fm)) ? remainders.get(fm) + f.getAmount() : f.getAmount();
+                            remainders.put(fm, amount);
+                        }
+                    }
+                });
             });
             // process ores
             int osize = oreChests.size();
@@ -95,10 +104,32 @@ public class TARDISSmelterListener implements Listener {
                     remainders.put(key, remainder);
                 }
                 int distrib = value / osize;
-                oreChests.forEach((fc) -> fc.getInventory().addItem(new ItemStack(key, distrib)));
+                oreChests.forEach((fc) -> {
+                    HashMap<Integer, ItemStack> leftoverore = fc.getInventory().addItem(new ItemStack(key, distrib));
+                    if (!leftoverore.isEmpty()) {
+                        for (ItemStack o : leftoverore.values()) {
+                            Material om = o.getType();
+                            int amount = (remainders.containsKey(om)) ? remainders.get(om) + o.getAmount() : o.getAmount();
+                            remainders.put(om, amount);
+                        }
+                    }
+                });
             });
             // return remainder to drop chest
-            remainders.forEach((key, value) -> inv.addItem(new ItemStack(key, value)));
+            remainders.forEach((key, value) -> {
+                int max = key.getMaxStackSize();
+                if (value > max) {
+                    int remainder = value % max;
+                    for (int i = 0; i < value / max; i++) {
+                        inv.addItem(new ItemStack(key, max));
+                    }
+                    if (remainder > 0) {
+                        inv.addItem(new ItemStack(key, remainder));
+                    }
+                } else {
+                    inv.addItem(new ItemStack(key, value));
+                }
+            });
         }
     }
 }
