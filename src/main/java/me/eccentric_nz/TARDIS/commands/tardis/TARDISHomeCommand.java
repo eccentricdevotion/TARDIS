@@ -76,8 +76,9 @@ class TARDISHomeCommand {
                 return true;
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
+                String world = eyeLocation.getWorld().getName();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;
                 }
@@ -94,7 +95,6 @@ class TARDISHomeCommand {
                     eyeLocation.setY(yplusone + 1);
                 }
                 // check the world is not excluded
-                String world = eyeLocation.getWorld().getName();
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                     TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;

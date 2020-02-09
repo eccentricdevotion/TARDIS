@@ -723,7 +723,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     // check world is enabled for travel
-                                    if (!containsIgnoreCase(world.getName(), plugin.getTardisAPI().getWorlds())) {
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
                                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
@@ -767,6 +767,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
                                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                                        return true;
+                                    }
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".time_travel")) {
+                                        TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
                                     if (rsc.isSubmarine()) {
