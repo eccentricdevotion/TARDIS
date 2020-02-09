@@ -69,7 +69,7 @@ public class TARDISTownyChecker {
             switch (tr) {
                 case wilderness:
                     // allow if wilderness, deny if a claimed town
-                    bool = TownyAPI.getInstance().isWilderness(l.getBlock());
+                    bool = TownyAPI.getInstance().isWilderness(l.getBlock().getLocation());
                     break;
                 case town:
                     // allow wilderness and the player's own town
@@ -127,7 +127,7 @@ public class TARDISTownyChecker {
                 return td;
             }
         }
-        td.setCanTravel(TownyAPI.getInstance().isWilderness(l.getBlock()));
+        td.setCanTravel(TownyAPI.getInstance().isWilderness(l.getBlock().getLocation()));
         return td;
     }
 

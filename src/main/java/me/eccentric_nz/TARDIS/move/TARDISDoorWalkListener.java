@@ -36,6 +36,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -45,7 +46,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.Door;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -338,8 +338,8 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         Location exitLoc;
                                         // player is in the TARDIS - always exit to current location
                                         Block door_bottom;
-                                        Door door = (Door) block.getState().getData();
-                                        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+                                        Door door = (Door) block.getBlockData();
+                                        door_bottom = (door.getHalf().equals(Bisected.Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
                                         boolean opened = TARDISStaticUtils.isDoorOpen(door_bottom);
                                         if (opened && preset.hasDoor()) {
                                             exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoor_location());
