@@ -158,14 +158,13 @@ class TARDISTransmatCommand {
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("transmat_id", rsm.getTransmat_id());
                     plugin.getQueryFactory().doDelete("transmats", wherer);
-                    // check for bound transmats
+                    // check for bound transmat
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
-                    whered.put("dest_name", "transmat");
-                    whered.put("preset", args[2]);
-                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, true);
+                    whered.put("name", args[2]);
+                    ResultSetBind rsd = new ResultSetBind(plugin, whered);
                     if (rsd.resultSet()) {
-                        new BoundTransmatRemoval(plugin, rsd.getData()).unbind();
+                        new BoundTransmatRemoval(plugin, id, args[2]).unbind();
                     }
                     TARDISMessage.send(player, "TRANSMAT_REMOVED");
                 } else {
