@@ -85,7 +85,7 @@ public class ResultSetForcefield {
                 z = rs.getInt("z");
                 location = new Location(world, x, y, z);
                 // check location is not in a TARDIS area
-                if (plugin.getTardisArea().areaCheckInExisting(location)) {
+                if (!plugin.getTardisArea().areaCheckInExisting(location)) {
                     TARDISMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
                     return false;
                 }

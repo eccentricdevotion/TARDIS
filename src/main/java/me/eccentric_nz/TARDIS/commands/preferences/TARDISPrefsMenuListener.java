@@ -108,16 +108,17 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                         TARDISMessage.send(p, "POWER_LOW");
                                         return;
                                     }
-                                    TARDISForceField.addToTracker(p);
+                                    if (TARDISForceField.addToTracker(p)) {
+                                        TARDISMessage.send(p, "PREF_WAS_ON", "The TARDIS force field");
+                                    }
                                 } else {
                                     TARDISMessage.send(p, "POWER_LEVEL");
                                     return;
                                 }
                             } else {
                                 plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
+                                TARDISMessage.send(p, "PREF_WAS_OFF", "The TARDIS force field");
                             }
-                            String grammar = (bool) ? "PREF_WAS_ON" : "PREF_WAS_OFF";
-                            TARDISMessage.send(p, grammar, "The TARDIS force field");
                             close(p);
                         } else {
                             TARDISMessage.send(p, "NO_PERMS");

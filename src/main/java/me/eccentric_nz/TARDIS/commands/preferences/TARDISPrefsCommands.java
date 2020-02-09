@@ -178,16 +178,17 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                             TARDISMessage.send(player, "POWER_LOW");
                                             return true;
                                         }
-                                        TARDISForceField.addToTracker(player);
+                                        if (TARDISForceField.addToTracker(player)) {
+                                            TARDISMessage.send(player, "PREF_WAS_ON", "The TARDIS force field");
+                                        }
                                     } else {
                                         TARDISMessage.send(player, "POWER_LEVEL");
                                         return true;
                                     }
                                 } else {
                                     plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
+                                    TARDISMessage.send(player, "PREF_WAS_OFF", "The TARDIS force field");
                                 }
-                                String grammar = (args[1].equalsIgnoreCase("on")) ? "PREF_WAS_ON" : "PREF_WAS_OFF";
-                                TARDISMessage.send(player, grammar, "The TARDIS force field");
                                 return true;
                             }
                             switch (pref) {

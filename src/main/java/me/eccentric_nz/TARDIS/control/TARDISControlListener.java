@@ -381,21 +381,21 @@ public class TARDISControlListener implements Listener {
                                 case 29:
                                     // force field
                                     if (player.hasPermission("tardis.forcefield")) {
-                                        String onoff = "ON";
                                         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                                             plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
                                             TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_down");
-                                            onoff = "OFF";
+                                            TARDISMessage.send(player, "FORCE_FIELD", "OFF");
                                         } else {
                                             // check there is enough artron
                                             if (level <= plugin.getArtronConfig().getInt("standby")) {
                                                 TARDISMessage.send(player, "POWER_LOW");
                                                 return;
                                             }
-                                            TARDISForceField.addToTracker(player);
-                                            TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_up");
+                                            if (TARDISForceField.addToTracker(player)) {
+                                                TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_up");
+                                                TARDISMessage.send(player, "FORCE_FIELD", "ON");
+                                            }
                                         }
-                                        TARDISMessage.send(player, "FORCE_FIELD", onoff);
                                     }
                                     break;
                                 case 30:

@@ -129,11 +129,13 @@ public class TARDISForceField implements Runnable {
         ent.setVelocity(vec);
     }
 
-    public static void addToTracker(Player player) {
+    public static boolean addToTracker(Player player) {
         ResultSetForcefield rsff = new ResultSetForcefield(TARDIS.plugin, player.getUniqueId().toString());
         if (rsff.resultSet()) {
             TARDIS.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
+            return true;
         }
+        return false;
     }
 
     private boolean isCompanion(Player other, Player player) {
