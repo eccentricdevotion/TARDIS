@@ -17,12 +17,15 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetApiaries;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Beehive;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Bee;
 
 public class TARDISBeeWaker implements Runnable {
 
@@ -59,7 +62,11 @@ public class TARDISBeeWaker implements Runnable {
                                 Block block = chunk.getWorld().getBlockAt(x, y, z);
                                 Material material = block.getType();
                                 if (material.equals(Material.BEE_NEST) || material.equals(Material.BEEHIVE)) {
-                                    plugin.getTardisHelper().releaseBees(block);
+                                    Beehive beehive = (Beehive) block.getState();
+                                    for (Bee bee : beehive.releaseEntities()) {
+                                        int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
+                                        bee.setCannotEnterHiveTicks(random);
+                                    }
                                 }
                             }
                         }
