@@ -160,6 +160,10 @@ public class TARDII implements TardisAPI {
         if (environment == null) {
             // choose random environment
             environment = Environment.values()[random.nextInt(Environment.values().length)];
+            // check if environment is enabled
+            if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
+                environment = Environment.NORMAL;
+            }
         }
         switch (environment) {
             case NETHER:
