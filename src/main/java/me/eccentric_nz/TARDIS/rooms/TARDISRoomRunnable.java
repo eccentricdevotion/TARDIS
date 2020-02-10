@@ -824,7 +824,7 @@ public class TARDISRoomRunnable implements Runnable {
             chunkList.add(thisChunk);
             // if we're setting the biome to sky, do it now
             if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                world.setBiome(startx, startz, Biome.THE_VOID);
+                world.setBiome(startx, starty, startz, Biome.THE_VOID);
             }
             if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                 if (type.equals(Material.WATER)) {

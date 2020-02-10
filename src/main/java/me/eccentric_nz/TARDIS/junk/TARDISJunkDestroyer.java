@@ -119,7 +119,7 @@ public class TARDISJunkDestroyer implements Runnable {
                                 }
                                 // reset the biome
                                 try {
-                                    world.setBiome(row, col, biome);
+                                    world.setBiome(row, sy, col, biome);
                                 } catch (NullPointerException e) {
                                     // remove TARDIS from tracker
                                     plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(pdd.getTardisID()));

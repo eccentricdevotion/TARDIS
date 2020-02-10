@@ -214,7 +214,7 @@ public class TARDISUtils {
                 for (int c = 0; c < 3; c++) {
                     for (int r = 0; r < 3; r++) {
                         try {
-                            w.setBiome(sbx + c, sbz + r, biome);
+                            w.setBiome(sbx + c, l.getBlockY(), sbz + r, biome);
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                             return false;

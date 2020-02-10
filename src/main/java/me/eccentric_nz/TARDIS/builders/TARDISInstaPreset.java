@@ -121,7 +121,7 @@ public class TARDISInstaPreset {
             // set the biome
             for (int c = -1; c < 2; c++) {
                 for (int r = -1; r < 2; r++) {
-                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
+                    world.setBiome(x + c, y, z + r, Biome.DEEP_OCEAN);
                     // TODO check re-adding umbrella if rebuilding
                     if (TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
                         // add an invisible roof
