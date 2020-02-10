@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -122,20 +121,6 @@ public class TARDISCraftListener implements Listener {
         if (recipe != null) {
             ItemStack is = recipe.getResult();
             CraftingInventory ci = event.getInventory();
-            if (is.getType().equals(Material.AIR)) {
-                // get first map
-                int slot = ci.first(Material.FILLED_MAP);
-                if (slot != -1) {
-                    ItemStack map = ci.getItem(slot);
-                    if (map.hasItemMeta() && map.getItemMeta().hasDisplayName() && TARDISConstants.CIRCUITS.contains(map.getItemMeta().getDisplayName())) {
-                        // disallow cloning
-                        if (ci.first(Material.FILLED_MAP) != -1) {
-                            ci.setResult(null);
-                            return;
-                        }
-                    }
-                }
-            }
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
                 String dn = is.getItemMeta().getDisplayName();
                 if (is.getType().equals(Material.RED_MUSHROOM_BLOCK) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
@@ -146,7 +131,7 @@ public class TARDISCraftListener implements Listener {
                     im.setLore(lore);
                     is.setItemMeta(im);
                     ci.setResult(is);
-                } else if (is.getType().equals(Material.FILLED_MAP)) {
+                } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
                     if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
                         // which circuit is it?
                         String[] split = dn.split(" ");

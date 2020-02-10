@@ -14,7 +14,7 @@ shaped:
     hard_ingredients:
       O: OBSIDIAN
       I: IRON_INGOT
-      C: FILLED_MAP:1965
+      C: GLOWSTONE_DUST=TARDIS Locator Circuit
     result: COMPASS
     amount: 1
     lore: ''
@@ -29,7 +29,7 @@ shaped:
     hard_ingredients:
       O: OBSIDIAN
       B: STONE_BUTTON
-      L: FILLED_MAP:1963
+      L: GLOWSTONE_DUST=TARDIS Stattenheim Circuit
       R: REDSTONE
     result: FLINT
     amount: 1
@@ -46,7 +46,7 @@ shaped:
       R: REDSTONE
       C: COMPARATOR
       K: GOLD_NUGGET
-      T: FILLED_MAP:1964
+      T: GLOWSTONE_DUST=TARDIS Materialisation Circuit
     result: GOLD_NUGGET
     amount: 1
     lore: Deadlock & unlock~Hide & rebuild
@@ -65,7 +65,7 @@ shaped:
       I: IRON_INGOT
       D: REPEATER
       L: BLUE_DYE
-    result: FILLED_MAP:1965
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   TARDIS Materialisation Circuit:
@@ -82,23 +82,23 @@ shaped:
       R: REDSTONE
       L: BLUE_DYE
       Q: QUARTZ
-    result: FILLED_MAP:1964
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~50
   TARDIS Stattenheim Circuit:
     easy_shape: '---,LRM,QQQ'
     easy_ingredients:
-      L: FILLED_MAP:1965
+      L: GLOWSTONE_DUST=TARDIS Locator Circuit
       R: REDSTONE
-      M: FILLED_MAP:1964
+      M: GLOWSTONE_DUST=TARDIS Materialisation Circuit
       Q: QUARTZ
     hard_shape: '---,LRM,QQQ'
     hard_ingredients:
-      L: FILLED_MAP:1965
+      L: GLOWSTONE_DUST=TARDIS Locator Circuit
       R: REDSTONE
-      M: FILLED_MAP:1964
+      M: GLOWSTONE_DUST=TARDIS Materialisation Circuit
       Q: QUARTZ
-    result: FILLED_MAP:1963
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   TARDIS Chameleon Circuit:
@@ -113,8 +113,8 @@ shaped:
       G: GOLD_INGOT
       E: DETECTOR_RAIL
       R: REDSTONE
-      M: FILLED_MAP:1964
-    result: FILLED_MAP:1966
+      M: GLOWSTONE_DUST=TARDIS Materialisation Circuit
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~25
   TARDIS ARS Circuit:
@@ -130,7 +130,7 @@ shaped:
       P: PISTON
       T: REDSTONE_TORCH
       R: REDSTONE
-    result: FILLED_MAP:1973
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~20
   TARDIS Temporal Circuit:
@@ -145,7 +145,7 @@ shaped:
       R: REDSTONE
       W: CLOCK
       Q: QUARTZ
-    result: FILLED_MAP:1974
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~20
   TARDIS Memory Circuit:
@@ -158,7 +158,7 @@ shaped:
       R: RED_SAND
       T: REDSTONE_TORCH
       C: TRAPPED_CHEST
-    result: FILLED_MAP:1975
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~20
   TARDIS Input Circuit:
@@ -170,7 +170,7 @@ shaped:
     hard_ingredients:
       R: REDSTONE
       S: OAK_SIGN
-    result: FILLED_MAP:1976
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~50
   TARDIS Scanner Circuit:
@@ -183,7 +183,7 @@ shaped:
       G: GLASS
       E: SPIDER_EYE
       R: REDSTONE
-    result: FILLED_MAP:1977
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~20
   TARDIS Randomiser Circuit:
@@ -201,23 +201,23 @@ shaped:
       C: COMPASS
       E: END_STONE
       W: WATER_BUCKET
-    result: FILLED_MAP:1980
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~50
   TARDIS Invisibility Circuit:
     easy_shape: -D-,P-E,-W-
     easy_ingredients:
       D: DIAMOND
-      P: FILLED_MAP:1978
+      P: GLOWSTONE_DUST=Perception Circuit
       E: EMERALD
       W: POTION
     hard_shape: -D-,P-E,-W-
     hard_ingredients:
       D: DIAMOND
-      P: FILLED_MAP:1978
+      P: GLOWSTONE_DUST=Perception Circuit
       E: EMERALD
       W: POTION
-    result: FILLED_MAP:1981
+    result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~5
   TARDIS Telepathic Circuit:
@@ -245,7 +245,7 @@ shaped:
       S: STRING
       R: REDSTONE
       G: GOLD_NUGGET
-      C: FILLED_MAP:1978
+      C: GLOWSTONE_DUST=Perception Circuit
     result: GOLD_NUGGET
     amount: 1
     lore: ''
@@ -266,7 +266,7 @@ shaped:
       E: FERMENTED_SPIDER_EYE
       D: REPEATER
       T: REDSTONE_TORCH
-    result: FILLED_MAP:1978
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   TARDIS Key:
@@ -301,7 +301,7 @@ shaped:
       Q: QUARTZ
       R: REDSTONE
       B: STONE_BUTTON
-    result: FILLED_MAP:1967
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Sonic Screwdriver:
@@ -313,7 +313,7 @@ shaped:
     hard_ingredients:
       Q: QUARTZ
       I: IRON_INGOT
-      O: FILLED_MAP:1967
+      O: GLOWSTONE_DUST=Sonic Oscillator
     result: BLAZE_ROD
     amount: 1
     lore: ''
@@ -337,12 +337,12 @@ shaped:
     easy_shape: BBB,BOB,BBB
     easy_ingredients:
       B: BEDROCK
-      O: FILLED_MAP:1967
+      O: GLOWSTONE_DUST=Sonic Oscillator
     hard_shape: BBB,BOB,BBB
     hard_ingredients:
       B: BEDROCK
-      O: FILLED_MAP:1967
-    result: FILLED_MAP:1968
+      O: GLOWSTONE_DUST=Sonic Oscillator
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Bio-scanner Circuit:
@@ -356,7 +356,7 @@ shaped:
       R: REPEATER
       E: SPIDER_EYE
       B: BONE
-    result: FILLED_MAP:1969
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Redstone Activator Circuit:
@@ -370,7 +370,7 @@ shaped:
       R: REPEATER
       C: COMPARATOR
       I: IRON_INGOT
-    result: FILLED_MAP:1970
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Diamond Disruptor Circuit:
@@ -384,7 +384,7 @@ shaped:
       O: OBSIDIAN
       D: DIAMOND
       S: SHEARS
-    result: FILLED_MAP:1971
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Emerald Environment Circuit:
@@ -398,7 +398,7 @@ shaped:
       E: EMERALD
       L: OAK_LEAVES
       S: STONE
-    result: FILLED_MAP:1972
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Painter Circuit:
@@ -412,7 +412,7 @@ shaped:
       I: BLACK_DYE
       D: PURPLE_DYE
       G: GOLD_BLOCK
-    result: FILLED_MAP:1979
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Ignite Circuit:
@@ -425,7 +425,7 @@ shaped:
       N: NETHERRACK
       F: FLINT_AND_STEEL
       L: LAVA_BUCKET
-    result: FILLED_MAP:1982
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Pickup Arrows Circuit:
@@ -437,7 +437,7 @@ shaped:
     hard_ingredients:
       S: SPECTRAL_ARROW
       R: REDSTONE_BLOCK
-    result: FILLED_MAP:1984
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Artron Storage Cell:
@@ -512,7 +512,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: WHITE_WOOL
     result: LEATHER_HELMET
@@ -526,7 +526,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: ORANGE_WOOL
     result: LEATHER_HELMET
@@ -540,7 +540,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: MAGENTA_WOOL
     result: LEATHER_HELMET
@@ -554,7 +554,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: LIGHT_BLUE_WOOL
     result: LEATHER_HELMET
@@ -568,7 +568,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: YELLOW_WOOL
     result: LEATHER_HELMET
@@ -582,7 +582,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: LIME_WOOL
     result: LEATHER_HELMET
@@ -596,7 +596,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: PINK_WOOL
     result: LEATHER_HELMET
@@ -610,7 +610,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: GRAY_WOOL
     result: LEATHER_HELMET
@@ -624,7 +624,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: LIGHT_GRAY_WOOL
     result: LEATHER_HELMET
@@ -638,7 +638,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: CYAN_WOOL
     result: LEATHER_HELMET
@@ -652,7 +652,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: PURPLE_WOOL
     result: LEATHER_HELMET
@@ -666,7 +666,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: BLUE_WOOL
     result: LEATHER_HELMET
@@ -680,7 +680,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: BROWN_WOOL
     result: LEATHER_HELMET
@@ -694,7 +694,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: GREEN_WOOL
     result: LEATHER_HELMET
@@ -708,7 +708,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: RED_WOOL
     result: LEATHER_HELMET
@@ -722,7 +722,7 @@ shaped:
     hard_shape: STS,L-L,WWW
     hard_ingredients:
       S: STRING
-      T: TRIPWIRE_HOOK
+      T: GLOWSTONE_DUST
       L: LEATHER
       W: BLACK_WOOL
     result: LEATHER_HELMET
@@ -747,12 +747,12 @@ shaped:
   Fob Watch:
     easy_shape: -C-,-W-,R-R
     easy_ingredients:
-      C: FILLED_MAP:1966
+      C: GLOWSTONE_DUST=TARDIS Chameleon Circuit
       W: CLOCK
       R: REDSTONE
     hard_shape: -C-,IWI,R-R
     hard_ingredients:
-      C: FILLED_MAP:1966
+      C: GLOWSTONE_DUST=TARDIS Chameleon Circuit
       I: IRON_INGOT
       W: CLOCK
       R: REDSTONE
@@ -762,13 +762,13 @@ shaped:
   TARDIS Biome Reader:
     easy_shape: '---,-C-,SDT'
     easy_ingredients:
-      C: FILLED_MAP:1972
+      C: GLOWSTONE_DUST=Emerald Environment Circuit
       S: SAND
       D: DIRT
       T: STONE
     hard_shape: -C-,SDT,LWN
     hard_ingredients:
-      C: FILLED_MAP:1972
+      C: GLOWSTONE_DUST=Emerald Environment Circuit
       S: SAND
       D: DIRT
       T: STONE
@@ -799,19 +799,19 @@ shaped:
     hard_ingredients:
       D: DIAMOND
       N: NETHER_STAR
-    result: FILLED_MAP:1983
+    result: GLOWSTONE_DUST
     amount: 1
     lore: ''
   Rift Manipulator:
     easy_shape: -A-,ACA,RAR
     easy_ingredients:
       A: NETHER_BRICK=Acid Battery
-      C: FILLED_MAP:1983
+      C: GLOWSTONE_DUST=Rift Circuit
       R: REDSTONE
     hard_shape: -A-,ACA,NAN
     hard_ingredients:
       A: NETHER_BRICK=Acid Battery
-      C: FILLED_MAP:1983
+      C: GLOWSTONE_DUST=Rift Circuit
       N: NETHER_STAR
     result: BEACON
     amount: 1
@@ -912,47 +912,47 @@ shapeless:
     amount: 1
     lore: Blank
   Preset Storage Disk:
-    recipe: MUSIC_DISC_STRAD,FILLED_MAP:1966
+    recipe: MUSIC_DISC_STRAD,GLOWSTONE_DUST=TARDIS Chameleon Circuit
     result: MUSIC_DISC_MALL
     amount: 1
     lore: Blank
   Admin Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1968
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Server Admin Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Bio-scanner Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1969
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Bio-scanner Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Redstone Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1970
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Redstone Activator Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Diamond Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1971
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Diamond Disruptor Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Emerald Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1972
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Emerald Environment Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Painter Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1979
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Painter Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Ignite Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1982
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Ignite Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''
   Pickup Arrows Upgrade:
-    recipe: BLAZE_ROD,FILLED_MAP:1984
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Pickup Arrows Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''

@@ -18,13 +18,12 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,14 +50,14 @@ public class TARDISShapelessRecipe {
 
     private ShapelessRecipe makeRecipe(String s) {
         /*
-         recipe: VINE,VINE,VINE
+         recipe: VINE,VINE,VINE=Special Vine
          result: SLIME_BALL
          amount: 1
          lore: ""
          */
         String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");
-        String[] result_iddata = plugin.getRecipesConfig().getString("shapeless." + s + ".result").split(":");
-        Material mat = Material.valueOf(result_iddata[0]);
+        String result_iddata = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
+        Material mat = Material.valueOf(result_iddata);
         int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
@@ -67,20 +66,23 @@ public class TARDISShapelessRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("~")));
         }
         im.setCustomModelData(RECIPE_ITEM.getByName(s).getCustomModelData());
-        if (result_iddata.length == 2 && mat.equals(Material.FILLED_MAP)) {
-            int map = TARDISNumberParsers.parseInt(result_iddata[1]);
-            MapMeta mapMeta = (MapMeta) im;
-            mapMeta.setMapId(map);
-            is.setItemMeta(mapMeta);
-        } else {
-            is.setItemMeta(im);
-        }
+        is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         for (String i : ingredients) {
-            String[] recipe_idata = i.split(":");
-            Material m = Material.valueOf(recipe_idata[0]);
-            r.addIngredient(m);
+            if (i.contains("=")) {
+                ItemStack exact;
+                String[] choice = i.split("=");
+                Material m = Material.valueOf(choice[0]);
+                exact = new ItemStack(m, 1);
+                ItemMeta em = exact.getItemMeta();
+                em.setDisplayName(choice[1]);
+                exact.setItemMeta(em);
+                r.addIngredient(new RecipeChoice.ExactChoice(exact));
+            } else {
+                Material m = Material.valueOf(i);
+                r.addIngredient(m);
+            }
         }
         if (s.contains("Jelly Baby")) {
             r.setGroup("Jelly Babies");

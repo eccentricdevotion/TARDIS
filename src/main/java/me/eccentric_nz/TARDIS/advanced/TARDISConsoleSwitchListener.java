@@ -37,7 +37,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ import java.util.List;
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> gui_circuits = Arrays.asList(1966, 1973, 1974, 1975, 1976, 1977);
+    private final List<Integer> gui_circuits = Arrays.asList(10001966, 10001973, 10001974, 10001975, 10001976, 10001977, 20001966, 20001973, 20001974, 20001975, 20001976, 20001977);
 
     public TARDISConsoleSwitchListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -76,10 +76,10 @@ public class TARDISConsoleSwitchListener implements Listener {
                 int slot = event.getRawSlot();
                 if (slot >= 0 && slot < 9) {
                     ItemStack item = view.getItem(slot);
-                    if (item != null && item.getType().equals(Material.FILLED_MAP) && item.hasItemMeta()) {
-                        MapMeta mapMeta = (MapMeta) item.getItemMeta();
-                        int map = (mapMeta.hasMapId()) ? mapMeta.getMapId() : 1963;
-                        if (gui_circuits.contains(map)) {
+                    if (item != null && item.getType().equals(Material.GLOWSTONE_DUST) && item.hasItemMeta()) {
+                        ItemMeta im = item.getItemMeta();
+                        int cmd = (im.hasCustomModelData()) ? im.getCustomModelData() : 10001963;
+                        if (gui_circuits.contains(cmd)) {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -88,24 +88,29 @@ public class TARDISConsoleSwitchListener implements Listener {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     ItemStack[] stack = null;
                                     Inventory new_inv = null;
-                                    switch (map) {
-                                        case 1966: // Chameleon circuit
+                                    switch (cmd) {
+                                        case 10001966: // Chameleon circuit
+                                        case 20001966:
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                             stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                             break;
-                                        case 1973: // ARS circuit
+                                        case 10001973: // ARS circuit
+                                        case 20001973:
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
                                             stack = new TARDISARSInventory(plugin).getARS();
                                             break;
-                                        case 1974: // Temporal circuit
+                                        case 10001974: // Temporal circuit
+                                        case 20001974:
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Temporal Locator");
                                             stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
                                             break;
-                                        case 1975: // Memory circuit (saves/areas)
+                                        case 10001975: // Memory circuit (saves/areas)
+                                        case 20001975:
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS saves");
                                             stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id()).getTerminal();
                                             break;
-                                        case 1976: // Input circuit (terminal)
+                                        case 10001976: // Input circuit (terminal)
+                                        case 20001976:
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
                                             stack = new TARDISTerminalInventory(plugin).getTerminal();
                                             break;

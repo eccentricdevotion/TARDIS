@@ -28,7 +28,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 
     private final Material sonicMaterial;
     private final HashMap<String, String> upgrades = new HashMap<>();
-    private final HashMap<Integer, String> mapIds = new HashMap<>();
+    private final HashMap<Integer, String> customModelData = new HashMap<>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
@@ -54,14 +53,14 @@ public class TARDISSonicUpgradeListener implements Listener {
         upgrades.put("Painter Upgrade", "paint");
         upgrades.put("Ignite Upgrade", "ignite");
         upgrades.put("Pickup Arrows Upgrade", "arrow");
-        mapIds.put(1968, "Admin Upgrade");
-        mapIds.put(1969, "Bio-scanner Upgrade");
-        mapIds.put(1970, "Redstone Upgrade");
-        mapIds.put(1971, "Diamond Upgrade");
-        mapIds.put(1972, "Emerald Upgrade");
-        mapIds.put(1979, "Painter Upgrade");
-        mapIds.put(1982, "Ignite Upgrade");
-        mapIds.put(1984, "Pickup Arrows Upgrade");
+        customModelData.put(10001968, "Admin Upgrade");
+        customModelData.put(10001969, "Bio-scanner Upgrade");
+        customModelData.put(10001970, "Redstone Upgrade");
+        customModelData.put(10001971, "Diamond Upgrade");
+        customModelData.put(10001972, "Emerald Upgrade");
+        customModelData.put(10001979, "Painter Upgrade");
+        customModelData.put(10001982, "Ignite Upgrade");
+        customModelData.put(10001984, "Pickup Arrows Upgrade");
     }
 
     /**
@@ -84,10 +83,10 @@ public class TARDISSonicUpgradeListener implements Listener {
                 // get the upgrade
                 boolean found = false;
                 String upgrade = im.getDisplayName();
-                for (ItemStack map : ci.getContents()) {
-                    if (map.getType().equals(Material.FILLED_MAP) && map.hasItemMeta()) {
-                        MapMeta mm = (MapMeta) map.getItemMeta();
-                        upgrade = mapIds.get(mm.getMapId());
+                for (ItemStack glowstone : ci.getContents()) {
+                    if (glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
+                        ItemMeta rm = glowstone.getItemMeta();
+                        upgrade = customModelData.get(rm.getCustomModelData());
                         found = true;
                     }
                 }

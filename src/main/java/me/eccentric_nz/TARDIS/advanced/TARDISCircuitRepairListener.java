@@ -27,7 +27,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,15 +42,15 @@ public class TARDISCircuitRepairListener implements Listener {
 
     public TARDISCircuitRepairListener(TARDIS plugin) {
         this.plugin = plugin;
-        circuits.put(1973, "ars");
-        circuits.put(1966, "chameleon");
-        circuits.put(1976, "input");
-        circuits.put(1981, "invisibility");
-        circuits.put(1964, "materialisation");
-        circuits.put(1975, "memory");
-        circuits.put(1980, "randomiser");
-        circuits.put(1977, "scanner");
-        circuits.put(1974, "temporal");
+        circuits.put(10001973, "ars");
+        circuits.put(10001966, "chameleon");
+        circuits.put(10001976, "input");
+        circuits.put(10001981, "invisibility");
+        circuits.put(10001964, "materialisation");
+        circuits.put(10001975, "memory");
+        circuits.put(10001980, "randomiser");
+        circuits.put(10001977, "scanner");
+        circuits.put(10001974, "temporal");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -66,11 +65,11 @@ public class TARDISCircuitRepairListener implements Listener {
             AnvilInventory anvil = (AnvilInventory) event.getInventory();
             ItemStack[] items = anvil.getContents();
             ItemStack first = items[0];
-            // is it a single map with item meta?
-            if (first != null && first.getType().equals(Material.FILLED_MAP) && first.hasItemMeta() && first.getAmount() == 1) {
+            // is it a redstone with item meta?
+            if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() && first.getAmount() == 1) {
                 // get the item meta
                 ItemMeta fim = first.getItemMeta();
-                if (fim.hasDisplayName()) {
+                if (fim.hasDisplayName() && fim.hasCustomModelData()) {
                     // get the display name
                     String dnf = fim.getDisplayName();
                     if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit")) {
@@ -82,14 +81,13 @@ public class TARDISCircuitRepairListener implements Listener {
                                 // get the uses left
                                 int left = TARDISNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
-                                MapMeta mapMeta = (MapMeta) fim;
-                                int map = (mapMeta.hasMapId()) ? mapMeta.getMapId() : 1963;
-                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(map));
+                                int ctm = (fim.hasCustomModelData()) ? fim.getCustomModelData() : 10001963;
+                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
                                 // is it used?
                                 if (left < uses) {
                                     ItemStack two = items[1];
                                     // is it redstone?
-                                    if (two != null && two.getType().equals(Material.REDSTONE)) {
+                                    if (two != null && two.getType().equals(Material.GLOWSTONE_DUST)) {
                                         // how many in the stack?
                                         int amount = two.getAmount();
                                         int repair_max = uses - left;

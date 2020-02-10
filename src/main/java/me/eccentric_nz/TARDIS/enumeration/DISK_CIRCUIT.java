@@ -28,23 +28,23 @@ import java.util.List;
 public enum DISK_CIRCUIT {
 
     AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
-    ARS("TARDIS ARS Circuit", Material.FILLED_MAP),
+    ARS("TARDIS ARS Circuit", Material.GLOWSTONE_DUST),
     BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
     BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD),
-    CHAMELEON("TARDIS Chameleon Circuit", Material.FILLED_MAP),
+    CHAMELEON("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST),
     HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
-    INPUT("TARDIS Input Circuit", Material.FILLED_MAP),
-    INVISIBILITY("TARDIS Invisibility Circuit", Material.FILLED_MAP),
+    INPUT("TARDIS Input Circuit", Material.GLOWSTONE_DUST),
+    INVISIBILITY("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST),
     KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
-    MATERIALISATION("TARDIS Materialisation Circuit", Material.FILLED_MAP),
-    MEMORY("TARDIS Memory Circuit", Material.FILLED_MAP),
+    MATERIALISATION("TARDIS Materialisation Circuit", Material.GLOWSTONE_DUST),
+    MEMORY("TARDIS Memory Circuit", Material.GLOWSTONE_DUST),
     PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT),
     PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL),
-    RANDOMISER("TARDIS Randomiser Circuit", Material.FILLED_MAP),
+    RANDOMISER("TARDIS Randomiser Circuit", Material.GLOWSTONE_DUST),
     SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
-    SCANNER("TARDIS Scanner Circuit", Material.FILLED_MAP),
+    SCANNER("TARDIS Scanner Circuit", Material.GLOWSTONE_DUST),
     SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
-    TEMPORAL("TARDIS Temporal Circuit", Material.FILLED_MAP);
+    TEMPORAL("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST);
 
     String name;
     Material material;
@@ -84,7 +84,7 @@ public enum DISK_CIRCUIT {
             if (circuit.getName().endsWith("Circuit")) {
                 circuitNames.add(circuit.getName());
             }
-            if (circuit.getMaterial() == Material.FILLED_MAP) {
+            if (circuit.getMaterial() == Material.GLOWSTONE_DUST) {
                 tardisCircuits.add(circuit);
             }
         }

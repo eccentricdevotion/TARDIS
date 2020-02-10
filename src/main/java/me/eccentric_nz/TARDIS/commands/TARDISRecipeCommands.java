@@ -214,7 +214,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
-        int mapCount = 0;
+        int glowstoneCount = 0;
         for (int j = 0; j < recipeShape.length; j++) {
             for (int k = 0; k < recipeShape[j].length(); k++) {
                 ItemStack item = ingredientMap.get(recipeShape[j].toCharArray()[k]);
@@ -222,14 +222,15 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     continue;
                 }
                 ItemMeta im = item.getItemMeta();
-                if (item.getType().equals(Material.FILLED_MAP)) {
-                    im.setDisplayName(getDisplayName(str, mapCount));
-                    im.setCustomModelData(RECIPE_ITEM.getByName(str).getCustomModelData());
-                    mapCount++;
+                if (item.getType().equals(Material.GLOWSTONE_DUST)) {
+                    String dn = getDisplayName(str, glowstoneCount);
+                    im.setDisplayName(dn);
+                    im.setCustomModelData(RECIPE_ITEM.getByName(dn).getCustomModelData());
+                    glowstoneCount++;
                 }
                 if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
                     im.setDisplayName("TARDIS Key");
-                    im.setCustomModelData(15);
+                    im.setCustomModelData(1);
                 }
                 if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
                     im.setDisplayName("Blaster Battery");
@@ -242,10 +243,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     im.setDisplayName("Acid Battery");
                     im.setCustomModelData(10000001);
-                }
-                if (str.equals("Rift Manipulator") && item.getType().equals(Material.FILLED_MAP)) {
-                    im.setDisplayName("Rift Circuit");
-                    im.setCustomModelData(10001983);
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
                     im.setDisplayName("Rust Bucket");
@@ -285,14 +282,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
-        int mapCount = 0;
+        int glowstoneCount = 0;
         for (int i = 0; i < ingredients.size(); i++) {
             ItemMeta im = ingredients.get(i).getItemMeta();
-            if (ingredients.get(i).getType().equals(Material.FILLED_MAP)) {
-                String dn = getDisplayName(str, mapCount);
+            if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
+                String dn = getDisplayName(str, glowstoneCount);
                 im.setDisplayName(dn);
                 im.setCustomModelData(RECIPE_ITEM.getByName(dn).getCustomModelData());
-                mapCount++;
+                glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
@@ -359,7 +356,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.openInventory(inv);
     }
 
-    private String getDisplayName(String recipe, int mapCount) {
+    private String getDisplayName(String recipe, int quartzCount) {
         switch (recipe) {
             case "TARDIS Locator":
                 return "TARDIS Locator Circuit"; // 1965
@@ -381,7 +378,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             case "Rift Manipulator":
                 return "Rift Circuit"; // 1983
             default:  //TARDIS Stattenheim Circuit"
-                if (mapCount == 0) {
+                if (quartzCount == 0) {
                     return "TARDIS Locator Circuit"; // 1965
                 } else {
                     return "TARDIS Materialisation Circuit"; // 1964
