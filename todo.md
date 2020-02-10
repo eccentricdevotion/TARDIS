@@ -1,8 +1,6 @@
 # TODO
 
 ## Next version `4.3`
-0. Move Chameleon, Save-Sign and scanner to controls table
-0. Redo `/tardisbind` commands - own database table, consistency between add / remove / update, properly support multiple instances of same bound control
 1. New features
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?

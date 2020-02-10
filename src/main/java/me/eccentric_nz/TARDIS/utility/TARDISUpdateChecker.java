@@ -66,7 +66,7 @@ public class TARDISUpdateChecker implements Runnable {
      */
     private Map<String, Object> fetchLatestJenkinsBuild() {
         try {
-            // We're connecting to md_5's jenkins REST api
+            // We're connecting to TARDIS's Jenkins REST api
             URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
             // Creating a connection
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -75,12 +75,12 @@ public class TARDISUpdateChecker implements Runnable {
             // Get the input stream, what we receive
             try (InputStream input = con.getInputStream()) {
                 // Read it to string
-                String json = IOUtils.toString(input);
+                String json = IOUtils.toString(input, "utf-8");
                 jsonObject = new Gson().fromJson(json, Map.class);
             }
             return jsonObject;
         } catch (Exception ex) {
-            plugin.debug("Failed to check for a snapshot update on jenkins.");
+            plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
         }
         return null;
     }
