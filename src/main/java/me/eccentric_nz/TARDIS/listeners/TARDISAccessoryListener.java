@@ -85,6 +85,6 @@ public class TARDISAccessoryListener implements Listener {
     }
 
     private boolean isNullOrAir(ItemStack item) {
-        return item == null || item.getType().equals(Material.AIR);
+        return item == null || item.getType().isAir();
     }
 }

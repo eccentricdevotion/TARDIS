@@ -54,7 +54,7 @@ public class TARDISSeedRecipe {
     }
 
     private ShapedRecipe makeSeedRecipe(SCHEMATIC s) {
-        ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+        ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
         int model;
         if (TARDISSeedModel.materialMap.containsKey(s.getSeedMaterial())) {
