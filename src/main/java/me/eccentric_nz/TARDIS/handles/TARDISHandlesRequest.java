@@ -233,6 +233,11 @@ public class TARDISHandlesRequest {
                         // travel home
                         player.performCommand("tardistravel home");
                     }, 1L);
+                } else if (split.contains("cave")) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // travel cave
+                        player.performCommand("tardistravel cave");
+                    }, 1L);
                 } else {
                     // don't understand
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
