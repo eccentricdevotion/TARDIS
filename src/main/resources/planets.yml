@@ -48,7 +48,6 @@ planets:
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
-    #      keepInventory: true
     keep_spawn_in_memory: false
   TARDIS_Zero_Room:
     enabled: false

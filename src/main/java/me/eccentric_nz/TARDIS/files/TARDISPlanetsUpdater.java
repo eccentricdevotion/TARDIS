@@ -165,7 +165,7 @@ public class TARDISPlanetsUpdater {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                 planets_config.save(new File(planetsPath));
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new item to planets.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new items to planets.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save planets.yml, " + io.getMessage());
             }
