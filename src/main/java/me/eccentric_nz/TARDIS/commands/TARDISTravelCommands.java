@@ -1026,44 +1026,40 @@ public class TARDISTravelCommands implements CommandExecutor {
                     case 0:
                         // east
                         for (int east = startx; east < limite; east += step) {
-                            int y = TARDISStaticLocationGetters.getHighestYin4x4(w, east, startz);
-                            Biome chkb = w.getBiome(east, y, startz);
+                            Biome chkb = w.getBiome(east, startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_E", b.toString());
-                                return new Location(w, east, y, startz);
+                                return new Location(w, east, TARDISStaticLocationGetters.getHighestYin4x4(w, east, startz), startz);
                             }
                         }
                         break;
                     case 1:
                         // south
                         for (int south = startz; south < limits; south += step) {
-                            int y = TARDISStaticLocationGetters.getHighestYin4x4(w, startx, south);
-                            Biome chkb = w.getBiome(startx, y, south);
+                            Biome chkb = w.getBiome(startx, south);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_S", b.toString());
-                                return new Location(w, startx, y, south);
+                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin4x4(w, startx, south), south);
                             }
                         }
                         break;
                     case 2:
                         // west
                         for (int west = startx; west > limitw; west -= step) {
-                            int y = TARDISStaticLocationGetters.getHighestYin4x4(w, west, startz);
-                            Biome chkb = w.getBiome(west, y, startz);
+                            Biome chkb = w.getBiome(west, startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_W", b.toString());
-                                return new Location(w, west, y, startz);
+                                return new Location(w, west, TARDISStaticLocationGetters.getHighestYin4x4(w, west, startz), startz);
                             }
                         }
                         break;
                     case 3:
                         // north
                         for (int north = startz; north > limitn; north -= step) {
-                            int y = TARDISStaticLocationGetters.getHighestYin4x4(w, startx, north);
-                            Biome chkb = w.getBiome(startx, y, north);
+                            Biome chkb = w.getBiome(startx, north);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_N", b.toString());
-                                return new Location(w, startx, y, north);
+                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin4x4(w, startx, north), north);
                             }
                         }
                         break;

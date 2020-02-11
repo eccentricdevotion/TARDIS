@@ -408,7 +408,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 int z = startz + col;
                 // if we're setting the biome to sky, do it now
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, y, z, Biome.THE_VOID);
+                    world.setBiome(x, z, Biome.THE_VOID);
                 }
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
                 Material type = data.getMaterial();

@@ -169,7 +169,7 @@ class TARDISMaterialisationPreset implements Runnable {
                 boolean isAdaptiveFactory = preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.BIOME);
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
-                    setBiome(world, x, y, z, bd.useTexture(), true);
+                    setBiome(world, x, z, bd.useTexture(), true);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
                             String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
@@ -762,7 +762,7 @@ class TARDISMaterialisationPreset implements Runnable {
                     // set handbrake to on ?
                 }
                 // just in case
-                setBiome(world, x, y, z, bd.useTexture(), false);
+                setBiome(world, x, z, bd.useTexture(), false);
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
@@ -821,7 +821,7 @@ class TARDISMaterialisationPreset implements Runnable {
         }
     }
 
-    private void setBiome(World world, int x, int y, int z, boolean pp, boolean umbrella) {
+    private void setBiome(World world, int x, int z, boolean pp, boolean umbrella) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && pp) {
             List<Chunk> chunks = new ArrayList<>();
             Chunk chunk = bd.getLocation().getChunk();
@@ -838,7 +838,7 @@ class TARDISMaterialisationPreset implements Runnable {
             // set the biome
             for (int c = -1; c < 2; c++) {
                 for (int r = -1; r < 2; r++) {
-                    world.setBiome(x + c, y, z + r, Biome.DEEP_OCEAN);
+                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
                     if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
                         // add an invisible roof
                         if (loops == 3) {

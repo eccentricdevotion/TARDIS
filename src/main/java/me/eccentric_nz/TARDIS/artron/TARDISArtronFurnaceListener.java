@@ -140,7 +140,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
                 Location l = b.getLocation();
                 // set biome
-                l.getWorld().setBiome(l.getBlockX(), l.getBlockY(), l.getBlockZ(), Biome.DEEP_OCEAN);
+                l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
                 Chunk c = l.getChunk();
                 plugin.getTardisHelper().refreshChunk(c);
             }
@@ -179,7 +179,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                         }
                     }
                     Location l = block.getLocation();
-                    l.getWorld().setBiome(l.getBlockX(), l.getBlockY(), l.getBlockZ(), b);
+                    l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), b);
                     Chunk c = l.getChunk();
                     plugin.getTardisHelper().refreshChunk(c);
                 }

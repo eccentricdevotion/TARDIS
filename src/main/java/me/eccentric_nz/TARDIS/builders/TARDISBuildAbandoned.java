@@ -158,7 +158,7 @@ class TARDISBuildAbandoned {
                     int z = startz + col;
                     // if we're setting the biome to sky, do it now
                     if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                        world.setBiome(x, y, z, Biome.THE_VOID);
+                        world.setBiome(x, z, Biome.THE_VOID);
                     }
                     data = plugin.getServer().createBlockData(c.getString("data"));
                     type = data.getMaterial();
