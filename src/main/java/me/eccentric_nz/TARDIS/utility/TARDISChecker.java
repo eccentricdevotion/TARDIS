@@ -38,16 +38,6 @@ public class TARDISChecker {
         // is there a worlds container?
         File container = plugin.getServer().getWorldContainer();
         String s_world = plugin.getServer().getWorlds().get(0).getName();
-        String dataRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "data" + File.separator;
-        for (int i = 1963; i < 1985; i++) {
-            String map = "map_" + i + ".dat";
-            File file = new File(dataRoot, map);
-            if (!file.exists()) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("MAP_NOT_FOUND"), map));
-                plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("MAP_COPYING"), map));
-                copy(map, file);
-            }
-        }
         // check if directories exist
         String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
         File tardisDir = new File(dataPacksRoot);
