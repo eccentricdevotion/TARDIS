@@ -123,6 +123,10 @@ public class TARDISSeedBlockProcessor {
                     if (plugin.getConfig().getBoolean("creation.default_world")) {
                         cw = plugin.getConfig().getString("creation.default_world_name");
                         chunkworld = plugin.getServer().getWorld(cw);
+                        if (chunkworld == null) {
+                            TARDISMessage.send(player, "TARDIS_WORLD_NOT_LOADED");
+                            return false;
+                        }
                         tips = true;
                     } else {
                         chunkworld = chunk.getWorld();
@@ -199,37 +203,42 @@ public class TARDISSeedBlockProcessor {
                 bd.setTardisID(lastInsertId);
                 bd.setBiome(l.getBlock().getBiome());
                 // police box needs to use chameleon id/data
-                plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
-                plugin.getPresetBuilder().buildPreset(bd);
-                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
-                // set achievement completed
-                if (player.hasPermission("tardis.book")) {
-                    HashMap<String, Object> seta = new HashMap<>();
-                    seta.put("completed", 1);
-                    HashMap<String, Object> wherea = new HashMap<>();
-                    wherea.put("uuid", player.getUniqueId().toString());
-                    wherea.put("name", "tardis");
-                    plugin.getQueryFactory().doUpdate("achievements", seta, wherea);
-                    // award advancement
-                    TARDISAchievementFactory.grantAdvancement(ADVANCEMENT.TARDIS, player);
-                }
-                if (max_count > 0) {
-                    TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
-                }
-                HashMap<String, Object> setc = new HashMap<>();
-                setc.put("count", player_count + 1);
-                setc.put("grace", grace_count);
-                if (has_count) {
-                    // update the player's TARDIS count
-                    HashMap<String, Object> wheretc = new HashMap<>();
-                    wheretc.put("uuid", player.getUniqueId().toString());
-                    plugin.getQueryFactory().doUpdate("t_count", setc, wheretc);
+                if (chunkworld != null) {
+                    plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
+                    plugin.getPresetBuilder().buildPreset(bd);
+                    plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
+                    // set achievement completed
+                    if (player.hasPermission("tardis.book")) {
+                        HashMap<String, Object> seta = new HashMap<>();
+                        seta.put("completed", 1);
+                        HashMap<String, Object> wherea = new HashMap<>();
+                        wherea.put("uuid", player.getUniqueId().toString());
+                        wherea.put("name", "tardis");
+                        plugin.getQueryFactory().doUpdate("achievements", seta, wherea);
+                        // award advancement
+                        TARDISAchievementFactory.grantAdvancement(ADVANCEMENT.TARDIS, player);
+                    }
+                    if (max_count > 0) {
+                        TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
+                    }
+                    HashMap<String, Object> setc = new HashMap<>();
+                    setc.put("count", player_count + 1);
+                    setc.put("grace", grace_count);
+                    if (has_count) {
+                        // update the player's TARDIS count
+                        HashMap<String, Object> wheretc = new HashMap<>();
+                        wheretc.put("uuid", player.getUniqueId().toString());
+                        plugin.getQueryFactory().doUpdate("t_count", setc, wheretc);
+                    } else {
+                        // insert new TARDIS count record
+                        setc.put("uuid", player.getUniqueId().toString());
+                        plugin.getQueryFactory().doInsert("t_count", setc);
+                    }
+                    return true;
                 } else {
-                    // insert new TARDIS count record
-                    setc.put("uuid", player.getUniqueId().toString());
-                    plugin.getQueryFactory().doInsert("t_count", setc);
+                    TARDISMessage.send(player, "TARDIS_WORLD_NOT_LOADED");
+                    return false;
                 }
-                return true;
             } else {
                 HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", rs.getTardis_id());

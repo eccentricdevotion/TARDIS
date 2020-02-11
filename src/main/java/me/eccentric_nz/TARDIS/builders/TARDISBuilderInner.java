@@ -142,6 +142,9 @@ public class TARDISBuilderInner {
             // get the correct chunk for ARS
             Location cl = new Location(world, startx, starty, startz);
             Chunk c = world.getChunkAt(cl);
+            while (!c.isLoaded()) {
+                c.load(true);
+            }
             String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
             set.put("chunk", chun);
             if (schm.getPermission().equals("junk")) {
@@ -161,6 +164,9 @@ public class TARDISBuilderInner {
         List<Chunk> chunkList = getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, l);
         // update chunks list in DB
         chunkList.forEach((c) -> {
+            while (!c.isLoaded()) {
+                c.load(true);
+            }
             HashMap<String, Object> setc = new HashMap<>();
             setc.put("tardis_id", dbID);
             setc.put("world", world.getName());
@@ -201,9 +207,14 @@ public class TARDISBuilderInner {
                     int x = startx + row;
                     int y = starty + level;
                     int z = startz + col;
-                    // if we're setting the biome to sky, do it now
-                    if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0 && !below) {
-                        world.setBiome(x, z, Biome.THE_VOID);
+                    try {
+                        // if we're setting the biome to sky, do it now
+                        if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0 && !below) {
+                            world.setBiome(x, z, Biome.THE_VOID);
+                            plugin.debug("Setting biome to THE_VOID");
+                        }
+                    } catch (NullPointerException npe) {
+                        plugin.debug("NPE setting biome!");
                     }
                     data = plugin.getServer().createBlockData(c.getString("data"));
                     type = data.getMaterial();
