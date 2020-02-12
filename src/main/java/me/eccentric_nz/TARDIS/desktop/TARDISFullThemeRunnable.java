@@ -42,7 +42,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -406,10 +405,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                // if we're setting the biome to sky, do it now
-                if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, z, Biome.THE_VOID);
-                }
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
                 Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {
@@ -444,8 +439,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.
                      */
-                    String scanloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                    set.put("scanner", scanloc);
+                    String scanner = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    plugin.getQueryFactory().insertSyncControl(id, 33, scanner, 0);
                 }
                 if (type.equals(Material.CHEST)) {
                     // remember the location of the condenser chest

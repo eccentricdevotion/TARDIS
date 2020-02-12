@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -207,15 +206,6 @@ public class TARDISBuilderInner {
                     int x = startx + row;
                     int y = starty + level;
                     int z = startz + col;
-                    try {
-                        // if we're setting the biome to sky, do it now
-                        if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0 && !below) {
-                            world.setBiome(x, z, Biome.THE_VOID);
-                            plugin.debug("Setting biome to THE_VOID");
-                        }
-                    } catch (NullPointerException npe) {
-                        plugin.debug("NPE setting biome!");
-                    }
                     data = plugin.getServer().createBlockData(c.getString("data"));
                     type = data.getMaterial();
                     if (type.equals(Material.NOTE_BLOCK)) {
@@ -302,8 +292,8 @@ public class TARDISBuilderInner {
                          * mob spawner will be converted to the correct id by
                          * setBlock(), but remember it for the scanner.
                          */
-                        String scanloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                        set.put("scanner", scanloc);
+                        String scanner = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                        plugin.getQueryFactory().insertSyncControl(dbID, 33, scanner, 0);
                     }
                     if (type.equals(Material.CHEST)) {
                         // remember the location of the condenser chest
