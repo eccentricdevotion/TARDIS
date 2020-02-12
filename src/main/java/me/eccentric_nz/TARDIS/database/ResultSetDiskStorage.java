@@ -184,9 +184,6 @@ public class ResultSetDiskStorage {
         return uuid;
     }
 
-    //    public String getOwner() {
-//        return owner;
-//    }
     public String getSavesOne() {
         return savesOne;
     }

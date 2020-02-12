@@ -27,6 +27,7 @@ public enum GLOWSTONE_CIRCUIT {
     ARS("TARDIS ARS Circuit", 10001973),
     BIO("Bio-scanner Circuit", 10001969),
     CHAMELEON("TARDIS Chameleon Circuit", 10001966),
+    CIRCUITS("Circuits", 10001985),
     DIAMOND("Diamond Disruptor Circuit", 10001971),
     EMERALD("Emerald Environment Circuit", 10001972),
     IGNITE("Ignite Circuit", 10001982),
@@ -49,7 +50,7 @@ public enum GLOWSTONE_CIRCUIT {
     String displayName;
     int customModelData;
     int damaged;
-    private static final HashMap<Integer, GLOWSTONE_CIRCUIT> BY_ID = new HashMap<>();
+    private static final HashMap<String, GLOWSTONE_CIRCUIT> BY_NAME = new HashMap<>();
 
     GLOWSTONE_CIRCUIT(String displayName, int customModelData) {
         this.displayName = displayName;
@@ -59,7 +60,7 @@ public enum GLOWSTONE_CIRCUIT {
 
     static {
         for (GLOWSTONE_CIRCUIT glowstone : values()) {
-            BY_ID.put(glowstone.customModelData, glowstone);
+            BY_NAME.put(glowstone.displayName, glowstone);
         }
     }
 
@@ -75,7 +76,7 @@ public enum GLOWSTONE_CIRCUIT {
         return damaged;
     }
 
-    public static HashMap<Integer, GLOWSTONE_CIRCUIT> getById() {
-        return BY_ID;
+    public static HashMap<String, GLOWSTONE_CIRCUIT> getByName() {
+        return BY_NAME;
     }
 }

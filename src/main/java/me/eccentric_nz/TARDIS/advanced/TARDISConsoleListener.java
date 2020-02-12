@@ -22,7 +22,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.GLOWSTONE_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,6 +36,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,6 +110,22 @@ public class TARDISConsoleListener implements Listener {
                             if (!console.isEmpty()) {
                                 try {
                                     ItemStack[] stack = TARDISSerializeInventory.itemStacksFromString(console);
+                                    for (ItemStack circuit : stack) {
+                                        if (circuit != null && circuit.hasItemMeta()) {
+                                            ItemMeta cm = circuit.getItemMeta();
+                                            if (circuit.getType().equals(Material.FILLED_MAP)) {
+                                                if (cm.hasDisplayName()) {
+                                                    GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(cm.getDisplayName());
+                                                    if (glowstone != null) {
+                                                        circuit.setType(Material.GLOWSTONE_DUST);
+                                                    }
+                                                }
+                                            } else if (TARDISStaticUtils.isMusicDisk(circuit)) {
+                                                cm.setCustomModelData(10000001);
+                                                circuit.setItemMeta(cm);
+                                            }
+                                        }
+                                    }
                                     inv.setContents(stack);
                                 } catch (IOException ex) {
                                     plugin.debug("Could not read console from database!");

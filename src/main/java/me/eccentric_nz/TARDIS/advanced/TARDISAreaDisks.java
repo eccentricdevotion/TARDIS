@@ -166,7 +166,6 @@ class TARDISAreaDisks {
                 if (count > 0) {
                     return TARDISSerializeInventory.itemStacksToString(inv.getContents());
                 } else {
-                    plugin.debug(serilized_areas);
                     return serilized_areas;
                 }
             } catch (IOException ex) {

@@ -72,7 +72,6 @@ public class TARDISControlListener implements Listener {
         this.plugin = plugin;
         validBlocks.add(Material.COMPARATOR);
         validBlocks.add(Material.DISPENSER);
-        validBlocks.add(Material.JUKEBOX);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
@@ -281,6 +280,36 @@ public class TARDISControlListener implements Listener {
                                     } else {
                                         try {
                                             stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
+                                            for (ItemStack is : stack) {
+                                                if (is != null && is.hasItemMeta()) {
+                                                    ItemMeta im = is.getItemMeta();
+                                                    if (im.hasDisplayName()) {
+                                                        if (is.getType().equals(Material.FILLED_MAP)) {
+                                                            GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(im.getDisplayName());
+                                                            if (glowstone != null) {
+                                                                im.setCustomModelData(glowstone.getCustomModelData());
+                                                                is.setType(Material.GLOWSTONE_DUST);
+                                                                is.setItemMeta(im);
+                                                            }
+                                                        } else {
+                                                            if (TARDISStaticUtils.isMusicDisk(is)) {
+                                                                im.setCustomModelData(10000001);
+                                                            } else if (is.getType().equals(Material.LIME_WOOL)) {
+                                                                im.setCustomModelData(86);
+                                                                is.setType(Material.BOWL);
+                                                                is.setItemMeta(im);
+                                                            } else if (is.getType().equals(Material.RED_WOOL)) {
+                                                                im.setCustomModelData(87);
+                                                                is.setType(Material.BOWL);
+                                                                is.setItemMeta(im);
+                                                            } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
+                                                                im.setCustomModelData(10001985);
+                                                            }
+                                                            is.setItemMeta(im);
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         } catch (IOException ex) {
                                             plugin.debug("Could not get default Storage Inventory: " + ex.getMessage());
                                         }

@@ -25,6 +25,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
 import java.util.UUID;
@@ -304,5 +305,18 @@ public class TARDISStaticUtils {
         double x = Math.cos(radians);
         double z = Math.sin(radians);
         return new EulerAngle(x, 0, z);
+    }
+
+    public static boolean isMusicDisk(ItemStack is) {
+        switch (is.getType()) {
+            case MUSIC_DISC_BLOCKS:
+            case MUSIC_DISC_CAT:
+            case MUSIC_DISC_CHIRP:
+            case MUSIC_DISC_MALL:
+            case MUSIC_DISC_WAIT:
+                return true;
+            default:
+                return false;
+        }
     }
 }

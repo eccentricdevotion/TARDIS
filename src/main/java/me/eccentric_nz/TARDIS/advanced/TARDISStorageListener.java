@@ -19,9 +19,11 @@ package me.eccentric_nz.TARDIS.advanced;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.GLOWSTONE_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -286,6 +288,36 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     stack = new TARDISAreaDisks(plugin).makeDisks(p);
                 } else {
                     stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
+                }
+                for (ItemStack is : stack) {
+                    if (is != null && is.hasItemMeta()) {
+                        ItemMeta im = is.getItemMeta();
+                        if (im.hasDisplayName()) {
+                            if (is.getType().equals(Material.FILLED_MAP)) {
+                                GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(im.getDisplayName());
+                                if (glowstone != null) {
+                                    im.setCustomModelData(glowstone.getCustomModelData());
+                                    is.setType(Material.GLOWSTONE_DUST);
+                                    is.setItemMeta(im);
+                                }
+                            } else {
+                                if (TARDISStaticUtils.isMusicDisk(is)) {
+                                    im.setCustomModelData(10000001);
+                                } else if (is.getType().equals(Material.LIME_WOOL)) {
+                                    im.setCustomModelData(86);
+                                    is.setType(Material.BOWL);
+                                    is.setItemMeta(im);
+                                } else if (is.getType().equals(Material.RED_WOOL)) {
+                                    im.setCustomModelData(87);
+                                    is.setType(Material.BOWL);
+                                    is.setItemMeta(im);
+                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
+                                    im.setCustomModelData(10001985);
+                                }
+                                is.setItemMeta(im);
+                            }
+                        }
+                    }
                 }
             } catch (IOException ex) {
                 plugin.debug("Could not get inventory from database! " + ex);
