@@ -90,7 +90,6 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
-        booleanOptions.put("creation.sky_biome", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
@@ -225,6 +224,9 @@ public class TARDISConfiguration {
         }
         if (config.contains("preferences.wand")) {
             plugin.getConfig().set("preferences.wand", null);
+        }
+        if (config.contains("creation.sky_biome")) {
+            plugin.getConfig().set("creation.sky_biome", null);
         }
         if (config.contains("creation.use_block_stack")) {
             plugin.getConfig().set("creation.use_block_stack", null);

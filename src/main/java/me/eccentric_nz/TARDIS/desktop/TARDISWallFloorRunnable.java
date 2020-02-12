@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
@@ -142,10 +141,6 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                // if we're setting the biome to sky, do it now
-                if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, z, Biome.THE_VOID);
-                }
                 BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {

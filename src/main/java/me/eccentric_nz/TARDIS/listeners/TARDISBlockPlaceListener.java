@@ -80,7 +80,6 @@ public class TARDISBlockPlaceListener implements Listener {
                 boolean light = false;
                 if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                     int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
-                    plugin.debug("which: " + which);
                     MultipleFacing multipleFacing;
                     if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));

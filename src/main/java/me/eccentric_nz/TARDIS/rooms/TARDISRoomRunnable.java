@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -465,11 +464,6 @@ public class TARDISRoomRunnable implements Runnable {
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 chunkList.forEach((ch) -> {
-                    if (plugin.getConfig().getBoolean("creation.sky_biome")) {
-                        // refresh the chunk so ctm textures show
-                        //world.refreshChunk(ch.getX(), ch.getZ());
-                        plugin.getTardisHelper().refreshChunk(ch);
-                    }
                     ch.setForceLoaded(false);
                 });
             }
@@ -822,10 +816,6 @@ public class TARDISRoomRunnable implements Runnable {
             Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
             thisChunk.setForceLoaded(true);
             chunkList.add(thisChunk);
-            // if we're setting the biome to sky, do it now
-            if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                world.setBiome(startx, startz, Biome.THE_VOID);
-            }
             if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                 if (type.equals(Material.WATER)) {
                     TARDISBlockSetters.setBlock(world, startx, starty, startz, Material.ICE.createBlockData());

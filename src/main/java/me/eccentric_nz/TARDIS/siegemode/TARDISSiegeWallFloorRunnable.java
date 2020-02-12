@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -168,10 +167,6 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                // if we're setting the biome to sky, do it now
-                if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, z, Biome.THE_VOID);
-                }
                 Block bb = world.getBlockAt(x, y, z);
                 Material compare_type = bb.getType();
                 Material to_wall_type = (toSiege) ? wall_type : siege_wall_type;

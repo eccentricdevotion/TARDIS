@@ -28,7 +28,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -117,10 +116,6 @@ public class TARDISJunkBuilder implements Runnable {
                                 int x = sx + row;
                                 int y = sy + level;
                                 int z = sz + col;
-                                // if we're setting the biome to sky, do it now
-                                if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                                    world.setBiome(x, z, Biome.THE_VOID);
-                                }
                                 data = plugin.getServer().createBlockData(c.getString("data"));
                                 type = data.getMaterial();
                                 if (type.equals(Material.CAKE)) {
