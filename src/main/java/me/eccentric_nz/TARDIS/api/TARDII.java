@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import me.eccentric_nz.tardisweepingangels.monsters.daleks.WeightedChoice;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -155,11 +156,13 @@ public class TARDII implements TardisAPI {
         return data;
     }
 
+    private static final WeightedChoice<Environment> weightedChoice = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
+
     @Override
     public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
         if (environment == null) {
-            // choose random environment
-            environment = Environment.values()[random.nextInt(Environment.values().length)];
+            // choose random environment - weighted towards normal!
+            environment = weightedChoice.next();
             // check if environment is enabled
             if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
                 environment = Environment.NORMAL;
