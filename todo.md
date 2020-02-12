@@ -14,9 +14,8 @@
 8. Update documentation...
 9. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
-10. Add CustomModelData to TARDIS items using `ItemMeta.setCustomModelData(int)` - _started_
-    * Update Disk Storage defaults
-11. Set Master button to ON (In Lazarus GUI) when it is in use
+10. Set Master button to ON (In Lazarus GUI) when it is in use
+11. Change Advanced console, Disk storage and Lamp Off blocks to unused MUSHROOM_STEM block states
 12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS.
 
 ## TARDIS data pack
