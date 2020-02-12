@@ -38,6 +38,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final TARDIS plugin;
     private final List<String> ROOT_SUBS = new ArrayList<>();
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off");
+    private final List<String> ITEM_SUBS = ImmutableList.of("hand", "inventory");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update");
@@ -86,6 +87,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                     return partial(lastArg, DIR_SUBS);
                 case "home":
                     return partial(lastArg, Collections.singletonList("set"));
+                case "item":
+                    return partial(lastArg, ITEM_SUBS);
                 case "list":
                     return partial(lastArg, LIST_SUBS);
                 case "rescue":

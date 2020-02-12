@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import me.eccentric_nz.TARDIS.enumeration.GLOWSTONE_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -45,39 +47,67 @@ public class TARDISItemCommand {
                 TARDISMessage.send(player, "ITEM_IN_HAND");
                 return true;
             }
-            if (im.hasCustomModelData()) {
-                TARDISMessage.send(player, "ITEM_HAS_DATA");
-                return true;
-            }
             // strip color codes
             String stripped = ChatColor.stripColor(im.getDisplayName());
             // look up display name
-            int cmd = RECIPE_ITEM.getByName(stripped).getCustomModelData();
-            im.setCustomModelData(cmd);
-            inHand.setItemMeta(im);
-            player.updateInventory();
-            TARDISMessage.send(player, "ITEM_UPDATED");
-            return true;
+            RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(stripped);
+            if (!recipeItem.equals(RECIPE_ITEM.NOT_FOUND)) {
+                int cmd = recipeItem.getCustomModelData();
+                im.setCustomModelData(cmd);
+                if (inHand.getType().equals(Material.FILLED_MAP)) {
+                    GLOWSTONE_CIRCUIT circuit = GLOWSTONE_CIRCUIT.getByName().get(stripped);
+                    if (circuit != null) {
+                        inHand.setType(Material.GLOWSTONE_DUST);
+                    }
+                } else {
+                    if (im.hasCustomModelData()) {
+                        TARDISMessage.send(player, "ITEM_HAS_DATA");
+                        return true;
+                    }
+                    inHand.setItemMeta(im);
+                }
+                player.updateInventory();
+                TARDISMessage.send(player, "ITEM_UPDATED");
+            }
         } else {
             int i = 0;
             for (ItemStack is : player.getInventory()) {
                 if (is != null && is.hasItemMeta()) {
+                    TARDISMessage.message(player, is.getType().toString());
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName() && !im.hasCustomModelData()) {
+                    if (im.hasDisplayName()) {
                         // strip color codes
                         String stripped = ChatColor.stripColor(im.getDisplayName());
+                        TARDISMessage.message(player, stripped);
                         // look up display name
-                        int cmd = RECIPE_ITEM.getByName(stripped).getCustomModelData();
-                        im.setCustomModelData(cmd);
-                        is.setItemMeta(im);
-                        i++;
+                        RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(stripped);
+                        TARDISMessage.message(player, recipeItem.toString());
+                        if (!recipeItem.equals(RECIPE_ITEM.NOT_FOUND)) {
+                            if (is.getType().equals(Material.FILLED_MAP)) {
+                                TARDISMessage.message(player, "Filled Map!");
+                                GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(im.getDisplayName());
+                                if (glowstone != null) {
+                                    TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
+                                    is.setType(Material.GLOWSTONE_DUST);
+                                    i++;
+                                } else {
+                                    TARDISMessage.message(player, "IllegalArgumentException for " + stripped);
+                                }
+                            }
+                            if (!im.hasCustomModelData()) {
+                                im.setCustomModelData(recipeItem.getCustomModelData());
+                                is.setItemMeta(im);
+                                i++;
+                            }
+                        }
                     }
                 }
             }
             if (i > 0) {
                 TARDISMessage.send(player, "ITEMS_UPDATED", "" + i);
+                player.updateInventory();
             }
-            return true;
         }
+        return true;
     }
 }
