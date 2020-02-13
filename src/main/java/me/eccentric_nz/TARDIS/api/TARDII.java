@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
-import me.eccentric_nz.tardisweepingangels.monsters.daleks.WeightedChoice;
+import me.eccentric_nz.TARDIS.utility.WeightedChoice;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
