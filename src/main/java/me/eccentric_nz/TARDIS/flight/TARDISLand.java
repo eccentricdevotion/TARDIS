@@ -44,6 +44,7 @@ public class TARDISLand {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         whereh.put("type", 0);
+        whereh.put("secondary", 0);
         ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
         if (rsh.resultSet()) {
             Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
