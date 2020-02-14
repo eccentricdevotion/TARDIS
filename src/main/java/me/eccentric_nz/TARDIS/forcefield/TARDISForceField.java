@@ -40,6 +40,7 @@ public class TARDISForceField implements Runnable {
     public TARDISForceField(TARDIS plugin) {
         this.plugin = plugin;
         range = this.plugin.getConfig().getInt("allow.force_field");
+        plugin.debug("Starting force fields with a range of " + range + " blocks.");
         doubleRange = range * 2;
     }
 
@@ -80,7 +81,8 @@ public class TARDISForceField implements Runnable {
             if (player == null || !player.isOnline()) {
                 continue;
             }
-            Location location = map.getValue().add(0.5, 0.5, 0.5);
+            Location location = map.getValue().clone().add(0.5, 0.5, 0.5);
+            new TARDISForceFieldVisualiser(plugin).showBorder(location.clone());
             for (Entity other : location.getWorld().getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
                 if (!(other instanceof LivingEntity)) {
                     continue;
