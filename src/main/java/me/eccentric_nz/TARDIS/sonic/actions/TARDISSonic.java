@@ -24,6 +24,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.Powerable;
+import org.bukkit.block.data.type.Gate;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -37,25 +38,32 @@ public class TARDISSonic {
     static {
         distance.add(Material.ACACIA_BUTTON);
         distance.add(Material.ACACIA_DOOR);
+        distance.add(Material.ACACIA_FENCE_GATE);
         distance.add(Material.BIRCH_BUTTON);
         distance.add(Material.BIRCH_DOOR);
+        distance.add(Material.BIRCH_FENCE_GATE);
         distance.add(Material.DARK_OAK_BUTTON);
         distance.add(Material.DARK_OAK_DOOR);
+        distance.add(Material.DARK_OAK_FENCE_GATE);
         distance.add(Material.IRON_DOOR);
         distance.add(Material.JUNGLE_BUTTON);
         distance.add(Material.JUNGLE_DOOR);
+        distance.add(Material.JUNGLE_FENCE_GATE);
         distance.add(Material.LEVER);
         distance.add(Material.OAK_BUTTON);
         distance.add(Material.OAK_DOOR);
+        distance.add(Material.OAK_FENCE_GATE);
         distance.add(Material.SPRUCE_BUTTON);
         distance.add(Material.SPRUCE_DOOR);
+        distance.add(Material.SPRUCE_FENCE_GATE);
         distance.add(Material.STONE_BUTTON);
     }
 
-    public static void standardSonic(TARDIS plugin, Player player) {
+    public static void standardSonic(TARDIS plugin, Player player, long now) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
+            TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
             // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
             if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
                 switch (blockType) {
@@ -98,9 +106,7 @@ public class TARDISSonic {
                         }
                         break;
                     case LEVER:
-                        plugin.debug("Lever");
                         Powerable lever = (Powerable) targetBlock.getBlockData();
-                        plugin.debug("powered: " + lever.isPowered());
                         lever.setPowered(!lever.isPowered());
                         targetBlock.setBlockData(lever, true);
                         break;
@@ -120,10 +126,22 @@ public class TARDISSonic {
                             targetBlock.setBlockData(button);
                         }, delay);
                         break;
+                    case ACACIA_FENCE_GATE:
+                    case BIRCH_FENCE_GATE:
+                    case DARK_OAK_FENCE_GATE:
+                    case JUNGLE_FENCE_GATE:
+                    case OAK_FENCE_GATE:
+                    case SPRUCE_FENCE_GATE:
+                        Gate gate = (Gate) targetBlock.getBlockData();
+                        gate.setOpen(!gate.isOpen());
+                        targetBlock.setBlockData(gate, true);
+                        break;
                     default:
                         break;
                 }
             }
+        } else {
+            TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
         }
     }
 }

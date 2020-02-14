@@ -105,11 +105,12 @@ public class TARDISSonicListener implements Listener {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
-                    TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                     // rebuild Police Box if dispersed by HADS
                     if (plugin.getTrackerKeeper().getDispersed().containsKey(player.getUniqueId())) {
+                        TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         TARDISSonicDispersed.assemble(plugin, player);
                     } else if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                        TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         // freeze target player
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Player target = TARDISSonicFreeze.getTargetPlayer(player);
@@ -119,7 +120,7 @@ public class TARDISSonicListener implements Listener {
                         }, 20L);
                     }
                     if (player.hasPermission("tardis.sonic.standard")) {
-                        TARDISSonic.standardSonic(plugin, player);
+                        TARDISSonic.standardSonic(plugin, player, now);
                         return;
                     }
                 }
