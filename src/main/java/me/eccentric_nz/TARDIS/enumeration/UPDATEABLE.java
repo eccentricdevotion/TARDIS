@@ -27,7 +27,7 @@ public enum UPDATEABLE {
     FORCEFIELD(true, true),
     FRAME(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME)),
     GENERATOR(false, true, new RecipeChoice.MaterialChoice(Material.FLOWER_POT)),
-    HANDBRAKE(false, true, new RecipeChoice.MaterialChoice(Material.LEVER)),
+    HANDBRAKE(true, true, new RecipeChoice.MaterialChoice(Material.LEVER)),
     HINGE(false, false),
     INFO(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     KEYBOARD(false, false, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
