@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.*;
@@ -174,6 +175,10 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                     plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                                     im.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_ON")));
                                     is.setItemMeta(im);
+                                    // Check if it's at a recharge point
+                                    TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
+                                    tal.recharge(id);
+                                    // Remove energy from TARDIS and sets database
                                     TARDISMessage.send(p, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
