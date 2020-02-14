@@ -45,6 +45,7 @@ public class TARDISSpawnListener implements Listener {
 
     public TARDISSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
+        good_spawns.add(SpawnReason.BEEHIVE);
         good_spawns.add(SpawnReason.BREEDING);
         good_spawns.add(SpawnReason.BUILD_IRONGOLEM);
         good_spawns.add(SpawnReason.BUILD_SNOWMAN);
@@ -62,8 +63,9 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.OCELOT_BABY);
         good_spawns.add(SpawnReason.RAID);
         good_spawns.add(SpawnReason.REINFORCEMENTS);
-        good_spawns.add(SpawnReason.SILVERFISH_BLOCK);
         good_spawns.add(SpawnReason.SHEARED);
+        good_spawns.add(SpawnReason.SHOULDER_ENTITY);
+        good_spawns.add(SpawnReason.SILVERFISH_BLOCK);
         good_spawns.add(SpawnReason.SLIME_SPLIT);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         good_spawns.add(SpawnReason.VILLAGE_DEFENSE);
