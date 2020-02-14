@@ -133,10 +133,10 @@ public class TARDISUpdateListener implements Listener {
                     new UpdateDoor(plugin).process(updateable, block, secondary, id, player);
                     break;
                 case GENERATOR:
-                    plugin.getQueryFactory().insertControl(id, 24, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 24, blockLocStr, secondary ? 1 : 0);
                     break;
                 case DISPENSER:
-                    plugin.getQueryFactory().insertControl(id, 28, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 28, blockLocStr, secondary ? 1 : 0);
                     break;
                 case TELEPATHIC:
                     plugin.getTrackerKeeper().getTelepathicPlacements().remove(uuid);
@@ -213,7 +213,7 @@ public class TARDISUpdateListener implements Listener {
                     ts.update();
                     break;
                 case CONTROL:
-                    plugin.getQueryFactory().insertControl(id, 22, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 22, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign os = (Sign) block.getState();
                     os.setLine(0, "");
@@ -245,7 +245,7 @@ public class TARDISUpdateListener implements Listener {
                     }
                     break;
                 case TEMPORAL:
-                    plugin.getQueryFactory().insertControl(id, 11, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 11, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign es = (Sign) block.getState();
                     es.setLine(0, "");
@@ -256,12 +256,12 @@ public class TARDISUpdateListener implements Listener {
                     break;
                 case ADVANCED:
                 case STORAGE:
-                    plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     // check if player has storage record, and update the tardis_id field
                     plugin.getUtils().updateStorageId(playerUUID, id);
                     break;
                 case INFO:
-                    plugin.getQueryFactory().insertControl(id, 13, blockLocStr, 0);
+                    plugin.getQueryFactory().insertControl(id, 13, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "-----");
