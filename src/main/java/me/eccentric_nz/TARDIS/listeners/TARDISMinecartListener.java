@@ -58,7 +58,7 @@ public class TARDISMinecartListener implements Listener {
         if (event.getVehicle() instanceof StorageMinecart || event.getVehicle() instanceof HopperMinecart) {
             Block block = event.getBlock();
             Material material = block.getType();
-            if (material.equals(Material.IRON_DOOR) || Tag.FENCES.isTagged(material)) {
+            if (Tag.DOORS.isTagged(material) || Tag.FENCES.isTagged(material)) {
                 Vehicle minecart = event.getVehicle();
                 String[] data = null;
                 UUID playerUUID = null;
@@ -71,7 +71,13 @@ public class TARDISMinecartListener implements Listener {
                 int bz = block_loc.getBlockZ();
                 String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
                 switch (material) {
-                    case IRON_DOOR: // is it a TARDIS door?
+                    case ACACIA_DOOR: // is it a TARDIS door?
+                    case BIRCH_DOOR:
+                    case DARK_OAK_DOOR:
+                    case IRON_DOOR:
+                    case JUNGLE_DOOR:
+                    case OAK_DOOR:
+                    case SPRUCE_DOOR:
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", db_loc);
                         where.put("door_type", 0);
