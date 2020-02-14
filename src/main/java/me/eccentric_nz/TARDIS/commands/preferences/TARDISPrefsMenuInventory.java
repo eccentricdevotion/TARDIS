@@ -87,7 +87,15 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isPoliceboxTexturesOn());
         values.add(rsp.isFarmOn());
         values.add(rsp.isTelepathyOn());
-        values.add(rsp.isAutoOn());
+        // get preset
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("uuid", uuid.toString());
+        ResultSetTardis rst = new ResultSetTardis(plugin, wherep, "", false, 0);
+        if (rst.resultSet()) {
+            values.add(rst.getTardis().getPreset().equals(PRESET.JUNK_MODE)); // junk mode
+        } else {
+            values.add(false);
+        }
         values.add(rsp.isAutoPowerUp());
         values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid));
         values.add(rsp.isLanternsOn());
@@ -118,7 +126,7 @@ public class TARDISPrefsMenuInventory {
                 }
                 im.setCustomModelData(v ? cmd : cmd + 100);
                 if (pref == GUIPlayerPreferences.HADS_TYPE) {
-                    im.setLore(Collections.singletonList(v ? "DISPLACEMENT" : "DISPERSAL"));
+                    im.setLore(Collections.singletonList(v ? "DISPERSAL" : "DISPLACEMENT"));
                 } else {
                     im.setLore(Collections.singletonList(v ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
                 }

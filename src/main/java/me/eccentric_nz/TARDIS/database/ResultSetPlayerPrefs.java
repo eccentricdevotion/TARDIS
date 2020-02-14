@@ -118,9 +118,11 @@ public class ResultSetPlayerPrefs {
                 autoSiegeOn = rs.getBoolean("auto_siege_on");
                 beaconOn = rs.getBoolean("beacon_on");
                 hadsOn = rs.getBoolean("hads_on");
-                hadsType = HADS.valueOf(rs.getString("hads_type"));
+                String ht = rs.getString("hads_type");
                 if (rs.wasNull()) {
                     hadsType = HADS.DISPLACEMENT;
+                } else {
+                    hadsType = HADS.valueOf(ht);
                 }
                 submarineOn = rs.getBoolean("submarine_on");
                 artronLevel = rs.getInt("artron_level");
