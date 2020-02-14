@@ -56,9 +56,7 @@ public class TARDISInteriorPostioning {
      * @return the first vacant slot
      */
     int getFreeSlot() {
-        plugin.debug("Attempting to get next free TIPS slot");
         int limit = plugin.getConfig().getInt("creation.tips_limit");
-        plugin.debug("TIPS limit is: " + limit);
         List<Integer> usedSlots = makeUsedSlotList();
         int slot = -1;
         for (int i = 0; i < limit; i++) {
@@ -67,7 +65,6 @@ public class TARDISInteriorPostioning {
                 break;
             }
         }
-        plugin.debug("Returning TIPS slot number: " + slot);
         return slot;
     }
 
@@ -132,7 +129,6 @@ public class TARDISInteriorPostioning {
      * @return a list of slot numbers
      */
     private List<Integer> makeUsedSlotList() {
-        plugin.debug("Making used TIPS slot list...");
         List<Integer> usedSlots = new ArrayList<>();
         Statement statement = null;
         ResultSet rs = null;
@@ -144,12 +140,9 @@ public class TARDISInteriorPostioning {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     int s = rs.getInt("tips");
-                    plugin.debug("Adding existing TIPS slot: " + s + " to list.");
                     usedSlots.add(s);
                     i++;
                 }
-            } else {
-                plugin.debug("No TIPS data found - probably the first TARDIS created");
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
@@ -165,7 +158,6 @@ public class TARDISInteriorPostioning {
                 plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
             }
         }
-        plugin.debug("Returning " + ((i > 0) ? "TIPS list with " + i + "entries" : "an empty list"));
         return usedSlots;
     }
 

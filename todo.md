@@ -16,7 +16,9 @@
    * Add advanced console and disk storage to schematics
 10. Set Master button to ON (In Lazarus GUI) when it is in use
 11. Change Advanced console, Disk storage and Lamp Off blocks to unused MUSHROOM_STEM block states
-12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS.
+12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS
+13. Cloister bell
+14. Remove code for creating TARDIS interior underground
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
@@ -29,14 +31,11 @@
 
 ## Resource Pack / TARDISWeepingAngels
 1. Custom Time Rotor model
-2. Update existing monsters with persistent data if they don't have it.
-3. Custom Entity models using Optifine (when they can be applied to named entities)
-4. Rare armour drops
-6. Re-skin mobs for Resource pack, and add new mob sounds
+2. Custom Entity models using Optifine (when they can be applied to named entities)
+3. Rare armour drops
+4. Re-skin mobs for Resource pack, and add new mob sounds
    * Clockwork Droid
    * Hath
-   * K-9 -> Change to armour stand.
-   * Endermen -> The Silence - _implemented, but texture needs to be finished_
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
@@ -44,7 +43,7 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
-7. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+5. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
 ## Minecraft API if ever available
 1. Recreate everything with the new API :)
