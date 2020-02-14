@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.forcefield;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Color;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -15,39 +15,28 @@ public class TARDISForceFieldVisualiser {
         this.plugin = plugin;
     }
 
-    public void showBorder(Location location) {
+    public void showBorder(Location location, int d) {
 
-        TARDISForceFieldLocation tffl = new TARDISForceFieldLocation(location, plugin.getConfig().getDouble("allow.force_field"));
+        TARDISForceFieldLocation tffl = new TARDISForceFieldLocation(location, plugin.getConfig().getDouble("allow.force_field") - 1.0d);
 
         World world = location.getWorld();
-        Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1);
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 14; i++) {
             // topLeft
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontLeft().add(0, 0, SPACE), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontLeft().add(0, 0, SPACE), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // topBack
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackLeft().add(SPACE, 0, 0), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackLeft().add(SPACE, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // topRight
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackRight().add(0, 0, -SPACE), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackRight().add(0, 0, -SPACE), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // topFront
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontRight().add(-SPACE, 0, 0), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontRight().add(-SPACE, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // bottomLeft
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontLeft().add(0, 0, SPACE), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontLeft().add(0, 0, SPACE), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // bottomBack
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackLeft().add(SPACE, 0, 0), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackLeft().add(SPACE, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // bottomRight
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackRight().add(0, 0, -SPACE), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackRight().add(0, 0, -SPACE), 1, TARDISConstants.DUSTOPTIONS.get(d));
             // bottomFront
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontRight().add(-SPACE, 0, 0), 5, dustOptions);
-        }
-        for (int i = 0; i < 7; i++) {
-            // cornerFrontLeft
-            world.spawnParticle(Particle.REDSTONE, tffl.getCornerFrontLeft().add(0, SPACE, 0), 5, dustOptions);
-            // cornerBackLeft
-            world.spawnParticle(Particle.REDSTONE, tffl.getCornerBackLeft().add(0, SPACE, 0), 5, dustOptions);
-            // cornerBackRight
-            world.spawnParticle(Particle.REDSTONE, tffl.getCornerBackRight().add(0, SPACE, 0), 5, dustOptions);
-            // cornerFrontRight
-            world.spawnParticle(Particle.REDSTONE, tffl.getCornerFrontRight().add(0, SPACE, 0), 5, dustOptions);
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontRight().add(-SPACE, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
         }
     }
 }

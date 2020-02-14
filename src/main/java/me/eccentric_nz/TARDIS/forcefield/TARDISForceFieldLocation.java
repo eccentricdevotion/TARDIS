@@ -19,17 +19,13 @@ public class TARDISForceFieldLocation {
     private final Location bottomFrontRight;
     private final Location bottomBackLeft;
     private final Location bottomBackRight;
-    private final Location cornerFrontLeft;
-    private final Location cornerFrontRight;
-    private final Location cornerBackLeft;
-    private final Location cornerBackRight;
 
     public TARDISForceFieldLocation(Location location, double range) {
         minX = location.getX() - range;
         minY = location.getY();
         minZ = location.getZ() - range;
         maxX = location.getX() + range;
-        maxY = location.getY() + range;
+        maxY = location.getY() + 1;
         maxZ = location.getZ() + range;
         World world = location.getWorld();
         topFrontLeft = new Location(world, minX, maxY, minZ);
@@ -40,10 +36,6 @@ public class TARDISForceFieldLocation {
         bottomFrontRight = new Location(world, maxX, minY, minZ);
         bottomBackLeft = new Location(world, minX, minY, maxZ);
         bottomBackRight = new Location(world, maxX, minY, maxZ);
-        cornerFrontLeft = bottomFrontLeft.clone();
-        cornerFrontRight = bottomFrontRight.clone();
-        cornerBackLeft = bottomBackLeft.clone();
-        cornerBackRight = bottomBackRight.clone();
     }
 
     public Location getTopFrontLeft() {
@@ -76,21 +68,5 @@ public class TARDISForceFieldLocation {
 
     public Location getBottomBackRight() {
         return bottomBackRight;
-    }
-
-    public Location getCornerFrontLeft() {
-        return cornerFrontLeft;
-    }
-
-    public Location getCornerFrontRight() {
-        return cornerFrontRight;
-    }
-
-    public Location getCornerBackLeft() {
-        return cornerBackLeft;
-    }
-
-    public Location getCornerBackRight() {
-        return cornerBackRight;
     }
 }

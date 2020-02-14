@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Biome;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
@@ -77,6 +79,7 @@ public class TARDISConstants {
     public static final BlockData ICE = Material.ICE.createBlockData();
     public static final List<LootTable> LOOT = Arrays.asList(LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(), LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(), LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(), LootTables.VILLAGE_ARMORER.getLootTable(), LootTables.VILLAGE_BUTCHER.getLootTable(), LootTables.VILLAGE_CARTOGRAPHER.getLootTable(), LootTables.VILLAGE_DESERT_HOUSE.getLootTable(), LootTables.VILLAGE_FISHER.getLootTable(), LootTables.VILLAGE_FLETCHER.getLootTable(), LootTables.VILLAGE_MASON.getLootTable(), LootTables.VILLAGE_PLAINS_HOUSE.getLootTable(), LootTables.VILLAGE_SAVANNA_HOUSE.getLootTable(), LootTables.VILLAGE_SHEPHERD.getLootTable(), LootTables.VILLAGE_SNOWY_HOUSE.getLootTable(), LootTables.VILLAGE_TAIGA_HOUSE.getLootTable(), LootTables.VILLAGE_TANNERY.getLootTable(), LootTables.VILLAGE_TEMPLE.getLootTable(), LootTables.VILLAGE_TOOLSMITH.getLootTable(), LootTables.VILLAGE_WEAPONSMITH.getLootTable(), LootTables.WOODLAND_MANSION.getLootTable(), LootTables.PILLAGER_OUTPOST.getLootTable());
     public static final Random RANDOM = new Random();
+    public static final List DUSTOPTIONS = Arrays.asList(new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 102), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1));
 
     /**
      * Creates a HashMap from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks

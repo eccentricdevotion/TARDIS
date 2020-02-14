@@ -36,6 +36,7 @@ public class TARDISForceField implements Runnable {
     private final TARDIS plugin;
     private final int range;
     private final int doubleRange;
+    private int dust = 0;
 
     public TARDISForceField(TARDIS plugin) {
         this.plugin = plugin;
@@ -82,7 +83,7 @@ public class TARDISForceField implements Runnable {
                 continue;
             }
             Location location = map.getValue().clone().add(0.5, 0.5, 0.5);
-            new TARDISForceFieldVisualiser(plugin).showBorder(location.clone());
+            new TARDISForceFieldVisualiser(plugin).showBorder(location.clone(), dust);
             for (Entity other : location.getWorld().getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
                 if (!(other instanceof LivingEntity)) {
                     continue;
@@ -109,6 +110,10 @@ public class TARDISForceField implements Runnable {
                 }
                 velocity(other, getTrajectory2d(map.getValue(), other), 0.5d);
                 other.getWorld().playSound(other.getLocation(), "tardis_force_field", 0.5f, 1.0f);
+            }
+            dust++;
+            if (dust > 11) {
+                dust = 0;
             }
         }
     }
