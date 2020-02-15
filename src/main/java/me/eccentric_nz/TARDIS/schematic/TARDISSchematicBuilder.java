@@ -59,6 +59,8 @@ public class TARDISSchematicBuilder {
         this.ez = ez;
         // orange hexagon
         mushroom_stem.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=true,west=true]", Material.ORANGE_WOOL);
+        // blue box
+        mushroom_stem.put("minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=true]", Material.BLUE_WOOL);
         // white roundel
         mushroom_stem.put("minecraft:mushroom_stem[down=true,east=true,north=false,south=false,up=false,west=false]", Material.WHITE_STAINED_GLASS);
         // white roundel offset
@@ -118,12 +120,12 @@ public class TARDISSchematicBuilder {
         }
 
         // get the min & max coords
-        int minx = (sx < ex) ? sx : ex;
-        int maxx = (sx < ex) ? ex : sx;
-        int miny = (sy < ey) ? sy : ey;
-        int maxy = (sy < ey) ? ey : sy;
-        int minz = (sz < ez) ? sz : ez;
-        int maxz = (sz < ez) ? ez : sz;
+        int minx = Math.min(sx, ex);
+        int maxx = Math.max(sx, ex);
+        int miny = Math.min(sy, ey);
+        int maxy = Math.max(sy, ey);
+        int minz = Math.min(sz, ez);
+        int maxz = Math.max(sz, ez);
         // create a JSON object for relative position
         JSONObject relative = new JSONObject();
         relative.put("x", maxx);

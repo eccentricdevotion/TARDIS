@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,7 +39,7 @@ class TARDISLampsRunnable implements Runnable {
     private final long end;
     private final BlockData light;
     private final BlockData BLACK = TARDISConstants.BLACK;
-    private final BlockData SPONGE = Material.SPONGE.createBlockData();
+    private final BlockData MUSHROOM;
     private final boolean use_wool;
     private final boolean lights_on;
     private int task;
@@ -50,6 +51,7 @@ class TARDISLampsRunnable implements Runnable {
         this.end = end;
         this.light = light.createBlockData();
         this.use_wool = use_wool;
+        MUSHROOM = (this.light.equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
         lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));
     }
 
@@ -59,7 +61,7 @@ class TARDISLampsRunnable implements Runnable {
             // set all lamps back to whatever they were when the malfunction happened
             if (lights_on) {
                 lamps.forEach((b) -> {
-                    if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
+                    if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
                         b.setBlockData(light);
                     }
                 });
@@ -69,7 +71,7 @@ class TARDISLampsRunnable implements Runnable {
                         if (use_wool) {
                             b.setBlockData(BLACK);
                         } else {
-                            b.setBlockData(SPONGE);
+                            b.setBlockData(MUSHROOM);
                         }
                     }
                 });
@@ -85,9 +87,9 @@ class TARDISLampsRunnable implements Runnable {
                     if (use_wool) {
                         b.setBlockData(BLACK);
                     } else {
-                        b.setBlockData(SPONGE);
+                        b.setBlockData(MUSHROOM);
                     }
-                } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
+                } else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
                     b.setBlockData(light);
                 }
             });

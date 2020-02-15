@@ -221,6 +221,19 @@ class TARDISBuildAbandoned {
                                     data = Material.getMaterial(m).createBlockData();
                                 }
                                 break;
+                            case BLUE_WOOL:
+                                switch (use_clay) {
+                                    case TERRACOTTA:
+                                        data = Material.BLUE_TERRACOTTA.createBlockData();
+                                        break;
+                                    case CONCRETE:
+                                        data = Material.BLUE_CONCRETE.createBlockData();
+                                        break;
+                                    default:
+                                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                                        break;
+                                }
+                                break;
                             default:
                                 String[] split = type.toString().split("_");
                                 String m;

@@ -101,12 +101,12 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 int ey = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockY();
                 int ez = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockZ();
                 // get the min & max coords
-                int minx = (sx < ex) ? sx : ex;
-                int maxx = (sx < ex) ? ex : sx;
-                int miny = (sy < ey) ? sy : ey;
-                int maxy = (sy < ey) ? ey : sy;
-                int minz = (sz < ez) ? sz : ez;
-                int maxz = (sz < ez) ? ez : sz;
+                int minx = Math.min(sx, ex);
+                int maxx = Math.max(sx, ex);
+                int miny = Math.min(sy, ey);
+                int maxy = Math.max(sy, ey);
+                int minz = Math.min(sz, ez);
+                int maxz = Math.max(sz, ez);
                 // create a JSON object for relative position
                 JSONObject relative = new JSONObject();
                 int px = player.getLocation().getBlockX() - minx;

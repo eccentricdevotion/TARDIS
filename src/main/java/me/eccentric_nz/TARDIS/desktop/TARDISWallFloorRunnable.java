@@ -155,6 +155,10 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                     type = floor_type;
                     TARDISBlockSetters.setBlock(world, x, y, z, type);
                 }
+                if (type.equals(Material.BLUE_WOOL)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                }
             }
             if (row < w) {
                 row++;

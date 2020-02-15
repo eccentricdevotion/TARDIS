@@ -5,20 +5,18 @@
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
    * Finish Chemistry features - balloons [decrease fall damage, increase number of blocks players can walk up, send entities floating into the air] - cures
-2. Make TARDIS circuits not maps
-3. Test player preference to bypass `tardis rescue accept`
-4. Test `invisibility` setting in TARDIS areas
-5. Test Handles transmat requests
-6. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
-7. Actually use `TARDISArtronLevels#checkLevel()`?
-8. Update documentation...
-9. 13th Doctor's and Factory TARDIS console
+2. Test player preference to bypass `tardis rescue accept`
+3. Test `invisibility` setting in TARDIS areas
+4. Test Handles transmat requests
+5. Test Tardis biome travel world selection - `/ttravel biome [biome] [world]`
+6. Actually use `TARDISArtronLevels#checkLevel()`?
+7. Update documentation...
+8. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
-10. Set Master button to ON (In Lazarus GUI) when it is in use
-11. Change Advanced console, Disk storage and Lamp Off blocks to unused MUSHROOM_STEM block states
-12. Update scanner results to new TARDISWeepingAngels persistent data monster checks
-13. Cloister bell
-14. Use the Vortex Manipulator to teleport past force fields
+9. Set Master button to ON (In Lazarus GUI) when it is in use
+10. Update scanner results to new TARDISWeepingAngels persistent data monster checks
+11. Cloister bell
+12. Use the Vortex Manipulator to teleport past force fields
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

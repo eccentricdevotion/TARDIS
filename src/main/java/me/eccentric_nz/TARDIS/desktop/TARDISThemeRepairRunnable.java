@@ -375,6 +375,9 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         data = wall_type.createBlockData();
                     }
                 }
+                if (type.equals(Material.BLUE_WOOL)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                }
                 if (type.equals(Material.WHITE_STAINED_GLASS)) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                 }

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Material;
@@ -33,9 +34,13 @@ import java.util.UUID;
 public class TARDISLampToggler {
 
     private final TARDIS plugin;
+    private final BlockData lamp;
+    private final BlockData sea;
 
     public TARDISLampToggler(TARDIS plugin) {
         this.plugin = plugin;
+        lamp = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
+        sea = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
     }
 
     public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
@@ -57,15 +62,17 @@ public class TARDISLampToggler {
                 }
                 if (on) {
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
+                        BlockData multipleFacing;
                         if (use_wool) {
-                            b.setBlockData(TARDISConstants.BLACK);
+                            multipleFacing = TARDISConstants.BLACK;
                         } else if (lantern) {
-                            b.setBlockData(Material.INFESTED_STONE.createBlockData());
+                            multipleFacing = sea;
                         } else {
-                            b.setBlockData(Material.SPONGE.createBlockData());
+                            multipleFacing = lamp;
                         }
+                        b.setBlockData(multipleFacing);
                     }
-                } else if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
+                } else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
                     b.setBlockData(onlamp);
                 }
             }

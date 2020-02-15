@@ -235,21 +235,21 @@ public class TARDISMushroomBlockData {
             // heat_block
             put(5, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]");
             // blue_lamp_on
-            put(20000001, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");
+            put(10000001, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");
             // green_lamp_on
-            put(20000004, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]");
+            put(10000004, "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]");
             // purple_lamp_on
-            put(20000003, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
+            put(10000003, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]");
             // red_lamp_on
-            put(20000002, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]");
+            put(10000002, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]");
             // blue_lamp
-            put(10000001, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
+            put(1, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
             // green_lamp
-            put(10000004, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]");
+            put(4, "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]");
             // purple_lamp
-            put(10000003, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
+            put(3, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
             // red_lamp
-            put(10000002, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
+            put(2, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
             // custom seed block
             put(45, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=true,west=false]");
             // orange hexagon
@@ -260,6 +260,16 @@ public class TARDISMushroomBlockData {
             put(48, "minecraft:mushroom_stem[down=true,east=true,north=false,south=false,up=false,west=true]");
             // cog
             put(49, "minecraft:mushroom_stem[down=true,east=true,north=false,south=false,up=true,west=false]");
+            // advanced_console
+            put(50, "minecraft:mushroom_stem[down=true,east=true,north=false,south=false,up=true,west=true]");
+            // disk_storage
+            put(51, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=false,west=false]");
+            // lamp_off
+            put(52, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=false,west=true]");
+            // lantern_off
+            put(53, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=false]");
+            // blue_box
+            put(54, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=true]");
         }
     };
 }
