@@ -28,11 +28,8 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -109,7 +106,6 @@ public class TARDISDeleteCommand {
                 TARDISMessage.send(sender, "WORLD_DELETED");
                 return true;
             }
-            Material restore = getRestore(cw);
             // get the current location
             Location bb_loc = null;
             COMPASS d = COMPASS.EAST;
@@ -170,7 +166,7 @@ public class TARDISDeleteCommand {
                         plugin.debug("Could not delete world <" + wname + ">");
                     }
                 } else {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
                 cleanDatabase(id);
                 TARDISMessage.send(sender, "TARDIS_EXTERMINATED");
@@ -180,21 +176,6 @@ public class TARDISDeleteCommand {
             return true;
         }
         return true;
-    }
-
-    private Material getRestore(World w) {
-        String dn = plugin.getConfig().getString("creation.default_world_name");
-        if (w.getWorldType() == WorldType.FLAT || w.getName().equals(dn) || w.getGenerator() instanceof TARDISChunkGenerator) {
-            return Material.AIR;
-        }
-        switch (w.getEnvironment()) {
-            case NETHER:
-                return Material.NETHERRACK;
-            case THE_END:
-                return Material.END_STONE;
-            default:
-                return Material.STONE;
-        }
     }
 
     public static void cleanDatabase(int id) {

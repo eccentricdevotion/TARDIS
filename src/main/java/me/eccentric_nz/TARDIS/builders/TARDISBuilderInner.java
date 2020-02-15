@@ -82,11 +82,12 @@ public class TARDISBuilderInner {
     public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, Material wall_type, Material floor_type, boolean tips) {
         Material type;
         int level, row, col, startx, startz, resetx, resetz, j = 2;
-        boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         int starty;
-        if (below) {
-            starty = 15;
-        } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
+        if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
+            TARDISMessage.send(p, "CONFIG_CREATION_WORLD");
+            return;
+        }
+        if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
             starty = 65;
         } else {
             starty = 64;
@@ -173,25 +174,6 @@ public class TARDISBuilderInner {
             setc.put("z", c.getZ());
             plugin.getQueryFactory().doInsert("chunks", setc);
         });
-        // if for some reason this is not a TARDIS world, set the blocks to air first
-        if (below) {
-            for (level = 0; level < h; level++) {
-                for (row = 0; row < w; row++) {
-                    for (col = 0; col < l; col++) {
-                        TARDISBlockSetters.setBlock(world, startx, starty, startz, Material.AIR);
-                        startx += 1;
-                    }
-                    startx = resetx;
-                    startz += 1;
-                }
-                startz = resetz;
-                starty += 1;
-            }
-            // reset start positions
-            startx = resetx;
-            starty = 15;
-            startz = resetz;
-        }
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", dbID);
         // get input array

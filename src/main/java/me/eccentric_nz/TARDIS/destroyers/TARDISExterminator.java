@@ -28,11 +28,8 @@ import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
@@ -101,9 +98,8 @@ public class TARDISExterminator {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
                 }
-                Material restore = getRestore(cw);
                 if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
                 cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
@@ -235,9 +231,8 @@ public class TARDISExterminator {
                     TARDISMessage.send(player, "WORLD_DELETED");
                     return true;
                 }
-                Material restore = getRestore(cw);
                 if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
                 cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
@@ -254,21 +249,6 @@ public class TARDISExterminator {
         } else {
             TARDISMessage.send(player, "NO_GRIEF");
             return false;
-        }
-    }
-
-    private Material getRestore(World w) {
-        String dn = plugin.getConfig().getString("creation.default_world_name");
-        if (w.getWorldType() == WorldType.FLAT || w.getName().equals(dn) || w.getGenerator() instanceof TARDISChunkGenerator) {
-            return Material.AIR;
-        }
-        switch (w.getEnvironment()) {
-            case NETHER:
-                return Material.NETHERRACK;
-            case THE_END:
-                return Material.END_STONE;
-            default:
-                return Material.STONE;
         }
     }
 
