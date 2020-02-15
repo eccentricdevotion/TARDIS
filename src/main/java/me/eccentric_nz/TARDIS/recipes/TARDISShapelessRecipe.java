@@ -56,8 +56,8 @@ public class TARDISShapelessRecipe {
          lore: ""
          */
         String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");
-        String result_iddata = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
-        Material mat = Material.valueOf(result_iddata);
+        String result = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
+        Material mat = Material.valueOf(result);
         int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
@@ -77,6 +77,7 @@ public class TARDISShapelessRecipe {
                 exact = new ItemStack(m, 1);
                 ItemMeta em = exact.getItemMeta();
                 em.setDisplayName(choice[1]);
+                em.setCustomModelData(RECIPE_ITEM.getByName(choice[1]).getCustomModelData());
                 exact.setItemMeta(em);
                 r.addIngredient(new RecipeChoice.ExactChoice(exact));
             } else {

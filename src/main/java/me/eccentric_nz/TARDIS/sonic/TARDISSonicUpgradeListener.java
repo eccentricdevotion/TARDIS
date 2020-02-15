@@ -84,7 +84,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                 boolean found = false;
                 String upgrade = im.getDisplayName();
                 for (ItemStack glowstone : ci.getContents()) {
-                    if (glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
+                    if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                         ItemMeta rm = glowstone.getItemMeta();
                         upgrade = customModelData.get(rm.getCustomModelData());
                         found = true;
