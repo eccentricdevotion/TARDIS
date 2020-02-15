@@ -589,6 +589,10 @@ commands:
       description: Teleports to or sets an internal TARDIS transmat location.
       usage: /<command> transmat [tp|add|update|remove|list] [name]
       permission: tardis.transmat
+    door:
+      description: Opens or closes the TARDIS door.
+      usage: /<command> door [open|close]
+      permission: tardis.use
   tardistravel:
     aliases: ttravel
     description: Travel to destinations in various ways.

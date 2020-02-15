@@ -34,6 +34,7 @@ public enum TARDIS_COMMAND {
     cube,
     desktop,
     direction,
+    door,
     egg,
     eject,
     ep1,
@@ -80,6 +81,7 @@ public enum TARDIS_COMMAND {
             case comehere:
             case desktop:
             case direction:
+            case door:
             case eject:
             case excite:
             case exterminate:
