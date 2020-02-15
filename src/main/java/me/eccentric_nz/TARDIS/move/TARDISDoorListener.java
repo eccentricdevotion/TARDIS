@@ -164,13 +164,13 @@ public class TARDISDoorListener {
     /**
      * A method to transport player pets (tamed mobs) into and out of the TARDIS.
      *
-     * @param p      a list of the player's pets found nearby
+     * @param pets   a list of the player's pets found nearby
      * @param l      the location to teleport pets to
      * @param player the player who owns the pets
      * @param d      the direction of the police box
      * @param enter  whether the pets are entering (true) or exiting (false)
      */
-    void movePets(List<TARDISPet> p, Location l, Player player, COMPASS d, boolean enter) {
+    void movePets(List<TARDISPet> pets, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -196,7 +196,7 @@ public class TARDISDoorListener {
                     break;
             }
         }
-        for (TARDISPet pet : p) {
+        for (TARDISPet pet : pets) {
             plugin.setTardisSpawn(true);
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
             if (ent.isDead()) {
@@ -250,7 +250,7 @@ public class TARDISDoorListener {
                     break;
             }
         }
-        p.clear();
+        pets.clear();
     }
 
     /**
