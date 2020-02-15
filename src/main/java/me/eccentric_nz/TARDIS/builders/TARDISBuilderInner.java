@@ -194,6 +194,8 @@ public class TARDISBuilderInner {
                         // remember the location of this Disk Storage
                         String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                         plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
+                        // set block data to correct MUSHROOM_STEM
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
                     }
                     // determine 'use_clay' material
                     USE_CLAY use_clay;
@@ -323,6 +325,8 @@ public class TARDISBuilderInner {
                         plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                         // check if player has storage record, and update the tardis_id field
                         plugin.getUtils().updateStorageId(playerUUID, dbID);
+                        // set block data to correct MUSHROOM_STEM
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
                     }
                     if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                         /*

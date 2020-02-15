@@ -417,6 +417,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // remember the location of this Disk Storage
                     String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 14, storage, 0);
+                    // set block data to correct MUSHROOM_STEM
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
@@ -475,6 +477,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // remember the location of this Advanced Console
                     String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);
+                    // set block data to correct MUSHROOM_STEM
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
                 }
                 if (type.equals(Material.CAKE)) {
                     /*
