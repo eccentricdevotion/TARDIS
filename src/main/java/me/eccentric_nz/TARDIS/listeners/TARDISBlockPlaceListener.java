@@ -87,7 +87,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
                     } else {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
-                        light = (which > 20000001 && which < 20000005);
+                        light = (which > 10000000 && which < 10000005);
                         if (plugin.getConfig().getBoolean("allow.chemistry") && which == 5) {
                             // remember heat block location
                             if (!plugin.getTrackerKeeper().getHeatBlocks().contains(blockStr)) {
