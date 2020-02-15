@@ -19,9 +19,7 @@
 12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS
 13. Cloister bell
 14. Remove code for creating TARDIS interior underground
-15. Clickable TIS
-16. Add direction, open & close door to Handles commands
-17. Add fence gates to standard sonic
+15. Add direction, open & close door to Handles commands
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

@@ -1135,3 +1135,7 @@ commands:
       usage: /<command> formula [compound|product]
       permission: tardis.formula.show
     permission-message: You don't have the permission <permission> to use this command
+  tardisinfo:
+    description: Internal command used by the TARDIS Information System.
+    usage: /<command> [letter]
+    permission: tardis.help

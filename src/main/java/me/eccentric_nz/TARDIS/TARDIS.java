@@ -48,6 +48,7 @@ import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
 import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
+import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISBeeWaker;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
@@ -275,8 +276,8 @@ public class TARDIS extends JavaPlugin {
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
             incomposita.addShapelessRecipes();
-            new TARDISListenerRegisterer(this).registerListeners();
-            new TARDISCommandSetter(this).loadCommands();
+            TARDISInformationSystemListener info = new TARDISListenerRegisterer(this).registerListeners();
+            new TARDISCommandSetter(this, info).loadCommands();
             startSound();
             startReminders();
             loadWorldGuard();

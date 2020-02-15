@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISGameModeCommand;
+import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
@@ -47,9 +48,11 @@ import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
 class TARDISCommandSetter {
 
     private final TARDIS plugin;
+    private final TARDISInformationSystemListener info;
 
-    TARDISCommandSetter(TARDIS plugin) {
+    TARDISCommandSetter(TARDIS plugin, TARDISInformationSystemListener info) {
         this.plugin = plugin;
+        this.info = info;
     }
 
     /**
@@ -103,6 +106,7 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisnetherportal").setExecutor(new TARDISNetherPortalCommand(plugin));
         plugin.getCommand("tardis?").setExecutor(new TARDISQuestionMarkCommand(plugin));
         plugin.getCommand("tardis?").setTabCompleter(new TARDISQuestionTabComplete(plugin));
+        plugin.getCommand("tardisinfo").setExecutor(info);
         plugin.getCommand("handles").setExecutor(new TARDISHandlesCommand(plugin));
         plugin.getCommand("handles").setTabCompleter(new TARDISHandlesTabComplete());
         if (plugin.getConfig().getBoolean("allow.chemistry")) {

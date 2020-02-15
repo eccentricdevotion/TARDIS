@@ -97,7 +97,7 @@ class TARDISListenerRegisterer {
     /**
      * Registers all the listeners for the various events required to use the TARDIS.
      */
-    void registerListeners() {
+    TARDISInformationSystemListener registerListeners() {
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
@@ -176,7 +176,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISHotbarListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHumListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIceMeltListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISInformationSystemListener(plugin), plugin);
+        TARDISInformationSystemListener info = new TARDISInformationSystemListener(plugin);
+        plugin.getPM().registerEvents(info, plugin);
         plugin.getPM().registerEvents(new TARDISJettisonSeeder(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISJoinListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISJunkControlListener(plugin), plugin);
@@ -313,6 +314,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new BrewingListener(plugin), plugin);
             plugin.getPM().registerEvents(new GlueListener(), plugin);
         }
+        return info;
     }
 
     private boolean getNPCManager() {
