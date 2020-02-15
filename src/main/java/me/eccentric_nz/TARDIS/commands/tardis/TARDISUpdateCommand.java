@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -30,6 +31,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.entity.Player;
@@ -77,11 +79,11 @@ class TARDISUpdateCommand {
                 TARDISMessage.send(player, "SIEGE_DISABLED");
                 return true;
             }
-            if (updateable.equals("beacon") && !tardis.isPowered_on()) {
+            if (updateable.equals(UPDATEABLE.BEACON) && !tardis.isPowered_on()) {
                 TARDISMessage.send(player, "UPDATE_BEACON");
                 return true;
             }
-            if (updateable.equals("hinge")) {
+            if (updateable.equals(UPDATEABLE.HINGE)) {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     Door door = (Door) block.getBlockData();
@@ -106,6 +108,14 @@ class TARDISUpdateCommand {
             if (updateable.equals(UPDATEABLE.ADVANCED) && !player.hasPermission("tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");
                 return true;
+            }
+            if (updateable.equals(UPDATEABLE.STORAGE)) {
+                // update note block if it's not MUSHROOM_STEM
+                Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
+                if (block.getType().equals(Material.NOTE_BLOCK)) {
+                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                    block.setBlockData(mushroom, true);
+                }
             }
             if (updateable.equals(UPDATEABLE.FORCEFIELD) && !player.hasPermission("tardis.forcefield")) {
                 TARDISMessage.send(player, "NO_PERM_FF");

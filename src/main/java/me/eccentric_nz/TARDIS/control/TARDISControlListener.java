@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISSetFlightCommand;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -41,6 +42,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -73,6 +75,7 @@ public class TARDISControlListener implements Listener {
         validBlocks.add(Material.COMPARATOR);
         validBlocks.add(Material.DISPENSER);
         validBlocks.add(Material.LEVER);
+        validBlocks.add(Material.MUSHROOM_STEM);
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
         validBlocks.addAll(Tag.SIGNS.getValues());
@@ -322,6 +325,11 @@ public class TARDISControlListener implements Listener {
                                     Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
+                                    // update note block if it's not MUSHROOM_STEM
+                                    if (blockType.equals(Material.NOTE_BLOCK)) {
+                                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                                        block.setBlockData(mushroom, true);
+                                    }
                                     break;
                                 case 16: // enter zero room
                                     doZero(level, player, tardis.getZero(), id);

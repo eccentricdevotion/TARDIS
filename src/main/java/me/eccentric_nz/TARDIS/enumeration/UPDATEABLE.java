@@ -7,7 +7,7 @@ import org.bukkit.inventory.RecipeChoice;
 
 public enum UPDATEABLE {
 
-    ADVANCED(false, true, new RecipeChoice.MaterialChoice(Material.JUKEBOX)),
+    ADVANCED(false, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX)),
     ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     ARTRON(false, true),
     BACK(true, true),
@@ -38,7 +38,7 @@ public enum UPDATEABLE {
     SIEGE(true, false),
     STABLE(false, false, true),
     STALL(false, false, true),
-    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.NOTE_BLOCK)),
+    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK)),
     TELEPATHIC(false, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR)),
     TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),

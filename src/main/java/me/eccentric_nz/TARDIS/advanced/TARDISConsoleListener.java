@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -28,6 +29,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,7 +73,7 @@ public class TARDISConsoleListener implements Listener {
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Block b = event.getClickedBlock();
-            if (b != null && b.getType().equals(Material.JUKEBOX)) {
+            if (b != null && (b.getType().equals(Material.JUKEBOX) || b.getType().equals(Material.MUSHROOM_STEM))) {
                 // is it a TARDIS console?
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("location", b.getLocation().toString());
@@ -79,6 +81,11 @@ public class TARDISConsoleListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (rsc.resultSet()) {
                     event.setCancelled(true);
+                    // update block if it's not MUSHROOM_STEM
+                    if (b.getType().equals(Material.JUKEBOX)) {
+                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
+                        b.setBlockData(mushroom);
+                    }
                     int id = rsc.getTardis_id();
                     // determine key item
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
