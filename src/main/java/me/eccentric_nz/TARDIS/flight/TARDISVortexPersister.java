@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,6 +128,9 @@ public class TARDISVortexPersister {
                             bd.setTardisID(id);
                             Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             bd.setLocation(location);
+                            OfflinePlayer olp = plugin.getServer().getOfflinePlayer(uuid);
+                            bd.setPlayer(olp);
+                            bd.setRebuild(false);
                             bd.setBiome(rsc.getBiome());
                             bd.setDirection(rsc.getDirection());
                             bd.setSubmarine(rsc.isSubmarine());

@@ -49,7 +49,6 @@ public class TARDISChemistryCommand implements CommandExecutor {
                 sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
                 return true;
             }
-            // TODO formula first
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return true;

@@ -30,7 +30,6 @@ public enum GUIConfiguration {
     HANDLES(6, 37, Material.REPEATER),
     POLICE_BOX(7, 38, Material.REPEATER),
     PREFERENCES(8, 41, Material.REPEATER),
-    // TODO slot numbers
     ABANDON(9, 0, Material.REPEATER),
     CIRCUITS(10, 0, Material.REPEATER),
     DEBUG(11, 0, Material.REPEATER),
