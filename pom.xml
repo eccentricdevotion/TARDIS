@@ -214,7 +214,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardisweepingangels</groupId>
             <artifactId>TARDISWeepingAngels</artifactId>
-            <version>3.2</version>
+            <version>3.2.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

@@ -25,7 +25,8 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
@@ -49,7 +50,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -383,9 +383,14 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                List<TARDISPet> pets = tf.exitPets(player);
-                                                if (pets != null && pets.size() > 0) {
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> movePets(pets, exitLoc, player, d, false), 10L);
+                                                TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
+                                                if (petsAndFollowers != null) {
+                                                    if (petsAndFollowers.getPets().size() > 0) {
+                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> movePets(petsAndFollowers.getPets(), exitLoc, player, d, false), 10L);
+                                                    }
+                                                    if (petsAndFollowers.getFollowers().size() > 0) {
+                                                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
+                                                    }
                                                 }
                                             }
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
@@ -427,11 +432,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             World cw = idl.getW();
                                             COMPASS innerD = idl.getD();
                                             // check for entities near the police box
-                                            List<TARDISPet> pets = null;
+                                            TARDISPetsAndFollowers petsAndFollowers = null;
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
                                                 plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                pets = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tmp_loc.getWorld().getName(), playerWorld.getName());
+                                                petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tmp_loc.getWorld().getName(), playerWorld.getName());
                                             }
                                             // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
@@ -446,8 +451,13 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             }
                                             tmp_loc.setYaw(yaw);
                                             movePlayer(player, tmp_loc, false, playerWorld, userQuotes, 1, minecart);
-                                            if (pets != null && pets.size() > 0) {
-                                                movePets(pets, tmp_loc, player, d, true);
+                                            if (petsAndFollowers != null) {
+                                                if (petsAndFollowers.getPets().size() > 0) {
+                                                    movePets(petsAndFollowers.getPets(), tmp_loc, player, d, true);
+                                                }
+                                                if (petsAndFollowers.getFollowers().size() > 0) {
+                                                    new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tmp_loc, player, d, true);
+                                                }
                                             }
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 if (!rsp.getTextureIn().isEmpty()) {

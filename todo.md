@@ -16,8 +16,9 @@
    * Add advanced console and disk storage to schematics
 10. Set Master button to ON (In Lazarus GUI) when it is in use
 11. Change Advanced console, Disk storage and Lamp Off blocks to unused MUSHROOM_STEM block states
-12. If TARDISWeepingAngels is enabled allow claimed K9 / Judoon / Ood to enter / exit the TARDIS
+12. Update scanner results to new TARDISWeepingAngels persistent data monster checks
 13. Cloister bell
+14. Use the Vortex Manipulator to teleport past force fields
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

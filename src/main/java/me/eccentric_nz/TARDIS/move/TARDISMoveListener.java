@@ -25,7 +25,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetVoid;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
@@ -105,11 +106,11 @@ public class TARDISMoveListener implements Listener {
                 boolean willFarm = (hasPrefs) && rsp.isFarmOn();
                 boolean canPowerUp = (hasPrefs) && (rsp.isAutoPowerUp() && !tpl.isAbandoned());
                 // check for entities near the police box
-                List<TARDISPet> pets = null;
+                TARDISPetsAndFollowers petsAndFollowers = null;
                 if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                    pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                    petsAndFollowers = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
                 }
                 // set travelling status
                 if (exit) {
@@ -131,8 +132,13 @@ public class TARDISMoveListener implements Listener {
                 }
                 // tp player
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
-                if (pets != null && pets.size() > 0) {
-                    plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
+                if (petsAndFollowers != null) {
+                    if (petsAndFollowers.getPets().size() > 0) {
+                        plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), p, d, true);
+                    }
+                    if (petsAndFollowers.getFollowers().size() > 0) {
+                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), p, d, true);
+                    }
                 }
                 if (canPowerUp && !exit) {
                     // power up the TARDIS

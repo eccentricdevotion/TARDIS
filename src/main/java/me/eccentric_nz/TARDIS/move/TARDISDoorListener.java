@@ -198,8 +198,7 @@ public class TARDISDoorListener {
         }
         for (TARDISPet pet : p) {
             plugin.setTardisSpawn(true);
-            LivingEntity ent;
-            ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
             if (ent.isDead()) {
                 ent.remove();
                 plugin.debug("Entity is dead! Spawning again...");
