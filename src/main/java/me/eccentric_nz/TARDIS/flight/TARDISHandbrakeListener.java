@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -184,9 +183,7 @@ public class TARDISHandbrakeListener implements Listener {
                                 if (!tardis.isHandbrake_on()) {
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
-                                    Switch lever = (Switch) block.getBlockData();
-                                    lever.setPowered(true);
-                                    block.setBlockData(lever);
+                                    TARDISHandbrake.setLevers(block, true, inside, handbrake_loc.toString(), id, plugin);
                                     // Check if it's at a recharge point
                                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                     tal.recharge(id);

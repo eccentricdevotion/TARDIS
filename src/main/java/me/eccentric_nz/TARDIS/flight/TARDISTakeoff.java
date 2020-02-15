@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -43,9 +42,8 @@ public class TARDISTakeoff {
     }
 
     public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar) {
-        Switch lever = (Switch) block.getBlockData();
-        lever.setPowered(false);
-        block.setBlockData(lever);
+        // set the handbrake
+        TARDISHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
         if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
         }
@@ -82,6 +80,7 @@ public class TARDISTakeoff {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("type", 0);
+        where.put("secondary", 0);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
             Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
@@ -93,9 +92,8 @@ public class TARDISTakeoff {
                 beac_on = rsp.isBeaconOn();
                 bar = rsp.isTravelbarOn();
             }
-            Switch lever = (Switch) handbrake.getBlock().getBlockData();
-            lever.setPowered(false);
-            handbrake.getBlock().setBlockData(lever);
+            // set the handbrake
+            TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardis_id(), plugin);
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
             }

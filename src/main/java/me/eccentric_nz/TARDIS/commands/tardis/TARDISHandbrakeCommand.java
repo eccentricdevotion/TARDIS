@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -63,9 +63,7 @@ public class TARDISHandbrakeCommand {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
             // Changes the lever to on
-            Switch lever = (Switch) location.getBlock().getBlockData();
-            lever.setPowered(bool);
-            location.getBlock().setBlockData(lever);
+            TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
             if (bool) {
                 plugin.getTrackerKeeper().getDestinationVortex().remove(id);
                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singletonList(id));

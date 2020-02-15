@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
@@ -36,7 +37,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -97,14 +97,13 @@ class TARDISHandlesLandCommand {
                         HashMap<String, Object> whereh = new HashMap<>();
                         whereh.put("type", 0);
                         whereh.put("tardis_id", id);
+                        whereh.put("secondary", 0);
                         ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                         if (rsc.resultSet()) {
                             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                             TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
                             // Changes the lever to on
-                            Switch lever = (Switch) location.getBlock().getBlockData();
-                            lever.setPowered(true);
-                            location.getBlock().setBlockData(lever);
+                            TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
                             // Check if it's at a recharge point
                             TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                             tal.recharge(id);
