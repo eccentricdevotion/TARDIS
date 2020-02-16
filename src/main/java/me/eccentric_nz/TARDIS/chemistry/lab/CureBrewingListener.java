@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.chemistry.cure;
+package me.eccentric_nz.TARDIS.chemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
@@ -24,7 +24,7 @@ import org.bukkit.potion.PotionType;
 
 import java.util.*;
 
-public class BrewingListener implements Listener {
+public class CureBrewingListener implements Listener {
 
     private final TARDIS plugin;
     private final List<String> fireResistancePotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART");
@@ -44,7 +44,7 @@ public class BrewingListener implements Listener {
     private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.UNCRAFTABLE);
     private final HashMap<PotionType, List<String>> potions = new HashMap<>();
 
-    public BrewingListener(TARDIS plugin) {
+    public CureBrewingListener(TARDIS plugin) {
         this.plugin = plugin;
         potions.put(PotionType.FIRE_RESISTANCE, fireResistancePotion);
         potions.put(PotionType.INSTANT_HEAL, healingPotion);
