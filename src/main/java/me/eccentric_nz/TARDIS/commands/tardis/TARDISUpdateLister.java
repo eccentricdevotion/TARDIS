@@ -96,6 +96,7 @@ class TARDISUpdateLister {
         misc.add(ChatColor.LIGHT_PURPLE + "frame" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Chameleon Item Frame");
         misc.add(ChatColor.LIGHT_PURPLE + "dispenser" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Custard Cream Dispenser");
         misc.add(ChatColor.LIGHT_PURPLE + "forcefield" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS Force Field button");
+        misc.add(ChatColor.LIGHT_PURPLE + "bell" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS Cloister bell button");
         update_options.put("Others", misc);
         return update_options;
     }

@@ -57,7 +57,8 @@ public enum CONTROL {
     CHAMELEON(31, "chameleon", false, false),
     SAVES(32, "save-sign", false, false),
     SCANNER(33, "scanner", false, false),
-    CONDENSER(34, "condenser", false, false);
+    CONDENSER(34, "condenser", false, false),
+    CLOISTER_BELL(35, "bell", true, false);
 
     private final int id;
     private final String update;

@@ -45,36 +45,6 @@ public class TARDISForceField implements Runnable {
         doubleRange = range * 2;
     }
 
-//    @Override
-//    public void run() {
-//        for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
-//            Player player = plugin.getServer().getPlayer(map.getKey());
-//            if (player == null || !player.isOnline()) {
-//                continue;
-//            }
-//            for (Player other : Bukkit.getServer().getOnlinePlayers()) {
-//                if (player.equals(other)) {
-//                    continue;
-//                }
-//                if (offset(other, map.getValue()) > range) {
-//                    continue;
-//                }
-//                if (other.getGameMode() == GameMode.SPECTATOR) {
-//                    continue;
-//                }
-//                if (other.hasPermission("tardis.admin")) {
-//                    continue;
-//                }
-//                Entity entity = other;
-//                while (entity.getVehicle() != null) {
-//                    entity = entity.getVehicle();
-//                }
-//                velocity(entity, getTrajectory2d(map.getValue(), entity), 0.5d);
-//                other.getWorld().playSound(other.getLocation(), "tardis_force_field", 1.0f, 1.0f);
-//            }
-//        }
-//    }
-
     @Override
     public void run() {
         for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {

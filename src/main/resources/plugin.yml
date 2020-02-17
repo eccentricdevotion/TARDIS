@@ -400,10 +400,10 @@ commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
-    chameleon:
-      description: Toggle the TARDIS Chameleon Circuit on and off.
-      usage: /<command> chameleon [on|off|short|reset]
-      permission: tardis.timetravel
+    bell:
+      description: Toggle the TARDIS Cloister Bell on and off.
+      usage: /<command> bell [on|off]
+      permission: tardis.use
       permission-message: You don't have the permission <permission> to use this command
     list:
       description: List saved time travel locations, companions, areas and rechargers.

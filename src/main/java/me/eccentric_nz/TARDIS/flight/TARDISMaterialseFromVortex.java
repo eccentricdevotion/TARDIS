@@ -123,7 +123,7 @@ class TARDISMaterialseFromVortex implements Runnable {
                         // add a potion effect to the player
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                         long cloister_delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 262L : 360L;
-                        scheduler.scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell"), cloister_delay);
+                        scheduler.scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell", 32.0f), cloister_delay);
                     } else {
                         malfunction = false;
                     }

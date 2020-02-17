@@ -13,6 +13,7 @@ public enum UPDATEABLE {
     BACK(true, true),
     BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR)),
     BEACON(false, false, new RecipeChoice.MaterialChoice(Material.BEACON)),
+    BELL(true, true),
     BUTTON(true, true),
     CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     CONDENSER(true, true, new RecipeChoice.MaterialChoice(Material.CHEST)),

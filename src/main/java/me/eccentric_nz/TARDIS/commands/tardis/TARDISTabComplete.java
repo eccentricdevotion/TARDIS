@@ -37,7 +37,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
     private final List<String> ROOT_SUBS = new ArrayList<>();
-    private final List<String> CHAM_SUBS = ImmutableList.of("on", "off");
+    private final List<String> ON_OFF_SUBS = ImmutableList.of("on", "off");
     private final List<String> DOOR_SUBS = ImmutableList.of("open", "close");
     private final List<String> ITEM_SUBS = ImmutableList.of("hand", "inventory");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
@@ -71,7 +71,6 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         // Remember that we can return null to default to online player name matching
         String lastArg = args[args.length - 1];
-
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
@@ -79,11 +78,13 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             switch (sub) {
                 case "add":
                 case "remove":
+                case "rescue":
+                case "save_player":
                     return null;
                 case "archive":
                     return partial(lastArg, ARCHIVE_SUBS);
-                case "chameleon":
-                    return partial(lastArg, CHAM_SUBS);
+                case "bell":
+                    return partial(lastArg, ON_OFF_SUBS);
                 case "direction":
                     return partial(lastArg, DIR_SUBS);
                 case "door":
@@ -94,9 +95,6 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                     return partial(lastArg, ITEM_SUBS);
                 case "list":
                     return partial(lastArg, LIST_SUBS);
-                case "rescue":
-                case "save_player":
-                    return null;
                 case "room":
                 case "jettison":
                     return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));

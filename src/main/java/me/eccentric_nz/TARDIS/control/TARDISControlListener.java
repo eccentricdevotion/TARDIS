@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
@@ -68,7 +69,7 @@ public class TARDISControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35);
 
     public TARDISControlListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -464,6 +465,17 @@ public class TARDISControlListener implements Listener {
                                 case 33:
                                     // scanner
                                     new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), level);
+                                case 35:
+                                    // cloister bell
+                                    if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
+                                        plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getCloisterBells().get(id));
+                                        plugin.getTrackerKeeper().getCloisterBells().remove(id);
+                                    } else {
+                                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, Integer.MAX_VALUE, id, plugin.getServer().getPlayer(tardis.getUuid()));
+                                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+                                        bell.setTask(taskID);
+                                        plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+                                    }
                                 default:
                                     break;
                             }

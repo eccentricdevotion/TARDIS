@@ -36,7 +36,6 @@
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
-   * Wolves -> K-9 (Make Custom Entity Model apply to named wolves only) _waiting on Optifine_
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows

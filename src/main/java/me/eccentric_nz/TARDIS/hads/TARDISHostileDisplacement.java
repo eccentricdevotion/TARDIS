@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -67,6 +68,7 @@ class TARDISHostileDisplacement {
         }
         boolean underwater = rsc.isSubmarine();
         Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        // displace
         COMPASS d = rsc.getDirection();
         Location l = loc.clone();
         // randomise the direction
@@ -82,7 +84,7 @@ class TARDISHostileDisplacement {
             if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
                 y = plugin.getUtils().getHighestNetherBlock(l.getWorld(), wx, wz);
             } else {
-                y = l.getWorld().getHighestBlockAt(l).getY();
+                y = TARDISStaticLocationGetters.getHighestYin4x4(l.getWorld(), wx, wz);
             }
             l.setY(y);
             if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
@@ -102,6 +104,11 @@ class TARDISHostileDisplacement {
                 if (safe) {
                     Location fl = (rsc.isSubmarine()) ? sub : l;
                     if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, FLAG.getNoMessageFlags()))) {
+                        // sound the cloister bell
+                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 11, id, fl, plugin.getServer().getPlayer(uuid));
+                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+                        bell.setTask(taskID);
+                        plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                         // set current
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);

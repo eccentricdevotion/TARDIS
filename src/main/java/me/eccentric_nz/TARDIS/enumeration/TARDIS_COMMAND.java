@@ -26,6 +26,7 @@ public enum TARDIS_COMMAND {
     arch_time,
     archive,
     arsremove,
+    bell,
     check_loc,
     colourise,
     colorize,

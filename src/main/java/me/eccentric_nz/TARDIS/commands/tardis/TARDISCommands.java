@@ -106,6 +106,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISArchiveCommand(plugin).zip(player, args);
                 case arsremove:
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
+                case bell:
+                    return new TARDISBellCommand(plugin).toggle(rs.getTardis_id(), player, args);
                 case check_loc:
                     return new TARDISCheckLocCommand(plugin).doACheckLocation(player, args);
                 case colourise:
