@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -123,7 +124,14 @@ class TARDISMaterialseFromVortex implements Runnable {
                         // add a potion effect to the player
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                         long cloister_delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 262L : 360L;
-                        scheduler.scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell", 10.0f), cloister_delay);
+                        Location location = exit;
+                        scheduler.scheduleSyncDelayedTask(plugin, () -> {
+                            // sound the cloister bell
+                            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, location, plugin.getServer().getPlayer(uuid), true, "a flight malfunction", false);
+                            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+                            bell.setTask(taskID);
+                            plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+                        }, cloister_delay);
                     } else {
                         malfunction = false;
                     }
