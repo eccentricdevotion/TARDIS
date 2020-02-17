@@ -14,8 +14,7 @@
 8. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
 9. Set Master button to ON (In Lazarus GUI) when it is in use
-10. Cloister bell
-11. Use the Vortex Manipulator to teleport past force fields
+10. Use the Vortex Manipulator to teleport past force fields
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_
