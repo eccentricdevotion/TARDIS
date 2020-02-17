@@ -74,7 +74,7 @@ class TARDISHostileDispersal {
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // sound the cloister bell
-        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 3, id, l, plugin.getServer().getPlayer(uuid));
+        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 3, id, l, plugin.getServer().getPlayer(uuid), "HADS dispersal");
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
         bell.setTask(taskID);
         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);

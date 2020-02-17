@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -31,6 +32,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
@@ -38,10 +40,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -192,6 +193,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 plugin.getTrackerKeeper().getInVortex().add(id);
                                                 // play tardis_takeoff sfx
                                                 TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
+                                                // sound the cloister bell at current location for dematerialisation
+                                                TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, sl, plugin.getServer().getPlayer(uuid), true, "Time Lord death", false);
+                                                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+                                                bell.setTask(taskID);
+                                                plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                             } else {
                                                 plugin.getPresetDestroyer().removeBlockProtection(id);
                                                 set.put("hidden", 0);
@@ -215,6 +221,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getTrackerKeeper().getInVortex().add(id);
                                             // play tardis_land sfx
                                             TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                                            // sound the cloister bell at current location for dematerialisation
+                                            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, sl, plugin.getServer().getPlayer(uuid), false, "", true);
+                                            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+                                            bell.setTask(taskID);
+                                            plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                             // set handbrake on
                                             HashMap<String, Object> seth = new HashMap<>();
                                             seth.put("handbrake_on", 1);
@@ -292,10 +303,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setTardisID(id);
                                     dd.setBiome(rsc.getBiome());
                                     plugin.getPresetDestroyer().destroyPreset(dd);
+                                    // sound the cloister bell at current location for siege mode
+                                    TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 7, id, sl, plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);
+                                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+                                    bell.setTask(taskID);
+                                    plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                     // place siege block
-                                    MultipleFacing mf = (MultipleFacing) Material.BROWN_MUSHROOM_BLOCK.createBlockData();
-                                    mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
-                                    siege.setBlockData(mf);
+                                    BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
+                                    siege.setBlockData(blockData);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);

@@ -31,6 +31,9 @@ public class TARDISCloisterBell implements Runnable {
     private final Location centre;
     private final Location current;
     private final Player player;
+    private final boolean messageOn;
+    private final String reason;
+    private final boolean messageOff;
     private int task;
 
     /**
@@ -46,6 +49,9 @@ public class TARDISCloisterBell implements Runnable {
         centre = getCentre(this.id);
         current = getCurrent(this.id);
         player = getPlayer(this.id);
+        messageOn = false;
+        messageOff = false;
+        reason = "";
     }
 
     public TARDISCloisterBell(TARDIS plugin, int loops, int id, Player player) {
@@ -55,21 +61,39 @@ public class TARDISCloisterBell implements Runnable {
         centre = getCentre(this.id);
         current = getCurrent(this.id);
         this.player = player;
+        messageOn = false;
+        reason = "";
+        messageOff = false;
     }
 
-    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player) {
+    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, String reason) {
         this.plugin = plugin;
         this.loops = loops;
         this.id = id;
         centre = getCentre(this.id);
         this.current = current;
         this.player = player;
+        messageOn = true;
+        this.reason = reason;
+        messageOff = true;
+    }
+
+    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
+        this.plugin = plugin;
+        this.loops = loops;
+        this.id = id;
+        centre = getCentre(this.id);
+        this.current = current;
+        this.player = player;
+        this.messageOn = messageOn;
+        this.reason = reason;
+        this.messageOff = messageOff;
     }
 
     @Override
     public void run() {
-        if (i == 0 && player != null && player.isOnline()) {
-            TARDISMessage.send(player, "CLOISTER_BELL_ON");
+        if (messageOn && i == 0 && player != null && player.isOnline()) {
+            TARDISMessage.send(player, "CLOISTER_BELL_ON", reason);
         }
         if (i < loops) {
             if (centre != null) {
@@ -92,7 +116,7 @@ public class TARDISCloisterBell implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = -1;
             plugin.getTrackerKeeper().getCloisterBells().remove(id);
-            if (player != null && player.isOnline()) {
+            if (messageOff && player != null && player.isOnline()) {
                 TARDISMessage.send(player, "CLOISTER_BELL_OFF");
             }
         }

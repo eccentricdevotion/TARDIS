@@ -67,10 +67,10 @@ class TARDISHostileDisplacement {
             plugin.debug("Could not get current TARDIS location for HADS!");
         }
         boolean underwater = rsc.isSubmarine();
-        Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // displace
         COMPASS d = rsc.getDirection();
-        Location l = loc.clone();
+        Location l = current.clone();
         // randomise the direction
         Collections.shuffle(angles);
         for (Integer a : angles) {
@@ -104,11 +104,18 @@ class TARDISHostileDisplacement {
                 if (safe) {
                     Location fl = (rsc.isSubmarine()) ? sub : l;
                     if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, FLAG.getNoMessageFlags()))) {
-                        // sound the cloister bell
-                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 11, id, fl, plugin.getServer().getPlayer(uuid));
+                        // sound the cloister bell at current location for dematerialisation
+                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, current, plugin.getServer().getPlayer(uuid), true, "HADS displacement", false);
                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                         bell.setTask(taskID);
                         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+                        // sound the cloister bell at HADS location for materialisation
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            TARDISCloisterBell end = new TARDISCloisterBell(plugin, 6, id, fl, plugin.getServer().getPlayer(uuid), false, "", true);
+                            int endTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, end, 2L, 70L);
+                            bell.setTask(endTask);
+                            plugin.getTrackerKeeper().getCloisterBells().put(id, endTask);
+                        }, 420L);
                         // set current
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
@@ -125,7 +132,7 @@ class TARDISHostileDisplacement {
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         DestroyData dd = new DestroyData(plugin, uuid.toString());
                         dd.setDirection(d);
-                        dd.setLocation(loc);
+                        dd.setLocation(current);
                         dd.setPlayer(player);
                         dd.setHide(false);
                         dd.setOutside(true);
@@ -155,13 +162,11 @@ class TARDISHostileDisplacement {
                             hostile.sendMessage(message);
                         }
                         plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, fl, HADS.DISPLACEMENT));
-                        return;
                     } else {
                         TARDISMessage.send(player, "HADS_PROTECTED");
                         if (player != hostile) {
                             TARDISMessage.send(hostile, "HADS_PROTECTED");
                         }
-                        return;
                     }
                 } else if (underwater) {
                     TARDISMessage.send(player, "HADS_NOT_SAFE");
