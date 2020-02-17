@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -30,7 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.block.data.BlockData;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -184,10 +185,8 @@ public class TARDISDeinstaPreset {
         }
         if (dd.isSiege()) {
             Block siege = dd.getLocation().getBlock();
-            siege.setBlockData(Material.BROWN_MUSHROOM_BLOCK.createBlockData());
-            MultipleFacing mf = (MultipleFacing) siege.getBlockData();
-            mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
-            siege.setBlockData(mf);
+            BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
+            siege.setBlockData(blockData);
         }
         // refresh chunk
         plugin.getTardisHelper().refreshChunk(chunk);
