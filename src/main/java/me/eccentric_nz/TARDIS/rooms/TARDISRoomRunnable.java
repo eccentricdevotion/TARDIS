@@ -170,56 +170,59 @@ public class TARDISRoomRunnable implements Runnable {
                 // process post block list
                 for (String s : postBlocks) {
                     String[] split = s.split("~");
-                    Block postBlock = world.getBlockAt(TARDISStaticLocationGetters.getLocationFromDB(split[0]));
-                    BlockData postData = plugin.getServer().createBlockData(split[1]);
-                    switch (postData.getMaterial()) {
-                        case ICE:
-                            iceblocks.add(postBlock);
-                            break;
-                        case REDSTONE_LAMP:
-                            lampblocks.add(postBlock);
-                            break;
-                        case TORCH:
-                            torchblocks.put(postBlock, postData);
-                            break;
-                        case REDSTONE_TORCH:
-                            redstoneTorchblocks.put(postBlock, postData);
-                            break;
-                        case COCOA:
-                            cocoablocks.put(postBlock, postData);
-                            break;
-                        case SUGAR_CANE:
-                            caneblocks.add(postBlock);
-                            break;
-                        case MELON_STEM:
-                            melonblocks.add(postBlock);
-                            break;
-                        case POTATOES:
-                            potatoblocks.add(postBlock);
-                            break;
-                        case CARROTS:
-                            carrotblocks.add(postBlock);
-                            break;
-                        case PUMPKIN_STEM:
-                            pumpkinblocks.add(postBlock);
-                            break;
-                        case WHEAT:
-                            wheatblocks.add(postBlock);
-                            break;
-                        case FARMLAND:
-                            farmlandblocks.add(postBlock);
-                            break;
-                        case SPRUCE_SIGN:
-                            signblocks.add(postBlock);
-                            break;
-                        case OAK_DOOR:
-                            doorblocks.put(postBlock, postData);
-                            break;
-                        case LEVER:
-                            leverblocks.put(postBlock, postData);
-                            break;
-                        default:
-                            break;
+                    Location location = TARDISStaticLocationGetters.getLocationFromDB(split[0]);
+                    if (location != null) {
+                        Block postBlock = world.getBlockAt(location);
+                        BlockData postData = plugin.getServer().createBlockData(split[1]);
+                        switch (postData.getMaterial()) {
+                            case ICE:
+                                iceblocks.add(postBlock);
+                                break;
+                            case REDSTONE_LAMP:
+                                lampblocks.add(postBlock);
+                                break;
+                            case TORCH:
+                                torchblocks.put(postBlock, postData);
+                                break;
+                            case REDSTONE_TORCH:
+                                redstoneTorchblocks.put(postBlock, postData);
+                                break;
+                            case COCOA:
+                                cocoablocks.put(postBlock, postData);
+                                break;
+                            case SUGAR_CANE:
+                                caneblocks.add(postBlock);
+                                break;
+                            case MELON_STEM:
+                                melonblocks.add(postBlock);
+                                break;
+                            case POTATOES:
+                                potatoblocks.add(postBlock);
+                                break;
+                            case CARROTS:
+                                carrotblocks.add(postBlock);
+                                break;
+                            case PUMPKIN_STEM:
+                                pumpkinblocks.add(postBlock);
+                                break;
+                            case WHEAT:
+                                wheatblocks.add(postBlock);
+                                break;
+                            case FARMLAND:
+                                farmlandblocks.add(postBlock);
+                                break;
+                            case SPRUCE_SIGN:
+                                signblocks.add(postBlock);
+                                break;
+                            case OAK_DOOR:
+                                doorblocks.put(postBlock, postData);
+                                break;
+                            case LEVER:
+                                leverblocks.put(postBlock, postData);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             } else {
