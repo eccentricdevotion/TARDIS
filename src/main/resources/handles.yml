@@ -1,0 +1,22 @@
+enabled: true
+prefix: "^(?:hey\s+handles(?:[,!:\s]|\.\.\.+)|handles(?:[,!:\s]|\.\.\.+))"
+  reminders:
+    enabled: true
+    schedule: 1200
+core-commands:
+  travel:
+    random: "regex where capture group 1 is the destination"
+    player: "regex where capture group 1 is the player's name"
+    # etc, for the other travel commands
+  door:
+    open: "regex"
+    close: "regex"
+    lock: "regex"
+    unlock: "regex"
+  # any other core/built-in commands for Handles have their triggers defined as a regex here
+custom-commands:
+  - trigger: "search pattern to apply to everything AFTER the prefix"
+    commands:
+      - command 1
+      - command 2
+      - etc

@@ -42,6 +42,8 @@ public class TARDISHandlesRequest {
 
     private final TARDIS plugin;
     private final ItemStack handles;
+    String hp = "(?:hey\\s+handles(?:[,!:\\s]|\\.\\.\\.+)|handles(?:[,!:\\s]|\\.\\.\\.+))";
+    private final Pattern handlesPattern = Pattern.compile(hp, Pattern.CASE_INSENSITIVE);
 
     public TARDISHandlesRequest(TARDIS plugin) {
         this.plugin = plugin;
@@ -90,7 +92,8 @@ public class TARDISHandlesRequest {
                 }
             }
             // remove the prefix
-            String removed = chat.replaceAll("(?i)" + Pattern.quote(plugin.getConfig().getString("handles.prefix")), "").trim();
+//            String removed = chat.replaceAll("(?i)" + Pattern.quote(plugin.getConfig().getString("handles.prefix")), "").trim();
+            String removed = chat.replaceAll("(?i)" + handlesPattern, "").trim();
             List<String> split = Arrays.asList(removed.toLowerCase().split(" "));
             if (split.contains("craft")) {
                 if (split.contains("tardis")) {
@@ -170,7 +173,7 @@ public class TARDISHandlesRequest {
                 }
             } else if (split.contains("rebuild")) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis rebuild"), 1L);
-            } else if (split.contains("travel")) {
+            } else if (split.contains("travel") || (split.contains("go") && split.contains("to"))) {
                 if (split.contains("save")) {
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", id);
