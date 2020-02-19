@@ -38,7 +38,7 @@ public class ResultSetArtronLevel {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for artron level table! " + e.getMessage());
+            plugin.debug("ResultSet error for tardis (artron level) table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -49,7 +49,7 @@ public class ResultSetArtronLevel {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing artron level statement! " + e.getMessage());
+                plugin.debug("Error closing tardis (artron level) statement! " + e.getMessage());
             }
         }
         return true;

@@ -75,7 +75,7 @@ public class TARDISControlRunnable implements Runnable {
                         if (rsc.artronData()) {
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             int current_level = rsc.getArtronLevel();
-                            int percent = Math.round((current_level * 100F) / fc);
+                            int percent = Math.round((current_level * 100.0f) / fc);
                             if (Tag.SIGNS.isTagged(rsc.getSign().getType())) {
                                 // get the sign
                                 Sign sign = (Sign) rsc.getSign().getState();

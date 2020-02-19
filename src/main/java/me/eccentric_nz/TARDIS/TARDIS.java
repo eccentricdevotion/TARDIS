@@ -54,6 +54,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISBeeWaker;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
+import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
 import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
@@ -177,7 +178,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Core", "4.0");
         versions.put("Multiverse-Inventories", "3.0");
         versions.put("MultiInv", "3.3.6");
-        versions.put("My_Worlds", "1.14.4");
+        versions.put("My_Worlds", "1.15.2");
         versions.put("PerWorldInventory", "2.3.0");
         versions.put("ProtocolLib", "4.5.0");
         versions.put("TARDISChunkGenerator", "4.3.1");
@@ -380,6 +381,11 @@ public class TARDIS extends JavaPlugin {
             new TARDISRoomPersister(this).resume();
             if (getConfig().getInt("allow.force_field") > 0) {
                 new TARDISForceFieldPersister(this).load();
+            }
+            // hook PlaceholderAPI
+            if (pm.getPlugin("PlaceholderAPI") != null) {
+                debug("Providing expansion to PlaceholderAPI.");
+                new TARDISPlaceholderExpansion(this).register();
             }
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
