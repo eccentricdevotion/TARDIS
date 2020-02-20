@@ -1,21 +1,42 @@
+# must use single quotes to wrap regular expressions
 enabled: true
-prefix: "^(?:hey\s+handles(?:[,!:\s]|\.\.\.+)|handles(?:[,!:\s]|\.\.\.+))"
-  reminders:
-    enabled: true
-    schedule: 1200
+prefix: '^(?:hey\s+)?handles(?:[,!:\s]|\.\.\.+)'
+reminders:
+  enabled: true
+  schedule: 1200
 core-commands:
+  craft: '\b(?:craft|build|make)\b.*\b(\w+)\s+tardis\b'
+  remind: 'remind\s?(?:me\s+to)?\s+(.+)\s+.+(\d+)'
+  say: 'say\s+(.+)'
+  name: 'name'
+  time: 'time'
+  call: 'call'
+  takeoff: 'takeoff|take off'
+  land: 'land'
+  hide: 'hide'
+  rebuild: 'rebuild'
+  direction: '(?:fac(?:ing|e)|direction)\s+(\w+)\s*?'
   travel:
-    random: "regex where capture group 1 is the destination"
-    player: "regex where capture group 1 is the player's name"
-    # etc, for the other travel commands
+    save: '(?:travel|go).+save\s+(\w+)'
+    home: '(?:travel|go)\s+home'
+    random: '(?:travel|go|find).+random'
+    player: '(?:travel|go).+player\s+(\w+)'
+    area: '(?:travel|go).*(?:\b(\w+)\s+area)\s*?$|(?:travel|go).+(?:area\s\b(\w+))\s*?'
+    biome: '(?:travel|go).*(?:\b(\w+)\s+biome)\s*?$|(?:travel|go).+(?:biome\s\b(\w+))\s*?'
+    cave: '(?:travel|go|find).+cave'
+    village: '(?:travel|go|find).+village'
   door:
-    open: "regex"
-    close: "regex"
-    lock: "regex"
-    unlock: "regex"
-  # any other core/built-in commands for Handles have their triggers defined as a regex here
+    open: '\bopen\b.*\bdoor\b|\bdoor\b.*\bopen\b'
+    close: '\bclose\b.*\bdoor\b|\bdoor\b.*\bclose\b'
+    lock: '\block\b.*\bdoor\b|\bdoor\b.*\block\b'
+    unlock: '\bunlock\b.*\bdoor\b|\bdoor\b.*\bunlock\b'
+  scan: 'scan'
+  teleport: 'teleport'
+  transmat: 'transmat\s?(?:me\s+to)?\s+(.+)'
 custom-commands:
-  - trigger: "search pattern to apply to everything AFTER the prefix"
+  trigger:
+    regex: 'search pattern to apply to everything AFTER the prefix'
+    permisssion: some.permission
     commands:
       - command 1
       - command 2

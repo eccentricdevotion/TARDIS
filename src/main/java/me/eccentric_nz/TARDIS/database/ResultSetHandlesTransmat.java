@@ -23,7 +23,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ResultSetHandlesTransmat {
 
@@ -40,7 +39,7 @@ public class ResultSetHandlesTransmat {
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean findSite(List<String> chat) {
+    public boolean findSite(String chat) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "transmats WHERE tardis_id = ?";
@@ -51,7 +50,7 @@ public class ResultSetHandlesTransmat {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    if (chat.contains(rs.getString("name"))) {
+                    if (chat.equalsIgnoreCase(rs.getString("name"))) {
                         location = new Location(plugin.getServer().getWorld(rs.getString("world")), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"));
                         location.setYaw(rs.getFloat("yaw"));
                         return true;

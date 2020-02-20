@@ -128,7 +128,6 @@ allow:
   autonomous: true
   guardians: false
   hads: true
-  handles: true
   invisibility: true
   tp_switch: true
   all_blocks: false
@@ -182,11 +181,6 @@ archive:
   enabled: true
   limit: 3
 # handles
-handles:
-  prefix: Hey Handles
-  reminders:
-    enabled: true
-    schedule: 1200
 rechargers: {}
 # don't touch
 conversions:

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
@@ -47,8 +48,7 @@ public class TARDISChatListener implements Listener {
 
     private final TARDIS plugin;
     private Pattern howToPattern = null;
-    String hp = "^(?:hey\\s+handles(?:[,!:\\s]|\\.\\.\\.+)|handles(?:[,!:\\s]|\\.\\.\\.+))";
-    private final Pattern handlesPattern = Pattern.compile(hp, Pattern.CASE_INSENSITIVE);
+    private final Pattern handlesPattern = TARDISHandlesPattern.getPattern("prefix");
 
     public TARDISChatListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -98,7 +98,6 @@ public class TARDISChatListener implements Listener {
                     String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
                     TARDISMessage.send(event.getPlayer(), message);
                 }
-//            } else if (chat.startsWith(plugin.getConfig().getString("handles.prefix").toLowerCase(Locale.ENGLISH))) {
             } else if (handlesPattern.matcher(chat).lookingAt()) {
                 event.setCancelled(true);
                 // process handles request

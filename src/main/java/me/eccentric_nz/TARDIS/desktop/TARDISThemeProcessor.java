@@ -53,7 +53,7 @@ class TARDISThemeProcessor {
         // get upgrade data
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);
-        if (plugin.getConfig().getBoolean("allow.handles") && player.hasPermission("tardis.handles")) {
+        if (plugin.getHandlesConfig().getBoolean("enabled") && player.hasPermission("tardis.handles")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);

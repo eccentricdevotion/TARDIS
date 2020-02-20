@@ -120,6 +120,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
     private FileConfiguration planetsConfig;
+    private FileConfiguration handlesConfig;
     private HashMap<String, Integer> condensables;
     private int standbyTask;
     private String pluginName;
@@ -384,7 +385,7 @@ public class TARDIS extends JavaPlugin {
             }
             // hook PlaceholderAPI
             if (pm.getPlugin("PlaceholderAPI") != null) {
-                debug("Providing expansion to PlaceholderAPI.");
+                debug("Registering expansion with PlaceholderAPI.");
                 new TARDISPlaceholderExpansion(this).register();
             }
         } else {
@@ -603,7 +604,7 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = Arrays.asList("achievements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
+        List<String> files = Arrays.asList("achievements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
         for (String f : files) {
             tardisCopier.copy(f);
         }
@@ -623,6 +624,7 @@ public class TARDIS extends JavaPlugin {
         kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
         achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
+        handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
     }
 
     /**
@@ -663,8 +665,8 @@ public class TARDIS extends JavaPlugin {
      * Starts a repeating task that schedules reminders added to a players Handles cyberhead companion.
      */
     private void startReminders() {
-        if (getConfig().getBoolean("handles.reminders.enabled")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120L, getConfig().getLong("handles.reminders.schedule"));
+        if (getHandlesConfig().getBoolean("reminders.enabled")) {
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120L, getHandlesConfig().getLong("reminders.schedule"));
         }
     }
 
@@ -1082,6 +1084,10 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getChameleonGuis() {
         return chameleonGuis;
+    }
+
+    public FileConfiguration getHandlesConfig() {
+        return handlesConfig;
     }
 
     public TARDISUtils getUtils() {

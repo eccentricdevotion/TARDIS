@@ -55,7 +55,6 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.external_gravity", false);
         booleanOptions.put("allow.guardians", false);
         booleanOptions.put("allow.hads", true);
-        booleanOptions.put("allow.handles", true);
         booleanOptions.put("allow.invisibility", true);
         booleanOptions.put("allow.mob_farming", true);
         booleanOptions.put("allow.perception_filter", true);
@@ -94,7 +93,6 @@ public class TARDISConfiguration {
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
         booleanOptions.put("growth.rooms_require_blocks", false);
-        booleanOptions.put("handles.reminders.enabled", true);
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("police_box.name_tardis", false);
@@ -153,7 +151,6 @@ public class TARDISConfiguration {
         integerOptions.put("growth.gravity_max_velocity", 5);
         integerOptions.put("growth.room_speed", 4);
         integerOptions.put("growth.rooms_condenser_percent", 100);
-        integerOptions.put("handles.reminders.schedule", 1200);
         integerOptions.put("junk.return", -1);
         integerOptions.put("police_box.confirm_timeout", 15);
         integerOptions.put("police_box.rebuild_cooldown", 10000);
@@ -184,7 +181,6 @@ public class TARDISConfiguration {
         stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         stringOptions.put("creation.gamemode", "survival");
         stringOptions.put("creation.use_clay", "WOOL");
-        stringOptions.put("handles.prefix", "Hey Handles");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
         stringOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP");
@@ -267,6 +263,12 @@ public class TARDISConfiguration {
             plugin.getConfig().set("storage.mysql.port", port);
             plugin.getConfig().set("storage.mysql.database", database);
             plugin.getConfig().set("storage.mysql.url", null);
+            i++;
+        }
+        // remove handles
+        if (config.contains("handles")) {
+            plugin.getConfig().set("allow.handles", null);
+            plugin.getConfig().set("handles", null);
             i++;
         }
         if (i > 0) {

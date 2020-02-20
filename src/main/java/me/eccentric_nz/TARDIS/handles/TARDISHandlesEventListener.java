@@ -113,7 +113,7 @@ public class TARDISHandlesEventListener implements Listener {
      * Retrieve a Program asynchronously from the database
      */
     private void getProgram(String uuid, String event) {
-        if (TARDIS.plugin.getConfig().getBoolean("allow.handles")) {
+        if (TARDIS.plugin.getHandlesConfig().getBoolean("enabled")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {

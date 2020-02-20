@@ -163,7 +163,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISGameModeSwitcher(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGravityWellListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandbrakeListener(plugin), plugin);
-        if (plugin.getConfig().getBoolean("allow.handles")) {
+        if (plugin.getHandlesConfig().getBoolean("enabled")) {
             plugin.getPM().registerEvents(new TARDISHandlesListener(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISHandlesEventListener(), plugin);
             plugin.getPM().registerEvents(new TARDISHandlesProgramListener(plugin), plugin);
