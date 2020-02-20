@@ -33,7 +33,7 @@ public class TARDISChecker {
         this.plugin = plugin;
     }
 
-    public void checkMapsAndAdvancements() {
+    public void checkAdvancements() {
         // get server's main world folder
         // is there a worlds container?
         File container = plugin.getServer().getWorldContainer();

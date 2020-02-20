@@ -313,8 +313,8 @@ public class TARDIS extends JavaPlugin {
             loadPerms();
             loadBooks();
             resourcePack = getServerTP();
-            // copy maps
-            new TARDISChecker(this).checkMapsAndAdvancements();
+            // copy advancements to tardis datapack
+            new TARDISChecker(this).checkAdvancements();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
             boxes = new TARDISChameleonPoliceBox();

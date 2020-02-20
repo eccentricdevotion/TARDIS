@@ -343,8 +343,8 @@ public class TARDISHandlesRequest {
                 }
                 //
                 if (matched) {
-                    if (player.hasPermission(plugin.getHandlesConfig().getString(key + ".permission"))) {
-                        for (String cmd : plugin.getHandlesConfig().getStringList(key + ".commands")) {
+                    if (player.hasPermission(plugin.getHandlesConfig().getString("custom-commands." + key + ".permission"))) {
+                        for (String cmd : plugin.getHandlesConfig().getStringList("custom-commands." + key + ".commands")) {
                             player.performCommand(cmd);
                         }
                     }
