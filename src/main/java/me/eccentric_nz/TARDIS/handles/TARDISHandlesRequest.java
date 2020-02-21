@@ -20,9 +20,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTransmatCommand;
+import me.eccentric_nz.TARDIS.control.TARDISLightSwitch;
+import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
+import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
 import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
@@ -97,7 +100,6 @@ public class TARDISHandlesRequest {
             String key = "";
             List<String> groups = null;
             for (String k : plugin.getHandlesConfig().getConfigurationSection("core-commands").getKeys(true)) {
-                plugin.debug("handles key: " + k);
                 if (!k.equals("travel") && !k.equals("door")) {
                     Pattern pattern = TARDISHandlesPattern.getPattern(k, false);
                     Matcher m = pattern.matcher(removed);
@@ -118,20 +120,26 @@ public class TARDISHandlesRequest {
                 switch (key) {
                     case "craft":
                         if (groups != null) {
-                            for (String seed : TARDISRecipeTabComplete.TARDIS_TYPES) {
-                                if (groups.get(0).equalsIgnoreCase(seed)) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis " + seed), 1L);
-                                    return;
+                            String tardis = groups.get(1);
+                            if (tardis == null || tardis.isEmpty()) {
+                                // tardis recipes
+                                for (String item : TARDISRecipeTabComplete.ROOT_SUBS) {
+                                    if (groups.get(2).equalsIgnoreCase(item)) {
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe " + item), 1L);
+                                        return;
+                                    }
                                 }
-                            }
-                            // default to budget
-                            player.performCommand("tardisrecipe tardis budget");
-                            // TODO tardis recipes
-                            for (String item : TARDISRecipeTabComplete.ROOT_SUBS) {
-                                if (groups.get(0).equalsIgnoreCase(item)) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe " + item), 1L);
-                                    return;
+                            } else {
+                                // tardis seed block
+                                for (String seed : TARDISRecipeTabComplete.TARDIS_TYPES) {
+                                    if (groups.get(0).equalsIgnoreCase(seed)) {
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis " + seed), 1L);
+                                        return;
+                                    }
                                 }
+                                // default to budget
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis budget"), 1L);
+                                return;
                             }
                             // don't understand
                             TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
@@ -142,15 +150,17 @@ public class TARDISHandlesRequest {
                             TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             return;
                         }
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            // remove 'remind me to '
-                            // TODO capture groups
-                            plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid.toString() + " " + StringUtils.normalizeSpace(removed.replaceAll("(?i)" + Pattern.quote("remind"), "").replaceAll("(?i)" + Pattern.quote("me to"), "")));
-                        }, 1L);
+                        if (groups != null) {
+                            String reminder = groups.get(0);
+                            String time = groups.get(1);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid.toString() + " " + reminder + " " + time), 1L);
+                            return;
+                        }
                         break;
                     case "say":
                         if (groups != null) {
-                            plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid.toString() + " " + StringUtils.normalizeSpace(groups.get(0)));
+                            String g = groups.get(0);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid.toString() + " " + StringUtils.normalizeSpace(g)), 1L);
                         }
                         break;
                     case "name":
@@ -192,6 +202,38 @@ public class TARDISHandlesRequest {
                             }
                         }
                         break;
+                    case "lights":
+                        if (groups != null) {
+                            boolean onoff = groups.get(0).equalsIgnoreCase("on");
+                            // get tardis
+                            HashMap<String, Object> wherel = new HashMap<>();
+                            wherel.put("tardis_id", id);
+                            ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
+                            if (rst.resultSet()) {
+                                Tardis tardis = rst.getTardis();
+                                if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().hasLanterns()).flickSwitch(), 1L);
+                                }
+                            }
+                        }
+                        break;
+                    case "power":
+                        if (groups != null) {
+                            boolean onoff = groups.get(0).equalsIgnoreCase("off");
+                            // get tardis
+                            HashMap<String, Object> wherel = new HashMap<>();
+                            wherel.put("tardis_id", id);
+                            ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
+                            if (rst.resultSet()) {
+                                Tardis tardis = rst.getTardis();
+                                if ((onoff && tardis.isPowered_on()) || (!onoff && !tardis.isPowered_on())) {
+                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 1L);
+                                    }
+                                }
+                            }
+                        }
+                        break;
                     case "travel.save":
                         if (groups != null) {
                             HashMap<String, Object> wheres = new HashMap<>();
@@ -212,18 +254,14 @@ public class TARDISHandlesRequest {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home"), 1L);
                         break;
                     case "travel.random":
-                        // get current location
-                        HashMap<String, Object> wherecl = new HashMap<>();
-                        wherecl.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
-                        if (rsc.resultSet()) {
-                            COMPASS direction = rscl.getDirection();
-                            Location random = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, direction);
-                            if (random != null) {
-                                plugin.getTrackerKeeper().getHasRandomised().add(id);
-                                TARDISMessage.handlesSend(player, "RANDOMISER");
-                                // TODO set location, message to release handbrake
-                            }
+                        // get tardis
+                        HashMap<String, Object> wherel = new HashMap<>();
+                        wherel.put("tardis_id", id);
+                        ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);
+                        if (rsr.resultSet()) {
+                            Tardis tardis = rsr.getTardis();
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtron_level(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
+                            return;
                         }
                         break;
                     case "travel.player":
@@ -245,12 +283,14 @@ public class TARDISHandlesRequest {
                         break;
                     case "travel.area":
                         if (groups != null) {
+                            String area = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
                             ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
                             if (rsa.resultSet()) {
                                 // cycle through areas
                                 for (String name : rsa.getNames()) {
-                                    if (groups.get(0).equalsIgnoreCase(name) && (player.hasPermission("tardis.area." + name) || player.hasPermission("tardis.area.*"))) {
+                                    if (area.equalsIgnoreCase(name) && (player.hasPermission("tardis.area." + name) || player.hasPermission("tardis.area.*"))) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel area " + name), 1L);
+                                        return;
                                     }
                                 }
                                 // don't understand
@@ -264,10 +304,11 @@ public class TARDISHandlesRequest {
                                 TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                 return;
                             }
+                            String gb = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
                             // cycle through biomes
                             for (Biome biome : Biome.values()) {
                                 String b = biome.toString();
-                                if (groups.get(0).equalsIgnoreCase(b)) {
+                                if (gb.equalsIgnoreCase(b)) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel biome " + b), 1L);
                                     return;
                                 }

@@ -5,7 +5,7 @@ reminders:
   enabled: true
   schedule: 1200
 core-commands:
-  craft: '\b(?:craft|build|make)\b.*\b(\w+)\s+tardis\b'
+  craft: '\b(?:craft|build|make|create)\b.*\b(\w+)\s+(tardis\b)?(\b.*\b)'
   remind: 'remind\s?(?:me\s+to)?\s+(.+)\s+.+(\d+)'
   say: 'say\s+(.+)'
   name: 'name'
@@ -16,6 +16,8 @@ core-commands:
   hide: 'hide'
   rebuild: 'rebuild'
   direction: '(?:fac(?:ing|e)|direction)\s+(\w+)\s*?'
+  lights: '\blights\b.*(?:(off|on))|(?:(off|on)).*\blights\b'
+  power: '\bpower\b.*(?:(off|on))|(?:(off|on)).*\bpower\b'
   travel:
     save: '(?:travel|go).+save\s+(\w+)'
     home: '(?:travel|go)\s+home'
@@ -32,7 +34,7 @@ core-commands:
     unlock: '\bunlock\b.*\bdoor\b|\bdoor\b.*\bunlock\b'
   scan: 'scan'
   teleport: 'teleport'
-  transmat: 'transmat\s?(?:me\s+to)?\s+(.+)'
+  transmat: 'transmat\s+(?:(?:me\s+)?to\s+(?:the\s+)?)?(.+)'
 custom-commands:
   trigger:
     regex: 'search pattern to apply to everything AFTER the prefix'
