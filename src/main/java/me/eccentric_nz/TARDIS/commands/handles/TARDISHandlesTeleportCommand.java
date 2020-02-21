@@ -48,7 +48,7 @@ public class TARDISHandlesTeleportCommand {
         Location location = player.getLocation();
         // must be outside the TARDIS
         if (plugin.getUtils().inTARDISWorld(location)) {
-            TARDISMessage.handlesMessage(player, "TARDIS_OUTSIDE");
+            TARDISMessage.handlesSend(player, "TARDIS_OUTSIDE");
             return;
         }
         // get tardis data
