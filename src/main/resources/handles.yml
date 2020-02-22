@@ -1,44 +1,49 @@
 # must use single quotes to wrap regular expressions
 enabled: true
-prefix: '^(?:hey\s+)?handles(?:[,!:\s]|\.\.\.+)'
+prefix: '^(?:hey,?\s+)?handles(?:[,!:\s]|\.\.\.+)'
 reminders:
   enabled: true
   schedule: 1200
 core-commands:
   craft: '\b(?:craft|build|make|create)\b.*\b(\w+)\s+(tardis\b)?(\b.*\b)'
-  remind: 'remind\s?(?:me\s+to)?\s+(.+)\s+.+(\d+)'
-  say: 'say\s+(.+)'
-  name: 'name'
-  time: 'time'
-  call: 'call'
-  takeoff: 'takeoff|take off'
-  land: 'land'
-  hide: 'hide'
-  rebuild: 'rebuild'
-  direction: '(?:fac(?:ing|e)|direction)\s+(\w+)\s*?'
-  lights: '\blights\b.*(?:(off|on))|(?:(off|on)).*\blights\b'
-  power: '\bpower\b.*(?:(off|on))|(?:(off|on)).*\bpower\b'
+  remind: '\bremind\s*(?:me\s+to)?\s+(.+)\s+.+(\d+)'
+  say: '\bsay\s+(.+)'
+  name: '\bname\b'
+  time: '\btime\b'
+  call: '\bcall\b'
+  takeoff: '\btake\s*off\b'
+  land: '\bland\b'
+  hide: '\bhide\b'
+  rebuild: '\brebuild\b'
+  direction: '\b(?:fac(?:ing|e)|direction)\s+(\w+)'
+  lights: '\b(?:lights\b.*\b(off|on)|(off|on)\b.*\blights)\b'
+  power: '\b(?:power\b.*\b(off|on)|(off|on)\b.*\bpower)\b'
   travel:
-    save: '(?:travel|go).+save\s+(\w+)'
-    home: '(?:travel|go)\s+home'
-    random: '(?:travel|go|find).+random'
-    player: '(?:travel|go).+player\s+(\w+)'
-    area: '(?:travel|go).*(?:\b(\w+)\s+area)\s*?$|(?:travel|go).+(?:area\s\b(\w+))\s*?'
-    biome: '(?:travel|go).*(?:\b(\w+)\s+biome)\s*?$|(?:travel|go).+(?:biome\s\b(\w+))\s*?'
-    cave: '(?:travel|go|find).+cave'
-    village: '(?:travel|go|find).+village'
+    save: '\b(?:travel|go)\s+(?:to\s+)?.*?(?:saved?(?:\s+(?:location|destination|place|point))?|destination)\s+(\w+)'
+    home: '\b(?:travel|go)\s+(?:to\s+)?.*?home\b'
+    random: '\b(?:(?:travel|go)\s+(?:to\s+)?.*?|find\b.+)\brandom\b'
+    player: '\b(?:travel|go)\s+(?:to\s+)?.*?player\s+(\w+)'
+    area: '\b(?:travel|go)\s+(?:to\s+)?.*?(?:\b(\w+)\s+area|area\s+(\w+))\s*?$'
+    biome: '\b(?:(?:travel|go)\s+(?:to\s+)?.*?|find\b.+)(?:\b([\w:]+)\s+biome|biome\s+(\w+))\s*?$'
+    cave: '\b(?:(?:travel|go)\s+(?:to\s+)?.*?|find\b.+)\bcave\b'
+    village: '\b(?:(?:travel|go)\s+(?:to\s+)?.*?|find\b.+)\bvillage\b'
   door:
-    open: '\bopen\b.*\bdoor\b|\bdoor\b.*\bopen\b'
-    close: '\bclose\b.*\bdoor\b|\bdoor\b.*\bclose\b'
-    lock: '\block\b.*\bdoor\b|\bdoor\b.*\block\b'
-    unlock: '\bunlock\b.*\bdoor\b|\bdoor\b.*\bunlock\b'
-  scan: 'scan'
-  teleport: 'teleport'
-  transmat: 'transmat\s+(?:(?:me\s+)?to\s+(?:the\s+)?)?(.+)'
+    open: '\b(?:open\b.*\bdoor|door\b.*\bopen(?:ed)?)\b'
+    close: '\b(?:close\b.*\bdoor|door\b.*\bclosed?)\b'
+    lock: '\b(?:lock\b.*\bdoor|door\b.*\block(?:ed)?)\b'
+    unlock: '\b(?:unlock\b.*\bdoor|door\b.*\bunlock(?:ed)?)\b'
+  scan: '\bscan\b'
+  teleport: '\bteleport\b'
+  transmat: '\btransmat\s+(?:(?:me\s+)?to\s+(?:the\s+)?)?(.+)'
 custom-commands:
   weird:
-    regex: 'blah blah'
+    regex: '\bblah\b'
     permission: tardis.handles.use
     commands:
       - handles weird
       - tell %player_name% I'm sorry %player_displayname%, I'm afraid I can't do that
+  console:
+    regex: '\bconsole\b\s+(\w+)'
+    permission: tardis.admin
+    commands:
+      - ©tadmin list $1

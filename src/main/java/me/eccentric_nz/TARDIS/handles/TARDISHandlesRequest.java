@@ -384,6 +384,12 @@ public class TARDISHandlesRequest {
                     if (m.find()) {
                         matched = true;
                         key = k;
+                        if (m.groupCount() > 0) {
+                            groups = new ArrayList<>();
+                            for (int i = 0; i < m.groupCount(); i++) {
+                                groups.add(m.group(i + 1));
+                            }
+                        }
                     }
                 }
                 //
@@ -394,8 +400,21 @@ public class TARDISHandlesRequest {
                             if (cmd.contains("%") && plugin.getPM().isPluginEnabled("PlaceholderAPI")) {
                                 cmd = TARDISHandlesPlaceholder.getSubstituted(cmd, player);
                             }
-                            String command = cmd;
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand(command), 1L);
+                            // process capture groups
+                            if (groups != null) {
+                                for (int g = 0; g < groups.size(); g++) {
+                                    String find = "$" + (g + 1);
+                                    cmd = cmd.replace(find, groups.get(g));
+                                }
+                            }
+                            boolean isConsoleCommand = cmd.startsWith("©");
+                            // strip console character id necessary
+                            String command = (isConsoleCommand) ? cmd.substring(1) : cmd;
+                            if (isConsoleCommand) {
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), command), 1L);
+                            } else {
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand(command), 1L);
+                            }
                         }
                     }
                     TARDISSounds.playTARDISSound(player, "handles_confirmed");
