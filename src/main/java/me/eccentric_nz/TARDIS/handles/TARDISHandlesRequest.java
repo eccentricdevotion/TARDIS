@@ -388,9 +388,14 @@ public class TARDISHandlesRequest {
                 }
                 //
                 if (matched) {
-                    if (player.hasPermission(plugin.getHandlesConfig().getString("custom-commands." + key + ".permission"))) {
+                    String perm = plugin.getHandlesConfig().getString("custom-commands." + key + ".permission");
+                    if (perm != null && player.hasPermission(perm)) {
                         for (String cmd : plugin.getHandlesConfig().getStringList("custom-commands." + key + ".commands")) {
-                            player.performCommand(cmd);
+                            if (cmd.contains("%") && plugin.getPM().isPluginEnabled("PlaceholderAPI")) {
+                                cmd = TARDISHandlesPlaceholder.getSubstituted(cmd, player);
+                            }
+                            String command = cmd;
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand(command), 1L);
                         }
                     }
                     TARDISSounds.playTARDISSound(player, "handles_confirmed");

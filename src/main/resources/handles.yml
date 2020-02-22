@@ -36,10 +36,9 @@ core-commands:
   teleport: 'teleport'
   transmat: 'transmat\s+(?:(?:me\s+)?to\s+(?:the\s+)?)?(.+)'
 custom-commands:
-  trigger:
-    regex: 'search pattern to apply to everything AFTER the prefix'
-    permisssion: some.permission
+  weird:
+    regex: 'blah blah'
+    permission: tardis.handles.use
     commands:
-      - command 1
-      - command 2
-      - etc
+      - handles weird
+      - tell %player_name% I'm sorry %player_displayname%, I'm afraid I can't do that
