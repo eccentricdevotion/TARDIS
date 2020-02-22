@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesWeirdness;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
@@ -50,6 +51,11 @@ public class TARDISHandlesCommand implements CommandExecutor {
         if (args[0].equals("remove")) {
             player = (Player) sender;
             return new TARDISHandlesRemoveCommand(plugin).purge(player);
+        }
+        if (args[0].equals("weird")) {
+            player = (Player) sender;
+            TARDISHandlesWeirdness.say(player);
+            return true;
         }
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
