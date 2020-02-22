@@ -138,6 +138,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
         firstsBool.put("no_coords", "preferences");
+        firstsBool.put("no_creative_condense", "preferences");
         firstsBool.put("open_door_policy", "preferences");
         firstsBool.put("particles", "artron_furnace");
         firstsBool.put("per_world_perms", "travel");
