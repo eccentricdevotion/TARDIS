@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -372,6 +373,9 @@ public class TARDISHandlesRequest {
                     default:
                         break;
                 }
+                if (key.equals("remind")) {
+                    TARDISSounds.playTARDISSound(player, "handles_confirmed");
+                }
             } else {
                 // try custom-commands
                 for (String k : plugin.getHandlesConfig().getConfigurationSection("custom-commands").getKeys(false)) {
@@ -389,6 +393,7 @@ public class TARDISHandlesRequest {
                             player.performCommand(cmd);
                         }
                     }
+                    TARDISSounds.playTARDISSound(player, "handles_confirmed");
                 } else {
                     // don't understand
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
