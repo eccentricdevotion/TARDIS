@@ -408,7 +408,7 @@ public class TARDISHandlesRequest {
                                 }
                             }
                             boolean isConsoleCommand = cmd.startsWith("©");
-                            // strip console character id necessary
+                            // strip console character if necessary
                             String command = (isConsoleCommand) ? cmd.substring(1) : cmd;
                             if (isConsoleCommand) {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), command), 1L);

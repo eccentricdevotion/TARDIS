@@ -40,8 +40,8 @@ custom-commands:
     regex: '\bblah\b'
     permission: tardis.handles.use
     commands:
+      - handles tell %player_name% I'm sorry %player_displayname%, I'm afraid I can't do that
       - handles weird
-      - tell %player_name% I'm sorry %player_displayname%, I'm afraid I can't do that
   console:
     regex: '\bconsole\b\s+(\w+)'
     permission: tardis.admin

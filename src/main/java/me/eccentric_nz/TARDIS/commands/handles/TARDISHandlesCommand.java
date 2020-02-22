@@ -65,6 +65,9 @@ public class TARDISHandlesCommand implements CommandExecutor {
             TARDISMessage.send(sender, "HANDLES_INTERNAL");
             return true;
         }
+        if (args[0].equals("tell")) {
+            return new TARDISHandlesTellCommand(plugin).message(args);
+        }
         UUID uuid;
         try {
             uuid = UUID.fromString(args[1]);
