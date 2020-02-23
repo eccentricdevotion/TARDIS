@@ -22,7 +22,7 @@ import org.bukkit.Material;
 public enum GUIChameleonConstructor {
 
     // Chameleon Constructor
-    BACK_TO_CHAMELEON_CIRCUIT(1, 0, Material.ARROW),
+    BACK_TO_CHAMELEON_CIRCUIT(8, 0, Material.ARROW),
     HELP(55, 2, Material.BOWL),
     INFO(57, 3, Material.BOWL),
     ABORT(2, 5, Material.BOWL),
