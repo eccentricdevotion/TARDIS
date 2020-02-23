@@ -43,7 +43,7 @@ custom-commands:
       - handles tell %player_name% I'm sorry %player_displayname%, I'm afraid I can't do that
       - handles weird
   console:
-    regex: '\bconsole\b\s+(\w+)'
+    regex: '\bconsole\s+(\w+)'
     permission: tardis.admin
     commands:
-      - ©tadmin list $1
+      - ^tadmin list $1

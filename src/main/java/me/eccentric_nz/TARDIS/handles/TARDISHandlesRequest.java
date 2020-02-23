@@ -400,14 +400,14 @@ public class TARDISHandlesRequest {
                             if (cmd.contains("%") && plugin.getPM().isPluginEnabled("PlaceholderAPI")) {
                                 cmd = TARDISHandlesPlaceholder.getSubstituted(cmd, player);
                             }
-                            // process capture groups
+                            // process capture groups (backwards so double digits $13 are replaced before single digits $1)
                             if (groups != null) {
-                                for (int g = 0; g < groups.size(); g++) {
+                                for (int g = groups.size() - 1; g >= 0; g--) {
                                     String find = "$" + (g + 1);
                                     cmd = cmd.replace(find, groups.get(g));
                                 }
                             }
-                            boolean isConsoleCommand = cmd.startsWith("©");
+                            boolean isConsoleCommand = cmd.startsWith("^");
                             // strip console character if necessary
                             String command = (isConsoleCommand) ? cmd.substring(1) : cmd;
                             if (isConsoleCommand) {
