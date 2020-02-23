@@ -15,6 +15,7 @@
    * Add advanced console and disk storage to schematics
 9. Set Master button to ON (In Lazarus GUI) when it is in use
 10. Use the Vortex Manipulator to teleport past force fields
+11. Permissions per Chameleon preset
 
 ## TARDIS data pack
 * Add TARDIS recipes? _probably not as you can't set the display name_

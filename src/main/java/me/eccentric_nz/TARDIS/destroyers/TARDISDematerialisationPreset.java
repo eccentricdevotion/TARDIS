@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -92,6 +89,11 @@ class TARDISDematerialisationPreset implements Runnable {
 
     @Override
     public void run() {
+        if (column == null) {
+            plugin.getServer().getScheduler().cancelTask(task);
+            task = 0;
+            TARDISMessage.send(dd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+        }
         BlockData[][] datas;
         // get relative locations
         int x = dd.getLocation().getBlockX(), plusx = dd.getLocation().getBlockX() + 1, minusx = dd.getLocation().getBlockX() - 1;

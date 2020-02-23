@@ -47,15 +47,18 @@ public class TARDISConstructColumn {
         ResultSetChameleon rs = new ResultSetChameleon(plugin, where);
         if (rs.resultSet()) {
             // convert to String[][] array
-            JSONArray json = new JSONArray(rs.getData().get(field));
-            String[][] strings = new String[10][4];
-            for (int i = 0; i < 10; i++) {
-                JSONArray inner = json.getJSONArray(i);
-                for (int j = 0; j < 4; j++) {
-                    strings[i][j] = inner.getString(j);
+            String data = rs.getData().get(field);
+            if (data != null) {
+                JSONArray json = new JSONArray(data);
+                String[][] strings = new String[10][4];
+                for (int i = 0; i < 10; i++) {
+                    JSONArray inner = json.getJSONArray(i);
+                    for (int j = 0; j < 4; j++) {
+                        strings[i][j] = inner.getString(j);
+                    }
                 }
+                return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"), false);
             }
-            return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"), false);
         }
         return null;
     }

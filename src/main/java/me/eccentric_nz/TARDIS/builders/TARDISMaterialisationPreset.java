@@ -116,6 +116,11 @@ class TARDISMaterialisationPreset implements Runnable {
     @Override
     public void run() {
         if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
+            if (column == null) {
+                plugin.getServer().getScheduler().cancelTask(task);
+                task = 0;
+                TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+            }
             BlockData[][] datas;
             // get relative locations
             int x = bd.getLocation().getBlockX(), plusx = bd.getLocation().getBlockX() + 1, minusx = bd.getLocation().getBlockX() - 1, y;

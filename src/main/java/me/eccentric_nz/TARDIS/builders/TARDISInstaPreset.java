@@ -86,6 +86,10 @@ public class TARDISInstaPreset {
             column = plugin.getBoxes().getColumn(preset, bd.getDirection());
         } else if (preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprint", bd.getDirection()).getColumn();
+            if (column == null) {
+                TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+                return;
+            }
         } else {
             column = plugin.getPresets().getColumn(preset, bd.getDirection());
         }
@@ -561,7 +565,7 @@ public class TARDISInstaPreset {
             int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
             plugin.getServer().getScheduler().cancelTask(taskID);
         }
-        if (!bd.isRebuild() && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
+        if (!bd.isRebuild() && bd.getPlayer().getPlayer() != null) {
             plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
         }
     }
