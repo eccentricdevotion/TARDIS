@@ -202,6 +202,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Sonic Generator");
+                im.setCustomModelData(10000001);
                 is.setItemMeta(im);
                 b.getWorld().dropItemNaturally(b.getLocation(), is);
             }
