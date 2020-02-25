@@ -60,41 +60,43 @@ public class TARDISStandbyMode implements Runnable {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -remove, where, null);
             } else if (level <= amount) {
-                // power down!
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("tardis_id", id);
-                HashMap<String, Object> setp = new HashMap<>();
-                setp.put("powered_on", 0);
-                OfflinePlayer player = plugin.getServer().getOfflinePlayer(value.getUuid());
-                if (player.isOnline()) {
-                    TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
-                    TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
-                }
-                long delay = 0;
-                // if hidden, rebuild
-                if (value.isHidden()) {
-                    plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // power down!
+                    HashMap<String, Object> wherep = new HashMap<>();
+                    wherep.put("tardis_id", id);
+                    HashMap<String, Object> setp = new HashMap<>();
+                    setp.put("powered_on", 0);
+                    OfflinePlayer player = plugin.getServer().getOfflinePlayer(value.getUuid());
                     if (player.isOnline()) {
-                        TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
+                        TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
+                        TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
                     }
-                    delay = 20L;
-                }
-                // police box lamp, delay it incase the TARDIS needs rebuilding
-                if (value.getPreset().equals(PRESET.NEW) || value.getPreset().equals(PRESET.OLD)) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
-                }
-                // if lights are on, turn them off
-                if (value.isLights()) {
-                    new TARDISLampToggler(plugin).flickSwitch(id, value.getUuid(), true, value.isLanterns());
-                }
-                // if beacon is on turn it off
-                new TARDISBeaconToggler(plugin).flickSwitch(value.getUuid(), id, false);
-                // update database
-                plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
-                // if force field is on, disable it
-                if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(value.getUuid())) {
-                    plugin.getTrackerKeeper().getActiveForceFields().remove(value.getUuid());
-                }
+                    long delay = 0;
+                    // if hidden, rebuild
+                    if (value.isHidden()) {
+                        plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                        if (player.isOnline()) {
+                            TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
+                        }
+                        delay = 20L;
+                    }
+                    // police box lamp, delay it incase the TARDIS needs rebuilding
+                    if (value.getPreset().equals(PRESET.NEW) || value.getPreset().equals(PRESET.OLD)) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    }
+                    // if lights are on, turn them off
+                    if (value.isLights()) {
+                        new TARDISLampToggler(plugin).flickSwitch(id, value.getUuid(), true, value.isLanterns());
+                    }
+                    // if beacon is on turn it off
+                    new TARDISBeaconToggler(plugin).flickSwitch(value.getUuid(), id, false);
+                    // update database
+                    plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+                    // if force field is on, disable it
+                    if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(value.getUuid())) {
+                        plugin.getTrackerKeeper().getActiveForceFields().remove(value.getUuid());
+                    }
+                }, 1L);
             }
         });
     }

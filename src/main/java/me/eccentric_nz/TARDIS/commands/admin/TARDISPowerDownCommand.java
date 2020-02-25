@@ -45,7 +45,7 @@ class TARDISPowerDownCommand {
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         if (tf.equals("false")) {
             // if false, stop the repeating task
-            plugin.getServer().getScheduler().cancelTask(plugin.getStandbyTask());
+            plugin.getStandbyTask().cancel();
             TARDISMessage.send(sender, "STANDBY_STOP");
         } else {
             // if true, start the repeating task

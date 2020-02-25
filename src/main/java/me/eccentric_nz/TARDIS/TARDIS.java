@@ -122,7 +122,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration planetsConfig;
     private FileConfiguration handlesConfig;
     private HashMap<String, Integer> condensables;
-    private int standbyTask;
+    private BukkitTask standbyTask;
     private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
@@ -681,7 +681,7 @@ public class TARDIS extends JavaPlugin {
             if (repeat <= 0) {
                 return;
             }
-            standbyTask = getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISStandbyMode(this), 6000L, repeat);
+            standbyTask = getServer().getScheduler().runTaskTimerAsynchronously(this, new TARDISStandbyMode(this), 6000L, repeat);
         }
     }
 
@@ -1218,7 +1218,7 @@ public class TARDIS extends JavaPlugin {
         return new TARDII();
     }
 
-    public int getStandbyTask() {
+    public BukkitTask getStandbyTask() {
         return standbyTask;
     }
 
