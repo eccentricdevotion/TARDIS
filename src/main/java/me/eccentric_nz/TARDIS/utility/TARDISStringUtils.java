@@ -44,6 +44,15 @@ public class TARDISStringUtils {
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
+    public static String titleCase(String s) {
+        String[] split = s.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String str : split) {
+            builder.append(uppercaseFirst(str)).append(" ");
+        }
+        return builder.toString().trim();
+    }
+
     public static String fromInt(int i) {
         if (i > 9) {
             return "A big number";

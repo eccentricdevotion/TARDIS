@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,10 +37,12 @@ class TARDISPoliceBoxInventory {
 
     private final ItemStack[] boxes;
     private final TARDIS plugin;
+    private final Player player;
     List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
 
-    public TARDISPoliceBoxInventory(TARDIS plugin) {
+    public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
+        this.player = player;
         boxes = getItemStack();
     }
 
@@ -53,12 +56,14 @@ class TARDISPoliceBoxInventory {
         int i = 0;
         // coloured police boxes
         for (String s : colours) {
-            ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(s + " Police Box");
-            im.setCustomModelData(10000003 + i);
-            is.setItemMeta(im);
-            boxes[i] = is;
+            if (player.hasPermission("tardis.preset.police_box_" + s.replace(" ", "_").toLowerCase())) {
+                ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName(s + " Police Box");
+                im.setCustomModelData(10000003 + i);
+                is.setItemMeta(im);
+                boxes[i] = is;
+            }
             i++;
         }
         // page one

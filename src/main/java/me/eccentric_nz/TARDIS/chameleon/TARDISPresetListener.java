@@ -543,7 +543,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // go to page two (coloured police boxes)
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        ItemStack[] boxes = new TARDISPoliceBoxInventory(plugin).getBoxes();
+                                        ItemStack[] boxes = new TARDISPoliceBoxInventory(plugin, player).getBoxes();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Police Boxes");
                                         gui.setContents(boxes);
                                         player.openInventory(gui);

@@ -195,7 +195,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     // presets
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISPresetInventory tpi = new TARDISPresetInventory(plugin);
+                                        TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
                                         ItemStack[] items = tpi.getPresets();
                                         Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
                                         presetinv.setContents(items);

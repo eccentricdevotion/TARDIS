@@ -51,7 +51,7 @@ public class TARDISChameleonFrame {
                     if (e instanceof ItemFrame) {
                         if (compareLocations(e.getLocation(), location)) {
                             ItemFrame frame = (ItemFrame) e;
-                            ItemStack is = new ItemStack(preset.getMaterial());
+                            ItemStack is = new ItemStack(preset.getGuiDisplay());
                             ItemMeta im = is.getItemMeta();
                             im.setDisplayName(preset.toString());
                             is.setItemMeta(im);

@@ -56,6 +56,74 @@ permissions:
       tardis.advanced: true
       tardis.storage: true
       tardis.vault: true
+      tardis.preset.*: true
+    default: op
+  tardis.preset.*:
+    description: Allow players to use all exterior Chameleon Presets.
+    children:
+      tardis.preset.andesite: true
+      tardis.preset.angel: true
+      tardis.preset.apperture: true
+      tardis.preset.cake: true
+      tardis.preset.candy: true
+      tardis.preset.chalice: true
+      tardis.preset.chorus: true
+      tardis.preset.creepy: true
+      tardis.preset.desert: true
+      tardis.preset.diorite: true
+      tardis.preset.duck: true
+      tardis.preset.fence: true
+      tardis.preset.flower: true
+      tardis.preset.gazebo: true
+      tardis.preset.granite: true
+      tardis.preset.gravestone: true
+      tardis.preset.helix: true
+      tardis.preset.jail: true
+      tardis.preset.jungle: true
+      tardis.preset.lamp: true
+      tardis.preset.library: true
+      tardis.preset.lighthouse: true
+      tardis.preset.mineshaft: true
+      tardis.preset.nether: true
+      tardis.preset.new: true
+      tardis.preset.old: true
+      tardis.preset.pandorica: true
+      tardis.preset.party: true
+      tardis.preset.peanut: true
+      tardis.preset.pine: true
+      tardis.preset.portal: true
+      tardis.preset.prismarine: true
+      tardis.preset.punked: true
+      tardis.preset.robot: true
+      tardis.preset.shroom: true
+      tardis.preset.snowman: true
+      tardis.preset.stone: true
+      tardis.preset.submerged: true
+      tardis.preset.swamp: true
+      tardis.preset.telephone: true
+      tardis.preset.toilet: true
+      tardis.preset.topsyturvey: true
+      tardis.preset.torch: true
+      tardis.preset.village: true
+      tardis.preset.well: true
+      tardis.preset.windmill: true
+      tardis.preset.yellow: true
+      tardis.preset.police_box_blue: true
+      tardis.preset.police_box_white: true
+      tardis.preset.police_box_orange: true
+      tardis.preset.police_box_magenta: true
+      tardis.preset.police_box_light_blue: true
+      tardis.preset.police_box_yellow: true
+      tardis.preset.police_box_lime: true
+      tardis.preset.police_box_pink: true
+      tardis.preset.police_box_gray: true
+      tardis.preset.police_box_light_gray: true
+      tardis.preset.police_box_cyan: true
+      tardis.preset.police_box_purple: true
+      tardis.preset.police_box_brown: true
+      tardis.preset.police_box_green: true
+      tardis.preset.police_box_red: true
+      tardis.preset.police_box_black: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
