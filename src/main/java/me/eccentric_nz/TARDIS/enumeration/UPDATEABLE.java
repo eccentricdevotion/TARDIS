@@ -9,7 +9,7 @@ public enum UPDATEABLE {
 
     ADVANCED(false, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX)),
     ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
-    ARTRON(false, true),
+    ARTRON(true, true),
     BACK(true, true),
     BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR)),
     BEACON(false, false, new RecipeChoice.MaterialChoice(Material.BEACON)),
