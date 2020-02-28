@@ -4,7 +4,6 @@
 1. New features
    * Test villager farming
    * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
-   * Finish Chemistry features - balloons [increase number of blocks players can walk up - give player jump boost when equipped, send entities floating into the air]
 2. Test player preference to bypass `tardis rescue accept`
 3. Test `invisibility` setting in TARDIS areas
 4. Test Handles transmat requests
