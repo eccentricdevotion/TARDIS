@@ -41,6 +41,7 @@ public class TARDISCloisterBell implements Runnable {
      *
      * @param plugin an instance of the TARDIS plugin
      * @param loops  the number of times to ring the cloister bell
+     * @param id     the id of the TARDIS whose cloister bell we are ringing
      */
     public TARDISCloisterBell(TARDIS plugin, int loops, int id) {
         this.plugin = plugin;

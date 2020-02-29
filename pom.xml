@@ -98,6 +98,7 @@
                         <configuration>
                             <!--<additionalparam>-Xdoclint:none</additionalparam>-->
                             <quiet/>
+                            <excludePackageNames>com.*:org.*</excludePackageNames>
                         </configuration>
                         <executions>
                             <execution>

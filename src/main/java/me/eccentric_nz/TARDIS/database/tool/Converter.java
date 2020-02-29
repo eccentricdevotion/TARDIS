@@ -42,7 +42,7 @@ public class Converter implements Runnable {
      *
      * @param plugin an instance of the TARDIS JavaPlugin class
      * @param sender the player using the /tadmin convert_database command
-     * @throws SQLException
+     * @throws SQLException if their is an SQL error
      **/
     public Converter(TARDIS plugin, CommandSender sender) throws Exception {
         this.plugin = plugin;
