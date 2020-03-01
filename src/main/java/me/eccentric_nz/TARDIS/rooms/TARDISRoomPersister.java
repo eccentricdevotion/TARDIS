@@ -18,12 +18,14 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisTimeLord;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.sql.Connection;
@@ -102,7 +104,8 @@ public class TARDISRoomPersister {
                     rd.setRoom(whichroom);
                     Location location = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
                     rd.setLocation(location);
-                    rd.setTardis_id(rs.getInt("tardis_id"));
+                    int id = rs.getInt("tardis_id");
+                    rd.setTardis_id(id);
                     rd.setRow(rs.getInt("progress_row"));
                     rd.setColumn(rs.getInt("progress_column"));
                     rd.setLevel(rs.getInt("progress_level"));
@@ -112,15 +115,20 @@ public class TARDISRoomPersister {
                     List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
                     rd.setPostBlocks(postBlocks);
                     long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-                    // resume the room growing
-                    TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, null);
-                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
-                    runnable.setTask(taskID);
-                    // resume tracking progress
-                    plugin.getTrackerKeeper().getRoomTasks().put(taskID, rd);
-                    // delete record
-                    delete.setInt(1, rs.getInt("progress_id"));
-                    delete.executeUpdate();
+                    // get the player who's tardis this is
+                    ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
+                    if (rst.fromID(id)) {
+                        Player player = plugin.getServer().getPlayer(rst.getUuid());
+                        // resume the room growing
+                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, player);
+                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
+                        runnable.setTask(taskID);
+                        // resume tracking progress
+                        plugin.getTrackerKeeper().getRoomTasks().put(taskID, rd);
+                        // delete record
+                        delete.setInt(1, rs.getInt("progress_id"));
+                        delete.executeUpdate();
+                    }
                 }
             }
         } catch (SQLException e) {
