@@ -465,6 +465,7 @@ public class TARDISControlListener implements Listener {
                                 case 33:
                                     // scanner
                                     new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), level);
+                                    break;
                                 case 35:
                                     // cloister bell
                                     if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
@@ -476,6 +477,7 @@ public class TARDISControlListener implements Listener {
                                         bell.setTask(taskID);
                                         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                     }
+                                    break;
                                 default:
                                     break;
                             }
