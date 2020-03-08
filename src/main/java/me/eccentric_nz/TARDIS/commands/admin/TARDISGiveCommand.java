@@ -115,6 +115,24 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("vortex", "Vortex Manipulator");
         items.put("wand", "TARDIS Schematic Wand");
         items.put("watch", "Fob Watch");
+        // seed blocks
+        items.put("ars_seed", "");
+        items.put("bigger_seed", "");
+        items.put("budget_seed", "");
+        items.put("coral_seed", "");
+        items.put("deluxe_seed", "");
+        items.put("eleventh_seed", "");
+        items.put("ender_seed", "");
+        items.put("master_seed", "");
+        items.put("plank_seed", "");
+        items.put("pyramid_seed", "");
+        items.put("redstone_seed", "");
+        items.put("steampunk_seed", "");
+        items.put("thirteenth_seed", "");
+        items.put("factory_seed", "");
+        items.put("tom_seed", "");
+        items.put("twelfth_seed", "");
+        items.put("war_seed", "");
     }
 
     @Override
@@ -225,7 +243,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         return giveFullCell(sender, amount, p);
                     } else if (args[2].equals("knowledge")) {
                         return giveKnowledgeBook(sender, item, p);
-                    } else {
+                    } else if (!args[2].endsWith("_seed")) {
                         return giveItem(sender, item, amount, p);
                     }
                 }
@@ -410,7 +428,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     private boolean giveKnowledgeBook(CommandSender sender, String item, Player player) {
-        String item_to_give = items.get(item);
+        String item_to_give = (item.endsWith("_seed")) ? item : items.get(item);
         ItemStack book = new ItemStack(Material.KNOWLEDGE_BOOK, 1);
         KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
         String message = item_to_give;
