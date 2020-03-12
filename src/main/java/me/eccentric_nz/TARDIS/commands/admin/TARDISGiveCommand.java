@@ -362,13 +362,19 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         Player player = plugin.getServer().getPlayer(p);
         ItemStack is;
+        int model;
         if (CONSOLES.getBY_NAMES().containsKey(type)) {
-            is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
-            // set display name
+            if (CONSOLES.getBY_NAMES().get(type).isCustom()) {
+                model = 45;
+                is = new ItemStack(Material.MUSHROOM_STEM, 1);
+            } else {
+                model = TARDISSeedModel.modelByString(type);
+                is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+            }
             ItemMeta im = is.getItemMeta();
-            int model = TARDISSeedModel.modelByString(type);
             im.setCustomModelData(10000000 + model);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+            // set display name
             im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
             lore.add(type);

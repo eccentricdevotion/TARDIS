@@ -69,7 +69,7 @@ public class TARDISSeedModel {
             // master
             put(Material.NETHER_BRICKS, 39);
 //            // custom
-//            put(Material.OBSIDIAN, 45);
+//            put(Material.MUSHROOM_STEM, 45);
 //            // templates
 //            put(Material.COBBLESTONE, 41);
 //            // archive
@@ -101,7 +101,7 @@ public class TARDISSeedModel {
             put("LEGACY_ELEVENTH", 36);
             put("LEGACY_REDSTONE", 37);
             put("MASTER", 39);
-            put("CUSTOM", 26);
+            put("CUSTOM", 45);
         }
     };
 

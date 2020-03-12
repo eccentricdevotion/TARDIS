@@ -123,7 +123,7 @@ public class TARDISCraftListener implements Listener {
             CraftingInventory ci = event.getInventory();
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
                 String dn = is.getItemMeta().getDisplayName();
-                if (is.getType().equals(Material.RED_MUSHROOM_BLOCK) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+                if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     lore.add("Walls: " + ci.getItem(6).getType().toString());
