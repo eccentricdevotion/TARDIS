@@ -247,10 +247,10 @@ class TARDISBuildAbandoned {
                                 data = Material.getMaterial(m).createBlockData();
                         }
                     }
-                    if (type.equals(Material.WHITE_STAINED_GLASS)) {
+                    if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
                         data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                     }
-                    if (type.equals(Material.WHITE_TERRACOTTA)) {
+                    if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
                         data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                     }
                     if (type.equals(Material.SPAWNER)) { // scanner button

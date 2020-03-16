@@ -277,11 +277,11 @@ public class TARDISBuilderInner {
                                 data = Material.getMaterial(m).createBlockData();
                         }
                     }
-                    if (type.equals(Material.WHITE_STAINED_GLASS)) {
+                    if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
                         data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                         postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
                     }
-                    if (type.equals(Material.WHITE_TERRACOTTA)) {
+                    if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
                         data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                         postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
                     }

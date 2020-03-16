@@ -380,10 +380,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.BLUE_WOOL)) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                 }
-                if (type.equals(Material.WHITE_STAINED_GLASS)) {
+                if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                 }
-                if (type.equals(Material.WHITE_TERRACOTTA)) {
+                if (type.equals(Material.WHITE_TERRACOTTA) && tud.getSchematic().getPermission().equals("war")) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
