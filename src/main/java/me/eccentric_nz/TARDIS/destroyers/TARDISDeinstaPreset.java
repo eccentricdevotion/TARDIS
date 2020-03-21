@@ -150,7 +150,7 @@ public class TARDISDeinstaPreset {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
-                    if (!b.getType().equals(Material.AIR)) {
+                    if (!b.getType().isAir()) {
                         b.setBlockData(TARDISConstants.AIR);
                     }
                 }

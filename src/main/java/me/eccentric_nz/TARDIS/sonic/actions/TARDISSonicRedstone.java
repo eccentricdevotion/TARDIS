@@ -92,7 +92,7 @@ public class TARDISSonicRedstone {
                     if (plugin.getGeneralKeeper().getSonicPistons().contains(block.getLocation().toString())) {
                         plugin.getGeneralKeeper().getSonicPistons().remove(block.getLocation().toString());
                         for (BlockFace f : plugin.getGeneralKeeper().getBlockFaces()) {
-                            if (block.getRelative(f).getType().equals(Material.AIR)) {
+                            if (block.getRelative(f).getType().isAir()) {
                                 // force a block update
                                 block.getRelative(f).setBlockData(TARDISConstants.VOID_AIR, true);
                                 block.getRelative(f).setBlockData(TARDISConstants.AIR, true);
@@ -111,7 +111,7 @@ public class TARDISSonicRedstone {
                     if (!lightable.isLit()) {
                         plugin.getGeneralKeeper().getSonicLamps().add(block.getLocation().toString());
                         for (BlockFace f : plugin.getGeneralKeeper().getBlockFaces()) {
-                            if (block.getRelative(f).getType().equals(Material.AIR)) {
+                            if (block.getRelative(f).getType().isAir()) {
                                 // force a block update
                                 block.getRelative(f).setBlockData(TARDISConstants.POWER, true);
                                 lightable.setLit(true);

@@ -231,7 +231,7 @@ public class TARDISAntiBuildListener implements Listener {
             Block b = event.getClickedBlock();
             b.getState().update();
             for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
-                if (b.getRelative(f).getType().equals(Material.AIR)) {
+                if (b.getRelative(f).getType().isAir()) {
                     b.getRelative(f).setBlockData(TARDISConstants.GLASS, true);
                     b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
                     break;

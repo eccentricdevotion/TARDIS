@@ -180,7 +180,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     // always lock / unlock both doors
                                     plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, "DOOR_LOCK", message);
-                                } else if (material.equals(Material.AIR) && rs.getTardis_id() != id) { // knock with hand if it's not their TARDIS
+                                } else if (material.isAir() && rs.getTardis_id() != id) { // knock with hand if it's not their TARDIS
                                     // only outside the TARDIS
                                     if (doortype == 0) {
                                         // only if companion

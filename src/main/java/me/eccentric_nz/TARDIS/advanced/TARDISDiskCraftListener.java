@@ -164,7 +164,7 @@ public class TARDISDiskCraftListener implements Listener {
         boolean check = false;
         int count = 0;
         for (int i = 1; i < 10; i++) {
-            if (inv.getItem(i) != null && !inv.getItem(i).getType().equals(Material.AIR)) {
+            if (inv.getItem(i) != null && !inv.getItem(i).getType().isAir()) {
                 count++;
             }
         }
@@ -179,7 +179,7 @@ public class TARDISDiskCraftListener implements Listener {
         for (ItemStack is : inv.getContents()) {
             if (is != null) {
                 Material m = is.getType();
-                if (!m.equals(Material.MUSIC_DISC_CAT) && !m.equals(Material.MUSIC_DISC_MALL) && !m.equals(Material.AIR)) {
+                if (!m.equals(Material.MUSIC_DISC_CAT) && !m.equals(Material.MUSIC_DISC_MALL) && !m.isAir()) {
                     items.add(is);
                 }
             }

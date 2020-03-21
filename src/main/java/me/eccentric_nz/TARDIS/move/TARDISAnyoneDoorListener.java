@@ -170,7 +170,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     // always lock / unlock both doors
                                     plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, "DOOR_LOCK", message);
-                                } else if (material.equals(Material.AIR)) { // knock with hand
+                                } else if (material.isAir()) { // knock with hand
                                     // only outside the TARDIS
                                     if (doortype == 0) {
                                         // only if companion

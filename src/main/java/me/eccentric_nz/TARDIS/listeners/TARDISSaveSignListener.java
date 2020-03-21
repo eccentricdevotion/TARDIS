@@ -100,7 +100,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         if (slot == 53) {
                             // get item on cursor
                             ItemStack cursor = player.getItemOnCursor();
-                            if (cursor.getType().equals(Material.AIR)) {
+                            if (cursor.getType().isAir()) {
                                 event.setCancelled(true);
                             } else {
                                 ItemMeta cim = cursor.getItemMeta();

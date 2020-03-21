@@ -45,7 +45,7 @@ class TARDISNameKeyCommand {
             key = plugin.getConfig().getString("preferences.key");
         }
         Material m = Material.getMaterial(key);
-        if (m.equals(Material.AIR)) {
+        if (m.isAir()) {
             TARDISMessage.send(player, "KEY_NO_RENAME");
             return true;
         }

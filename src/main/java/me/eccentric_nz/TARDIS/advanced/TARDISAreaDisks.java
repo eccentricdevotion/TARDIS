@@ -183,7 +183,7 @@ class TARDISAreaDisks {
      */
     int getNextEmptySlot(Inventory inv) {
         for (int i = 27; i < 54; i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+            if (inv.getItem(i) == null || inv.getItem(i).getType().isAir()) {
                 return i;
             }
         }

@@ -67,7 +67,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             }
             if (slot < 36) {
                 ItemStack record = player.getItemOnCursor();
-                if (record != null && !record.getType().equals(Material.AIR)) {
+                if (record != null && !record.getType().isAir()) {
                     if (record.getType().equals(Material.MUSIC_DISC_WARD)) {
                         ItemStack disk = view.getItem(slot);
                         if (disk != null && record.isSimilar(disk)) {

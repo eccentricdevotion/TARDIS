@@ -143,11 +143,11 @@ public class TARDISUtils {
     public int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);
-        while (!startBlock.getType().equals(Material.AIR)) {
+        while (!startBlock.getType().isAir()) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
         }
         int air = 0;
-        while (startBlock.getType().equals(Material.AIR) && startBlock.getLocation().getBlockY() > 30) {
+        while (startBlock.getType().isAir() && startBlock.getLocation().getBlockY() > 30) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
             air++;
         }

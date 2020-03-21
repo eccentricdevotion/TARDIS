@@ -244,7 +244,7 @@ public class TARDISInstaPreset {
                 }
                 Material mat = colData[yy].getMaterial();
                 // update door location if invisible
-                if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && mat.equals(Material.AIR)) {
+                if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && mat.isAir()) {
                     String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door);
                     // if tardis is in the air add under door

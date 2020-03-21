@@ -59,7 +59,7 @@ public class TARDISGrowthListener implements Listener {
         for (TARDISSiegeArea area : plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w)) {
             if (area.isInSiegeArea(l) && TARDISConstants.RANDOM.nextInt(100) < chance) {
                 // grow an extra step
-                if (species.equals(Material.AIR)) {
+                if (species.isAir()) {
                     // with cactus and sugar cane the block returned is AIR
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setBlockData(plant.getRelative(BlockFace.DOWN).getType().createBlockData()), 3L);
                 } else {

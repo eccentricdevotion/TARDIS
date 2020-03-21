@@ -65,7 +65,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                     if (state instanceof Door) {
                         Block blockBelow = getBlockBelow(block);
                         if (blockBelow != null) {
-                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                                 event.setCancelled(true);
                             }
                         }

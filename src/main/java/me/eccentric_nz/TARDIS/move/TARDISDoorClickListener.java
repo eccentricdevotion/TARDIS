@@ -521,7 +521,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 TARDISMessage.send(player, "NOT_KEY", key);
                             }
                             // knock with hand
-                            if (material.equals(Material.AIR)) {
+                            if (material.isAir()) {
                                 // only outside the TARDIS
                                 if (doortype == 0) {
                                     // only if companion
