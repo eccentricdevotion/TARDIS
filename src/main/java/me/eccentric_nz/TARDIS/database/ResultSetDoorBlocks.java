@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.database;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import java.sql.Connection;
@@ -75,7 +74,6 @@ public class ResultSetDoorBlocks {
                 while (rs.next()) {
                     // get block
                     String door = rs.getString("door_location");
-                    World cw = TARDISStaticLocationGetters.getWorld(door);
                     if (rs.getInt("door_type") == 0) {
                         outerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
                         outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
