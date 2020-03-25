@@ -513,6 +513,7 @@ HANDLES_SAVED: "Program disk saved, give it a name with /tardis handle_disk [nam
 HANDLES_SELECT: "You need to select a program first!"
 HANDLES_SERVER_TIME: "The real time on the server is: %s"
 HANDLES_TIME: "The Minecraft time is: %s ticks (%s) or %s"
+HANDLES_VORTEX: "You can't land now as we're not drifting in the time vortex!"
 HAVE_TARDIS: "You already have a TARDIS, but we couldn't find it! Try calling it to you."
 HELMIC_ABORT: "Regulating aborted. Who knows where you'll land!"
 HELP_NOT_VALID: "That is not a valid help topic!"

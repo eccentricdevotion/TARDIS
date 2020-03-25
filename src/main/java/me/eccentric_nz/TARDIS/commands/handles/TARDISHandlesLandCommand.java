@@ -67,6 +67,10 @@ class TARDISHandlesLandCommand {
                 TARDISMessage.handlesSend(player, "HANDBRAKE_ON_ERR");
                 return true;
             }
+            if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                TARDISMessage.handlesSend(player, "HANDLES_VORTEX");
+                return true;
+            }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
             // so generate a random overworld location
             HashMap<String, Object> wherecl = new HashMap<>();
