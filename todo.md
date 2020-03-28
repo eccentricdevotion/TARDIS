@@ -1,12 +1,17 @@
-#TODO
+---
+layout: default
+title: To-Do
+---
 
-##Current bugfix version `3.6.1`
+# TODO
+
+## Current bugfix version `3.6.1`
 1. Fix bugs!
    * Relocate player to safe location when upgrading to / from coral console
    * Add missing room perms to plugin.yml
    * Add missing LAZARUS enum to ROOM
 
-##Next minor version `3.7`  
+## Next minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Add [API Events](http://wiki.bukkit.org/Event_API_Reference#Creating_Custom_Events) that other plugins can listen for
@@ -30,12 +35,12 @@
 6. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 7. TARDISSonicBlaster addon?
 
-##Future version `4+`
+## Future version `4+`
 * SpongeAPI
 * Forge mod for custom items and blocks (to tie in with Sponge version)
 * Slimmer TARDIS option?
 
-##Resource Pack / TARDISWeepingAngels
+## Resource Pack / TARDISWeepingAngels
 1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
 2. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
@@ -48,16 +53,16 @@
    * Slimes -> Adipose
  3. Sycorax
  4. Scarecrows
- 
-##TIPS visulisation tool
+
+## TIPS visulisation tool
 * Use WorldGuard region data
 
-##Waiting on Bukkit / SpigotAPI
-0. IDs/data are soon to be history... so convert all ID/data use to block states 
+## Waiting on Bukkit / SpigotAPI
+0. IDs/data are soon to be history... so convert all ID/data use to block states
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :(
 
-##Minecraft API if ever available
+## Minecraft API if ever available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. Custom TARDIS items and crafting recipes for the same.

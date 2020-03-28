@@ -1,0 +1,28 @@
+---
+layout: default
+title: List of default interiors
+---
+
+# List of default TARDIS interiors
+
+- ARS
+- BIGGER
+- BUDGET
+- CORAL
+- CUSTOM
+- DELUXE
+- ELEVENTH
+- ENDER
+- MASTER
+- PLANK
+- PYRAMID
+- REDSTONE
+- STEAMPUNK
+- TOM
+- TWELFTH
+- WAR
+- LEGACY\_BIGGER
+- LEGACY\_BUDGET
+- LEGACY\_DELUXE
+- LEGACY\_ELEVENTH
+- LEGACY\_REDSTONE
