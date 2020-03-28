@@ -711,6 +711,7 @@ RECIPE_BLASTER: "The TARDIS Sonic Blaster plugin is not installed on this server
 RECIPE_VIEW: "You can view the following recipes:"
 RECIPE_VORTEX: "The TARDIS Vortex Manipulator plugin is not installed on this server!"
 RELATIVE_NOT_FOUND: "Could not get relative location! Check all arguments start with '~'."
+RELOAD_BAD_FILE: "The '%s' config file does not exist!"
 RELOAD_FAIL: "There was a problem reloading the TARDIS %s config!"
 RELOAD_NOT_THESE: "You cannot reload the %s config!"
 RELOAD_SUCCESS: "%s config reloaded."

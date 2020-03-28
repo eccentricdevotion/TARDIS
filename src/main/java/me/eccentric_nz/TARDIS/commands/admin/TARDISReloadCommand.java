@@ -84,7 +84,10 @@ class TARDISReloadCommand {
                     return true;
             }
             TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
-        } catch (IllegalArgumentException | InvalidConfigurationException | IOException e) {
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+            return true;
+        } catch (InvalidConfigurationException | IOException e) {
             TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
             return true;
         }
