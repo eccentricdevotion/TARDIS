@@ -17,9 +17,14 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONFIG;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author eccentric_nz
@@ -39,6 +44,50 @@ class TARDISReloadCommand {
         tc.doWorlds();
         plugin.saveConfig();
         TARDISMessage.send(sender, "RELOADED");
+        return true;
+    }
+
+    boolean reloadOtherConfig(CommandSender sender, String[] args) {
+        try {
+            CONFIG config = CONFIG.valueOf(args[1].toLowerCase());
+            File file = new File(plugin.getDataFolder(), config.toString() + ".yml");
+            switch (config) {
+                case achievements:
+                    plugin.getAchievementConfig().load(file);
+                    break;
+                case artron:
+                    plugin.getArtronConfig().load(file);
+                    break;
+                case blocks:
+                    plugin.getBlocksConfig().load(file);
+                    break;
+                case chameleon_guis:
+                    plugin.getChameleonGuis().load(file);
+                    break;
+                case condensables:
+                    plugin.getCondensablesConfig().load(file);
+                    break;
+                case handles:
+                    plugin.getHandlesConfig().load(file);
+                    break;
+                case kits:
+                    plugin.getKitsConfig().load(file);
+                    break;
+                case rooms:
+                    plugin.getRoomsConfig().load(file);
+                    break;
+                case signs:
+                    plugin.getSigns().load(file);
+                    break;
+                default:
+                    TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
+                    return true;
+            }
+            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+        } catch (IllegalArgumentException | InvalidConfigurationException | IOException e) {
+            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+            return true;
+        }
         return true;
     }
 }

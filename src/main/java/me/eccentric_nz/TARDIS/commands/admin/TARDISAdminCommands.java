@@ -272,6 +272,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
+                if (first.equals("reload")) {
+                    return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);
+                }
                 if (first.equals("arch")) {
                     if (args.length > 2) {
                         return new TARDISArchCommand(plugin).force(sender, args);

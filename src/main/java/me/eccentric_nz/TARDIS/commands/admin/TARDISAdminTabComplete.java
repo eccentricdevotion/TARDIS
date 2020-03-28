@@ -55,6 +55,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms");
+    private final ImmutableList<String> FILE_SUBS = ImmutableList.of("achievements", "artron", "blocks", "chameleon_guis", "condensables", "handles", "kits", "rooms", "signs", "tag");
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> SEED_SUBS;
@@ -116,6 +117,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             }
             if (sub.equals("region_flag")) {
                 return partial(lastArg, REGION_SUBS);
+            }
+            if (sub.equals("reload")) {
+                return partial(lastArg, FILE_SUBS);
             }
             if (sub.equals("vortex_fall")) {
                 return partial(lastArg, VORTEX_SUBS);
