@@ -30,7 +30,7 @@ This list is in alphabetical order.
 - [Igloo](#igloo)
 - [Kitchen](#kitchen)
 - [Library](#library)
-- [Llama Stall](#llama-stall) [No Image Yet]
+- [Llama Stall](#llama-stall)
 - [Mob Farm](#mob-farm)
 - [Mycelium](#mushroom)
 - [Passage](#passage)
@@ -124,6 +124,10 @@ This list is in alphabetical order.
 #### Library
 
 ![Library](images/rooms/library.jpg)
+
+#### Llama Stall
+
+![Library](images/rooms/stall.jpg)
 
 #### Mob Farm
 
