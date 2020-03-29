@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -42,7 +43,8 @@ class TARDISRoomDirection {
     public void getDirection() {
         for (COMPASS c : COMPASS.values()) {
             BlockFace tmp = BlockFace.valueOf(c.toString());
-            if (b.getRelative(tmp).getType().equals(Material.STONE_PRESSURE_PLATE)) {
+            Material plate = b.getRelative(tmp).getType();
+            if (Tag.WOODEN_PRESSURE_PLATES.isTagged(plate) || plate.equals(Material.STONE_PRESSURE_PLATE)) {
                 face = tmp;
                 found = true;
                 compass = c;
