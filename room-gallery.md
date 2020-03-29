@@ -127,7 +127,7 @@ This list is in alphabetical order.
 
 #### Llama Stall
 
-![Library](images/rooms/stall.jpg)
+![Llama Stall](images/rooms/stall.jpg)
 
 #### Mob Farm
 
