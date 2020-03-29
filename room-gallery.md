@@ -7,6 +7,44 @@ title: Room gallery
 
 # Room gallery
 
+## Table of Contents
+
+This list is in alphabetical order.
+
+- [4th Doctor's Secondary Console](#secondary-console-baker)
+- [Anti-gravity Well](#anti-gravity-well)
+- [Apiary](#apiary)
+- [Aquarium](#aquarium)
+- [Arboretum](#arboretum)
+- [Bamboo](#bamboo)
+- [Bedroom](#bedroom)
+- [Bird Cage](#bird-cage)
+- [Chemistry Lab](#chemistry-lab)
+- [Empty](#empty)
+- [Exterior Renderer](#exterior-rendering-room-before-render)
+- [Eye of Harmony](#eye-of-harmony)
+- [Genetic Manipulator](#genetic-manipulator)
+- [Gravity Well](#gravity-well)
+- [Greenhouse](#greenhouse)
+- [Horse Stable](#horse-stable)
+- [Igloo](#igloo)
+- [Kitchen](#kitchen)
+- [Library](#library)
+- [Llama Stall](#llama-stall) [No Image Yet]
+- [Mob Farm](#mob-farm)
+- [Mycelium](#mushroom)
+- [Passage](#passage)
+- [Pool](#pool)
+- [Rabbit Hutch](#rabbit-hutch)
+- [Rail Transfer System](#rail-transport-room)
+- [Shell](#shell)
+- [Smelter](#smelter)
+- [Storage Vault](#vault)
+- [Trenzalore](#trenzalore)
+- [Village](#village)
+- [Wood Secondary Console](#secondary-console-wood)
+- [Workshop](#workshop)
+
 #### Aquarium
 
 ![Aquarium](images/rooms/aquarium.jpg)
@@ -15,9 +53,25 @@ title: Room gallery
 
 ![Arboretum](images/rooms/arboretum.jpg)
 
+#### Apiary
+
+![Apiary](images/rooms/apiary.png)
+
+#### Bamboo
+
+![Bamboo](images/rooms/bamboo.png)
+
 #### Bedroom
 
 ![Bedroom](images/rooms/bedroom.jpg)
+
+#### Bird Cage
+
+![Bird Cage](images/rooms/bird-cage.png)
+
+#### Chemistry Lab
+
+![Chemistry Lab](images/rooms/chemistry-lab.png)
 
 #### Empty
 
@@ -71,6 +125,10 @@ title: Room gallery
 
 ![Library](images/rooms/library.jpg)
 
+#### Mob Farm
+
+![Mob Farm](images/rooms/mob-farm.png)
+
 #### Mushroom
 
 ![Shroom Room](images/rooms/mushroom.jpg)
@@ -102,6 +160,10 @@ title: Room gallery
 #### Shell
 
 ![Shell](images/rooms/shell.jpg)
+
+#### Smelter
+
+![Smelter](images/rooms/smelter.png)
 
 #### Trenzalore
 
@@ -144,4 +206,3 @@ Deprecated in TARDIS version 2.6-beta-1
 ![Passage (long)](images/rooms/old/long.jpg)
 
 [Back](javascript:history.back();)
-
