@@ -52,7 +52,7 @@ public enum TARDISARS implements ARS {
     SHELL("DEAD_BRAIN_CORAL_BLOCK", "Shell", 1),
     SMELTER("CHEST", "Smelter", 1),
     STABLE("HAY_BLOCK", "Horse Stable", 1),
-    STALL("NETHER_WART_BLOCK", "Llama Stall", 1),
+    STALL("BROWN_GLAZED_TERRACOTTA", "Llama Stall", 1),
     TRENZALORE("BRICKS", "Trenzalore", 1),
     VAULT("DISPENSER", "Storage Vault", 1),
     VILLAGE("OAK_LOG", "Village", 1),

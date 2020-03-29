@@ -64,7 +64,6 @@ public class TARDISARSInventory {
         black.setItemMeta(wool);
         for (int j = 0; j < 37; j += 9) {
             for (int k = 0; k < 5; k++) {
-
                 int slot = 4 + j + k;
                 is[slot] = black;
             }
