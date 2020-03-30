@@ -6,9 +6,13 @@
     <header>
         <h1>{{ site.title }}</h1>
         <p>{{ site.description }}</p>
-        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <p><a href="https://github.com/eccentricdevotion/TARDIS/issues">Leave Bug Reports or Suggestions on GitHub</a></p>
+        <p><a href="https://discord.gg/sfuPVHh">Join our Community Discord server!</a></p>
         <ul>
-            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+          {% if page.title contains "Home Page" %}
+          {% else %}
+            <li><a href="/TARDIS/">Back <strong>Home</strong></a></li>
+          {% endif %}
             <li><a href="site-map.html"><strong>Index</strong> File</a></li>
         </ul>
     </header>
