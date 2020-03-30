@@ -1,11 +1,11 @@
 ---
 layout: default
-title: TARDIS
+title: Home Page
 ---
 
 # TARDIS
 
-TARDIS is a CraftBukkit plugin that allows you to create a TARDIS that lets you time travel (teleport) to random locations. It adds a Whovian twist to the typical /sethome and /home commands.
+TARDIS is a Spigot / Paper plugin that allows you to create a TARDIS that lets you time travel (teleport) to random locations. It adds a Whovian twist to the typical /sethome and /home commands.
 
 **As a player, you can:**
 
@@ -24,5 +24,6 @@ TARDIS is a CraftBukkit plugin that allows you to create a TARDIS that lets you 
 
 [Check out some **FAQs**](faqs.html)
 
-![TARDIS](images/docs/artronrecharging.jpg)
+[Join our Community-Led Discord Server!](https://discord.gg/sfuPVHh)
 
+![TARDIS](images/docs/artronrecharging.jpg)
