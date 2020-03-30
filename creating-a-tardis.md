@@ -24,10 +24,10 @@ The crafting grid above shows how to craft the default ‘budget’ TARDIS with 
 - **IRON block** = TARDIS type, can be any of the current TARDIS ‘type’ blocks e.g. IRON, GOLD, DIAMOND, EMERALD etc ([see list below](#types))
 - **LAPIS block** = required block
 - **REDSTONE TORCH** = required block
-- **BLUE WOOL** = Police Box wall block, can be any block with an id from the `chameleon_blocks` configuration section in _[blocks.yml](https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/resources/blocks.yml#L25)_ — **Leave empty for TARDIS v3.7 and above**
-- **REDSTONE LAMP** = Police Box lamp, can be any block with a material from the `lamp_blocks` configuration section in _[blocks.yml](https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/resources/blocks.yml#L81)_ — **Leave empty for TARDIS v3.7 and above**
-- **LIGHT GREY WOOL** = TARDIS interior floor block, can be any valid [TARDIS wall block](https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/java/me/eccentric_nz/TARDIS/rooms/TARDISWalls.java)
-- **ORANGE WOOL** = TARDIS interior wall block, can be any valid [TARDIS wall block](https://github.com/eccentricdevotion/TARDIS/blob/v3.0/src/main/java/me/eccentric_nz/TARDIS/rooms/TARDISWalls.java)
+- **BLUE WOOL** = Police Box wall block, can be any block from the `chameleon_blocks` configuration section in _[blocks.yml](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L129-L307)_ — **Leave empty for TARDIS v3.7 and above**
+- **REDSTONE LAMP** = Police Box lamp, can be any block from the `lamp_blocks` configuration section in _[blocks.yml](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L308-L314)_ — **Leave empty for TARDIS v3.7 and above**
+- **LIGHT GREY WOOL** = TARDIS interior floor block, can be any valid [TARDIS wall block](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L4-L127)
+- **ORANGE WOOL** = TARDIS interior wall block, can be any valid [TARDIS wall block](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L4-L127)
 
 Once the required and chosen blocks are placed in the crafting grid, a TARDIS seed block is automatically generated.
 
@@ -50,7 +50,8 @@ Seed blocks can be placed, broken and dropped and still remain as a valid seed b
 - NETHER WART BLOCK - “coral” TARDIS interior
 - PURPUR BLOCK - “ender” TARDIS interior
 - OBSIDIAN BLOCK - “custom” (server created) TARDIS interior
-- [view a gallery of interiors](interiors.html)
+
+[View a gallery of interiors](interiors.html)
 
 ## Growing the TARDIS from the seed
 
@@ -108,4 +109,3 @@ See the picture below for how it should look.
 &nbsp;
 
 **Next:** [Artron Energy](artron-energy.html)
-
