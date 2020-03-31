@@ -37,6 +37,10 @@ class TARDISRepairCommand {
     }
 
     boolean setFreeCount(CommandSender sender, String[] args) {
+        if (args.length < 3) {
+            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            return true;
+        }
         // Look up this player's UUID
         OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
         if (op == null) {
