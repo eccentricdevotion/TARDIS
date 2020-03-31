@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     break;
                 case "artron_percent":
-                    rsl = new ResultSetArtronLevel(plugin, player.getUniqueId().toString());
+                    rsl = new ResultSetArtronLevel(plugin, uuid);
                     if (rsl.resultset()) {
                         result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
                     }
@@ -80,7 +81,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     where.put("uuid", uuid);
                     rst = new ResultSetTardis(plugin, where, "", false, 2);
                     if (rst.resultSet()) {
-                        result = rst.getTardis().getSchematic().toString();
+                        result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
                     }
                     break;
                 case "preset":
