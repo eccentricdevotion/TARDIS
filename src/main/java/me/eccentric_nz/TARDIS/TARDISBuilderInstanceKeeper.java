@@ -36,7 +36,7 @@ public class TARDISBuilderInstanceKeeper {
     private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private HashMap<Material, String> seeds;
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
-    private static final List<String> IGNORE_BLOCKS = Arrays.asList("AIR", "BEDROCK", "CAKE", "COMMAND", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
+    private static final List<String> IGNORE_BLOCKS = Arrays.asList("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
     private static final List<Material> PRECIOUS = new ArrayList<>();
 
     static {
