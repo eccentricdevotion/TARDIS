@@ -261,6 +261,9 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                         break;
                                     case thevoid:
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id")) + end;
+                                        sb.append(str);
+                                        break;
                                     case vortex:
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getInt("task")) + end;
                                         sb.append(str);
