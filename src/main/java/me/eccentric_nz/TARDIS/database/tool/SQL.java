@@ -83,7 +83,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sback (back_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (back_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sbindk (bind_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', `type` int(1) DEFAULT '0', location varchar(512) DEFAULT '', name varchar(32) DEFAULT '', PRIMARY KEY (bind_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sbind (bind_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', `type` int(1) DEFAULT '0', location varchar(512) DEFAULT '', name varchar(32) DEFAULT '', PRIMARY KEY (bind_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sblocks (b_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', `data` text, police_box int(1) DEFAULT '0', PRIMARY KEY (b_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -131,7 +131,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sreminders (reminder_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', reminder text NULL, time int(11) DEFAULT '0', PRIMARY KEY (reminder_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sroom_progress (progress_id int(11) NOT NULL, direction varchar(5) DEFAULT '', room varchar(32) DEFAULT '', location varchar(512) DEFAULT '', tardis_id int(11) DEFAULT '0', progress_row int(3) DEFAULT '0', progress_column int(3) DEFAULT '0', progress_level int(3) DEFAULT '0', middle_type varchar(64) DEFAULT '', floor_type varchar(64) DEFAULT '', post_blocks text NULL, PRIMARY KEY (progress_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci",
+            "CREATE TABLE IF NOT EXISTS %sroom_progress (progress_id int(11) NOT NULL, direction varchar(5) DEFAULT '', room varchar(32) DEFAULT '', location varchar(512) DEFAULT '', tardis_id int(11) DEFAULT '0', progress_row int(3) DEFAULT '0', progress_column int(3) DEFAULT '0', progress_level int(3) DEFAULT '0', middle_type varchar(64) DEFAULT '', floor_type varchar(64) DEFAULT '', post_blocks text NULL, PRIMARY KEY (progress_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %ssiege (siege_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', PRIMARY KEY (siege_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -261,7 +261,7 @@ public class SQL {
 
             "(%s, %s, '%s', '%s', %s)",
 
-            "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s'. %s)",
+            "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s)",
 
             "(%s, %s, '%s', %s, %s)",
 
