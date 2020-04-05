@@ -21,6 +21,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import com.griefcraft.lwc.LWC;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -114,6 +115,10 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (plugin.getPM().isPluginEnabled("Towny")) {
                             allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
+                        }
+                        // LWCX
+                        if (plugin.getPM().isPluginEnabled("LWC") && !LWC.getInstance().getProtectionCache().getProtection(block).isOwner(player)) {
+                            allow = false;
                         }
                         if (allow) {
                             Inventory inventory = ((InventoryHolder) block.getState()).getInventory();

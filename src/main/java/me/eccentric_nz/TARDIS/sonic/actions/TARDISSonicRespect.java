@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import com.griefcraft.lwc.LWC;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
@@ -50,6 +51,10 @@ public class TARDISSonicRespect {
         }
         // LockettePro
         if (plugin.getPM().isPluginEnabled("LockettePro") && LocketteProAPI.isProtected(block)) {
+            return false;
+        }
+        // LWCX
+        if (plugin.getPM().isPluginEnabled("LWC") && !LWC.getInstance().getProtectionCache().getProtection(block).isOwner(player)) {
             return false;
         }
         // BlockLocker

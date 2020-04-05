@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import com.griefcraft.lwc.LWC;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -161,6 +162,11 @@ class TARDISComehereCommand {
                 }
                 if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                     if (BlockLockerAPIv2.isProtected(eyeLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
+                        count = 1;
+                    }
+                }
+                if (plugin.getPM().isPluginEnabled("LWC")) {
+                    if (!LWC.getInstance().getProtectionCache().getProtection(eyeLocation.getBlock()).isOwner(player) || !LWC.getInstance().getProtectionCache().getProtection(under).isOwner(player)) {
                         count = 1;
                     }
                 }

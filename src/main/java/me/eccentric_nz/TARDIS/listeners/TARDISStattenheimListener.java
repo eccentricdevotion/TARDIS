@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import com.griefcraft.lwc.LWC;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -214,6 +215,11 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                             if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
+                                count = 1;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("LWC")) {
+                            if (!LWC.getInstance().getProtectionCache().getProtection(remoteLocation.getBlock()).isOwner(player) || !LWC.getInstance().getProtectionCache().getProtection(under).isOwner(player)) {
                                 count = 1;
                             }
                         }
