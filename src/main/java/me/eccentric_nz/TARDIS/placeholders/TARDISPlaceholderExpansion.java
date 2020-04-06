@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.placeholders;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -89,6 +90,97 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     rst = new ResultSetTardis(plugin, where, "", false, 2);
                     if (rst.resultSet()) {
                         result = rst.getTardis().getPreset().toString();
+                    }
+                    break;
+                case "current_location":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
+                        }
+                    }
+                    break;
+                case "current_location_x":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = rscl.getX() + "";
+                        }
+                    }
+                    break;
+                case "current_location_y":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = rscl.getY() + "";
+                        }
+                    }
+                    break;
+                case "current_location_z":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = rscl.getZ() + "";
+                        }
+                    }
+                    break;
+                case "current_location_world":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = rscl.getWorld().getName() + "";
+                        }
+                    }
+                    break;
+                case "current_location_direction":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = rscl.getDirection() + "";
+                        }
+                    }
+                    break;
+                case "current_location_biome":
+                    where.put("uuid", uuid);
+                    rst = new ResultSetTardis(plugin, where, "", false, 2);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis().getTardis_id();
+                        where.remove("uuid");
+                        where.put("tardis_id", id);
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        if (rscl.resultSet()) {
+                            result = rscl.getBiome() + "";
+                        }
                     }
                     break;
                 case "timelord_artron_amount":
