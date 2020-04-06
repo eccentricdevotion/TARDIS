@@ -52,7 +52,7 @@ public class TARDISItemFrameListener implements Listener {
             // did they run the `/tardis update direction` command?
             if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
                 String control = plugin.getTrackerKeeper().getPlayers().get(uuid);
-                if (control.equals("direction") || control.equals("frame")) {
+                if (control.equalsIgnoreCase("DIRECTION") || control.equalsIgnoreCase("FRAME")) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
@@ -64,7 +64,7 @@ public class TARDISItemFrameListener implements Listener {
                     // check whether they have a direction item frame already
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("location", l);
-                    where.put("type", control.equals("direction") ? 18 : 27);
+                    where.put("type", control.equalsIgnoreCase("DIRECTION") ? 18 : 27);
                     ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                     HashMap<String, Object> set = new HashMap<>();
                     if (rsc.resultSet()) {
@@ -72,14 +72,14 @@ public class TARDISItemFrameListener implements Listener {
                         set.put("location", l);
                         HashMap<String, Object> whereu = new HashMap<>();
                         whereu.put("tardis_id", id);
-                        whereu.put("type", control.equals("direction") ? 18 : 27);
+                        whereu.put("type", control.equalsIgnoreCase("DIRECTION") ? 18 : 27);
                         plugin.getQueryFactory().doUpdate("controls", set, whereu);
                     } else {
                         // add control
-                        plugin.getQueryFactory().insertControl(id, control.equals("direction") ? 18 : 27, l, 0);
+                        plugin.getQueryFactory().insertControl(id, control.equalsIgnoreCase("DIRECTION") ? 18 : 27, l, 0);
                     }
                     plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                    TARDISMessage.send(player, control.equals("direction") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");
+                    TARDISMessage.send(player, control.equalsIgnoreCase("DIRECTION") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");
                     return;
                 }
             }

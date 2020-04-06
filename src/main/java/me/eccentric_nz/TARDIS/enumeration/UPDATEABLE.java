@@ -31,7 +31,7 @@ public enum UPDATEABLE {
     HANDBRAKE(true, true, new RecipeChoice.MaterialChoice(Material.LEVER)),
     HINGE(false, false),
     INFO(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
-    KEYBOARD(false, false, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    KEYBOARD(true, false, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     LIGHT(true, true),
     RAIL(false, false, new RecipeChoice.MaterialChoice(Tag.FENCES)),
     SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
