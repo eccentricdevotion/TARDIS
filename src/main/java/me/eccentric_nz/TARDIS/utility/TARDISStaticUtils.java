@@ -280,7 +280,13 @@ public class TARDISStaticUtils {
             String prefix = essentials.getSettings().getNicknamePrefix();
             return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
         }
-        return Bukkit.getPlayer(uuid).getName();
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) {
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+            return (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
+        } else {
+            return player.getName();
+        }
     }
 
     public static String getNick(Player player) {
