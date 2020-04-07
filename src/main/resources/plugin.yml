@@ -1178,6 +1178,7 @@ commands:
     gui:
       description: Show a chemistry GUI.
       usage: /<command> gui [creative|construct|compound|reduce|product|lab]
+      permission: tardis.chemistry.command
       creative:
         description: Open the 'Chemistry creative' GUI.
         usage: /<command> gui creative [elements|compounds|products|lab]
