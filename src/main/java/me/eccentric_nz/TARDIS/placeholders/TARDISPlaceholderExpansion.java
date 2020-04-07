@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Player;
 
@@ -65,6 +66,9 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
             ResultSetArtronLevel rsl;
             ResultSetTardis rst;
             HashMap<String, Object> where = new HashMap<>();
+            boolean exist;
+            ResultSetTardisID rsti;
+            ResultSetCurrentLocation rscl;
             switch (identifier) {
                 case "artron_amount":
                     rsl = new ResultSetArtronLevel(plugin, uuid);
@@ -93,91 +97,84 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     break;
                 case "current_location":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
                         }
                     }
                     break;
                 case "current_location_x":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = rscl.getX() + "";
                         }
                     }
                     break;
                 case "current_location_y":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = rscl.getY() + "";
                         }
                     }
                     break;
                 case "current_location_z":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = rscl.getZ() + "";
                         }
                     }
                     break;
                 case "current_location_world":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = rscl.getWorld().getName() + "";
                         }
                     }
                     break;
                 case "current_location_direction":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = rscl.getDirection() + "";
                         }
                     }
                     break;
                 case "current_location_biome":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis().getTardis_id();
-                        where.remove("uuid");
+                    rsti = new ResultSetTardisID(plugin);
+                    exist = rsti.fromUUID(uuid);
+                    if (exist) {
+                        int id = rsti.getTardis_id();
                         where.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                        rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
                             result = rscl.getBiome() + "";
                         }
