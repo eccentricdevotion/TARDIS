@@ -125,11 +125,7 @@ public class TARDISSonicSorterListener implements Listener {
                                 Protection protection = protectionCache.getProtection(block);
                                 if (protection != null && !protection.isOwner(player)) {
                                     allow = false;
-                                } else {
-                                    plugin.debug("protection was " + protection + " or not protected");
                                 }
-                            } else {
-                                plugin.debug("ProtectionCache is null");
                             }
                         }
                         if (allow) {
