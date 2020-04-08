@@ -37,21 +37,21 @@ public class FormulaCommand {
         }
         // do stuff
         try {
-            Compound compound = Compound.valueOf(args[0]);
+            Compound compound = Compound.valueOf(args[1]);
             new FormulaViewer(plugin, player).getCompoundFormula(compound);
             return true;
         } catch (IllegalArgumentException ce) {
             try {
-                Product product = Product.valueOf(args[0]);
+                Product product = Product.valueOf(args[1]);
                 new FormulaViewer(plugin, player).getProductFormula(product);
                 return true;
             } catch (IllegalArgumentException pe) {
                 try {
-                    Lab lab = Lab.valueOf(args[0]);
+                    Lab lab = Lab.valueOf(args[1]);
                     new FormulaViewer(plugin, player).getLabFormula(lab);
                     return true;
                 } catch (IllegalArgumentException le) {
-                    player.sendMessage(plugin.getPluginName() + "Could not find a formula for '" + args[0] + "' make sure you typed it correctly.");
+                    player.sendMessage(plugin.getPluginName() + "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
                     return true;
                 }
             }
