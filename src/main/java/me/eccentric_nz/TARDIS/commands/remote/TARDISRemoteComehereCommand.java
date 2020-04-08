@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
+import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
+import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -144,8 +146,13 @@ class TARDISRemoteComehereCommand {
             }
         }
         if (plugin.getPM().isPluginEnabled("LWC")) {
-            if (!LWC.getInstance().getProtectionCache().getProtection(eyeLocation.getBlock()).isOwner(player) || !LWC.getInstance().getProtectionCache().getProtection(under).isOwner(player)) {
-                count = 1;
+            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
+            if (protectionCache != null) {
+                Protection protection = protectionCache.getProtection(eyeLocation.getBlock());
+                Protection underProtection = protectionCache.getProtection(under);
+                if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
+                    count = 1;
+                }
             }
         }
         if (count > 0) {
