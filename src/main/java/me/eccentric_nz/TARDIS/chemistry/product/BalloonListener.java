@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -35,6 +37,34 @@ public class BalloonListener implements Listener {
                 player.addPotionEffect(potionEffect, true);
             }
         }, 1L);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerDropBalloon(PlayerDropItemEvent event) {
+        if (isBalloon(event.getItemDrop().getItemStack())) {
+            removeJumpBoost(event.getPlayer());
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerDropBalloon(EntityPickupItemEvent event) {
+        if (event.getEntity() instanceof Player) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Player player = (Player) event.getEntity();
+                int factor = -1;
+                if (isBalloon(event.getItem().getItemStack())) {
+                    factor += 1;
+                    if (isBalloon(player.getInventory().getItemInOffHand())) {
+                        factor += 1;
+                    }
+                    removeJumpBoost(player);
+                    if (factor > -1) {
+                        PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
+                        player.addPotionEffect(potionEffect, true);
+                    }
+                }
+            }, 1L);
+        }
     }
 
     private boolean isBalloon(ItemStack is) {
