@@ -9,6 +9,15 @@ The TARDIS comes with a Chemistry lab room!
 
 *This page shows how to use the chemistry lab equipment, to see a list of items you can craft with the equipment, check out [Items craftable with Chemistry Lab](chemistry-lab-craftables).*
 
+## Table of Contents
+* [Resource Pack](#resource-pack)
+* [Permissions](#permissions)
+* [Element Constructor](#element-constructor)
+* [Chemical Compounding](#chemical-compounding)
+* [Material Reducer](#material-reducer)
+* [The Lab Table & Product Crafting](#the-lab-table--product-crafter)
+* [Atomic Elements Block](#atomic-elements-block-creativecheats)
+
 ## Resource Pack
 
 ***The room is best viewed with the [resource pack](https://github.com/eccentricdevotion/TARDIS-Resource-Pack).***
@@ -95,7 +104,37 @@ Clicking reduce gets us our Hydrogen and Oxygen back!
 
 ![material reduced water](images/chemistry/material-reduced-water.png)
 
-## The Lab Table
+## The Lab Table & Product Crafter
+
+These blocks do the same thing, however they craft different items with elements and compounds and the process to craft them differs slightly.
+
+![lab table and product crafter](images/chemistry/lab-table-product-crafter-blocks.png)
+
+Lab Table (left) and Product Crafter (right).
+
+### Lab Table
+
+In-game description: Combine elements and compounds to create bleach, ice bombs, heat blocks, and fertiliser.
+
+As the description implies, you can craft those 4 items, just like you would with the [chemical compounder](#chemical-compounding). Place items in the bottom row from left to right, then click Check product.
+
+![example heat block](images/chemistry/lab-table-gui-heat-block.png)
+
+Clicking check product gets our product!
+
+![output lab table](images/chemistry/lab-table-output-heat-block.png)
+
+### Product Crafter
+
+In-game description: Combine elements and compounds to create sparklers, balloons, lamps, and glow sticks.
+
+Much like the Lab table, you can craft the above 4 items. However, instead these items must be arranged like a 3x3 crafting grid, instead of putting them in the bottom row.
+
+![example balloon recipe](images/chemistry/product-crafting-balloon-example.png)
+
+Then, click "Craft" to complete the process.
+
+![crafted balloon](images/chemistry/product-crafting-balloon-crafted.png)
 
 ## Atomic Elements Block (Creative/Cheats)
 
