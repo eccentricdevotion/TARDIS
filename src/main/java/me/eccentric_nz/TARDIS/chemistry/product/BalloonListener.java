@@ -99,7 +99,7 @@ public class BalloonListener implements Listener {
     }
 
     private boolean isBalloon(ItemStack is) {
-        return is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
+        return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
     }
 
     private boolean isInDataRange(int custom) {
