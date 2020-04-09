@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
@@ -42,18 +43,25 @@ public class BalloonListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropBalloon(PlayerDropItemEvent event) {
         if (isBalloon(event.getItemDrop().getItemStack())) {
-            removeJumpBoost(event.getPlayer());
+            Player player = event.getPlayer();
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                if (!isBalloon(player.getInventory().getItemInMainHand())) {
+                    removeJumpBoost(player);
+                }
+            }, 1L);
         }
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerDropBalloon(EntityPickupItemEvent event) {
+    public void onPlayerPickupBalloon(EntityPickupItemEvent event) {
         if (event.getEntity() instanceof Player) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 Player player = (Player) event.getEntity();
                 int factor = -1;
                 if (isBalloon(event.getItem().getItemStack())) {
-                    factor += 1;
+                    if (isBalloon(player.getInventory().getItemInMainHand())) {
+                        factor += 1;
+                    }
                     if (isBalloon(player.getInventory().getItemInOffHand())) {
                         factor += 1;
                     }
@@ -62,6 +70,29 @@ public class BalloonListener implements Listener {
                         PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
                         player.addPotionEffect(potionEffect, true);
                     }
+                }
+            }, 1L);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerMoveBalloon(InventoryClickEvent event) {
+        if (isBalloon(event.getCursor()) || isBalloon(event.getCurrentItem())) {
+            plugin.debug("moved balloon in inventory");
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Player player = (Player) event.getWhoClicked();
+                int factor = 1;
+                if (!isBalloon(player.getInventory().getItemInMainHand())) {
+                    factor -= 1;
+                }
+                if (!isBalloon(player.getInventory().getItemInOffHand())) {
+                    factor -= 1;
+                }
+                if (factor > -1) {
+                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
+                    player.addPotionEffect(potionEffect, true);
+                } else {
+                    removeJumpBoost(player);
                 }
             }, 1L);
         }
