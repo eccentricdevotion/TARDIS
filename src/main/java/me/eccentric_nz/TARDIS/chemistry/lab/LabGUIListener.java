@@ -109,11 +109,8 @@ public class LabGUIListener implements Listener {
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f);
     }
 
-    private void craft(Lab product, Inventory inventory, Player player) {
-        ItemStack crafted = new ItemStack(product.getItemMaterial(), 1);
-        ItemMeta cm = crafted.getItemMeta();
-        cm.setDisplayName(product.toString().replace("_", " "));
-        crafted.setItemMeta(cm);
+    private void craft(Lab lab, Inventory inventory, Player player) {
+        ItemStack crafted = LabBuilder.getLabProduct(lab);
         // set slot 14 to the crafted product
         inventory.setItem(0, crafted);
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
