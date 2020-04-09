@@ -78,7 +78,6 @@ public class BalloonListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerMoveBalloon(InventoryClickEvent event) {
         if (isBalloon(event.getCursor()) || isBalloon(event.getCurrentItem())) {
-            plugin.debug("moved balloon in inventory");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 Player player = (Player) event.getWhoClicked();
                 int factor = 1;
