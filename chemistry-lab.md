@@ -7,9 +7,13 @@ title: Chemistry Lab
 
 The TARDIS comes with a Chemistry lab room!
 
-_The room is best viewed with the [resource pack](https://github.com/eccentricdevotion/TARDIS-Resource-Pack)._
-
 *This page shows how to use the chemistry lab equipment, to see a list of items you can craft with the equipment, check out [Items craftable with Chemistry Lab](chemistry-lab-craftables).*
+
+## Resource Pack
+
+***The room is best viewed with the [resource pack](https://github.com/eccentricdevotion/TARDIS-Resource-Pack).***
+
+All images use the TARDIS-Resource-Pack, and your experience will be much better with it!
 
 ![Chemistry Lab](images/rooms/chemistry-lab.png)
 
@@ -45,7 +49,7 @@ Right clicking this block or running `/tardischemistry gui construct` will open 
 
 ![element constructor gui](images/chemistry/element-constructor-gui.png)
 
-From here, you can use the plus or minus items to decrease or increase the amount of protons, neutrons, and electrons in your element. For example, 1 Proton and 1 Electron = 1 Hydrogen atom.
+From here, you can use the plus or minus items to decrease or increase the amount of protons, neutrons, and electrons in your element. For example, 1 Proton and 1 Electron => 1 Hydrogen atom.
 
 ![hydrogen crafted](images/chemistry/element-constructor-hydrogen.png)
 
@@ -59,7 +63,7 @@ In-game description: Combine elements to create chemical compounds. To see a com
 
 ![chemical-compounding block](images/chemistry/chemical-compounder-block.png)
 
-Once you have elements, you can compound them into different items. For example, if you run `/tardischemistry forumla water`, you can figure out how to craft water!
+Once you have elements, you can compound them into different items. For example, if you run `/tardischemistry forumla Water`, you can figure out how to craft water! (Note, the formula is case-sensitive!)
 
 ![water forumla](images/chemistry/formula-water.png)
 
@@ -93,7 +97,7 @@ Clicking reduce gets us our Hydrogen and Oxygen back!
 
 ## The Lab Table
 
-## Cheating
+## Atomic Elements Block (Creative/Cheats)
 
 You can get all elements and products from the Atomic Elements panel.
 
