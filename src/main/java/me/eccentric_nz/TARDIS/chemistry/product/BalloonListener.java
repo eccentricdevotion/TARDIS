@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -77,7 +78,7 @@ public class BalloonListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerMoveBalloon(InventoryClickEvent event) {
-        if (isBalloon(event.getCursor()) || isBalloon(event.getCurrentItem())) {
+        if (isBalloon(event.getCursor()) || isBalloon(event.getCurrentItem()) || event.getClick() == ClickType.NUMBER_KEY) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 Player player = (Player) event.getWhoClicked();
                 int factor = 1;
