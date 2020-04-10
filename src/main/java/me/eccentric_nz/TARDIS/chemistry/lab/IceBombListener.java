@@ -58,11 +58,11 @@ public class IceBombListener implements Listener {
                     // check plugin respect
                     if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters((Player) event.getEntity().getShooter(), FLAG.getNoMessageFlags()))) {
                         // freeze water
-                        up.setBlockData(TARDISConstants.AIR);
+                        up.setBlockData(TARDISConstants.ICE);
                         for (BlockFace face : plugin.getGeneralKeeper().getSurrounding()) {
                             Block water = up.getRelative(face);
                             if (water.getType().equals(Material.WATER)) {
-                                water.setBlockData(TARDISConstants.AIR);
+                                water.setBlockData(TARDISConstants.ICE);
                             }
                         }
                     }
