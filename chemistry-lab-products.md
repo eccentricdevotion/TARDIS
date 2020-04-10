@@ -30,12 +30,16 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 
 ## Lamps
 
-Lamps are simple blocks that provide light around it, much like glowstone, torch, or other source of light. You can craft 4 different colors of Lamps. These are blue, red, purple, and green lamps. Each lamp produces a light level of 15, the highest light level possible.
+Lamps are simple light source blocks.
 
+-   You can craft 4 different colors of Lamps: blue, red, purple, and green lamps.
+-   Each lamp produces a light level of 15, the highest light level possible.
 -   If the block is updated (e.g. a block is placed next to it) it loses its light until it is placed again.
 -   Breaking the block does not give the item back.
+-   The Lamp can be toggled with a Redstone-enabled [Sonic Screwdriver](sonic-screwdriver)
 
 ![lamps](images/chemistry/products/lamps.png)
+*(left to right) Blue Lamp, Red Lamp, Purple Lamp, Green Lamp*
 
 ### Recipes
 
