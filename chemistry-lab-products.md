@@ -38,7 +38,7 @@ Lamps are simple light source blocks.
 -   The Lamp can be toggled with a Redstone-enabled [Sonic Screwdriver](sonic-screwdriver)
 
 ![lamps](images/chemistry/products/lamps.png)
-*(left to right) Blue Lamp, Red Lamp, Purple Lamp, Green Lamp*
+_(left to right) Blue Lamp, Red Lamp, Purple Lamp, Green Lamp_
 
 ### Recipes
 
@@ -50,3 +50,35 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 | Red Lamp    | [Mercuric Chloride](chemistry-lab-compounds#mercuric-chloride) + [Redstone Lamp](https://minecraft.gamepedia.com/Redstone_Lamp)   | ![red lamp recipe](images/chemistry/products/recipe-red-lamp.png)       | `/tchemistry formula Red_Lamp`    |
 | Purple Lamp | [Potassium Chloride](chemistry-lab-compounds#potassium-chloride) + [Redstone Lamp](https://minecraft.gamepedia.com/Redstone_Lamp) | ![purple lamp recipe](images/chemistry/products/recipe-purple-lamp.png) | `/tchemistry formula Purple_Lamp` |
 | Green Lamp  | [Tungsten Chloride](chemistry-lab-compounds#tungsten-chloride) + [Redstone Lamp](https://minecraft.gamepedia.com/Redstone_Lamp)   | ![green lamp recipe](images/chemistry/products/recipe-green-lamp.png)   | `/tchemistry formula Green_Lamp`  |
+
+## Glow Sticks
+
+Glow sticks
+
+## Balloons
+
+Balloons are decorative items that you can hold. Holding one gives you [Jump Boost I](https://minecraft.gamepedia.com/Jump_Boost). Unlike [Education Edition balloons](https://minecraft.gamepedia.com/Balloon), you cannot place them on fences or attach them to mobs. However, the recipe is the same, with the exception of requiring a String instead of a Lead.
+
+They come in the following colors: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pin, Cyan, Lime, Gray, Light Gray, Black, Brown, and White.
+
+![balloon](images/chemistry/products/balloon.png)
+
+### Recipe
+
+| Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
+| [6 Latex](chemistry-lab-compounds#latex) + Any Dye + Helium + [String](https://minecraft.gamepedia.com/String) | ![balloon recipe](images/chemistry/products/recipe-balloons.gif) | `/tchemistry formula [Balloon Color]_Balloon` |
+
+## Super Fertiliser
+
+Super fertiliser is a "super" version of the typical bone meal. It instantly fully-grows crops, restoring old bone meal mechanics.
+
+![super fertiliser](images/chemistry/products/super-fertiliser.gif)
+
+### Recipe
+
+This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
+
+| Ingredients                                             | Crafting recipe                                                                   | Recipe Command                         |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------- |
+| [Ammonia](chemistry-lab-compounds#ammonia) + Phosphorus | ![super fertiliser recipe](images/chemistry/products/recipe-super-fertiliser.png) | `/tchemistry formula Super_Fertiliser` |
