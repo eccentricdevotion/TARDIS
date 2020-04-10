@@ -57,6 +57,14 @@ public class ChemistryBlockListener implements Listener {
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=true]", "Element constructor");
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=false]", "Lab table");
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=true]", "Product crafting");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]", "Blue Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]", "Green Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]", "Purple Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]", "Red Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]", "Blue Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]", "Green Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]", "Purple Lamp");
+        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]", "Red Lamp");
         blocks.put("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]", "Heat Block");
         models.put("Atomic elements", 40);
         models.put("Chemical compounds", 41);
@@ -64,6 +72,10 @@ public class ChemistryBlockListener implements Listener {
         models.put("Element constructor", 43);
         models.put("Lab table", 44);
         models.put("Product crafting", 45);
+        models.put("Blue Lamp", 1);
+        models.put("Red Lamp", 2);
+        models.put("Purple Lamp", 3);
+        models.put("Green Lamp", 4);
         models.put("Heat Block", 5);
     }
 
