@@ -53,17 +53,38 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 
 ## Glow Sticks
 
-Glow sticks
+Glow sticks are cosmetic items that don't really do much on their own. They don't provide light, however holding one and right clicking into the air will give it an enchanting effect. Unlike [Balloons](#balloons), there are only 14 colors.
+
+The following colors are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple, Blue, Brown, Green, and Red.
+
+![glow sticks](images/chemistry/products/glow-sticks.png)
+*All 14 colors of glow sticks. 2 are activates*
+
+### Recipes
+
+The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes except Gray and Black.
+
+| Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
+| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![]() | `/tchemistry formula [Color]_Glow_Stick` |
+
+## Sparklers
+
+Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle!
+
+Sparklers only come in 5 colors: Orange, Blue, Green, Purple, and Red.
 
 ## Balloons
 
-Balloons are decorative items that you can hold. Holding one gives you [Jump Boost I](https://minecraft.gamepedia.com/Jump_Boost). Unlike [Education Edition balloons](https://minecraft.gamepedia.com/Balloon), you cannot place them on fences or attach them to mobs. However, the recipe is the same, with the exception of requiring a String instead of a Lead.
+Balloons are decorative items that you can hold. Holding one gives you [Jump Boost I](https://minecraft.gamepedia.com/Jump_Boost), holding one in your main and off hand will give [Jump Boost II](https://minecraft.gamepedia.com/Jump_Boost). Unlike [Education Edition balloons](https://minecraft.gamepedia.com/Balloon), you cannot place them on fences or attach them to mobs. However, the recipe is the same, with the exception of requiring a String instead of a Lead.
 
-They come in the following colors: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pin, Cyan, Lime, Gray, Light Gray, Black, Brown, and White.
+They come in the following colors: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pink, Cyan, Lime, Gray, Light Gray, Black, Brown, and White.
 
 ![balloon](images/chemistry/products/balloon.png)
 
-### Recipe
+### Recipes
+
+The recipe is generally the same for each balloon. The dye in the middle can be any of the above listed dyes.
 
 | Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
