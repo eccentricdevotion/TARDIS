@@ -9,7 +9,8 @@ This is a cheat sheet for the Atomic Elements used in the [Element constructor](
 
 Please note, the Protons and Electrons are the same number and are based on the Atomic Number.
 
-Atomic Number = Protons = Electrons
+![example](images/chemistry/element-iron-example.png)
+*Example of Iron in an [Element constructor](chemistry-lab#element-constructor)*
 
 | Name          | Symbol | Atomic Number | Neutrons |
 | ------------- | ------ | ------------- | -------- |
