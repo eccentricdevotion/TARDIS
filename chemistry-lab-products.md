@@ -7,7 +7,7 @@ title: Chemistry Lab Products
 
 The [Chemistry Lab](chemistry-lab) can produce some useful products for you!
 
-_This page only shows products of the chemistry lab, to view compounds, go to [chemistry lab compounds](chemistry-lab-compounds), to view how to use the chemistry lab, go to the [chemistry lab page](chemistry-lab)_
+_This page only shows products of the chemistry lab, to view compounds, go to [chemistry lab compounds](chemistry-lab-compounds), to view how to use the chemistry lab, go to the [chemistry lab page](chemistry-lab). To view elements, go to the [elements page](elements)_
 
 ## Resource Pack
 
@@ -56,15 +56,15 @@ Glow sticks are cosmetic items that don't really do much on their own. They don'
 The following colours are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple, Blue, Brown, Green, and Red.
 
 ![glow sticks](images/chemistry/products/glow-sticks.png)
-_All 14 colours of glow sticks. 2 are activates_
+_All 14 colours of glow sticks. The first 2 on the top row are activated._
 
 ### Recipes
 
 The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes except Gray and Black.
 
-| Ingredients                                                                                                                                                                | Crafting recipe | Recipe Command                            |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ----------------------------------------- |
-| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![](<>)         | `/tchemistry formula [colour]_Glow_Stick` |
+| Ingredients                                                                                                                                                                | Crafting recipe                                                           | Recipe Command                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------- |
+| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![glow sticks recipes](images/chemistry/products/recipes-glow-sticks.gif) | `/tchemistry formula [colour]_Glow_Stick` |
 
 ## Sparklers
 
