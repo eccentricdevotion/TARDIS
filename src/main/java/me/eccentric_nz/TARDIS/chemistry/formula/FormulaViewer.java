@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.chemistry.lab.LabBuilder;
 import me.eccentric_nz.TARDIS.chemistry.product.Product;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductBuilder;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -113,7 +114,7 @@ public class FormulaViewer {
         for (int i = 0; i < shape.length; i++) {
             ItemStack is = null;
             try {
-                Compound compound = Compound.valueOf(shape[i].replace(" ", "_"));
+                Compound compound = Compound.valueOf(TARDISStringUtils.titleCase(shape[i].replace(" ", "_")));
                 is = CompoundBuilder.getCompound(compound);
             } catch (IllegalArgumentException ce) {
                 // is it an element?
