@@ -3,8 +3,6 @@ layout: default
 title: Chemistry Lab Products
 ---
 
-<link href="stylesheets/hydra.css" rel="stylesheet">
-
 # TARDIS Chemistry Lab Products
 
 The [Chemistry Lab](chemistry-lab) can produce some useful products for you!
@@ -73,6 +71,8 @@ The recipe is generally the same for each glow stick. The dye in the middle can 
 Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle!
 
 Sparklers only come in 5 colors: Orange, Blue, Green, Purple, and Red.
+
+
 
 ## Balloons
 
