@@ -26,12 +26,14 @@ public class RecipeData {
     private final String nameSpacedKey;
     private final List<String> lore;
     private final Material craftMaterial;
+    private final int customModelData;
 
-    public RecipeData(String displayName, String namespacedKey, List<String> lore, Material craftMaterial) {
+    public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, int customModelData) {
         this.displayName = displayName;
-        this.nameSpacedKey = namespacedKey;
+        this.nameSpacedKey = nameSpacedKey;
         this.lore = lore;
         this.craftMaterial = craftMaterial;
+        this.customModelData = customModelData;
     }
 
     public String getDisplayName() {
@@ -48,5 +50,9 @@ public class RecipeData {
 
     public Material getCraftMaterial() {
         return craftMaterial;
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
     }
 }

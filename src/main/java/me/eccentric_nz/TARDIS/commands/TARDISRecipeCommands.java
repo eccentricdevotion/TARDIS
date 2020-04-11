@@ -140,7 +140,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!sender.hasPermission("tardis.help")) {
                 TARDISMessage.send(sender, "NO_PERMS");
-                return false;
+                return true;
             }
             Player player = null;
             if (sender instanceof Player) {

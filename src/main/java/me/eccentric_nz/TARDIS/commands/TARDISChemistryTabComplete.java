@@ -30,7 +30,7 @@ import java.util.List;
 
 public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = Arrays.asList("gui", "formula");
+    private final List<String> ROOT_SUBS = Arrays.asList("gui", "formula", "recipe");
     private final List<String> GUI_SUBS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
     private final List<String> FORMULA_SUBS = new ArrayList<>();
     private final List<String> CREATIVE_SUBS = Arrays.asList("elements", "compounds", "products", "lab");
@@ -54,7 +54,7 @@ public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCo
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0].toLowerCase();
-            if (sub.equals("gui")) {
+            if (sub.equals("gui") || sub.equals("recipe")) {
                 return partial(lastArg, GUI_SUBS);
             }
             if (sub.equals("formula")) {

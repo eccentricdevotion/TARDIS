@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlock;
+import me.eccentric_nz.TARDIS.chemistry.block.RecipeData;
 import me.eccentric_nz.TARDIS.chemistry.compound.CompoundCommand;
 import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructCommand;
 import me.eccentric_nz.TARDIS.chemistry.creative.CreativeCommand;
@@ -25,14 +27,23 @@ import me.eccentric_nz.TARDIS.chemistry.lab.LabCommand;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductCommand;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReduceCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TARDISChemistryCommand implements CommandExecutor {
 
     private final TARDIS plugin;
+    private final List<String> GUIS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
 
     public TARDISChemistryCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -78,11 +89,69 @@ public class TARDISChemistryCommand implements CommandExecutor {
                     case "lab":
                         return new LabCommand(plugin).combine(player);
                     default:
-                        break;
+                        return true;
                 }
+            } else if (args[0].equalsIgnoreCase("recipe")) {
+                if (!sender.hasPermission("tardis.help")) {
+                    TARDISMessage.send(sender, "NO_PERMS");
+                    return true;
+                }
+                String which = args[1].toLowerCase();
+                if (!GUIS.contains(which)) {
+                    TARDISMessage.message(player, "");
+                    return false;
+                }
+                showBlockRecipe(player, which);
+                return true;
             }
             return true;
         }
         return false;
+    }
+
+    private void showBlockRecipe(Player player, String which) {
+        player.closeInventory();
+        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        Material surround;
+        switch (which) {
+            case "creative":
+                surround = Material.DIAMOND;
+                break;
+            case "construct":
+                surround = Material.LAPIS_LAZULI;
+                break;
+            case "compound":
+                surround = Material.REDSTONE;
+                break;
+            case "reduce":
+                surround = Material.GOLD_NUGGET;
+                break;
+            case "product":
+                surround = Material.IRON_NUGGET;
+                break;
+            default: // lab
+                surround = Material.COAL;
+                break;
+        }
+        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemistry " + which + " recipe");
+        ItemStack ingredient = new ItemStack(surround, 1);
+        inv.setItem(0, ingredient);
+        inv.setItem(1, ingredient);
+        inv.setItem(2, ingredient);
+        inv.setItem(9, ingredient);
+        inv.setItem(10, new ItemStack(Material.CRAFTING_TABLE, 1));
+        inv.setItem(11, ingredient);
+        inv.setItem(18, ingredient);
+        inv.setItem(19, ingredient);
+        inv.setItem(20, ingredient);
+        ItemStack result = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+        ItemMeta im = result.getItemMeta();
+        RecipeData data = ChemistryBlock.RECIPES.get(which);
+        im.setDisplayName(data.getDisplayName());
+        im.setLore(data.getLore());
+        im.setCustomModelData(data.getCustomModelData());
+        result.setItemMeta(im);
+        inv.setItem(17, result);
+        player.openInventory(inv);
     }
 }

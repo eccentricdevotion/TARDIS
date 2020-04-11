@@ -1207,6 +1207,10 @@ commands:
       description: Show a compound or product formula.
       usage: /<command> formula [compound|product]
       permission: tardis.formula.show
+    recipe:
+      description: Show a Chemistry GUI block recipe.
+      usage: /<command> recipe [creative|construct|compound|reduce|product|lab]
+      permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   tardisinfo:
     description: Internal command used by the TARDIS Information System.
