@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
@@ -94,7 +95,7 @@ public class SuperFertisliserListener implements Listener {
                         break;
                 }
             }
-            if (removeItem) {
+            if (removeItem && !player.getGameMode().equals(GameMode.CREATIVE)) {
                 int amount = is.getAmount() - 1;
                 if (amount > 0) {
                     player.getInventory().getItemInMainHand().setAmount(amount);
