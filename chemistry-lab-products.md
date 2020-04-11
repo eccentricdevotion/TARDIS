@@ -50,11 +50,17 @@ They come in the following colours: Red, Orange, Yellow, Green, Blue, Purple, Li
 
 The recipe is generally the same for each balloon. The dye in the middle can be any of the above listed dyes.
 
+All recipes must be crafted in the [Product crafter](chemistry-lab#product-crafter)
+
 | Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                 |
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
 | [6 Latex](chemistry-lab-compounds#latex) + Any Dye + Helium + [String](https://minecraft.gamepedia.com/String) | ![balloon recipe](images/chemistry/products/recipe-balloons.gif) | `/tchemistry formula [Balloon colour]_Balloon` |
 
 ## Bleach
+
+Bleach is used to remove the colour from objects. They work just like [Education Edition Bleach](https://minecraft.gamepedia.com/Bleach), however they can also make Leather Armour completely white and turn concrete powder white.
+
+![bleach](images/chemistry/products/bleach.gif)
 
 ## Glow Sticks
 
@@ -68,6 +74,8 @@ _All 14 colours of glow sticks. The first 2 on the top row are activated._
 ### Recipes
 
 The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes except Gray and Black.
+
+All recipes must be crafted in the [Product crafter](chemistry-lab#product-crafter)
 
 | Ingredients                                                                                                                                                                | Crafting recipe                                                           | Recipe Command                            |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------- |
@@ -85,7 +93,7 @@ This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
 
 | Ingredients                                                                                                                                  | Crafting recipe          | Recipe Command                   |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------- |
-| Iron + [Water](chemistry-lab-compounds#water) + [Charcoal](https://minecraft.gamepedia.com/Charcoal) + [Water](chemistry-lab-compounds#salt) | ![heat block recipe](<>) | `/tchemistry formula Heat_Block` |
+| Iron + [Water](chemistry-lab-compounds#water) + [Charcoal](https://minecraft.gamepedia.com/Charcoal) + [Water](chemistry-lab-compounds#salt) | ![heat block recipe](images/chemistry/products/recipe-heat-block.png) | `/tchemistry formula Heat_Block` |
 
 ## Ice Bomb
 
