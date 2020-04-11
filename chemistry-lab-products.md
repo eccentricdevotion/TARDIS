@@ -30,7 +30,7 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 
 Lamps are simple light source blocks.
 
--   You can craft 4 different colors of Lamps: blue, red, purple, and green lamps.
+-   You can craft 4 different colours of Lamps: blue, red, purple, and green lamps.
 -   Each lamp produces a light level of 15, the highest light level possible.
 -   If the block is updated (e.g. a block is placed next to it) it loses its light until it is placed again.
 -   The Lamp can be toggled with a Redstone-enabled [Sonic Screwdriver](sonic-screwdriver)
@@ -51,12 +51,12 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 
 ## Glow Sticks
 
-Glow sticks are cosmetic items that don't really do much on their own. They don't provide light, however holding one and right clicking into the air will give it an enchanting effect. Unlike [Balloons](#balloons), there are only 14 colors.
+Glow sticks are cosmetic items that don't really do much on their own. They don't provide light, however holding one and right clicking into the air will give it an enchanting effect. Unlike [Balloons](#balloons), there are only 14 colours.
 
-The following colors are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple, Blue, Brown, Green, and Red.
+The following colours are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple, Blue, Brown, Green, and Red.
 
 ![glow sticks](images/chemistry/products/glow-sticks.png)
-*All 14 colors of glow sticks. 2 are activates*
+*All 14 colours of glow sticks. 2 are activates*
 
 ### Recipes
 
@@ -64,13 +64,13 @@ The recipe is generally the same for each glow stick. The dye in the middle can 
 
 | Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
-| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![]() | `/tchemistry formula [Color]_Glow_Stick` |
+| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![]() | `/tchemistry formula [colour]_Glow_Stick` |
 
 ## Sparklers
 
 Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle!
 
-Sparklers only come in 5 colors: Orange, Blue, Green, Purple, and Red.
+Sparklers only come in 5 colours: Orange, Blue, Green, Purple, and Red.
 
 
 
@@ -78,7 +78,7 @@ Sparklers only come in 5 colors: Orange, Blue, Green, Purple, and Red.
 
 Balloons are decorative items that you can hold. Holding one gives you [Jump Boost I](https://minecraft.gamepedia.com/Jump_Boost), holding one in your main and off hand will give [Jump Boost II](https://minecraft.gamepedia.com/Jump_Boost). Unlike [Education Edition balloons](https://minecraft.gamepedia.com/Balloon), you cannot place them on fences or attach them to mobs. However, the recipe is the same, with the exception of requiring a String instead of a Lead.
 
-They come in the following colors: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pink, Cyan, Lime, Gray, Light Gray, Black, Brown, and White.
+They come in the following colours: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pink, Cyan, Lime, Gray, Light Gray, Black, Brown, and White.
 
 ![balloon](images/chemistry/products/balloon.png)
 
@@ -88,7 +88,7 @@ The recipe is generally the same for each balloon. The dye in the middle can be 
 
 | Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
-| [6 Latex](chemistry-lab-compounds#latex) + Any Dye + Helium + [String](https://minecraft.gamepedia.com/String) | ![balloon recipe](images/chemistry/products/recipe-balloons.gif) | `/tchemistry formula [Balloon Color]_Balloon` |
+| [6 Latex](chemistry-lab-compounds#latex) + Any Dye + Helium + [String](https://minecraft.gamepedia.com/String) | ![balloon recipe](images/chemistry/products/recipe-balloons.gif) | `/tchemistry formula [Balloon colour]_Balloon` |
 
 ## Super Fertiliser
 
