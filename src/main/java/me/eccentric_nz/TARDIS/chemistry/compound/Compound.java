@@ -47,7 +47,7 @@ public enum Compound {
     Sodium_Acetate("Carbon:2-Hydrogen:3-Sodium:1-Oxygen:2", "C2H3NaO2"),
     Sodium_Fluoride("Sodium:1-Fluorine:1", "NaF"),
     Sodium_Hydride("Sodium:1-Hydrogen:1", "NaH"),
-    Sodium_Hypochlorite("Sodium:1-Chlorine:10", "NaClO"),
+    Sodium_Hypochlorite("Sodium:1-Chlorine:1-Oxygen:1", "NaClO"),
     Sodium_Oxide("Sodium:1-Oxygen:20", "Na2O"),
     Sugar("Carbon:6-Hydrogen:12-Oxygen:6", "C6H12O6"),
     Sulfate("Sulfur:1-Oxygen:4", "SO4"),
