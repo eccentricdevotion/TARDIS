@@ -186,7 +186,7 @@ public class ChemistryBlockListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onChemistryBlockPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && event.getBlock().getType() != Material.RED_MUSHROOM_BLOCK) {
             event.setCancelled(true);
         }
     }
