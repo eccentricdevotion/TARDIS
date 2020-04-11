@@ -60,6 +60,7 @@ public class SparklerRunnable implements Runnable {
                     ItemMeta im = sparkler.getItemMeta();
                     int cmd = im.getCustomModelData() - 2000000;
                     im.setCustomModelData(cmd);
+                    im.removeEnchant(Enchantment.LOYALTY);
                     sparkler.setItemMeta(im);
                     sparkler.setAmount(amount - 1);
                     inventory.setItemInMainHand(sparkler);

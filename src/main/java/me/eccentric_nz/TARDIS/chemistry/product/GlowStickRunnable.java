@@ -58,7 +58,6 @@ public class GlowStickRunnable implements Runnable {
         PersistentDataContainer pdk = im.getPersistentDataContainer();
         if (pdk.has(namespacedKey, PersistentDataType.INTEGER)) {
             int damage = pdk.get(namespacedKey, PersistentDataType.INTEGER) - 5;
-//            plugin.debug("damage: " + damage);
             if (damage <= 0) {
                 if (main) {
                     inventory.setItemInMainHand(null);
