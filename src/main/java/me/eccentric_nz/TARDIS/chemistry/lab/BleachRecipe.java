@@ -1,12 +1,14 @@
 package me.eccentric_nz.TARDIS.chemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class BleachRecipe {
@@ -17,6 +19,10 @@ public class BleachRecipe {
     private final NamespacedKey carpetKey;
     private final NamespacedKey bannerKey;
     private final NamespacedKey powderKey;
+    private final NamespacedKey helmetKey;
+    private final NamespacedKey chestplateKey;
+    private final NamespacedKey leggingsKey;
+    private final NamespacedKey bootsKey;
 
     public BleachRecipe(TARDIS plugin) {
         this.plugin = plugin;
@@ -25,6 +31,10 @@ public class BleachRecipe {
         carpetKey = new NamespacedKey(this.plugin, "bleached_carpet");
         bannerKey = new NamespacedKey(this.plugin, "bleached_banner");
         powderKey = new NamespacedKey(this.plugin, "bleached_powder");
+        helmetKey = new NamespacedKey(this.plugin, "bleached_helmet");
+        chestplateKey = new NamespacedKey(this.plugin, "bleached_chestplate");
+        leggingsKey = new NamespacedKey(this.plugin, "bleached_leggings");
+        bootsKey = new NamespacedKey(this.plugin, "bleached_boots");
     }
 
     // concrete, concrete powder
@@ -71,5 +81,45 @@ public class BleachRecipe {
         RecipeChoice colouredPowder = new RecipeChoice.MaterialChoice(Material.BLACK_CONCRETE_POWDER, Material.BLUE_CONCRETE_POWDER, Material.BROWN_CONCRETE_POWDER, Material.CYAN_CONCRETE_POWDER, Material.GRAY_CONCRETE_POWDER, Material.GREEN_CONCRETE_POWDER, Material.LIGHT_BLUE_CONCRETE_POWDER, Material.LIGHT_GRAY_CONCRETE_POWDER, Material.LIME_CONCRETE_POWDER, Material.MAGENTA_CONCRETE_POWDER, Material.ORANGE_CONCRETE_POWDER, Material.PINK_CONCRETE_POWDER, Material.PURPLE_CONCRETE_POWDER, Material.RED_CONCRETE_POWDER, Material.YELLOW_CONCRETE_POWDER);
         powderRecipe.addIngredient(colouredPowder);
         plugin.getServer().addRecipe(powderRecipe);
+        // leather helmet
+        ItemStack helmet = new ItemStack(Material.LEATHER_HELMET, 1);
+        LeatherArmorMeta helmetItemMeta = (LeatherArmorMeta) helmet.getItemMeta();
+        helmetItemMeta.setColor(Color.WHITE);
+        helmet.setItemMeta(helmetItemMeta);
+        ShapelessRecipe helmetRecipe = new ShapelessRecipe(helmetKey, helmet);
+        helmetRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        RecipeChoice colouredHelmet = new RecipeChoice.MaterialChoice(Material.LEATHER_HELMET);
+        helmetRecipe.addIngredient(colouredHelmet);
+        plugin.getServer().addRecipe(helmetRecipe);
+        // leather chestplate
+        ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+        LeatherArmorMeta chestplateItemMeta = (LeatherArmorMeta) chestplate.getItemMeta();
+        chestplateItemMeta.setColor(Color.WHITE);
+        chestplate.setItemMeta(chestplateItemMeta);
+        ShapelessRecipe chestplateRecipe = new ShapelessRecipe(chestplateKey, chestplate);
+        chestplateRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        RecipeChoice colouredChestplate = new RecipeChoice.MaterialChoice(Material.LEATHER_CHESTPLATE);
+        chestplateRecipe.addIngredient(colouredChestplate);
+        plugin.getServer().addRecipe(chestplateRecipe);
+        // leather leggings
+        ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+        LeatherArmorMeta leggingsItemMeta = (LeatherArmorMeta) leggings.getItemMeta();
+        leggingsItemMeta.setColor(Color.WHITE);
+        leggings.setItemMeta(leggingsItemMeta);
+        ShapelessRecipe leggingsRecipe = new ShapelessRecipe(leggingsKey, leggings);
+        leggingsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        RecipeChoice colouredLeggings = new RecipeChoice.MaterialChoice(Material.LEATHER_LEGGINGS);
+        leggingsRecipe.addIngredient(colouredLeggings);
+        plugin.getServer().addRecipe(leggingsRecipe);
+        // leather boots
+        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
+        LeatherArmorMeta bootsItemMeta = (LeatherArmorMeta) boots.getItemMeta();
+        bootsItemMeta.setColor(Color.WHITE);
+        boots.setItemMeta(bootsItemMeta);
+        ShapelessRecipe bootsRecipe = new ShapelessRecipe(bootsKey, boots);
+        bootsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        RecipeChoice colouredBoots = new RecipeChoice.MaterialChoice(Material.LEATHER_BOOTS);
+        bootsRecipe.addIngredient(colouredBoots);
+        plugin.getServer().addRecipe(bootsRecipe);
     }
 }
