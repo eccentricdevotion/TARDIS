@@ -83,7 +83,7 @@ public class SparklerRunnable implements Runnable {
         double degrees = toThreeSixty(Location.normalizeYaw(player.getLocation().getYaw()));
         double yaw = Math.toRadians(degrees);
         // not sure about 0.4, i think you'll have to test it out and find the best.
-        double handRadius = 0.75d;
+        double handRadius = 0.55d;
         double realXOffset = Math.cos(yaw) * handRadius;
         double realZOffset = Math.sin(yaw) * handRadius;
         // not sure about 1.2, i think you'll have to test it out and find the best.
