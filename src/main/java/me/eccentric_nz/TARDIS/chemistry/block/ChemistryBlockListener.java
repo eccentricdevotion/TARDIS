@@ -35,6 +35,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -179,6 +180,14 @@ public class ChemistryBlockListener implements Listener {
                     plugin.getTrackerKeeper().getHeatBlocks().remove(block.getLocation().toString());
                 }
             }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onChemistryBlockPlace(BlockPlaceEvent event) {
+        ItemStack is = event.getItemInHand();
+        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+            event.setCancelled(true);
         }
     }
 }
