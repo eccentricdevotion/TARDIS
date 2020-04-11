@@ -27,9 +27,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Vehicle;
-import org.bukkit.entity.minecart.HopperMinecart;
-import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
@@ -55,11 +54,12 @@ public class TARDISMinecartListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
-        if (event.getVehicle() instanceof StorageMinecart || event.getVehicle() instanceof HopperMinecart) {
+        Vehicle vehicle = event.getVehicle();
+        plugin.debug("vehicle: " + vehicle.getType().toString() + ", " + vehicle.getClass().getName());
+        if (vehicle instanceof Minecart && vehicle instanceof InventoryHolder) {
             Block block = event.getBlock();
             Material material = block.getType();
             if (Tag.DOORS.isTagged(material) || Tag.FENCES.isTagged(material)) {
-                Vehicle minecart = event.getVehicle();
                 String[] data = null;
                 UUID playerUUID = null;
                 int id = 0;
@@ -158,10 +158,10 @@ public class TARDISMinecartListener implements Listener {
                             } else {
                                 w.getChunkAt(in_out).setForceLoaded(false);
                             }
-                            Inventory inventory = ((InventoryHolder) minecart).getInventory();
+                            Inventory inventory = ((InventoryHolder) vehicle).getInventory();
                             ItemStack[] inv = Arrays.copyOf(inventory.getContents(), inventory.getSize());
                             inventory.clear();
-                            teleportMinecart(minecart, in_out, d, inv, minecart.getType());
+                            teleportMinecart(vehicle, in_out, d, inv, vehicle.getType());
                             shouldPrevent = false;
                     }
                     if (shouldPrevent) {
