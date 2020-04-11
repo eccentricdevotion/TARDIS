@@ -62,6 +62,19 @@ Bleach is used to remove the colour from objects. They work just like [Education
 
 ![bleach](images/chemistry/products/bleach.gif)
 
+### Recipe
+
+Recipe must be crafted in a [Lab table](chemistry-lab#lab-table)
+
+Recipe is the same as it is in Education Edition
+
+Recipe command: `/tchemistry formula Bleach`
+
+| Result                                               | Materials Needed                                                                                                |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ![bleach](images/chemistry/products/item-bleach.png) | ![bleach recipe](<>)                                                                                            |
+| Bleach                                               | [3 Water](chemistry-lab-compounds#water) + [3 Sodium Hypochlorite](chemistry-lab-compounds#sodium-hypochlorite) |
+
 ## Glow Sticks
 
 Glow sticks are cosmetic items that don't really do much on their own. They don't provide light, however holding one and right clicking into the air will give it an enchanting effect. Unlike [Balloons](#balloons), there are only 14 colours.
@@ -91,9 +104,12 @@ The Heat Block acts as a source of heat, melting nearby ice in a 5x5 area.
 
 This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
 
-| Ingredients                                                                                                                                  | Crafting recipe          | Recipe Command                   |
-| -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------- |
-| Iron + [Water](chemistry-lab-compounds#water) + [Charcoal](https://minecraft.gamepedia.com/Charcoal) + [Water](chemistry-lab-compounds#salt) | ![heat block recipe](images/chemistry/products/recipe-heat-block.png) | `/tchemistry formula Heat_Block` |
+Recipe command: `/tchemistry formula Heat_Block`
+
+| Result                                                       | Materials Needed                                                                                                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![heat block](images/chemistry/products/item-heat-block.png) | ![heat block recipe](images/chemistry/products/recipe-heat-block.png)                                                                       |
+| Heat Block                                                   | Iron + [Water](chemistry-lab-compounds#water) + [Charcoal](https://minecraft.gamepedia.com/Charcoal) + [Salt](chemistry-lab-compounds#salt) |
 
 ## Ice Bomb
 
@@ -105,9 +121,12 @@ Ice Bombs are simply ice in a ball! Throwing an ice bomb into a body of water wi
 
 This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
 
-| Ingredients                                                | Crafting recipe                                                           | Recipe Command                         |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
-| [4 Sodium Acetate](chemistry-lab-compounds#sodium-acetate) | ![super fertiliser recipe](images/chemistry/products/recipe-ice-bomb.png) | `/tchemistry formula Super_Fertiliser` |
+Recipe command: `/tchemistry forumla Ice_Bomb`
+
+| Result                                                   | Materials Needed                                                  |
+| -------------------------------------------------------- | ----------------------------------------------------------------- |
+| ![ice bomb](images/chemistry/products/item-ice-bomb.png) | ![ice bomb recipe](images/chemistry/products/recipe-ice-bomb.png) |
+| Ice Bomb                                                 | [4 Sodium Acetate](chemistry-lab-compounds#sodium-acetate)        |
 
 ## Lamps
 
@@ -148,6 +167,9 @@ Super fertiliser is a "super" version of the typical bone meal. It instantly ful
 
 This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
 
-| Ingredients                                             | Crafting recipe                                                                   | Recipe Command                         |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------- |
-| [Ammonia](chemistry-lab-compounds#ammonia) + Phosphorus | ![super fertiliser recipe](images/chemistry/products/recipe-super-fertiliser.png) | `/tchemistry formula Super_Fertiliser` |
+Recipe command: `/tchemistry formula Super_Fertiliser`
+
+| Result                                                                   | Materials Needed                                                                  |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| ![super fertiliser](images/chemistry/products/item-super-fertiliser.png) | ![super fertiliser recipe](images/chemistry/products/recipe-super-fertiliser.png) |
+| Super Fertiliser                                                         | [Ammonia](chemistry-lab-compounds#ammonia) + Phosphorus                           |
