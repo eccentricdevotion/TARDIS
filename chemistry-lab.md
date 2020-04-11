@@ -7,7 +7,7 @@ title: Chemistry Lab
 
 The TARDIS comes with a Chemistry lab room!
 
-*This page shows how to use the chemistry lab equipment, to see a list of items you can craft with the equipment, check out [Items craftable with Chemistry Lab](chemistry-lab-craftables).*
+*This page shows how to use the chemistry lab equipment, to see a list of items you can craft with the equipment, check out [Chemistry Lab Products](chemistry-lab-products) or their [compounds](chemistry-lab-compounds), or the [elements themselves](elements).*
 
 ## Table of Contents
 * [Resource Pack](#resource-pack)
