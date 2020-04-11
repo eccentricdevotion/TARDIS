@@ -25,6 +25,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class SparklerRunnable implements Runnable {
 
@@ -49,11 +50,23 @@ public class SparklerRunnable implements Runnable {
         // item in hands
         ItemStack mainHand = inventory.getItemInMainHand();
         if (isSparkler(mainHand)) {
-            if (System.currentTimeMillis() < startTime + 6000) {
+            if (System.currentTimeMillis() < startTime + 30000) {
                 Location rightHand = getHandLocation();
                 player.spawnParticle(Particle.BLOCK_DUST, rightHand, 5, colour);
             } else {
-                inventory.setItemInMainHand(null);
+                ItemStack sparkler = inventory.getItemInMainHand();
+                int amount = sparkler.getAmount();
+                if (amount > 1) {
+                    ItemMeta im = sparkler.getItemMeta();
+                    int cmd = im.getCustomModelData() - 2000000;
+                    im.setCustomModelData(cmd);
+                    sparkler.setItemMeta(im);
+                    sparkler.setAmount(amount - 1);
+                    inventory.setItemInMainHand(sparkler);
+                } else {
+                    inventory.setItemInMainHand(null);
+                }
+                player.updateInventory();
                 player.playSound(player.getLocation(), Sound.ENTITY_CREEPER_DEATH, 1.0f, 1.0f);
                 Bukkit.getScheduler().cancelTask(taskId);
                 taskId = 0;
