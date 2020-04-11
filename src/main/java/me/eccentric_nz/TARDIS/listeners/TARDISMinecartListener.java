@@ -55,9 +55,14 @@ public class TARDISMinecartListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
         Vehicle vehicle = event.getVehicle();
-        plugin.debug("vehicle: " + vehicle.getType().toString() + ", " + vehicle.getClass().getName());
         if (vehicle instanceof Minecart && vehicle instanceof InventoryHolder) {
             Block block = event.getBlock();
+//            plugin.debug("event block: " + block.getType().toString());
+//            Block minecartBlock = event.getVehicle().getLocation().getBlock();
+//            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
+//                Block bb = minecartBlock.getRelative(face);
+//                plugin.debug(face.toString() + ": " + bb.getType().toString());
+//            }
             Material material = block.getType();
             if (Tag.DOORS.isTagged(material) || Tag.FENCES.isTagged(material)) {
                 String[] data = null;
@@ -147,21 +152,6 @@ public class TARDISMinecartListener implements Listener {
                             shouldPrevent = (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
                             break;
                         default:
-                            World w = plugin.getServer().getWorld(data[0]);
-                            int x = TARDISNumberParsers.parseInt(data[1]);
-                            int y = TARDISNumberParsers.parseInt(data[2]);
-                            int z = TARDISNumberParsers.parseInt(data[3]);
-                            Location in_out = new Location(w, x, y, z);
-                            if (Tag.DOORS.isTagged(material)) {
-                                d = getDirection(in_out);
-                                w.getChunkAt(in_out).setForceLoaded(true);
-                            } else {
-                                w.getChunkAt(in_out).setForceLoaded(false);
-                            }
-                            Inventory inventory = ((InventoryHolder) vehicle).getInventory();
-                            ItemStack[] inv = Arrays.copyOf(inventory.getContents(), inventory.getSize());
-                            inventory.clear();
-                            teleportMinecart(vehicle, in_out, d, inv, vehicle.getType());
                             shouldPrevent = false;
                     }
                     if (shouldPrevent) {
@@ -169,6 +159,22 @@ public class TARDISMinecartListener implements Listener {
                             TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
+                    } else {
+                        World w = plugin.getServer().getWorld(data[0]);
+                        int x = TARDISNumberParsers.parseInt(data[1]);
+                        int y = TARDISNumberParsers.parseInt(data[2]);
+                        int z = TARDISNumberParsers.parseInt(data[3]);
+                        Location in_out = new Location(w, x, y, z);
+                        if (Tag.DOORS.isTagged(material)) {
+                            d = getDirection(in_out);
+                            w.getChunkAt(in_out).setForceLoaded(true);
+                        } else {
+                            w.getChunkAt(in_out).setForceLoaded(false);
+                        }
+                        Inventory inventory = ((InventoryHolder) vehicle).getInventory();
+                        ItemStack[] inv = Arrays.copyOf(inventory.getContents(), inventory.getSize());
+                        inventory.clear();
+                        teleportMinecart(vehicle, in_out, d, inv, vehicle.getType());
                     }
                 }
             }
