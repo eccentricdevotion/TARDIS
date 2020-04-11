@@ -17,14 +17,26 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 
 ## Table of Contents
 
--   [Lamps](#lamps)
--   [Glow Sticks](#glow-sticks)
--   [Balloons](#balloons)
--   [Sparklers](#sparklers)
--   [Bleach](#bleach)
--   [Heat Block](#heat-block)
--   [Ice Bomb](#ice-bomb)
--   [Super Fertiliser](#super-fertiliser)
+<div class="row">
+<dl id="one">
+<dt>B</dt>
+<dd>{{ "[Balloons](#balloons)" | markdownify }}</dd>
+<dd>{{ "[Bleach](#bleach)" | markdownify }}</dd>
+<dt>G</dt>
+<dd>{{ "[Glow Sticks](#glow-sticks)" | markdownify }}</dd>
+<dt>H</dt>
+<dd>{{ "[Heat Block](#heat-block)" | markdownify }}</dd>
+</dl>
+<dl>
+<dt>I</dt>
+<dd>{{ "[Ice Bomb](#ice-bomb)" | markdownify }}</dd>
+<dt>L</dt>
+<dd>{{ "[Lamps](#lamps)" | markdownify }}</dd>
+<dt>S</dt>
+<dd>{{ "[Sparklers](#sparklers)" | markdownify }}</dd>
+<dd>{{ "[Super Fertiliser](#super-fertiliser)" | markdownify }}</dd>
+</dl>
+</div>
 
 ## Lamps
 
