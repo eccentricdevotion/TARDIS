@@ -7,7 +7,7 @@ title: Chemistry Lab Compounds
 
 The [Chemistry Lab](chemistry-lab) can produce compounds, typically used in crafting Products!
 
-_This page only shows compounds made in the chemistry lab, to view products, go to [chemistry lab compounds](chemistry-lab-products), to view how to use the chemistry lab, go to the [chemistry lab page](chemistry-lab). To view a list elements, go to the [elements page](elements)_
+_This page only shows compounds made in the chemistry lab, to view products, go to [chemistry lab products](chemistry-lab-products), to view how to use the chemistry lab, go to the [chemistry lab page](chemistry-lab). To view a list elements, go to the [elements page](elements)_
 
 All compounds are inherently useless on their own (with the exception of the vanilla items and their vanilla uses). They must be combined with other compounds, [elements](elements), or items to make [products]((chemistry-lab-products))!
 
