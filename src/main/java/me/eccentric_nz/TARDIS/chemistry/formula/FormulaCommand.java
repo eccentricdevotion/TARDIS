@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
 import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
 import me.eccentric_nz.TARDIS.chemistry.product.Product;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class FormulaCommand {
@@ -32,7 +33,7 @@ public class FormulaCommand {
 
     public boolean show(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(plugin.getPluginName() + "You need to specify the compound or product you want the formula for! Try using tab complete...");
+            TARDISMessage.message(player, "You need to specify the compound or product you want the formula for! Try using tab complete...");
             return false;
         }
         // do stuff
@@ -51,7 +52,7 @@ public class FormulaCommand {
                     new FormulaViewer(plugin, player).getLabFormula(lab);
                     return true;
                 } catch (IllegalArgumentException le) {
-                    player.sendMessage(plugin.getPluginName() + "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
+                    TARDISMessage.message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
                     return true;
                 }
             }
