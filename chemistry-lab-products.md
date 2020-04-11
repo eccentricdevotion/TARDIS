@@ -56,23 +56,21 @@ Glow sticks are cosmetic items that don't really do much on their own. They don'
 The following colours are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple, Blue, Brown, Green, and Red.
 
 ![glow sticks](images/chemistry/products/glow-sticks.png)
-*All 14 colours of glow sticks. 2 are activates*
+_All 14 colours of glow sticks. 2 are activates_
 
 ### Recipes
 
 The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes except Gray and Black.
 
-| Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
-| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
-| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![]() | `/tchemistry formula [colour]_Glow_Stick` |
+| Ingredients                                                                                                                                                                | Crafting recipe | Recipe Command                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ----------------------------------------- |
+| [6 Polyethylene](chemistry-lab-compounds#polyethylene) + Dye + [Luminol](chemistry-lab-compounds#luminol) + [Hydrogen Peroxide](chemistry-lab-compounds#hydrogen-peroxide) | ![](<>)         | `/tchemistry formula [colour]_Glow_Stick` |
 
 ## Sparklers
 
 Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle!
 
 Sparklers only come in 5 colours: Orange, Blue, Green, Purple, and Red.
-
-
 
 ## Balloons
 
@@ -86,9 +84,37 @@ They come in the following colours: Red, Orange, Yellow, Green, Blue, Purple, Li
 
 The recipe is generally the same for each balloon. The dye in the middle can be any of the above listed dyes.
 
-| Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                |
-| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
+| Ingredients                                                                                                    | Crafting recipe                                                  | Recipe Command                                 |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
 | [6 Latex](chemistry-lab-compounds#latex) + Any Dye + Helium + [String](https://minecraft.gamepedia.com/String) | ![balloon recipe](images/chemistry/products/recipe-balloons.gif) | `/tchemistry formula [Balloon colour]_Balloon` |
+
+## Heat Block
+
+The Heat Block acts as a source of heat, melting nearby ice in a 5x5 area.
+
+![heat block](images/chemistry/products/heat-block.png)
+
+### Recipe
+
+This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
+
+| Ingredients                                                                                                                                  | Crafting recipe          | Recipe Command                   |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------- |
+| Iron + [Water](chemistry-lab-compounds#water) + [Charcoal](https://minecraft.gamepedia.com/Charcoal) + [Water](chemistry-lab-compounds#salt) | ![heat block recipe](<>) | `/tchemistry formula Heat_Block` |
+
+## Ice Bomb
+
+Ice Bombs are simply ice in a ball! Throwing an ice bomb into a body of water will make a 3x3 of [ice](https://minecraft.gamepedia.com/Ice)
+
+![ice bomb](images/chemistry/products/ice-bomb.gif)
+
+### Recipe
+
+This recipe must be crafted in the [Lab table](chemistry-lab#lab-table)
+
+| Ingredients                                                | Crafting recipe                                                           | Recipe Command                         |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
+| [4 Sodium Acetate](chemistry-lab-compounds#sodium-acetate) | ![super fertiliser recipe](images/chemistry/products/recipe-ice-bomb.png) | `/tchemistry formula Super_Fertiliser` |
 
 ## Super Fertiliser
 
