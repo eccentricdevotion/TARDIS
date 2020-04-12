@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.formula;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,9 +27,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class FormulaViewerListener implements Listener {
@@ -60,6 +63,18 @@ public class FormulaViewerListener implements Listener {
                 if (event.getRawSlot() == 26) {
                     // close
                     close(player);
+                } else if (event.getRawSlot() != 0) {
+                    ItemStack is = event.getCurrentItem();
+                    if (is != null && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
+                        // is it a compound?
+                        try {
+                            Compound compound = Compound.valueOf(is.getItemMeta().getDisplayName().replace(" ", "_"));
+                            close(player);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FormulaViewer(plugin, player).getCompoundFormula(compound), 2L);
+                        } catch (IllegalArgumentException e) {
+                            // don't know what it is
+                        }
+                    }
                 }
             }
         }
