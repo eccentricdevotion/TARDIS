@@ -72,7 +72,7 @@ Recipe command: `/tchemistry formula Bleach`
 
 | Result                                               | Materials Needed                                                                                                |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| ![bleach](images/chemistry/products/item-bleach.png) | ![bleach recipe](<>)                                                                                            |
+| ![bleach](images/chemistry/products/item-bleach.png) | ![bleach recipe](images/chemistry/products/recipe-bleach.png)                                                   |
 | Bleach                                               | [3 Water](chemistry-lab-compounds#water) + [3 Sodium Hypochlorite](chemistry-lab-compounds#sodium-hypochlorite) |
 
 ## Glow Sticks
@@ -86,7 +86,7 @@ _All 14 colours of glow sticks. The first 2 on the top row are activated._
 
 ### Recipes
 
-The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes except Gray and Black.
+The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes (which is all dyes except Gray and Black).
 
 All recipes must be crafted in the [Product crafter](chemistry-lab#product-crafter)
 
@@ -153,9 +153,24 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 
 ## Sparklers
 
-Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle!
+Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle for 30 seconds! Once it's done, it will consume 1 sparkler. If you are not holding the Sparkler when the time is up, it will only take it once you hold it again.
 
 Sparklers only come in 5 colours: Orange, Blue, Green, Purple, and Red.
+
+![sparkler](images/chemistry/products/sparkler.gif)
+_Orange Sparkler in action_
+
+### Recipes
+
+All recipes must be crafted in the [Product crafter](chemistry-lab#product-crafter)
+
+| Name            | Ingredients                                                                          | Crafting recipe                                                                 | Recipe Command                        |
+| --------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ------------------------------------- |
+| Orange Sparkler | [Calcium Chloride](chemistry-lab-compounds#calcium-chloride) + Magnesium + Stick     | ![Orange Sparkler recipe](images/chemistry/products/recipe-orange-sparkler.png) | `/tchemistry formula Orange_Sparkler` |
+| Blue Sparkler   | [Cerium Chloride](chemistry-lab-compounds#cerium-chloride) + Magnesium + Stick       | ![Blue sparkler recipe](images/chemistry/products/recipe-blue-sparkler.png)       | `/tchemistry formula Blue_Sparkler`   |
+| Green Sparkler  | [Tungsten Chloride](chemistry-lab-compounds#tungsten-chloride) + Magnesium + Stick | ![Green sparkler recipe](images/chemistry/products/recipe-green-sparkler.png) | `/tchemistry formula Green_Sparkler`  |
+| Purple Sparkler | [Potassium Chloride](chemistry-lab-compounds#potassium-chloride) + Magnesium + Stick   | ![Purple sparkler recipe](images/chemistry/products/recipe-purple-sparkler.png)   | `/tchemistry formula Purple_Sparkler` |
+| Red Sparkler    | [Mercuric Chloride](chemistry-lab-compounds#mercuric-chloride) + Magnesium + Stick   | ![Red sparkler recipe](images/chemistry/products/recipe-red-sparkler.png)   | `/tchemistry formula Red_Sparkler`    |
 
 ## Super Fertiliser
 
