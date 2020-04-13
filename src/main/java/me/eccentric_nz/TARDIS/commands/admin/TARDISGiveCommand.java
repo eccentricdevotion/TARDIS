@@ -169,7 +169,13 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (item.equals("seed")) {
-                    return giveSeed(sender, args[0], args[2].toUpperCase(Locale.ENGLISH));
+                    String seed = args[2].toUpperCase(Locale.ENGLISH);
+                    if (CONSOLES.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
+                        return giveSeed(sender, args);
+                    } else {
+                        TARDISMessage.send(sender, "ARG_SEED");
+                        return true;
+                    }
                 }
                 if (item.equals("tachyon")) {
                     return giveTachyon(sender, args[0], args[2]);
@@ -355,12 +361,29 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
     }
 
-    private boolean giveSeed(CommandSender sender, String p, String type) {
-        if (plugin.getServer().getPlayer(p) == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
+    private boolean giveSeed(CommandSender sender, String[] args) {
+        Player player;
+        if (args[0].equals("@s")) {
+            player = (Player) sender;
+        } else {
+            player = plugin.getServer().getPlayer(args[0]);
+            if (player == null) {
+                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                return true;
+            }
         }
-        Player player = plugin.getServer().getPlayer(p);
+        String type = args[2].toUpperCase(Locale.ENGLISH);
+        String wall = "ORANGE_WOOL";
+        String floor = "LIGHT_GRAY_WOOL";
+        if (args.length > 4) {
+            try {
+                wall = Material.valueOf(args[3].toUpperCase()).toString();
+                floor = Material.valueOf(args[4].toUpperCase()).toString();
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(sender, "SEED_MAT_NOT_VALID");
+                return true;
+            }
+        }
         ItemStack is;
         int model;
         if (CONSOLES.getBY_NAMES().containsKey(type)) {
@@ -378,8 +401,8 @@ public class TARDISGiveCommand implements CommandExecutor {
             im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
             lore.add(type);
-            lore.add("Walls: ORANGE_WOOL");
-            lore.add("Floors: LIGHT_GRAY_WOOL");
+            lore.add("Walls: " + wall);
+            lore.add("Floors: " + floor);
             lore.add("Chameleon: FACTORY");
             im.setLore(lore);
             is.setItemMeta(im);
