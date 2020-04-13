@@ -10,6 +10,7 @@ TARDIS is a Spigot / Paper plugin that allows you to create a TARDIS that lets y
 * Grow rooms in your TARDIS.
 * Take companions with you when you time travel.
 * Collect Artron Energy to power your TARDIS.
+* And so much more...
 
 Plugin documentation can be found here:
 [http://eccentricdevotion.github.io/TARDIS/site-map.html](http://eccentricdevotion.github.io/TARDIS/site-map.html)
