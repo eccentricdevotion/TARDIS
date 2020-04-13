@@ -144,7 +144,7 @@ Uses: Crafting Blue [Lamps](chemistry-lab-products#lamps) and Blue [Sparklers](c
 
 Recipe command: `/tardischemistry formula Charcoal`
 
-Elements required to craft: 7 Carbon and 40 Hydrogen.
+Elements required to craft: 7 Carbon, 4 Hydrogen, and 1 Oxygen.
 
 Uses: Crafting [Heat Blocks](chemistry-lab-products#heat-block) as well as any [Vanilla uses](https://minecraft.gamepedia.com/Charcoal).
 
