@@ -26,7 +26,7 @@ public enum Compound {
     Calcium_Bromide("Calcium:1-Bromine:2", "CaBr2"),
     Calcium_Chloride("Calcium:1-Chlorine:2", "CaCl2"),
     Cerium_Chloride("Cerium:1-Chlorine:3", "CeCl3"),
-    Charcoal("Carbon:7-Hydrogen:40", "C7H4O"),
+    Charcoal("Carbon:7-Hydrogen:4-Oxygen:1", "C7H4O"),
     Crude_Oil("Carbon:9-Hydrogen:20", "C9H20"),
     Glue("Carbon:5-Hydrogen:5-Nitrogen:1-Oxygen:2", "C5H5NO2"),
     Hydrogen_Peroxide("Hydrogen:2-Oxygen:2", "H2O2"),
