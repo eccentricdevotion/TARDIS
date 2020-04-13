@@ -42,7 +42,7 @@ New configuration options and database fields will be added automatically, and i
 
 While not essential to make the TARDIS plugin work, the following plugins will make your Time Travelling experience even better.
 
-1. Install the [TARDISChunkGenerator](http://dev.bukkit.org/bukkit-plugins/tardis) plugin so that you can generate TARDISes in their own self-conatined void world.
+1. Install the [TARDISChunkGenerator](http://dev.bukkit.org/bukkit-plugins/tardis) plugin so that you can generate TARDISes in their own self-contained void world.
 2. Install [WorldGuard](http://dev.bukkit.org/bukkit-plugins/worldguard) to automatically protect your TARDIS from griefing, and stop mobs spawning in TARDIS worlds.
 3. Install [WorldBorder](http://dev.bukkit.org/bukkit-plugins/worldborder) to restrict the size of the worlds generated for TARDIS occupation.
 4. Install a Permissions plugin, so that you can restrict or grant players the rights to use TARDIS’ different features. We like [PermissionsBukkit](http://dev.bukkit.org/bukkit-plugins/permbukkit/).
@@ -61,4 +61,3 @@ While not essential to make the TARDIS plugin work, the following plugins will m
 If upgrading from a previous version of TARDIS that did not have generated worlds, or enabling them for the first time, please delete your previously created TARDISes and recreate them.
 
 If upgrading from a version without an Artron Energy button or handbrake, please place these items, and use the `/tardis update` command to add them to your TARDIS. See [Commands](tardis-commands.html#update) for more information.
-

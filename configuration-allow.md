@@ -21,7 +21,7 @@ These are the plugin restriction configuration options.
 | &nbsp;&nbsp;&nbsp;&nbsp;`mob_farming` | boolean | `true` |
 | &nbsp; | Sets whether players can [farm mobs](farming.html) when entering the TARDIS. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`spawn_eggs` | boolean | `true` |
-| &nbsp; | Sets whether the player recieves mob spawn eggs when TARDIS mob farming (and there is no farm room grown). |
+| &nbsp; | Sets whether the player receives mob spawn eggs when TARDIS mob farming (and there is no farm room grown). |
 | &nbsp;&nbsp;&nbsp;&nbsp;`emergency_npc` | boolean | `true` |
 | &nbsp; | Sets whether the [Emergency Program One](emergency-program-one.html) feature is enabled. This setting will be disabled automatically if the Citizens plugin is not found. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`external_gravity` | boolean | `false` |
@@ -60,4 +60,3 @@ These are the plugin restriction configuration options.
 | &nbsp; | Sets whether players can repair a damaged TARDIS interior. |
 
 [Back to main configuration page](configuration.html)
-

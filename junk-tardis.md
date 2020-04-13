@@ -11,7 +11,7 @@ The Junk TARDIS is a public use TARDIS that any player with the correct permissi
 
 ![Junk TARDIS](images/docs/junk.jpg)
 
-### Prequisites for enabling the Junk TARDIS
+### Prerequisite for enabling the Junk TARDIS
 
 For the Junk TARDIS to be enabled on the server, the server must be set to use a default world for storing TARDISes (this is the default option with new installs). In the config, set `creation.default_world: true`. You will also need to enable the Junk TARDIS — `junk.enabled: true`.
 
@@ -20,7 +20,7 @@ For the Junk TARDIS to be enabled on the server, the server must be set to use a
 Any player with the `tardis.admin` permission can create the Junk TARDIS, but only one Junk TARDIS can be active at a time. To create the Junk TARDIS:
 
 1. Clear a 6 x 6 block flat area
-2. Target a block in the center of the flat area
+2. Target a block in the centre of the flat area
 3. Open chat and type the command `/tardisjunk create`
 
 ### Removing the Junk TARDIS
@@ -51,7 +51,7 @@ If no destination coordinates are entered onto the destination sign and the Junk
 
 `/tardisjunk find` — find the current location of the Junk TARDIS
 
-`/tardisjunk [wall|floor] [material]` — change the wall and floor blocks of the Junk TARDIS. Use **before** creating the Junk TARDIS so that the Voretx TARDIS matches
+`/tardisjunk [wall|floor] [material]` — change the wall and floor blocks of the Junk TARDIS. Use **before** creating the Junk TARDIS so that the Vortex TARDIS matches
 
 ### Config options
 

@@ -9,7 +9,7 @@ title: Rooms
 
 # Rooms
 
-**Note:** This feature has changed signicantly as of TARDIS version 2.6-beta-1! It requires:
+**Note:** This feature has changed significantly as of TARDIS version 2.6-beta-1! It requires:
 
 - `create_worlds: true` in the config, and a multi-world plugin
 - OR

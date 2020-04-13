@@ -7,7 +7,7 @@ title: The Custom Chameleon preset
 
 # The Custom Chameleon preset
 
-The TARDIS Chmeleon Circuit GUI has one preset slot set up so that server admins can add a custom preset.
+The TARDIS Chameleon Circuit GUI has one preset slot set up so that server admins can add a custom preset.
 
 Custom presets need to be a certain size and shape:
 
@@ -46,4 +46,3 @@ If your custom preset contained a sign, you can change the text that is displaye
 <iframe src="https://player.vimeo.com/video/88423516" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 Video here
-

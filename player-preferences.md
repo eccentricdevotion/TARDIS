@@ -103,7 +103,7 @@ To change the block type that changes when a TARDIS enters siege mode, type:
 
     /tardisprefs [siege_wall|siege_floor] [material]
 
-Where `[material]` is a block from the list on the [Wall materials](walls.html) page. This setting has no effect if `siege.textures: false` is set in the coinfig.
+Where `[material]` is a block from the list on the [Wall materials](walls.html) page. This setting has no effect if `siege.textures: false` is set in the config.
 
 To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis ‘home’ (whichever is closest) when the Time Lord owner dies, type:
 
@@ -230,4 +230,3 @@ To set the language used in the '/tardis say' command, type (with auto-complete)
 To toggle Police Box textures on and off (biome for CTM is set / not set at the TARDIS' location), type:
 
     /tardisprefs policebox_textures [on|off]
-

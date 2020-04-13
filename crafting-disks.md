@@ -93,4 +93,3 @@ To craft the disk combine a Blank Preset Storage Disk with the correct item. The
 | WINDMILL | Wood |
 | YELLOW SUBMARINE | Gold Nugget |
 | CUSTOM | Obsidian |
-

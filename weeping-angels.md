@@ -7,7 +7,7 @@ title: Weeping Angels
 
 # Weeping Angels
 
-TARDISWeepingAngels is a complementary add-on plugin that tranforms skeletons into terrifying Weeping Angels, zombies into Cybermen and Pig Zombies into angry Ice Warriors.
+TARDISWeepingAngels is a complementary add-on plugin that transforms skeletons into terrifying Weeping Angels, zombies into Cybermen and Pig Zombies into angry Ice Warriors.
 
 ![Weeping Angel](images/docs/weepingangel1.jpg)
 

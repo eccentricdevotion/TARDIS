@@ -24,11 +24,11 @@ You can create a custom schematic for the inner TARDIS, but there are a few thin
 
 1. In order to be loaded by the plugin, the schematic file must be named _custom.tschm_ (_custom.schematic_ for pre-v3.0 versions), and should be located in the _plugins/TARDIS/user\_schematics_ folder.
 2. The custom TARDIS can only have 1 iron door, 1 stone button, and 1 wood button in its initial design (in addition to the placeholder blocks as listed below).
-3. The TARDIS should be sized in multipes of 16 blocks (1 chunk) — the chunks they use are reserved and cannot be used by other TARDISes - but be aware that big TARDISs will lag the server!
+3. The TARDIS should be sized in multiples of 16 blocks (1 chunk) — the chunks they use are reserved and cannot be used by other TARDISes - but be aware that big TARDISs will lag the server!
 4. TARDISes should be squares i.e. that same width (x) and length (z) dimensions. A 16 x 16 block TARDIS is _good_, a 24 x 18 block TARDIS would be **bad**.
 5. Custom consoles are always grown starting at the same Y level (Y=64), this means that — the level of the floor where the doors are — needs to be at a certain height for the doors to line up with any rooms that are grown. You should be able to determine the floor level by basing your design on any console schematic except the REDSTONE one.
 6. When you are facing the outside of the TARDIS door, you should be pointing SOUTH.
-7. The are some special placeholder blocks that are needed so the that plugin will record the location of the TARDIS controls. They are: 
+7. The are some special placeholder blocks that are needed so the that plugin will record the location of the TARDIS controls. They are:
 
 | `cake block` | handbrake |
 | `monster stone (97:0)` | Save Sign |

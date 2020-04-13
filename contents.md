@@ -131,7 +131,7 @@ To get started choose a page:
 
 [TARDIS areas](tardis-areas.html) — How to set up TARDIS areas
 
-[Rooms and enconomies](rooms-and-economies.html) — How to balance the two
+[Rooms and economies](rooms-and-economies.html) — How to balance the two
 
 ## Other
 
@@ -146,4 +146,3 @@ To get started choose a page:
 [Minecraft name generator](name-generator.html) — Currently a work in progress, but give a whirl anyway!
 
 [Bukkit plugin starter](http://www.thenosefairy.co.nz/plugin_starter.php) — Generate the required files to start writing a Bukkit plugin in NetBeans.
-

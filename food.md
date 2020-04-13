@@ -31,7 +31,7 @@ Each recipe gives 3 fish fingers, eating a fish finger restores 2.5 hunger.
 
 ### Bowl of custard
 
-The other part of the eleventh Doctor’s regeneration food, together they make fish custard! A shapeless recipe, custard is crafted with 1 bucket of milk, 1 egg, and 1 woooden bowl. To see the recipe type:
+The other part of the eleventh Doctor’s regeneration food, together they make fish custard! A shapeless recipe, custard is crafted with 1 bucket of milk, 1 egg, and 1 wooden bowl. To see the recipe type:
 
     /tardisrecipe custard
 
@@ -52,4 +52,3 @@ Each recipe gives 8 Jammy Dodgers, eating a Jammy Dodger restores 1 hunger.
 All the food items, including all 16 jelly baby flavours.
 
 ![custard crafting](images/docs/tardis_food.jpg)
-

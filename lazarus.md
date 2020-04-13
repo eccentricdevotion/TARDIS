@@ -16,9 +16,9 @@ The Genetic Manipulator depends on two plugins being installed alongside TARDIS:
 
 ## Genetic Manipulation
 
-The Lazarus Device is a hypersonic soundwave manipulator invented by Professor Richard Lazarus. The machine can turn anyone inside decades younger, but the process containes a side effect: genes that evolution rejected and left dormant would be unlocked, transforming the human into a beast that fed off the lifeforce of living creatures.
+The Lazarus Device is a hypersonic soundwave manipulator invented by Professor Richard Lazarus. The machine can turn anyone inside decades younger, but the process contains a side effect: genes that evolution rejected and left dormant would be unlocked, transforming the human into a beast that fed off the lifeforce of living creatures.
 
-If you have the permission `tardis.lazarus`, you too can transform yourself into an amimal or monster by growing a Lazarus room and stepping into the genetic manipulator:
+If you have the permission `tardis.lazarus`, you too can transform yourself into an animal or monster by growing a Lazarus room and stepping into the genetic manipulator:
 
 - Grow a ‘LAZARUS’ room using ARS or the `/tardis room lazarus` command (you’ll need the permission `tardis.room.lazarus`)
 - Once the room is grown, step into the Genetic Manipulator and trigger the wood pressure plate

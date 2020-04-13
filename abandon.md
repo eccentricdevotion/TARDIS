@@ -35,6 +35,6 @@ Where `[SCHEMATIC]` is the interior console type of the TARDIS — see [list\_of
 
 And `[PRESET]` is the exterior preset type of the TARDIS — see [PRESET](http://www.thenosefairy.co.nz/TARDIS_java_docs/me/eccentric_nz/TARDIS/enumeration/PRESET.html)
 
-And `[DIRECTION]` is the direction the player would be facing if theyy are looking at the exterior preset door — one of: NORTH, SOUTH, EAST, WEST
+And `[DIRECTION]` is the direction the player would be facing if they are looking at the exterior preset door — one of: NORTH, SOUTH, EAST, WEST
 
 And `world x y z` are the coordinates of the TARDIS exterior’s bottom centre.

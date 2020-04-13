@@ -65,7 +65,7 @@ planets:
 
 `planets` — This is a list of worlds on your server. If you want to use the world resource pack switching feature for other server worlds, you can add them here. Use the `TARDIS_TimeVortex` entry as an example.
 
-`planets: Skaro` — this is the config section for the custom Skaro world. The options are explaind below:
+`planets: Skaro` — this is the config section for the custom Skaro world. The options are explained below:
 
 `enabled: [true|false]` — whether this world should be created and managed by TARDIS.
 

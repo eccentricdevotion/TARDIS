@@ -7,15 +7,15 @@ title: Handles
 
 # Handles
 
-Handles ias the name given by the Eleventh Doctor to a Cyberman head that he obtained from the Maldovarium Market, and subsequently repaired.
+Handles is the name given by the Eleventh Doctor to a Cyberman head that he obtained from the Maldovarium Market, and subsequently repaired.
 
 You can craft and place Handles so that he can interact with you and the TARDIS.
 
-To see the Handles craftig recipe, use the command `/tardisrecipe handles`. Alternatively, you can give yourself or other players a Handles with the command `/tardisgive [player] handles 1`
+To see the Handles crafting recipe, use the command `/tardisrecipe handles`. Alternatively, you can give yourself or other players a Handles with the command `/tardisgive [player] handles 1`
 
 Handles can only be placed inside the TARDIS
 
-Outside the TARDIS you can only communicate with Handles if he is in your inventory, or you have a communicator (and Handles is placed in the TARDIS) — use the `/tardisrecipe communicator` to view the recipe, or give a commuicator with the `/tardisgive [player] communicator 1` command.
+Outside the TARDIS you can only communicate with Handles if he is in your inventory, or you have a communicator (and Handles is placed in the TARDIS) — use the `/tardisrecipe communicator` to view the recipe, or give a communicator with the `/tardisgive [player] communicator 1` command.
 
 ### Talking to Handles
 
@@ -94,4 +94,3 @@ And the children:
 <iframe width="600" height="366" src="https://www.youtube.com/embed/pyJQHvxqpA8?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Original Handles request thread: [https://dev.bukkit.org/projects/tardis/issues/1549](https://dev.bukkit.org/projects/tardis/issues/1549)
-

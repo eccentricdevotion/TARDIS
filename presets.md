@@ -175,11 +175,10 @@ Chameleon Presets can be selected and applied in the [Chameleon Circuit](chamele
 
 ![Mossy well](images/presets/well.jpg)
 
-**WINDMILL** — A minature windmill.
+**WINDMILL** — A miniature windmill.
 
 ![windmill](images/presets/windmill.jpg)
 
 **YELLOW** — A yellow submarine.
 
 ![yellow submarine](images/presets/yellow.jpg)
-

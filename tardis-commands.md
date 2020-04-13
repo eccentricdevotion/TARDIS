@@ -191,7 +191,7 @@ If you run the command `/tardis update` without any further arguments, an intera
 
 ### /tardis secondary
 
-Silmilar to the `/tardis update` command, you can use the `/tardis secondary` command to update the locations of controls in secondary (and tertiary) consoles.
+Similar to the `/tardis update` command, you can use the `/tardis secondary` command to update the locations of controls in secondary (and tertiary) consoles.
 
 First move the blocks to their new position then, type one of:
 
@@ -228,7 +228,7 @@ and the Police Box will be recreated at its last known save position. Use `/tard
 
 ### /tardis rescue
 
-Let’s you rescue a player and materialise the TARDIS around them.
+Lets you rescue a player and materialise the TARDIS around them.
 
     /tardis resuce [player]
 
@@ -236,7 +236,7 @@ The player must accept the rescue attempt by typing `tardis rescue accept` in ch
 
 ### /tardis namekey
 
-Let’s you rename the TARDIS key item to whatever you want. To rename it, simply type:
+Lets you rename the TARDIS key item to whatever you want. To rename it, simply type:
 
     /tardis namekey [your cool new name here]
 
@@ -252,7 +252,7 @@ Type this command to convert v2.0-beta-6 and earlier style gravity wells to the 
 
 ### /tardis occupy
 
-Type this command if you have exited the TARDIS accidently by another means than by the TARDIS door. It will toggle your TARDIS occupation status i.e. if you were inside the TARDIS it will set you to being _outside_.
+Type this command if you have exited the TARDIS accidentally by another means than by the TARDIS door. It will toggle your TARDIS occupation status i.e. if you were inside the TARDIS it will set you to being _outside_.
 
 ### /tardis eject
 
@@ -316,7 +316,7 @@ Open the TARDIS Desktop Theme GUI.
 
 ### /tardis excite
 
-Initiate atmospheric exitation (make it snow) around your TARDIS.
+Initiate atmospheric excitation (make it snow) around your TARDIS.
 
 ### /tardis ep1
 
@@ -347,4 +347,3 @@ Display the 'Tag the Ood' game statistics.
 Sets an internal TARDIS transmat location.
 
     /tardis transmat [name]
-
