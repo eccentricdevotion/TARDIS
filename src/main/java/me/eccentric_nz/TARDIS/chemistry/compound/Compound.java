@@ -31,7 +31,7 @@ public enum Compound {
     Glue("Carbon:5-Hydrogen:5-Nitrogen:1-Oxygen:2", "C5H5NO2"),
     Hydrogen_Peroxide("Hydrogen:2-Oxygen:2", "H2O2"),
     Ink("Iron:1-Sulfur:1-Oxygen:4", "FeSO4"),
-    Iron_Sulfide("Iron:1-S:1", "FeS"),
+    Iron_Sulfide("Iron:1-Sulfur:1", "FeS"),
     Latex("Carbon:5-Hydrogen:8", "C5H8"),
     Lithium_Hydride("Lithium:1-Hydrogen:1", "LiH"),
     Luminol("Carbon:8-Hydrogen:7-Nitrogen:3-Oxygen:2", "C8H7N3O2"),
