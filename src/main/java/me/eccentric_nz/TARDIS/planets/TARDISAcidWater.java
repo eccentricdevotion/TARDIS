@@ -280,9 +280,11 @@ public class TARDISAcidWater implements Listener {
         ItemMeta im = bucket.getItemMeta();
         if (type.equals(Material.WATER)) {
             im.setDisplayName("Acid Bucket");
+            im.setCustomModelData(1);
         }
         if (type.equals(Material.LAVA)) {
             im.setDisplayName("Rust Bucket");
+            im.setCustomModelData(1);
         }
         bucket.setItemMeta(im);
         p.updateInventory();

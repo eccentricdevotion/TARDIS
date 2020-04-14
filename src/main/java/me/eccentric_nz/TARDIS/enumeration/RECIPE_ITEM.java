@@ -119,6 +119,9 @@ public enum RECIPE_ITEM {
     PAINTER_UPGRADE(10001979),
     IGNITE_UPGRADE(10001982),
     PICKUP_ARROWS_UPGRADE(10001984),
+    // planet items
+    ACID_BUCKET(1),
+    RUST_BUCKET(1),
     // not fond
     NOT_FOUND(-1);
 
