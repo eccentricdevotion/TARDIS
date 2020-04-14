@@ -547,9 +547,15 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
                     HashMap<String, Object> seta = new HashMap<>();
                     seta.put("apiary", world.getName() + ":" + startx + ":" + (starty + 1) + ":" + startz);
-                    HashMap<String, Object> wherea = new HashMap<>();
-                    wherea.put("tardis_id", tardis_id);
-                    plugin.getQueryFactory().doUpdate("farming", seta, wherea);
+                    ResultSetFarming rsa = new ResultSetFarming(plugin, tardis_id);
+                    if (rsa.resultSet()) {
+                        HashMap<String, Object> wherea = new HashMap<>();
+                        wherea.put("tardis_id", tardis_id);
+                        plugin.getQueryFactory().doUpdate("farming", seta, wherea);
+                    } else {
+                        seta.put("tardis_id", tardis_id);
+                        plugin.getQueryFactory().doInsert("farming", seta);
+                    }
                 }
                 // set condenser
                 if (type.equals(Material.CHEST) && room.equals("HARMONY")) {
@@ -580,11 +586,18 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 // set farm
                 if (type.equals(Material.SPAWNER) && room.equals("FARM")) {
+                    // do they have a farm record?
                     HashMap<String, Object> setf = new HashMap<>();
                     setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                    HashMap<String, Object> wheref = new HashMap<>();
-                    wheref.put("tardis_id", tardis_id);
-                    plugin.getQueryFactory().doUpdate("farming", setf, wheref);
+                    ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
+                    if (rsf.resultSet()) {
+                        HashMap<String, Object> wheref = new HashMap<>();
+                        wheref.put("tardis_id", tardis_id);
+                        plugin.getQueryFactory().doUpdate("farming", setf, wheref);
+                    } else {
+                        setf.put("tardis_id", tardis_id);
+                        plugin.getQueryFactory().doInsert("farming", setf);
+                    }
                     // replace with floor material
                     data = (floor_type.equals(Material.LIGHT_GRAY_WOOL)) ? lgw.createBlockData() : floor_type.createBlockData();
                     // update player prefs - turn on mob farming
