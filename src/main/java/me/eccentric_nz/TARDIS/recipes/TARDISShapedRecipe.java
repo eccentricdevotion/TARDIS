@@ -140,6 +140,7 @@ public class TARDISShapedRecipe {
                     exact = new ItemStack(m, 1);
                     ItemMeta em = exact.getItemMeta();
                     em.setDisplayName(choice[1]);
+                    em.setCustomModelData(RECIPE_ITEM.getByName(choice[1]).getCustomModelData());
                     exact.setItemMeta(em);
                     r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
                 } else {
