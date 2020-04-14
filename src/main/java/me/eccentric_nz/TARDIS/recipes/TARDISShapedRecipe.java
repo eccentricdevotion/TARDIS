@@ -28,6 +28,9 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -143,6 +146,21 @@ public class TARDISShapedRecipe {
                     em.setCustomModelData(RECIPE_ITEM.getByName(choice[1]).getCustomModelData());
                     exact.setItemMeta(em);
                     r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
+                } else if (i.contains(">")) {
+                    ItemStack potion;
+                    String[] choice = i.split(">");
+                    potion = new ItemStack(Material.POTION, 1);
+                    PotionMeta pm = (PotionMeta) potion.getItemMeta();
+                    PotionType potionType;
+                    try {
+                        potionType = PotionType.valueOf(choice[1]);
+                    } catch (IllegalArgumentException e) {
+                        potionType = PotionType.INVISIBILITY;
+                    }
+                    PotionData potionData = new PotionData(potionType);
+                    pm.setBasePotionData(potionData);
+                    potion.setItemMeta(pm);
+                    r.setIngredient(c, new RecipeChoice.ExactChoice(potion));
                 } else {
                     Material m = Material.valueOf(i);
                     r.setIngredient(c, m);

@@ -210,13 +210,13 @@ shaped:
       D: DIAMOND
       P: GLOWSTONE_DUST=Perception Circuit
       E: EMERALD
-      W: POTION
+      W: POTION>INVISIBILITY
     hard_shape: -D-,P-E,-W-
     hard_ingredients:
       D: DIAMOND
       P: GLOWSTONE_DUST=Perception Circuit
       E: EMERALD
-      W: POTION
+      W: POTION>INVISIBILITY
     result: GLOWSTONE_DUST
     amount: 1
     lore: Uses left~5
@@ -228,7 +228,7 @@ shaped:
     hard_shape: -S-,SPS,ESE
     hard_ingredients:
       S: SLIME_BALL
-      P: POTION
+      P: POTION>AWKWARD
       E: EMERALD
     result: DAYLIGHT_DETECTOR
     amount: 1

@@ -619,22 +619,24 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.E", "EMERALD");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_shape", "-D-,P-E,-W-");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.E", "EMERALD");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "GLOWSTONE_DUST");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.amount", 1);
             recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
             i++;
         } else {
-            if (recipes_config.getString("shaped.TARDIS Invisibility Circuit.easy_ingredients.W").equals("POTION:8206")) {
-                recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION");
+            String easyValue = recipes_config.getString("shaped.TARDIS Invisibility Circuit.easy_ingredients.W");
+            if (easyValue.equals("POTION:8206") || easyValue.equals("POTION")) {
+                recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
             }
-            if (recipes_config.getString("shaped.TARDIS Invisibility Circuit.hard_ingredients.W").equals("POTION:8270")) {
-                recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION");
+            String hardValue = recipes_config.getString("shaped.TARDIS Invisibility Circuit.hard_ingredients.W");
+            if (hardValue.equals("POTION:8270") || hardValue.equals("POTION")) {
+                recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
             }
         }
         if (!recipes_config.contains("shaped.TARDIS Telepathic Circuit")) {
@@ -649,8 +651,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Telepathic Circuit.amount", 1);
             recipes_config.set("shaped.TARDIS Telepathic Circuit.lore", "Allow companions to~use TARDIS commands");
             i++;
-        } else if (recipes_config.getString("shaped.TARDIS Telepathic Circuit.hard_ingredients.P").equals("POTION:373")) {
-            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION");
+        } else {
+            String value = recipes_config.getString("shaped.TARDIS Telepathic Circuit.hard_ingredients.P");
+            if (value.equals("POTION:373") || value.equals("POTION")) {
+                recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION>AWKWARD");
+            }
         }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
