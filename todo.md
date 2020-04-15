@@ -1,9 +1,9 @@
 # TODO
 
-## Next version `4.3`
+## Next version `4.4`
 1. New features
    * Test villager farming
-   * Remove / alter the Artron furnace now that there is a Smoker / Blast Furnace?
+   * Remove / alter the Artron furnace now there is a Smoker / Blast Furnace?
 2. Test player preference to bypass `tardis rescue accept`
 3. Test `invisibility` setting in TARDIS areas
 4. Test Handles transmat requests
@@ -26,9 +26,8 @@
 
 ## Resource Pack / TARDISWeepingAngels
 1. Custom Time Rotor model
-2. Custom Entity models using Optifine (when they can be applied to named entities)
-3. Rare armour drops
-4. Re-skin mobs for Resource pack, and add new mob sounds
+2. Rare armour drops
+3. Re-skin mobs for Resource pack, and add new mob sounds
    * Clockwork Droid
    * Hath _started_
    * Endermites -> Cybermats
@@ -37,7 +36,7 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
-5. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
 ## Minecraft API if ever available
 1. Recreate everything with the new API :)
