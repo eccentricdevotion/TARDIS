@@ -122,6 +122,7 @@ public class TARDISTerminalListener implements Listener {
                             break;
                         case 36:
                             // current world
+                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 36);
                             break;
                         case 38:
@@ -131,10 +132,12 @@ public class TARDISTerminalListener implements Listener {
                             break;
                         case 40:
                             // nether
+                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 40);
                             break;
                         case 42:
                             // the end
+                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 42);
                             break;
                         case 44:
