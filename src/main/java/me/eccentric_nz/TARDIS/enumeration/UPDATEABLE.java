@@ -7,7 +7,7 @@ import org.bukkit.inventory.RecipeChoice;
 
 public enum UPDATEABLE {
 
-    ADVANCED(false, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX)),
+    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX)),
     ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     ARTRON(true, true),
     BACK(true, true),
