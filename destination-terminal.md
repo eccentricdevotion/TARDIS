@@ -9,7 +9,7 @@ title: Destination Terminal
 
 The Destination Terminal is an alternative way to set a time travel location. The Destination Terminal is automatically added to new TARDISes. You can destroy and place it at a new location by using the `/tardis update terminal` command.
 
-To use the Destination Terminal, right-click it to open the inventory based GUI. You will see a screen like the one below. The basic functions of the GUI are the same as when using the repeaters on the TARDIS console — you can set the `x` and `z` coordinates, a distance miltiplier, and a world type. The Destination Terminal also lets you select the TARDIS submarine mode for travelling under water.
+To use the Destination Terminal, right-click it to open the inventory based GUI. You will see a screen like the one below. The basic functions of the GUI are the same as when using the repeaters on the TARDIS console — you can set the `x` and `z` coordinates, a distance multiplier, and a world type. The Destination Terminal also lets you select the TARDIS submarine mode for travelling under water.
 
 ![Destination Terminal](images/docs/destination-terminal.jpg)
 

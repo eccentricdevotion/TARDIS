@@ -6,7 +6,7 @@ title: Achievements
 Achievements
 ============
 
-Players can gain rewards for TARDIS achievements. The achievement system is mostly automatic, and works in conhunction with TARDIS [books](books.html). If using a Spout enabled server/client combination, then an actual Minecraft achievement popup is used :)
+Players can gain rewards for TARDIS achievements. The achievement system is mostly automatic, and works in conjunction with TARDIS [books](books.html). If using a Spout enabled server/client combination, then an actual Minecraft achievement popup is used :)
 
 Players can get the following achievements.
 

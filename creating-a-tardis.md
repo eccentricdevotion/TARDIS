@@ -55,7 +55,7 @@ Seed blocks can be placed, broken and dropped and still remain as a valid seed b
 
 ## Growing the TARDIS from the seed
 
-Your TARDIS Police Box requires a 3 x 3 x 4 (w x d x h) cuboid region. Where you place the TARDIS seed block will be the center of the Police Box, and will be saved as the TARDIS’s ‘Home’ location.
+Your TARDIS Police Box requires a 3 x 3 x 4 (w x d x h) cuboid region. Where you place the TARDIS seed block will be the centre of the Police Box, and will be saved as the TARDIS’s ‘Home’ location.
 
 To create your TARDIS, right-click a placed seed block with the TARDIS key.
 

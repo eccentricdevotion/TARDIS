@@ -29,7 +29,7 @@ eg. `/tardistravel eccentric_nz` — to travel to a player.
 
 A player can prevent other players from travelling to them by setting the player preference to ‘Do Not Disturb’ — to do this type: `/tardisprefs dnd [on|off]` or use the Sonic Prefs Menu.
 
-To ask a player if you can trvel to their protected region / claim, use the coomand:
+To ask a player if you can travel to their protected region / claim, use the command:
 
     /tardistravel [player] ?
 
@@ -75,4 +75,3 @@ Removes the currently set travel destination
     /tardistravel stop
 
 Stops travelling / materialising and returns to the home location. _Use in an emergency only!_
-

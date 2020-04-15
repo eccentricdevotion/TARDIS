@@ -17,7 +17,7 @@ To travel to a saved location, simply click a block.
 
 ### Rearranging saves
 
-In later versions of the plugin, saves can be rearranged into your preferred order. To do this, click the bottom left block called “Rearrange saves” then move the saves into their desired positions. You cannot rearrage the “home” location block.
+In later versions of the plugin, saves can be rearranged into your preferred order. To do this, click the bottom left block called “Rearrange saves” then move the saves into their desired positions. You cannot rearrange the “home” location block.
 
 Close the Save Sign GUI to keep the arrangement.
 
@@ -26,4 +26,3 @@ Close the Save Sign GUI to keep the arrangement.
 The bottom middle block in the Save Sign GUI lets you switch to the TARDIS Areas screen. Any areas set up by the server administrator (and that you have permission for) will be shown here. To go to the location, click the block just like you would for a save.
 
 ![Save Sign](images/docs/save-sign.jpg)
-

@@ -9,7 +9,7 @@ title: Alternative controls
 
 As of version v2.2-beta-1, the ‘save’ sign is automatically added to the main TARDIS control room. If you are missing a save sign, add it with the command `/tardis update save-sign`
 
-The ‘save’ sign can be used to quicklty set the TARDIS’s destination
+The ‘save’ sign can be used to quickly set the TARDIS’s destination
 
 - Right-clicking the sign will cycle through the TARDIS’s saved destinations, as well as the TARDIS ‘Home’ location.
 - Right-clicking the sign while sneaking will set the TARDIS destination to the save currently shown on the sign.

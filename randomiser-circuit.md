@@ -28,7 +28,7 @@ travel:
     z: 5000
 ```
 
-Maximum +/- number of blocks the random location search will look between in x and z directions, so default will be -5000 to 5000 in both x and z directions. If the WorldBorder plugin is installed or a vaniila world border is in use, then those settings will be used instead.
+Maximum +/- number of blocks the random location search will look between in x and z directions, so default will be -5000 to 5000 in both x and z directions. If the WorldBorder plugin is installed or a vanilla world border is in use, then those settings will be used instead.
 
 In _artron.yml_:
 ```yaml

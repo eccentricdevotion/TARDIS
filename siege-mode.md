@@ -1,4 +1,4 @@
----
+sacrificed---
 layout: default
 title: Siege mode
 ---
@@ -49,8 +49,8 @@ The settings are explained below:
 - `breeding: [percentage]` — if this is set higher than 0, this is the percentage chance that twins will be born when animals breed
 - `growth: [percentage]` — if this is set higher than 0, this is the percentage chance that a plant will sprout an extra step when it grows
 - `butcher: [true|false]` — whether any hostile mobs inside the TARDIS will be butchered when Siege mode is engaged
-- `creeper: [true|false]` — whether (when the TARDIS runs out of energy) the Artron creeper will be sacrified to give the TARDIS an energy boost
-- `healing: [true|false]` — whether players inside the TARDIS recieve a healing pick-me-up
+- `creeper: [true|false]` — whether (when the TARDIS runs out of energy) the Artron creeper will be sacrificed to give the TARDIS an energy boost
+- `healing: [true|false]` — whether players inside the TARDIS receive a healing pick-me-up
 - `texture: [true|false]` — whether the desktop theme is changed when Siege mode is engaged
 
 ### Siege mode Artron settings
@@ -69,7 +69,7 @@ The default Artron settings for Siege mode are shown below:
 
 ## The Siege Cube
 
-The Siege Cube replaces the Police Box when Siege mode is engaged. The Time Lord and any companions of the TARDIS can mine the Siege Cube and carry it around with them in their inventory. While as an _item_, the Siege Cube is indestructable.
+The Siege Cube replaces the Police Box when Siege mode is engaged. The Time Lord and any companions of the TARDIS can mine the Siege Cube and carry it around with them in their inventory. While as an _item_, the Siege Cube is indestructible.
 
 If the player drops the Siege Cube on the ground, and there is sufficient room for a Police Box to materialise, the Siege Cube will turn back into a block again.
 
@@ -98,4 +98,3 @@ The player must be online when running the command, and the TARDIS will be resto
 ![Siege Cube](images/docs/siegecube.jpg)
 
 **Note:** the TARDIS Siege Cube block is a huge brown mushroom with the texture on all sides. As such it is recommended that players use the [TARDIS-MCP Resource Pack](https://github.com/eccentricdevotion/TARDIS-MCP) so that it looks the part and can be distinguished easily.
-

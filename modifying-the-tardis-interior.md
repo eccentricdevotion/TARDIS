@@ -9,7 +9,7 @@ title: Modifying the interior
 
 While you can’t modify the Police Box — as it gets recreated every time you travel to a new destination, it is possible to alter the interior of the TARDIS (aside from growing [rooms](rooms.html)). However there are some blocks that the plugin expects to be in a certain position. These are:
 
-- On the TARDIS console 
+- On the TARDIS console
   - The repeaters
   - The handbrake
   - The random location button
@@ -59,7 +59,7 @@ Anything else can be destroyed and changed.
 
 **Note 2:** If `create_worlds` is false in the TARDIS configuration file and you are using a TARDIS version prior to v2.7-beta-1, the plugin only reserves and protects the initial chunks used to create the TARDIS in, which means that another player could potentially create a TARDIS that overlaps yours if you make it bigger.
 
-See also: [Binding desinations to blocks](bind-commands.html)
+See also: [Binding destinations to blocks](bind-commands.html)
 
 ## Changing room wall and floor blocks
 
@@ -72,4 +72,3 @@ You can change the blocks that room walls and floors are grown with in two ways:
 - Set the floor block using the `/tardisprefs floor [material]` command. A list of valid materials can be found on the [Wall materials](walls.html) page
 
 ![Sandstone walls](images/docs/sandstonewalls.jpg)
-

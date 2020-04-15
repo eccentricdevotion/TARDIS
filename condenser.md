@@ -16,7 +16,7 @@ The condenser chest is automatically added to newly created TARDISes, but there 
 
 To convert materials to Artron Energy, place them in the Condenser chest and then close it. Any valid materials will be converted, and you will receive a message stating how much energy was generated.
 
-A list of condesnable items and their relative values can be found on the [Condensables](condensables.html) page.
+A list of condensable items and their relative values can be found on the [Condensables](condensables.html) page.
 
 ![Energy condenser](images/docs/condenser.jpg)
 
@@ -29,4 +29,3 @@ To add a server condenser, place a chest, target it, then run the command:
     /tardisadmin condenser
 
 The server condenser works the same way as the interior TARDIS condenser.
-

@@ -23,7 +23,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Biome Storage Disk | `/tardisrecipe biome-disk` |
 | Blank Storage Disk | `/tardisrecipe blank` |
 | Chameleon Circuit | `/tardisrecipe c-circuit` |
-| Diamind Disruptor Circuit | `/tardisrecipe d-circuit` |
+| Diamond Disruptor Circuit | `/tardisrecipe d-circuit` |
 | Emerald Environment Circuit | `/tardisrecipe e-circuit` |
 | Perception Filter | `/tardisrecipe filter` |
 | TARDIS Key | `/tardisrecipe key` |
@@ -42,4 +42,3 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Sonic Screwdriver | `/tardisrecipe sonic` |
 
 ![Recipe GUI](images/docs/recipe.jpg)
-

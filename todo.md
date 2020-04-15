@@ -54,7 +54,7 @@ title: To-Do
  3. Sycorax
  4. Scarecrows
 
-## TIPS visulisation tool
+## TIPS visualisation tool
 * Use WorldGuard region data
 
 ## Waiting on Bukkit / SpigotAPI

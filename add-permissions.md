@@ -32,6 +32,6 @@ To do this:
 *   Add a minus in front of the permissions to make it false.
 *   If you want to add other groups, put the group name (with a `#` at the start) and add the permissions for the players in that group
 
-In the example above the `first_group` is the one that the TARDIS owner will be added to. The `second_group` would be used for any companions that the `first_group` player might want to tag along (they can’t build TARDISes, but can enter anyone elses if they are a companion).
+In the example above the `first_group` is the one that the TARDIS owner will be added to. The `second_group` would be used for any companions that the `first_group` player might want to tag along (they can’t build TARDISes, but can enter anyone else's if they are a companion).
 
 This feature supports Essentials GroupManager and bPermissions only at this stage.
