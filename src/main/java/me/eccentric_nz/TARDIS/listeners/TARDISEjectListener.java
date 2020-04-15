@@ -253,6 +253,7 @@ public class TARDISEjectListener implements Listener {
                 if (parrot_name != null && !parrot_name.isEmpty()) {
                     outer_parrot.setCustomName(parrot_name);
                 }
+                outer_parrot.setVariant(inner_parrot.getVariant());
                 ent.remove();
                 break;
             case PIG:
