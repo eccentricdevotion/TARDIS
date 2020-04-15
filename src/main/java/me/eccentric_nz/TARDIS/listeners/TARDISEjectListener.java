@@ -236,9 +236,11 @@ public class TARDISEjectListener implements Listener {
                 Panda inner_panda = (Panda) ent;
                 Panda outer_panda = (Panda) l.getWorld().spawnEntity(l, EntityType.PANDA);
                 outer_panda.setTicksLived(inner_panda.getTicksLived());
-                if ((!inner_panda.isAdult())) {
+                if (!inner_panda.isAdult()) {
                     outer_panda.setBaby();
                 }
+                outer_panda.setMainGene(inner_panda.getMainGene());
+                outer_panda.setHiddenGene(inner_panda.getHiddenGene());
                 String panda_name = ent.getCustomName();
                 if (panda_name != null && !panda_name.isEmpty()) {
                     outer_panda.setCustomName(panda_name);
