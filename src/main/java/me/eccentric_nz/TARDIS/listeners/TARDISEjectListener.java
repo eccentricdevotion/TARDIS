@@ -232,6 +232,29 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
                 break;
+            case PANDA:
+                Panda inner_panda = (Panda) ent;
+                Panda outer_panda = (Panda) l.getWorld().spawnEntity(l, EntityType.PANDA);
+                outer_panda.setTicksLived(inner_panda.getTicksLived());
+                if ((!inner_panda.isAdult())) {
+                    outer_panda.setBaby();
+                }
+                String panda_name = ent.getCustomName();
+                if (panda_name != null && !panda_name.isEmpty()) {
+                    outer_panda.setCustomName(panda_name);
+                }
+                ent.remove();
+                break;
+            case PARROT:
+                Parrot inner_parrot = (Parrot) ent;
+                Parrot outer_parrot = (Parrot) l.getWorld().spawnEntity(l, EntityType.PARROT);
+                outer_parrot.setTicksLived(inner_parrot.getTicksLived());
+                String parrot_name = ent.getCustomName();
+                if (parrot_name != null && !parrot_name.isEmpty()) {
+                    outer_parrot.setCustomName(parrot_name);
+                }
+                ent.remove();
+                break;
             case PIG:
                 Pig g = (Pig) ent;
                 // eject any passengers
