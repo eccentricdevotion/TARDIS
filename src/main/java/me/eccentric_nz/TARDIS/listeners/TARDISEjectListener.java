@@ -109,10 +109,16 @@ public class TARDISEjectListener implements Listener {
                 Bee b = (Bee) ent;
                 Bee bee = (Bee) l.getWorld().spawnEntity(l, EntityType.BEE);
                 bee.setTicksLived(b.getTicksLived());
+                if (!b.isAdult()) {
+                    bee.setBaby();
+                }
                 String beename = ent.getCustomName();
                 if (beename != null && !beename.isEmpty()) {
                     bee.setCustomName(beename);
                 }
+                bee.setHasStung(b.hasStung());
+                bee.setHasNectar(b.hasNectar());
+                bee.setAnger(b.getAnger());
                 ent.remove();
                 break;
             case CHICKEN:
@@ -161,11 +167,7 @@ public class TARDISEjectListener implements Listener {
                 tmlla.setLlamacolor(ll.getColor());
                 tmlla.setStrength(ll.getStrength());
                 tmlla.setHorseVariant(EntityType.HORSE);
-                if (ll.isTamed()) {
-                    tmlla.setTamed(true);
-                } else {
-                    tmlla.setTamed(false);
-                }
+                tmlla.setTamed(ll.isTamed());
                 if (ll.isCarryingChest()) {
                     tmlla.setHasChest(true);
                 }
