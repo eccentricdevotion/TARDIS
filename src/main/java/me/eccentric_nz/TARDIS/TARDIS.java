@@ -171,7 +171,7 @@ public class TARDIS extends JavaPlugin {
         helperOnServer = false;
         invManager = INVENTORY_MANAGER.NONE;
         versions.put("Citizens", "2.0.26");
-//        versions.put("Factions", "2.8.19");
+        versions.put("Factions", "1.6.9.5");
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "9.9.9");
         versions.put("MultiWorld", "5.2");
@@ -422,13 +422,6 @@ public class TARDIS extends JavaPlugin {
                 Version ver = new Version("0");
                 if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
                     ver = new Version("1");
-                } else if (plg.equals("Factions")) {
-                    if (preSplit.endsWith("Beta")) {
-                        ver = new Version(split[0].substring(0, split[0].length() - 4));
-                    } else if (check.getDescription().getMain().contains("SavageFactions")) {
-                        ver = new Version(split[0]);
-                        minver = new Version("1.6.9.5");
-                    }
                 } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");

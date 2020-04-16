@@ -306,18 +306,10 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>2.14.0</version>
+            <version>1.6.9.5</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Factions.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.massivecraft</groupId>
-            <artifactId>massivecore</artifactId>
-            <version>2.14.0</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/MassiveCore.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
