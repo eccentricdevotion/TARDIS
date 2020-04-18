@@ -98,6 +98,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         ItemMeta dim = disk.getItemMeta();
                                         dim.setDisplayName("Biome Storage Disk");
                                         dim.setLore(disk_lore);
+                                        dim.setCustomModelData(10000001);
                                         disk.setItemMeta(dim);
                                         inv.setItem(0, disk);
                                         player.updateInventory();
@@ -112,6 +113,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         ItemMeta dim = disk.getItemMeta();
                                         dim.setDisplayName("Biome Storage Disk");
                                         dim.setLore(disk_lore);
+                                        dim.setCustomModelData(10000001);
                                         disk.setItemMeta(dim);
                                         inv.setItem(0, disk);
                                         player.updateInventory();
@@ -144,6 +146,7 @@ public class TARDISDiskCraftListener implements Listener {
                                             ItemMeta dim = disk.getItemMeta();
                                             dim.setDisplayName("Preset Storage Disk");
                                             dim.setLore(disk_lore);
+                                            dim.setCustomModelData(10000001);
                                             disk.setItemMeta(dim);
                                             inv.setItem(0, disk);
                                             player.updateInventory();

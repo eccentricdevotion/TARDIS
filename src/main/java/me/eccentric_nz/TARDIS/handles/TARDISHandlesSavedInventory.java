@@ -67,7 +67,7 @@ class TARDISHandlesSavedInventory {
                     im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
                 }
                 im.addItemFlags(ItemFlag.values());
-                im.setCustomModelData(1);
+                im.setCustomModelData(10000001);
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;

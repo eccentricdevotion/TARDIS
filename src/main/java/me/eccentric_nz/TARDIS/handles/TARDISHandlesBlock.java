@@ -117,10 +117,10 @@ public enum TARDISHandlesBlock {
     LEFT(TARDISHandlesCategory.BUTTON, "Scroll left", null, 60),
     RIGHT(TARDISHandlesCategory.BUTTON, "Scroll right", null, 73),
     // music disks
-    AREA_DISK(TARDISHandlesCategory.DISK, "Area Storage Disk", null, 1),
-    BIOME_DISK(TARDISHandlesCategory.DISK, "Biome Storage Disk", null, 1),
-    PLAYER_DISK(TARDISHandlesCategory.DISK, "Player Storage Disk", null, 1),
-    SAVE_DISK(TARDISHandlesCategory.DISK, "Save Storage Disk", null, 1);
+    AREA_DISK(TARDISHandlesCategory.DISK, "Area Storage Disk", null, 10000001),
+    BIOME_DISK(TARDISHandlesCategory.DISK, "Biome Storage Disk", null, 10000001),
+    PLAYER_DISK(TARDISHandlesCategory.DISK, "Player Storage Disk", null, 10000001),
+    SAVE_DISK(TARDISHandlesCategory.DISK, "Save Storage Disk", null, 10000001);
 
     private final TARDISHandlesCategory category;
     private final String displayName;
@@ -167,8 +167,10 @@ public enum TARDISHandlesBlock {
                 case SELECTOR:
                     selectors.add(block);
                     break;
-                default:
+                case VARIABLE:
                     variables.add(block);
+                    break;
+                default:
                     break;
             }
             BY_NAME.put(block.displayName, block);
