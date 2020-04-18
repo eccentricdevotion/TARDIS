@@ -13,7 +13,7 @@ Get the TARDIS plugin files from: [http://dev.bukkit.org/bukkit-plugins/tardis](
 
 You install TARDIS just like you would any other Bukkit plugin, by dropping it into the Bukkit plugins folder and starting the server. TARDIS depends on a small library of code that is found in another plugin: TARDISChunkGenerator.jar — you can find this under _Additional Files_ on the TARDIS download page. The TARDIS database, configuration, schematic and map files will be created automatically.
 
-Some versions of the TARDIS plugin are backwards compatible with previous versions of CraftBukkit (version 2.5.8 is [compatible with Tekkit Classic Server](tekkit.html)), for the plugin to have full functionality and work correctly you should have CraftBukkit / Spigot / Paper version `1.14.4-R0.1` or higher.
+Some versions of the TARDIS plugin are backwards compatible with previous versions of CraftBukkit (version 2.5.8 is compatible with Tekkit Classic Server), for the plugin to have full functionality and work correctly you should have CraftBukkit / Spigot / Paper version `1.15.2-R0.1` or higher.
 
 The TARDIS plugin has evolved into a complex beast, with configurable recipes, and other things that unexperienced server administrators may have trouble with. If you have difficulties, create a ticket on the [plugin page](http://dev.bukkit.org/bukkit-plugins/tardis/tickets).
 
@@ -42,14 +42,12 @@ New configuration options and database fields will be added automatically, and i
 
 While not essential to make the TARDIS plugin work, the following plugins will make your Time Travelling experience even better.
 
-1. Install the [TARDISChunkGenerator](http://dev.bukkit.org/bukkit-plugins/tardis) plugin so that you can generate TARDISes in their own self-contained void world.
-2. Install [WorldGuard](http://dev.bukkit.org/bukkit-plugins/worldguard) to automatically protect your TARDIS from griefing, and stop mobs spawning in TARDIS worlds.
-3. Install [WorldBorder](http://dev.bukkit.org/bukkit-plugins/worldborder) to restrict the size of the worlds generated for TARDIS occupation.
-4. Install a Permissions plugin, so that you can restrict or grant players the rights to use TARDIS’ different features. We like [PermissionsBukkit](http://dev.bukkit.org/bukkit-plugins/permbukkit/).
-5. Install [TARDISWeepingAngels](weeping-angels.html) for a more Who-like experience!
-6. Install [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) so that the TARDIS Zero Room is completely detached from the universe and the TARDIS Keyboard is editable by clicking it.
-7. Install [LibsDisguises](http://www.spigotmc.org/resources/libs-disguises.81/) so that you can use the Genetic Manipulator / Immortality Gate.
-8. Install [Dynmap-TARDIS](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/) so that you show real-time TARDIS locations on the Dynmap plugin map.
+1. Install [WorldGuard](http://dev.bukkit.org/bukkit-plugins/worldguard) to automatically protect your TARDIS from griefing.
+2. Install a permissions plugin, so that you can restrict or grant players the rights to use TARDIS’ different features. We like [PermissionsBukkit](http://dev.bukkit.org/bukkit-plugins/permbukkit/).
+3. Install [TARDISWeepingAngels](weeping-angels.html) for a more Who-like experience!
+4. Install [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) so that the TARDIS Zero Room is completely dettached from the universe. Also required by LibsDisguises below.
+5. Install [LibsDisguises](http://www.spigotmc.org/resources/libs-disguises.81/) so that you can use the Genetic Manipulator / Immortality Gate.
+6. Install [Dynmap-TARDIS](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/) so that you show real-time TARDIS locations on the Dynmap plugin map.
 
 ### Video
 <iframe src="https://player.vimeo.com/video/58356201" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
