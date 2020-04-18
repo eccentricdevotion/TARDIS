@@ -32,7 +32,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -84,15 +83,9 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             }
             STORAGE store = STORAGE.valueOf(tmp);
             saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
-        } else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console")) {
-            /*
-             * Fix incorrect Bukkit behaviour
-             *
-             * https://bukkit.atlassian.net/browse/BUKKIT-2788
-             */
-            int isze = (view.getType().equals(InventoryType.ANVIL)) ? 2 : event.getInventory().getSize();
+        } else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
             // scan the inventory for area disks and spit them out
-            for (int i = 0; i < isze; i++) {
+            for (int i = 0; i < event.getInventory().getSize(); i++) {
                 ItemStack stack = view.getItem(i);
                 if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
                     ItemMeta ims = stack.getItemMeta();
