@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import com.massivecraft.factions.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISFactionsChecker {
+public class TARDISFactionsUUID {
 
     /**
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
@@ -38,11 +38,14 @@ public class TARDISFactionsChecker {
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
     public boolean isInFaction(Player p, Location l) {
-        try {
-            Class.forName("com.massivecraft.factions.entity.MPlayer");
-            return TARDIS.plugin.getTardisHelper().isInFaction(p, l);
-        } catch (Exception e) {
-            return new TARDISFactionsUUID().isInFaction(p, l);
+        boolean bool = true;
+        FPlayer uplayer = FPlayers.getInstance().getByPlayer(p);
+        Faction ufac = uplayer.getFaction();
+        FLocation flocation = new FLocation(l);
+        Faction lfac = Board.getInstance().getFactionAt(flocation);
+        if (!ufac.equals(lfac) && !lfac.isNone()) {
+            bool = false;
         }
+        return bool;
     }
 }
