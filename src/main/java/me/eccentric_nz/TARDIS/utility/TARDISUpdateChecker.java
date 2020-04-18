@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Map;
+import java.net.URLConnection;
 
 public class TARDISUpdateChecker implements Runnable {
 
@@ -45,12 +46,12 @@ public class TARDISUpdateChecker implements Runnable {
             return;
         }
         int buildNumber = Integer.parseInt(build);
-        Map<String, Object> lastBuild = fetchLatestJenkinsBuild();
-        if (lastBuild == null || !lastBuild.containsKey("id")) {
+        JsonObject lastBuild = fetchLatestJenkinsBuild();
+        if (lastBuild == null || !lastBuild.has("id")) {
             // couldn't get Jenkins info
             return;
         }
-        int newBuildNumber = Integer.parseInt((String) lastBuild.get("id"));
+        int newBuildNumber = lastBuild.get("id").getAsInt();
         if (newBuildNumber <= buildNumber) {
             // if new build number is same or older
             return;
@@ -64,21 +65,19 @@ public class TARDISUpdateChecker implements Runnable {
     /**
      * Fetches from jenkins, using the REST api the last snapshot build information
      */
-    private Map<String, Object> fetchLatestJenkinsBuild() {
+    private JsonObject fetchLatestJenkinsBuild() {
         try {
             // We're connecting to TARDIS's Jenkins REST api
             URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
             // Creating a connection
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            Map<String, Object> jsonObject;
+            URLConnection request = url.openConnection();
+            request.connect();
 
-            // Get the input stream, what we receive
-            try (InputStream input = con.getInputStream()) {
-                // Read it to string
-                String json = IOUtils.toString(input, "utf-8");
-                jsonObject = new Gson().fromJson(json, Map.class);
-            }
-            return jsonObject;
+            // Convert to a JSON object
+            JsonParser jp = new JsonParser(); // from gson
+            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); // Convert the input stream to a json element
+            JsonObject rootobj = root.getAsJsonObject(); // May be an array, may be an object.
+            return rootobj;
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
         }
