@@ -14,8 +14,10 @@ TARDIS provides an easy way to get materials into its interior. The method uses 
 Setting up the system is a multi-step process:
 
 1. Grow a rail room
-2. Move your TARDIS to a location and save it
-3. Run rails up to the TARDIS (exterior) door — **Note:** it must be an IRON door, change the exterior preset if necessary
+2. Move your TARDIS to a location and **save it**
+3. Move the TARDIS to a different location
+4. Run rails up to the TARDIS (exterior) door — **Note:** it must be a preset with a door, change the exterior preset if necessary
+5. Travel back to your saved location from step 1
 
 The design of the rail system is up to you, but only one minecart can be inside the rail room at a time, so you will need to take that into consideration.
 
