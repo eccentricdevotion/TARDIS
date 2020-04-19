@@ -126,7 +126,6 @@ class TARDISHostileDisplacement {
                         set.put("z", fl.getBlockZ());
                         set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", set, tid);
-                        plugin.getTrackerKeeper().getDamage().remove(id);
                         long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
@@ -162,6 +161,7 @@ class TARDISHostileDisplacement {
                             hostile.sendMessage(message);
                         }
                         plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, fl, HADS.DISPLACEMENT));
+                        break;
                     } else {
                         TARDISMessage.send(player, "HADS_PROTECTED");
                         if (player != hostile) {

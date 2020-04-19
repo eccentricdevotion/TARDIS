@@ -773,8 +773,6 @@ class TARDISMaterialisationPreset implements Runnable {
                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
-                // tardis has moved so remove HADS damage count
-                plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
                 plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
                 if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
                     plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
@@ -821,6 +819,8 @@ class TARDISMaterialisationPreset implements Runnable {
                         whered.put("police_box", 2);
                         plugin.getQueryFactory().doDelete("blocks", whered);
                     }
+                    // tardis has moved so remove HADS damage count
+                    plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
                 }
             }
         }

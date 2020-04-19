@@ -39,6 +39,10 @@ public class TARDISHostileAction {
     }
 
     public void processAction(int id, Player hostile) {
+        if (plugin.getTrackerKeeper().getDamage().get(id) > 99) {
+            return;
+        }
+        plugin.getTrackerKeeper().getDamage().put(id, 100);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
