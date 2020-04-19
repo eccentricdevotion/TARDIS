@@ -2,11 +2,7 @@ package me.eccentric_nz.TARDIS.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Player;
 
@@ -66,14 +62,19 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
             ResultSetArtronLevel rsl;
             ResultSetTardis rst;
             HashMap<String, Object> where = new HashMap<>();
-            boolean exist;
             ResultSetTardisID rsti;
             ResultSetCurrentLocation rscl;
             switch (identifier) {
+                case "ars_status":
+                    Integer percent = plugin.getBuildKeeper().getRoomProgress().get(player.getUniqueId());
+                    if (percent != null) {
+                        result = Integer.toString(percent);
+                    }
+                    break;
                 case "artron_amount":
                     rsl = new ResultSetArtronLevel(plugin, uuid);
                     if (rsl.resultset()) {
-                        result = "" + rsl.getArtronLevel();
+                        result = Integer.toString(rsl.getArtronLevel());
                     }
                     break;
                 case "artron_percent":
@@ -88,6 +89,11 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     if (rst.resultSet()) {
                         result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
                     }
+                    break;
+                case "in":
+                    where.put("uuid", uuid);
+                    ResultSetTravellers rsv = new ResultSetTravellers(plugin, where, false);
+                    result = rsv.resultSet() ? "true" : "false";
                     break;
                 case "preset":
                     where.put("uuid", uuid);
@@ -112,7 +118,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("tardis_id", rsti.getTardis_id());
                         rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
-                            result = rscl.getX() + "";
+                            result = Integer.toString(rscl.getX());
                         }
                     }
                     break;
@@ -122,7 +128,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("tardis_id", rsti.getTardis_id());
                         rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
-                            result = rscl.getY() + "";
+                            result = Integer.toString(rscl.getY());
                         }
                     }
                     break;
@@ -132,7 +138,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("tardis_id", rsti.getTardis_id());
                         rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
-                            result = rscl.getZ() + "";
+                            result = Integer.toString(rscl.getZ());
                         }
                     }
                     break;
@@ -142,7 +148,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("tardis_id", rsti.getTardis_id());
                         rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
-                            result = rscl.getWorld().getName() + "";
+                            result = rscl.getWorld().getName();
                         }
                     }
                     break;
@@ -152,7 +158,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("tardis_id", rsti.getTardis_id());
                         rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
-                            result = rscl.getDirection() + "";
+                            result = rscl.getDirection().toString();
                         }
                     }
                     break;
@@ -162,14 +168,14 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("tardis_id", rsti.getTardis_id());
                         rscl = new ResultSetCurrentLocation(plugin, where);
                         if (rscl.resultSet()) {
-                            result = rscl.getBiome() + "";
+                            result = rscl.getBiome().toString();
                         }
                     }
                     break;
                 case "timelord_artron_amount":
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                     if (rsp.resultSet()) {
-                        result = "" + rsp.getArtronLevel();
+                        result = Integer.toString(rsp.getArtronLevel());
                     }
                     break;
                 default:
