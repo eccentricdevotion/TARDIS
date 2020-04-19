@@ -232,6 +232,7 @@ public class TARDISRoomRunnable implements Runnable {
                     trd.setPostBlocks(new ArrayList<>());
                     plugin.getTrackerKeeper().getRoomTasks().put(task, trd);
                 }
+                plugin.getBuildKeeper().getRoomProgress().put(player.getUniqueId(), 0);
                 running = true;
                 String grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
@@ -486,6 +487,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (player != null) {
                     TARDISMessage.send(player, "ROOM_FINISHED", rname);
                 }
+                plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
             } else {
                 TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                 // place one block
@@ -855,7 +857,6 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                     }
                 }
-
                 Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
                 thisChunk.setForceLoaded(true);
                 chunkList.add(thisChunk);
@@ -973,6 +974,7 @@ public class TARDISRoomRunnable implements Runnable {
                     starty += 1;
                     int percent = TARDISNumberParsers.roundUp(level * 100, h);
                     if (percent > 0 && player != null) {
+                        plugin.getBuildKeeper().getRoomProgress().put(player.getUniqueId(), percent);
                         TARDISMessage.send(player, "ROOM_PERCENT", room, String.format("%d", percent));
                     }
                     level++;

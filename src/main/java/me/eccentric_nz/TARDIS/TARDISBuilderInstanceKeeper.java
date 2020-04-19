@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Material;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Keeps track of various building related lookups. these include: Room block counts, Room seed blocks and Stained Glass
@@ -38,6 +35,7 @@ public class TARDISBuilderInstanceKeeper {
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
     private static final List<String> IGNORE_BLOCKS = Arrays.asList("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
     private static final List<Material> PRECIOUS = new ArrayList<>();
+    private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
 
     static {
         BLOCK_CONVERSION.put("ACACIA_LEAVES", "ACACIA_SAPLING");
@@ -134,5 +132,9 @@ public class TARDISBuilderInstanceKeeper {
 
     public static List<Material> getPrecious() {
         return PRECIOUS;
+    }
+
+    public HashMap<UUID, Integer> getRoomProgress() {
+        return roomProgress;
     }
 }

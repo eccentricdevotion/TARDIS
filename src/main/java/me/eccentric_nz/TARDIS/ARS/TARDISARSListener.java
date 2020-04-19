@@ -115,7 +115,11 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         break;
                     case 12:
                         // reconfigure
-                        close(player);
+                        if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
+                            close(player);
+                        } else {
+                            TARDISMessage.send(player, "ARS_ACTIVE");
+                        }
                         break;
                     case 27:
                     case 28:
