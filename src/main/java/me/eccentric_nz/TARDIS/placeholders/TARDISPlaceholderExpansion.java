@@ -4,6 +4,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -64,122 +65,167 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
             HashMap<String, Object> where = new HashMap<>();
             ResultSetTardisID rsti;
             ResultSetCurrentLocation rscl;
-            switch (identifier) {
-                case "ars_status":
-                    Integer percent = plugin.getBuildKeeper().getRoomProgress().get(player.getUniqueId());
-                    if (percent != null) {
-                        result = Integer.toString(percent);
+            if (identifier.startsWith("in")) {
+                // default to false so if all else fails we get a result
+                result = "false";
+                where.put("uuid", uuid);
+                ResultSetTravellers rsv = new ResultSetTravellers(plugin, where, false);
+                if (rsv.resultSet()) {
+                    /*
+                     %tardis_in_any%
+                     %tardis_in_own%
+                     %tardis_in_whose%
+                     %tardis_in_user_<username>%
+                     */
+                    String[] split = identifier.split("_");
+                    switch (split[1]) {
+                        case "any":
+                            result = "true";
+                            break;
+                        case "own":
+                            rsti = new ResultSetTardisID(plugin);
+                            if (rsti.fromUUID(uuid) && rsti.getTardis_id() == rsv.getTardis_id()) {
+                                result = "true";
+                            }
+                            break;
+                        case "whose":
+                            where.put("tardis_id", rsv.getTardis_id());
+                            rst = new ResultSetTardis(plugin, where, "", false, 2);
+                            if (rst.resultSet()) {
+                                if (rst.getTardis().getTardis_id() == rsv.getTardis_id()) {
+                                    result = "their own";
+                                } else {
+                                    result = rst.getTardis().getOwner() + "'s";
+                                }
+                            }
+                            break;
+                        default:
+                            // user
+                            if (split.length > 2) {
+                                OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(split[2]);
+                                if (offlinePlayer != null) {
+                                    rsti = new ResultSetTardisID(plugin);
+                                    if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardis_id() == rsv.getTardis_id()) {
+                                        result = "true";
+                                    }
+                                }
+                            }
+                            break;
                     }
-                    break;
-                case "artron_amount":
-                    rsl = new ResultSetArtronLevel(plugin, uuid);
-                    if (rsl.resultset()) {
-                        result = Integer.toString(rsl.getArtronLevel());
-                    }
-                    break;
-                case "artron_percent":
-                    rsl = new ResultSetArtronLevel(plugin, uuid);
-                    if (rsl.resultset()) {
-                        result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
-                    }
-                    break;
-                case "console":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
-                    }
-                    break;
-                case "in":
-                    where.put("uuid", uuid);
-                    ResultSetTravellers rsv = new ResultSetTravellers(plugin, where, false);
-                    result = rsv.resultSet() ? "true" : "false";
-                    break;
-                case "preset":
-                    where.put("uuid", uuid);
-                    rst = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rst.resultSet()) {
-                        result = rst.getTardis().getPreset().toString();
-                    }
-                    break;
-                case "current_location":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
+                }
+            } else {
+                switch (identifier) {
+                    case "ars_status":
+                        Integer percent = plugin.getBuildKeeper().getRoomProgress().get(player.getUniqueId());
+                        if (percent != null) {
+                            result = Integer.toString(percent);
                         }
-                    }
-                    break;
-                case "current_location_x":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = Integer.toString(rscl.getX());
+                        break;
+                    case "artron_amount":
+                        rsl = new ResultSetArtronLevel(plugin, uuid);
+                        if (rsl.resultset()) {
+                            result = Integer.toString(rsl.getArtronLevel());
                         }
-                    }
-                    break;
-                case "current_location_y":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = Integer.toString(rscl.getY());
+                        break;
+                    case "artron_percent":
+                        rsl = new ResultSetArtronLevel(plugin, uuid);
+                        if (rsl.resultset()) {
+                            result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
                         }
-                    }
-                    break;
-                case "current_location_z":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = Integer.toString(rscl.getZ());
+                        break;
+                    case "console":
+                        where.put("uuid", uuid);
+                        rst = new ResultSetTardis(plugin, where, "", false, 2);
+                        if (rst.resultSet()) {
+                            result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
                         }
-                    }
-                    break;
-                case "current_location_world":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = rscl.getWorld().getName();
+                        break;
+                    case "preset":
+                        where.put("uuid", uuid);
+                        rst = new ResultSetTardis(plugin, where, "", false, 2);
+                        if (rst.resultSet()) {
+                            result = rst.getTardis().getPreset().toString();
                         }
-                    }
-                    break;
-                case "current_location_direction":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = rscl.getDirection().toString();
+                        break;
+                    case "current_location":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
+                            }
                         }
-                    }
-                    break;
-                case "current_location_biome":
-                    rsti = new ResultSetTardisID(plugin);
-                    if (rsti.fromUUID(uuid)) {
-                        where.put("tardis_id", rsti.getTardis_id());
-                        rscl = new ResultSetCurrentLocation(plugin, where);
-                        if (rscl.resultSet()) {
-                            result = rscl.getBiome().toString();
+                        break;
+                    case "current_location_x":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = Integer.toString(rscl.getX());
+                            }
                         }
-                    }
-                    break;
-                case "timelord_artron_amount":
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-                    if (rsp.resultSet()) {
-                        result = Integer.toString(rsp.getArtronLevel());
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case "current_location_y":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = Integer.toString(rscl.getY());
+                            }
+                        }
+                        break;
+                    case "current_location_z":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = Integer.toString(rscl.getZ());
+                            }
+                        }
+                        break;
+                    case "current_location_world":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = rscl.getWorld().getName();
+                            }
+                        }
+                        break;
+                    case "current_location_direction":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = rscl.getDirection().toString();
+                            }
+                        }
+                        break;
+                    case "current_location_biome":
+                        rsti = new ResultSetTardisID(plugin);
+                        if (rsti.fromUUID(uuid)) {
+                            where.put("tardis_id", rsti.getTardis_id());
+                            rscl = new ResultSetCurrentLocation(plugin, where);
+                            if (rscl.resultSet()) {
+                                result = rscl.getBiome().toString();
+                            }
+                        }
+                        break;
+                    case "timelord_artron_amount":
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
+                        if (rsp.resultSet()) {
+                            result = Integer.toString(rsp.getArtronLevel());
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         // return null if an invalid placeholder (e.g. %tardis_unknownplaceholder%) was provided
