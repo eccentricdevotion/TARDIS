@@ -21,16 +21,18 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum ConsoleSize {
 
-    SMALL("small", "16 x 16 x 16 blocks"),
-    MEDIUM("medium", "32 x 16 x 32 blocks"),
-    TALL("tall", "32 x 32 x 32 blocks");
+    SMALL("small", "16 x 16 x 16 blocks", 768l),
+    MEDIUM("medium", "32 x 16 x 32 blocks", 1536l),
+    TALL("tall", "32 x 32 x 32 blocks", 3072l);
 
     private final String configPath;
     private final String blocks;
+    private final long delay;
 
-    ConsoleSize(String configPath, String blocks) {
+    ConsoleSize(String configPath, String blocks, long delay) {
         this.configPath = configPath;
         this.blocks = blocks;
+        this.delay = delay;
     }
 
     public String getConfigPath() {
@@ -39,6 +41,10 @@ public enum ConsoleSize {
 
     public String getBlocks() {
         return blocks;
+    }
+
+    public long getDelay() {
+        return delay;
     }
 
     public static ConsoleSize getByWidthAndHeight(int w, int h) {

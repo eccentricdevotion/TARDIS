@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -115,7 +116,9 @@ class TARDISJunkCreator {
         bd.setTardisID(lastInsertId);
         bd.setBiome(l.getBlock().getBiome());
         // build the TARDIS in the Vortex
-        plugin.getInteriorBuilder().buildInner(CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);
+        TARDISBuilderInner builder = new TARDISBuilderInner(plugin, CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+        builder.setTask(task);
         // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
         return true;

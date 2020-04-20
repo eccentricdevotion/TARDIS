@@ -135,10 +135,6 @@ public class TARDISSeedBlockProcessor {
                     // get this chunk co-ords
                     cx = chunk.getX();
                     cz = chunk.getZ();
-                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getLocationUtils().checkChunk(cw, cx, cz, schm)) {
-                        TARDISMessage.send(player, "TARDIS_EXISTS");
-                        return false;
-                    }
                 }
                 String biome = l.getBlock().getBiome().toString();
                 // get player direction
@@ -205,8 +201,11 @@ public class TARDISSeedBlockProcessor {
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
                     plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
-                    plugin.getPresetBuilder().buildPreset(bd);
-                    plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
+                    TARDISBuilderInner builder = new TARDISBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
+                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+                    builder.setTask(task);
+                    // delay building exterior
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), schm.getConsoleSize().getDelay());
                     // set achievement completed
                     if (player.hasPermission("tardis.book")) {
                         HashMap<String, Object> seta = new HashMap<>();
