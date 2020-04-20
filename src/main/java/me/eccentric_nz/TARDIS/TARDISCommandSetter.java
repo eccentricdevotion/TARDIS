@@ -37,8 +37,11 @@ import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicTabComplete;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
+
+import java.io.File;
 
 /**
  * Loads all TARDIS command executors and tab completers.
@@ -88,6 +91,7 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisroom").setExecutor(new TARDISRoomCommands(plugin));
         plugin.getCommand("tardisroom").setTabCompleter(new TARDISRoomTabComplete(plugin));
         plugin.getCommand("tardisschematic").setExecutor(new TARDISSchematicCommand(plugin));
+        plugin.getCommand("tardisschematic").setTabCompleter(new TARDISSchematicTabComplete(new File(plugin.getDataFolder() + File.separator + "user_schematics")));
         TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
         plugin.getCommand("tardisteleport").setExecutor(tardisTP);
         plugin.getCommand("tardisteleport").setTabCompleter(tardisTP);
