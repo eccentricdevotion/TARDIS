@@ -22,3 +22,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Log files**
 If applicable, paste your server log (_showing the whole server startup to when the error occurs_) on a website like pastebin.com, and post a link here.
+
+**`/tardis version` output**
+Please include an output of your `/tardis version`.
