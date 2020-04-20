@@ -16,6 +16,11 @@ _Current Location placeholders have been added in build #2049_
 | `%tardis_timelord_artron_amount%`     | Gets your current Time-Lord Artron amount                                   |
 | `%tardis_console%`                    | Gets the TARDIS schematic/console name                                      |
 | `%tardis_preset%`                     | Gets your TARDIS Preset                                                     |
+| `%tardis_ars_status%`                 | Gets the status of the in-progress ARS task                                 |
+| `%tardis_in_any%`                     | Gets whether you're in any TARDIS or not                                    |
+| `%tardis_in_own%`                     | Gets whether you're in your TARDIS or not                                   |
+| `%tardis_in_whose%`                   | Gets who's TARDIS you're in.                                                |
+| `%tardis_in_user_<username>%`         | Gets whether you're in <username>'s TARDIS or not                           |
 | `%tardis_current_location%`           | Gets your TARDIS's Current Location as a String (similar to `/tardis find`) |
 | `%tardis_current_location_x%`         | Gets your TARDIS's Current "x" Location                                     |
 | `%tardis_current_location_y%`         | Gets your TARDIS's Current "y" Location                                     |
