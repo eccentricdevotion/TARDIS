@@ -16,17 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisChunk;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-
-import java.io.File;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -81,42 +74,5 @@ public class TARDISLocationGetters {
             startLoc[3] = startLoc[2];
         }
         return startLoc;
-    }
-
-    /**
-     * Checks whether a chunk is available to build a TARDIS in.
-     *
-     * @param w    the world the chunk is in.
-     * @param x    the x coordinate of the chunk.
-     * @param z    the z coordinate of the chunk.
-     * @param schm the schematic of the TARDIS being created.
-     * @return true or false.
-     */
-    public boolean checkChunk(String w, int x, int z, SCHEMATIC schm) {
-        boolean chunkchk = false;
-        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
-        // get JSON
-        JSONObject obj = TARDISSchematicGZip.unzip(path);
-        // get dimensions
-        JSONObject dimensions = (JSONObject) obj.get("dimensions");
-        int wid = dimensions.getInt("width");
-        int len = dimensions.getInt("length");
-        int cw = TARDISNumberParsers.roundUp(wid, 16);
-        int cl = TARDISNumberParsers.roundUp(len, 16);
-        // check all the chunks that will be used by the schematic
-        for (int cx = 0; cx < cw; cx++) {
-            for (int cz = 0; cz < cl; cz++) {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("world", w);
-                where.put("x", (x + cx));
-                where.put("z", (z + cl));
-                ResultSetChunks rs = new ResultSetChunks(plugin, where, false);
-                if (rs.resultSet()) {
-                    chunkchk = true;
-                }
-            }
-        }
-        return chunkchk;
     }
 }

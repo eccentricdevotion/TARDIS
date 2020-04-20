@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
@@ -143,7 +142,6 @@ public class TARDIS extends JavaPlugin {
     private INVENTORY_MANAGER invManager;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
-    private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
     private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
     private final TARDISDestroyerInner interiorDestroyer = new TARDISDestroyerInner(this);
     private TARDISGeneralInstanceKeeper generalKeeper;
@@ -1094,11 +1092,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISPluginRespect getPluginRespect() {
         return pluginRespect;
     }
-
-    public TARDISBuilderInner getInteriorBuilder() {
-        return interiorBuilder;
-    }
-
+    
     public TARDISPresetBuilderFactory getPresetBuilder() {
         return presetBuilder;
     }
