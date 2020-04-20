@@ -34,8 +34,12 @@ class TARDISVersionCommand {
 
     boolean displayVersion(CommandSender sender) {
         String version = plugin.getPM().getPlugin("TARDIS").getDescription().getVersion();
+        String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
         String cb = Bukkit.getVersion();
-        sender.sendMessage(plugin.getPluginName() + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);
+        String bv = Bukkit.getBukkitVersion();
+        sender.sendMessage(plugin.getPluginName() + "TARDIS version: " + ChatColor.AQUA + version);// + ChatColor.RESET + " running " + implementation + cb);
+        sender.sendMessage(plugin.getPluginName() + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
+        sender.sendMessage(plugin.getPluginName() + "Server version: " + ChatColor.AQUA + bv + " " + cb);
         return true;
     }
 }
