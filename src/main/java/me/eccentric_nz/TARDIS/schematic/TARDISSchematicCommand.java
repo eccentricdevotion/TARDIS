@@ -66,7 +66,10 @@ public class TARDISSchematicCommand implements CommandExecutor {
             }
             UUID uuid = player.getUniqueId();
             if (args.length == 1 && args[0].equalsIgnoreCase("paste")) {
-                return new TARDISSchematicPaster(plugin, player).paste();
+                TARDISSchematicPaster paster = new TARDISSchematicPaster(plugin, player);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
+                paster.setTask(task);
+                return true;
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
