@@ -19,12 +19,15 @@ package me.eccentric_nz.TARDIS.update;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONTROL;
 import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -81,6 +84,25 @@ public class TARDISUpdateListener implements Listener {
         } else if (plugin.getTrackerKeeper().getSecondary().containsKey(uuid)) {
             updateable = plugin.getTrackerKeeper().getSecondary().get(uuid);
             secondary = true;
+        } else if (player.isSneaking() && plugin.getTrackerKeeper().getSecondaryRemovers().containsKey(uuid)) {
+            Block block = event.getClickedBlock();
+            // attempt to remove secondary control record
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", plugin.getTrackerKeeper().getSecondaryRemovers().get(uuid));
+            String location = (block.getType().equals(Material.REPEATER)) ? TARDISStaticLocationGetters.makeLocationStr(block.getLocation()) : block.getLocation().toString();
+            wherec.put("location", location);
+            wherec.put("secondary", 1);
+            ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+            if (rsc.resultSet()) {
+                HashMap<String, Object> whered = new HashMap<>();
+                whered.put("c_id", rsc.getC_id());
+                new QueryFactory(plugin).doDelete("controls", whered);
+                TARDISMessage.send(player, "SEC_REMOVED");
+            } else {
+                TARDISMessage.send(player, "SEC_REMOVE_NO_MATCH");
+            }
+            plugin.getTrackerKeeper().getSecondaryRemovers().remove(uuid);
+            return;
         } else {
             return;
         }

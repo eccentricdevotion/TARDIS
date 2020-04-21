@@ -65,6 +65,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 SEC_SUBS.add(u.getName());
             }
         }
+        SEC_SUBS.add("remove");
     }
 
     @Override

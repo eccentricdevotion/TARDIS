@@ -67,7 +67,7 @@ public class TARDISHandbrakeListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || event.getPlayer().isSneaking()) {
             return;
         }
         Player player = event.getPlayer();

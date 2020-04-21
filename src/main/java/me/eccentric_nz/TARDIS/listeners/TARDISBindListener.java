@@ -98,14 +98,13 @@ public class TARDISBindListener implements Listener {
                     whereb.put("location", l);
                     ResultSetBind rsb = new ResultSetBind(plugin, whereb);
                     if (rsb.resultSet()) {
-                        where.put("type", bind.getType());
-                        where.put("location", l);
-                        plugin.getTrackerKeeper().getBindRemoval().remove(uuid);
+                        where.put("bind_id", rsb.getBind_id());
                         plugin.getQueryFactory().doDelete("bind", where);
                         TARDISMessage.send(player, "BIND_REMOVED", bind.toString());
                     } else {
                         TARDISMessage.send(player, "BIND_REMOVE_NO_MATCH");
                     }
+                    plugin.getTrackerKeeper().getBindRemoval().remove(uuid);
                 } else {
                     // is player travelling in TARDIS
                     where.put("uuid", player.getUniqueId().toString());

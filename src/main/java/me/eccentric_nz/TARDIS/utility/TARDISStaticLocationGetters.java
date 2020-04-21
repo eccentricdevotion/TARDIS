@@ -130,6 +130,16 @@ public class TARDISStaticLocationGetters {
     }
 
     /**
+     * Create a TARDIS Repeater location string from a Bukkit location.
+     *
+     * @param location the location to convert to a String
+     * @return a String in the style of world:x:y:z
+     */
+    public static String makeLocationStr(Location location) {
+        return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+    }
+
+    /**
      * Gets the chunk the TARDIS interior is in.
      *
      * @param str the saved location data from the database.

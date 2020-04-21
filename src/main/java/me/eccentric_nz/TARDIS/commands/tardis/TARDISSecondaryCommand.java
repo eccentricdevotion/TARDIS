@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -43,6 +44,17 @@ class TARDISSecondaryCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
+            UUID uuid = player.getUniqueId();
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(uuid.toString())) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return false;
+            }
+            if (args[1].equalsIgnoreCase("remove")) {
+                plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardis_id());
+                TARDISMessage.send(player, "SEC_REMOVE_CLICK_BLOCK");
+                return true;
+            }
             UPDATEABLE updateable;
             try {
                 updateable = UPDATEABLE.valueOf(TARDISStringUtils.toScoredUppercase(args[1]));
@@ -54,21 +66,14 @@ class TARDISSecondaryCommand {
                 TARDISMessage.send(player, "UPDATE_NOT_VALID");
                 return false;
             }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
-                return false;
-            }
             HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("uuid", player.getUniqueId().toString());
+            wheret.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 TARDISMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
-            plugin.getTrackerKeeper().getSecondary().put(player.getUniqueId(), updateable);
+            plugin.getTrackerKeeper().getSecondary().put(uuid, updateable);
             TARDISMessage.send(player, "UPDATE_CLICK", updateable.getName());
             return true;
         } else {
