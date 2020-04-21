@@ -1,11 +1,12 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Switch;
 
 import java.util.HashMap;
@@ -28,10 +29,18 @@ public class TARDISHandbrake {
                         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(map.get("location"));
                         if (location != null) {
                             Block other = location.getBlock();
-                            if (block.getType().equals(Material.LEVER)) {
-                                Switch brake = (Switch) other.getBlockData();
+                            BlockData blockData = other.getBlockData();
+                            if (blockData instanceof Switch) {
+                                Switch brake = (Switch) blockData;
                                 brake.setPowered(powered);
                                 other.setBlockData(brake);
+                            } else {
+                                // remove the control record because the lever no longer exists
+                                HashMap<String, Object> wherec = new HashMap<>();
+                                wherec.put("tardis_id", id);
+                                wherec.put("type", 0);
+                                wherec.put("location", map.get("location"));
+                                new QueryFactory(plugin).doDelete("controls", wherec);
                             }
                         }
                     }

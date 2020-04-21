@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.database;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Repeater;
 
 import java.sql.Connection;
@@ -106,15 +107,15 @@ public class ResultSetRepeaters {
     public int[] getRepeaters() {
         if (locations.size() == 4) {
             // get repeaters
-            Repeater r0 = (Repeater) locations.get(0).getBlock().getBlockData();
-            Repeater r1 = (Repeater) locations.get(1).getBlock().getBlockData();
-            Repeater r2 = (Repeater) locations.get(2).getBlock().getBlockData();
-            Repeater r3 = (Repeater) locations.get(3).getBlock().getBlockData();
+            BlockData r0 = locations.get(0).getBlock().getBlockData();
+            BlockData r1 = locations.get(1).getBlock().getBlockData();
+            BlockData r2 = locations.get(2).getBlock().getBlockData();
+            BlockData r3 = locations.get(3).getBlock().getBlockData();
             // get repeater settings
-            diodes[0] = r0.getDelay();
-            diodes[1] = r1.getDelay();
-            diodes[2] = r2.getDelay();
-            diodes[3] = r3.getDelay();
+            diodes[0] = (r0 instanceof Repeater) ? ((Repeater) r0).getDelay() : -1;
+            diodes[1] = (r1 instanceof Repeater) ? ((Repeater) r1).getDelay() : 1;
+            diodes[2] = (r2 instanceof Repeater) ? ((Repeater) r2).getDelay() : 1;
+            diodes[3] = (r3 instanceof Repeater) ? ((Repeater) r3).getDelay() : 1;
         } else {
             diodes[0] = -1;
         }
