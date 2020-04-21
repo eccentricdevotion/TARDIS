@@ -103,7 +103,7 @@ class TARDISAbandonedCommand {
             }
             l = new Location(w, x, y, z);
         }
-        new TARDISAbandoned(plugin).spawn(l, s, preset, d);
+        new TARDISAbandoned(plugin).spawn(l, s, preset, d, (sender instanceof Player) ? (Player) sender : null);
         return true;
     }
 }

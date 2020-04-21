@@ -18,13 +18,16 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -41,7 +44,7 @@ public class TARDISAbandoned {
         this.plugin = plugin;
     }
 
-    public void spawn(Location l, SCHEMATIC s, PRESET p, COMPASS d) {
+    public void spawn(Location l, SCHEMATIC schm, PRESET preset, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name");
@@ -55,11 +58,11 @@ public class TARDISAbandoned {
         set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
         set.put("chunk", chun);
-        set.put("size", s.getPermission().toUpperCase(Locale.ENGLISH));
+        set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
         set.put("abandoned", 1);
         set.put("lastuse", Long.MAX_VALUE);
-        set.put("chameleon_preset", p.toString());
-        set.put("chameleon_demat", p.toString());
+        set.put("chameleon_preset", preset.toString());
+        set.put("chameleon_demat", preset.toString());
         int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
@@ -79,11 +82,18 @@ public class TARDISAbandoned {
         bd.setRebuild(false);
         bd.setSubmarine(l.getBlock().getType().equals(Material.WATER));
         bd.setTardisID(lastInsertId);
+        bd.setPlayer(player);
         plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
-        TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin);
-        // build exterior
-        builder.buildOuter(bd, p);
-        // build interior
-        builder.buildInner(s, chunkworld, lastInsertId, Material.ORANGE_WOOL, Material.LIGHT_GRAY_WOOL);
+        TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin, schm, chunkworld, lastInsertId, player);
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+        builder.setTask(task);
+        // delay building exterior
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+            TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), ADAPTION.OFF, 3);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+            runnable.setTask(taskID);
+            TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
+        }, schm.getConsoleSize().getDelay());
     }
 }

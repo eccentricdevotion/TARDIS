@@ -68,7 +68,7 @@ public class TARDISBuilderInner implements Runnable {
     private final Material wall_type;
     private final Material floor_type;
     private final boolean tips;
-    private int task, level, row, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
+    private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
     private JSONArray arr;
     private JSONObject obj;
     private Location wg1;

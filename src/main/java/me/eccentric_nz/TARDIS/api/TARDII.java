@@ -584,7 +584,7 @@ public class TARDII implements TardisAPI {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
         SCHEMATIC schm = CONSOLES.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
-        new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, direction);
+        new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, direction, null);
     }
 
     @Override
