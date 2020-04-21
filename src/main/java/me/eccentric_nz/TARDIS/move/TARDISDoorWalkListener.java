@@ -227,7 +227,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 }
                                 // must be Time Lord or companion
                                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
-                                if (rsc.getCompanions().contains(playerUUID)) {
+                                if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
                                     if (!rsd.isLocked()) {
                                         // toogle the door open/closed
                                         if (Tag.DOORS.isTagged(blockType)) {
@@ -425,7 +425,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 }
                                             }
                                         }
-                                        if (playerUUID.equals(tlUUID) || chkCompanion || player.hasPermission("tardis.skeletonkey")) {
+                                        if (playerUUID.equals(tlUUID) || chkCompanion || player.hasPermission("tardis.skeletonkey") || tardis.isAbandoned()) {
                                             // get INNER TARDIS location
                                             TARDISDoorLocation idl = getDoor(1, id);
                                             Location tmp_loc = idl.getL();

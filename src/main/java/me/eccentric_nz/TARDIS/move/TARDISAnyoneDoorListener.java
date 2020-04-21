@@ -248,7 +248,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
                                             }
                                             // toggle the door
-                                            if (toggle) {
+                                            if (toggle || rs.getTardis().isAbandoned()) {
                                                 new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                             }
                                         }
@@ -417,7 +417,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 }
                                             }
                                         }
-                                        if (playerUUID.equals(tlUUID) || chkCompanion || player.hasPermission("tardis.skeletonkey")) {
+                                        if (playerUUID.equals(tlUUID) || chkCompanion || player.hasPermission("tardis.skeletonkey") || tardis.isAbandoned()) {
                                             // get INNER TARDIS location
                                             TARDISDoorLocation idl = getDoor(1, id);
                                             Location tardis_loc = idl.getL();
