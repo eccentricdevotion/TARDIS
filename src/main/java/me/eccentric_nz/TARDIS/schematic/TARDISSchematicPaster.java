@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.schematic;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.*;
@@ -26,7 +27,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EntityType;
@@ -55,7 +55,6 @@ class TARDISSchematicPaster implements Runnable {
     private JSONObject obj;
     private JSONArray arr;
     private boolean running = false;
-    private final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
     private BossBar bb;
 
     TARDISSchematicPaster(TARDIS plugin, Player player) {
@@ -94,7 +93,7 @@ class TARDISSchematicPaster implements Runnable {
             world = player.getWorld();
             // get input array
             arr = (JSONArray) obj.get("input");
-            bb = Bukkit.createBossBar("TARDIS Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
+            bb = Bukkit.createBossBar("TARDIS Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
             bb.setProgress(0);
             bb.addPlayer(player);
             bb.setVisible(true);

@@ -39,7 +39,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Lightable;
 import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
@@ -97,7 +96,6 @@ public class TARDISBuilderInner implements Runnable {
     private USE_CLAY use_clay;
     private int counter = 0;
     private double div = 1.0d;
-    private final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
     private BossBar bb;
 
     /**
@@ -220,7 +218,7 @@ public class TARDISBuilderInner implements Runnable {
             // get input array
             arr = (JSONArray) obj.get("input");
             // start progress bar
-            bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
+            bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
             bb.setProgress(0);
             bb.addPlayer(player);
             bb.setVisible(true);
@@ -357,7 +355,7 @@ public class TARDISBuilderInner implements Runnable {
         }
         JSONArray floor = (JSONArray) arr.get(level);
         JSONArray r = (JSONArray) floor.get(row);
-        // loop like crazy
+        // paste a column
         for (int col = 0; col <= d; col++) {
             counter++;
             JSONObject c = (JSONObject) r.get(col);
