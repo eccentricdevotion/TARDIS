@@ -171,6 +171,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("ars_limit", "growth");
         firstsInt.put("block_change_percent", "desktop");
         firstsInt.put("border_radius", "creation");
+        firstsInt.put("chat_width", "preferences");
         firstsInt.put("confirm_timeout", "police_box");
         firstsInt.put("count", "creation");
         firstsInt.put("grace_period", "travel");

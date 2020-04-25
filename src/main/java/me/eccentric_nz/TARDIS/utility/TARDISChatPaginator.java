@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class TARDISChatPaginator {
 
-    static final int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = 55; // Will never wrap, even with the largest characters
+    static int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = TARDIS.plugin.getConfig().getInt("preferences.chat_width"); // Will never wrap, even with the largest characters
 
     /**
      * Breaks a raw string up into a series of lines. Words are wrapped using spaces as decimeters and the newline
@@ -127,5 +128,9 @@ public class TARDISChatPaginator {
         public String[] getLines() {
             return lines;
         }
+    }
+
+    public static void setGuaranteedNoWrapChatPageWidth(int guaranteedNoWrapChatPageWidth) {
+        GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = guaranteedNoWrapChatPageWidth;
     }
 }

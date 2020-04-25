@@ -175,7 +175,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     selectedSlot.put(uuid, null);
                     ItemStack clone = is.clone();
                     player.getWorld().dropItemNaturally(player.getLocation(), clone);
-                    // ckeck out
+                    // check out
                     int pid = TARDISNumberParsers.parseInt(lore.get(1));
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("checked", 1);

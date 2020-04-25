@@ -154,6 +154,7 @@ public class TARDISConfiguration {
         integerOptions.put("junk.return", -1);
         integerOptions.put("police_box.confirm_timeout", 15);
         integerOptions.put("police_box.rebuild_cooldown", 10000);
+        integerOptions.put("preferences.chat_width", 55);
         integerOptions.put("preferences.freeze_cooldown", 60);
         integerOptions.put("preferences.hads_damage", 10);
         integerOptions.put("preferences.hads_distance", 10);

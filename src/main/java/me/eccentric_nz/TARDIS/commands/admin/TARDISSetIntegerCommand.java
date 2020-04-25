@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISChatPaginator;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -58,6 +59,9 @@ class TARDISSetIntegerCommand {
         }
         if (first.equals("circuits.uses.invisibility_uses")) {
             first = "circuits.uses.invisibility";
+        }
+        if (first.equals("preferences.chat_width")) {
+            TARDISChatPaginator.setGuaranteedNoWrapChatPageWidth(val);
         }
         plugin.getConfig().set(first, val);
         plugin.saveConfig();
