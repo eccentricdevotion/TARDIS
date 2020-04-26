@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -82,7 +83,7 @@ public class TARDISTravelRequest {
             TARDISMessage.send(p, "WORLDBORDER");
             bool = false;
         }
-        if (plugin.getPluginRespect().isFactionsOnServer() && plugin.getConfig().getBoolean("preferences.respect_factions") && !plugin.getPluginRespect().getFactionschk().isInFaction(to, l)) {
+        if (plugin.getPluginRespect().isFactionsOnServer() && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(to, l)) {
             TARDISMessage.send(p, "FACTIONS");
             bool = false;
         }

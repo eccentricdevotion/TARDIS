@@ -21,6 +21,7 @@ import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -39,21 +40,26 @@ public class TARDISSonicRespect {
      * @return true if the player has permission to alter the block, otherwise false
      */
     public static boolean checkBlockRespect(TARDIS plugin, Player player, Block block) {
+        boolean allow = true;
+        // Factions
+        if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
+            allow = TARDISFactionsChecker.isInFaction(player, block.getLocation());
+        }
         // WorldGuard
-        if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
-            return false;
+        if (plugin.isWorldGuardOnServer()) {
+            allow = plugin.getWorldGuardUtils().canBuild(player, block.getLocation());
         }
         // Towny
-        if (plugin.getPM().isPluginEnabled("Towny") && !(new TARDISTownyChecker(plugin).playerHasPermission(player, block))) {
-            return false;
+        if (plugin.getPM().isPluginEnabled("Towny")) {
+            allow = new TARDISTownyChecker(plugin).playerHasPermission(player, block);
         }
         // GriefPrevention
-        if (plugin.getPM().isPluginEnabled("GriefPrevention") && new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation())) {
-            return false;
+        if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
+            allow = !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
         }
         // LockettePro
-        if (plugin.getPM().isPluginEnabled("LockettePro") && LocketteProAPI.isProtected(block)) {
-            return false;
+        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+            allow = !LocketteProAPI.isProtected(block);
         }
         // LWCX
         if (plugin.getPM().isPluginEnabled("LWC")) {
@@ -61,18 +67,18 @@ public class TARDISSonicRespect {
             if (protectionCache != null) {
                 Protection protection = protectionCache.getProtection(block);
                 if (protection != null && !protection.isOwner(player)) {
-                    return false;
+                    allow = false;
                 }
             }
         }
         // BlockLocker
-        if (plugin.getPM().isPluginEnabled("BlockLocker") && BlockLockerAPIv2.isProtected(block)) {
-            return false;
+        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+            allow = !BlockLockerAPIv2.isProtected(block);
         }
         // Lockette
-        if (plugin.getPM().isPluginEnabled("Lockette") && Lockette.isProtected(block)) {
-            return false;
+        if (plugin.getPM().isPluginEnabled("Lockette")) {
+            allow = !Lockette.isProtected(block);
         }
-        return true;
+        return allow;
     }
 }

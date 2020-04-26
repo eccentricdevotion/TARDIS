@@ -37,7 +37,7 @@ public class TARDISFactionsChecker {
      * @param l the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
-    public boolean isInFaction(Player p, Location l) {
+    public static boolean isInFaction(Player p, Location l) {
         try {
             Class.forName("com.massivecraft.factions.entity.MPlayer");
             return TARDIS.plugin.getTardisHelper().isInFaction(p, l);

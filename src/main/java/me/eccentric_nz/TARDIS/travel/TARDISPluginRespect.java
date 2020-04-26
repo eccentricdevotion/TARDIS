@@ -34,7 +34,6 @@ public class TARDISPluginRespect {
     private final TARDIS plugin;
     private TARDISTownyChecker tychk;
     private TARDISWorldBorderChecker borderchk;
-    private TARDISFactionsChecker factionschk;
     private TARDISGriefPreventionChecker griefchk;
     private boolean townyOnServer = false;
     private boolean borderOnServer = false;
@@ -117,7 +116,7 @@ public class TARDISPluginRespect {
                 bool = false;
             }
         }
-        if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !factionschk.isInFaction(flag.getPlayer(), l)) {
+        if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(flag.getPlayer(), l)) {
             if (flag.messagePlayer()) {
                 TARDISMessage.send(flag.getPlayer(), "FACTIONS");
             }
@@ -171,7 +170,6 @@ public class TARDISPluginRespect {
     public void loadFactions() {
         if (plugin.getPM().getPlugin("Factions") != null) {
             factionsOnServer = true;
-            factionschk = new TARDISFactionsChecker();
         }
     }
 
@@ -196,10 +194,6 @@ public class TARDISPluginRespect {
 
     TARDISWorldBorderChecker getBorderchk() {
         return borderchk;
-    }
-
-    TARDISFactionsChecker getFactionschk() {
-        return factionschk;
     }
 
     TARDISGriefPreventionChecker getGriefchk() {
