@@ -21,8 +21,8 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum ConsoleSize {
 
-    SMALL("small", "16 x 16 x 16 blocks", 768l),
-    MEDIUM("medium", "32 x 16 x 32 blocks", 1536l),
+    SMALL("small", "16 x 16 x 16 blocks", 600l),
+    MEDIUM("medium", "32 x 16 x 32 blocks", 1460l),
     TALL("tall", "32 x 32 x 32 blocks", 3072l);
 
     private final String configPath;
