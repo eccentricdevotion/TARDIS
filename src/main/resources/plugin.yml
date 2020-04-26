@@ -1216,3 +1216,8 @@ commands:
     description: Internal command used by the TARDIS Information System.
     usage: /<command> [letter]
     permission: tardis.help
+  tardissudo:
+    aliases: [tsudo, tadminsudo, tardisadminsudo]
+    description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
+    permission: tardis.admin
+    usage: /<command> [player|off]

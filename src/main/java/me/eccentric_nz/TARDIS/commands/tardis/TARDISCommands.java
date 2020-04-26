@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.commands.sudo.SudoRepair;
+import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
@@ -34,6 +36,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Command /tardis [arguments].
@@ -122,7 +125,14 @@ public class TARDISCommands implements CommandExecutor {
                 case desktop:
                 case upgrade:
                 case theme:
-                    return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
+                    plugin.debug("args[1]: " + args[1]);
+                    if ((args[1].equalsIgnoreCase("clean") || args[1].equalsIgnoreCase("repair")) && TARDISSudoTracker.isSudo(sender)) {
+                        plugin.debug("is sudo");
+                        UUID uuid = TARDISSudoTracker.getSudoPlayer(sender);
+                        return new SudoRepair(plugin, uuid, args[1].equalsIgnoreCase("clean")).repair();
+                    } else {
+                        return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
+                    }
                 case direction:
                     return new TARDISDirectionCommand(plugin).changeDirection(player, args);
                 case door:
