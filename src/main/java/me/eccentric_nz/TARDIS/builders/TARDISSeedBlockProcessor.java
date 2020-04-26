@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.database.*;
@@ -205,7 +206,10 @@ public class TARDISSeedBlockProcessor {
                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
                     builder.setTask(task);
                     // delay building exterior
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), schm.getConsoleSize().getDelay());
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        plugin.getPresetBuilder().buildPreset(bd);
+                        l.getBlock().setBlockData(TARDISConstants.AIR);
+                    }, schm.getConsoleSize().getDelay());
                     // set achievement completed
                     if (player.hasPermission("tardis.book")) {
                         HashMap<String, Object> seta = new HashMap<>();

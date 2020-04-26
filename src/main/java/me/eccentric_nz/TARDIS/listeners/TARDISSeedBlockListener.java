@@ -116,7 +116,6 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISBuildData data = trackTARDISSeed.get(l);
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
-//                ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
                 ItemMeta im = is.getItemMeta();
                 if (im == null) {
@@ -185,8 +184,9 @@ public class TARDISSeedBlockListener implements Listener {
                     if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
                         // remove seed data
                         trackTARDISSeed.remove(l);
-                        // remove seed block
-                        event.getClickedBlock().setBlockData(TARDISConstants.AIR);
+                        // replace seed block with animated grow block
+                        MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
+                        event.getClickedBlock().setBlockData(multipleFacing);
                     }
                 }
             }
