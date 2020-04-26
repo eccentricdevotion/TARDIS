@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSounds {
 
-    private static final float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
+    private static float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
     /**
      * Plays the interior hum sound upon TARDIS entry.
@@ -82,5 +82,9 @@ public class TARDISSounds {
      */
     public static void playTARDISSound(Player p, String s) {
         TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), 5L);
+    }
+
+    public static void setVolume(float VOLUME) {
+        TARDISSounds.VOLUME = VOLUME;
     }
 }

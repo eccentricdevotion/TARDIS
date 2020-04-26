@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISChatPaginator;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -62,6 +63,9 @@ class TARDISSetIntegerCommand {
         }
         if (first.equals("preferences.chat_width")) {
             TARDISChatPaginator.setGuaranteedNoWrapChatPageWidth(val);
+        }
+        if (first.equals("preferences.sfx_volume")) {
+            TARDISSounds.setVolume(val);
         }
         plugin.getConfig().set(first, val);
         plugin.saveConfig();
