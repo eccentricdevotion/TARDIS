@@ -186,8 +186,20 @@ public class ChemistryBlockListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onChemistryBlockPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && event.getBlock().getType() != Material.RED_MUSHROOM_BLOCK) {
+        Material material = event.getBlock().getType();
+        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
             event.setCancelled(true);
+        }
+    }
+
+    private boolean isMushroomBlock(Material material) {
+        switch (material) {
+            case MUSHROOM_STEM:
+            case RED_MUSHROOM_BLOCK:
+            case BROWN_MUSHROOM_BLOCK:
+                return true;
+            default:
+                return false;
         }
     }
 }
