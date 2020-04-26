@@ -53,8 +53,8 @@ public class TARDISRoomSeeder implements Listener {
 
     /**
      * Listens for player interaction with one of the blocks required to seed a room. If the block is clicked with the
-     * TARDIS key after running the command /tardis room [room type], the seed block will start growing into a
-     * passageway or the room type specified.
+     * TARDIS key after running the command /tardis room [room type], the seed block will start growing into the room
+     * type specified.
      * <p>
      * Requires the TARDIS to have sufficient Artron Energy to grow the room.
      *
@@ -64,7 +64,7 @@ public class TARDISRoomSeeder implements Listener {
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        // check that player is in TARDIS
+        // check the player is in the TARDIS
         if (!plugin.getTrackerKeeper().getRoomSeed().containsKey(uuid)) {
             return;
         }
