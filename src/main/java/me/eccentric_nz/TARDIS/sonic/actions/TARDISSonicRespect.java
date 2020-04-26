@@ -40,26 +40,25 @@ public class TARDISSonicRespect {
      * @return true if the player has permission to alter the block, otherwise false
      */
     public static boolean checkBlockRespect(TARDIS plugin, Player player, Block block) {
-        boolean allow = true;
         // Factions
         if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
-            allow = TARDISFactionsChecker.isInFaction(player, block.getLocation());
+            return TARDISFactionsChecker.isInFaction(player, block.getLocation());
         }
         // WorldGuard
         if (plugin.isWorldGuardOnServer()) {
-            allow = plugin.getWorldGuardUtils().canBuild(player, block.getLocation());
+            return plugin.getWorldGuardUtils().canBuild(player, block.getLocation());
         }
         // Towny
         if (plugin.getPM().isPluginEnabled("Towny")) {
-            allow = new TARDISTownyChecker(plugin).playerHasPermission(player, block);
+            return new TARDISTownyChecker(plugin).playerHasPermission(player, block);
         }
         // GriefPrevention
         if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
-            allow = !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
+            return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
         }
         // LockettePro
         if (plugin.getPM().isPluginEnabled("LockettePro")) {
-            allow = !LocketteProAPI.isProtected(block);
+            return !LocketteProAPI.isProtected(block);
         }
         // LWCX
         if (plugin.getPM().isPluginEnabled("LWC")) {
@@ -67,18 +66,18 @@ public class TARDISSonicRespect {
             if (protectionCache != null) {
                 Protection protection = protectionCache.getProtection(block);
                 if (protection != null && !protection.isOwner(player)) {
-                    allow = false;
+                    return false;
                 }
             }
         }
         // BlockLocker
         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-            allow = !BlockLockerAPIv2.isProtected(block);
+            return !BlockLockerAPIv2.isProtected(block);
         }
         // Lockette
         if (plugin.getPM().isPluginEnabled("Lockette")) {
-            allow = !Lockette.isProtected(block);
+            return !Lockette.isProtected(block);
         }
-        return allow;
+        return true;
     }
 }
