@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
-import me.eccentric_nz.TARDIS.utility.Smelter;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;

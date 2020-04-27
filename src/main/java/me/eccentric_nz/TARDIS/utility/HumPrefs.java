@@ -21,9 +21,9 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class Prefs {
+class HumPrefs {
 
-    public Prefs(Player player, Boolean sfx, String hum) {
+    public HumPrefs(Player player, Boolean sfx, String hum) {
         this.player = player;
         this.sfx = sfx;
         this.hum = hum;

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
-import me.eccentric_nz.TARDIS.utility.Smelter;
+import me.eccentric_nz.TARDIS.rooms.smelter.Smelter;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;

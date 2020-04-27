@@ -53,7 +53,7 @@ public class TARDISHumSounds {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Prefs p = new Prefs(player, true, "tardis_hum");
+                        HumPrefs p = new HumPrefs(player, true, "tardis_hum");
                         // All the MySQL stuff and what not
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, u.toString());
                         if (rsp.resultSet()) {
@@ -74,7 +74,7 @@ public class TARDISHumSounds {
         });
     };
 
-    private final Callback<Prefs> prefs = (Prefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer().getLocation(), pref.getHum());
+    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer().getLocation(), pref.getHum());
 
     /**
      * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
