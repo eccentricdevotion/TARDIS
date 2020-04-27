@@ -18,9 +18,10 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetSmelter;
+import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterDrop;
+import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterFuel;
+import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterOre;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
-import me.eccentric_nz.TARDIS.utility.Smelter;
-import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,9 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class TARDISSmelterListener implements Listener {
@@ -58,78 +57,18 @@ public class TARDISSmelterListener implements Listener {
             // get fuel chests
             List<Chest> fuelChests = rs.getFuelChests();
             List<Chest> oreChests = rs.getOreChests();
-            // process drop chest contents
-            HashMap<Material, Integer> fuels = new HashMap<>();
-            HashMap<Material, Integer> ores = new HashMap<>();
-            HashMap<Material, Integer> remainders = new HashMap<>();
-            for (ItemStack is : inv.getContents()) {
-                if (is != null) {
-                    Material m = is.getType();
-                    if (m.isFuel()) {
-                        int amount = (fuels.containsKey(m)) ? fuels.get(m) + is.getAmount() : is.getAmount();
-                        fuels.put(m, amount);
-                        inv.remove(is);
-                    }
-                    if (Smelter.isSmeltable(m)) {
-                        int amount = (ores.containsKey(m)) ? ores.get(m) + is.getAmount() : is.getAmount();
-                        ores.put(m, amount);
-                        inv.remove(is);
-                    }
-                }
+            // process chest contents
+            switch (rs.getType()) {
+                case FUEL:
+                    new TARDISSmelterFuel().processItems(inv, fuelChests);
+                    break;
+                case SMELT:
+                    new TARDISSmelterOre().processItems(inv, oreChests);
+                    break;
+                default: // DROP
+                    new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
+                    break;
             }
-            // process fuels
-            int fsize = fuelChests.size();
-            fuels.forEach((key, value) -> {
-                int remainder = value % fsize;
-                if (remainder > 0) {
-                    remainders.put(key, remainder);
-                }
-                int distrib = value / fsize;
-                fuelChests.forEach((fc) -> {
-                    HashMap<Integer, ItemStack> leftoverfuel = fc.getInventory().addItem(new ItemStack(key, distrib));
-                    if (!leftoverfuel.isEmpty()) {
-                        for (ItemStack f : leftoverfuel.values()) {
-                            Material fm = f.getType();
-                            int amount = (remainders.containsKey(fm)) ? remainders.get(fm) + f.getAmount() : f.getAmount();
-                            remainders.put(fm, amount);
-                        }
-                    }
-                });
-            });
-            // process ores
-            int osize = oreChests.size();
-            ores.forEach((key, value) -> {
-                int remainder = value % osize;
-                if (remainder > 0) {
-                    remainders.put(key, remainder);
-                }
-                int distrib = value / osize;
-                oreChests.forEach((fc) -> {
-                    HashMap<Integer, ItemStack> leftoverore = fc.getInventory().addItem(new ItemStack(key, distrib));
-                    if (!leftoverore.isEmpty()) {
-                        for (ItemStack o : leftoverore.values()) {
-                            Material om = o.getType();
-                            int amount = (remainders.containsKey(om)) ? remainders.get(om) + o.getAmount() : o.getAmount();
-                            remainders.put(om, amount);
-                        }
-                    }
-                });
-            });
-            // return remainder to drop chest
-            remainders.forEach((key, value) -> {
-                int max = key.getMaxStackSize();
-                if (value > max) {
-                    int remainder = value % max;
-                    for (int i = 0; i < value / max; i++) {
-                        inv.addItem(new ItemStack(key, max));
-                    }
-                    if (remainder > 0) {
-                        inv.addItem(new ItemStack(key, remainder));
-                    }
-                } else {
-                    inv.addItem(new ItemStack(key, value));
-                }
-            });
         }
     }
 }

@@ -105,6 +105,9 @@ class TARDISUpdateCommand {
             if (updateable.equals(UPDATEABLE.VAULT)) {
                 return new TARDISVaultCommand(plugin).addDropChest(player);
             }
+            if (updateable.equals(UPDATEABLE.FUEL) || updateable.equals(UPDATEABLE.SMELT)) {
+                return new TARDISSmelterCommand(plugin).addDropChest(player, updateable);
+            }
             if (updateable.equals(UPDATEABLE.ADVANCED) && !player.hasPermission("tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");
                 return true;

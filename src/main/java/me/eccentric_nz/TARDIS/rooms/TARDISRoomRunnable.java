@@ -678,11 +678,12 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                     }
                 }
-                if (type.equals(Material.SOUL_SAND) && room.equals("SMELTER")) {
+                if ((type.equals(Material.SOUL_SAND) || type.equals(Material.CARVED_PUMPKIN)) && room.equals("SMELTER")) {
                     String pos = new Location(world, startx, starty, startz).toString();
                     HashMap<String, Object> setsm = new HashMap<>();
                     setsm.put("tardis_id", tardis_id);
                     setsm.put("location", pos);
+                    setsm.put("chest_type", type.equals(Material.CARVED_PUMPKIN) ? "SMELT" : "FUEL");
                     plugin.getQueryFactory().doInsert("vaults", setsm);
                     data = Material.CHEST.createBlockData();
                 }

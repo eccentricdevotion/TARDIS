@@ -17,21 +17,13 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
-import me.eccentric_nz.TARDIS.utility.Smelter;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.util.Vector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
@@ -41,18 +33,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class ResultSetSmelter {
+public class ResultSetSmelterCheck {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final String where;
+    private final HashMap<String, Object> where;
     private int smelter_id;
-    private int tardis_id;
-    private String location;
-    private SmelterChest type;
-    private List<Chest> fuelChests;
-    private List<Chest> oreChests;
     private final String prefix;
 
     /**
@@ -61,7 +48,7 @@ public class ResultSetSmelter {
      * @param plugin an instance of the main class.
      * @param where  the location of the smelter chest.
      */
-    public ResultSetSmelter(TARDIS plugin, String where) {
+    public ResultSetSmelterCheck(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -76,20 +63,32 @@ public class ResultSetSmelter {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "vaults WHERE location = ? AND x = 0 AND y = 0 AND z = 0";
+        String wheres = "";
+        if (where != null) {
+            StringBuilder sbw = new StringBuilder();
+            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
+            wheres = " WHERE " + sbw.toString();
+        }
+        String query = "SELECT * FROM " + prefix + "vaults " + wheres + "x = 0 AND y = 0 AND z = 0";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            statement.setString(1, where);
+            if (where != null) {
+                int s = 1;
+                for (Map.Entry<String, Object> entry : where.entrySet()) {
+                    if (entry.getValue() instanceof String) {
+                        statement.setString(s, entry.getValue().toString());
+                    } else {
+                        statement.setInt(s, (Integer) entry.getValue());
+                    }
+                    s++;
+                }
+                where.clear();
+            }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     smelter_id = rs.getInt("v_id");
-                    tardis_id = rs.getInt("tardis_id");
-                    location = rs.getString("location");
-                    type = SmelterChest.valueOf(rs.getString("chest_type"));
-                    fuelChests = getChests(location, true);
-                    oreChests = getChests(location, false);
                 }
             } else {
                 return false;
@@ -114,39 +113,5 @@ public class ResultSetSmelter {
 
     public int getSmelter_id() {
         return smelter_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public SmelterChest getType() {
-        return type;
-    }
-
-    public List<Chest> getFuelChests() {
-        return fuelChests;
-    }
-
-    public List<Chest> getOreChests() {
-        return oreChests;
-    }
-
-    private List<Chest> getChests(String location, boolean fuel) {
-        Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
-        List<Chest> chests = new ArrayList<>();
-        List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();
-        vectors.forEach((v) -> {
-            Block b = l.clone().add(v).getBlock();
-            if (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) {
-                Chest chest = (Chest) b.getState();
-                chests.add(chest);
-            }
-        });
-        return chests;
     }
 }

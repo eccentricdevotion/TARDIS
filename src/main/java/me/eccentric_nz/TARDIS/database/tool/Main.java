@@ -295,7 +295,7 @@ public class Main {
                                         bw.write(str);
                                         break;
                                     case vaults:
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("v_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("v_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("chest_type"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z")) + end;
                                         bw.write(str);
                                         break;
                                     case thevoid:

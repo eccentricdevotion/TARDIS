@@ -220,7 +220,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryT_Counts);
 
             // Table structure for table 'vaults'
-            String queryVaults = "CREATE TABLE IF NOT EXISTS " + prefix + "vaults (v_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', x INTEGER DEFAULT 0, y INTEGER DEFAULT 0, z INTEGER DEFAULT 0)";
+            String queryVaults = "CREATE TABLE IF NOT EXISTS " + prefix + "vaults (v_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', chest_type TEXT COLLATE NOCASE DEFAULT 'DROP', x INTEGER DEFAULT 0, y INTEGER DEFAULT 0, z INTEGER DEFAULT 0)";
             statement.executeUpdate(queryVaults);
 
             // Table structure for table 'thevoid'

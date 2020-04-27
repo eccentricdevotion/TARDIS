@@ -149,7 +149,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %stravellers (traveller_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', PRIMARY KEY (traveller_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %svaults (v_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', x int(11) DEFAULT '0', y int(3) DEFAULT '0', z int(11) DEFAULT '0', PRIMARY KEY (v_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %svaults (v_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', x int(11) DEFAULT '0', y int(3) DEFAULT '0', z int(11) DEFAULT '0', chest_type varchar(8) DEFAULT 'DROP', PRIMARY KEY (v_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sthevoid (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -236,7 +236,7 @@ public class SQL {
 
             "INSERT INTO `%stravellers` (`traveller_id`, `tardis_id`, `uuid`, `player`) VALUES ",
 
-            "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `x`, `y`, `z`) VALUES ",
+            "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `chest_type`, `x`, `y`, `z`) VALUES ",
 
             "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
 
@@ -323,7 +323,7 @@ public class SQL {
 
             "(%s, %s, '%s', '%s')",
 
-            "(%s, %s, '%s', %s, %s, %s)",
+            "(%s, %s, '%s', '%s', %s, %s, %s)",
 
             "(%s)",
 

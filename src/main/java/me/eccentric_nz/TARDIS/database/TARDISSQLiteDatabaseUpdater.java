@@ -374,6 +374,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String post_alter = "ALTER TABLE " + prefix + "room_progress ADD post_blocks TEXT DEFAULT ''";
                 statement.executeUpdate(post_alter);
             }
+            // add chest_type to vaults
+            String vct_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "vaults' AND sql LIKE '%chest_type%'";
+            ResultSet rsvct = statement.executeQuery(vct_query);
+            if (!rsvct.next()) {
+                i++;
+                String vct_alter = "ALTER TABLE " + prefix + "vaults ADD chest_type TEXT DEFAULT 'DROP'";
+                statement.executeUpdate(vct_alter);
+            }
             // transfer farming locations from `tardis` table to `farming` table - only if updating!
             String farmCheckQuery = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%farm TEXT%'";
             ResultSet rsfc = statement.executeQuery(farmCheckQuery);
