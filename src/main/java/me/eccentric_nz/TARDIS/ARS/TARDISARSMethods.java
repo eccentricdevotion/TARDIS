@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -304,6 +305,9 @@ public class TARDISARSMethods {
                             if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
                                 String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
                                 TARDISMessage.send(p, message);
+                                if (tap.getChanged().size() == 1) {
+                                    RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), p);
+                                }
                                 revert(uuid);
                                 p.closeInventory();
                                 return;
