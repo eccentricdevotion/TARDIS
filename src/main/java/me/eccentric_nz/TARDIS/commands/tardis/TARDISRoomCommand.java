@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -59,8 +60,9 @@ class TARDISRoomCommand {
             TARDISMessage.send(player, "NO_PERM_ROOM_TYPE");
             return true;
         }
+        UUID uuid = player.getUniqueId();
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
+        where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
@@ -95,7 +97,7 @@ class TARDISRoomCommand {
         int tips = tardis.getTIPS();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", player.getUniqueId().toString());
+        wheret.put("uuid", uuid.toString());
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
@@ -113,7 +115,7 @@ class TARDISRoomCommand {
             String wall = "ORANGE_WOOL";
             String floor = "LIGHT_GRAY_WOOL";
             boolean hasPrefs = false;
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {
                 hasPrefs = true;
                 wall = rsp.getWall();
@@ -157,12 +159,13 @@ class TARDISRoomCommand {
             }
             if (!hasRequired) {
                 player.sendMessage("-----------------------------");
+                plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                 return true;
             }
             TARDISCondenserData c_data = new TARDISCondenserData();
             c_data.setBlockIDCount(item_counts);
             c_data.setTardis_id(id);
-            plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
+            plugin.getGeneralKeeper().getRoomCondenserData().put(uuid, c_data);
         }
         if (room.equals("ZERO")) {
             return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
@@ -178,7 +181,7 @@ class TARDISRoomCommand {
         wherea.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
         sd.setARS(rsc.resultSet());
-        plugin.getTrackerKeeper().getRoomSeed().put(player.getUniqueId(), sd);
+        plugin.getTrackerKeeper().getRoomSeed().put(uuid, sd);
         TARDISMessage.send(player, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString("rooms." + room + ".seed"));
         return true;
     }
