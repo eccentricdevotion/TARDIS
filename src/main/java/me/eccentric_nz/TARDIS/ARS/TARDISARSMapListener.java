@@ -113,6 +113,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                             // transmat
                             if (!selectedLocation.containsKey(uuid)) {
                                 TARDISMessage.send(player, "TRANSMAT_SELECT");
+                            } else if (selectedLocation.get(uuid).equals("TERRACOTTA")) {
+                                setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER"));
                             } else {
                                 Location tp_loc = getRoomLocation(player);
                                 if (tp_loc != null) {
