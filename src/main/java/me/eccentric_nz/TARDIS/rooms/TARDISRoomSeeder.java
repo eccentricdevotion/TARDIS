@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.rooms;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -64,7 +65,7 @@ public class TARDISRoomSeeder implements Listener {
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        // check the player is in the TARDIS
+        // check the player has run the /tardis room command
         if (!plugin.getTrackerKeeper().getRoomSeed().containsKey(uuid)) {
             return;
         }
@@ -97,20 +98,29 @@ public class TARDISRoomSeeder implements Listener {
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
-                COMPASS d = trd.getCompass();
-                BlockFace facing = trd.getFace();
-                // check there is not a block in the direction the player is facing
-                Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
-                if (!check_block.getType().isAir()) {
-                    TARDISMessage.send(player, "ROOM_VOID");
+                if (!trd.isAir()) {
+                    TARDISMessage.send(player, "AIR_NOT_FOUND");
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
+                COMPASS d = trd.getCompass();
+                BlockFace facing = trd.getFace();
                 // get seed data
                 TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
+                Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", sd.getId());
+                where.put("world", c.getWorld().getName());
+                where.put("x", c.getX());
+                where.put("z", c.getZ());
+                ResultSetChunks rsc = new ResultSetChunks(plugin, where, false);
+                if (rsc.resultSet()) {
+                    TARDISMessage.send(player, "ROOM_CONSOLE");
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
+                    return;
+                }
                 // check they are not in an ARS chunk
                 if (sd.hasARS()) {
-                    Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     int cx = c.getX();
                     int cy = block.getY();
                     int cz = c.getZ();

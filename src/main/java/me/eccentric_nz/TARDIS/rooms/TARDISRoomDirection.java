@@ -29,12 +29,14 @@ class TARDISRoomDirection {
 
     private final Block b;
     private boolean found;
+    private boolean air;
     private BlockFace face;
     private COMPASS compass;
 
     TARDISRoomDirection(Block b) {
         this.b = b;
         found = false;
+        air = false;
     }
 
     /**
@@ -48,12 +50,18 @@ class TARDISRoomDirection {
                 face = tmp;
                 found = true;
                 compass = c;
+                // do a quick check to see that there are actually AIR blocks at floor level on the other side of the pressure plate
+                air = b.getRelative(BlockFace.DOWN).getRelative(tmp, 9).getType().isAir();
             }
         }
     }
 
     public boolean isFound() {
         return found;
+    }
+
+    public boolean isAir() {
+        return air;
     }
 
     public BlockFace getFace() {
