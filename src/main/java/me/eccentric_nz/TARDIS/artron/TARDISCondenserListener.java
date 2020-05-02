@@ -39,6 +39,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +131,34 @@ public class TARDISCondenserListener implements Listener {
                             String item = is.getType().toString();
                             if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
                                 int stack_size = is.getAmount();
-                                amount += stack_size * plugin.getCondensables().get(item);
+                                if (item.equals("BLAZE_ROD") && isSonic(is)) {
+                                    List<String> lore = is.getItemMeta().getLore();
+                                    double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
+                                    amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
+                                    if (lore.contains("Bio-scanner Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
+                                    }
+                                    if (lore.contains("Diamond Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
+                                    }
+                                    if (lore.contains("Emerald Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
+                                    }
+                                    if (lore.contains("Redstone Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
+                                    }
+                                    if (lore.contains("Painter Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
+                                    }
+                                    if (lore.contains("Ignite Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
+                                    }
+                                    if (lore.contains("Pickup Arrows Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
+                                    }
+                                } else {
+                                    amount += stack_size * plugin.getCondensables().get(item);
+                                }
                                 String block_data = is.getType().toString();
                                 if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
                                     if (item_counts.containsKey(block_data)) {
@@ -241,5 +269,15 @@ public class TARDISCondenserListener implements Listener {
         aec.setContents(is);
         p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
         p.openInventory(aec);
+    }
+
+    private boolean isSonic(ItemStack is) {
+        if (is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName()) {
+                return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
+            }
+        }
+        return false;
     }
 }
