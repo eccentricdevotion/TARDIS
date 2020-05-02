@@ -101,6 +101,11 @@ public class TARDISRandomButton {
                 }
                 if (repeaters[0] == 1) { // first position
                     environment = "THIS";
+                    // check TARDIS travel is allowed in this world
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rscl.getWorld().getName() + ".time_travel")) {
+                        TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                        return;
+                    }
                 }
                 if (repeaters[0] == 2) { // second position
                     environment = "NORMAL";
@@ -137,6 +142,11 @@ public class TARDISRandomButton {
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
                 if (rand != null) {
+                    // double check TARDIS travel is allowed in this world
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
+                        TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                        return;
+                    }
                     set.put("world", rand.getWorld().getName());
                     set.put("x", rand.getBlockX());
                     set.put("y", rand.getBlockY());

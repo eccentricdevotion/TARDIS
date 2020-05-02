@@ -86,7 +86,7 @@ public class TARDISTimeTravel {
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<World> allowedWorlds = new ArrayList<>();
 
-        if (e.equals("THIS")) {
+        if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
             allowedWorlds.add(this_world);
         } else {
             worldlist.forEach((o) -> {
@@ -111,7 +111,7 @@ public class TARDISTimeTravel {
                         }
                     }
                     // remove the world the Police Box is in
-                    if (allowedWorlds.size() > 1) {
+                    if (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
