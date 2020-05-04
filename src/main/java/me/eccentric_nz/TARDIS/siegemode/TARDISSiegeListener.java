@@ -48,6 +48,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,6 +127,7 @@ public class TARDISSiegeListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
         im.setCustomModelData(10000002);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 2);
         List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
         lore.add("ID: " + id);
@@ -202,11 +204,7 @@ public class TARDISSiegeListener implements Listener {
             // turn the drop into a block
             item.remove();
             Block siege = loc.getBlock();
-            siege.setBlockData(Material.BROWN_MUSHROOM_BLOCK.createBlockData());
-            // set the mushroom faces
-            MultipleFacing mf = (MultipleFacing) siege.getBlockData();
-            mf.getAllowedFaces().forEach((face) -> mf.setFace(face, true));
-            siege.setBlockData(mf);
+            siege.setBlockData(plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2)));
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
