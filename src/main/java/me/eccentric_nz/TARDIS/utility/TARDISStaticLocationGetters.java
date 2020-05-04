@@ -153,12 +153,13 @@ public class TARDISStaticLocationGetters {
         return cw.getChunkAt(cx, cz);
     }
 
-    private static final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
+    //    private static final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
+    private static final int[] threeByThree = new int[]{-1, 0, 1};
 
     public static int getHighestYin4x4(World world, int x, int z) {
         int y = 0;
-        for (int xx : fourByFour) {
-            for (int zz : fourByFour) {
+        for (int xx : threeByThree) {
+            for (int zz : threeByThree) {
                 // need to +1 due to Spigot change
                 int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
                 y = Math.max(tmp, y);
