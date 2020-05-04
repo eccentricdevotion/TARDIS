@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.siegemode;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -32,7 +33,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Item;
@@ -225,8 +225,8 @@ public class TARDISSiegeListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onSiegeCubePlace(BlockPlaceEvent event) {
-        Block b = event.getBlockPlaced();
-        if (!isSiegeCube(b)) {
+        ItemStack is = event.getItemInHand();
+        if (!isSiegeCube(is)) {
             return;
         }
         Player p = event.getPlayer();
@@ -384,7 +384,14 @@ public class TARDISSiegeListener implements Listener {
     }
 
     private boolean isSiegeCube(ItemStack is) {
-        return is.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
+        if (!is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
+            return false;
+        }
+        ItemMeta im = is.getItemMeta();
+        if (im != null) {
+            return im.hasCustomModelData() && im.getCustomModelData() == 10000002;
+        }
+        return false;
     }
 
     private boolean isSiegeCube(Block b) {
@@ -392,11 +399,7 @@ public class TARDISSiegeListener implements Listener {
         BlockData blockData = b.getBlockData();
         if (blockData instanceof MultipleFacing) {
             MultipleFacing mf = (MultipleFacing) b.getBlockData();
-            for (BlockFace face : mf.getAllowedFaces()) {
-                if (!mf.hasFace(face)) {
-                    return false;
-                }
-            }
+            return mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
         }
         return faced;
     }

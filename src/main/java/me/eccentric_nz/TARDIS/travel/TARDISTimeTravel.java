@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -311,13 +312,10 @@ public class TARDISTimeTravel {
                         // check for siege cube
                         if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
                             MultipleFacing mf = (MultipleFacing) block.getBlockData();
-                            for (BlockFace face : mf.getAllowedFaces()) {
-                                if (!mf.hasFace(face)) {
-                                    count++;
-                                    break;
-                                }
+                            if (!mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
+                                count++;
+                                break;
                             }
-                            continue;
                         } else {
                             count++;
                         }
