@@ -415,7 +415,7 @@ public class TARDISTerminalListener implements Listener {
                     }
                 }
                 // remove the world the Police Box is in
-                if (this_world != null && allowedWorlds.size() > 1) {
+                if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world + ".time_travel"))) {
                     allowedWorlds.remove(this_world);
                 }
                 // remove the world if the player doesn't have permission

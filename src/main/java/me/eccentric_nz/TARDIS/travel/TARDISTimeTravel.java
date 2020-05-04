@@ -100,6 +100,7 @@ public class TARDISTimeTravel {
                     }
                     if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
+                            // malfunction only ever true for NETHER & THE_END worlds
                             if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") || malfunction) {
                                 allowedWorlds.add(ww);
                             }
@@ -112,7 +113,7 @@ public class TARDISTimeTravel {
                         }
                     }
                     // remove the world the Police Box is in
-                    if (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
+                    if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel"))) {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
