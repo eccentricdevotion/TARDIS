@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -281,7 +282,7 @@ public class TARDISStattenheimListener implements Listener {
                             tid.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
                             // restore biome
-                            plugin.getUtils().restoreBiome(oldSave, rsc.getBiome());
+                            BiomeSetter.restoreBiome(oldSave, rsc.getBiome());
                         }
                         TARDISMessage.send(player, "TARDIS_COMING");
                         long delay = 10L;

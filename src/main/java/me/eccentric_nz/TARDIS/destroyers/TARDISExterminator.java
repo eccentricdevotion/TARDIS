@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.*;
@@ -224,7 +225,7 @@ public class TARDISExterminator {
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 } else {
                     // restore biome
-                    plugin.getUtils().restoreBiome(bb_loc, rsc.getBiome());
+                    BiomeSetter.restoreBiome(bb_loc, rsc.getBiome());
                 }
                 World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {

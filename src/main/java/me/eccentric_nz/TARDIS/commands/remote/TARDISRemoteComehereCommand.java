@@ -22,6 +22,7 @@ import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -198,7 +199,7 @@ class TARDISRemoteComehereCommand {
             ttid.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
             // restore biome
-            plugin.getUtils().restoreBiome(oldSave, biome);
+            BiomeSetter.restoreBiome(oldSave, biome);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
         TARDISMessage.send(player, "TARDIS_COMING");

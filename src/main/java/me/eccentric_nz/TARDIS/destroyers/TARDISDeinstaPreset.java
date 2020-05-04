@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
@@ -85,7 +86,7 @@ public class TARDISDeinstaPreset {
         }
         int sbz = l.getBlockZ() - 1;
         // reset biome and it's not The End
-        if (!plugin.getUtils().restoreBiome(l, biome)) {
+        if (!BiomeSetter.restoreBiome(l, biome)) {
             // remove TARDIS from tracker
             plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
         }

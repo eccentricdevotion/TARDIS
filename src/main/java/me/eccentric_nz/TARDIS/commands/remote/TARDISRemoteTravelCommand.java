@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
@@ -100,7 +101,7 @@ class TARDISRemoteTravelCommand {
                     set.put("hidden", 0);
                     plugin.getPresetDestroyer().removeBlockProtection(id);
                     // restore biome
-                    plugin.getUtils().restoreBiome(l, biome);
+                    BiomeSetter.restoreBiome(l, biome);
                 }
             }
             long delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 1L : 500L;

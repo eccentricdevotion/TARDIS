@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
@@ -202,7 +203,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 plugin.getPresetDestroyer().removeBlockProtection(id);
                                                 set.put("hidden", 0);
                                                 // restore biome
-                                                plugin.getUtils().restoreBiome(sl, rsc.getBiome());
+                                                BiomeSetter.restoreBiome(sl, rsc.getBiome());
                                             }
                                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                         }

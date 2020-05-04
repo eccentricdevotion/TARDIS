@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
+import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -137,7 +138,7 @@ class TARDISDematerialiseToVortex implements Runnable {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
                 plugin.getPresetDestroyer().removeBlockProtection(id);
                 // restore biome
-                plugin.getUtils().restoreBiome(l, biome);
+                BiomeSetter.restoreBiome(l, biome);
             }
         }
     }

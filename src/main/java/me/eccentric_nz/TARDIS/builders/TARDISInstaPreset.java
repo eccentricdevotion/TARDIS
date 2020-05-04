@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -110,38 +109,7 @@ public class TARDISInstaPreset {
         int signx = 0, signz = 0;
         // if configured and it's a Whovian preset set biome
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.useTexture()) {
-            List<Chunk> chunks = new ArrayList<>();
-            Chunk chunk = bd.getLocation().getChunk();
-            chunks.add(chunk);
-            // load the chunk
-            int cx = bd.getLocation().getBlockX() >> 4;
-            int cz = bd.getLocation().getBlockZ() >> 4;
-            if (!world.loadChunk(cx, cz, false)) {
-                world.loadChunk(cx, cz, true);
-            }
-            while (!chunk.isLoaded()) {
-                world.loadChunk(chunk);
-            }
-            // set the biome
-            for (int c = -1; c < 2; c++) {
-                for (int r = -1; r < 2; r++) {
-                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-                    // TODO check re-adding umbrella if rebuilding
-                    if (TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
-                        // add an invisible roof
-                        TARDISBlockSetters.setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, bd.getTardisID());
-                    }
-                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
-                    if (!chunks.contains(tmp_chunk)) {
-                        chunks.add(tmp_chunk);
-                    }
-                }
-            }
-            // refresh the chunks
-            chunks.forEach((c) -> {
-                //world.refreshChunk(c.getX(), c.getZ());
-                plugin.getTardisHelper().refreshChunk(c);
-            });
+            BiomeSetter.setBiome(bd, true, 1);
         }
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {

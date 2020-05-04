@@ -30,14 +30,16 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.*;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
@@ -174,7 +176,7 @@ class TARDISMaterialisationPreset implements Runnable {
                 boolean isAdaptiveFactory = preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.BIOME);
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
-                    setBiome(world, x, z, bd.useTexture(), true);
+                    setBiome(bd.useTexture(), true);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
                             String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
@@ -767,7 +769,7 @@ class TARDISMaterialisationPreset implements Runnable {
                     // set handbrake to on ?
                 }
                 // just in case
-                setBiome(world, x, z, bd.useTexture(), false);
+                setBiome(bd.useTexture(), false);
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
@@ -826,42 +828,9 @@ class TARDISMaterialisationPreset implements Runnable {
         }
     }
 
-    private void setBiome(World world, int x, int z, boolean pp, boolean umbrella) {
+    private void setBiome(boolean pp, boolean umbrella) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && pp) {
-            List<Chunk> chunks = new ArrayList<>();
-            Chunk chunk = bd.getLocation().getChunk();
-            chunks.add(chunk);
-            // load the chunk
-            int cx = bd.getLocation().getBlockX() >> 4;
-            int cz = bd.getLocation().getBlockZ() >> 4;
-            if (!world.loadChunk(cx, cz, false)) {
-                world.loadChunk(cx, cz, true);
-            }
-            while (!chunk.isLoaded()) {
-                world.loadChunk(chunk);
-            }
-            // set the biome
-            for (int c = -1; c < 2; c++) {
-                for (int r = -1; r < 2; r++) {
-                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-                    if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
-                        // add an invisible roof
-                        if (loops == 3) {
-                            TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER);
-                        } else {
-                            TARDISBlockSetters.setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, bd.getTardisID());
-                        }
-                    }
-                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
-                    if (!chunks.contains(tmp_chunk)) {
-                        chunks.add(tmp_chunk);
-                    }
-                }
-            }
-            // refresh the chunks
-            chunks.forEach((c) -> {
-                plugin.getTardisHelper().refreshChunk(c);
-            });
+            BiomeSetter.setBiome(bd, umbrella, loops);
         }
     }
 
