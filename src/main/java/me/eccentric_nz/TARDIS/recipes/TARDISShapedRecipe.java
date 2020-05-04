@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,10 +33,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -113,7 +111,18 @@ public class TARDISShapedRecipe {
         }
         im.setCustomModelData(RECIPE_ITEM.getByName(s).getCustomModelData());
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
-            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
+            if (mat.equals(Material.GLOWSTONE_DUST) && DISK_CIRCUIT.getCircuitNames().contains(s)) {
+                // which circuit is it?
+                String[] split = s.split(" ");
+                String which = split[1].toLowerCase(Locale.ENGLISH);
+                // set the second line of lore
+                List<String> lore;
+                String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                lore = Arrays.asList("Uses left", uses);
+                im.setLore(lore);
+            } else {
+                im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
+            }
         }
         if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("TARDIS Communicator")) {
             Damageable damageable = (Damageable) im;
@@ -144,6 +153,16 @@ public class TARDISShapedRecipe {
                     ItemMeta em = exact.getItemMeta();
                     em.setDisplayName(choice[1]);
                     em.setCustomModelData(RECIPE_ITEM.getByName(choice[1]).getCustomModelData());
+                    if (m.equals(Material.GLOWSTONE_DUST) && DISK_CIRCUIT.getCircuitNames().contains(choice[1])) {
+                        // which circuit is it?
+                        String[] split = choice[1].split(" ");
+                        String which = split[1].toLowerCase(Locale.ENGLISH);
+                        // set the second line of lore
+                        List<String> lore;
+                        String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                        lore = Arrays.asList("Uses left", uses);
+                        em.setLore(lore);
+                    }
                     exact.setItemMeta(em);
                     r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
                 } else if (i.contains(">")) {
