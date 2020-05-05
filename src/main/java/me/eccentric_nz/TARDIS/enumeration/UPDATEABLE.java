@@ -81,7 +81,11 @@ public enum UPDATEABLE {
     }
 
     public String getName() {
-        return TARDISStringUtils.toDashedLowercase(toString());
+        if (this == UPDATEABLE.TOGGLE_WOOL) {
+            return "toggle_wool";
+        } else {
+            return TARDISStringUtils.toDashedLowercase(toString());
+        }
     }
 
     public boolean isControl() {
