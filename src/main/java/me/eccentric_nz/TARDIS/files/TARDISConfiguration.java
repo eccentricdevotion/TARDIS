@@ -49,6 +49,7 @@ public class TARDISConfiguration {
         booleanOptions.put("abandon.reduce_count", true);
         booleanOptions.put("allow.3d_doors", false);
         booleanOptions.put("allow.achievements", true);
+        booleanOptions.put("allow.admin_bypass", false);
         booleanOptions.put("allow.all_blocks", false);
         booleanOptions.put("allow.autonomous", true);
         booleanOptions.put("allow.emergency_npc", true);

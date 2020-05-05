@@ -54,6 +54,9 @@ public class TARDISPluginRespect {
      */
     public boolean getRespect(Location l, Parameters flag) {
         boolean bool = true;
+        if (plugin.getConfig().getBoolean("allow.admin_bypass") && flag.getPlayer() != null && flag.getPlayer().hasPermission("tardis.admin")) {
+            return true;
+        }
         if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
             String perm = l.getWorld().getName();
             if (!flag.getPlayer().hasPermission("tardis.travel." + perm)) {
