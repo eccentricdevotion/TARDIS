@@ -86,6 +86,7 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postCarpetBlocks = new HashMap<>();
     private final List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private Location ender = null;
@@ -248,22 +249,24 @@ public class TARDISBuilderInner implements Runnable {
             });
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
-                if (s == 0) {
-                    // always make the control centre the first sign
-                    Block psb = entry.getKey();
-                    psb.setBlockData(entry.getValue());
-                    if (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN)) {
-                        Sign cs = (Sign) psb.getState();
-                        cs.setLine(0, "");
-                        cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                        cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                        cs.setLine(3, "");
-                        cs.update();
-                        String controlloc = psb.getLocation().toString();
-                        plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
-                    }
+                Block psb = entry.getKey();
+                psb.setBlockData(entry.getValue());
+                // always make the control centre the first oak wall sign
+                if (s == 0 && entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN)) {
+                    Sign cs = (Sign) psb.getState();
+                    cs.setLine(0, "");
+                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    cs.setLine(3, "");
+                    cs.update();
+                    String controlloc = psb.getLocation().toString();
+                    plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
+                    s++;
                 }
-                s++;
+            }
+            for (Map.Entry<Block, BlockData> carpet : postCarpetBlocks.entrySet()) {
+                Block pcb = carpet.getKey();
+                pcb.setBlockData(carpet.getValue());
             }
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
@@ -665,6 +668,8 @@ public class TARDISBuilderInner implements Runnable {
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 plugin.setTardisSpawn(true);
                 world.spawnEntity(new Location(world, x + 0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
+            } else if (type.equals(Material.BLACK_CARPET) && schm.getPermission().equals("master")) {
+                postCarpetBlocks.put(world.getBlockAt(x, y, z), data);
             } else {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);
             }
