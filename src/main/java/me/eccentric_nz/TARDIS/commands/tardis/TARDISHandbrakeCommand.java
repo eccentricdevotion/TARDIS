@@ -68,6 +68,7 @@ public class TARDISHandbrakeCommand {
                 plugin.getTrackerKeeper().getDestinationVortex().remove(id);
                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singletonList(id));
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singletonList(id));
+                plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singletonList(id));
             }
             if (!admin) {
                 TARDISMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));

@@ -202,6 +202,7 @@ public class TARDISSiegeMode {
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, true);
             }
+            // turn off force field
             if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(p.getUniqueId())) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
             }
