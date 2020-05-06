@@ -196,6 +196,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 8:
                                     // zero room
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     int zero_amount = plugin.getArtronConfig().getInt("zero");
                                     if (level < zero_amount) {
                                         TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
@@ -232,6 +236,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 11:
                                     // desktop theme
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (!player.hasPermission("tardis.upgrade")) {
                                         TARDISMessage.send(player, "NO_PERM_UPGRADE");
                                         return;
@@ -326,6 +334,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 29:
                                     // light switch
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                                         TARDISMessage.send(player, "POWER_DOWN");
                                         return;
@@ -343,6 +355,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     new TARDISRebuildCommand(plugin).rebuildPreset(player);
                                     break;
                                 case 33:
+                                    // transmat
                                     ItemStack[] tran = new TARDISTransmatInventory(plugin, id).getMenu();
                                     Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
                                     smat.setContents(tran);
