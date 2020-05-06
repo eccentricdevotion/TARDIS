@@ -15,9 +15,6 @@
 9. Set Master button to ON (In Lazarus GUI) when it is in use
 10. Use the Vortex Manipulator to teleport past force fields
 
-## TARDIS data pack
-* Add TARDIS recipes? _probably not as you can't set the display name_
-
 ## Future version `?+`
 * TARDISSonicBlaster addon? - _unlikely_
 * Add more API Events that other plugins can listen for? - _unlikely_
@@ -38,8 +35,8 @@
    * Stray -> Scarecrows
 4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
-## Minecraft API if ever available
-1. Recreate everything with the new API :)
+## Minecraft Bedrock Edition
+1. Recreate everything :)
 2. Create custom blocks for the TARDIS and console
 3. Custom TARDIS items and crafting recipes for the same
 4. A Sonic Screwdriver and a crafting recipe for it
