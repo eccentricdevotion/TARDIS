@@ -102,6 +102,23 @@ public class TARDISTravelCommands implements CommandExecutor {
                 }
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardis_id();
+                if (args[0].equalsIgnoreCase("cancel")) {
+                    if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                        plugin.getTrackerKeeper().getHasDestination().remove(id);
+                        TARDISMessage.send(player, "TRAVEL_CANCEL");
+                    } else {
+                        TARDISMessage.send(player, "TRAVEL_NEED_DEST");
+                    }
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("costs")) {
+                    TARDISMessage.send(player, "TRAVEL_COSTS");
+                    for (String s : costs) {
+                        String c = (s.equals("rebuild")) ? plugin.getArtronConfig().getString("random") : plugin.getArtronConfig().getString(s);
+                        TARDISMessage.message(player, "    " + s + ": " + ChatColor.AQUA + c);
+                    }
+                    return true;
+                }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     TARDISMessage.send(player, "SIEGE_NO_CMD");
                     return true;
