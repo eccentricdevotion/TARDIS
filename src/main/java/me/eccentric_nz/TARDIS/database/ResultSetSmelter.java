@@ -138,9 +138,13 @@ public class ResultSetSmelter {
 
     private List<Chest> getChests(String location, boolean fuel) {
         Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
+        int offset = l.getBlockY() - 68;
         List<Chest> chests = new ArrayList<>();
         List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();
         vectors.forEach((v) -> {
+            if (offset > 0) {
+                v.setY(4.0d - offset);
+            }
             Block b = l.clone().add(v).getBlock();
             if (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) {
                 Chest chest = (Chest) b.getState();
