@@ -109,6 +109,15 @@ class TARDISARSJettisonRunnable implements Runnable {
                 del.put("type", 25);
                 plugin.getQueryFactory().doDelete("controls", del);
             }
+            // if it is a smelter room remove the chest records
+            if (r.equals("SMELTER")) {
+                HashMap<String, Object> del = new HashMap<>();
+                del.put("tardis_id", id);
+                del.put("x", 0);
+                del.put("y", 0);
+                del.put("z", 0);
+                plugin.getQueryFactory().doDelete("vaults", del);
+            }
             if (r.equals("RENDERER")) {
                 // remove stored location from the database
                 HashMap<String, Object> setd = new HashMap<>();
