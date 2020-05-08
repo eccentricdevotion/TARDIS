@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.*;
@@ -58,6 +59,19 @@ public class TARDISBlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSignBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
+        if (player.getGameMode().equals(GameMode.CREATIVE)) {
+            // prevent TARDIS block breakage
+            Block b = event.getBlock();
+            String l = b.getLocation().toString();
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("location", l);
+            where.put("police_box", 1);
+            ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
+            if (rsb.resultSet()) {
+                TARDISMessage.send(player, "TARDIS_BREAK");
+                event.setCancelled(true);
+            }
+        }
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(player, "NOT_IN_ZERO");
