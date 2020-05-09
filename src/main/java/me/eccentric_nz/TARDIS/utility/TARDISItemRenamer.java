@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -52,6 +53,12 @@ public class TARDISItemRenamer {
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add("Enter and exit your TARDIS");
                 im.setLore(lore);
+            }
+            try {
+                RECIPE_ITEM recipeItem = RECIPE_ITEM.valueOf(TARDISStringUtils.toScoredUppercase(name));
+                im.setCustomModelData(recipeItem.getCustomModelData());
+            } catch (IllegalArgumentException e) {
+                // do nothing
             }
             itemStack.setItemMeta(im);
         }
