@@ -26,6 +26,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -172,6 +173,9 @@ public class TARDISInteriorPostioning {
             for (int z = 0; z < 64; z++) {
                 int cx = sx + x;
                 int cz = sz + z;
+                for (Entity e : w.getChunkAt(cx, cz).getEntities()) {
+                    e.remove();
+                }
                 w.regenerateChunk(cx, cz);
                 w.unloadChunk(cx, cz, true);
             }
@@ -187,6 +191,9 @@ public class TARDISInteriorPostioning {
         if (rs.resultSet()) {
             String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
+            for (Entity e : c.getEntities()) {
+                e.remove();
+            }
             for (int l = 0; l < 3; l++) {
                 for (int x = 0; x < 9; x++) {
                     for (int z = 0; z < 9; z++) {
@@ -210,7 +217,7 @@ public class TARDISInteriorPostioning {
             }
         }
     }
-
+    
     public void reclaimZeroChunk(World w, TARDISTIPSData data) {
         // get starting chunk
         Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
