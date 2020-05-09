@@ -1,1 +1,1 @@
-This product includes software from Memetix (https://github.com/boatmeme/microsoft-translator-java-api), and from JSON (http://http://www.json.org/java/index.html).
+This product includes software for Yandex API calls (https://www.rmtheis.com/), and GZip archiving and extraction (https://rauschig.org/jarchivelib/).
