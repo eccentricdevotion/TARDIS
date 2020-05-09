@@ -70,6 +70,7 @@ public class TARDISBlockBreakListener implements Listener {
             if (rsb.resultSet()) {
                 TARDISMessage.send(player, "TARDIS_BREAK");
                 event.setCancelled(true);
+                return;
             }
         }
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
