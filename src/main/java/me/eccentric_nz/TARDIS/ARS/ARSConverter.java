@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
@@ -65,21 +67,21 @@ public class ARSConverter {
                         continue;
                     }
                     String[][][] grid = new String[3][9][9];
-                    JSONArray json = new JSONArray(js);
+                    JsonArray json = new JsonParser().parse(js).getAsJsonArray();
                     for (int y = 0; y < 3; y++) {
-                        JSONArray jsonx = json.getJSONArray(y);
+                        JsonArray jsonx = json.get(y).getAsJsonArray();
                         for (int x = 0; x < 9; x++) {
-                            JSONArray jsonz = jsonx.getJSONArray(x);
+                            JsonArray jsonz = jsonx.get(x).getAsJsonArray();
                             for (int z = 0; z < 9; z++) {
-                                if (jsonz.getInt(z) == 46) {
+                                if (jsonz.get(z).getAsInt() == 46) {
                                     grid[y][x][z] = "STONE";
                                 } else {
-                                    grid[y][x][z] = tmic.LEGACY_ID_LOOKUP.get(jsonz.getInt(z)).toString();
+                                    grid[y][x][z] = tmic.LEGACY_ID_LOOKUP.get(jsonz.get(z).getAsInt()).toString();
                                 }
                             }
                         }
                     }
-                    JSONArray arr = new JSONArray(grid);
+                    JsonArray arr = new JsonParser().parse(new Gson().toJson(grid)).getAsJsonArray();
                     update.setString(1, arr.toString());
                     update.setInt(2, id);
                     update.addBatch();

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Archive;
@@ -82,7 +82,7 @@ public class ResultSetArchive {
                             rs.getBoolean("beacon"),
                             rs.getBoolean("lanterns"),
                             rs.getInt("use"),
-                            new JSONObject(rs.getString("data")),
+                            new JsonParser().parse(rs.getString("data")).getAsJsonObject(),
                             rs.getString("description")
                     );
                 }

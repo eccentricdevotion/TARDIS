@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -87,16 +87,16 @@ public class TARDISRoomBuilder {
             String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
             String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
-            JSONObject obj = TARDISSchematicGZip.unzip(path);
-            JSONObject dimensions = obj.getJSONObject("dimensions");
-            int xzoffset = (dimensions.getInt("width") / 2);
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            int xzoffset = (dimensions.get("width").getAsInt() / 2);
             switch (d) {
                 case NORTH:
                     l.setX(l.getX() - xzoffset);
-                    l.setZ(l.getZ() - dimensions.getInt("width"));
+                    l.setZ(l.getZ() - dimensions.get("width").getAsInt());
                     break;
                 case WEST:
-                    l.setX(l.getX() - dimensions.getInt("width"));
+                    l.setX(l.getX() - dimensions.get("width").getAsInt());
                     l.setZ(l.getZ() - xzoffset);
                     break;
                 case SOUTH:

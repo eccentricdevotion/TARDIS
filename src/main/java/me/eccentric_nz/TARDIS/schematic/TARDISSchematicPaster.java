@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -52,8 +52,8 @@ class TARDISSchematicPaster implements Runnable {
     private double div = 1.0d;
     private World world;
     private UUID uuid;
-    private JSONObject obj;
-    private JSONArray arr;
+    private JsonObject obj;
+    private JsonArray arr;
     private boolean running = false;
     private BossBar bb;
 
@@ -77,22 +77,22 @@ class TARDISSchematicPaster implements Runnable {
             }
             obj = plugin.getTrackerKeeper().getPastes().get(uuid);
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height") - 1;
-            w = dimensions.getInt("width");
-            d = dimensions.getInt("length") - 1;
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt() - 1;
+            w = dimensions.get("width").getAsInt();
+            d = dimensions.get("length").getAsInt() - 1;
             div = (h + 1.0d) * w * (d + 1.0d);
             // get start location
-            JSONObject r = (JSONObject) obj.get("relative");
-            rx = r.getInt("x");
-            ry = r.getInt("y");
-            rz = r.getInt("z");
+            JsonObject r = obj.get("relative").getAsJsonObject();
+            rx = r.get("x").getAsInt();
+            ry = r.get("y").getAsInt();
+            rz = r.get("z").getAsInt();
             x = player.getLocation().getBlockX() - rx;
             y = player.getLocation().getBlockY() - ry;
             z = player.getLocation().getBlockZ() - rz;
             world = player.getWorld();
             // get input array
-            arr = (JSONArray) obj.get("input");
+            arr = obj.get("input").getAsJsonArray();
             bb = Bukkit.createBossBar("TARDIS Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
             bb.setProgress(0);
             bb.addPlayer(player);
@@ -104,15 +104,15 @@ class TARDISSchematicPaster implements Runnable {
             setBanners(postBanners);
             // paintings
             if (obj.has("paintings")) {
-                JSONArray paintings = (JSONArray) obj.get("paintings");
-                for (int i = 0; i < paintings.length(); i++) {
-                    JSONObject painting = paintings.getJSONObject(i);
-                    JSONObject rel = painting.getJSONObject("rel_location");
-                    int px = rel.getInt("x");
-                    int py = rel.getInt("y");
-                    int pz = rel.getInt("z");
-                    Art art = Art.valueOf(painting.getString("art"));
-                    BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
+                JsonArray paintings = (JsonArray) obj.get("paintings");
+                for (int i = 0; i < paintings.size(); i++) {
+                    JsonObject painting = paintings.get(i).getAsJsonObject();
+                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
+                    int px = rel.get("x").getAsInt();
+                    int py = rel.get("y").getAsInt();
+                    int pz = rel.get("z").getAsInt();
+                    Art art = Art.valueOf(painting.get("art").getAsString());
+                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
                     Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
                     try {
                         Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
@@ -131,12 +131,12 @@ class TARDISSchematicPaster implements Runnable {
             bb.removeAll();
         }
         // paste a column
-        JSONArray level = (JSONArray) arr.get(l);
-        JSONArray row = (JSONArray) level.get(r);
+        JsonArray level = (JsonArray) arr.get(l);
+        JsonArray row = (JsonArray) level.get(r);
         for (int c = 0; c <= d; c++) {
             counter++;
-            JSONObject col = (JSONObject) row.get(c);
-            BlockData data = plugin.getServer().createBlockData(col.getString("data"));
+            JsonObject col = row.get(c).getAsJsonObject();
+            BlockData data = plugin.getServer().createBlockData(col.get("data").getAsString());
             Block block = world.getBlockAt(x + r, y + l, z + c);
             switch (data.getMaterial()) {
                 case REDSTONE_TORCH:
@@ -174,7 +174,7 @@ class TARDISSchematicPaster implements Runnable {
                 case WHITE_WALL_BANNER:
                 case YELLOW_BANNER:
                 case YELLOW_WALL_BANNER:
-                    JSONObject state = col.optJSONObject("banner");
+                    JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);
                         postBanners.put(block, tbd);

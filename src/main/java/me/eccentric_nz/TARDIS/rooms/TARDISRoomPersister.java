@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisTimeLord;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
@@ -98,7 +98,7 @@ public class TARDISRoomPersister {
                     String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
                     String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
                     // get JSON
-                    JSONObject obj = TARDISSchematicGZip.unzip(path);
+                    JsonObject obj = TARDISSchematicGZip.unzip(path);
                     TARDISRoomData rd = new TARDISRoomData();
                     rd.setSchematic(obj);
                     rd.setRoom(whichroom);

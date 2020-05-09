@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -98,7 +98,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                     return;
                 }
             }
-            JSONObject obj;
+            JsonObject obj;
             if (archive == null) {
                 String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
@@ -115,10 +115,10 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 obj = archive.getJSON();
             }
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height");
-            w = dimensions.getInt("width");
-            c = dimensions.getInt("length");
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt();
+            w = dimensions.get("width").getAsInt();
+            c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());

@@ -16,10 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -86,7 +88,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private Block postBedrock;
-    private JSONArray arr;
+    private JsonArray arr;
     private Material wall_type;
     private Material floor_type;
     private HashMap<String, Object> set;
@@ -147,7 +149,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             set = new HashMap<>();
             where = new HashMap<>();
-            JSONObject obj;
+            JsonObject obj;
             if (archive_next == null) {
                 String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
@@ -164,10 +166,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 obj = archive_next.getJSON();
             }
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height");
-            w = dimensions.getInt("width");
-            c = dimensions.getInt("length");
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt();
+            w = dimensions.get("width").getAsInt();
+            c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
@@ -225,7 +227,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             wall_type = Material.valueOf(wall[0]);
             floor_type = Material.valueOf(floor[0]);
             // get input array
-            arr = (JSONArray) obj.get("input");
+            arr = obj.get("input").getAsJsonArray();
             // clear existing precious blocks
             HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("tardis_id", id);
@@ -394,15 +396,15 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             taskID = 0;
             TARDISMessage.send(player, "UPGRADE_FINISHED");
         } else {
-            JSONArray floor = (JSONArray) arr.get(level);
-            JSONArray r = (JSONArray) floor.get(row);
+            JsonArray floor = arr.get(level).getAsJsonArray();
+            JsonArray r = (JsonArray) floor.get(row);
             // place a row of blocks
             for (int col = 0; col < c; col++) {
-                JSONObject bb = (JSONObject) r.get(col);
+                JsonObject bb = r.get(col).getAsJsonObject();
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
+                BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
                 Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
@@ -517,7 +519,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         } else if (h > 16) {
                             existing[2][4][4] = control;
                         }
-                        JSONArray json = new JSONArray(existing);
+                        JsonArray json = new JsonParser().parse(new Gson().toJson(existing)).getAsJsonArray();
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("json", json.toString());
                         HashMap<String, Object> wheres = new HashMap<>();

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -83,7 +83,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private Block postBedrock;
-    private JSONArray arr;
+    private JsonArray arr;
     private Material wall_type;
     private Material floor_type;
     private HashMap<String, Object> set;
@@ -127,7 +127,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             }
             set = new HashMap<>();
             where = new HashMap<>();
-            JSONObject obj;
+            JsonObject obj;
             if (archive == null) {
                 String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
@@ -144,10 +144,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 obj = archive.getJSON();
             }
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height");
-            w = dimensions.getInt("width");
-            c = dimensions.getInt("length");
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt();
+            w = dimensions.get("width").getAsInt();
+            c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
@@ -201,7 +201,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             wall_type = Material.valueOf(wall[0]);
             floor_type = Material.valueOf(floor[0]);
             // get input array
-            arr = (JSONArray) obj.get("input");
+            arr = obj.get("input").getAsJsonArray();
             // clear existing lamp blocks
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", id);
@@ -344,15 +344,15 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             String message = (clean) ? "REPAIR_CLEAN" : "REPAIR_DONE";
             TARDISMessage.send(player, message);
         } else {
-            JSONArray floor = (JSONArray) arr.get(level);
-            JSONArray r = (JSONArray) floor.get(row);
+            JsonArray floor = arr.get(level).getAsJsonArray();
+            JsonArray r = (JsonArray) floor.get(row);
             // place a row of blocks
             for (int col = 0; col < c; col++) {
-                JSONObject bb = (JSONObject) r.get(col);
+                JsonObject bb = r.get(col).getAsJsonObject();
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
+                BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
                 Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light

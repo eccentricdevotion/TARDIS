@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
@@ -84,26 +84,26 @@ public class TARDISRoomMap {
             return false;
         }
         // get JSON
-        JSONObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
+        JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
         if (obj == null) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            int h = dimensions.getInt("height");
-            int w = dimensions.getInt("width");
-            int l = dimensions.getInt("length");
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            int h = dimensions.get("height").getAsInt();
+            int w = dimensions.get("width").getAsInt();
+            int l = dimensions.get("length").getAsInt();
             // get input array
-            JSONArray arr = (JSONArray) obj.get("input");
+            JsonArray arr = obj.get("input").getAsJsonArray();
             // loop like crazy
             for (int level = 0; level < h; level++) {
-                JSONArray floor = (JSONArray) arr.get(level);
+                JsonArray floor = arr.get(level).getAsJsonArray();
                 for (int row = 0; row < w; row++) {
-                    JSONArray r = (JSONArray) floor.get(row);
+                    JsonArray r = floor.get(row).getAsJsonArray();
                     for (int col = 0; col < l; col++) {
-                        JSONObject c = (JSONObject) r.get(col);
-                        if (!(c.get("data") instanceof String)) {
+                        JsonObject c = r.get(col).getAsJsonObject();
+                        if (!(c.get("data").getAsString().contains("minecraft"))) {
                             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
                             plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
                             try {
@@ -112,7 +112,7 @@ public class TARDISRoomMap {
                             }
                             return false;
                         }
-                        String bid = getMaterialAsString(c.getString("data"));
+                        String bid = getMaterialAsString(c.get("data").getAsString());
                         if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
                         }

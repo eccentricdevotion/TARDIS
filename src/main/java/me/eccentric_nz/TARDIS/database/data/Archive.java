@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 
 import java.util.UUID;
@@ -32,10 +32,10 @@ public class Archive {
     private final boolean beacon;
     private final boolean lanterns;
     private final int use;
-    private final JSONObject JSON;
+    private final JsonObject JSON;
     private final String description;
 
-    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, JSONObject JSON, String description) {
+    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, JsonObject JSON, String description) {
         this.uuid = uuid;
         this.name = name;
         this.consoleSize = ConsoleSize.valueOf(consoleSize);
@@ -70,7 +70,7 @@ public class Archive {
         return use;
     }
 
-    public JSONObject getJSON() {
+    public JsonObject getJSON() {
         return JSON;
     }
 

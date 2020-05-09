@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -70,11 +70,11 @@ class TARDISRoomRemover {
         String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
         String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
         // get JSON
-        JSONObject obj = TARDISSchematicGZip.unzip(path);
+        JsonObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
-        JSONObject dimensions = (JSONObject) obj.get("dimensions");
-        int h = dimensions.getInt("height");
-        int wid = dimensions.getInt("width");
+        JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+        int h = dimensions.get("height").getAsInt();
+        int wid = dimensions.get("width").getAsInt();
         downy = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
         upy = h - (downy + 1);
         int xzoffset = (wid / 2);

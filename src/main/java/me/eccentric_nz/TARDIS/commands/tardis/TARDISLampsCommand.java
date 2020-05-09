@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
@@ -96,10 +96,10 @@ class TARDISLampsCommand {
                 String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
-                JSONObject obj = TARDISSchematicGZip.unzip(path);
+                JsonObject obj = TARDISSchematicGZip.unzip(path);
                 // get dimensions
-                JSONObject dimensions = (JSONObject) obj.get("dimensions");
-                int h = dimensions.getInt("height");
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                int h = dimensions.get("height").getAsInt();
                 starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();

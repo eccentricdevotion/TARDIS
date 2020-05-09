@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Banner;
@@ -36,17 +36,17 @@ public class TARDISBannerSetter {
 
     public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
         banners.forEach((key, tbd) -> {
-            JSONObject state = tbd.getState();
+            JsonObject state = tbd.getState();
             if (state != null) {
                 Block pbb = key.getLocation().getBlock();
                 pbb.setBlockData(tbd.getData(), true);
                 Banner banner = (Banner) pbb.getState();
                 List<Pattern> plist = new ArrayList<>();
-                JSONArray patterns = state.getJSONArray("patterns");
-                for (int j = 0; j < patterns.length(); j++) {
-                    JSONObject jo = patterns.getJSONObject(j);
-                    PatternType pt = PatternType.valueOf(jo.getString("pattern"));
-                    DyeColor dc = DyeColor.valueOf(jo.getString("pattern_colour"));
+                JsonArray patterns = state.get("patterns").getAsJsonArray();
+                for (int j = 0; j < patterns.size(); j++) {
+                    JsonObject jo = patterns.get(j).getAsJsonObject();
+                    PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+                    DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
                     Pattern p = new Pattern(dc, pt);
                     plist.add(p);
                 }

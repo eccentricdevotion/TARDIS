@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.recalculators.*;
@@ -288,11 +289,11 @@ public class TARDISChameleonPreset {
      */
     private static BlockData[][] getStringArrayFromJSON(String js) {
         BlockData[][] preset = new BlockData[10][4];
-        JSONArray json = new JSONArray(js);
+        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
         for (int col = 0; col < 10; col++) {
-            JSONArray jsoncol = json.getJSONArray(col);
+            JsonArray jsoncol = json.get(col).getAsJsonArray();
             for (int block = 0; block < 4; block++) {
-                preset[col][block] = Bukkit.createBlockData(jsoncol.getString(block));
+                preset[col][block] = Bukkit.createBlockData(jsoncol.get(block).getAsString());
             }
         }
         return preset;

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -98,15 +98,15 @@ public class TARDISRepair {
     boolean hasCondensedMissingBlocks() {
         String uuid = player.getUniqueId().toString();
         HashMap<String, Integer> blockIDs = new HashMap<>();
-        JSONObject obj = getConsole();
+        JsonObject obj = getConsole();
         if (obj.has("dimensions")) {
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            int h = dimensions.getInt("height");
-            int w = dimensions.getInt("width");
-            int l = dimensions.getInt("length");
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            int h = dimensions.get("height").getAsInt();
+            int w = dimensions.get("width").getAsInt();
+            int l = dimensions.get("length").getAsInt();
             // get input array
-            JSONArray arr = (JSONArray) obj.get("input");
+            JsonArray arr = obj.get("input").getAsJsonArray();
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -140,15 +140,15 @@ public class TARDISRepair {
                 }
                 // loop like crazy
                 for (int level = 0; level < h; level++) {
-                    JSONArray plane = (JSONArray) arr.get(level);
+                    JsonArray plane = arr.get(level).getAsJsonArray();
                     for (int row = 0; row < w; row++) {
-                        JSONArray r = (JSONArray) plane.get(row);
+                        JsonArray r = (JsonArray) plane.get(row);
                         for (int col = 0; col < l; col++) {
                             int x = startx + row;
                             int y = starty + level;
                             int z = startz + col;
-                            JSONObject c = (JSONObject) r.get(col);
-                            BlockData data = plugin.getServer().createBlockData(c.getString("data"));
+                            JsonObject c = r.get(col).getAsJsonObject();
+                            BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
                             String bid = data.getMaterial().toString();
                             if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                                 continue;
@@ -246,8 +246,8 @@ public class TARDISRepair {
         return false;
     }
 
-    private JSONObject getConsole() {
-        JSONObject obj = new JSONObject();
+    private JsonObject getConsole() {
+        JsonObject obj = new JsonObject();
         String uuid = player.getUniqueId().toString();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);

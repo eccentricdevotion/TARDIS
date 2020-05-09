@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -111,21 +111,21 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 int minz = Math.min(sz, ez);
                 int maxz = Math.max(sz, ez);
                 // create a JSON object for relative position
-                JSONObject relative = new JSONObject();
+                JsonObject relative = new JsonObject();
                 int px = player.getLocation().getBlockX() - minx;
                 int py = player.getLocation().getBlockY() - miny;
                 int pz = player.getLocation().getBlockZ() - minz;
-                relative.put("x", px);
-                relative.put("y", py);
-                relative.put("z", pz);
+                relative.addProperty("x", px);
+                relative.addProperty("y", py);
+                relative.addProperty("z", pz);
                 // create a JSON object for dimensions
-                JSONObject dimensions = new JSONObject();
+                JsonObject dimensions = new JsonObject();
                 int width = (maxx - minx) + 1;
                 int height = (maxy - miny) + 1;
                 int length = (maxz - minz) + 1;
-                dimensions.put("width", width);
-                dimensions.put("height", height);
-                dimensions.put("length", length);
+                dimensions.addProperty("width", width);
+                dimensions.addProperty("height", height);
+                dimensions.addProperty("length", length);
                 if (width != length) {
                     TARDISMessage.send(player, "SCHM_SQUARE");
                     return true;
@@ -134,17 +134,17 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     TARDISMessage.send(player, "SCHM_MULTIPLE");
                     return true;
                 }
-                JSONArray paintings = new JSONArray();
+                JsonArray paintings = new JsonArray();
                 List<Entity> entities = new ArrayList<>();
                 // create JSON arrays for block data
-                JSONArray levels = new JSONArray();
+                JsonArray levels = new JsonArray();
                 // loop through the blocks inside this cube
                 for (int l = miny; l <= maxy; l++) {
-                    JSONArray rows = new JSONArray();
+                    JsonArray rows = new JsonArray();
                     for (int r = minx; r <= maxx; r++) {
-                        JSONArray columns = new JSONArray();
+                        JsonArray columns = new JsonArray();
                         for (int c = minz; c <= maxz; c++) {
-                            JSONObject obj = new JSONObject();
+                            JsonObject obj = new JsonObject();
                             Block b = w.getBlockAt(r, l, c);
                             // check for paintings
                             Location bLocation = b.getLocation();
@@ -152,49 +152,49 @@ public class TARDISSchematicCommand implements CommandExecutor {
                                 if (entity instanceof Painting) {
                                     Location ploc = entity.getLocation();
                                     if (!entities.contains(entity)) {
-                                        JSONObject painting = new JSONObject();
-                                        JSONObject loc = new JSONObject();
-                                        loc.put("x", ploc.getBlockX() - minx);
-                                        loc.put("y", ploc.getBlockY() - miny);
-                                        loc.put("z", ploc.getBlockZ() - minz);
-                                        painting.put("rel_location", loc);
-                                        painting.put("art", ((Painting) entity).getArt().toString());
-                                        painting.put("facing", entity.getFacing().toString());
-                                        paintings.put(painting);
+                                        JsonObject painting = new JsonObject();
+                                        JsonObject loc = new JsonObject();
+                                        loc.addProperty("x", ploc.getBlockX() - minx);
+                                        loc.addProperty("y", ploc.getBlockY() - miny);
+                                        loc.addProperty("z", ploc.getBlockZ() - minz);
+                                        painting.add("rel_location", loc);
+                                        painting.addProperty("art", ((Painting) entity).getArt().toString());
+                                        painting.addProperty("facing", entity.getFacing().toString());
+                                        paintings.add(painting);
                                         entities.add(entity);
                                     }
                                 }
                             }
                             String blockData = b.getBlockData().getAsString();
-                            obj.put("data", blockData);
+                            obj.addProperty("data", blockData);
                             // banners
                             if (TARDISStaticUtils.isBanner(b.getType())) {
-                                JSONObject state = new JSONObject();
+                                JsonObject state = new JsonObject();
                                 Banner banner = (Banner) b.getState();
-                                JSONArray patterns = new JSONArray();
+                                JsonArray patterns = new JsonArray();
                                 if (banner.numberOfPatterns() > 0) {
                                     banner.getPatterns().forEach((p) -> {
-                                        JSONObject pattern = new JSONObject();
-                                        pattern.put("pattern", p.getPattern().toString());
-                                        pattern.put("pattern_colour", p.getColor().toString());
-                                        patterns.put(pattern);
+                                        JsonObject pattern = new JsonObject();
+                                        pattern.addProperty("pattern", p.getPattern().toString());
+                                        pattern.addProperty("pattern_colour", p.getColor().toString());
+                                        patterns.add(pattern);
                                     });
                                 }
-                                state.put("patterns", patterns);
-                                obj.put("banner", state);
+                                state.add("patterns", patterns);
+                                obj.add("banner", state);
                             }
-                            columns.put(obj);
+                            columns.add(obj);
                         }
-                        rows.put(columns);
+                        rows.add(columns);
                     }
-                    levels.put(rows);
+                    levels.add(rows);
                 }
-                JSONObject schematic = new JSONObject();
-                schematic.put("relative", relative);
-                schematic.put("dimensions", dimensions);
-                schematic.put("input", levels);
-                if (paintings.length() > 0) {
-                    schematic.put("paintings", paintings);
+                JsonObject schematic = new JsonObject();
+                schematic.add("relative", relative);
+                schematic.add("dimensions", dimensions);
+                schematic.add("input", levels);
+                if (paintings.size() > 0) {
+                    schematic.add("paintings", paintings);
                 }
                 String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
                 File file = new File(output);
@@ -217,7 +217,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     TARDISMessage.send(player, "SCHM_NOT_VALID");
                     return true;
                 }
-                JSONObject sch = TARDISSchematicGZip.unzip(instr);
+                JsonObject sch = TARDISSchematicGZip.unzip(instr);
                 plugin.getTrackerKeeper().getPastes().put(uuid, sch);
                 TARDISMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET);
                 return true;

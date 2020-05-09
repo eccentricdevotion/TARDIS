@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,7 +38,7 @@ public class TARDISRoomData {
     private String room;
     private Location location;
     private Block block;
-    private JSONObject schematic;
+    private JsonObject schematic;
     private int tardis_id;
     private int row;
     private int column;
@@ -85,11 +85,11 @@ public class TARDISRoomData {
         this.block = block;
     }
 
-    public JSONObject getSchematic() {
+    public JsonObject getSchematic() {
         return schematic;
     }
 
-    public void setSchematic(JSONObject schematic) {
+    public void setSchematic(JsonObject schematic) {
         this.schematic = schematic;
     }
 

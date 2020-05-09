@@ -24,9 +24,9 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONException;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.event.Listener;
 
@@ -49,44 +49,34 @@ public final class TARDISZeroRoomPacketListener implements Listener {
      */
     public TARDISZeroRoomPacketListener(TARDIS instance) {
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
-        manager.addPacketListener(
-                new PacketAdapter(instance, ListenerPriority.NORMAL, Collections.singletonList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
-                    @Override
-                    public void onPacketSending(PacketEvent event) {
-                        boolean send = false;
-                        WrappedChatComponent chat = event.getPacket().getChatComponents().read(0);
-                        if (chat != null) {
-                            String json = chat.getJson();
-                            if (json != null && !json.isEmpty() && !json.equals("\"\"")) {
-                                try {
-                                    JSONObject data = new JSONObject(json);
-                                    if (data.has("extra")) {
-                                        JSONArray extra = data.getJSONArray("extra");
-                                        for (int i = 0; i < extra.length(); i++) {
-                                            if (extra.get(i) instanceof String) {
-                                                return;
-                                            }
-                                            JSONObject tmp = (JSONObject) extra.get(i);
-                                            if (tmp.has("text")) {
-                                                String text = (String) tmp.get("text");
-                                                if (text.toLowerCase(Locale.ENGLISH).contains("broadcast")) {
-                                                    send = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        if (!send && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
-                                            event.setCancelled(true);
-                                        }
+        manager.addPacketListener(new PacketAdapter(instance, ListenerPriority.NORMAL, Collections.singletonList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                boolean send = false;
+                WrappedChatComponent chat = event.getPacket().getChatComponents().read(0);
+                if (chat != null) {
+                    String json = chat.getJson();
+                    if (json != null && !json.isEmpty() && !json.equals("\"\"")) {
+                        JsonObject data = new JsonParser().parse(json).getAsJsonObject();
+                        if (data.has("extra")) {
+                            JsonArray extra = data.get("extra").getAsJsonArray();
+                            for (int i = 0; i < extra.size(); i++) {
+                                JsonObject tmp = extra.get(i).getAsJsonObject();
+                                if (tmp.has("text")) {
+                                    String text = tmp.get("text").getAsString();
+                                    if (text.toLowerCase(Locale.ENGLISH).contains("broadcast")) {
+                                        send = true;
+                                        break;
                                     }
-                                } catch (JSONException e) {
-                                    instance.debug("Invalid JSON in packet!");
-                                    instance.debug(json);
                                 }
+                            }
+                            if (!send && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
+                                event.setCancelled(true);
                             }
                         }
                     }
                 }
-        );
+            }
+        });
     }
 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
@@ -104,11 +104,11 @@ public class TARDISConsoleLoader {
                 }
                 plugin.debug("Adding custom console schematic: " + console);
                 // get JSON
-                JSONObject obj = TARDISSchematicGZip.unzip(path);
+                JsonObject obj = TARDISSchematicGZip.unzip(path);
                 // get dimensions
-                JSONObject dimensions = (JSONObject) obj.get("dimensions");
-                int h = dimensions.getInt("height");
-                int w = dimensions.getInt("width");
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                int h = dimensions.get("height").getAsInt();
+                int w = dimensions.get("width").getAsInt();
                 String description = plugin.getCustomConsolesConfig().getString(console + ".description");
                 ConsoleSize consoleSize = ConsoleSize.getByWidthAndHeight(w, h);
                 boolean beacon = plugin.getCustomConsolesConfig().getBoolean(console + ".has_beacon");

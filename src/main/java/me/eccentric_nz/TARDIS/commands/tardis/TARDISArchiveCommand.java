@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -116,7 +116,7 @@ class TARDISArchiveCommand {
                     Tardis tardis = rs.getTardis();
                     SCHEMATIC current = tardis.getSchematic();
                     // get the schematic start location, width, length and height
-                    JSONObject obj = null;
+                    JsonObject obj = null;
                     if (current.getPermission().equals("archive")) {
                         HashMap<String, Object> wherean = new HashMap<>();
                         wherean.put("uuid", uuid);
@@ -139,10 +139,10 @@ class TARDISArchiveCommand {
                     }
                     if (obj != null) {
                         // get dimensions
-                        JSONObject dimensions = (JSONObject) obj.get("dimensions");
-                        int h = dimensions.getInt("height") - 1;
-                        int w = dimensions.getInt("width") - 1;
-                        int c = dimensions.getInt("length") - 1;
+                        JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                        int h = dimensions.get("height").getAsInt() - 1;
+                        int w = dimensions.get("width").getAsInt() - 1;
+                        int c = dimensions.get("length").getAsInt() - 1;
                         // get console size
                         ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
                         if (((args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("update")) && args.length == 4) || (args[1].equalsIgnoreCase("scan") && args.length == 3)) {

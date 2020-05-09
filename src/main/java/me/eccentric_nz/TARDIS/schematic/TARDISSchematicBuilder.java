@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -127,29 +127,29 @@ public class TARDISSchematicBuilder {
         int minz = Math.min(sz, ez);
         int maxz = Math.max(sz, ez);
         // create a JSON object for relative position
-        JSONObject relative = new JSONObject();
-        relative.put("x", maxx);
-        relative.put("y", miny);
-        relative.put("z", minz - 1);
+        JsonObject relative = new JsonObject();
+        relative.addProperty("x", maxx);
+        relative.addProperty("y", miny);
+        relative.addProperty("z", minz - 1);
         // create a JSON object for dimensions
-        JSONObject dimensions = new JSONObject();
+        JsonObject dimensions = new JsonObject();
         int width = (maxx - minx) + 1;
         int height = (maxy - miny) + 1;
         int length = (maxz - minz) + 1;
-        dimensions.put("width", width);
-        dimensions.put("height", height);
-        dimensions.put("length", length);
+        dimensions.addProperty("width", width);
+        dimensions.addProperty("height", height);
+        dimensions.addProperty("length", length);
         // create JSON arrays for block data
-        JSONArray levels = new JSONArray();
+        JsonArray levels = new JsonArray();
         int f = 2;
         int beacon = 0;
         // loop through the blocks inside this cube
         for (int l = miny; l <= maxy; l++) {
-            JSONArray rows = new JSONArray();
+            JsonArray rows = new JsonArray();
             for (int r = minx; r <= maxx; r++) {
-                JSONArray columns = new JSONArray();
+                JsonArray columns = new JsonArray();
                 for (int c = minz; c <= maxz; c++) {
-                    JSONObject obj = new JSONObject();
+                    JsonObject obj = new JsonObject();
                     Block b = w.getBlockAt(r, l, c);
                     BlockData data = b.getBlockData();
                     Material m = data.getMaterial();
@@ -193,34 +193,34 @@ public class TARDISSchematicBuilder {
                         data = (m.equals(Material.BEACON)) ? Material.BEACON.createBlockData() : Material.COMMAND_BLOCK.createBlockData();
                         beacon = (m.equals(Material.BEACON)) ? 1 : 0;
                     }
-                    obj.put("data", data.getAsString());
+                    obj.addProperty("data", data.getAsString());
                     // banners
                     if (TARDISStaticUtils.isBanner(m)) {
-                        JSONObject state = new JSONObject();
+                        JsonObject state = new JsonObject();
                         Banner banner = (Banner) b.getState();
-                        state.put("colour", banner.getBaseColor().toString());
-                        JSONArray patterns = new JSONArray();
+                        state.addProperty("colour", banner.getBaseColor().toString());
+                        JsonArray patterns = new JsonArray();
                         if (banner.numberOfPatterns() > 0) {
                             banner.getPatterns().forEach((p) -> {
-                                JSONObject pattern = new JSONObject();
-                                pattern.put("pattern", p.getPattern().toString());
-                                pattern.put("pattern_colour", p.getColor().toString());
-                                patterns.put(pattern);
+                                JsonObject pattern = new JsonObject();
+                                pattern.addProperty("pattern", p.getPattern().toString());
+                                pattern.addProperty("pattern_colour", p.getColor().toString());
+                                patterns.add(pattern);
                             });
                         }
-                        state.put("patterns", patterns);
-                        obj.put("banner", state);
+                        state.add("patterns", patterns);
+                        obj.add("banner", state);
                     }
-                    columns.put(obj);
+                    columns.add(obj);
                 }
-                rows.put(columns);
+                rows.add(columns);
             }
-            levels.put(rows);
+            levels.add(rows);
         }
-        JSONObject schematic = new JSONObject();
-        schematic.put("relative", relative);
-        schematic.put("dimensions", dimensions);
-        schematic.put("input", levels);
+        JsonObject schematic = new JsonObject();
+        schematic.add("relative", relative);
+        schematic.add("dimensions", dimensions);
+        schematic.add("input", levels);
         return new ArchiveData(schematic, beacon);
     }
 
@@ -231,15 +231,15 @@ public class TARDISSchematicBuilder {
 
     public static class ArchiveData {
 
-        private final JSONObject JSON;
+        private final JsonObject JSON;
         private final int beacon;
 
-        ArchiveData(JSONObject JSON, int beacon) {
+        ArchiveData(JsonObject JSON, int beacon) {
             this.JSON = JSON;
             this.beacon = beacon;
         }
 
-        public JSONObject getJSON() {
+        public JsonObject getJSON() {
             return JSON;
         }
 

@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
@@ -74,15 +76,16 @@ public class ConstructsConverter {
                         String[][] bpGrid = new String[10][4];
                         String[][] stGrid = new String[10][4];
                         String[][] glGrid = new String[10][4];
-                        JSONArray bpIDJson = new JSONArray(bpID);
-                        JSONArray bpDataJson = new JSONArray(bpData);
-                        JSONArray glIDJson = new JSONArray(glID);
+                        JsonParser parser = new JsonParser();
+                        JsonArray bpIDJson = parser.parse(new Gson().toJson(bpID)).getAsJsonArray();
+                        JsonArray bpDataJson = parser.parse(new Gson().toJson(bpData)).getAsJsonArray();
+                        JsonArray glIDJson = parser.parse(new Gson().toJson(glID)).getAsJsonArray();
                         for (int y = 0; y < 10; y++) {
-                            JSONArray bpIDX = bpIDJson.getJSONArray(y);
-                            JSONArray bpDATAX = bpDataJson.getJSONArray(y);
-                            JSONArray glIDX = glIDJson.getJSONArray(y);
+                            JsonArray bpIDX = bpIDJson.get(y).getAsJsonArray();
+                            JsonArray bpDATAX = bpDataJson.get(y).getAsJsonArray();
+                            JsonArray glIDX = glIDJson.get(y).getAsJsonArray();
                             for (int x = 0; x < 4; x++) {
-                                Material material = tmic.LEGACY_ID_LOOKUP.get(bpIDX.getInt(x));
+                                Material material = tmic.LEGACY_ID_LOOKUP.get(bpIDX.get(x).getAsInt());
                                 bpGrid[y][x] = material.createBlockData().getAsString();
                                 switch (material) {
                                     case WHITE_CARPET:
@@ -92,7 +95,7 @@ public class ConstructsConverter {
                                     case GREEN_TERRACOTTA:
                                         // get correct colour
                                         String[] split = material.toString().split("_");
-                                        split[0] = tmic.COLOUR_LOOKUP.get(bpDATAX.getInt(x));
+                                        split[0] = tmic.COLOUR_LOOKUP.get(bpDATAX.get(x).getAsInt());
                                         StringBuilder sb = new StringBuilder();
                                         for (int s = 0; s < split.length; s++) {
                                             sb.append(split[s]);
@@ -146,7 +149,7 @@ public class ConstructsConverter {
                                     case SPRUCE_WALL_SIGN:
                                     case TORCH:
                                     case WALL_TORCH:
-                                        stGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(bpIDX.getInt(x)).createBlockData().getAsString();
+                                        stGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(bpIDX.get(x).getAsInt()).createBlockData().getAsString();
                                         break;
                                     default:
                                         try {
@@ -156,12 +159,12 @@ public class ConstructsConverter {
                                         }
                                         break;
                                 }
-                                glGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(glIDX.getInt(x)).createBlockData().getAsString();
+                                glGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(glIDX.get(x).getAsInt()).createBlockData().getAsString();
                             }
                         }
-                        JSONArray bpArr = new JSONArray(bpGrid);
-                        JSONArray stArr = new JSONArray(stGrid);
-                        JSONArray glArr = new JSONArray(glGrid);
+                        JsonArray bpArr = parser.parse(new Gson().toJson(bpGrid)).getAsJsonArray();
+                        JsonArray stArr = parser.parse(new Gson().toJson(stGrid)).getAsJsonArray();
+                        JsonArray glArr = parser.parse(new Gson().toJson(glGrid)).getAsJsonArray();
                         update.setString(1, bpArr.toString());
                         update.setString(2, stArr.toString());
                         update.setString(3, glArr.toString());

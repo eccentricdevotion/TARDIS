@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
@@ -54,7 +54,7 @@ public class TARDISRoomRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Location l;
-    private final JSONObject s;
+    private final JsonObject s;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int tardis_id;
     private final int progressLevel;
@@ -87,7 +87,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
-    private JSONArray arr;
+    private JsonArray arr;
     private Location aqua_spawn;
     private final boolean wasResumed;
     private final List<String> postBlocks;
@@ -156,11 +156,11 @@ public class TARDISRoomRunnable implements Runnable {
                 level = progressLevel;
                 row = progressRow;
                 col = progressColumn;
-                JSONObject dim = s.getJSONObject("dimensions");
-                arr = s.getJSONArray("input");
-                h = dim.getInt("height") - 1;
-                w = dim.getInt("width") - 1;
-                c = dim.getInt("length");
+                JsonObject dim = s.get("dimensions").getAsJsonObject();
+                arr = s.get("input").getAsJsonArray();
+                h = dim.get("height").getAsInt() - 1;
+                w = dim.get("width").getAsInt() - 1;
+                c = dim.get("length").getAsInt();
                 startx = l.getBlockX() + progressRow;
                 starty = l.getBlockY() + progressLevel;
                 startz = l.getBlockZ() + progressColumn;
@@ -385,15 +385,15 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (s.has("paintings")) {
                     // place paintings
-                    JSONArray paintings = (JSONArray) s.get("paintings");
-                    for (int i = 0; i < paintings.length(); i++) {
-                        JSONObject painting = paintings.getJSONObject(i);
-                        JSONObject rel = painting.getJSONObject("rel_location");
-                        int px = rel.getInt("x");
-                        int py = rel.getInt("y");
-                        int pz = rel.getInt("z");
-                        Art art = Art.valueOf(painting.getString("art"));
-                        BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
+                    JsonArray paintings = (JsonArray) s.get("paintings");
+                    for (int i = 0; i < paintings.size(); i++) {
+                        JsonObject painting = paintings.get(i).getAsJsonObject();
+                        JsonObject rel = painting.get("rel_location").getAsJsonObject();
+                        int px = rel.get("x").getAsInt();
+                        int py = rel.get("y").getAsInt();
+                        int pz = rel.get("z").getAsInt();
+                        Art art = Art.valueOf(painting.get("art").getAsString());
+                        BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
                         Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, resety + py, resetz + pz));
                         try {
                             Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
@@ -491,8 +491,8 @@ public class TARDISRoomRunnable implements Runnable {
             } else {
                 TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                 // place one block
-                JSONObject v = arr.getJSONArray(level).getJSONArray(row).getJSONObject(col);
-                BlockData data = plugin.getServer().createBlockData(v.getString("data"));
+                JsonObject v = arr.get(level).getAsJsonArray().get(row).getAsJsonArray().get(col).getAsJsonObject();
+                BlockData data = plugin.getServer().createBlockData(v.get("data").getAsString());
                 Material type = data.getMaterial();
                 // determine 'use_clay' material
                 USE_CLAY use_clay;
@@ -737,7 +737,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // remember banners
                 if (TARDISStaticUtils.isBanner(type)) {
                     Block banner = world.getBlockAt(startx, starty, startz);
-                    JSONObject state = v.optJSONObject("banner");
+                    JsonObject state = v.has("banner") ? v.get("banner").getAsJsonObject() : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);
                         bannerblocks.put(banner, tbd);

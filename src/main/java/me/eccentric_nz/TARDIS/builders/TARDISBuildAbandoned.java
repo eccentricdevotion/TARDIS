@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -70,8 +72,8 @@ class TARDISBuildAbandoned implements Runnable {
     private final Material floor_type = Material.LIGHT_GRAY_WOOL;
     private boolean running;
     private TARDISTIPSData pos;
-    private JSONObject obj;
-    private JSONArray arr;
+    private JsonObject obj;
+    private JsonArray arr;
     private int task, h, w, d, level = 0, row = 0, startx, starty, startz, j = 2;
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
@@ -130,10 +132,10 @@ class TARDISBuildAbandoned implements Runnable {
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height") - 1;
-            w = dimensions.getInt("width");
-            d = dimensions.getInt("length") - 1;
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt() - 1;
+            w = dimensions.get("width").getAsInt();
+            d = dimensions.get("length").getAsInt() - 1;
             div = (h + 1.0d) * w * (d + 1.0d);
             // calculate startx, starty, startz
             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -168,7 +170,7 @@ class TARDISBuildAbandoned implements Runnable {
                 use_clay = USE_CLAY.WOOL;
             }
             // get input array
-            arr = (JSONArray) obj.get("input");
+            arr = obj.get("input").getAsJsonArray();
             if (player != null) {
                 // start progress bar
                 bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
@@ -245,16 +247,16 @@ class TARDISBuildAbandoned implements Runnable {
                 bb.removeAll();
             }
         }
-        JSONArray floor = (JSONArray) arr.get(level);
-        JSONArray r = (JSONArray) floor.get(row);
+        JsonArray floor = arr.get(level).getAsJsonArray();
+        JsonArray r = (JsonArray) floor.get(row);
         // paste a column
         for (int col = 0; col <= d; col++) {
             counter++;
-            JSONObject c = (JSONObject) r.get(col);
+            JsonObject c = r.get(col).getAsJsonObject();
             int x = startx + row;
             int y = starty + level;
             int z = startz + col;
-            data = plugin.getServer().createBlockData(c.getString("data"));
+            data = plugin.getServer().createBlockData(c.get("data").getAsString());
             type = data.getMaterial();
             if (type.equals(Material.NOTE_BLOCK)) {
                 // remember the location of this Disk Storage
@@ -413,7 +415,7 @@ class TARDISBuildAbandoned implements Runnable {
                 } else if (h > 16) {
                     empty[2][4][4] = control;
                 }
-                JSONArray json = new JSONArray(empty);
+                JsonArray json = new JsonParser().parse(new Gson().toJson(empty)).getAsJsonArray();
                 HashMap<String, Object> seta = new HashMap<>();
                 seta.put("tardis_id", dbID);
                 seta.put("json", json.toString());
@@ -495,7 +497,7 @@ class TARDISBuildAbandoned implements Runnable {
             } else if (type.equals(Material.OAK_WALL_SIGN)) {
                 postSignBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (TARDISStaticUtils.isBanner(type)) {
-                JSONObject state = c.optJSONObject("banner");
+                JsonObject state = c.has("banner") ? c.getAsJsonObject("banner") : null;
                 if (state != null) {
                     TARDISBannerData tbd = new TARDISBannerData(data, state);
                     postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);

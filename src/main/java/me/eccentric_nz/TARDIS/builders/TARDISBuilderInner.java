@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -68,8 +70,8 @@ public class TARDISBuilderInner implements Runnable {
     private final Material floor_type;
     private final boolean tips;
     private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
-    private JSONArray arr;
-    private JSONObject obj;
+    private JsonArray arr;
+    private JsonObject obj;
     private Location wg1;
     private Location wg2;
     private TARDISTIPSData pos;
@@ -150,10 +152,10 @@ public class TARDISBuilderInner implements Runnable {
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height") - 1;
-            w = dimensions.getInt("width");
-            d = dimensions.getInt("length") - 1;
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt() - 1;
+            w = dimensions.get("width").getAsInt();
+            d = dimensions.get("length").getAsInt() - 1;
             div = (h + 1.0d) * w * (d + 1.0d);
             playerUUID = player.getUniqueId().toString();
 
@@ -216,7 +218,7 @@ public class TARDISBuilderInner implements Runnable {
                 use_clay = USE_CLAY.WOOL;
             }
             // get input array
-            arr = (JSONArray) obj.get("input");
+            arr = obj.get("input").getAsJsonArray();
             // start progress bar
             bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
             bb.setProgress(0);
@@ -297,15 +299,15 @@ public class TARDISBuilderInner implements Runnable {
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             if (obj.has("paintings")) {
-                JSONArray paintings = (JSONArray) obj.get("paintings");
-                for (int i = 0; i < paintings.length(); i++) {
-                    JSONObject painting = paintings.getJSONObject(i);
-                    JSONObject rel = painting.getJSONObject("rel_location");
-                    int px = rel.getInt("x");
-                    int py = rel.getInt("y");
-                    int pz = rel.getInt("z");
-                    Art art = Art.valueOf(painting.getString("art"));
-                    BlockFace facing = BlockFace.valueOf(painting.getString("facing"));
+                JsonArray paintings = (JsonArray) obj.get("paintings");
+                for (int i = 0; i < paintings.size(); i++) {
+                    JsonObject painting = paintings.get(i).getAsJsonObject();
+                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
+                    int px = rel.get("x").getAsInt();
+                    int py = rel.get("y").getAsInt();
+                    int pz = rel.get("z").getAsInt();
+                    Art art = Art.valueOf(painting.get("art").getAsString());
+                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
                     Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
                     Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
                     ent.teleport(pl);
@@ -355,16 +357,16 @@ public class TARDISBuilderInner implements Runnable {
             bb.setVisible(false);
             bb.removeAll();
         }
-        JSONArray floor = (JSONArray) arr.get(level);
-        JSONArray r = (JSONArray) floor.get(row);
+        JsonArray floor = arr.get(level).getAsJsonArray();
+        JsonArray r = (JsonArray) floor.get(row);
         // paste a column
         for (int col = 0; col <= d; col++) {
             counter++;
-            JSONObject c = (JSONObject) r.get(col);
+            JsonObject c = r.get(col).getAsJsonObject();
             int x = startx + row;
             int y = starty + level;
             int z = startz + col;
-            data = plugin.getServer().createBlockData(c.getString("data"));
+            data = plugin.getServer().createBlockData(c.get("data").getAsString());
             type = data.getMaterial();
             if (type.equals(Material.NOTE_BLOCK)) {
                 // remember the location of this Disk Storage
@@ -529,7 +531,7 @@ public class TARDISBuilderInner implements Runnable {
                 } else if (h > 16) {
                     empty[2][4][4] = control;
                 }
-                JSONArray json = new JSONArray(empty);
+                JsonArray json = new JsonParser().parse(new Gson().toJson(empty)).getAsJsonArray();
                 HashMap<String, Object> seta = new HashMap<>();
                 seta.put("tardis_id", dbID);
                 seta.put("uuid", playerUUID);
@@ -613,7 +615,7 @@ public class TARDISBuilderInner implements Runnable {
             } else if (Tag.SIGNS.isTagged(type)) {
                 postSignBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (TARDISStaticUtils.isBanner(type)) {
-                JSONObject state = c.optJSONObject("banner");
+                JsonObject state = c.has("banner") ? c.get("banner").getAsJsonObject() : null;
                 if (state != null) {
                     TARDISBannerData tbd = new TARDISBannerData(data, state);
                     postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);

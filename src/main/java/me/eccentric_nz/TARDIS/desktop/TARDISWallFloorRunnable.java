@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
@@ -60,7 +60,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     private int starty;
     private int startz;
     private World world;
-    private JSONArray arr;
+    private JsonArray arr;
     private Material wall_type;
     private Material floor_type;
     private Player player;
@@ -84,12 +84,12 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 return;
             }
             // get JSON
-            JSONObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
-            JSONObject dimensions = (JSONObject) obj.get("dimensions");
-            h = dimensions.getInt("height");
-            w = dimensions.getInt("width");
-            c = dimensions.getInt("length");
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt();
+            w = dimensions.get("width").getAsInt();
+            c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
@@ -119,7 +119,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             wall_type = Material.valueOf(tud.getWall());
             floor_type = Material.valueOf(tud.getFloor());
             // get input array
-            arr = (JSONArray) obj.get("input");
+            arr = obj.get("input").getAsJsonArray();
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
@@ -133,15 +133,15 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             taskID = 0;
             TARDISMessage.send(player, "UPGRADE_FINISHED");
         } else {
-            JSONArray floor = (JSONArray) arr.get(level);
-            JSONArray r = (JSONArray) floor.get(row);
+            JsonArray floor = arr.get(level).getAsJsonArray();
+            JsonArray r = (JsonArray) floor.get(row);
             // place a row of blocks
             for (int col = 0; col < c; col++) {
-                JSONObject bb = (JSONObject) r.get(col);
+                JsonObject bb = r.get(col).getAsJsonObject();
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                BlockData data = plugin.getServer().createBlockData(bb.getString("data"));
+                BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {

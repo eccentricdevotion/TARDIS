@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
@@ -98,25 +98,25 @@ public class TARDISJunkBuilder implements Runnable {
                     Block postTerminalBlock = null;
                     // get JSON
                     String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
-                    JSONObject obj = TARDISSchematicGZip.unzip(path);
+                    JsonObject obj = TARDISSchematicGZip.unzip(path);
                     // get dimensions
-                    JSONObject dimensions = (JSONObject) obj.get("dimensions");
-                    int h = dimensions.getInt("height");
-                    int w = dimensions.getInt("width");
-                    int l = dimensions.getInt("length");
+                    JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                    int h = dimensions.get("height").getAsInt();
+                    int w = dimensions.get("width").getAsInt();
+                    int l = dimensions.get("length").getAsInt();
                     // get input array
-                    JSONArray arr = (JSONArray) obj.get("input");
+                    JsonArray arr = obj.get("input").getAsJsonArray();
                     // loop like crazy
                     for (int level = 0; level < h; level++) {
-                        JSONArray floor = (JSONArray) arr.get(level);
+                        JsonArray floor = arr.get(level).getAsJsonArray();
                         for (int row = 0; row < w; row++) {
-                            JSONArray r = (JSONArray) floor.get(row);
+                            JsonArray r = (JsonArray) floor.get(row);
                             for (int col = 0; col < l; col++) {
-                                JSONObject c = (JSONObject) r.get(col);
+                                JsonObject c = r.get(col).getAsJsonObject();
                                 int x = sx + row;
                                 int y = sy + level;
                                 int z = sz + col;
-                                data = plugin.getServer().createBlockData(c.getString("data"));
+                                data = plugin.getServer().createBlockData(c.get("data").getAsString());
                                 type = data.getMaterial();
                                 if (type.equals(Material.CAKE)) {
                                     /*

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -88,7 +88,7 @@ class TARDISARSRunnable implements Runnable {
             String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
             String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
-            JSONObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
             l.setY(l.getY() + room.getOffset());
             roomData.setLocation(l);

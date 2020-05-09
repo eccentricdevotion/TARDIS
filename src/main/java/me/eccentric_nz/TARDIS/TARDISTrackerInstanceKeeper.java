@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -72,7 +72,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Integer> ejecting = new HashMap<>();
     private final HashMap<UUID, Integer> junkPlayers = new HashMap<>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
-    private final HashMap<UUID, JSONObject> pastes = new HashMap<>();
+    private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
     private final HashMap<UUID, List<Integer>> renderedNPCs = new HashMap<>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<>();
     private final HashMap<UUID, Location> dispersed = new HashMap<>();
@@ -482,7 +482,7 @@ public class TARDISTrackerInstanceKeeper {
         this.immortalityGate = immortalityGate;
     }
 
-    public HashMap<UUID, JSONObject> getPastes() {
+    public HashMap<UUID, JsonObject> getPastes() {
         return pastes;
     }
 

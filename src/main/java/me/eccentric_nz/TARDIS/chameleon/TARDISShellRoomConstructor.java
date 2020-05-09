@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import com.google.gson.Gson;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -140,9 +140,9 @@ public class TARDISShellRoomConstructor {
             String datas = sb_blue_data.toString();
             String stain_ids = sb_stain_data.toString();
             String glass_ids = sb_glass_data.toString();
-            String jsonBlue = new JSONArray(datas).toString();
-            String jsonStain = new JSONArray(stain_ids).toString();
-            String jsonGlass = new JSONArray(glass_ids).toString();
+            String jsonBlue = new Gson().toJson(datas);
+            String jsonStain = new Gson().toJson(stain_ids);
+            String jsonGlass = new Gson().toJson(glass_ids);
             // save chameleon construct
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);

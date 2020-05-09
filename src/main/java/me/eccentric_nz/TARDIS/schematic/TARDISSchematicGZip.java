@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 import java.io.*;
@@ -47,7 +48,7 @@ public class TARDISSchematicGZip {
         }
     }
 
-    public static JSONObject unzip(String instr) {
+    public static JsonObject unzip(String instr) {
         InputStreamReader isr = null;
         StringWriter sw = null;
         String s = "";
@@ -75,6 +76,6 @@ public class TARDISSchematicGZip {
                 TARDIS.plugin.debug("Could not close GZip schematic file!" + ex.getMessage());
             }
         }
-        return (s.startsWith("{")) ? new JSONObject(s) : null;
+        return (s.startsWith("{")) ? new JsonParser().parse(s).getAsJsonObject() : null;
     }
 }

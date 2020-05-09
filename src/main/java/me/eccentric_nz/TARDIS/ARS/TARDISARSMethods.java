@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -65,7 +67,7 @@ public class TARDISARSMethods {
      */
     private void saveAll(UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
-        JSONArray json = new JSONArray(md.getData());
+        JsonArray json = new JsonParser().parse(new Gson().toJson(md.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("ars_x_east", md.getE());
         set.put("ars_z_south", md.getS());
@@ -83,7 +85,7 @@ public class TARDISARSMethods {
      */
     private void revert(UUID uuid) {
         TARDISARSSaveData sd = save_map_data.get(uuid);
-        JSONArray json = new JSONArray(sd.getData());
+        JsonArray json = new JsonParser().parse(new Gson().toJson(sd.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();
@@ -99,16 +101,16 @@ public class TARDISARSMethods {
      */
     public static String[][][] getGridFromJSON(String js) {
         String[][][] grid = new String[3][9][9];
-        JSONArray json = new JSONArray(js);
+        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
         for (int y = 0; y < 3; y++) {
-            JSONArray jsonx = json.getJSONArray(y);
+            JsonArray jsonx = json.get(y).getAsJsonArray();
             for (int x = 0; x < 9; x++) {
-                JSONArray jsonz = jsonx.getJSONArray(x);
+                JsonArray jsonz = jsonx.get(x).getAsJsonArray();
                 for (int z = 0; z < 9; z++) {
-                    if (jsonz.getString(z).equals("TNT")) {
+                    if (jsonz.get(z).getAsString().equals("TNT")) {
                         grid[y][x][z] = "STONE";
                     } else {
-                        grid[y][x][z] = jsonz.getString(z);
+                        grid[y][x][z] = jsonz.get(z).getAsString();
                     }
                 }
             }

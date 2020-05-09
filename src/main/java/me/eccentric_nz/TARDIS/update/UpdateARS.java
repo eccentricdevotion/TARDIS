@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.update;
 
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -50,7 +52,7 @@ public class UpdateARS {
                 empty[1][5][5] = controlBlock;
             }
             empty[1][4][4] = controlBlock;
-            JSONArray json = new JSONArray(empty);
+            JsonArray json = new JsonParser().parse(new Gson().toJson(empty)).getAsJsonArray();
             HashMap<String, Object> seta = new HashMap<>();
             seta.put("tardis_id", id);
             seta.put("uuid", uuid);
