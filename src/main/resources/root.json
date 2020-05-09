@@ -3,9 +3,9 @@
         "icon": {
             "item": "minecraft:compass"
         },
-        "title": "Dr Who",
+        "title": "Doctor Who",
         "description": "Exploration in space and time",
-        "background": "minecraft:textures/blocks/soul_sand.png",
+        "background": "minecraft:textures/block/soul_sand.png",
         "show_toast": false,
         "announce_to_chat": false
     },
