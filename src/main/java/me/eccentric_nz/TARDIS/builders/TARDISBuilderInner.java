@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -682,7 +681,7 @@ public class TARDISBuilderInner implements Runnable {
                 row = 0;
                 level++;
                 // set progress bar title
-                if (!schm.getConsoleSize().equals(ConsoleSize.TALL) && level == h) {
+                if (level == h) {
                     bb.setTitle(TARDISConstants.GROWTH_STATES.get(31));
                 } else {
                     bb.setTitle(TARDISConstants.GROWTH_STATES.get(level));
