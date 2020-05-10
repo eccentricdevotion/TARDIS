@@ -147,15 +147,15 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %stransmats (transmat_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float(7,1) DEFAULT '0', y float(3,1) DEFAULT '0', z float(7,1) DEFAULT '0', yaw float(7,1) DEFAULT '0.0', PRIMARY KEY (transmat_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %straveled_to (uuid varchar(48) NOT NULL, the_end int(11) DEFAULT 0, nether int(11) DEFAULT 0, normal int(11) DEFAULT 0, PRIMARY KEY(uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %stravellers (traveller_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', PRIMARY KEY (traveller_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %svaults (v_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', x int(11) DEFAULT '0', y int(3) DEFAULT '0', z int(11) DEFAULT '0', chest_type varchar(8) DEFAULT 'DROP', PRIMARY KEY (v_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sthevoid (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
-
-            "CREATE TABLE IF NOT EXISTS %straveled_to (uuid varchar(48) NOT NULL, the_end int(11) DEFAULT 0, nether int(11) DEFAULT 0, normal int(11) DEFAULT 0, PRIMARY KEY(uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;";
+            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
 
     );
 
@@ -236,15 +236,15 @@ public class SQL {
 
             "INSERT INTO `%stransmats` (`transmat_id`, `tardis_id`, `name`, `world`, `x`, `y`, `z`, `yaw`) VALUES ",
 
+            "INSERT INTO `%straveled_to` (`uuid`, `the_end`, `nether`, `normal`) VALUES ",
+
             "INSERT INTO `%stravellers` (`traveller_id`, `tardis_id`, `uuid`, `player`) VALUES ",
 
             "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `chest_type`, `x`, `y`, `z`) VALUES ",
 
             "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
 
-            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES ",
-
-            "INSERT INTO `%straveled_to` (`uuid`, `the_end`, `nether`, `normal`) VALUES "
+            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES "
 
     );
 
@@ -325,15 +325,15 @@ public class SQL {
 
             "(%s, %s, '%s', '%s', %s, %s, %s, %s)",
 
+            "(%s, %s, %s, %s)",
+
             "(%s, %s, '%s', '%s')",
 
             "(%s, %s, '%s', '%s', %s, %s, %s)",
 
             "(%s)",
 
-            "(%s, %s)",
-
-            "(%s, %s, %s, %s)"
+            "(%s, %s)"
 
     );
 

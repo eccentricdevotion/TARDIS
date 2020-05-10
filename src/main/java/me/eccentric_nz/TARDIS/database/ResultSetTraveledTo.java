@@ -37,12 +37,11 @@ public class ResultSetTraveledTo {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from
-     * the tag table.
+     * the traveled_to table.
      *
      * @param plugin an instance of the main class.
      */
@@ -88,9 +87,5 @@ public class ResultSetTraveledTo {
                 plugin.debug("Error closing traveled_to table! " + e.getMessage());
             }
         }
-    }
-
-    public ArrayList<HashMap<String, String>> getData() {
-        return data;
     }
 }
