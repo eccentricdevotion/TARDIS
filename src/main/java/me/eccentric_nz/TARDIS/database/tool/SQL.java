@@ -147,7 +147,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %stransmats (transmat_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float(7,1) DEFAULT '0', y float(3,1) DEFAULT '0', z float(7,1) DEFAULT '0', yaw float(7,1) DEFAULT '0.0', PRIMARY KEY (transmat_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %straveled_to (uuid varchar(48) NOT NULL, the_end int(11) DEFAULT 0, nether int(11) DEFAULT 0, normal int(11) DEFAULT 0, PRIMARY KEY(uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %straveled_to (uuid varchar(48) NOT NULL, environment varchar(64) NOT NULL) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %stravellers (traveller_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', PRIMARY KEY (traveller_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -236,7 +236,7 @@ public class SQL {
 
             "INSERT INTO `%stransmats` (`transmat_id`, `tardis_id`, `name`, `world`, `x`, `y`, `z`, `yaw`) VALUES ",
 
-            "INSERT INTO `%straveled_to` (`uuid`, `the_end`, `nether`, `normal`) VALUES ",
+            "INSERT INTO `%straveled_to` (`uuid`, `environment`) VALUES ",
 
             "INSERT INTO `%stravellers` (`traveller_id`, `tardis_id`, `uuid`, `player`) VALUES ",
 
@@ -325,7 +325,7 @@ public class SQL {
 
             "(%s, %s, '%s', '%s', %s, %s, %s, %s)",
 
-            "(%s, %s, %s, %s)",
+            "(%s, %s)",
 
             "(%s, %s, '%s', '%s')",
 

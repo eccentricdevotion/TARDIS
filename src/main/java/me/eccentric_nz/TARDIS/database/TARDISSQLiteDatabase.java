@@ -212,7 +212,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryTransmats);
 
             // Table structure for table 'traveled_to'
-            String queryTraveledTo = "CREATE TABLE IF NOT EXISTS " + prefix + "traveled_to (uuid TEXT NOT NULL, the_end	INTEGER DEFAULT 0, nether INTEGER DEFAULT 0, normal INTEGER DEFAULT 0, PRIMARY KEY(uuid))";
+            String queryTraveledTo = "CREATE TABLE IF NOT EXISTS " + prefix + "traveled_to (uuid TEXT NOT NULL, environment TEXT NOT NULL)";
             statement.executeUpdate(queryTraveledTo);            
 
             // Table structure for table 'travellers'

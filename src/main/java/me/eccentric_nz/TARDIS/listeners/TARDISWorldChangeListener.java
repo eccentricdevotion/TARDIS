@@ -16,13 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
 
-import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,18 +27,17 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
 
 /**
  * @author Technoguyfication
  */
 public class TARDISWorldChangeListener implements Listener {
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service;
 
     public TARDISWorldChangeListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.service = TARDISDatabaseConnection.getINSTANCE();
     }
 
     // lowest priority because we aren't affecting the world change
@@ -61,53 +55,17 @@ public class TARDISWorldChangeListener implements Listener {
     // add that the player has been to this world to the database
     private void handleWorld(Player p) {
         Environment env = p.getWorld().getEnvironment();
-        String envName = env.toString().toLowerCase();
 
-        // set up database connection
-        ResultSet rs = null;
-        PreparedStatement statement = null;
-        try {
-            Connection connection = service.getConnection();
-            service.testConnection(connection);
-            String prefix = this.plugin.getPrefix();
+        // check if player has been to this dimension before
+        ResultSetTraveledTo rs = new ResultSetTraveledTo(plugin);
+        if (!rs.resultSet(p, env)) {
+            // add this dimension to the database
+            QueryFactory queryFactory = plugin.getQueryFactory();
+            HashMap<String, Object> values = new HashMap<>();
+            values.put("uuid", p.getUniqueId().toString());
+            values.put("environment", env.toString().toLowerCase());
 
-            // get their current entry from database
-            String getQuery = "SELECT * FROM " + prefix + "traveled_to WHERE uuid = ?";
-            PreparedStatement query = connection.prepareStatement(getQuery);
-            query.setString(1, p.getUniqueId().toString());
-            rs = query.executeQuery();
-
-            // update entry if it exists, otherwise create a new one
-            if (rs.next()) {
-                // check if the player has visited this world before and update if needed
-                if (rs.getInt(envName) != 1) {
-                    String updateQuery = "UPDATE " + prefix + "traveled_to SET " + envName + " = 1 WHERE uuid = ?;";
-                    statement = connection.prepareStatement(updateQuery);
-                    statement.setString(1, p.getUniqueId().toString());
-                    statement.executeUpdate();
-                    statement.close();
-                }
-            } else {
-                // they have no data, so just set their current world as visited
-                String insertQuery = "INSERT INTO " + prefix + "traveled_to (uuid, " + envName + ") VALUES (?, 1);";
-                statement = connection.prepareStatement(insertQuery);
-                statement.setString(1, p.getUniqueId().toString());
-                statement.executeUpdate();
-                statement.close();
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet or Statement error for traveled_to table! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing traveled_to table! " + e.getMessage());
-            }
+            queryFactory.doInsert("traveled_to", values);
         }
     }
 }
