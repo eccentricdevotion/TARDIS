@@ -84,7 +84,7 @@ class TARDISHostileDisplacement {
             if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
                 y = plugin.getUtils().getHighestNetherBlock(l.getWorld(), wx, wz);
             } else {
-                y = TARDISStaticLocationGetters.getHighestYin4x4(l.getWorld(), wx, wz);
+                y = TARDISStaticLocationGetters.getHighestYin3x3(l.getWorld(), wx, wz);
             }
             l.setY(y);
             if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {

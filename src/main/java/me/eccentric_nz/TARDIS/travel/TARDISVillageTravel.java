@@ -58,7 +58,7 @@ public class TARDISVillageTravel {
                     break;
                 case THE_END:
                     loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
-                    int highesty = TARDISStaticLocationGetters.getHighestYin4x4(world, rs.getX(), rs.getZ());
+                    int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
                     loc.setY(highesty);
                     break;
                 default: // NORMAL

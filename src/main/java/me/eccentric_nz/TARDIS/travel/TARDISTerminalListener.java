@@ -470,7 +470,7 @@ public class TARDISTerminalListener implements Listener {
                     String loc_str = world + ":" + slotx + ":" + slotz;
                     switch (e) {
                         case THE_END:
-                            int endy = TARDISStaticLocationGetters.getHighestYin4x4(w, slotx, slotz);
+                            int endy = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
                             if (endy > 40 && Math.abs(slotx) > 9 && Math.abs(slotz) > 9) {
                                 Location loc = new Location(w, slotx, 0, slotz);
                                 int[] estart = TARDISTimeTravel.getStartLocation(loc, d);
@@ -509,7 +509,7 @@ public class TARDISTerminalListener implements Listener {
                         default:
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-                            int starty = TARDISStaticLocationGetters.getHighestYin4x4(w, slotx, slotz);
+                            int starty = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
                             // allow room for under door block
                             if (starty <= 0) {
                                 starty = 1;

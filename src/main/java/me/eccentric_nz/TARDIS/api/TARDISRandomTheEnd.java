@@ -58,7 +58,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
             int z = war.getMinZ() + randZ;
             // get the spawn point
             Location endSpawn = war.getW().getSpawnLocation();
-            int highest = TARDISStaticLocationGetters.getHighestYin4x4(war.getW(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
+            int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getW(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
             int startx, starty, startz, resetx, resetz, count = 0;
             if (highest > 40) {
                 Block currentBlock = war.getW().getBlockAt(x, highest, z);
