@@ -49,7 +49,6 @@ public class TARDISCraftListener implements Listener {
     private final TARDIS plugin;
     private final HashMap<Material, String> t = new HashMap<>();
     private final List<UUID> crafters = new ArrayList<>();
-    private final List<Integer> spaces = Arrays.asList(1, 4, 7, 6, 9);
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
