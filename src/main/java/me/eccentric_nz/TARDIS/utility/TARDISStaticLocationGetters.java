@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 
 /**
  * @author eccentric_nz
@@ -156,13 +153,19 @@ public class TARDISStaticLocationGetters {
     //    private static final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
     private static final int[] threeByThree = new int[]{-1, 0, 1};
 
-    public static int getHighestYin4x4(World world, int x, int z) {
+    public static int getHighestYin3x3(World world, int x, int z) {
         int y = 0;
         for (int xx : threeByThree) {
             for (int zz : threeByThree) {
                 // need to +1 due to Spigot change
                 int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
                 y = Math.max(tmp, y);
+                if (world.getName().equals("Siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
+                    y--;
+                    while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO)) {
+                        y--;
+                    }
+                }
             }
         }
         return y;

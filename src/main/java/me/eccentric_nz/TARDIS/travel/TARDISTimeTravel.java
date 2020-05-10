@@ -152,7 +152,7 @@ public class TARDISTimeTravel {
                     wherez -= 120;
                     // get the spawn point
                     Location endSpawn = randworld.getSpawnLocation();
-                    highest = TARDISStaticLocationGetters.getHighestYin4x4(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+                    highest = TARDISStaticLocationGetters.getHighestYin3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
                     if (highest > 40) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         Location chunk_loc = currentBlock.getLocation();
@@ -206,7 +206,7 @@ public class TARDISTimeTravel {
                             // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
                             wherex = randomX(range, quarter, rx, ry, e, current);
                             wherez = randomZ(range, quarter, rz, ry, e, current);
-                            highest = TARDISStaticLocationGetters.getHighestYin4x4(randworld, wherex, wherez);
+                            highest = TARDISStaticLocationGetters.getHighestYin3x3(randworld, wherex, wherez);
                             if (highest > 3) {
                                 Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                                 if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
@@ -317,6 +317,8 @@ public class TARDISTimeTravel {
                                 count++;
                                 break;
                             }
+                        } else if (w.getName().equals("Siluria") && mat.equals(Material.BAMBOO)) {
+                            // do nothing
                         } else {
                             count++;
                         }
