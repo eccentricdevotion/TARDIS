@@ -263,16 +263,16 @@ public class TARDISScanner {
             // adjsut for current location as it will always return SKY if set_biome is true
             switch (tardisDirection) {
                 case NORTH:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.SOUTH, 2).getBiome();
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.SOUTH, 6).getBiome();
                     break;
                 case WEST:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.EAST, 2).getBiome();
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.EAST, 6).getBiome();
                     break;
                 case SOUTH:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.NORTH, 2).getBiome();
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.NORTH, 6).getBiome();
                     break;
                 default:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.WEST, 2).getBiome();
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.WEST, 6).getBiome();
                     break;
             }
         } else {
