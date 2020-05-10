@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2020 eccentric_nz
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package me.eccentric_nz.TARDIS.planets;
 
 import com.google.gson.JsonArray;
@@ -25,7 +9,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
@@ -33,18 +16,12 @@ import org.bukkit.entity.EntityType;
 
 import java.io.File;
 
-/**
- * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
- * has substantially modified/rebuilt it.
- *
- * @author eccentric_nz
- */
-class TARDISBuildSkaroStructure implements Runnable {
+public class TARDISSilurianStructureRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final int startx, y, startz;
-    private int task, starty, h, w, d, level = 0, row = 0;
+    private final int startx, starty, startz;
+    private final String path;
+    private int task, h, w, d, level = 0, row = 0;
     boolean running = false;
     private JsonObject obj;
     private JsonArray arr;
@@ -53,51 +30,32 @@ class TARDISBuildSkaroStructure implements Runnable {
     private Material type;
     private BlockData data;
 
-    /**
-     * Builds a Skaro structure.
-     *
-     * @param plugin an instance of the main TARDIS plugin class
-     * @param startx the start coordinate on the x-axis
-     * @param y      the start coordinate on the y-axis
-     * @param startz the start coordinate on the z-axis
-     * @return false when the build task has finished
-     */
-    public TARDISBuildSkaroStructure(TARDIS plugin, int startx, int y, int startz) {
+    public TARDISSilurianStructureRunnable(TARDIS plugin, int startx, int starty, int startz, String path) {
         this.plugin = plugin;
         this.startx = startx;
-        this.y = y;
+        this.starty = starty;
         this.startz = startz;
+        this.path = path;
     }
 
     @Override
     public void run() {
         if (!running) {
-            world = plugin.getServer().getWorld("Skaro");
-            String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-            path += (TARDISConstants.RANDOM.nextInt(100) > 25) ? "dalek_small.tschm" : "dalek_large.tschm";
             File file = new File(path);
             if (!file.exists()) {
-                plugin.debug("Could not find the Skaro schematic!");
+                plugin.debug("Could not find the Silurian schematic!");
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = -1;
                 return;
             }
-            plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
-            // get JSON
+            plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
+            world = plugin.getServer().getWorld("Siluria");
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt() - 1;
             w = dimensions.get("width").getAsInt();
             d = dimensions.get("length").getAsInt() - 1;
-            // make sure highest block is sand
-            Block sand = world.getBlockAt(startx, starty, startz);
-            if (sand.getType() != Material.SAND) {
-                while (sand.getType() != Material.AIR) {
-                    sand = sand.getRelative(BlockFace.UP);
-                }
-                starty = sand.getLocation().getBlockY() - 1;
-            }
             // get input array
             arr = obj.get("input").getAsJsonArray();
             running = true;
@@ -107,9 +65,9 @@ class TARDISBuildSkaroStructure implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = -1;
         } else {
+            // loop like crazy
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = floor.get(row).getAsJsonArray();
-            // loop like crazy
             for (int col = 0; col <= d; col++) {
                 JsonObject c = r.get(col).getAsJsonObject();
                 int x = startx + row;
@@ -118,6 +76,12 @@ class TARDISBuildSkaroStructure implements Runnable {
                 data = plugin.getServer().createBlockData(c.get("data").getAsString());
                 type = data.getMaterial();
                 switch (type) {
+                    case AIR:
+                        // only set air blocks if the structure part is above the 'stilts'
+                        if (level > h - 6) {
+                            TARDISBlockSetters.setBlock(world, x, y, z, data);
+                        }
+                        break;
                     case CHEST:
                         TARDISBlockSetters.setBlock(world, x, y, z, data);
                         chest = world.getBlockAt(x, y, z);
@@ -128,7 +92,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                                 container.setLootTable(TARDISConstants.LOOT.get(TARDISConstants.RANDOM.nextInt(11)));
                                 container.update();
                             } catch (ClassCastException e) {
-                                plugin.debug("Could not cast " + chest.getType() + "to Skaroan Chest." + e.getMessage());
+                                plugin.debug("Could not cast " + chest.getType() + "to Silurian Chest." + e.getMessage());
                             }
                         }
                         break;
@@ -145,7 +109,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                             CreatureSpawner cs = (CreatureSpawner) spawner.getState();
                             cs.setSpawnedType(EntityType.SKELETON);
                             cs.update();
-                        }, 2l);
+                        }, 2L);
                         break;
                     default:
                         TARDISBlockSetters.setBlock(world, x, y, z, data);

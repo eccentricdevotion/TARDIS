@@ -39,7 +39,6 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
 
     private final TARDIS plugin;
     private final List<ChunkInfo> chunks = new ArrayList<>();
-    private boolean isBuilding = false;
     private long timeCheck;
 
     public TARDISGallifreyChunkPopulateListener(TARDIS plugin) {
@@ -55,7 +54,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
             return;
         }
         ChunkInfo chunkInfo = new ChunkInfo("Gallifrey", chunk.getX(), chunk.getZ());
-        if (chunks.contains(chunkInfo) || isBuilding) {
+        if (chunks.contains(chunkInfo)) {
             return;
         }
         // scan chunk for GOLD_ORE between y = 50 , 70
@@ -77,14 +76,13 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
         timeCheck = System.currentTimeMillis() + 3000;
-        isBuilding = true;
         chunks.add(chunkInfo);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // create structure
             if (TARDISConstants.RANDOM.nextBoolean()) {
-                isBuilding = new TARDISBuildGallifreyanStructure(plugin).buildCity(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
-            } else {
-                isBuilding = false;
+                TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 1L);
+                tbgs.setTask(task);
             }
         }, 1L);
     }

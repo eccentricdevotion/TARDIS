@@ -38,7 +38,6 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
 
     private final TARDIS plugin;
     private final List<ChunkInfo> chunks = new ArrayList<>();
-    private boolean isBuilding = false;
     private long timeCheck;
 
     public TARDISSkaroChunkPopulateListener(TARDIS plugin) {
@@ -54,7 +53,7 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
             return;
         }
         ChunkInfo chunkInfo = new ChunkInfo("Skaro", chunk.getX(), chunk.getZ());
-        if (chunks.contains(chunkInfo) || isBuilding) {
+        if (chunks.contains(chunkInfo)) {
             return;
         }
         // scan chunk for _ORE between y = 50 , 70
@@ -76,11 +75,12 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
         timeCheck = System.currentTimeMillis() + 2000;
-        isBuilding = true;
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             chunks.add(chunkInfo);
             // create structure
-            isBuilding = new TARDISBuildSkaroStructure(plugin).buildCity(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+            TARDISBuildSkaroStructure tbss = new TARDISBuildSkaroStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbss, 1L, 1L);
+            tbss.setTask(task);
         }, 2L);
     }
 }

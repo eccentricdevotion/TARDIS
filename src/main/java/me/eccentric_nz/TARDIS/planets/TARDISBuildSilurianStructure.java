@@ -16,21 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.CreatureSpawner;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.EntityType;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -45,9 +35,11 @@ import java.io.File;
 class TARDISBuildSilurianStructure {
 
     private final TARDIS plugin;
+    private final String[] paths;
 
     TARDISBuildSilurianStructure(TARDIS plugin) {
         this.plugin = plugin;
+        paths = new String[]{plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
     }
 
     /**
@@ -59,110 +51,41 @@ class TARDISBuildSilurianStructure {
      * @return false when the build task has finished
      */
     boolean buildCity(int startx, int starty, int startz) {
-        String[] paths = {plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
         File file = new File(paths[0]);
         if (!file.exists()) {
             plugin.debug("Could not find the Silurian schematics!");
             return false;
         }
-        plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
-        World world = plugin.getServer().getWorld("Siluria");
-        structure(paths[0], world, startx, starty, startz);
+        TARDISSilurianStructureRunnable tssr = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 1L);
+        tssr.setTask(task);
         // choose a random direction
         COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];
         // see if the chunk is loaded
-        Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
+        Vector v1 = isChunkLoaded(compass, plugin.getServer().getWorld("Siluria").getBlockAt(startx, starty, startz));
         if (v1 != null) {
             startx += v1.getBlockX();
             starty += v1.getBlockY();
             startz += v1.getBlockZ();
+            String path;
             if (TARDISConstants.RANDOM.nextBoolean()) {
                 // cross - paths[1]
-                structure(paths[1], world, startx, starty, startz);
+                path = paths[1];
             } else {
                 // straight
                 if (compass.equals(COMPASS.NORTH) || compass.equals(COMPASS.SOUTH)) {
                     // east west - paths[2]
-                    structure(paths[2], world, startx, starty, startz);
+                    path = paths[2];
                 } else {
                     // north south - paths[3]
-                    structure(paths[3], world, startx, starty, startz);
+                    path = paths[3];
                 }
             }
+            TARDISSilurianStructureRunnable secondary = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, path);
+            int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 1L);
+            secondary.setTask(secondaryTask);
         }
         return false;
-    }
-
-    private void structure(String path, World world, int startx, int starty, int startz) {
-        // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(path);
-        // get dimensions
-        JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-        int h = dimensions.get("height").getAsInt();
-        int w = dimensions.get("width").getAsInt();
-        int l = dimensions.get("length").getAsInt();
-        Block chest;
-        Material type;
-        BlockData data;
-        // get input array
-        JsonArray arr = obj.get("input").getAsJsonArray();
-        // loop like crazy
-        for (int level = 0; level < h; level++) {
-            JsonArray floor = arr.get(level).getAsJsonArray();
-            for (int row = 0; row < w; row++) {
-                JsonArray r = floor.get(row).getAsJsonArray();
-                for (int col = 0; col < l; col++) {
-                    JsonObject c = r.get(col).getAsJsonObject();
-                    int x = startx + row;
-                    int y = starty + level;
-                    int z = startz + col;
-
-                    data = plugin.getServer().createBlockData(c.get("data").getAsString());
-                    type = data.getMaterial();
-
-                    switch (type) {
-                        case AIR:
-                            // only set air blocks if the structure part is above the 'stilts'
-                            if (level > h - 6) {
-                                TARDISBlockSetters.setBlock(world, x, y, z, data);
-                            }
-                            break;
-                        case CHEST:
-                            TARDISBlockSetters.setBlock(world, x, y, z, data);
-                            chest = world.getBlockAt(x, y, z);
-                            if (chest != null && chest.getType().equals(Material.CHEST)) {
-                                try {
-                                    // set chest contents
-                                    Chest container = (Chest) chest.getState();
-                                    container.setLootTable(TARDISConstants.LOOT.get(TARDISConstants.RANDOM.nextInt(11)));
-                                    container.update();
-                                } catch (ClassCastException e) {
-                                    plugin.debug("Could not cast " + chest.getType() + "to Silurian Chest." + e.getMessage());
-                                }
-                            }
-                            break;
-                        case SPONGE:
-                            Block swap_block = world.getBlockAt(x, y, z);
-                            if (!swap_block.getType().isOccluding()) {
-                                TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
-                            }
-                            break;
-                        case SPAWNER:
-                            Block spawner = world.getBlockAt(x, y, z);
-                            spawner.setBlockData(data);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                CreatureSpawner cs = (CreatureSpawner) spawner.getState();
-                                cs.setSpawnedType(EntityType.SKELETON);
-                                cs.update();
-                            }, 2L);
-                            break;
-                        default:
-                            TARDISBlockSetters.setBlock(world, x, y, z, data);
-                            break;
-                    }
-                }
-            }
-        }
     }
 
     private Vector isChunkLoaded(COMPASS compass, Block block) {
