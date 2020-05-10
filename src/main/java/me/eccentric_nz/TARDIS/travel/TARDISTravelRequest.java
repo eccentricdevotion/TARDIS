@@ -66,7 +66,7 @@ public class TARDISTravelRequest {
             }
 
             // check permission
-            if (!p.hasPermission("tardis.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+            if (!p.hasPermission("tardis.nether")) {
                 TARDISMessage.send(p, "NO_PERM_TRAVEL", "Nether");
                 bool = false;
             }
@@ -87,7 +87,7 @@ public class TARDISTravelRequest {
             }
 
             // check permission
-            if (!p.hasPermission("tardis.end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
+            if (!p.hasPermission("tardis.end")) {
                 TARDISMessage.send(p, "NO_PERM_TRAVEL", "End");
                 bool = false;
             }
