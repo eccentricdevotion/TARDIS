@@ -114,6 +114,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("add_perms", "creation");
         firstsBool.put("admin_bypass", "allow");
         firstsBool.put("all_blocks", "allow");
+        firstsBool.put("allow_end_after_visit", "travel");
+        firstsBool.put("allow_nether_after_visit", "travel");
         firstsBool.put("autonomous", "allow");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
