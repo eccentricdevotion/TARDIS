@@ -69,14 +69,7 @@ public class ResultSetTraveledTo {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                switch (env) {
-                    case NETHER:
-                        return rs.getInt("nether") == 1;
-                    case THE_END:
-                        return rs.getInt("end") == 1;
-                    case NORMAL:
-                        return rs.getInt("normal") == 1;
-                }
+                return rs.getInt(env.toString().toLowerCase()) == 1;
             } else {
                 return false;
             }
@@ -95,7 +88,6 @@ public class ResultSetTraveledTo {
                 plugin.debug("Error closing traveled_to table! " + e.getMessage());
             }
         }
-        return true;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
