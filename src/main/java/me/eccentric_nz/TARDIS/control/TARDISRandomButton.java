@@ -132,7 +132,7 @@ public class TARDISRandomButton {
                         TARDISMessage.send(player, "ANCIENT", "End");
                     } else if (!player.hasPermission("tardis.end")) {    // end permission    
                         TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
-                    } else if (plugin.getConfig().getBoolean("travel.allow_ned_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.THE_END)) { // check if they need to visit the end first
+                    } else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.THE_END)) { // check if they need to visit the end first
                         TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");
                     } else if (level < the_end_min) {    // check if they have enough artron to travel to the end
                         TARDISMessage.send(player, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", the_end_min), "End");
