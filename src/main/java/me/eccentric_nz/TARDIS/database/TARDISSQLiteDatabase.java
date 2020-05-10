@@ -231,6 +231,10 @@ public class TARDISSQLiteDatabase {
             String queryVortex = "CREATE TABLE IF NOT EXISTS " + prefix + "vortex (tardis_id INTEGER PRIMARY KEY NOT NULL, task INTEGER DEFAULT 0)";
             statement.executeUpdate(queryVortex);
 
+            // Table structure for table 'traveled_to'
+            String queryTraveledTo = "CREATE TABLE IF NOT EXISTS " + prefix + "traveled_to (uuid TEXT NOT NULL, end	INTEGER DEFAULT 0, nether INTEGER DEFAULT 0, normal INTEGER DEFAULT 0, PRIMARY KEY(uuid))";
+            statement.executeUpdate(queryTraveledTo);
+
             // delete old submerged, gravity and levers tables
             String dropSubmerged = "DROP TABLE IF EXISTS submerged";
             statement.executeUpdate(dropSubmerged);
