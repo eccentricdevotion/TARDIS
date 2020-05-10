@@ -79,144 +79,151 @@ public class TARDISMonsterRunnable implements Runnable {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
-                // only police boxes that are not hidden
-                boolean hidden = new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible();
-                if (!hidden) {
-                    Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
-                    List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
-                    ent.remove();
-                    boolean found = false;
-                    if (entities.size() > 0) {
-                        // check if a Time Lord or companion is near
-                        boolean take_action = true;
-                        for (Entity e : entities) {
-                            if (e instanceof Player && isTimelord(map.getValue(), e)) {
-                                take_action = false;
-                                break;
+            if (map.getKey().getWorld().getName().contains("TARDIS")) {
+                continue;
+            }
+            if (map.getValue().isAbandoned()) {
+                continue;
+            }
+            // only police boxes that are not hidden
+            boolean hidden = new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible();
+            if (hidden) {
+                continue;
+            }
+            Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
+            List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
+            ent.remove();
+            boolean found = false;
+            if (entities.size() < 1) {
+                continue;
+            }
+            // check if a Time Lord or companion is near
+            boolean take_action = true;
+            for (Entity e : entities) {
+                if (e instanceof Player && isTimelord(map.getValue(), (Player) e)) {
+                    take_action = false;
+                    break;
+                }
+            }
+            // nobody there so continue
+            if (!take_action) {
+                continue;
+            }
+            boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
+            for (Entity e : entities) {
+                EntityType type = e.getType();
+                TARDISMonster tm = new TARDISMonster();
+                String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
+                if (monsters.contains(type)) {
+                    found = true;
+                    switch (type) {
+                        case CREEPER:
+                            Creeper creeper = (Creeper) e;
+                            tm.setCharged(creeper.isPowered());
+                            dn = (creeper.isPowered()) ? "Charged Creeper" : "Creeper";
+                            break;
+                        case ENDERMAN:
+                            Enderman enderman = (Enderman) e;
+                            tm.setCarried(enderman.getCarriedBlock());
+                            if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                                dn = "Silent";
                             }
-                        }
-                        // nobody there so continue
-                        if (take_action) {
-                            boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
-                            for (Entity e : entities) {
-                                EntityType type = e.getType();
-                                TARDISMonster tm = new TARDISMonster();
-                                String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
-                                if (monsters.contains(type)) {
-                                    found = true;
-                                    switch (type) {
-                                        case CREEPER:
-                                            Creeper creeper = (Creeper) e;
-                                            tm.setCharged(creeper.isPowered());
-                                            dn = (creeper.isPowered()) ? "Charged Creeper" : "Creeper";
-                                            break;
-                                        case ENDERMAN:
-                                            Enderman enderman = (Enderman) e;
-                                            tm.setCarried(enderman.getCarriedBlock());
-                                            if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
-                                                dn = "Silent";
-                                            }
-                                            break;
-                                        case PIG_ZOMBIE:
-                                            PigZombie pigzombie = (PigZombie) e;
-                                            tm.setAggressive(pigzombie.isAngry());
-                                            tm.setAnger(pigzombie.getAnger());
-                                            tm.setEquipment(pigzombie.getEquipment());
-                                            if (twa && pigzombie.getEquipment().getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && pigzombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
-                                                String name = pigzombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
-                                                if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
-                                                    dn = name.substring(0, name.length() - 5);
-                                                }
-                                            } else {
-                                                dn = "Pig Zombie";
-                                            }
-                                            break;
-                                        case SKELETON:
-                                        case STRAY:
-                                        case WITHER_SKELETON:
-                                            Skeleton skeleton = (Skeleton) e;
-                                            tm.setEquipment(skeleton.getEquipment());
-                                            if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
-                                                String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
-                                                if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
-                                                    dn = name.substring(0, name.length() - 5);
-                                                }
-                                            }
-                                            if (type.equals(EntityType.WITHER_SKELETON)) {
-                                                dn = "Wither Skeleton";
-                                            }
-                                            break;
-                                        case SLIME:
-                                            Slime slime = (Slime) e;
-                                            tm.setSize(slime.getSize());
-                                            break;
-                                        case VINDICATOR:
-                                            Vindicator vindicator = (Vindicator) e;
-                                            tm.setEquipment(vindicator.getEquipment());
-                                            break;
-                                        case HUSK:
-                                        case ZOMBIE:
-                                        case ZOMBIE_VILLAGER:
-                                            Zombie zombie = (Zombie) e;
-                                            tm.setBaby(zombie.isBaby());
-                                            tm.setEquipment(zombie.getEquipment());
-                                            if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
-                                                String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
-                                                if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
-                                                    dn = name.substring(0, name.length() - 5);
-                                                }
-                                            }
-                                            if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
-                                                ZombieVillager zombie_villager = (ZombieVillager) e;
-                                                Profession prof = zombie_villager.getVillagerProfession();
-                                                tm.setProfession(prof);
-                                                dn = "Zombie Villager";
-                                            }
-                                            break;
-                                        case PILLAGER:
-                                            Pillager pillager = (Pillager) e;
-                                            tm.setEquipment(pillager.getEquipment());
-                                            dn = "Pillager";
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    tm.setDisplayName(dn);
-                                    tm.setType(type);
-                                    tm.setAge(e.getTicksLived());
-                                    tm.setHealth(((LivingEntity) e).getHealth());
-                                    tm.setName(e.getCustomName());
-                                    if (e.getPassengers().size() > 0) {
-                                        tm.setPassenger(e.getPassengers().get(0).getType());
-                                    }
-                                    moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
+                            break;
+                        case PIG_ZOMBIE:
+                            PigZombie pigzombie = (PigZombie) e;
+                            tm.setAggressive(pigzombie.isAngry());
+                            tm.setAnger(pigzombie.getAnger());
+                            tm.setEquipment(pigzombie.getEquipment());
+                            if (twa && pigzombie.getEquipment().getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && pigzombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+                                String name = pigzombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
+                                if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
+                                    dn = name.substring(0, name.length() - 5);
+                                }
+                            } else {
+                                dn = "Pig Zombie";
+                            }
+                            break;
+                        case SKELETON:
+                        case STRAY:
+                        case WITHER_SKELETON:
+                            Skeleton skeleton = (Skeleton) e;
+                            tm.setEquipment(skeleton.getEquipment());
+                            if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+                                String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
+                                if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
+                                    dn = name.substring(0, name.length() - 5);
                                 }
                             }
-                        }
+                            if (type.equals(EntityType.WITHER_SKELETON)) {
+                                dn = "Wither Skeleton";
+                            }
+                            break;
+                        case SLIME:
+                            Slime slime = (Slime) e;
+                            tm.setSize(slime.getSize());
+                            break;
+                        case VINDICATOR:
+                            Vindicator vindicator = (Vindicator) e;
+                            tm.setEquipment(vindicator.getEquipment());
+                            break;
+                        case HUSK:
+                        case ZOMBIE:
+                        case ZOMBIE_VILLAGER:
+                            Zombie zombie = (Zombie) e;
+                            tm.setBaby(zombie.isBaby());
+                            tm.setEquipment(zombie.getEquipment());
+                            if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+                                String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
+                                if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
+                                    dn = name.substring(0, name.length() - 5);
+                                }
+                            }
+                            if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
+                                ZombieVillager zombie_villager = (ZombieVillager) e;
+                                Profession prof = zombie_villager.getVillagerProfession();
+                                tm.setProfession(prof);
+                                dn = "Zombie Villager";
+                            }
+                            break;
+                        case PILLAGER:
+                            Pillager pillager = (Pillager) e;
+                            tm.setEquipment(pillager.getEquipment());
+                            dn = "Pillager";
+                            break;
+                        default:
+                            break;
                     }
-                    if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
-                        // spawn a random mob inside TARDIS?
-                        // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                        if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
-                            HashMap<String, Object> wheret = new HashMap<>();
-                            wheret.put("tardis_id", map.getValue().getTardisId());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-                            if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
-                                TARDISMonster rtm = new TARDISMonster();
-                                // choose a random monster
-                                EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
-                                rtm.setType(type);
-                                String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
-                                if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
-                                    Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
-                                    rtm.setProfession(prof);
-                                    dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
-                                }
-                                rtm.setDisplayName(dn);
-                                moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
-                            }
+                    tm.setDisplayName(dn);
+                    tm.setType(type);
+                    tm.setAge(e.getTicksLived());
+                    tm.setHealth(((LivingEntity) e).getHealth());
+                    tm.setName(e.getCustomName());
+                    if (e.getPassengers().size() > 0) {
+                        tm.setPassenger(e.getPassengers().get(0).getType());
+                    }
+                    moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
+                }
+            }
+            if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
+                // spawn a random mob inside TARDIS?
+                // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
+                if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
+                    HashMap<String, Object> wheret = new HashMap<>();
+                    wheret.put("tardis_id", map.getValue().getTardisId());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
+                    if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
+                        TARDISMonster rtm = new TARDISMonster();
+                        // choose a random monster
+                        EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
+                        rtm.setType(type);
+                        String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
+                        if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
+                            Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
+                            rtm.setProfession(prof);
+                            dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
                         }
+                        rtm.setDisplayName(dn);
+                        moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
                     }
                 }
             }
@@ -225,7 +232,7 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private boolean canSpawn(Location l, int r) {
         // get biome
-        Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
+        Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 6).getBiome();
         if (biome.equals(Biome.MUSHROOM_FIELDS) || biome.equals(Biome.MUSHROOM_FIELD_SHORE)) {
             return false;
         }
@@ -428,8 +435,8 @@ public class TARDISMonsterRunnable implements Runnable {
         }
     }
 
-    private boolean isTimelord(TARDISTeleportLocation tpl, Entity e) {
+    private boolean isTimelord(TARDISTeleportLocation tpl, Player player) {
         ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
-        return (rsc.getCompanions().contains(e.getUniqueId()));
+        return (rsc.getCompanions().contains(player.getUniqueId()));
     }
 }
