@@ -75,7 +75,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
     }
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
-        timeCheck = System.currentTimeMillis() + 3000;
+        timeCheck = System.currentTimeMillis() + 4500;
         chunks.add(chunkInfo);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // create structure

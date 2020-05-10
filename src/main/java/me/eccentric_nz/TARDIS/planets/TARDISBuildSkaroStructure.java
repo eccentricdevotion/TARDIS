@@ -82,7 +82,6 @@ class TARDISBuildSkaroStructure implements Runnable {
                 task = -1;
                 return;
             }
-            plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
@@ -91,13 +90,14 @@ class TARDISBuildSkaroStructure implements Runnable {
             w = dimensions.get("width").getAsInt();
             d = dimensions.get("length").getAsInt() - 1;
             // make sure highest block is sand
-            Block sand = world.getBlockAt(startx, starty, startz);
+            Block sand = world.getBlockAt(startx, y, startz);
             if (sand.getType() != Material.SAND) {
                 while (sand.getType() != Material.AIR) {
                     sand = sand.getRelative(BlockFace.UP);
                 }
                 starty = sand.getLocation().getBlockY() - 1;
             }
+            plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
             // get input array
             arr = obj.get("input").getAsJsonArray();
             running = true;
