@@ -63,7 +63,7 @@ public class TARDISWorldChangeListener implements Listener {
             QueryFactory queryFactory = plugin.getQueryFactory();
             HashMap<String, Object> values = new HashMap<>();
             values.put("uuid", p.getUniqueId().toString());
-            values.put("environment", env.toString().toLowerCase());
+            values.put("environment", env.toString());
 
             queryFactory.doInsert("traveled_to", values);
         }

@@ -62,7 +62,7 @@ public class ResultSetTraveledTo {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setString(1, p.getUniqueId().toString());     // playeruuid
-            statement.setString(2, env.toString().toLowerCase());   // environment name
+            statement.setString(2, env.toString());   // environment name
             rs = statement.executeQuery();
 
             return rs.isBeforeFirst();  // if row exists, player has visited environment
