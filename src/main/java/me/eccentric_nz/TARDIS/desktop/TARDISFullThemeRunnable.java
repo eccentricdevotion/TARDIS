@@ -215,7 +215,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+            if (tud.getSchematic().getPermission().equals("archive")) {
+                starty = archive_next.getY();
+            } else {
+                starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+            }
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
             world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");

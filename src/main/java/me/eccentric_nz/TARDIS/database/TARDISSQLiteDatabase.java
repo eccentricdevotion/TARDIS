@@ -61,7 +61,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryArched);
 
             // Table structure for table 'archive'
-            String queryArchive = "CREATE TABLE IF NOT EXISTS " + prefix + "archive (archive_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, name TEXT, console_size TEXT, beacon INTEGER, lanterns INTEGER, use INTEGER, data TEXT, description TEXT default '')";
+            String queryArchive = "CREATE TABLE IF NOT EXISTS " + prefix + "archive (archive_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, name TEXT, console_size TEXT, beacon INTEGER, lanterns INTEGER, use INTEGER, y INTEGER DEFAULT '64', data TEXT, description TEXT DEFAULT '')";
             statement.executeUpdate(queryArchive);
 
             // Table structure for table 'areas'

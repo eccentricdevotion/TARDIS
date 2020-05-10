@@ -307,6 +307,14 @@ class TARDISMySQLDatabaseUpdater {
                 String vct_alter = "ALTER TABLE " + prefix + "vaults ADD chest_type varchar(8) DEFAULT 'DROP'";
                 statement.executeUpdate(vct_alter);
             }
+            // add y to archive
+            String y_query = "SHOW COLUMNS FROM " + prefix + "archive LIKE 'y'";
+            ResultSet rsy = statement.executeQuery(y_query);
+            if (!rsy.next()) {
+                i++;
+                String y_alter = "ALTER TABLE " + prefix + "archive ADD y int(3) DEFAULT '64'";
+                statement.executeUpdate(y_alter);
+            }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
             ResultSet rsvoid = statement.executeQuery(voidQuery);

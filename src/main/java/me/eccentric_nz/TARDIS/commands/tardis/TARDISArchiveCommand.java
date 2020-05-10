@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -45,7 +46,7 @@ import java.util.Locale;
 class TARDISArchiveCommand {
 
     private final TARDIS plugin;
-    private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update");
+    private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update", "y");
 
     TARDISArchiveCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -66,7 +67,7 @@ class TARDISArchiveCommand {
         }
         String uuid = player.getUniqueId().toString();
         String name = (args.length > 2) ? args[2].toUpperCase(Locale.ENGLISH) : "ARCHIVE";
-        if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update")) {
+        if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) {
             if (args.length < 3) {
                 TARDISMessage.send(player, "SCHM_NAME");
                 return true;
@@ -78,7 +79,7 @@ class TARDISArchiveCommand {
                     TARDISMessage.send(player, "ARCHIVE_EXIST", name);
                     return true;
                 }
-                if ((sub.equals("description") || sub.equals("remove") || sub.equals("update")) && !exists) {
+                if ((sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) && !exists) {
                     TARDISMessage.send(player, "ARCHIVE_NOT_EXIST", name);
                     return true;
                 }
@@ -99,6 +100,21 @@ class TARDISArchiveCommand {
                     }
                 }
             }
+        }
+        if (sub.equals("y")) {
+            // update y
+            if (args.length > 3 && (args[3].equals("64") || args[3].equals("65"))) {
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("y", TARDISNumberParsers.parseInt(args[3]));
+                HashMap<String, Object> wherey = new HashMap<>();
+                wherey.put("uuid", uuid);
+                wherey.put("name", name);
+                plugin.getQueryFactory().doUpdate("archive", set, wherey);
+                TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
+            } else {
+                TARDISMessage.send(player, "ARCHIVE_Y");
+            }
+            return true;
         }
         if (sub.equals("scan") || sub.equals("add") || sub.equals("update")) {
             // get TARDIS player is in
@@ -207,6 +223,7 @@ class TARDISArchiveCommand {
                             // save json to database
                             set.put("uuid", uuid);
                             set.put("name", name);
+                            set.put("y", sy);
                             plugin.getQueryFactory().doInsert("archive", set);
                             TARDISMessage.send(player, "ARCHIVE_ADD", name);
                             return true;

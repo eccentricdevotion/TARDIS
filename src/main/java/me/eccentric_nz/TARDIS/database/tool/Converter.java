@@ -101,7 +101,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                         break;
                                     case archive:
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("archive_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("console_size"), rs.getInt("beacon"), rs.getInt("lanterns"), rs.getInt("use"), rs.getString("data"), rs.getString("description")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("archive_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("console_size"), rs.getInt("beacon"), rs.getInt("lanterns"), rs.getInt("use"), rs.getInt("y"), rs.getString("data"), rs.getString("description")) + end;
                                         sb.append(str);
                                         break;
                                     case areas:

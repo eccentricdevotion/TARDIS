@@ -32,16 +32,18 @@ public class Archive {
     private final boolean beacon;
     private final boolean lanterns;
     private final int use;
+    private final int y;
     private final JsonObject JSON;
     private final String description;
 
-    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, JsonObject JSON, String description) {
+    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, int y, JsonObject JSON, String description) {
         this.uuid = uuid;
         this.name = name;
         this.consoleSize = ConsoleSize.valueOf(consoleSize);
         this.beacon = beacon;
         this.lanterns = lanterns;
         this.use = use;
+        this.y = y;
         this.JSON = JSON;
         this.description = description;
     }
@@ -68,6 +70,10 @@ public class Archive {
 
     public int getUse() {
         return use;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public JsonObject getJSON() {

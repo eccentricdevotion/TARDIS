@@ -595,7 +595,7 @@ commands:
       permission: tardis.abandon
     archive:
       description: Archive your current TARDIS console.
-      usage: /<command> archive [scan|add|remove|update|description] [name]
+      usage: /<command> archive [scan|add|remove|update|description|y] [name] <y_value>
       permission: tardis.archive
     construct:
       description: Set the sign text or asymmetry of the TARDIS CONSTRUCT Chameleon preset.

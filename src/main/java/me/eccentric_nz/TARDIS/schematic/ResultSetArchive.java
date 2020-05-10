@@ -82,6 +82,7 @@ public class ResultSetArchive {
                             rs.getBoolean("beacon"),
                             rs.getBoolean("lanterns"),
                             rs.getInt("use"),
+                            rs.getInt("y"),
                             new JsonParser().parse(rs.getString("data")).getAsJsonObject(),
                             rs.getString("description")
                     );

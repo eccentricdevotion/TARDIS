@@ -42,7 +42,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> ITEM_SUBS = ImmutableList.of("hand", "inventory");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
-    private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update");
+    private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update", "y");
+    private final List<String> Y_SUBS = ImmutableList.of("64", "65");
     private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL");
     private final List<String> TRANSMAT_SUBS = ImmutableList.of("tp", "add", "remove", "update", "list");
     private final List<String> UPD_SUBS = new ArrayList<>();
@@ -123,6 +124,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             String sub = args[1].toLowerCase();
             if (sub.equals("add") || sub.equals("update")) {
                 return partial(lastArg, CONSOLE_SIZE_SUBS);
+            }
+            if (sub.equals("y")) {
+                return partial(lastArg, Y_SUBS);
             }
         }
         return ImmutableList.of();
