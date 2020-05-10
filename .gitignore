@@ -13,6 +13,9 @@ build/*
 *.xcworkspace
 xcuserdata
 
+# vscode
+.vscode/*
+
 # svn & cvs
 .svn
 CVS
