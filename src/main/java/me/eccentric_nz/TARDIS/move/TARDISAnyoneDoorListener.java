@@ -555,7 +555,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             }
 
                                             // check permission
-                                            if(!player.hasPermission("tardis.nether")) {
+                                            if (!player.hasPermission("tardis.nether")) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                                 return;
                                             }

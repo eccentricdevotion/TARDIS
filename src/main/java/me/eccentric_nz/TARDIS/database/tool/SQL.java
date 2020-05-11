@@ -64,6 +64,7 @@ public class SQL {
         tag,
         tardis,
         transmats,
+        traveled_to,
         travellers,
         vaults,
         thevoid,

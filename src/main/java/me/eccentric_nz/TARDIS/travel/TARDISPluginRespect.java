@@ -67,7 +67,6 @@ public class TARDISPluginRespect {
                 bool = false;
             }
         }
-
         // nether travel
         if (flag.permsNether() && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             // check if nether enabled
@@ -77,7 +76,6 @@ public class TARDISPluginRespect {
                 }
                 bool = false;
             }
-
             // check permission
             if (!flag.getPlayer().hasPermission("tardis.nether")) {
                 if (flag.messagePlayer()) {
@@ -85,7 +83,6 @@ public class TARDISPluginRespect {
                 }
                 bool = false;
             }
-                        
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.NETHER)) {
                 if (flag.messagePlayer()) {
@@ -94,7 +91,6 @@ public class TARDISPluginRespect {
                 bool = false;
             }
         }
-
         // end travel
         if (flag.permsTheEnd() && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             // check if end enabled
@@ -104,7 +100,6 @@ public class TARDISPluginRespect {
                 }
                 bool = false;
             }
-
             // check permission
             if (!flag.getPlayer().hasPermission("tardis.end")) {
                 if (flag.messagePlayer()) {
@@ -112,7 +107,6 @@ public class TARDISPluginRespect {
                 }
                 bool = false;
             }
-
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.THE_END)) {
                 if (flag.messagePlayer()) {
@@ -121,7 +115,6 @@ public class TARDISPluginRespect {
                 bool = false;
             }
         }
-
         if (flag.respectWorldguard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), l)) {
             if (flag.messagePlayer()) {
                 TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");

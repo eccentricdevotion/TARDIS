@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,14 +27,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
+import java.util.HashMap;
 
 /**
  * @author Technoguyfication
  */
 public class TARDISWorldChangeListener implements Listener {
+
     private final TARDIS plugin;
 
     public TARDISWorldChangeListener(TARDIS plugin) {

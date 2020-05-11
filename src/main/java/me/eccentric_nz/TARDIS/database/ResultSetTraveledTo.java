@@ -26,8 +26,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... the location of the TARDIS Police Box blocks.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
+ * blocks.
  *
  * @author Technoguyfication
  */
@@ -39,8 +39,7 @@ public class ResultSetTraveledTo {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from
-     * the traveled_to table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the traveled_to table.
      *
      * @param plugin an instance of the main class.
      */
@@ -50,8 +49,8 @@ public class ResultSetTraveledTo {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the traveled_to table. This is used to
-     * determine if players have traveled to a dimension
+     * Retrieves an SQL ResultSet from the traveled_to table. This is used to determine if players have traveled to a
+     * dimension
      *
      * @return true or false depending on whether the player has traveled to the environment
      */

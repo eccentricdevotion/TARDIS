@@ -56,7 +56,6 @@ public class TARDISTravelRequest {
                 bool = false;
             }
         }
-
         // nether travel
         if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             // check if nether enabled
@@ -64,20 +63,17 @@ public class TARDISTravelRequest {
                 TARDISMessage.send(p, "TRAVEL_DISABLED", "Nether");
                 bool = false;
             }
-
             // check permission
             if (!p.hasPermission("tardis.nether")) {
                 TARDISMessage.send(p, "NO_PERM_TRAVEL", "Nether");
                 bool = false;
             }
-                        
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(p, Environment.NETHER)) {
                 TARDISMessage.send(p, "TRAVEL_NOT_VISITED", "Nether");
                 bool = false;
             }
         }
-
         // end travel
         if (l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             // check if end enabled
@@ -85,20 +81,17 @@ public class TARDISTravelRequest {
                 TARDISMessage.send(p, "TRAVEL_DISABLED", "End");
                 bool = false;
             }
-
             // check permission
             if (!p.hasPermission("tardis.end")) {
                 TARDISMessage.send(p, "NO_PERM_TRAVEL", "End");
                 bool = false;
             }
-
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(p, Environment.THE_END)) {
                 TARDISMessage.send(p, "TRAVEL_NOT_VISITED", "End");
                 bool = false;
             }
         }
-
         if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(to, l)) {
             TARDISMessage.send(p, "WORLDGUARD");
             bool = false;

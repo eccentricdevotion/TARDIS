@@ -512,7 +512,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
 
                                                 // check permission
-                                                if(!player.hasPermission("tardis.nether")) {
+                                                if (!player.hasPermission("tardis.nether")) {
                                                     TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                                     return;
                                                 }
@@ -523,7 +523,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     return;
                                                 }
                                             }
-                                            
+
                                             COMPASS obdd = obdl.getD();
                                             COMPASS opd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                             if (!obdd.equals(opd)) {
