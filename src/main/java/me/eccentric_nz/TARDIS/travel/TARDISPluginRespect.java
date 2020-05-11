@@ -104,7 +104,7 @@ public class TARDISPluginRespect {
             }
 
             // check if player has to visit first
-            if (plugin.getConfig().getBoolean("allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.THE_END)) {
+            if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.THE_END)) {
                 TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
                 bool = false;
             }
