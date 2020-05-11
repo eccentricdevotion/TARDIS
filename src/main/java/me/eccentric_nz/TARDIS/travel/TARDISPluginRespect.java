@@ -69,59 +69,59 @@ public class TARDISPluginRespect {
         }
 
         // nether travel
-        if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+        if (flag.permsNether() && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             // check if nether enabled
             if (!plugin.getConfig().getBoolean("travel.nether")) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
+                }
                 bool = false;
             }
 
             // check permission
             if (!flag.getPlayer().hasPermission("tardis.nether")) {
-                TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
+                }
                 bool = false;
             }
                         
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.NETHER)) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
+                }
                 bool = false;
             }
         }
 
         // end travel
-        if (l.getWorld().getEnvironment().equals(Environment.THE_END)) {
+        if (flag.permsTheEnd() && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             // check if end enabled
             if (!plugin.getConfig().getBoolean("travel.the_end")) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
+                }
                 bool = false;
             }
 
             // check permission
             if (!flag.getPlayer().hasPermission("tardis.end")) {
-                TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
+                }
                 bool = false;
             }
 
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.THE_END)) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
+                }
                 bool = false;
             }
         }
-        
-        if (flag.permsTheEnd() && !plugin.getConfig().getBoolean("travel.the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
-            }
-            bool = false;
-        }
-        if (flag.permsTheEnd() && !flag.getPlayer().hasPermission("tardis.end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
-            }
-            bool = false;
-        }
+
         if (flag.respectWorldguard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), l)) {
             if (flag.messagePlayer()) {
                 TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");
