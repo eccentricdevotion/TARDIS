@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-
-import java.sql.*;
-
 import org.bukkit.World.Environment;
-
 import org.bukkit.entity.Player;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
