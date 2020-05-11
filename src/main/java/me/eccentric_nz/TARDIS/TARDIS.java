@@ -194,10 +194,10 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         customBlockKey = new NamespacedKey(this, "customBlock");
         console = getServer().getConsoleSender();
-        Version bukkitversion = getServerVersion(getServer().getVersion());
+        Version serverVersion = getServerVersion(getServer().getVersion());
         Version minversion = new Version("1.15.2");
-        // check CraftBukkit version
-        if (bukkitversion.compareTo(minversion) >= 0) {
+        // check server version
+        if (serverVersion.compareTo(minversion) >= 0) {
             if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
                 console.sendMessage(pluginName + ChatColor.RED + "Your server is running CraftBukkit. Please use Spigot or Paper instead! This plugin will continue to load, but it will perform better :)");
             }

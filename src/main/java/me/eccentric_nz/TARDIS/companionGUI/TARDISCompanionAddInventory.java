@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.metadata.MetadataValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,12 +37,14 @@ import java.util.UUID;
 public class TARDISCompanionAddInventory {
 
     private final TARDIS plugin;
+    Player player;
     private final UUID uuid;
     private final ItemStack[] players;
 
-    public TARDISCompanionAddInventory(TARDIS plugin, UUID uuid) {
+    public TARDISCompanionAddInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
-        this.uuid = uuid;
+        this.player = player;
+        uuid = this.player.getUniqueId();
         players = getItemStack();
     }
 
@@ -60,7 +63,7 @@ public class TARDISCompanionAddInventory {
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (i < 45) {
                     UUID puid = p.getUniqueId();
-                    if (puid != uuid && !comps.contains(puid.toString())) {
+                    if (puid != uuid && !comps.contains(puid.toString()) && canSee(p)) {
                         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                         SkullMeta skull = (SkullMeta) head.getItemMeta();
                         skull.setOwningPlayer(p);
@@ -104,6 +107,19 @@ public class TARDISCompanionAddInventory {
         heads[53] = close;
 
         return heads;
+    }
+
+    private boolean canSee(Player other) {
+        return player.canSee(other) && !isVanished(other);
+    }
+
+    private boolean isVanished(Player player) {
+        for (MetadataValue meta : player.getMetadata("vanished")) {
+            if (meta.asBoolean()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ItemStack[] getPlayers() {

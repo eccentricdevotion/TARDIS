@@ -68,7 +68,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                         case 48: // add
                             close(player);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] items = new TARDISCompanionAddInventory(plugin, uuid).getPlayers();
+                                ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
                                 Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
                                 presetinv.setContents(items);
                                 player.openInventory(presetinv);
