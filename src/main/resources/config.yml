@@ -47,7 +47,9 @@ travel:
   max_distance: 29999983
   give_key: false
   the_end: false
+  allow_end_after_visit: false
   nether: false
+  allow_nether_after_visit: false
   terminal:
     redefine: false
     nether: world

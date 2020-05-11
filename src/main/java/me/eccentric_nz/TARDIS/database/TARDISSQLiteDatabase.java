@@ -211,6 +211,10 @@ public class TARDISSQLiteDatabase {
             String queryTransmats = "CREATE TABLE IF NOT EXISTS " + prefix + "transmats (transmat_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0)";
             statement.executeUpdate(queryTransmats);
 
+            // Table structure for table 'traveled_to'
+            String queryTraveledTo = "CREATE TABLE IF NOT EXISTS " + prefix + "traveled_to (uuid TEXT NOT NULL, environment TEXT NOT NULL)";
+            statement.executeUpdate(queryTraveledTo);            
+
             // Table structure for table 'travellers'
             String queryTravellers = "CREATE TABLE IF NOT EXISTS " + prefix + "travellers (traveller_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '')";
             statement.executeUpdate(queryTravellers);

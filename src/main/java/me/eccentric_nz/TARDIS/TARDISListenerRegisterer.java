@@ -318,6 +318,9 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new BalloonListener(plugin), plugin);
             plugin.getPM().registerEvents(new InventoryHelper(plugin), plugin);
         }
+        if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") || plugin.getConfig().getBoolean("travel.allow_end_after_visit")) {
+            plugin.getPM().registerEvents(new TARDISWorldChangeListener(plugin), plugin);
+        }
         return info;
     }
 

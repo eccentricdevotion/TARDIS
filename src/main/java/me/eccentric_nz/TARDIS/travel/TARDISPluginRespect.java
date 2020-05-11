@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -66,30 +67,61 @@ public class TARDISPluginRespect {
                 bool = false;
             }
         }
-        if (flag.permsNether() && !plugin.getConfig().getBoolean("travel.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
+
+        // nether travel
+        if (flag.permsNether() && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+            // check if nether enabled
+            if (!plugin.getConfig().getBoolean("travel.nether")) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
+                }
+                bool = false;
             }
-            bool = false;
-        }
-        if (flag.permsNether() && !flag.getPlayer().hasPermission("tardis.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
+
+            // check permission
+            if (!flag.getPlayer().hasPermission("tardis.nether")) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
+                }
+                bool = false;
             }
-            bool = false;
-        }
-        if (flag.permsTheEnd() && !plugin.getConfig().getBoolean("travel.the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
+                        
+            // check if player has to visit first
+            if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.NETHER)) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
+                }
+                bool = false;
             }
-            bool = false;
         }
-        if (flag.permsTheEnd() && !flag.getPlayer().hasPermission("tardis.end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
+
+        // end travel
+        if (flag.permsTheEnd() && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
+            // check if end enabled
+            if (!plugin.getConfig().getBoolean("travel.the_end")) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
+                }
+                bool = false;
             }
-            bool = false;
+
+            // check permission
+            if (!flag.getPlayer().hasPermission("tardis.end")) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
+                }
+                bool = false;
+            }
+
+            // check if player has to visit first
+            if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.THE_END)) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
+                }
+                bool = false;
+            }
         }
+
         if (flag.respectWorldguard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), l)) {
             if (flag.messagePlayer()) {
                 TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");
