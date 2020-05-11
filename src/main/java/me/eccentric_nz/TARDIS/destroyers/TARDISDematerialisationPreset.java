@@ -89,7 +89,7 @@ class TARDISDematerialisationPreset implements Runnable {
 
     @Override
     public void run() {
-        if (column == null) {
+        if (column == null || stained_column == null || glass_column == null) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             TARDISMessage.send(dd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");

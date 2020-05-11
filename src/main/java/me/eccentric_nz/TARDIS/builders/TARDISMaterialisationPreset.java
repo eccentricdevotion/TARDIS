@@ -118,7 +118,7 @@ class TARDISMaterialisationPreset implements Runnable {
     @Override
     public void run() {
         if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
-            if (column == null) {
+            if (column == null || stained_column == null || glass_column == null) {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");

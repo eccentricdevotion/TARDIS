@@ -55,7 +55,11 @@ public class TARDISConstructColumn {
                 for (int i = 0; i < 10; i++) {
                     JsonArray inner = json.get(i).getAsJsonArray();
                     for (int j = 0; j < 4; j++) {
-                        strings[i][j] = inner.get(j).getAsString();
+                        String block = inner.get(j).getAsString();
+                        if (!block.startsWith("minecraft")) {
+                            return null;
+                        }
+                        strings[i][j] = block;
                     }
                 }
                 return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"), false);
