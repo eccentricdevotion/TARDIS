@@ -72,7 +72,7 @@ public class TARDISTravelRequest {
             }
                         
             // check if player has to visit first
-            if (plugin.getConfig().getBoolean("allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(p, Environment.NETHER)) {
+            if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(p, Environment.NETHER)) {
                 TARDISMessage.send(p, "TRAVEL_NOT_VISITED", "Nether");
                 bool = false;
             }
@@ -98,6 +98,7 @@ public class TARDISTravelRequest {
                 bool = false;
             }
         }
+
         if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(to, l)) {
             TARDISMessage.send(p, "WORLDGUARD");
             bool = false;
