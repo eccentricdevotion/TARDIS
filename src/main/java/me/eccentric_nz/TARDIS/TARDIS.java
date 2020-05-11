@@ -198,6 +198,9 @@ public class TARDIS extends JavaPlugin {
         Version minversion = new Version("1.15.2");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
+            if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
+                console.sendMessage(pluginName + ChatColor.RED + "Your server is running CraftBukkit. Please use Spigot or Paper instead! This plugin will continue to load, but it will perform better :)");
+            }
             // TARDISChunkGenerator needs to be enabled
             if (!loadHelper()) {
                 console.sendMessage(pluginName + ChatColor.RED + "This plugin requires TARDISChunkGenerator to function, disabling...");
@@ -1092,7 +1095,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISPluginRespect getPluginRespect() {
         return pluginRespect;
     }
-    
+
     public TARDISPresetBuilderFactory getPresetBuilder() {
         return presetBuilder;
     }
