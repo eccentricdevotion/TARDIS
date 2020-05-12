@@ -171,13 +171,18 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
+                                    <include>org.rauschig:jarchivelib</include>
                                     <include>org.apache.commons:commons-compress</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>org.apache.commons:commons-compress</pattern>
-                                    <shadedPattern>org.rauschig.org.apache.commons:commons-compress</shadedPattern>
+                                    <shadedPattern>lib:commons-compress</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.rauschig:jarchivelib</pattern>
+                                    <shadedPattern>lib:jarchivelib</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -396,6 +401,11 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.10.6</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.rauschig</groupId>
+            <artifactId>jarchivelib</artifactId>
+            <version>0.7.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
