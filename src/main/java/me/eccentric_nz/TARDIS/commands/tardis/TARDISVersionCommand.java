@@ -39,15 +39,16 @@ class TARDISVersionCommand {
 
     boolean displayVersion(CommandSender sender) {
         final PluginManager pm = plugin.getPM();
+        String pluginName = plugin.getPluginName();
         List<String> hooks = plugin.getDescription().getSoftDepend();
-
-        String tardisversion = pm.getPlugin("TARDIS").getDescription().getVersion();
+        String tardisversion = plugin.getDescription().getVersion();
         String chunkversion = pm.getPlugin("TARDISChunkGenerator").getDescription().getVersion();
         String cb = Bukkit.getVersion();
         String bv = Bukkit.getBukkitVersion();
-        sender.sendMessage(plugin.getPluginName() + "Server version: " + ChatColor.AQUA + bv + " " + cb);
-        sender.sendMessage(plugin.getPluginName() + "TARDIS version: " + ChatColor.AQUA + tardisversion);
-        sender.sendMessage(plugin.getPluginName() + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
+        
+        sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + bv + " " + cb);
+        sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
+        sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
 
         for (Plugin hook : pm.getPlugins()) {
             PluginDescriptionFile desc = hook.getDescription();
@@ -55,7 +56,7 @@ class TARDISVersionCommand {
             String version = desc.getVersion();
 
             if(hooks.contains(name)) {
-                sender.sendMessage(plugin.getPluginName() + name + " version: " + ChatColor.AQUA + version);
+                sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
             }
         }
 
