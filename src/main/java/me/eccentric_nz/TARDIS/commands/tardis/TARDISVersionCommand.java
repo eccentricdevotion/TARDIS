@@ -38,11 +38,11 @@ class TARDISVersionCommand {
     }
 
     boolean displayVersion(CommandSender sender) {
-        final PluginManager pm = Bukkit.getServer().getPluginManager();
+        final PluginManager pm = plugin.getPM();
         List<String> hooks = plugin.getDescription().getSoftDepend();
 
-        String tardisversion = plugin.getPM().getPlugin("TARDIS").getDescription().getVersion();
-        String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
+        String tardisversion = pm.getPlugin("TARDIS").getDescription().getVersion();
+        String chunkversion = pm.getPlugin("TARDISChunkGenerator").getDescription().getVersion();
         String cb = Bukkit.getVersion();
         String bv = Bukkit.getBukkitVersion();
         sender.sendMessage(plugin.getPluginName() + "Server version: " + ChatColor.AQUA + bv + " " + cb);
