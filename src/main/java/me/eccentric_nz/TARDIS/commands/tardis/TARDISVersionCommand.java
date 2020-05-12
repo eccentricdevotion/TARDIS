@@ -20,6 +20,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -33,13 +38,27 @@ class TARDISVersionCommand {
     }
 
     boolean displayVersion(CommandSender sender) {
-        String version = plugin.getPM().getPlugin("TARDIS").getDescription().getVersion();
+        final PluginManager pm = Bukkit.getServer().getPluginManager();
+        List<String> hooks = plugin.getDescription().getSoftDepend();
+
+        String tardisversion = plugin.getPM().getPlugin("TARDIS").getDescription().getVersion();
         String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
         String cb = Bukkit.getVersion();
         String bv = Bukkit.getBukkitVersion();
-        sender.sendMessage(plugin.getPluginName() + "TARDIS version: " + ChatColor.AQUA + version);// + ChatColor.RESET + " running " + implementation + cb);
-        sender.sendMessage(plugin.getPluginName() + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
         sender.sendMessage(plugin.getPluginName() + "Server version: " + ChatColor.AQUA + bv + " " + cb);
+        sender.sendMessage(plugin.getPluginName() + "TARDIS version: " + ChatColor.AQUA + tardisversion);
+        sender.sendMessage(plugin.getPluginName() + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
+
+        for (Plugin hook : pm.getPlugins()) {
+            final PluginDescriptionFile desc = hook.getDescription();
+            String name = desc.getName();
+            String version = desc.getVersion();
+
+            if(hooks.contains(name) && !name.equals("TARDISChunkGenerator")) {
+                sender.sendMessage(plugin.getPluginName() + name + " version: " + ChatColor.AQUA + version);
+            }
+        }
+
         return true;
     }
 }
