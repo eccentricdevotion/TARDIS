@@ -42,7 +42,7 @@ public enum UPDATEABLE {
     STABLE(false, false, true),
     STALL(false, false, true),
     STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK)),
-    TELEPATHIC(false, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR)),
+    TELEPATHIC(true, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR)),
     TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     TOGGLE_WOOL(true, true),
