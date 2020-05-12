@@ -172,11 +172,14 @@ class TARDISHostileDispersal {
                     }
                     if (!b.getType().isAir()) {
                         float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 - -0.5) + 1));
-                        Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType());
+                        // get the appropriate carpet colour
+                        String stainedGlass = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType()).toString();
+                        String colour = stainedGlass.replace("STAINED_GLASS", "CARPET");
+                        Material carpet = Material.valueOf(colour);
                         if (yy == 1 && xx == 0 && zz == 0) {
-                            tmp = colour;
+                            tmp = carpet;
                         }
-                        FallingBlock fb = w.spawnFallingBlock(b.getLocation(), colour.createBlockData());
+                        FallingBlock fb = w.spawnFallingBlock(b.getLocation(), carpet.createBlockData());
                         falls.add(fb);
                         fb.setDropItem(false);
                         fb.setVelocity(new Vector(v, v, v));
@@ -185,7 +188,7 @@ class TARDISHostileDispersal {
                 }
             }
         }
-        BlockData mat = tmp.createBlockData();
+        BlockData carpetBlockData = tmp.createBlockData();
         // schedule task to remove fallen blocks
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> falls.forEach((f) -> {
             f.getLocation().getBlock().setBlockData(TARDISConstants.AIR);
@@ -196,7 +199,7 @@ class TARDISHostileDispersal {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block block = w.getBlockAt((sbx + xx), (sby), (sbz + zz));
-                    block.setBlockData(mat);
+                    block.setBlockData(carpetBlockData);
                 }
             }
         }, 15L);
