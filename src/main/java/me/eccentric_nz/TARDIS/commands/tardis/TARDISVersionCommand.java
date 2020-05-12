@@ -50,11 +50,11 @@ class TARDISVersionCommand {
         sender.sendMessage(plugin.getPluginName() + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
 
         for (Plugin hook : pm.getPlugins()) {
-            final PluginDescriptionFile desc = hook.getDescription();
+            PluginDescriptionFile desc = hook.getDescription();
             String name = desc.getName();
             String version = desc.getVersion();
 
-            if(hooks.contains(name) && !name.equals("TARDISChunkGenerator")) {
+            if(hooks.contains(name)) {
                 sender.sendMessage(plugin.getPluginName() + name + " version: " + ChatColor.AQUA + version);
             }
         }
