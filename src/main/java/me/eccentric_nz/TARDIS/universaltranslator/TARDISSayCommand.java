@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.universaltranslator;
 
-import com.rmtheis.yandtran.translate.Language;
-import com.rmtheis.yandtran.translate.Translate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;

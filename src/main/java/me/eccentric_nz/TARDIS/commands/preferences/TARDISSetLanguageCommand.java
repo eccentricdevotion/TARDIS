@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import com.rmtheis.yandtran.translate.Language;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.universaltranslator.Language;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
