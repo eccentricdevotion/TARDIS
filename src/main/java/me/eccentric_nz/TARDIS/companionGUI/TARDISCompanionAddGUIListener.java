@@ -123,7 +123,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                 String comps = rs.getCompanions();
                 ItemStack[] items;
                 if (comps.equalsIgnoreCase("everyone")) {
-                    items = new TARDISEveryoneCompanionInventory(plugin).getSkulls();
+                    items = new TARDISEveryoneCompanionInventory(plugin, player).getSkulls();
                 } else {
                     items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
                 }

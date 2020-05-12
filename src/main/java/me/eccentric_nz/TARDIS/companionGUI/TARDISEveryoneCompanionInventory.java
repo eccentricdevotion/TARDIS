@@ -29,10 +29,12 @@ import java.util.ArrayList;
 public class TARDISEveryoneCompanionInventory {
 
     private final TARDIS plugin;
+    private final Player player;
     private final ItemStack[] skulls;
 
-    public TARDISEveryoneCompanionInventory(TARDIS plugin) {
+    public TARDISEveryoneCompanionInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
+        this.player = player;
         skulls = getItemStack();
     }
 
@@ -41,16 +43,18 @@ public class TARDISEveryoneCompanionInventory {
         int i = 0;
         for (Player c : plugin.getServer().getOnlinePlayers()) {
             if (i < 45) {
-                ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
-                SkullMeta skull = (SkullMeta) head.getItemMeta();
-                skull.setOwningPlayer(c);
-                skull.setDisplayName(c.getName());
-                ArrayList<String> lore = new ArrayList<>();
-                lore.add(c.getUniqueId().toString());
-                skull.setLore(lore);
-                head.setItemMeta(skull);
-                heads[i] = head;
-                i++;
+                if (VanishChecker.canSee(player, c)) {
+                    ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
+                    SkullMeta skull = (SkullMeta) head.getItemMeta();
+                    skull.setOwningPlayer(c);
+                    skull.setDisplayName(c.getName());
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.add(c.getUniqueId().toString());
+                    skull.setLore(lore);
+                    head.setItemMeta(skull);
+                    heads[i] = head;
+                    i++;
+                }
             }
         }
         // add buttons
