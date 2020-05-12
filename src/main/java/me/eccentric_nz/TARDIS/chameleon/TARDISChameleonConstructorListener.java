@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -240,9 +241,10 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     stain[9] = signData;
                                     glass[9] = signData;
                                     // json
-                                    String jsonBlue = new Gson().toJson(blue);
-                                    String jsonStain = new Gson().toJson(stain);
-                                    String jsonGlass = new Gson().toJson(glass);
+                                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                                    String jsonBlue = gson.toJson(blue);
+                                    String jsonStain = gson.toJson(stain);
+                                    String jsonGlass = gson.toJson(glass);
                                     // save chameleon construct
                                     HashMap<String, Object> wherec = new HashMap<>();
                                     wherec.put("tardis_id", id);

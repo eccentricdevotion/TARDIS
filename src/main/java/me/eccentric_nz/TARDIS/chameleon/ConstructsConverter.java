@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -77,9 +78,10 @@ public class ConstructsConverter {
                         String[][] stGrid = new String[10][4];
                         String[][] glGrid = new String[10][4];
                         JsonParser parser = new JsonParser();
-                        JsonArray bpIDJson = parser.parse(new Gson().toJson(bpID)).getAsJsonArray();
-                        JsonArray bpDataJson = parser.parse(new Gson().toJson(bpData)).getAsJsonArray();
-                        JsonArray glIDJson = parser.parse(new Gson().toJson(glID)).getAsJsonArray();
+                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        JsonArray bpIDJson = parser.parse(gson.toJson(bpID)).getAsJsonArray();
+                        JsonArray bpDataJson = parser.parse(gson.toJson(bpData)).getAsJsonArray();
+                        JsonArray glIDJson = parser.parse(gson.toJson(glID)).getAsJsonArray();
                         for (int y = 0; y < 10; y++) {
                             JsonArray bpIDX = bpIDJson.get(y).getAsJsonArray();
                             JsonArray bpDATAX = bpDataJson.get(y).getAsJsonArray();
@@ -162,9 +164,9 @@ public class ConstructsConverter {
                                 glGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(glIDX.get(x).getAsInt()).createBlockData().getAsString();
                             }
                         }
-                        JsonArray bpArr = parser.parse(new Gson().toJson(bpGrid)).getAsJsonArray();
-                        JsonArray stArr = parser.parse(new Gson().toJson(stGrid)).getAsJsonArray();
-                        JsonArray glArr = parser.parse(new Gson().toJson(glGrid)).getAsJsonArray();
+                        JsonArray bpArr = parser.parse(gson.toJson(bpGrid)).getAsJsonArray();
+                        JsonArray stArr = parser.parse(gson.toJson(stGrid)).getAsJsonArray();
+                        JsonArray glArr = parser.parse(gson.toJson(glGrid)).getAsJsonArray();
                         update.setString(1, bpArr.toString());
                         update.setString(2, stArr.toString());
                         update.setString(3, glArr.toString());

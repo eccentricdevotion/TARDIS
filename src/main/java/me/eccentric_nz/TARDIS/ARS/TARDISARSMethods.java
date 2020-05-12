@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -67,7 +68,8 @@ public class TARDISARSMethods {
      */
     private void saveAll(UUID uuid) {
         TARDISARSMapData md = map_data.get(uuid);
-        JsonArray json = new JsonParser().parse(new Gson().toJson(md.getData())).getAsJsonArray();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        JsonArray json = new JsonParser().parse(gson.toJson(md.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("ars_x_east", md.getE());
         set.put("ars_z_south", md.getS());
@@ -85,7 +87,8 @@ public class TARDISARSMethods {
      */
     private void revert(UUID uuid) {
         TARDISARSSaveData sd = save_map_data.get(uuid);
-        JsonArray json = new JsonParser().parse(new Gson().toJson(sd.getData())).getAsJsonArray();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        JsonArray json = new JsonParser().parse(gson.toJson(sd.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();

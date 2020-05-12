@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -81,7 +82,8 @@ public class ARSConverter {
                             }
                         }
                     }
-                    JsonArray arr = new JsonParser().parse(new Gson().toJson(grid)).getAsJsonArray();
+                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    JsonArray arr = new JsonParser().parse(gson.toJson(grid)).getAsJsonArray();
                     update.setString(1, arr.toString());
                     update.setInt(2, id);
                     update.addBatch();

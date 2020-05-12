@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import com.google.gson.Gson;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -131,12 +130,9 @@ public class TARDISMakePresetListener implements Listener {
                 sb_blue_data.append("]");
                 sb_stain_data.append("]");
                 sb_glass_data.append("]");
-                String datas = sb_blue_data.toString();
-                String stain_ids = sb_stain_data.toString();
-                String glass_ids = sb_glass_data.toString();
-                String jsonBlue = new Gson().toJson(datas);
-                String jsonStain = new Gson().toJson(stain_ids);
-                String jsonGlass = new Gson().toJson(glass_ids);
+                String jsonBlue = sb_blue_data.toString();
+                String jsonStain = sb_stain_data.toString();
+                String jsonGlass = sb_glass_data.toString();
                 String filename = "custom_preset_" + name + ".txt";
                 String file = plugin.getDataFolder() + File.separator + filename;
                 try {

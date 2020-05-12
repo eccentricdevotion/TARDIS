@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -523,7 +520,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         } else if (h > 16) {
                             existing[2][4][4] = control;
                         }
-                        JsonArray json = new JsonParser().parse(new Gson().toJson(existing)).getAsJsonArray();
+                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        JsonArray json = new JsonParser().parse(gson.toJson(existing)).getAsJsonArray();
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("json", json.toString());
                         HashMap<String, Object> wheres = new HashMap<>();

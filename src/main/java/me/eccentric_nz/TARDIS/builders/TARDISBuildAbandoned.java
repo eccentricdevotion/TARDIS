@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -415,7 +412,8 @@ class TARDISBuildAbandoned implements Runnable {
                 } else if (h > 16) {
                     empty[2][4][4] = control;
                 }
-                JsonArray json = new JsonParser().parse(new Gson().toJson(empty)).getAsJsonArray();
+                Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();
                 HashMap<String, Object> seta = new HashMap<>();
                 seta.put("tardis_id", dbID);
                 seta.put("json", json.toString());
