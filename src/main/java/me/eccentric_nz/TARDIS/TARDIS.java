@@ -61,6 +61,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.TARDISSeedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
+import me.eccentric_nz.TARDIS.recipes.TARDISUUIDDataType;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
@@ -76,6 +77,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -158,7 +160,10 @@ public class TARDIS extends JavaPlugin {
     private DIFFICULTY difficulty;
     private WORLD_MANAGER worldManager;
     private BukkitTask recordingTask;
+    private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
+    private NamespacedKey timeLordUuidKey;
+    private PersistentDataType<byte[], UUID> persistentDataTypeUUID;
     private QueryFactory queryFactory;
     private boolean updateFound = false;
     private int buildNumber = 0;
@@ -192,7 +197,10 @@ public class TARDIS extends JavaPlugin {
         pm = getServer().getPluginManager();
         pluginName = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
-        customBlockKey = new NamespacedKey(this, "customBlock");
+        oldBlockKey = new NamespacedKey(this, "customBlock");
+        customBlockKey = new NamespacedKey(this, "custom_block");
+        timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
+        persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
         Version minversion = new Version("1.15.2");
@@ -1238,8 +1246,21 @@ public class TARDIS extends JavaPlugin {
         this.recordingTask = recordingTask;
     }
 
+    @Deprecated
+    public NamespacedKey getOldBlockKey() {
+        return oldBlockKey;
+    }
+
     public NamespacedKey getCustomBlockKey() {
         return customBlockKey;
+    }
+
+    public NamespacedKey getTimeLordUuidKey() {
+        return timeLordUuidKey;
+    }
+
+    public PersistentDataType<byte[], UUID> getPersistentDataTypeUUID() {
+        return persistentDataTypeUUID;
     }
 
     public QueryFactory getQueryFactory() {
