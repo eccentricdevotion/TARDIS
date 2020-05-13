@@ -481,7 +481,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 TARDISMessage.send(player, "DOOR_BACK_OUT");
                                                 return;
                                             }
-
                                             // backdoor is located in the end
                                             if (outer_loc.getWorld().getEnvironment().equals(Environment.THE_END)) {
                                                 // check enabled
@@ -489,20 +488,17 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     TARDISMessage.send(player, "ANCIENT", "End");
                                                     return;
                                                 }
-
                                                 // check permission
                                                 if (!player.hasPermission("tardis.end")) {
                                                     TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
                                                     return;
                                                 }
-
                                                 // check traveled to
                                                 if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.THE_END)) {
                                                     TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");
                                                     return;
                                                 }
                                             }
-
                                             // backdoor located in the nether
                                             if (outer_loc.getWorld().getEnvironment().equals(Environment.NETHER)) {
                                                 // check enabled
@@ -510,20 +506,17 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     TARDISMessage.send(player, "ANCIENT", "Nether");
                                                     return;
                                                 }
-
                                                 // check permission
                                                 if (!player.hasPermission("tardis.nether")) {
                                                     TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                                     return;
                                                 }
-
                                                 // check traveled to
                                                 if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.NETHER)) {
                                                     TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "Nether");
                                                     return;
                                                 }
                                             }
-
                                             COMPASS obdd = obdl.getD();
                                             COMPASS opd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                             if (!obdd.equals(opd)) {

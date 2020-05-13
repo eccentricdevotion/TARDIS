@@ -36,7 +36,6 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Player;
@@ -80,7 +79,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking a door!
-            if (Tag.DOORS.isTagged(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
+            if (Tag.DOORS.isTagged(blockType) || Tag.TRAPDOORS.isTagged(blockType)) {
                 Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
                     Action action = event.getAction();
@@ -93,7 +92,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                     int bz = block_loc.getBlockZ();
                     if (!Tag.TRAPDOORS.isTagged(blockType)) {
                         Bisected bisected = (Bisected) block.getBlockData();
-                        if (bisected.getHalf().equals(Half.TOP)) {
+                        if (bisected.getHalf().equals(Bisected.Half.TOP)) {
                             by = (by - 1);
                             block = block.getRelative(BlockFace.DOWN);
                         }
@@ -178,6 +177,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         if (rsc.getCompanions().contains(playerUUID)) {
                                             // get Time Lord
                                             HashMap<String, Object> wherett = new HashMap<>();
+                                            wherett.put("tardis_id", id);
                                             ResultSetTardis rstt = new ResultSetTardis(plugin, wherett, "", false, 2);
                                             if (rstt.resultSet()) {
                                                 UUID tluuid = rstt.getTardis().getUuid();
@@ -335,7 +335,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         // player is in the TARDIS - always exit to current location
                                         Block door_bottom;
                                         Door door = (Door) block.getBlockData();
-                                        door_bottom = (door.getHalf().equals(Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
+                                        door_bottom = (door.getHalf().equals(Bisected.Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
                                         boolean opened = TARDISStaticUtils.isDoorOpen(door_bottom);
                                         if (opened && preset.hasDoor()) {
                                             exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoor_location());
@@ -408,11 +408,15 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         if (!playerUUID.equals(tlUUID)) {
                                             if (companions != null && !companions.isEmpty()) {
                                                 // is the player in the companion list
-                                                String[] companionData = companions.split(":");
-                                                for (String c : companionData) {
-                                                    if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
-                                                        chkCompanion = true;
-                                                        break;
+                                                if (companions.equalsIgnoreCase("everyone")) {
+                                                    chkCompanion = true;
+                                                } else {
+                                                    String[] companionData = companions.split(":");
+                                                    for (String c : companionData) {
+                                                        if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
+                                                            chkCompanion = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -532,20 +536,17 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 TARDISMessage.send(player, "ANCIENT", "End");
                                                 return;
                                             }
-
                                             // check permission
                                             if (!player.hasPermission("tardis.end")) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
                                                 return;
                                             }
-
                                             // check traveled to
                                             if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.THE_END)) {
                                                 TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");
                                                 return;
                                             }
                                         }
-
                                         // backdoor located in the nether
                                         if (outer_loc.getWorld().getEnvironment().equals(Environment.NETHER)) {
                                             // check enabled
@@ -553,13 +554,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 TARDISMessage.send(player, "ANCIENT", "Nether");
                                                 return;
                                             }
-
                                             // check permission
                                             if (!player.hasPermission("tardis.nether")) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                                 return;
                                             }
-
                                             // check traveled to
                                             if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.NETHER)) {
                                                 TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "Nether");
