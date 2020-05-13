@@ -64,7 +64,7 @@ class TARDISNameKeyCommand {
         }
         String tmp = buf.toString();
         if (!tmp.isEmpty()) {
-            TARDISItemRenamer ir = new TARDISItemRenamer(is);
+            TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
             ir.setName(tmp, false);
             TARDISMessage.send(player, "KEY_RENAMED", tmp);
             return true;

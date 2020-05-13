@@ -256,28 +256,28 @@ public class TARDISDoorListener {
     /**
      * A method to give the TARDIS key to a player if the server is using a multi-inventory plugin.
      *
-     * @param p the player to give the key to
+     * @param player the player to give the key to
      */
-    private void giveKey(Player p) {
+    private void giveKey(Player player) {
         if (plugin.getConfig().getBoolean("travel.give_key")) {
             String key;
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             if (rsp.resultSet()) {
                 key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
             } else {
                 key = plugin.getConfig().getString("preferences.key");
             }
             if (!key.equals("AIR")) {
-                PlayerInventory inv = p.getInventory();
+                PlayerInventory inv = player.getInventory();
                 Material m = Material.valueOf(key);
                 ItemStack oh = inv.getItemInOffHand();
                 if (!inv.contains(m) && (oh != null && !oh.getType().equals(m))) {
                     ItemStack is = new ItemStack(m, 1);
-                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                    TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
                     ir.setName("TARDIS Key", true);
                     inv.addItem(is);
-                    p.updateInventory();
-                    TARDISMessage.send(p, "KEY_REMIND");
+                    player.updateInventory();
+                    TARDISMessage.send(player, "KEY_REMIND");
                 }
             }
         }

@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,9 +33,13 @@ import java.util.ArrayList;
  */
 public class TARDISItemRenamer {
 
+    private final TARDIS plugin;
+    private final Player player;
     private final ItemStack itemStack;
 
-    public TARDISItemRenamer(ItemStack itemStack) {
+    public TARDISItemRenamer(TARDIS plugin, Player player, ItemStack itemStack) {
+        this.plugin = plugin;
+        this.player = player;
         this.itemStack = itemStack;
     }
 
@@ -52,7 +58,11 @@ public class TARDISItemRenamer {
             if (setlore) {
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add("Enter and exit your TARDIS");
+                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                lore.add(format + "This key belongs to");
+                lore.add(format + player.getName());
                 im.setLore(lore);
+                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             }
             try {
                 RECIPE_ITEM recipeItem = RECIPE_ITEM.valueOf(TARDISStringUtils.toScoredUppercase(name));
