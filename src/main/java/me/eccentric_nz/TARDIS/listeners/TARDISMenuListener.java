@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 
@@ -30,7 +31,7 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISMenuListener {
+public class TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
     private final HashMap<String, Integer> titles;

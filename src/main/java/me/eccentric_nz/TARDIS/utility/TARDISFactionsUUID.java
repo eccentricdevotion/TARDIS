@@ -43,7 +43,7 @@ public class TARDISFactionsUUID {
         Faction ufac = uplayer.getFaction();
         FLocation flocation = new FLocation(l);
         Faction lfac = Board.getInstance().getFactionAt(flocation);
-        if (!ufac.equals(lfac) && !lfac.isNone()) {
+        if (!ufac.equals(lfac) && !lfac.isWilderness()) {
             bool = false;
         }
         return bool;

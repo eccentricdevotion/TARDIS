@@ -33,6 +33,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
@@ -166,7 +167,7 @@ public class TARDISJunkBuilder implements Runnable {
                                     case CAKE:
                                         BlockData handbrake = Material.LEVER.createBlockData();
                                         Switch lever = (Switch) handbrake;
-                                        lever.setFace(Switch.Face.FLOOR);
+                                        lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                                         lever.setFacing(BlockFace.SOUTH);
                                         TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
                                         break;

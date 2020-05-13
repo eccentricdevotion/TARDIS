@@ -24,6 +24,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
 
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class TARDISBlockSetters {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
-                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
@@ -63,7 +64,7 @@ public class TARDISBlockSetters {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
-                    button.setFace(Switch.Face.WALL);
+                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
@@ -89,7 +90,7 @@ public class TARDISBlockSetters {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
-                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
@@ -97,7 +98,7 @@ public class TARDISBlockSetters {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
-                    button.setFace(Switch.Face.WALL);
+                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
@@ -123,7 +124,7 @@ public class TARDISBlockSetters {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
-                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
@@ -131,7 +132,7 @@ public class TARDISBlockSetters {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
-                    button.setFace(Switch.Face.WALL);
+                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
@@ -159,7 +160,7 @@ public class TARDISBlockSetters {
                     // cake -> handbrake
                     BlockData blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
-                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
@@ -167,7 +168,7 @@ public class TARDISBlockSetters {
                     // mob spawner -> scanner button
                     BlockData oak = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) oak;
-                    button.setFace(Switch.Face.WALL);
+                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
@@ -196,7 +197,7 @@ public class TARDISBlockSetters {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
-                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
@@ -204,7 +205,7 @@ public class TARDISBlockSetters {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
-                    button.setFace(Switch.Face.WALL);
+                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;
@@ -233,7 +234,7 @@ public class TARDISBlockSetters {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
-                    lever.setFace(Switch.Face.FLOOR);
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
                     break;
@@ -241,7 +242,7 @@ public class TARDISBlockSetters {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
-                    button.setFace(Switch.Face.WALL);
+                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
                     break;

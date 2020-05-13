@@ -83,7 +83,9 @@ public class TARDISVoidUpdate {
             if (world.getBlockAt(sx, 64, sz).getBiome().equals(Biome.THE_END)) {
                 for (int x = sx; x < ex; x++) {
                     for (int z = sz; z < ez; z++) {
-                        world.setBiome(x, z, Biome.THE_VOID);
+                        for (int y = 48; y < 81; y += 2) {
+                            world.setBiome(x, y, z, Biome.THE_VOID);
+                        }
                     }
                 }
             }

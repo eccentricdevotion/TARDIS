@@ -36,7 +36,7 @@ public class BalloonListener implements Listener {
             removeJumpBoost(player);
             if (factor > -1) {
                 PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
-                player.addPotionEffect(potionEffect, true);
+                player.addPotionEffect(potionEffect);
             }
         }, 1L);
     }
@@ -69,7 +69,7 @@ public class BalloonListener implements Listener {
                     removeJumpBoost(player);
                     if (factor > -1) {
                         PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
-                        player.addPotionEffect(potionEffect, true);
+                        player.addPotionEffect(potionEffect);
                     }
                 }
             }, 1L);
@@ -90,7 +90,7 @@ public class BalloonListener implements Listener {
                 }
                 if (factor > -1) {
                     PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
-                    player.addPotionEffect(potionEffect, true);
+                    player.addPotionEffect(potionEffect);
                 } else {
                     removeJumpBoost(player);
                 }
