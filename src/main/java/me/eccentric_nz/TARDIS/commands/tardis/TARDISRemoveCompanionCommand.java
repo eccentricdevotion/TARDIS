@@ -68,7 +68,6 @@ class TARDISRemoveCompanionCommand {
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
-                return true;
             } else {
                 String newList = "";
                 String message = "COMPANIONS_REMOVE_ALL";
@@ -119,8 +118,8 @@ class TARDISRemoveCompanionCommand {
                 } else {
                     TARDISMessage.send(player, message);
                 }
-                return true;
             }
+            return true;
         } else {
             TARDISMessage.send(player, "NO_PERMS");
             return false;

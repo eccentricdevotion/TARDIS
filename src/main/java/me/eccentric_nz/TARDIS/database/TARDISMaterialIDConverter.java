@@ -955,17 +955,14 @@ public class TARDISMaterialIDConverter {
                             }
                             // update the record
                             ps.setString(1, material.createBlockData().getAsString());
-                            ps.setInt(2, b_id);
-                            ps.addBatch();
-                            i++;
                         } else {
                             plugin.debug("Could not convert legacy material, defaulting to AIR!");
                             // update the record
                             ps.setString(1, TARDISConstants.AIR.getAsString());
-                            ps.setInt(2, b_id);
-                            ps.addBatch();
-                            i++;
                         }
+                        ps.setInt(2, b_id);
+                        ps.addBatch();
+                        i++;
                     }
                     if (i > 0) {
                         ps.executeBatch();

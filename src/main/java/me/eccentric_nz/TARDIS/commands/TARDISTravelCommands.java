@@ -666,11 +666,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     new TARDISLand(plugin, id, player).exitVortex();
                                 }
-                                return true;
                             } else {
                                 TARDISMessage.send(player, "SAVE_NO_WORLD");
-                                return true;
                             }
+                            return true;
                         } else {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_SAVE");
                             return true;
@@ -816,7 +815,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     int count = checkLocation(location, player, id);
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
-                                        return true;
                                     } else {
                                         set.put("world", location.getWorld().getName());
                                         set.put("x", location.getBlockX());
@@ -830,8 +828,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             new TARDISLand(plugin, id, player).exitVortex();
                                         }
-                                        return true;
                                     }
+                                    return true;
                                 } else {
                                     // automatically get highest block Y coord
                                     Location determiney = getCoordinateLocation(args, player, id);
@@ -839,7 +837,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         int count = checkLocation(determiney, player, id);
                                         if (count > 0) {
                                             TARDISMessage.send(player, "NOT_SAFE");
-                                            return true;
                                         } else {
                                             set.put("world", determiney.getWorld().getName());
                                             set.put("x", determiney.getBlockX());
@@ -853,8 +850,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                                 new TARDISLand(plugin, id, player).exitVortex();
                                             }
-                                            return true;
                                         }
+                                        return true;
                                     }
                                 }
                                 break;
@@ -866,7 +863,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     int count = checkLocation(giveny, player, id);
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
-                                        return true;
                                     } else {
                                         set.put("world", giveny.getWorld().getName());
                                         set.put("x", giveny.getBlockX());
@@ -880,8 +876,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             new TARDISLand(plugin, id, player).exitVortex();
                                         }
-                                        return true;
                                     }
+                                    return true;
                                 }
                                 break;
                         }

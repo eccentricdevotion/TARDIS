@@ -56,10 +56,9 @@ class TARDISPurgeCommand {
             purger.cleanHashMaps(id);
             purger.cleanDatabase(id);
             TARDISMessage.send(sender, "PURGE_PLAYER", args[1]);
-            return true;
         } else {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", args[1]);
-            return true;
         }
+        return true;
     }
 }

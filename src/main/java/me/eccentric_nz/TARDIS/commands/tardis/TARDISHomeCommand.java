@@ -73,7 +73,6 @@ class TARDISHomeCommand {
                 seth.put("preset", which);
                 plugin.getQueryFactory().doUpdate("homes", seth, whereh);
                 TARDISMessage.send(player, "CHAM_SET", which);
-                return true;
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 String world = eyeLocation.getWorld().getName();
@@ -139,8 +138,8 @@ class TARDISHomeCommand {
                 set.put("submarine", isSub(eyeLocation) ? 1 : 0);
                 plugin.getQueryFactory().doUpdate("homes", set, tid);
                 TARDISMessage.send(player, "HOME_SET");
-                return true;
             }
+            return true;
         } else {
             TARDISMessage.send(player, "NO_PERMS");
             return false;

@@ -354,11 +354,10 @@ public class TARDISGiveCommand implements CommandExecutor {
                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                 sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
             }
-            return true;
         } else {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
-            return true;
         }
+        return true;
     }
 
     private boolean giveSeed(CommandSender sender, String[] args) {
@@ -426,11 +425,10 @@ public class TARDISGiveCommand implements CommandExecutor {
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
         if (uuid != null) {
             plugin.getServer().dispatchCommand(sender, "vmg " + uuid.toString() + " " + amount);
-            return true;
         } else {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
-            return true;
         }
+        return true;
     }
 
     private boolean giveFullCell(CommandSender sender, int amount, Player player) {

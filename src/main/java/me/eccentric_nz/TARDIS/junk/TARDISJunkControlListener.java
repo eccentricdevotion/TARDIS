@@ -246,10 +246,8 @@ public class TARDISJunkControlListener implements Listener {
             if (worldMap.containsKey(uuid)) {
                 int v = worldMap.get(uuid);
                 pos = (v < worlds.size() - 1) ? v + 1 : 0;
-                worldMap.put(uuid, pos);
-            } else {
-                worldMap.put(uuid, pos);
             }
+            worldMap.put(uuid, pos);
             s.setLine(1, worlds.get(pos));
             s.update();
         }

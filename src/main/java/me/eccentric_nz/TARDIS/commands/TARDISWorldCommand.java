@@ -126,7 +126,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 }
                 if (args[0].toLowerCase().equals("load")) {
                     TARDISMessage.send(sender, "WORLD_LOADED", args[1]);
-                    return true;
                 } else {
                     // try to unload the world
                     plugin.getServer().unloadWorld(world, true);
@@ -134,8 +133,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".time_travel", false);
                     plugin.savePlanetsConfig();
                     TARDISMessage.send(sender, "WORLD_UNLOAD_SUCCESS", args[1]);
-                    return true;
                 }
+                return true;
             } else {
                 if (args[0].toLowerCase().equals("rename")) {
                     if (args.length < 3) {
@@ -195,11 +194,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".environment", environment.toString());
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".generator", args.length > 4 ? args[4] : "DEFAULT");
                     plugin.savePlanetsConfig();
-                    return true;
                 } else {
                     TARDISMessage.send(sender, "WORLD_UNLOADED", args[1]);
-                    return true;
                 }
+                return true;
             }
         }
         return false;
