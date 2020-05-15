@@ -17,7 +17,6 @@ public class BiomeSetter {
     public static void setBiome(BuildData bd, boolean umbrella, int loops) {
         World world = bd.getLocation().getWorld();
         int x = bd.getLocation().getBlockX();
-        int y = bd.getLocation().getBlockY();
         int z = bd.getLocation().getBlockZ();
         List<Chunk> chunks = new ArrayList<>();
         Chunk chunk = bd.getLocation().getChunk();
@@ -34,9 +33,7 @@ public class BiomeSetter {
         // set the biome
         for (int c = -3; c < 4; c++) {
             for (int r = -3; r < 4; r++) {
-                for (int l = -1; l < 5; l += 2) {
-                    world.setBiome(x + c, y + l, z + r, Biome.DEEP_OCEAN);
-                }
+                world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
                 // TODO check re-adding umbrella if rebuilding
                 if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
                     // add an invisible roof
@@ -53,15 +50,12 @@ public class BiomeSetter {
             }
         }
         // refresh the chunks
-        chunks.forEach((c) -> {
-            TARDIS.plugin.getTardisHelper().refreshChunk(c);
-        });
+        chunks.forEach((c) -> TARDIS.plugin.getTardisHelper().refreshChunk(c));
     }
 
     public static boolean restoreBiome(Location l, Biome biome) {
         if (l != null && biome != null) {
             int sbx = l.getBlockX();
-            int sby = l.getBlockY();
             int sbz = l.getBlockZ();
             World w = l.getWorld();
             List<Chunk> chunks = new ArrayList<>();
@@ -73,9 +67,7 @@ public class BiomeSetter {
                 for (int c = -3; c < 4; c++) {
                     for (int r = -3; r < 4; r++) {
                         try {
-                            for (int y = -1; y < 5; y += 2) {
-                                w.setBiome(sbx + c, sby + y, sbz + r, biome);
-                            }
+                            w.setBiome(sbx + c, sbz + r, biome);
                             Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + c, 64, sbz + r));
                             if (!chunks.contains(tmp_chunk)) {
                                 chunks.add(tmp_chunk);
