@@ -279,10 +279,8 @@ public class TARDIS extends JavaPlugin {
                 difficulty = DIFFICULTY.EASY;
             }
             // register recipes
-            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                seeds = new TARDISSeedRecipe(this);
-                seeds.addSeedRecipes();
-            }, 60L);
+            seeds = new TARDISSeedRecipe(this);
+            seeds.addSeedRecipes();
             figura = new TARDISShapedRecipe(this);
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
