@@ -75,7 +75,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("furnace", "TARDIS Artron Furnace");
         items.put("generator", "Sonic Generator");
         items.put("glasses", "3-D Glasses");
-        items.put("handles", "Handles Cyberhead");
+        items.put("handles", "Handles");
         items.put("i-circuit", "TARDIS Input Circuit");
         items.put("ignite-circuit", "Ignite Circuit");
         items.put("invisible", "TARDIS Invisibility Circuit");
@@ -215,22 +215,6 @@ public class TARDISGiveCommand implements CommandExecutor {
                     p.getInventory().addItem(mushroom);
                     p.updateInventory();
                     TARDISMessage.send(p, "GIVE_ITEM", sender.getName(), amount + " " + args[3]);
-                    return true;
-                }
-                if (item.equals("handles")) {
-                    Player p = plugin.getServer().getPlayer(args[0]);
-                    if (p == null) { // player must be online
-                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-                        return true;
-                    }
-                    ItemStack handles = new ItemStack(Material.BIRCH_BUTTON, amount);
-                    ItemMeta him = handles.getItemMeta();
-                    him.setDisplayName("Handles");
-                    him.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
-                    handles.setItemMeta(him);
-                    p.getInventory().addItem(handles);
-                    p.updateInventory();
-                    TARDISMessage.send(p, "GIVE_ITEM", sender.getName(), amount + " Handles");
                     return true;
                 }
                 if (item.equals("artron")) {
