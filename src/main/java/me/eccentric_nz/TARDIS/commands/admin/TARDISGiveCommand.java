@@ -115,24 +115,6 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("vortex", "Vortex Manipulator");
         items.put("wand", "TARDIS Schematic Wand");
         items.put("watch", "Fob Watch");
-        // seed blocks
-        items.put("ars_seed", "");
-        items.put("bigger_seed", "");
-        items.put("budget_seed", "");
-        items.put("coral_seed", "");
-        items.put("deluxe_seed", "");
-        items.put("eleventh_seed", "");
-        items.put("ender_seed", "");
-        items.put("master_seed", "");
-        items.put("plank_seed", "");
-        items.put("pyramid_seed", "");
-        items.put("redstone_seed", "");
-        items.put("steampunk_seed", "");
-        items.put("thirteenth_seed", "");
-        items.put("factory_seed", "");
-        items.put("tom_seed", "");
-        items.put("twelfth_seed", "");
-        items.put("war_seed", "");
     }
 
     @Override
@@ -171,7 +153,16 @@ public class TARDISGiveCommand implements CommandExecutor {
                 if (item.equals("seed")) {
                     String seed = args[2].toUpperCase(Locale.ENGLISH);
                     if (CONSOLES.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
-                        return giveSeed(sender, args);
+                        if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
+                            Player sp = plugin.getServer().getPlayer(args[0]);
+                            if (sp == null) { // player must be online
+                                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                                return true;
+                            }
+                            return giveKnowledgeBook(sender, seed.toLowerCase() + "_seed", sp);
+                        } else {
+                            return giveSeed(sender, args);
+                        }
                     } else {
                         TARDISMessage.send(sender, "ARG_SEED");
                         return true;
