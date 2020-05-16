@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -27,6 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -336,8 +339,19 @@ public class TARDISRecipeCommands implements CommandExecutor {
         // seed block
         ItemStack block = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
         // tardis type
-        ItemStack tardis = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
+        ItemStack tardis;
+        // should be mushroom block
+        int model;
+        if (CONSOLES.getBY_NAMES().get(type).isCustom()) {
+            model = 45;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else {
+            model = TARDISSeedModel.modelByString(type);
+            tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+        }
         ItemMeta seed = tardis.getItemMeta();
+        seed.setCustomModelData(10000000 + model);
+        seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
         List<String> lore = new ArrayList<>();
