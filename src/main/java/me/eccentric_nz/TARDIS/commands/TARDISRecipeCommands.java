@@ -342,11 +342,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack tardis;
         // should be mushroom block
         int model;
-        if (CONSOLES.getBY_NAMES().get(type).isCustom()) {
+        if (CONSOLES.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
             model = 45;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else {
-            model = TARDISSeedModel.modelByString(type);
+            model = TARDISSeedModel.modelByString(type.toUpperCase());
             tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
         }
         ItemMeta seed = tardis.getItemMeta();
