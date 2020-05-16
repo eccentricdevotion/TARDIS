@@ -7,7 +7,7 @@ title: Condensable items
 
 # Condensable items
 
-The following list contains all the valid condensable items that can be used to generate Artron Energy. The number represents the relative energy value (i.e. Item value:1 != Energy value:1).
+The following list contains all the valid condensable items that can be used to generate Artron Energy. The number represents the relative energy value, for example, 1 Apple will give you 10 Artron Energy.
 
 | Item | Relative value |
 | --- | --- |
@@ -718,11 +718,17 @@ The following list contains all the valid condensable items that can be used to 
 | STONECUTTER | 112 |
 | STRING | 5 |
 | STRIPPED_ACACIA_LOG | 2 |
+| STRIPPED_ACACIA_WOOD | 2 |
 | STRIPPED_BIRCH_LOG | 2 |
+| STRIPPED_BIRCH_WOOD | 2 |
 | STRIPPED_DARK_OAK_LOG | 2 |
+| STRIPPED_DARK_OAK_WOOD | 2 |
 | STRIPPED_JUNGLE_LOG | 2 |
+| STRIPPED_JUNGLE_WOOD | 2 |
 | STRIPPED_OAK_LOG | 2 |
+| STRIPPED_OAK_WOOD | 2 |
 | STRIPPED_SPRUCE_LOG | 2 |
+| STRIPPED_SPRUCE_WOOD | 2 |
 | SUGAR | 10 |
 | SUGAR_CANE | 10 |
 | SUNFLOWER | 2 |
