@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
+import me.eccentric_nz.TARDIS.database.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -84,7 +84,7 @@ public class TARDISPluginRespect {
                 bool = false;
             }
             // check if player has to visit first
-            if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.NETHER)) {
+            if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "NETHER")) {
                 if (flag.messagePlayer()) {
                     TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
                 }
@@ -108,7 +108,7 @@ public class TARDISPluginRespect {
                 bool = false;
             }
             // check if player has to visit first
-            if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(flag.getPlayer(), Environment.THE_END)) {
+            if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "THE_END")) {
                 if (flag.messagePlayer()) {
                     TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
                 }

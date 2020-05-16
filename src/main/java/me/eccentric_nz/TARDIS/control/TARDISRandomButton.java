@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
+import me.eccentric_nz.TARDIS.database.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
-import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -116,9 +115,9 @@ public class TARDISRandomButton {
                     environment = "NORMAL";
                     if (!plugin.getConfig().getBoolean("travel.nether")) {  // nether travel enabled
                         TARDISMessage.send(player, "ANCIENT", "Nether");
-                    } else if (!player.hasPermission("tardis.nether")) {    // nether permission    
+                    } else if (!player.hasPermission("tardis.nether")) {    // nether permission
                         TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
-                    } else if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.NETHER)) { // check if they need to visit nether first
+                    } else if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "NETHER")) { // check if they need to visit nether first
                         TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "Nether");
                     } else if (level < nether_min) {    // check if they have enough artron to travel to the nether
                         TARDISMessage.send(player, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", nether_min), "Nether");
@@ -130,9 +129,9 @@ public class TARDISRandomButton {
                     environment = "NORMAL";
                     if (!plugin.getConfig().getBoolean("travel.the_end")) {  // end travel enabled
                         TARDISMessage.send(player, "ANCIENT", "End");
-                    } else if (!player.hasPermission("tardis.end")) {    // end permission    
+                    } else if (!player.hasPermission("tardis.end")) {    // end permission
                         TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
-                    } else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.THE_END)) { // check if they need to visit the end first
+                    } else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "THE_END")) { // check if they need to visit the end first
                         TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");
                     } else if (level < the_end_min) {    // check if they have enough artron to travel to the end
                         TARDISMessage.send(player, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", the_end_min), "End");

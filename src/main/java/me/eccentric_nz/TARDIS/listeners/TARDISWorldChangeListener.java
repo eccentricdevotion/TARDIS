@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTraveledTo;
+import me.eccentric_nz.TARDIS.database.ResultSetTravelledTo;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,18 +53,16 @@ public class TARDISWorldChangeListener implements Listener {
     }
 
     // add that the player has been to this world to the database
-    private void handleWorld(Player p) {
-        Environment env = p.getWorld().getEnvironment();
-
+    private void handleWorld(Player player) {
+        Environment environment = player.getWorld().getEnvironment();
         // check if player has been to this dimension before
-        ResultSetTraveledTo rs = new ResultSetTraveledTo(plugin);
-        if (!rs.resultSet(p, env)) {
+        ResultSetTravelledTo rs = new ResultSetTravelledTo(plugin);
+        if (!rs.resultSet(player.getUniqueId().toString(), environment.toString())) {
             // add this dimension to the database
             QueryFactory queryFactory = plugin.getQueryFactory();
             HashMap<String, Object> values = new HashMap<>();
-            values.put("uuid", p.getUniqueId().toString());
-            values.put("environment", env.toString());
-
+            values.put("uuid", player.getUniqueId().toString());
+            values.put("environment", environment.toString());
             queryFactory.doInsert("traveled_to", values);
         }
     }

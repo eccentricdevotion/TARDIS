@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.World.Environment;
-import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +29,7 @@ import java.sql.SQLException;
  *
  * @author Technoguyfication
  */
-public class ResultSetTraveledTo {
+public class ResultSetTravelledTo {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -43,7 +41,7 @@ public class ResultSetTraveledTo {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTraveledTo(TARDIS plugin) {
+    public ResultSetTravelledTo(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -52,20 +50,22 @@ public class ResultSetTraveledTo {
      * Retrieves an SQL ResultSet from the traveled_to table. This is used to determine if players have traveled to a
      * dimension
      *
+     * @param player      the player to check travel status for
+     * @param environment the environment to check
      * @return true or false depending on whether the player has traveled to the environment
      */
-    public boolean resultSet(Player p, Environment env) {
+    public boolean resultSet(String player, String environment) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "traveled_to WHERE uuid = ? AND environment = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            statement.setString(1, p.getUniqueId().toString());     // playeruuid
-            statement.setString(2, env.toString());   // environment name
+            statement.setString(1, player);
+            statement.setString(2, environment);
             rs = statement.executeQuery();
-
-            return rs.isBeforeFirst();  // if row exists, player has visited environment
+            // if row exists, player has visited environment
+            return rs.isBeforeFirst();
         } catch (SQLException e) {
             plugin.debug("ResultSet error for traveled_to table! " + e.getMessage());
             return false;

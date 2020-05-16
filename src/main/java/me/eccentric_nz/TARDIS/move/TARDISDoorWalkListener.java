@@ -164,7 +164,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             }
                             // must be the owner
                             ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                            if (rs.fromUUID(player.getUniqueId().toString())) {
+                            if (rs.fromUUID(playerUUID.toString())) {
                                 // must use key to lock / unlock door
                                 if (material.equals(m)) {
                                     if (rs.getTardis_id() != id) {
@@ -417,7 +417,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 } else {
                                                     String[] companionData = companions.split(":");
                                                     for (String c : companionData) {
-                                                        if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
+                                                        if (c.equalsIgnoreCase(playerUUID.toString())) {
                                                             chkCompanion = true;
                                                             break;
                                                         }
@@ -433,8 +433,8 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             COMPASS innerD = idl.getD();
                                             // check for entities near the police box
                                             TARDISPetsAndFollowers petsAndFollowers = null;
-                                            if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
-                                                plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
+                                            if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
+                                                plugin.getTrackerKeeper().getFarming().add(playerUUID);
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
                                                 petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
                                             }
@@ -550,7 +550,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 return;
                                             }
                                             // check traveled to
-                                            if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.THE_END)) {
+                                            if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(playerUUID.toString(), "THE_END")) {
                                                 TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");
                                                 return;
                                             }
@@ -568,7 +568,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 return;
                                             }
                                             // check traveled to
-                                            if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTraveledTo(plugin).resultSet(player, Environment.NETHER)) {
+                                            if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(playerUUID.toString(), "NETHER")) {
                                                 TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "Nether");
                                                 return;
                                             }
