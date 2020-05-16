@@ -746,11 +746,17 @@ public class TARDISCondensables {
             condensables.put("STONECUTTER", 112);
             condensables.put("STRING", 5);
             condensables.put("STRIPPED_ACACIA_LOG", 2);
+            condensables.put("STRIPPED_ACACIA_WOOD", 2);
             condensables.put("STRIPPED_BIRCH_LOG", 2);
+            condensables.put("STRIPPED_BIRCH_WOOD", 2);
             condensables.put("STRIPPED_DARK_OAK_LOG", 2);
+            condensables.put("STRIPPED_DARK_OAK_WOOD", 2);
             condensables.put("STRIPPED_JUNGLE_LOG", 2);
+            condensables.put("STRIPPED_JUNGLE_WOOD", 2);
             condensables.put("STRIPPED_OAK_LOG", 2);
+            condensables.put("STRIPPED_OAK_WOOD", 2);
             condensables.put("STRIPPED_SPRUCE_LOG", 2);
+            condensables.put("STRIPPED_SPRUCE_WOOD", 2);
             condensables.put("SUGAR", 10);
             condensables.put("SUGAR_CANE", 10);
             condensables.put("SUNFLOWER", 2);
