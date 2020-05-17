@@ -272,6 +272,14 @@ public class TARDISMushroomBlockData {
             put(54, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=true]");
             // animated seed grow
             put(55, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=false]");
+            // police box blue open east
+            put(56, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=true]");
+            // police box blue open south
+            put(57, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=false]");
+            // police box blue open west
+            put(58, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=true]");
+            // police box blue open north
+            put(59, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=false]");
         }
     };
 }

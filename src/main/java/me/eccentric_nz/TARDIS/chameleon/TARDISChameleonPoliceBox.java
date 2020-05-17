@@ -32,6 +32,7 @@ public class TARDISChameleonPoliceBox {
 
     private final PoliceBoxBlackPreset black;
     private final PoliceBoxBluePreset blue;
+    private final PoliceBoxBlueOpenPreset blue_open;
     private final PoliceBoxBrownPreset brown;
     private final PoliceBoxCyanPreset cyan;
     private final PoliceBoxGrayPreset gray;
@@ -50,6 +51,7 @@ public class TARDISChameleonPoliceBox {
     public TARDISChameleonPoliceBox() {
         black = new PoliceBoxBlackPreset();
         blue = new PoliceBoxBluePreset();
+        blue_open = new PoliceBoxBlueOpenPreset();
         brown = new PoliceBoxBrownPreset();
         cyan = new PoliceBoxCyanPreset();
         gray = new PoliceBoxGrayPreset();
@@ -69,6 +71,7 @@ public class TARDISChameleonPoliceBox {
     public void makePresets() {
         black.makePresets();
         blue.makePresets();
+        blue_open.makePresets();
         brown.makePresets();
         cyan.makePresets();
         gray.makePresets();
@@ -138,6 +141,8 @@ public class TARDISChameleonPoliceBox {
                 return red.getBlueprint().get(d);
             case POLICE_BOX_BLACK:
                 return black.getBlueprint().get(d);
+            case POLICE_BOX_BLUE_OPEN:
+                return blue_open.getBlueprint().get(d);
             default: // POLICE_BOX_BLUE
                 return blue.getBlueprint().get(d);
         }

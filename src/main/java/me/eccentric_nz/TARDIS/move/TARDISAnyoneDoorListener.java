@@ -215,8 +215,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     return;
                                 }
                                 if (!rsd.isLocked()) {
-                                    // toogle the door open/closed
-                                    if (Tag.DOORS.isTagged(blockType)) {
+                                    boolean isPoliceBoxBlue = (rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE) || rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE_OPEN));
+                                    // toggle the door open/closed
+                                    if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBoxBlue)) {
                                         if (doortype == 0 || doortype == 1) {
                                             boolean open = TARDISStaticUtils.isDoorOpen(block);
                                             boolean toggle = true;
@@ -249,7 +250,12 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             }
                                             // toggle the door
                                             if (toggle || rs.getTardis().isAbandoned()) {
-                                                new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                // toggle the door
+                                                if (isPoliceBoxBlue) {
+                                                    new TARDISModelChanger(plugin, block, player, id, doortype).toggleDoors();
+                                                } else {
+                                                    new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                }
                                             }
                                         }
                                     } else if (Tag.TRAPDOORS.isTagged(blockType)) {

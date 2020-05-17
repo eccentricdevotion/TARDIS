@@ -195,8 +195,9 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                                     if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
                                         if (!rsd.isLocked()) {
-                                            // toogle the door open/closed
-                                            if (Tag.DOORS.isTagged(blockType)) {
+                                            boolean isPoliceBoxBlue = (rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE) || rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE_OPEN));
+                                            // toggle the door open/closed
+                                            if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBoxBlue)) {
                                                 if (doortype == 0 || doortype == 1) {
                                                     boolean open = TARDISStaticUtils.isDoorOpen(block);
                                                     if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
@@ -205,7 +206,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                         new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
                                                     }
                                                     // toggle the doors
-                                                    new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                    if (isPoliceBoxBlue) {
+                                                        new TARDISModelChanger(plugin, block, player, id, doortype).toggleDoors();
+                                                    } else {
+                                                        new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                    }
                                                 }
                                             } else if (Tag.TRAPDOORS.isTagged(blockType)) {
                                                 TrapDoor door_data = (TrapDoor) block.getBlockData();

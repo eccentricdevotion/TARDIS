@@ -95,7 +95,8 @@ public enum PRESET {
     COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true),
     BOAT(Material.BARRIER, "BOAT", "", false, false),
     // coloured police boxes
-    POLICE_BOX_BLUE(Material.BLUE_CONCRETE_POWDER, 0, "", "", false, false, "Blue Police Box"),
+    POLICE_BOX_BLUE(Material.BLUE_CONCRETE_POWDER, 0, "", "", false, true, "Blue Police Box"),
+    POLICE_BOX_BLUE_OPEN(Material.BLUE_CONCRETE_POWDER, -1, "", "", false, true, "Open Blue Police Box"),
     POLICE_BOX_WHITE(Material.WHITE_CONCRETE_POWDER, 1, "", "", false, false, "White Police Box"),
     POLICE_BOX_ORANGE(Material.ORANGE_CONCRETE_POWDER, 2, "", "", false, false, "Orange Police Box"),
     POLICE_BOX_MAGENTA(Material.MAGENTA_CONCRETE_POWDER, 3, "", "", false, false, "Magenta Police Box"),
@@ -211,6 +212,7 @@ public enum PRESET {
     public boolean isColoured() {
         switch (this) {
             case POLICE_BOX_BLUE:
+            case POLICE_BOX_BLUE_OPEN:
             case POLICE_BOX_WHITE:
             case POLICE_BOX_ORANGE:
             case POLICE_BOX_MAGENTA:
