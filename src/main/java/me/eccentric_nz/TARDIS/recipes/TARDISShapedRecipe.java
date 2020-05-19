@@ -136,11 +136,15 @@ public class TARDISShapedRecipe {
         String difficulty = (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
         try {
             String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
-            String[] shape = new String[3];
-            for (int i = 0; i < 3; i++) {
+            String[] shape = new String[shape_tmp.length];
+            for (int i = 0; i < shape_tmp.length; i++) {
                 shape[i] = shape_tmp[i].replaceAll("-", " ");
             }
-            r.shape(shape[0], shape[1], shape[2]);
+            if (shape_tmp.length > 2) {
+                r.shape(shape[0], shape[1], shape[2]);
+            } else {
+                r.shape(shape[0], shape[1]);
+            }
             Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
             ingredients.forEach((g) -> {
                 char c = g.charAt(0);

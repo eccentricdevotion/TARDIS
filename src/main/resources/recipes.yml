@@ -270,11 +270,11 @@ shaped:
     amount: 1
     lore: ''
   TARDIS Key:
-    easy_shape: '---,-R-,-G-'
+    easy_shape: R,G
     easy_ingredients:
       R: REDSTONE
       G: GOLD_NUGGET
-    hard_shape: '---,-C-,-G-'
+    hard_shape: C,G
     hard_ingredients:
       C: COMPARATOR
       G: GOLD_NUGGET

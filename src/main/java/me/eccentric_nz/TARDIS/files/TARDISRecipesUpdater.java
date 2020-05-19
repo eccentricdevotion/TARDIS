@@ -83,6 +83,12 @@ public class TARDISRecipesUpdater {
 
     public void addRecipes() {
         int i = 0;
+        // update TARDIS key recipe
+        if (recipes_config.getString("shaped.TARDIS Key.easy_shape").contains("-")) {
+            recipes_config.set("shaped.TARDIS Key.easy_shape", "R,G");
+            recipes_config.set("shaped.TARDIS Key.hard_shape", "C,G");
+            i++;
+        }
         // update circuits
         if (recipes_config.getString("shaped.TARDIS Materialisation Circuit.result").contains(":")) {
             recipes_config.set("shaped.Bio-scanner Circuit.result", "GLOWSTONE_DUST");
@@ -137,6 +143,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=TARDIS Chameleon Circuit");
             recipes_config.set("shapeless.Redstone Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Redstone Activator Circuit");
             plugin.getConsole().sendMessage(plugin.getPluginName() + "All TARDIS and sonic screwdriver circuit recipes have changed!");
+            i++;
         }
         // update for 1.13
         if (recipes_config.getString("shaped.TARDIS Locator.easy_ingredients.C").contains(":")) {
@@ -264,6 +271,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
             recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
+            i++;
         }
         if (recipes_config.getString("shapeless.Lemon Jelly Baby.recipe").contains("DANDELION_YELLOW")) {
             recipes_config.set("shapeless.Lemon Jelly Baby.recipe", "SUGAR,SLIME_BALL,YELLOW_DYE");
@@ -286,6 +294,7 @@ public class TARDISRecipesUpdater {
                 recipes_config.set("shaped.TARDIS Input Circuit.easy_ingredients.S", "OAK_SIGN");
                 recipes_config.set("shaped.TARDIS Input Circuit.hard_ingredients.S", "OAK_SIGN");
             }
+            i++;
         }
         if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":") || recipes_config.getString("shaped.Painter Circuit.easy_ingredients.I").contains("INK_SAC") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains("LAPIS_LAZULI")) {
             recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "BLUE_DYE");
