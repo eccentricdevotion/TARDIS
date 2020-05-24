@@ -65,12 +65,21 @@ public enum TARDISARS implements ARS {
 
     private final String material;
     private final String descriptiveName;
+    private final String configPath;
     private final int offset;
     private final static HashMap<String, ARS> EXTENDED_MATERIAL = new HashMap<>();
 
     TARDISARS(String material, String descriptiveName, int offset) {
         this.material = material;
         this.descriptiveName = descriptiveName;
+        configPath = toString();
+        this.offset = offset;
+    }
+
+    TARDISARS(String material, String descriptiveName, String configPath, int offset) {
+        this.material = material;
+        this.descriptiveName = descriptiveName;
+        this.configPath = configPath;
         this.offset = offset;
     }
 
@@ -92,6 +101,16 @@ public enum TARDISARS implements ARS {
     @Override
     public String getDescriptiveName() {
         return descriptiveName;
+    }
+
+    /**
+     * Gets the config path for the room.
+     *
+     * @return the config path
+     */
+    @Override
+    public String getConfigPath() {
+        return configPath;
     }
 
     /**

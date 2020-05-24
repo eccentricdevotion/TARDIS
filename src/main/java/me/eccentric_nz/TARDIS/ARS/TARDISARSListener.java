@@ -222,7 +222,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             } else {
                                 ItemStack ris = view.getItem(slot);
                                 String displayName = ris.getItemMeta().getDisplayName();
-                                String room = TARDISARS.ARSFor(ris.getType().toString()).toString();
+                                String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
                                 if (!player.hasPermission("tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
                                     break;
@@ -309,6 +309,11 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 @Override
                 public String getDescriptiveName() {
                     return uc;
+                }
+
+                @Override
+                public String getConfigPath() {
+                    return c;
                 }
 
                 @Override

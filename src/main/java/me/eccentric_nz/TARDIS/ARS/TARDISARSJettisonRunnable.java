@@ -51,7 +51,7 @@ class TARDISARSJettisonRunnable implements Runnable {
 
     @Override
     public void run() {
-        String r = room.toString();
+        String r = room.getConfigPath();
         // remove the room
         World w = slot.getChunk().getWorld();
         int x = slot.getX();

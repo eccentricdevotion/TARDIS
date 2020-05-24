@@ -158,7 +158,7 @@ public class TARDISARSMethods {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
-            String config_path = TARDISARS.ARSFor(material.toString()).toString();
+            String config_path = TARDISARS.ARSFor(material.toString()).getConfigPath();
             List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
             im.setLore(lore);
         } else {

@@ -63,7 +63,7 @@ public class TARDISSchematicGZip {
             }
             s = sw.toString();
         } catch (IOException ex) {
-            TARDIS.plugin.debug("Could not read GZip schematic file!" + ex.getMessage());
+            TARDIS.plugin.debug("Could not read GZip schematic file! " + ex.getMessage());
         } finally {
             try {
                 if (sw != null) {
@@ -73,7 +73,7 @@ public class TARDISSchematicGZip {
                     isr.close();
                 }
             } catch (IOException ex) {
-                TARDIS.plugin.debug("Could not close GZip schematic file!" + ex.getMessage());
+                TARDIS.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
             }
         }
         return (s.startsWith("{")) ? new JsonParser().parse(s).getAsJsonObject() : null;

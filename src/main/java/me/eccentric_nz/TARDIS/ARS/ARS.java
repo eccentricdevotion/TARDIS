@@ -27,5 +27,7 @@ public interface ARS {
 
     String getDescriptiveName();
 
+    String getConfigPath();
+
     int getOffset();
 }
