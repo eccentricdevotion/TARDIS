@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>4.4</version>
+    <version>4.4.1</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -217,7 +217,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.4</version>
+            <version>4.4.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -315,14 +315,6 @@
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Factions.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>net.citizensnpcs</groupId>
-            <artifactId>citizensapi</artifactId>
-            <version>2.0.26-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/CitizensAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.yi.acru.bukkit</groupId>
