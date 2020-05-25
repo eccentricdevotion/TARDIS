@@ -173,7 +173,6 @@ public class TARDIS extends JavaPlugin {
         worldGuardOnServer = false;
         helperOnServer = false;
         invManager = INVENTORY_MANAGER.NONE;
-        versions.put("Citizens", "2.0.26");
         versions.put("Factions", "1.6.9.5");
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "10.0.0");
@@ -185,7 +184,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("My_Worlds", "1.15.2");
         versions.put("PerWorldInventory", "2.3.0");
         versions.put("ProtocolLib", "4.5.0");
-        versions.put("TARDISChunkGenerator", "4.4");
+        versions.put("TARDISChunkGenerator", "4.4.1");
         versions.put("TARDISWeepingAngels", "3.2.1");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
