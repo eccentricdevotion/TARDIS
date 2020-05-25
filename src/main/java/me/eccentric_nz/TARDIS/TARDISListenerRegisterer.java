@@ -198,9 +198,6 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeListener(plugin), plugin);
-        if (plugin.getPM().isPluginEnabled("ProjectRassilon")) {
-            plugin.getPM().registerEvents(new TARDISRegenerationListener(plugin), plugin);
-        }
         plugin.getPM().registerEvents(new TARDISRegulatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRemoteKeyListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRedstoneListener(plugin), plugin);
