@@ -275,7 +275,7 @@ public class TARDISExteriorRenderer {
             }
         }
         // if enabled add static entities
-        if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("preferences.render_entities")) {
+        if (plugin.getConfig().getBoolean("preferences.render_entities")) {
             plugin.debug("rendering entities");
             new TARDISEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
         }

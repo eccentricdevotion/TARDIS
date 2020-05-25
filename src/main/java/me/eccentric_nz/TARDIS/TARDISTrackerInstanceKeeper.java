@@ -73,7 +73,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Integer> junkPlayers = new HashMap<>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
     private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
-    private final HashMap<UUID, List<Integer>> renderedNPCs = new HashMap<>();
+    private final HashMap<UUID, List<UUID>> renderedNPCs = new HashMap<>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<>();
     private final HashMap<UUID, Location> dispersed = new HashMap<>();
     private final HashMap<UUID, Location> sonicGenerators = new HashMap<>();
@@ -257,7 +257,7 @@ public class TARDISTrackerInstanceKeeper {
         return repeaters;
     }
 
-    public HashMap<UUID, List<Integer>> getRenderedNPCs() {
+    public HashMap<UUID, List<UUID>> getRenderedNPCs() {
         return renderedNPCs;
     }
 

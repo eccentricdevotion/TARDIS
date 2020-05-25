@@ -42,7 +42,7 @@ class TARDISEmergencyProgrammeCommand {
     }
 
     boolean showEP1(Player p) {
-        if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
+        if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 TARDISMessage.send(p, "CMD_IN_WORLD");
                 return true;

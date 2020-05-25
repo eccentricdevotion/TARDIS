@@ -103,7 +103,7 @@ public class TARDISRenderRoomListener implements Listener {
                     p.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                     p.teleport(tp_loc);
                     plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
-                    if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId()) && plugin.getPM().isPluginEnabled("Citizens")) {
+                    if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId())) {
                         new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
                     }
                 }, 10L);

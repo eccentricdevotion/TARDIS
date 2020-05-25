@@ -100,7 +100,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 Location death_loc = player.getLocation();
                                 int amount = plugin.getArtronConfig().getInt("autonomous");
                                 if (tardis.getArtron_level() > amount) {
-                                    if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
+                                    if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                         // check if there are players in the TARDIS
                                         HashMap<String, Object> wherev = new HashMap<>();
                                         wherev.put("tardis_id", id);

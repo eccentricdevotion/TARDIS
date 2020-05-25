@@ -181,7 +181,7 @@ public class TARDISMalfunction {
             // get player prefs
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rsp.resultSet()) {
-                if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
+                if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
                     HashMap<String, Object> wherev = new HashMap<>();

@@ -187,7 +187,7 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                     break;
                 case EPS:
-                    blockLocStr = bw.getName() + ":" + bx + ":" + (by + 1) + ":" + (bz - 1);
+                    blockLocStr = bw.getName() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
                     set.put("eps", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                     break;

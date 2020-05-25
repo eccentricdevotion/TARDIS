@@ -246,9 +246,6 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISWallFloorMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSeedMenuListener(plugin), plugin);
-        if (getNPCManager()) {
-            plugin.getPM().registerEvents(new TARDISNPCListener(plugin), plugin);
-        }
         if (plugin.getPM().isPluginEnabled("Multiverse-Adventure")) {
             plugin.getPM().registerEvents(new TARDISWorldResetListener(plugin), plugin);
         }
@@ -322,22 +319,5 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISWorldChangeListener(plugin), plugin);
         }
         return info;
-    }
-
-    private boolean getNPCManager() {
-        if (plugin.getPM().getPlugin("Citizens") != null && plugin.getPM().getPlugin("Citizens").isEnabled()) {
-            if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
-                plugin.debug("Enabling Emergency Programme One!");
-            }
-            return true;
-        } else {
-            if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
-                plugin.debug("Emergency Programme One was disabled as it requires the Citizens plugin!");
-            }
-            // set emergency_npc false as Citizens not found
-            plugin.getConfig().set("allow.emergency_npc", false);
-            plugin.saveConfig();
-            return false;
-        }
     }
 }
