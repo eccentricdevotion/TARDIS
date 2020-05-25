@@ -26,7 +26,7 @@ The Zero Room has several useful abilities, including:
 
 - Players can levitate in the Zero Room — when you walk your feet do not touch the floor!
 - Slow healing, default 200 ticks (1/2 heart every 10 seconds)
-- Chat isolation &dash; Both chat and commands are disabled, and only server-wide broadcasts (the important things) can be heard
+- Chat isolation — Both chat and commands are disabled, and only server-wide broadcasts (the important things) can be heard
 - Configurable artron cost to enter the room, default 250 (can be changed in _artron.yml_)
 
 ## Video
