@@ -250,11 +250,6 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISWorldResetListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
-        if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
-            if (plugin.getConfig().getBoolean("allow.zero_room")) {
-                new TARDISZeroRoomPacketListener(plugin);
-            }
-        }
         if (plugin.getConfig().getBoolean("arch.enabled")) {
             plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);

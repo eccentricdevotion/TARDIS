@@ -52,7 +52,7 @@ class TARDISUpdateCommand {
 
     boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            if (args.length == 1 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+            if (args.length == 1) {
                 return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
