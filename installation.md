@@ -7,7 +7,7 @@ title: Installation
 
 # Installation
 
-Get the TARDIS plugin files from: [http://dev.bukkit.org/bukkit-plugins/tardis](http://dev.bukkit.org/bukkit-plugins/tardis)
+Get the latest TARDIS plugin files from: [http://tardisjenkins.duckdns.org:8080/view/TARDIS/](http://tardisjenkins.duckdns.org:8080/view/TARDIS/)
 
 * * *
 
