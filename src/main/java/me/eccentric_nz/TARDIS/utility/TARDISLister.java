@@ -61,26 +61,26 @@ public class TARDISLister {
             if (therechargers.size() < 1) {
                 TARDISMessage.send(p, "CHARGER_NONE");
             }
-            int a = 1;
-
+            TableGenerator tg = new TableGenerator(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.RIGHT, TableGenerator.Alignment.RIGHT, TableGenerator.Alignment.RIGHT);
+            tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS Rechargers", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
+            tg.addRow();
             for (String s : therechargers) {
                 // only list public rechargers
                 if (!s.startsWith("rift")) {
-                    if (a == 1) {
-                        TARDISMessage.send(p, "CHARGERS");
-                    }
                     String w;
                     if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
                         w = plugin.getMVHelper().getAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
                     } else {
                         w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
                     }
-                    int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
-                    int y = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".y");
-                    int z = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".z");
-                    p.sendMessage(a + ". [" + s + "] in world: " + w + ", at " + x + ":" + y + ":" + z);
-                    a++;
+                    String x = TARDIS.plugin.getConfig().getString("rechargers." + s + ".x");
+                    String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
+                    String z = TARDIS.plugin.getConfig().getString("rechargers." + s + ".z");
+                    tg.addRow(ChatColor.GREEN + s + ChatColor.RESET, w, x, y, z);
                 }
+            }
+            for (String line : tg.generate(TableGenerator.Receiver.CLIENT, true, true)) {
+                p.sendMessage(line);
             }
         }
         if (l.equals("areas")) {
@@ -105,31 +105,30 @@ public class TARDISLister {
                 int id = tardis.getTardis_id();
                 // list TARDIS saves
                 if (l.equalsIgnoreCase("saves")) {
+                    TableGenerator tg = new TableGenerator(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.RIGHT, TableGenerator.Alignment.RIGHT, TableGenerator.Alignment.RIGHT);
+                    tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " + plugin.getLanguage().getString("SAVES"), ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
+                    tg.addRow();
                     // get home
                     HashMap<String, Object> wherehl = new HashMap<>();
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
-                    p.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("SAVES"));
-                    p.sendMessage(ChatColor.GREEN + plugin.getLanguage().getString("HOME") + ": " + rsh.getWorld().getName() + " at x:" + rsh.getX() + " y:" + rsh.getY() + " z:" + rsh.getZ());
+                    tg.addRow(ChatColor.GREEN + plugin.getLanguage().getString("HOME") + ChatColor.RESET, rsh.getWorld().getName(), "" + rsh.getX(), "" + rsh.getY(), "" + rsh.getZ());
+                    tg.addRow();
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
                     ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, whered, true);
-                    int i = 1;
                     if (rsd.resultSet()) {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
                         for (HashMap<String, String> map : data) {
-                            if (i == 1) {
-                                p.sendMessage(ChatColor.GRAY + "----------------");
-                            }
-                            String type = map.get("type");
-                            if (type.equals("0")) {
-                                String dn = map.get("dest_name");
-                                p.sendMessage(ChatColor.GREEN + "" + i + ". [" + dn + "]: " + map.get("world") + " at x:" + map.get("x") + " y:" + map.get("y") + " z:" + map.get("z"));
-                                i++;
+                            if (map.get("type").equals("0")) {
+                                tg.addRow(ChatColor.GREEN + map.get("dest_name") + ChatColor.RESET, map.get("world"), "" + map.get("x"), "" + map.get("y"), "" + map.get("z"));
                             }
                         }
+                    }
+                    for (String line : tg.generate(TableGenerator.Receiver.CLIENT, true, true)) {
+                        p.sendMessage(line);
                     }
                 }
                 if (l.equalsIgnoreCase("companions")) {

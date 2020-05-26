@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TableGenerator;
+import me.eccentric_nz.TARDIS.utility.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -31,109 +32,107 @@ class TARDISGiveLister {
 
     private final TARDIS plugin;
     private final CommandSender sender;
-    private final LinkedHashMap<String, List<String>> options;
+    private final TableGenerator tg;
 
     TARDISGiveLister(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;
         this.sender = sender;
-        options = createGiveOptions();
+        tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT);
     }
 
     public void list() {
         sender.sendMessage(plugin.getPluginName() + "You can 'give' the following items:");
-        sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
-        options.forEach((key, value) -> {
-            sender.sendMessage(key);
-            value.forEach((s) -> sender.sendMessage("    " + s));
-        });
+        for (String line : createGiveOptions()) {
+            sender.sendMessage(line);
+        }
     }
 
-    private LinkedHashMap<String, List<String>> createGiveOptions() {
-        LinkedHashMap<String, List<String>> give_options = new LinkedHashMap<>();
-        List<String> art_kits = new ArrayList<>();
-        art_kits.add(ChatColor.YELLOW + "artron" + ChatColor.RESET + " - " + ChatColor.GOLD + "Artron Energy");
-        art_kits.add(ChatColor.YELLOW + "kit" + ChatColor.RESET + " - " + ChatColor.GOLD + "TARDIS Item Kit");
-        art_kits.add(ChatColor.YELLOW + "seed" + ChatColor.RESET + " - " + ChatColor.GOLD + "TARDIS Seed Block");
-        art_kits.add(ChatColor.YELLOW + "handles" + ChatColor.RESET + " - " + ChatColor.GOLD + "Handles cyber-companion");
-        art_kits.add(ChatColor.YELLOW + "mushroom" + ChatColor.RESET + " - " + ChatColor.GOLD + "TARDIS textured mushroom blocks");
-        give_options.put("Artron, Kits and Seeds", art_kits);
-        List<String> items = new ArrayList<>();
-        items.add(ChatColor.GREEN + "key" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Key");
-        items.add(ChatColor.GREEN + "locator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Locator");
-        items.add(ChatColor.GREEN + "cell" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Artron Storage Cell");
-        items.add(ChatColor.GREEN + "furnace" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Artron Furnace");
-        items.add(ChatColor.GREEN + "filter" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Perception Filter");
-        items.add(ChatColor.GREEN + "sonic" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Screwdriver");
-        items.add(ChatColor.GREEN + "remote" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Stattenheim Remote");
-        items.add(ChatColor.GREEN + "r-key" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Remote Key");
-        items.add(ChatColor.GREEN + "reader" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Biome Reader");
-        give_options.put("TARDIS Items", items);
-        List<String> item_circuits = new ArrayList<>();
-        item_circuits.add(ChatColor.RED + "l-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Locator Circuit");
-        item_circuits.add(ChatColor.RED + "m-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Materialisation Circuit");
-        item_circuits.add(ChatColor.RED + "generator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Generator");
-        item_circuits.add(ChatColor.RED + "oscillator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Oscillator");
-        item_circuits.add(ChatColor.RED + "p-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Perception Circuit");
-        item_circuits.add(ChatColor.RED + "rift-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Rift Circuit");
-        item_circuits.add(ChatColor.RED + "s-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Stattenheim Circuit");
-        give_options.put("Item Circuits", item_circuits);
-        List<String> sonic_circuits = new ArrayList<>();
-        sonic_circuits.add(ChatColor.BLUE + "a-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Admin Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "bio-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Bio-scanner Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "d-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Diamond Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "e-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Emerald Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "r-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Redstone Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "painter" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Painter Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "ignite-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Ignite Circuit");
-        sonic_circuits.add(ChatColor.BLUE + "arrow-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Pickup Arrows Circuit");
-        give_options.put("Sonic Circuits", sonic_circuits);
-        List<String> console_circuits = new ArrayList<>();
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "ars-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "ARS Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "c-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Chameleon Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "i-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Input Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "invisible" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Invisibility Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "m-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Materialisation Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "memory-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Memory Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "randomiser-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Randomiser Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "scanner-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Scanner Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "t-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Temporal Circuit");
-        console_circuits.add(ChatColor.LIGHT_PURPLE + "telepathic" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Telepathic Circuit");
-        give_options.put("Advanced Console Circuits", console_circuits);
-        List<String> disks = new ArrayList<>();
-        disks.add(ChatColor.AQUA + "blank" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Blank Storage Disk");
-        disks.add(ChatColor.AQUA + "biome-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Biome Storage Disk");
-        disks.add(ChatColor.AQUA + "player-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Player Storage Disk");
-        disks.add(ChatColor.AQUA + "preset-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Preset Storage Disk");
-        disks.add(ChatColor.AQUA + "save-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Save Storage Disk");
-        give_options.put("Storage Disks", disks);
-        List<String> food = new ArrayList<>();
-        food.add(ChatColor.GRAY + "custard" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Bowl of Custard");
-        food.add(ChatColor.GRAY + "fish-finger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Fish Finger");
-        food.add(ChatColor.GRAY + "jammy-dodger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jammy Dodger Biscuit");
-        food.add(ChatColor.GRAY + "jelly-baby" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jelly Baby");
-        food.add(ChatColor.GRAY + "paper-bag" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Paper Bag");
-        give_options.put("Food", food);
-        List<String> accessories = new ArrayList<>();
-        accessories.add(ChatColor.GREEN + "bow-tie" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Bow Tie");
-        accessories.add(ChatColor.GREEN + "glasses" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "3-D Glasses");
-        accessories.add(ChatColor.GREEN + "communicator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Communicator");
-        accessories.add(ChatColor.GREEN + "handles" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Handles Companion");
-        accessories.add(ChatColor.GREEN + "acid-battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Acid Battery");
-        accessories.add(ChatColor.GREEN + "rift-manipulator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Rift Manipulator");
-        accessories.add(ChatColor.GREEN + "rust" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Rust Plague Sword");
+    private List<String> createGiveOptions() {
+        tg.addRow(ChatColor.GRAY + "Command argument", ChatColor.DARK_GRAY + "Description");
+        tg.addRow();
+        tg.addRow("Artron, Kits, Seeds", "");
+        tg.addRow(ChatColor.YELLOW + "artron", ChatColor.GOLD + "Artron Energy");
+        tg.addRow(ChatColor.YELLOW + "kit", ChatColor.GOLD + "TARDIS Item Kit");
+        tg.addRow(ChatColor.YELLOW + "seed", ChatColor.GOLD + "TARDIS Seed Block");
+        tg.addRow(ChatColor.YELLOW + "handles", ChatColor.GOLD + "Handles cyber-companion");
+        tg.addRow(ChatColor.YELLOW + "mushroom", ChatColor.GOLD + "TARDIS textured mushroom blocks");
+        tg.addRow();
+        tg.addRow("TARDIS Items", "");
+        tg.addRow(ChatColor.GREEN + "key", ChatColor.DARK_GREEN + "TARDIS Key");
+        tg.addRow(ChatColor.GREEN + "locator", ChatColor.DARK_GREEN + "TARDIS Locator");
+        tg.addRow(ChatColor.GREEN + "cell", ChatColor.DARK_GREEN + "Artron Storage Cell");
+        tg.addRow(ChatColor.GREEN + "furnace", ChatColor.DARK_GREEN + "TARDIS Artron Furnace");
+        tg.addRow(ChatColor.GREEN + "filter", ChatColor.DARK_GREEN + "Perception Filter");
+        tg.addRow(ChatColor.GREEN + "sonic", ChatColor.DARK_GREEN + "Sonic Screwdriver");
+        tg.addRow(ChatColor.GREEN + "remote", ChatColor.DARK_GREEN + "Stattenheim Remote");
+        tg.addRow(ChatColor.GREEN + "r-key", ChatColor.DARK_GREEN + "TARDIS Remote Key");
+        tg.addRow(ChatColor.GREEN + "reader", ChatColor.DARK_GREEN + "TARDIS Biome Reader");
+        tg.addRow();
+        tg.addRow("Item Circuits", "");
+        tg.addRow(ChatColor.RED + "l-circuit", ChatColor.DARK_RED + "Locator Circuit");
+        tg.addRow(ChatColor.RED + "m-circuit", ChatColor.DARK_RED + "Materialisation Circuit");
+        tg.addRow(ChatColor.RED + "generator", ChatColor.DARK_RED + "Sonic Generator");
+        tg.addRow(ChatColor.RED + "oscillator", ChatColor.DARK_RED + "Sonic Oscillator");
+        tg.addRow(ChatColor.RED + "p-circuit", ChatColor.DARK_RED + "Perception Circuit");
+        tg.addRow(ChatColor.RED + "rift-circuit", ChatColor.DARK_RED + "Rift Circuit");
+        tg.addRow(ChatColor.RED + "s-circuit", ChatColor.DARK_RED + "Stattenheim Circuit");
+        tg.addRow();
+        tg.addRow("Sonic Circuits", "");
+        tg.addRow(ChatColor.BLUE + "a-circuit", ChatColor.DARK_BLUE + "Admin Circuit");
+        tg.addRow(ChatColor.BLUE + "bio-circuit", ChatColor.DARK_BLUE + "Bio-scanner Circuit");
+        tg.addRow(ChatColor.BLUE + "d-circuit", ChatColor.DARK_BLUE + "Diamond Circuit");
+        tg.addRow(ChatColor.BLUE + "e-circuit", ChatColor.DARK_BLUE + "Emerald Circuit");
+        tg.addRow(ChatColor.BLUE + "r-circuit", ChatColor.DARK_BLUE + "Redstone Circuit");
+        tg.addRow(ChatColor.BLUE + "painter", ChatColor.DARK_BLUE + "Painter Circuit");
+        tg.addRow(ChatColor.BLUE + "ignite-circuit", ChatColor.DARK_BLUE + "Ignite Circuit");
+        tg.addRow(ChatColor.BLUE + "arrow-circuit", ChatColor.DARK_BLUE + "Pickup Arrows Circuit");
+        tg.addRow();
+        tg.addRow("Console Circuits", "");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "ars-circuit", ChatColor.DARK_PURPLE + "ARS Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "c-circuit", ChatColor.DARK_PURPLE + "Chameleon Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "i-circuit", ChatColor.DARK_PURPLE + "Input Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "invisible", ChatColor.DARK_PURPLE + "Invisibility Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "m-circuit", ChatColor.DARK_PURPLE + "Materialisation Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "memory-circuit", ChatColor.DARK_PURPLE + "Memory Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "randomiser-circuit", ChatColor.DARK_PURPLE + "Randomiser Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "scanner-circuit", ChatColor.DARK_PURPLE + "Scanner Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "t-circuit", ChatColor.DARK_PURPLE + "Temporal Circuit");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "telepathic", ChatColor.DARK_PURPLE + "Telepathic Circuit");
+        tg.addRow();
+        tg.addRow("Storage Disks", "");
+        tg.addRow(ChatColor.AQUA + "blank", ChatColor.DARK_AQUA + "Blank Storage Disk");
+        tg.addRow(ChatColor.AQUA + "biome-disk", ChatColor.DARK_AQUA + "Biome Storage Disk");
+        tg.addRow(ChatColor.AQUA + "player-disk", ChatColor.DARK_AQUA + "Player Storage Disk");
+        tg.addRow(ChatColor.AQUA + "preset-disk", ChatColor.DARK_AQUA + "Preset Storage Disk");
+        tg.addRow(ChatColor.AQUA + "save-disk", ChatColor.DARK_AQUA + "Save Storage Disk");
+        tg.addRow();
+        tg.addRow("Food", "");
+        tg.addRow(ChatColor.GRAY + "custard", ChatColor.DARK_GRAY + "Bowl of Custard");
+        tg.addRow(ChatColor.GRAY + "fish-finger", ChatColor.DARK_GRAY + "Fish Finger");
+        tg.addRow(ChatColor.GRAY + "jammy-dodger", ChatColor.DARK_GRAY + "Jammy Dodger Biscuit");
+        tg.addRow(ChatColor.GRAY + "jelly-baby", ChatColor.DARK_GRAY + "Jelly Baby");
+        tg.addRow(ChatColor.GRAY + "paper-bag", ChatColor.DARK_GRAY + "Paper Bag");
+        tg.addRow();
+        tg.addRow("Accessories", "");
+        tg.addRow(ChatColor.GREEN + "bow-tie", ChatColor.DARK_GREEN + "Bow Tie");
+        tg.addRow(ChatColor.GREEN + "glasses", ChatColor.DARK_GREEN + "3-D Glasses");
+        tg.addRow(ChatColor.GREEN + "communicator", ChatColor.DARK_GREEN + "TARDIS Communicator");
+        tg.addRow(ChatColor.GREEN + "handles", ChatColor.DARK_GREEN + "Handles Companion");
+        tg.addRow(ChatColor.GREEN + "acid-battery", ChatColor.DARK_GREEN + "Acid Battery");
+        tg.addRow(ChatColor.GREEN + "rift-manipulator", ChatColor.DARK_GREEN + "Rift Manipulator");
+        tg.addRow(ChatColor.GREEN + "rust", ChatColor.DARK_GREEN + "Rust Plague Sword");
         if (plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
-            accessories.add(ChatColor.GREEN + "blaster" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Blaster");
-            accessories.add(ChatColor.GREEN + "battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Blaster Battery");
-            accessories.add(ChatColor.GREEN + "pad" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Landing Pad");
+            tg.addRow(ChatColor.GREEN + "blaster", ChatColor.DARK_GREEN + "Sonic Blaster");
+            tg.addRow(ChatColor.GREEN + "battery", ChatColor.DARK_GREEN + "Blaster Battery");
+            tg.addRow(ChatColor.GREEN + "pad", ChatColor.DARK_GREEN + "Landing Pad");
         }
         if (plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
-            accessories.add(ChatColor.GREEN + "tachyon" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
-            accessories.add(ChatColor.GREEN + "vortex" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator");
+            tg.addRow(ChatColor.GREEN + "tachyon", ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
+            tg.addRow(ChatColor.GREEN + "vortex", ChatColor.DARK_GREEN + "Vortex Manipulator");
         }
-        accessories.add(ChatColor.GREEN + "wand" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
-        accessories.add(ChatColor.GREEN + "watch" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
-        accessories.add(ChatColor.GREEN + "keyboard" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
-        give_options.put("Accessories", accessories);
-        return give_options;
+        tg.addRow(ChatColor.GREEN + "wand", ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
+        tg.addRow(ChatColor.GREEN + "watch", ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
+        tg.addRow(ChatColor.GREEN + "keyboard", ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
+        return tg.generate(sender instanceof Player ? TableGenerator.Receiver.CLIENT : TableGenerator.Receiver.CONSOLE, true, true);
     }
 }

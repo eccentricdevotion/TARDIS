@@ -17,11 +17,14 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TableGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -33,6 +36,7 @@ class TARDISRoomLister {
     private final TARDIS plugin;
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
+    private final String JSON = "{\"text\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\",\"color\":\"aqua\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"Click me!\"}}";
 
     TARDISRoomLister(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -44,13 +48,24 @@ class TARDISRoomLister {
         TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
         options.forEach((key, value) -> {
             player.sendMessage(key);
-            if (value.size() > 0) {
-                value.forEach((s) -> player.sendMessage("    " + s));
+            TableGenerator tg = new TableGenerator(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+            int s = value.size();
+            if (s > 0) {
+                value.sort(Comparator.naturalOrder());
+                // how many rows?
+                int limit = roundUpTo4(s);
+                for (int i = 0; i < limit; i += 4) {
+                    tg.addRow("    " + value.get(i), (i + 1 < s) ? value.get(i + 1) : "", (i + 2 < s) ? value.get(i + 2) : "", (i + 3 < s) ? value.get(i + 3) : "");
+                }
+                for (String line : tg.generate(TableGenerator.Receiver.CLIENT, true, true)) {
+                    player.sendMessage(line);
+                }
             } else {
                 TARDISMessage.send(player, "ROOM_NONE");
             }
         });
         TARDISMessage.send(player, "ROOM_GALLERY");
+        TARDISUpdateChatGUI.sendJSON(JSON, player);
     }
 
     private LinkedHashMap<String, List<String>> createRoomOptions(Player player) {
@@ -70,5 +85,9 @@ class TARDISRoomLister {
         room_options.put("Default Rooms", default_rooms);
         room_options.put("Custom Rooms", custom_rooms);
         return room_options;
+    }
+
+    int roundUpTo4(int num) {
+        return (int) (Math.ceil(num / 4d) * 4);
     }
 }

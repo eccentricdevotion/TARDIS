@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TableGenerator;
+import me.eccentric_nz.TARDIS.utility.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -30,74 +30,72 @@ import java.util.List;
 class TARDISUpdateLister {
 
     private final Player player;
-    private final LinkedHashMap<String, List<String>> options;
+    private final TableGenerator tg;
 
     TARDISUpdateLister(Player player) {
         this.player = player;
-        options = createUpdateOptions();
+        tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT);
     }
 
     public void list() {
         TARDISMessage.send(player, "UPDATE_INFO");
-        player.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
-        options.forEach((key, value) -> {
-            player.sendMessage(key);
-            value.forEach((s) -> player.sendMessage("    " + s));
-        });
+        for (String line : createUpdateOptions()) {
+            player.sendMessage(line);
+        }
     }
 
-    private LinkedHashMap<String, List<String>> createUpdateOptions() {
-        LinkedHashMap<String, List<String>> update_options = new LinkedHashMap<>();
-        List<String> controls = new ArrayList<>();
-        controls.add(ChatColor.GREEN + "artron" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Artron Energy Capacitor button");
-        controls.add(ChatColor.GREEN + "back" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Previous Location button");
-        controls.add(ChatColor.GREEN + "button" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random Location button");
-        controls.add(ChatColor.GREEN + "handbrake" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Handbrake");
-        controls.add(ChatColor.GREEN + "world-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "World Type selector");
-        controls.add(ChatColor.GREEN + "x-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random x coordinate setter");
-        controls.add(ChatColor.GREEN + "y-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Distance multipler");
-        controls.add(ChatColor.GREEN + "z-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random z coordinate setter");
-        controls.add(ChatColor.GREEN + "control" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Control Menu");
-        controls.add(ChatColor.GREEN + "flight" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Flight Mode button");
-        update_options.put("TARDIS Controls", controls);
-        List<String> guis = new ArrayList<>();
-        guis.add(ChatColor.RED + "advanced" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Advanced Console");
-        guis.add(ChatColor.RED + "ars" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Architectural Reconfiguration System");
-        guis.add(ChatColor.RED + "chameleon" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Chameleon Circuit");
-        guis.add(ChatColor.RED + "direction" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Direction Item Frame");
-        guis.add(ChatColor.RED + "info" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Information System");
-        guis.add(ChatColor.RED + "save-sign" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Saved locations and TARDIS areas");
-        guis.add(ChatColor.RED + "telepathic" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Telepathic Circuit");
-        guis.add(ChatColor.RED + "temporal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Temporal Relocator");
-        guis.add(ChatColor.RED + "terminal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Destination Terminal");
-        guis.add(ChatColor.RED + "storage" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Disk Storage Container");
-        guis.add(ChatColor.RED + "generator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Generator");
-        update_options.put("TARDIS User Interfaces", guis);
-        List<String> spawns = new ArrayList<>();
-        spawns.add(ChatColor.BLUE + "creeper" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Artron Charged Creeper");
-        spawns.add(ChatColor.BLUE + "eps" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Emergency Programme One");
-        spawns.add(ChatColor.BLUE + "farm" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Farm room");
-        spawns.add(ChatColor.BLUE + "rail" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Rail room");
-        spawns.add(ChatColor.BLUE + "stable" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Stable room");
-        spawns.add(ChatColor.BLUE + "stall" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Llama stall room");
-        spawns.add(ChatColor.BLUE + "vault" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Vault room drop chest");
-        spawns.add(ChatColor.BLUE + "village" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Village room");
-        update_options.put("TARDIS Internal Spawn Locations", spawns);
-        List<String> misc = new ArrayList<>();
-        misc.add(ChatColor.LIGHT_PURPLE + "condenser" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Artron Energy Condenser");
-        misc.add(ChatColor.LIGHT_PURPLE + "door" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS Interior Door");
-        misc.add(ChatColor.LIGHT_PURPLE + "backdoor" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS back doors");
-        misc.add(ChatColor.LIGHT_PURPLE + "keyboard" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Keyboard Input sign");
-        misc.add(ChatColor.LIGHT_PURPLE + "scanner" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Exterior Scanner button");
-        misc.add(ChatColor.LIGHT_PURPLE + "light" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Console Light switch");
-        misc.add(ChatColor.LIGHT_PURPLE + "toggle_wool" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Toggle Black Wool behind door");
-        misc.add(ChatColor.LIGHT_PURPLE + "zero" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Zero room transmat button");
-        misc.add(ChatColor.LIGHT_PURPLE + "beacon" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Beacon toggle block");
-        misc.add(ChatColor.LIGHT_PURPLE + "frame" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Chameleon Item Frame");
-        misc.add(ChatColor.LIGHT_PURPLE + "dispenser" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Custard Cream Dispenser");
-        misc.add(ChatColor.LIGHT_PURPLE + "forcefield" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS Force Field button");
-        misc.add(ChatColor.LIGHT_PURPLE + "bell" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "TARDIS Cloister bell button");
-        update_options.put("Others", misc);
-        return update_options;
+    private List<String> createUpdateOptions() {
+        tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Description");
+        tg.addRow();
+        tg.addRow("TARDIS Controls", "");
+        tg.addRow(ChatColor.GREEN + "artron", ChatColor.DARK_GREEN + "Artron Energy Capacitor button");
+        tg.addRow(ChatColor.GREEN + "back", ChatColor.DARK_GREEN + "Previous Location button");
+        tg.addRow(ChatColor.GREEN + "button", ChatColor.DARK_GREEN + "Random Location button");
+        tg.addRow(ChatColor.GREEN + "handbrake", ChatColor.DARK_GREEN + "Handbrake");
+        tg.addRow(ChatColor.GREEN + "world-repeater", ChatColor.DARK_GREEN + "World Type selector");
+        tg.addRow(ChatColor.GREEN + "x-repeater", ChatColor.DARK_GREEN + "Random x coordinate setter");
+        tg.addRow(ChatColor.GREEN + "y-repeater", ChatColor.DARK_GREEN + "Distance multipler");
+        tg.addRow(ChatColor.GREEN + "z-repeater", ChatColor.DARK_GREEN + "Random z coordinate setter");
+        tg.addRow(ChatColor.GREEN + "control", ChatColor.DARK_GREEN + "TARDIS Control Menu");
+        tg.addRow(ChatColor.GREEN + "flight", ChatColor.DARK_GREEN + "TARDIS Flight Mode button");
+        tg.addRow();
+        tg.addRow("User Interfaces", "");
+        tg.addRow(ChatColor.RED + "advanced", ChatColor.DARK_RED + "TARDIS Advanced Console");
+        tg.addRow(ChatColor.RED + "ars", ChatColor.DARK_RED + "Architectural Reconfiguration System");
+        tg.addRow(ChatColor.RED + "chameleon", ChatColor.DARK_RED + "Chameleon Circuit");
+        tg.addRow(ChatColor.RED + "direction", ChatColor.DARK_RED + "Direction Item Frame");
+        tg.addRow(ChatColor.RED + "info", ChatColor.DARK_RED + "TARDIS Information System");
+        tg.addRow(ChatColor.RED + "save-sign", ChatColor.DARK_RED + "Saved locations and TARDIS areas");
+        tg.addRow(ChatColor.RED + "telepathic", ChatColor.DARK_RED + "Telepathic Circuit");
+        tg.addRow(ChatColor.RED + "temporal", ChatColor.DARK_RED + "Temporal Relocator");
+        tg.addRow(ChatColor.RED + "terminal", ChatColor.DARK_RED + "Destination Terminal");
+        tg.addRow(ChatColor.RED + "storage", ChatColor.DARK_RED + "Disk Storage Container");
+        tg.addRow(ChatColor.RED + "generator", ChatColor.DARK_RED + "Sonic Generator");
+        tg.addRow();
+        tg.addRow("Spawn Locations", "");
+        tg.addRow(ChatColor.BLUE + "creeper", ChatColor.DARK_BLUE + "Artron Charged Creeper");
+        tg.addRow(ChatColor.BLUE + "eps", ChatColor.DARK_BLUE + "Emergency Programme One");
+        tg.addRow(ChatColor.BLUE + "farm", ChatColor.DARK_BLUE + "Farm room");
+        tg.addRow(ChatColor.BLUE + "rail", ChatColor.DARK_BLUE + "Rail room");
+        tg.addRow(ChatColor.BLUE + "stable", ChatColor.DARK_BLUE + "Stable room");
+        tg.addRow(ChatColor.BLUE + "stall", ChatColor.DARK_BLUE + "Llama stall room");
+        tg.addRow(ChatColor.BLUE + "vault", ChatColor.DARK_BLUE + "Vault room drop chest");
+        tg.addRow(ChatColor.BLUE + "village", ChatColor.DARK_BLUE + "Village room");
+        tg.addRow();
+        tg.addRow("Others", "");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "condenser", ChatColor.DARK_PURPLE + "Artron Energy Condenser");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "door", ChatColor.DARK_PURPLE + "TARDIS Interior Door");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "backdoor", ChatColor.DARK_PURPLE + "TARDIS back doors");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "keyboard", ChatColor.DARK_PURPLE + "Keyboard Input sign");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "scanner", ChatColor.DARK_PURPLE + "Exterior Scanner button");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "light", ChatColor.DARK_PURPLE + "Console Light switch");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "toggle_wool", ChatColor.DARK_PURPLE + "Toggle Black Wool behind door");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "zero", ChatColor.DARK_PURPLE + "Zero room transmat button");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "beacon", ChatColor.DARK_PURPLE + "Beacon toggle block");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "frame", ChatColor.DARK_PURPLE + "Chameleon Item Frame");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "dispenser", ChatColor.DARK_PURPLE + "Custard Cream Dispenser");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "forcefield", ChatColor.DARK_PURPLE + "TARDIS Force Field button");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "bell", ChatColor.DARK_PURPLE + "TARDIS Cloister bell button");
+        return tg.generate(TableGenerator.Receiver.CLIENT, true, true);
     }
 }
