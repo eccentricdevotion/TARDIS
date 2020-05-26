@@ -14,50 +14,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TableGenerator;
-import me.eccentric_nz.TARDIS.utility.TableGenerator.Alignment;
+import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 
 /**
  * @author eccentric_nz
  */
-class TARDISGiveLister {
+public class TARDISRecipeLister {
 
     private final TARDIS plugin;
     private final CommandSender sender;
     private final TableGenerator tg;
 
-    TARDISGiveLister(TARDIS plugin, CommandSender sender) {
+    public TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;
         this.sender = sender;
         tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT);
     }
 
     public void list() {
-        sender.sendMessage(plugin.getPluginName() + "You can 'give' the following items:");
-        for (String line : createGiveOptions()) {
+        TARDISMessage.send(sender, "RECIPE_VIEW");
+        for (String line : createRecipeOptions()) {
             sender.sendMessage(line);
         }
     }
 
-    private List<String> createGiveOptions() {
-        tg.addRow(ChatColor.GRAY + "Command argument", ChatColor.DARK_GRAY + "Description");
-        tg.addRow();
-        tg.addRow("Artron, Kits, Seeds", "");
-        tg.addRow(ChatColor.YELLOW + "artron", ChatColor.GOLD + "Artron Energy");
-        tg.addRow(ChatColor.YELLOW + "kit", ChatColor.GOLD + "TARDIS Item Kit");
-        tg.addRow(ChatColor.YELLOW + "seed", ChatColor.GOLD + "TARDIS Seed Block");
-        tg.addRow(ChatColor.YELLOW + "handles", ChatColor.GOLD + "Handles cyber-companion");
-        tg.addRow(ChatColor.YELLOW + "mushroom", ChatColor.GOLD + "TARDIS textured mushroom blocks");
+    private List<String> createRecipeOptions() {
+        tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Recipe Result");
         tg.addRow();
         tg.addRow("TARDIS Items", "");
+        tg.addRow(ChatColor.GREEN + "tardis [type]", ChatColor.DARK_GREEN + "TARDIS Seed Block");
         tg.addRow(ChatColor.GREEN + "key", ChatColor.DARK_GREEN + "TARDIS Key");
         tg.addRow(ChatColor.GREEN + "locator", ChatColor.DARK_GREEN + "TARDIS Locator");
         tg.addRow(ChatColor.GREEN + "cell", ChatColor.DARK_GREEN + "Artron Storage Cell");
@@ -115,9 +107,9 @@ class TARDISGiveLister {
         tg.addRow();
         tg.addRow("Accessories", "");
         tg.addRow(ChatColor.GREEN + "bow-tie", ChatColor.DARK_GREEN + "Bow Tie");
-        tg.addRow(ChatColor.GREEN + "glasses", ChatColor.DARK_GREEN + "3-D Glasses");
         tg.addRow(ChatColor.GREEN + "communicator", ChatColor.DARK_GREEN + "TARDIS Communicator");
         tg.addRow(ChatColor.GREEN + "handles", ChatColor.DARK_GREEN + "Handles Companion");
+        tg.addRow(ChatColor.GREEN + "glasses", ChatColor.DARK_GREEN + "3-D Glasses");
         tg.addRow(ChatColor.GREEN + "acid-battery", ChatColor.DARK_GREEN + "Acid Battery");
         tg.addRow(ChatColor.GREEN + "rift-manipulator", ChatColor.DARK_GREEN + "Rift Manipulator");
         tg.addRow(ChatColor.GREEN + "rust", ChatColor.DARK_GREEN + "Rust Plague Sword");
@@ -127,12 +119,11 @@ class TARDISGiveLister {
             tg.addRow(ChatColor.GREEN + "pad", ChatColor.DARK_GREEN + "Landing Pad");
         }
         if (plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
-            tg.addRow(ChatColor.GREEN + "tachyon", ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
             tg.addRow(ChatColor.GREEN + "vortex", ChatColor.DARK_GREEN + "Vortex Manipulator");
         }
         tg.addRow(ChatColor.GREEN + "wand", ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
         tg.addRow(ChatColor.GREEN + "watch", ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
         tg.addRow(ChatColor.GREEN + "keyboard", ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
-        return tg.generate(sender instanceof Player ? TableGenerator.Receiver.CLIENT : TableGenerator.Receiver.CONSOLE, true, true);
+        return tg.generate(TableGenerator.Receiver.CLIENT, true, true);
     }
 }

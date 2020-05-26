@@ -5,7 +5,7 @@
  * https://www.spigotmc.org/threads/help-making-a-chat-table-based.170306/
  *
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.messaging;
 
 import java.util.ArrayList;
 import java.util.Arrays;

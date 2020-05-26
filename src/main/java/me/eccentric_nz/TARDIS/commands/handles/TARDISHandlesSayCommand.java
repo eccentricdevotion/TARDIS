@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**

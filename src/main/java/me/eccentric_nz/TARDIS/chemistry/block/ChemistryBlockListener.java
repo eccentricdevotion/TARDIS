@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
 import me.eccentric_nz.TARDIS.chemistry.lab.LabInventory;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductInventory;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerInventory;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

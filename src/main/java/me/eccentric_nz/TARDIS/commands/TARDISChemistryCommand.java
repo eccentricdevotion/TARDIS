@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.chemistry.formula.FormulaCommand;
 import me.eccentric_nz.TARDIS.chemistry.lab.LabCommand;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductCommand;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReduceCommand;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;

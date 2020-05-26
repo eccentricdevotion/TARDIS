@@ -14,11 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.TARDIS.messaging;
 
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TableGenerator;
-import me.eccentric_nz.TARDIS.utility.TableGenerator.Alignment;
+import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -27,12 +25,12 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TARDISUpdateLister {
+public class TARDISUpdateLister {
 
     private final Player player;
     private final TableGenerator tg;
 
-    TARDISUpdateLister(Player player) {
+    public TARDISUpdateLister(Player player) {
         this.player = player;
         tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT);
     }

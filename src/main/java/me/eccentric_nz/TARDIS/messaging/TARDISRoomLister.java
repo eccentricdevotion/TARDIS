@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TableGenerator;
+import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -31,14 +30,14 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TARDISRoomLister {
+public class TARDISRoomLister {
 
     private final TARDIS plugin;
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
     private final String JSON = "{\"text\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\",\"color\":\"aqua\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"Click me!\"}}";
 
-    TARDISRoomLister(TARDIS plugin, Player player) {
+    public TARDISRoomLister(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         options = createRoomOptions(this.player);
@@ -48,7 +47,7 @@ class TARDISRoomLister {
         TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
         options.forEach((key, value) -> {
             player.sendMessage(key);
-            TableGenerator tg = new TableGenerator(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+            TableGenerator tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT);
             int s = value.size();
             if (s > 0) {
                 value.sort(Comparator.naturalOrder());

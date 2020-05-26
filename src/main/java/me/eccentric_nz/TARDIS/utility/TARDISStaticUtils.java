@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
