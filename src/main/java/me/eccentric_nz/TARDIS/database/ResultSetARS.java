@@ -98,7 +98,12 @@ public class ResultSetARS {
                 while (rs.next()) {
                     id = rs.getInt("ars_id");
                     tardis_id = rs.getInt("tardis_id");
-                    uuid = UUID.fromString(rs.getString("uuid"));
+                    if (!rs.getString("uuid").isEmpty()) {
+                        uuid = UUID.fromString(rs.getString("uuid"));
+                    } else {
+                        // random UUID
+                        uuid = UUID.randomUUID();
+                    }
                     east = rs.getInt("ars_x_east");
                     south = rs.getInt("ars_z_south");
                     layer = rs.getInt("ars_y_layer");
