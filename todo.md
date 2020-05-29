@@ -14,6 +14,16 @@
    * Add advanced console and disk storage to schematics
 9. Set Master button to ON (In Lazarus GUI) when it is in use
 10. Use the Vortex Manipulator to teleport past force fields
+11. Emergency Protocol 712 - [Bukkit #1240](https://dev.bukkit.org/projects/tardis/issues/1240)
+12. Tardis Time-Space Throttle - [Bukkit #1449](https://dev.bukkit.org/projects/tardis/issues/1449) & [Bukkit #1185](https://dev.bukkit.org/projects/tardis/issues/1185)
+13. Weather control - [Bukkit #1654](https://dev.bukkit.org/projects/tardis/issues/1654)
+14. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
+15. Sonic knockback upgrade - [Bukkit #1207](https://dev.bukkit.org/projects/tardis/issues/1207) & bottom of [Bukkit #1056](https://dev.bukkit.org/projects/tardis/issues/1056)
+16. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
+17. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110)
+18. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
+19. Explore scanner using a map - [Bukkit #1097](https://dev.bukkit.org/projects/tardis/issues/1097)
+
 
 ## Future version `?+`
 * TARDISSonicBlaster addon? - _unlikely_
@@ -22,7 +32,7 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
-1. Custom Time Rotor model
+1. Custom Time Rotor model - [Bukkit #1570](https://dev.bukkit.org/projects/tardis/issues/1570)
 2. Rare armour drops
 3. Re-skin mobs for Resource pack, and add new mob sounds
    * Clockwork Droid
