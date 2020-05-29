@@ -28,7 +28,10 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -579,11 +582,18 @@ public class TARDISBuilderInner implements Runnable {
                 String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 23, telepathicloc, 0);
             }
-            if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
-                /*
-                 * get the ender crystal location
-                 */
-                ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
+            if (type.equals(Material.BEACON)) {
+                if (schm.getPermission().equals("ender")) {
+                    /*
+                     * get the ender crystal location
+                     */
+                    ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
+                } else if (schm.getPermission().equals("rotor")) {
+                    /*
+                     * spawn an item frame and place the time rotor in it
+                     */
+                    TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
+                }
             }
             // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
             if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
@@ -621,7 +631,7 @@ public class TARDISBuilderInner implements Runnable {
                 }
             } else if (TARDISStaticUtils.isInfested(type)) {
                 // legacy monster egg stone for controls
-                TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
             } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                 // save repeater location
                 if (j < 6) {
@@ -630,25 +640,25 @@ public class TARDISBuilderInner implements Runnable {
                     Directional directional = (Directional) data;
                     switch (j) {
                         case 2:
-                            directional.setFacing(BlockFace.EAST);
+                            directional.setFacing(BlockFace.WEST);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
                             break;
                         case 3:
-                            directional.setFacing(BlockFace.SOUTH);
+                            directional.setFacing(BlockFace.NORTH);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
                             break;
                         case 4:
-                            directional.setFacing(BlockFace.NORTH);
+                            directional.setFacing(BlockFace.SOUTH);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
                             break;
                         default:
-                            directional.setFacing(BlockFace.WEST);
+                            directional.setFacing(BlockFace.EAST);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
@@ -657,7 +667,7 @@ public class TARDISBuilderInner implements Runnable {
                     j++;
                 }
             } else if (type.equals(Material.SPONGE)) {
-                TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
             } else if (type.equals(Material.BEDROCK)) {
                 // remember bedrock location to block off the beacon light
                 String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -665,7 +675,7 @@ public class TARDISBuilderInner implements Runnable {
                 postBedrock = world.getBlockAt(x, y, z);
             } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {
                 // spawn locations for two villagers
-                TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
                 plugin.setTardisSpawn(true);
                 world.spawnEntity(new Location(world, x + 0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
             } else if (type.equals(Material.BLACK_CARPET) && schm.getPermission().equals("master")) {

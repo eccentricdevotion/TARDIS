@@ -56,6 +56,8 @@ public class TARDISSeedModel {
             put(Material.PRISMARINE, 28);
             // war
             put(Material.WHITE_TERRACOTTA, 29);
+            // rotor
+            put(Material.HONEYCOMB_BLOCK, 44);
             // legacy_bigger
             put(Material.ORANGE_GLAZED_TERRACOTTA, 33);
             // legacy_budget
@@ -95,6 +97,7 @@ public class TARDISSeedModel {
             put("TOM", 27);
             put("TWELFTH", 28);
             put("WAR", 29);
+            put("ROTOR", 44);
             put("LEGACY_BIGGER", 33);
             put("LEGACY_BUDGET", 34);
             put("LEGACY_DELUXE", 35);

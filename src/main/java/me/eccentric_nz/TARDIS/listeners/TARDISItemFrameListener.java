@@ -152,7 +152,8 @@ public class TARDISItemFrameListener implements Listener {
                         frame.setRotation(r);
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
-                } else // are they placing a tripwire hook?
+                } else {
+                    // are they placing a tripwire hook?
                     if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
                         // get current tardis direction
                         HashMap<String, Object> wherec = new HashMap<>();
@@ -181,6 +182,7 @@ public class TARDISItemFrameListener implements Listener {
                             }, 4L);
                         }
                     }
+                }
             }
         }
     }

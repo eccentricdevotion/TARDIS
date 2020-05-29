@@ -58,6 +58,7 @@ public class TARDISConsoleLoader {
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
         CONSOLES.getBY_NAMES().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, false, false));
+        CONSOLES.getBY_NAMES().put("ROTOR", new SCHEMATIC("HONEYCOMB_BLOCK", "rotor", "Time Rotor Console", ConsoleSize.SMALL, true, false, false));
         CONSOLES.getBY_NAMES().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, false, false));
         // THIRTEENTH designed by Razihel
         CONSOLES.getBY_NAMES().put("THIRTEENTH", new SCHEMATIC("ORANGE_CONCRETE", "thirteenth", "13th Doctor's Console", ConsoleSize.MEDIUM, false, false, false));

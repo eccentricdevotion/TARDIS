@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Archive;
@@ -35,7 +36,10 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -477,11 +481,18 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 23, telepathicloc, 0);
                 }
-                if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
-                    /*
-                     * get the ender crytal location
-                     */
-                    ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
+                if (type.equals(Material.BEACON)) {
+                    if (tud.getSchematic().getPermission().equals("ender")) {
+                        /*
+                         * get the ender crystal location
+                         */
+                        ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
+                    } else if (tud.getSchematic().getPermission().equals("rotor")) {
+                        /*
+                         * spawn an item frame and place the time rotor in it
+                         */
+                        TARDISTimeRotor.setItemFrame(tud.getSchematic(), new Location(world, x, y + 1, z), id);
+                    }
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                 if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) && !type.equals(Material.BEDROCK)) {
@@ -522,25 +533,25 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         Directional directional = (Directional) data;
                         switch (j) {
                             case 2:
-                                directional.setFacing(BlockFace.EAST);
+                                directional.setFacing(BlockFace.WEST);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
                                 break;
                             case 3:
-                                directional.setFacing(BlockFace.SOUTH);
+                                directional.setFacing(BlockFace.NORTH);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
                                 break;
                             case 4:
-                                directional.setFacing(BlockFace.NORTH);
+                                directional.setFacing(BlockFace.SOUTH);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
                                 break;
                             default:
-                                directional.setFacing(BlockFace.WEST);
+                                directional.setFacing(BlockFace.EAST);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);

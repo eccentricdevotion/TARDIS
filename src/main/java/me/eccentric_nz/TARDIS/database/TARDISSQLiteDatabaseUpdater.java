@@ -125,6 +125,7 @@ class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("renderer TEXT DEFAULT ''");
+        tardisupdates.add("rotor TEXT DEFAULT ''");
         tardisupdates.add("siege_on INTEGER DEFAULT 0");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("tips INTEGER DEFAULT '-1'");

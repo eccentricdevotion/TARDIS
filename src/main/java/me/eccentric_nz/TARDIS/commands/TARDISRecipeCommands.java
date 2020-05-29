@@ -346,6 +346,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (CONSOLES.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
             model = 45;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("ROTOR")) {
+            model = 44;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else {
             model = TARDISSeedModel.modelByString(type.toUpperCase());
             tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

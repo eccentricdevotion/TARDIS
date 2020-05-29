@@ -68,6 +68,7 @@ class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("abandoned int(1) DEFAULT '0'");
         tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
+        tardisupdates.add("rotor varchar(48) DEFAULT ''");
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         prefsupdates.add("auto_rescue_on int(1) DEFAULT '0'");
