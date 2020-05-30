@@ -97,6 +97,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("rift-circuit", "Rift Circuit");
         recipeItems.put("rift-manipulator", "Rift Manipulator");
         recipeItems.put("rust", "Rust Plague Sword");
+        recipeItems.put("rotor_early", "Time Rotor Early");
+        recipeItems.put("rotor_tenth", "Time Rotor Tenth");
+        recipeItems.put("rotor_eleventh", "Time Rotor Eleventh");
+        recipeItems.put("rotor_twelfth", "Time Rotor Twelfth");
         recipeItems.put("s-circuit", "TARDIS Stattenheim Circuit");
         recipeItems.put("save-disk", "Save Storage Disk");
         recipeItems.put("scanner-circuit", "TARDIS Scanner Circuit");

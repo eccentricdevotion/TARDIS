@@ -11,18 +11,26 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 public class TARDISTimeRotor {
 
+    private static final HashMap<String, Integer> BY_NAME = new HashMap<String, Integer>() {
+        {
+            put("early", 10000002);
+            put("rotor", 10000003);
+            put("copper", 10000004);
+            put("round", 10000005);
+        }
+    };
+
     public static void setItemFrame(SCHEMATIC schm, Location location, int id) {
         location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
         ItemFrame itemFrame = (ItemFrame) location.getWorld().spawnEntity(location, EntityType.ITEM_FRAME);
         itemFrame.setFacingDirection(BlockFace.UP);
-        setRotorStatic(schm, itemFrame);
+        setRotor(BY_NAME.get(schm.getPermission()), itemFrame, false);
         // save itemFrame UUID
         updateRotorRecord(id, itemFrame.getUniqueId().toString());
     }
@@ -35,54 +43,12 @@ public class TARDISTimeRotor {
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 
-    public static void setRotorStatic(SCHEMATIC schm, ItemFrame itemFrame) {
-        String displayName;
-        int which;
-        switch (schm.getPermission()) {
-            case "default":
-                displayName = "Time Rotor 1 Off";
-                which = 63;
-                break;
-            case "rotor":
-                displayName = "Time Rotor 2 Off";
-                which = 64;
-                break;
-            default: // early
-                displayName = "Time Rotor 3 Off";
-                which = 65;
-                break;
-        }
-        ItemStack is = new ItemStack(Material.MUSHROOM_STEM, 1);
+    public static void setRotor(int which, ItemFrame itemFrame, boolean animated) {
+        Material material = (animated) ? Material.LIGHT_BLUE_DYE : Material.LIGHT_GRAY_DYE;
+        ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(displayName);
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
-        im.setCustomModelData(10000000 + which);
-        is.setItemMeta(im);
-        itemFrame.setItem(is);
-    }
-
-    public static void setRotorAnimated(SCHEMATIC schm, ItemFrame itemFrame) {
-        String displayName;
-        int which;
-        switch (schm.getPermission()) {
-            case "default":
-                displayName = "Time Rotor 1";
-                which = 60;
-                break;
-            case "rotor":
-                displayName = "Time Rotor 2";
-                which = 61;
-                break;
-            default: // early
-                displayName = "Time Rotor 3";
-                which = 62;
-                break;
-        }
-        ItemStack is = new ItemStack(Material.MUSHROOM_STEM, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(displayName);
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
-        im.setCustomModelData(10000000 + which);
+        im.setDisplayName("Time Rotor");
+        im.setCustomModelData(which);
         is.setItemMeta(im);
         itemFrame.setItem(is);
     }
@@ -90,5 +56,16 @@ public class TARDISTimeRotor {
     public static ItemFrame getItemFrame(UUID uuid) {
         ItemFrame itemFrame = (ItemFrame) Bukkit.getEntity(uuid);
         return itemFrame;
+    }
+
+    public static int getRotorModelData(ItemFrame itemFrame) {
+        ItemStack is = itemFrame.getItem();
+        if (is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasCustomModelData()) {
+                return im.getCustomModelData();
+            }
+        }
+        return 10000002;
     }
 }

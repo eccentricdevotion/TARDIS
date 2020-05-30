@@ -887,6 +887,70 @@ shaped:
     result: OAK_SIGN
     amount: 1
     lore: ''
+  Time Rotor Early:
+    easy_shape: 'CRC,GWG,GRG'
+    easy_ingredients:
+      C: GRAY_DYE
+      R: REDSTONE
+      W: CLOCK
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      C: GRAY_DYE
+      R: REDSTONE_BLOCK
+      W: CLOCK
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
+  Time Rotor Tenth:
+    easy_shape: 'CRC,GWG,GRG'
+    easy_ingredients:
+      C: CYAN_DYE
+      R: REDSTONE
+      W: CLOCK
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      C: CYAN_DYE
+      R: REDSTONE_BLOCK
+      W: CLOCK
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
+  Time Rotor Eleventh:
+    easy_shape: 'CRC,GWG,GRG'
+    easy_ingredients:
+      C: BROWN_DYE
+      R: REDSTONE
+      W: CLOCK
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      C: BROWN_DYE
+      R: REDSTONE_BLOCK
+      W: CLOCK
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
+  Time Rotor Twelfth:
+    easy_shape: 'CRC,GWG,GRG'
+    easy_ingredients:
+      C: ORANGE_DYE
+      R: REDSTONE
+      W: CLOCK
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      C: ORANGE_DYE
+      R: REDSTONE_BLOCK
+      W: CLOCK
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
 # -------------------
 # these are the shapeless recipes
 # -------------------

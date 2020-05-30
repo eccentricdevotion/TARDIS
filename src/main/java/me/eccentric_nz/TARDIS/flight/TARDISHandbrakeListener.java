@@ -181,7 +181,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (tardis.getSchematic().getPermission().equals("rotor") && tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                         if (itemFrame != null) {
-                                            TARDISTimeRotor.setRotorAnimated(tardis.getSchematic(), itemFrame);
+                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
                                         }
                                     }
                                 } else {
@@ -194,7 +194,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (tardis.getSchematic().getPermission().equals("rotor") && tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                         if (itemFrame != null) {
-                                            TARDISTimeRotor.setRotorStatic(tardis.getSchematic(), itemFrame);
+                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
                                         }
                                     }
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");

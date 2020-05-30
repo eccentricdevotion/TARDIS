@@ -282,18 +282,6 @@ public class TARDISMushroomBlockData {
             put(58, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=true]");
             // police box blue open north
             put(59, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=false]");
-            // time rotor
-            put(60, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=true]");
-            // time rotor 2
-            put(61, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=false,west=false]");
-            // time rotor 3
-            put(62, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=false,west=true]");
-            // time rotor OFF
-            put(63, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=true,west=false]");
-            // time rotor 2 OFF
-            put(64, "minecraft:mushroom_stem[down=false,east=false,north=true,south=false,up=true,west=true]");
-            // time rotor 3 OFF
-            put(65, "minecraft:mushroom_stem[down=false,east=false,north=true,south=true,up=false,west=false]");
         }
     };
 }

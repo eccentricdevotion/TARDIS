@@ -112,6 +112,12 @@ public class TARDISGiveLister {
         tg.addRow(ChatColor.GRAY + "jelly-baby", ChatColor.DARK_GRAY + "Jelly Baby");
         tg.addRow(ChatColor.GRAY + "paper-bag", ChatColor.DARK_GRAY + "Paper Bag");
         tg.addRow();
+        tg.addRow("Time Rotors", "");
+        tg.addRow(ChatColor.GOLD + "rotor_early", ChatColor.YELLOW + "Early Time Rotor");
+        tg.addRow(ChatColor.GOLD + "rotor_tenth", ChatColor.YELLOW + "Ninth & Tenth Time Rotor");
+        tg.addRow(ChatColor.GOLD + "rotor_eleventh", ChatColor.YELLOW + "Eleventh Time Rotor");
+        tg.addRow(ChatColor.GOLD + "rotor_twelfth", ChatColor.YELLOW + "Twelfth Time Rotor");
+        tg.addRow();
         tg.addRow("Accessories", "");
         tg.addRow(ChatColor.GREEN + "bow-tie", ChatColor.DARK_GREEN + "Bow Tie");
         tg.addRow(ChatColor.GREEN + "glasses", ChatColor.DARK_GREEN + "3-D Glasses");

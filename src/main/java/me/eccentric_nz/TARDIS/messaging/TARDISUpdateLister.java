@@ -94,6 +94,7 @@ public class TARDISUpdateLister {
         tg.addRow(ChatColor.LIGHT_PURPLE + "dispenser", ChatColor.DARK_PURPLE + "Custard Cream Dispenser");
         tg.addRow(ChatColor.LIGHT_PURPLE + "forcefield", ChatColor.DARK_PURPLE + "TARDIS Force Field button");
         tg.addRow(ChatColor.LIGHT_PURPLE + "bell", ChatColor.DARK_PURPLE + "TARDIS Cloister bell button");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "rotor", ChatColor.DARK_PURPLE + "Time Rotor item frame");
         return tg.generate(TableGenerator.Receiver.CLIENT, true, true);
     }
 }

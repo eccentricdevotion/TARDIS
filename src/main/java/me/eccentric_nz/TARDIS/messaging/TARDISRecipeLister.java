@@ -60,6 +60,12 @@ public class TARDISRecipeLister {
         tg.addRow(ChatColor.GREEN + "r-key", ChatColor.DARK_GREEN + "TARDIS Remote Key");
         tg.addRow(ChatColor.GREEN + "reader", ChatColor.DARK_GREEN + "TARDIS Biome Reader");
         tg.addRow();
+        tg.addRow("Time Rotors", "");
+        tg.addRow(ChatColor.GOLD + "rotor_early", ChatColor.YELLOW + "Early Time Rotor");
+        tg.addRow(ChatColor.GOLD + "rotor_tenth", ChatColor.YELLOW + "Ninth & Tenth Time Rotor");
+        tg.addRow(ChatColor.GOLD + "rotor_eleventh", ChatColor.YELLOW + "Eleventh Time Rotor");
+        tg.addRow(ChatColor.GOLD + "rotor_twelfth", ChatColor.YELLOW + "Twelfth Time Rotor");
+        tg.addRow();
         tg.addRow("Item Circuits", "");
         tg.addRow(ChatColor.RED + "l-circuit", ChatColor.DARK_RED + "Locator Circuit");
         tg.addRow(ChatColor.RED + "m-circuit", ChatColor.DARK_RED + "Materialisation Circuit");

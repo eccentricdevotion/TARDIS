@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -52,7 +53,7 @@ public class TARDISItemFrameListener implements Listener {
             // did they run the `/tardis update direction` command?
             if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
                 String control = plugin.getTrackerKeeper().getPlayers().get(uuid);
-                if (control.equalsIgnoreCase("DIRECTION") || control.equalsIgnoreCase("FRAME")) {
+                if (control.equalsIgnoreCase("DIRECTION") || control.equalsIgnoreCase("FRAME") || control.equalsIgnoreCase("ROTOR")) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
@@ -60,26 +61,31 @@ public class TARDISItemFrameListener implements Listener {
                         return;
                     }
                     int id = rst.getTardis_id();
-                    String l = event.getRightClicked().getLocation().toString();
-                    // check whether they have a direction item frame already
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("location", l);
-                    where.put("type", control.equalsIgnoreCase("DIRECTION") ? 18 : 27);
-                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                    HashMap<String, Object> set = new HashMap<>();
-                    if (rsc.resultSet()) {
-                        // update location
-                        set.put("location", l);
-                        HashMap<String, Object> whereu = new HashMap<>();
-                        whereu.put("tardis_id", id);
-                        whereu.put("type", control.equalsIgnoreCase("DIRECTION") ? 18 : 27);
-                        plugin.getQueryFactory().doUpdate("controls", set, whereu);
+                    if (control.equalsIgnoreCase("DIRECTION") || control.equalsIgnoreCase("FRAME")) {
+                        String l = event.getRightClicked().getLocation().toString();
+                        // check whether they have a direction item frame already
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("location", l);
+                        where.put("type", control.equalsIgnoreCase("DIRECTION") ? 18 : 27);
+                        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                        HashMap<String, Object> set = new HashMap<>();
+                        if (rsc.resultSet()) {
+                            // update location
+                            set.put("location", l);
+                            HashMap<String, Object> whereu = new HashMap<>();
+                            whereu.put("tardis_id", id);
+                            whereu.put("type", control.equalsIgnoreCase("DIRECTION") ? 18 : 27);
+                            plugin.getQueryFactory().doUpdate("controls", set, whereu);
+                        } else {
+                            // add control
+                            plugin.getQueryFactory().insertControl(id, control.equalsIgnoreCase("DIRECTION") ? 18 : 27, l, 0);
+                        }
+                        plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                        TARDISMessage.send(player, control.equalsIgnoreCase("DIRECTION") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");
                     } else {
-                        // add control
-                        plugin.getQueryFactory().insertControl(id, control.equalsIgnoreCase("DIRECTION") ? 18 : 27, l, 0);
+                        TARDISTimeRotor.updateRotorRecord(id, event.getRightClicked().getUniqueId().toString());
+                        TARDISMessage.send(player, "ROTOR_UPDATE");
                     }
-                    plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                    TARDISMessage.send(player, control.equalsIgnoreCase("DIRECTION") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");
                     return;
                 }
             }
