@@ -30,139 +30,11 @@ public class TARDISMushroomBlockData {
             put(1, "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]");
             // siege_cube
             put(2, "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=false]");
-            // tardis_blue
-            put(3, "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=true]");
-            // tardis_white
-            put(4, "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=false,up=false,west=false]");
-            // tardis_orange
-            put(5, "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=false,up=false,west=true]");
-            // tardis_magenta
-            put(6, "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=true,up=false,west=false]");
-            // tardis_light_blue
-            put(7, "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=true,up=false,west=true]");
-            // tardis_yellow
-            put(8, "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=true,up=true,west=false]");
-            // tardis_lime
-            put(9, "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=true,up=true,west=true]");
-            // tardis_pink
-            put(10, "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=false,up=false,west=false]");
-            // tardis_gray
-            put(11, "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=false,up=false,west=true]");
-            // tardis_light_gray
-            put(12, "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=false,up=true,west=true]");
-            // tardis_cyan
-            put(13, "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=true,up=false,west=false]");
-            // tardis_purple
-            put(14, "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=true,up=false,west=true]");
-            // tardis_brown
-            put(15, "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=true,up=true,west=true]");
-            // tardis_green
-            put(16, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=false]");
-            // tardis_red
-            put(17, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=true]");
-            // tardis_black
-            put(18, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=true]");
-            // tardis_blue_south
-            put(19, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=true,up=false,west=false]");
-            // tardis_white_south
-            put(20, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=true,up=false,west=true]");
-            // tardis_orange_south
-            put(21, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=false]");
-            // tardis_magenta_south
-            put(22, "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=true]");
-            // tardis_light_blue_south
-            put(23, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=false,up=false,west=false]");
-            // tardis_yellow_south
-            put(24, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=false,up=false,west=true]");
-            // tardis_lime_south
-            put(25, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=false,up=true,west=false]");
-            // tardis_pink_south
-            put(26, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=false,up=true,west=true]");
-            // tardis_gray_south
-            put(27, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=true,up=false,west=false]");
-            // tardis_light_gray_south
-            put(28, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=true,up=false,west=true]");
-            // tardis_cyan_south
-            put(29, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=true,up=true,west=false]");
-            // tardis_purple_south
-            put(30, "minecraft:brown_mushroom_block[down=true,east=false,north=false,south=true,up=true,west=true]");
-            // tardis_brown_south
-            put(31, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=false,up=false,west=false]");
-            // tardis_green_south
-            put(32, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=false,up=false,west=true]");
-            // tardis_red_south
-            put(33, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=false,up=true,west=false]");
-            // tardis_black_south
-            put(34, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=false,up=true,west=true]");
-            // tardis_blue_west
-            put(35, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=true,up=false,west=false]");
-            // tardis_white_west
-            put(36, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=true,up=false,west=true]");
-            // tardis_orange_west
-            put(37, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=true,up=true,west=false]");
-            // tardis_magenta_west
-            put(38, "minecraft:brown_mushroom_block[down=true,east=false,north=true,south=true,up=true,west=true]");
-            // tardis_light_blue_west
-            put(39, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=false,up=false,west=false]");
-            // tardis_yellow_west
-            put(40, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=false,up=false,west=true]");
-            // tardis_lime_west
-            put(41, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=false,up=true,west=false]");
-            // tardis_pink_west
-            put(42, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=false,up=true,west=true]");
-            // tardis_gray_west
-            put(43, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=false]");
-            // tardis_light_gray_west
-            put(44, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
-            // tardis_cyan_west
-            put(45, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
-            // tardis_purple_west
-            put(46, "minecraft:brown_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=true]");
-            // tardis_brown_west
-            put(47, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]");
-            // tardis_green_west
-            put(48, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=true]");
-            // tardis_red_west
-            put(49, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=false]");
-            // tardis_black_west
-            put(50, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=true]");
-            // tardis_blue_north
-            put(51, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=false]");
-            // tardis_white_north
-            put(52, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=true]");
-            // tardis_orange_north
-            put(53, "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=false]");
         }
     };
 
     public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<Integer, String>() {
         {
-            // tardis_magenta_north
-            put(1, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=false]");
-            // tardis_light_blue_north
-            put(2, "minecraft:red_mushroom_block[down=false,east=false,north=true,south=true,up=false,west=false]");
-            // tardis_yellow_north
-            put(3, "minecraft:red_mushroom_block[down=false,east=false,north=true,south=true,up=false,west=true]");
-            // tardis_lime_north
-            put(4, "minecraft:red_mushroom_block[down=false,east=false,north=true,south=true,up=true,west=false]");
-            // tardis_pink_north
-            put(5, "minecraft:red_mushroom_block[down=false,east=false,north=true,south=true,up=true,west=true]");
-            // tardis_gray_north
-            put(6, "minecraft:red_mushroom_block[down=false,east=true,north=false,south=false,up=false,west=true]");
-            // tardis_light_gray_north
-            put(7, "minecraft:red_mushroom_block[down=false,east=true,north=false,south=false,up=true,west=true]");
-            // tardis_cyan_north
-            put(8, "minecraft:red_mushroom_block[down=false,east=true,north=false,south=true,up=false,west=true]");
-            // tardis_purple_north
-            put(9, "minecraft:red_mushroom_block[down=false,east=true,north=false,south=true,up=true,west=true]");
-            // tardis_brown_north
-            put(10, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=true]");
-            // tardis_green_north
-            put(11, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=true]");
-            // tardis_red_north
-            put(12, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=false,west=false]");
-            // tardis_black_north
-            put(13, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=false,west=true]");
             // ars
             put(14, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=false]");
             // bigger
@@ -211,6 +83,7 @@ public class TARDISMushroomBlockData {
             put(36, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=false]");
             // legacy_redstone
             put(37, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
+            // TODO change pandorica to item frame model
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
             // master
@@ -274,14 +147,6 @@ public class TARDISMushroomBlockData {
             put(54, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=true]");
             // animated seed grow
             put(55, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=false]");
-            // police box blue open east
-            put(56, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=true]");
-            // police box blue open south
-            put(57, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=false]");
-            // police box blue open west
-            put(58, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=true]");
-            // police box blue open north
-            put(59, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=false]");
         }
     };
 }

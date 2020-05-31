@@ -35,7 +35,7 @@ public class TARDISNumberParsers {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
             TARDIS.plugin.debug("Could not convert to int, the string was: " + i);
-            n.printStackTrace();
+//            n.printStackTrace();
         }
         return num;
     }
