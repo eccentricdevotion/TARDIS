@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,10 +28,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -67,6 +66,8 @@ public class TARDISHandlesListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Handles");
         im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
+        im.setCustomModelData(10000001);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);
         // remove control record
@@ -83,33 +84,9 @@ public class TARDISHandlesListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
-            if (!event.getPlayer().hasPermission("tardis.handles.use")) {
-                event.setCancelled(true);
-                TARDISMessage.send(event.getPlayer(), "NO_PERMS");
-                return;
-            }
-            // cannot place unless inside the TARDIS
-            if (!plugin.getUtils().inTARDISWorld(event.getPlayer())) {
-                event.setCancelled(true);
-                return;
-            }
-            UUID uuid = event.getPlayer().getUniqueId();
-            // must have a TARDIS
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (rs.fromUUID(uuid.toString())) {
-                // check if they have a handles block
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", rs.getTardis_id());
-                where.put("type", 26);
-                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                if (!rsc.resultSet()) {
-                    String l = event.getBlock().getLocation().toString();
-                    plugin.getQueryFactory().insertControl(rs.getTardis_id(), 26, l, 0);
-                } else {
-                    event.setCancelled(true);
-                    TARDISMessage.send(event.getPlayer(), "HANDLES_PLACED");
-                }
-            }
+            // can only be placed in an item frame
+            event.setCancelled(true);
+            TARDISMessage.send(event.getPlayer(), "HANDLES_FRAME");
         }
     }
 }
