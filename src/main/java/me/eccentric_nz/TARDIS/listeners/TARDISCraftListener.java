@@ -69,6 +69,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
+        t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
         t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
@@ -128,6 +129,7 @@ public class TARDISCraftListener implements Listener {
                     List<String> lore = im.getLore();
                     lore.add("Walls: " + ci.getItem(6).getType().toString());
                     lore.add("Floors: " + ci.getItem(9).getType().toString());
+                    lore.add("Chameleon: FACTORY");
                     im.setLore(lore);
                     is.setItemMeta(im);
                     ci.setResult(is);

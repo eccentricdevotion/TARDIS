@@ -104,6 +104,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("s-circuit", "TARDIS Stattenheim Circuit");
         recipeItems.put("save-disk", "Save Storage Disk");
         recipeItems.put("scanner-circuit", "TARDIS Scanner Circuit");
+        recipeItems.put("seed", "");
         recipeItems.put("sonic", "Sonic Screwdriver");
         recipeItems.put("t-circuit", "TARDIS Temporal Circuit");
         recipeItems.put("tardis", "");
@@ -122,6 +123,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
         t.put("PLANK", Material.BOOKSHELF); // plank
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
+        t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel
@@ -166,11 +168,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            if (args[0].equalsIgnoreCase("tardis") && args.length < 2) {
+            if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("tardis") && args.length == 2) {
+            if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length == 2) {
                 if (!t.containsKey(args[1].toUpperCase(Locale.ENGLISH))) {
                     TARDISMessage.send(player, "ARG_NOT_VALID");
                     return true;
@@ -363,7 +365,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
         List<String> lore = new ArrayList<>();
-        lore.add(type);
+        lore.add(type.toUpperCase());
         lore.add("Walls: ORANGE_WOOL");
         lore.add("Floors: LIGHT_GRAY_WOOL");
         lore.add("Chameleon: FACTORY");
