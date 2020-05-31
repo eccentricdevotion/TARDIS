@@ -32,7 +32,9 @@ public class TARDISTimeRotor {
         itemFrame.setFacingDirection(BlockFace.UP);
         setRotor(BY_NAME.get(schm.getPermission()), itemFrame, false);
         // save itemFrame UUID
-        updateRotorRecord(id, itemFrame.getUniqueId().toString());
+        UUID uuid = itemFrame.getUniqueId();
+        updateRotorRecord(id, uuid.toString());
+        TARDIS.plugin.getGeneralKeeper().getTimeRotors().put(id, uuid);
     }
 
     public static void updateRotorRecord(int id, String uuid) {

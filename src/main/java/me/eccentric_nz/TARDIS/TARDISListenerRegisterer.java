@@ -107,12 +107,14 @@ class TARDISListenerRegisterer {
                 plugin.getPM().registerEvents(new TARDISAnyoneDoorListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISAnyoneMoveListener(plugin), plugin);
             } else {
+                plugin.getPM().registerEvents(new TARDISPoliceBoxDoorListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
             }
         } else {
             plugin.getPM().registerEvents(new TARDISDoorClickListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISHangingListener(plugin), plugin);
         TARDISSonicListener sonicListener = new TARDISSonicListener(plugin);
         plugin.getPM().registerEvents(sonicListener, plugin);
         TARDISRenderRoomListener rendererListener = new TARDISRenderRoomListener(plugin);

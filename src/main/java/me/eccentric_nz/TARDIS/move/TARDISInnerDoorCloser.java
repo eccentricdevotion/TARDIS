@@ -146,6 +146,8 @@ public class TARDISInnerDoorCloser {
                 // players
                 uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().remove(u));
             }
+            plugin.debug("close exportal: " + exportal.toString());
+            plugin.debug("close inportal: " + inportal.toString());
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);
             plugin.getTrackerKeeper().getPortals().remove(inportal);

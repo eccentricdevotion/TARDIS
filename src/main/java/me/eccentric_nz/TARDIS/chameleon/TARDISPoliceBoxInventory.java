@@ -56,11 +56,13 @@ class TARDISPoliceBoxInventory {
         int i = 0;
         // coloured police boxes
         for (String s : colours) {
-            if (player.hasPermission("tardis.preset.police_box_" + s.replace(" ", "_").toLowerCase())) {
-                ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
+            String underscored = s.replace(" ", "_");
+            if (player.hasPermission("tardis.preset.police_box_" + underscored.toLowerCase())) {
+                String dye = underscored.toUpperCase() + "_DYE";
+                ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(s + " Police Box");
-                im.setCustomModelData(10000003 + i);
+                im.setCustomModelData(1001);
                 is.setItemMeta(im);
                 boxes[i] = is;
             }

@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
+import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -141,13 +141,20 @@ public class TARDISPresetBuilderFactory {
             if (bd.isRebuild()) {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
-                    TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
+                    TARDISDeinstantPreset deinsta = new TARDISDeinstantPreset(plugin);
                     deinsta.instaDestroyPreset(bd, false, demat);
                 }
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption(), 3);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                runnable.setTask(taskID);
+                int taskID;
+                if (preset.isColoured()) {
+                    TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, 3, preset);
+                    taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
+                    frame.setTask(taskID);
+                } else {
+                    TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption(), 3);
+                    taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
+                }
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
                 if (plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
                     TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
@@ -159,16 +166,23 @@ public class TARDISPresetBuilderFactory {
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption(), 18);
-                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                    runnable.setTask(taskID);
+                    int taskID;
+                    if (preset.isColoured()) {
+                        TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, 18, preset);
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
+                        frame.setTask(taskID);
+                    } else {
+                        TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption(), 18);
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                        runnable.setTask(taskID);
+                    }
                 }
             } else {
                 Material material = chameleonMaterial;
                 // delay by the usual time so handbrake message shows after materialisation sound
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                    new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, material.createBlockData(), false).buildPreset();
+                    new TARDISInstantPreset(plugin, bd, PRESET.INVISIBLE, material.createBlockData(), false).buildPreset();
                 }, 375L);
             }
             // update demat so it knows about the current preset after it has changed

@@ -18,10 +18,11 @@ package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISInstaPreset;
+import me.eccentric_nz.TARDIS.builders.TARDISInstantPoliceBox;
+import me.eccentric_nz.TARDIS.builders.TARDISInstantPreset;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
+import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -115,7 +116,7 @@ public class TARDISVortexPersister {
                                 while (!location.getChunk().isLoaded()) {
                                     location.getChunk().load();
                                 }
-                                new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, false, rs.getTardis().getDemat());
+                                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, rs.getTardis().getDemat());
                             }
                         }
                         // interrupted materialisation
@@ -140,7 +141,11 @@ public class TARDISVortexPersister {
                                 location.getChunk().load();
                             }
                             plugin.getTrackerKeeper().getMaterialising().add(id);
-                            new TARDISInstaPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                            if (rs.getTardis().getPreset().isColoured()) {
+                                new TARDISInstantPoliceBox(plugin, bd, rs.getTardis().getPreset()).buildPreset();
+                            } else {
+                                new TARDISInstantPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                            }
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singletonList(id));
                                 plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singletonList(id));

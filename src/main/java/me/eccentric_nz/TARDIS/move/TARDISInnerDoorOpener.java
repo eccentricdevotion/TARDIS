@@ -204,6 +204,8 @@ public class TARDISInnerDoorOpener {
                         });
                     }
                     // locations
+                    plugin.debug("open exportal: " + exportal.toString());
+                    plugin.debug("open inportal: " + inportal.toString());
                     if (tardis != null && preset != null) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
                     }

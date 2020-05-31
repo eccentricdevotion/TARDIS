@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPoliceBox;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
@@ -127,7 +126,6 @@ public class TARDIS extends JavaPlugin {
     private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
-    private TARDISChameleonPoliceBox boxes;
     private TARDISPerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
     private TARDISSeedRecipe seeds;
@@ -322,8 +320,6 @@ public class TARDIS extends JavaPlugin {
             new TARDISChecker(this).checkAdvancements();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
-            boxes = new TARDISChameleonPoliceBox();
-            boxes.makePresets();
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).load();
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
@@ -343,6 +339,8 @@ public class TARDIS extends JavaPlugin {
                 TARDISHadsPersister thp = new TARDISHadsPersister(this);
                 thp.load();
             }
+            TARDISTimeRotorLoader trl = new TARDISTimeRotorLoader(this);
+            trl.load();
             if (getConfig().getBoolean("allow.chemistry")) {
                 new ChemistryBlockRecipes(this).addRecipes();
                 new BleachRecipe(this).setRecipes();
@@ -1122,10 +1120,6 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISChameleonPreset getPresets() {
         return presets;
-    }
-
-    public TARDISChameleonPoliceBox getBoxes() {
-        return boxes;
     }
 
     public TARDISShapedRecipe getFigura() {

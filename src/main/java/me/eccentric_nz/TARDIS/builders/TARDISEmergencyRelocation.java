@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -58,7 +58,11 @@ public class TARDISEmergencyRelocation {
                 bd.setMalfunction(false);
                 bd.setSubmarine(false);
                 Tardis tardis = rs.getTardis();
-                new TARDISInstaPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                if (tardis.getPreset().isColoured()) {
+                    new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
+                } else {
+                    new TARDISInstantPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                }
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 HashMap<String, Object> setc = new HashMap<>();

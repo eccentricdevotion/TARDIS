@@ -100,12 +100,19 @@ public class TARDISPresetDestroyerFactory {
                         // remove door
                         destroyDoor(dd.getTardisID());
                     }
-                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, dd, demat, cham_id.createBlockData(), loops);
-                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                    runnable.setTask(taskID);
+                    int taskID;
+                    if (preset.isColoured()) {
+                        TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, loops, demat);
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
+                        frame.setTask(taskID);
+                    } else {
+                        TARDISDematerialisePreset runnable = new TARDISDematerialisePreset(plugin, dd, demat, cham_id.createBlockData(), loops);
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                        runnable.setTask(taskID);
+                    }
                 }
             } else {
-                new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
+                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
             }
         }
     }

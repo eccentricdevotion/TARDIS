@@ -16,13 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import org.bukkit.Rotation;
+
 /**
  * @author eccentric_nz
  */
 public enum COMPASS {
 
-    EAST,
-    SOUTH,
-    WEST,
-    NORTH
+    EAST(Rotation.FLIPPED),
+    SOUTH(Rotation.COUNTER_CLOCKWISE),
+    WEST(Rotation.NONE),
+    NORTH(Rotation.CLOCKWISE);
+
+    private final Rotation rotation;
+
+    COMPASS(Rotation rotation) {
+        this.rotation = rotation;
+    }
+
+    public Rotation getRotation() {
+        return rotation;
+    }
 }

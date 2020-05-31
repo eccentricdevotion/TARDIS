@@ -91,13 +91,15 @@ public class TARDISItemFrameListener implements Listener {
                         plugin.getTrackerKeeper().getPlayers().remove(uuid);
                         TARDISMessage.send(player, control.equalsIgnoreCase("DIRECTION") ? "DIRECTION_UPDATE" : "CHAM_UPDATE");
                     } else {
-                        TARDISTimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
+                        UUID trit = frame.getUniqueId();
+                        TARDISTimeRotor.updateRotorRecord(id, trit.toString());
+                        plugin.getGeneralKeeper().getTimeRotors().put(id, trit);
+                        plugin.getTrackerKeeper().getPlayers().remove(uuid);
                         TARDISMessage.send(player, "ROTOR_UPDATE");
                     }
                     return;
                 }
             }
-            // if the item frame has a tripwire hook in it
             // check if it is a TARDIS direction item frame
             String l = frame.getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();
@@ -115,6 +117,7 @@ public class TARDISItemFrameListener implements Listener {
                     event.setCancelled(true);
                     return;
                 }
+                // if the item frame has a tripwire hook in it
                 if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
                     if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
@@ -334,6 +337,8 @@ public class TARDISItemFrameListener implements Listener {
                 } else {
                     event.setCancelled(true);
                 }
+            } else if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(event.getEntity().getLocation().getBlock().getLocation().toString())) {
+                event.setCancelled(true);
             }
         }
     }

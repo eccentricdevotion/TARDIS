@@ -47,7 +47,7 @@ public class TARDISGeneralInstanceKeeper {
 
     private final HashSet<Material> transparent;
     private final List<Block> doorPistons = new ArrayList<>();
-    private final List<UUID> npcIDs = new ArrayList<>();
+    private final HashMap<Integer, UUID> timeRotors = new HashMap<>();
     private List<String> quotes = new ArrayList<>();
     private final HashMap<String, String> sign_lookup;
     private TARDISAdminCommands tardisAdminCommand;
@@ -161,8 +161,8 @@ public class TARDISGeneralInstanceKeeper {
         return roomCondenserData;
     }
 
-    public List<UUID> getNpcIDs() {
-        return npcIDs;
+    public HashMap<Integer, UUID> getTimeRotors() {
+        return timeRotors;
     }
 
     public List<Block> getDoorPistons() {

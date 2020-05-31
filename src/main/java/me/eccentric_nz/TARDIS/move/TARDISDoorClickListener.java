@@ -24,11 +24,11 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -207,7 +207,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     }
                                                     // toggle the doors
                                                     if (isPoliceBoxBlue) {
-                                                        new TARDISModelChanger(plugin, block, player, id, doortype).toggleDoors();
+                                                        new TARDISCustomModelDataChanger(plugin, block, player, id).toggleDoors();
                                                     } else {
                                                         new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                     }
