@@ -28,7 +28,10 @@ import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -48,7 +51,7 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class TARDISMaterialisationPreset implements Runnable {
+class TARDISMaterialisePreset implements Runnable {
 
     private final TARDIS plugin;
     private final BuildData bd;
@@ -84,7 +87,7 @@ class TARDISMaterialisationPreset implements Runnable {
      * @param adapt  the chameleon circuit adaption setting
      * @param loops  the number of loops to run
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, ADAPTION adapt, int loops) {
+    public TARDISMaterialisePreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, ADAPTION adapt, int loops) {
         this.plugin = plugin;
         this.bd = bd;
         this.loops = loops;
@@ -95,11 +98,7 @@ class TARDISMaterialisationPreset implements Runnable {
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(TARDISConstants.RANDOM.nextInt(2));
         }
-        if (preset.isColoured()) {
-            column = plugin.getBoxes().getColumn(preset, bd.getDirection());
-            stained_column = plugin.getBoxes().getStained(preset, bd.getDirection());
-            glass_column = plugin.getBoxes().getGlass(preset, bd.getDirection());
-        } else if (this.preset.equals(PRESET.CONSTRUCT)) {
+        if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stainData", bd.getDirection()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glassData", bd.getDirection()).getColumn();

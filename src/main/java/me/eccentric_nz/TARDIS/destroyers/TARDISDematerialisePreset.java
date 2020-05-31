@@ -23,7 +23,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -41,7 +44,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISDematerialisationPreset implements Runnable {
+class TARDISDematerialisePreset implements Runnable {
 
     private final TARDIS plugin;
     private final DestroyData dd;
@@ -66,18 +69,14 @@ class TARDISDematerialisationPreset implements Runnable {
      * @param cham_id the chameleon block id for the police box
      * @param loops   the number of loops to run
      */
-    TARDISDematerialisationPreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
+    TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
         this.plugin = plugin;
         this.dd = dd;
         this.loops = loops;
         this.preset = preset;
         i = 0;
         this.cham_id = cham_id;
-        if (preset.isColoured()) {
-            column = plugin.getBoxes().getColumn(preset, dd.getDirection());
-            stained_column = plugin.getBoxes().getStained(preset, dd.getDirection());
-            glass_column = plugin.getBoxes().getGlass(preset, dd.getDirection());
-        } else if (this.preset.equals(PRESET.CONSTRUCT)) {
+        if (this.preset.equals(PRESET.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection()).getColumn();
@@ -321,7 +320,7 @@ class TARDISDematerialisationPreset implements Runnable {
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, false, preset);
+            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
             if (preset.equals(PRESET.JUNK_MODE)) {
                 // teleport player(s) to exit (tmd.getFromToLocation())
                 getJunkTravellers().forEach((e) -> {

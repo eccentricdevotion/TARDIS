@@ -77,7 +77,7 @@ public class TARDISUtils {
         // check they are still in the TARDIS world
         World world = plugin.getServer().getWorlds().get(0);
         String name = "";
-        if (player.isOnline()) {
+        if (player != null && player.isOnline()) {
             world = player.getLocation().getWorld();
             name = world.getName();
         }
