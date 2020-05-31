@@ -23,7 +23,7 @@
 17. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110)
 18. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 19. Explore scanner using a map - [Bukkit #1097](https://dev.bukkit.org/projects/tardis/issues/1097)
-20. Use item frame trick to make Handles a mushroom block instead of a birch button - _started_
+20. Use item frame trick to make Handles not override a birch button - _started_
 
 
 ## Future version `?+`
@@ -33,11 +33,8 @@
    * Mob farming / ejection events
 
 ## Resource Pack / TARDISWeepingAngels
-1. Custom Time Rotor model - [Bukkit #1570](https://dev.bukkit.org/projects/tardis/issues/1570) - _started_
-   * Update Rotor console schematic & remove beacon
-   * Add config option for custom consoles
-2. Rare armour drops
-3. Re-skin mobs for Resource pack, and add new mob sounds
+1. Rare armour drops
+2. Re-skin mobs for Resource pack, and add new mob sounds
    * Clockwork Droid
    * Hath _started_
    * Endermites -> Cybermats
@@ -46,7 +43,7 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
-4. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+3. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
 ## Minecraft Bedrock Edition
 1. Recreate everything :)

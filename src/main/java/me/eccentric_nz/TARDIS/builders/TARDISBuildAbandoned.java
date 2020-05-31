@@ -460,18 +460,18 @@ class TARDISBuildAbandoned implements Runnable {
                 String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 23, telepathicloc, 0);
             }
-            if (type.equals(Material.BEACON)) {
-                if (schm.getPermission().equals("ender")) {
-                    /*
-                     * get the ender crystal location
-                     */
-                    ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
-                } else if (schm.getPermission().equals("rotor")) {
-                    /*
-                     * spawn an item frame and place the time rotor in it
-                     */
-                    TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
-                }
+            if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
+                /*
+                 * get the ender crystal location
+                 */
+                ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
+            }
+            if (type.equals(Material.HONEYCOMB_BLOCK) && schm.getPermission().equals("rotor")) {
+                /*
+                 * spawn an item frame and place the time rotor in it
+                 */
+                TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
+                data = Material.STONE_BRICKS.createBlockData();
             }
             // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
             if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
