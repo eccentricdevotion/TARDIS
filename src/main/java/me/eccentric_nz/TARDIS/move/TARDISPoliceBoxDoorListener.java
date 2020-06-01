@@ -2,14 +2,24 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,12 +32,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TARDISPoliceBoxDoorListener implements Listener {
-
-    private final TARDIS plugin;
+public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
 
     public TARDISPoliceBoxDoorListener(TARDIS plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -67,34 +75,99 @@ public class TARDISPoliceBoxDoorListener implements Listener {
                             tid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
-                                if (!rs.getTardis().isHandbrake_on()) {
+                                Tardis tardis = rs.getTardis();
+                                if (!tardis.isHandbrake_on()) {
                                     TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
                                 // must be Time Lord or companion
                                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
-                                if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
+                                if (rsc.getCompanions().contains(playerUUID) || tardis.isAbandoned()) {
                                     if (!rsd.isLocked()) {
                                         if (open) {
                                             // get key material
                                             ResultSetPlayerPrefs rspref = new ResultSetPlayerPrefs(plugin, uuid.toString());
                                             String key;
+                                            boolean willFarm = false;
+                                            boolean canPowerUp = false;
                                             if (rspref.resultSet()) {
                                                 key = (!rspref.getKey().isEmpty()) ? rspref.getKey() : plugin.getConfig().getString("preferences.key");
+                                                willFarm = rspref.isFarmOn();
+                                                if (rspref.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down")) {
+                                                    // check TARDIS is not abandoned
+                                                    canPowerUp = !tardis.isAbandoned();
+                                                }
                                             } else {
                                                 key = plugin.getConfig().getString("preferences.key");
                                             }
                                             Material m = Material.valueOf(key);
                                             if (player.getInventory().getItemInMainHand().getType().equals(m)) {
-                                                // create portal & open inner door
-                                                new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
-                                                dim.setCustomModelData(1002);
-                                                dye.setItemMeta(dim);
-                                                frame.setItem(dye);
+                                                if (player.isSneaking()) {
+                                                    // tp to the interior
+                                                    // get INNER TARDIS location
+                                                    TARDISDoorLocation idl = getDoor(1, id);
+                                                    Location tardis_loc = idl.getL();
+                                                    World cw = idl.getW();
+                                                    COMPASS innerD = idl.getD();
+                                                    COMPASS d = rsd.getDoor_direction();
+                                                    COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                                                    World playerWorld = location.getWorld();
+                                                    // check for entities near the police box
+                                                    TARDISPetsAndFollowers petsAndFollowers = null;
+                                                    if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
+                                                        plugin.getTrackerKeeper().getFarming().add(playerUUID);
+                                                        TARDISFarmer tf = new TARDISFarmer(plugin);
+                                                        petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
+                                                    }
+                                                    // if WorldGuard is on the server check for TARDIS region protection and add admin as member
+                                                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
+                                                        plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
+                                                    }
+                                                    // enter TARDIS!
+                                                    cw.getChunkAt(tardis_loc).load();
+                                                    tardis_loc.setPitch(player.getLocation().getPitch());
+                                                    // get inner door direction so we can adjust yaw if necessary
+                                                    float yaw = player.getLocation().getYaw();
+                                                    if (!innerD.equals(pd)) {
+                                                        yaw += adjustYaw(pd, innerD);
+                                                    }
+                                                    tardis_loc.setYaw(yaw);
+                                                    movePlayer(player, tardis_loc, false, playerWorld, rspref.isQuotesOn(), 1, rspref.isMinecartOn());
+                                                    if (petsAndFollowers != null) {
+                                                        if (petsAndFollowers.getPets().size() > 0) {
+                                                            movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
+                                                        }
+                                                        if (petsAndFollowers.getFollowers().size() > 0) {
+                                                            new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
+                                                        }
+                                                    }
+                                                    if (plugin.getConfig().getBoolean("allow.tp_switch") && rspref.isTextureOn()) {
+                                                        if (!rspref.getTextureIn().isEmpty()) {
+                                                            new TARDISResourcePackChanger(plugin).changeRP(player, rspref.getTextureIn());
+                                                        }
+                                                    }
+                                                    if (canPowerUp && !tardis.isPowered_on() && !tardis.isAbandoned()) {
+                                                        // power up the TARDIS
+                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 20L);
+                                                    }
+                                                    // put player into travellers table
+                                                    // remove them first as they may have exited incorrectly and we only want them listed once
+                                                    removeTraveller(playerUUID);
+                                                    HashMap<String, Object> set = new HashMap<>();
+                                                    set.put("tardis_id", id);
+                                                    set.put("uuid", playerUUID.toString());
+                                                    plugin.getQueryFactory().doSyncInsert("travellers", set);
+                                                } else {
+                                                    // create portal & open inner door
+                                                    new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
+                                                    dim.setCustomModelData(1002);
+                                                    dye.setItemMeta(dim);
+                                                    frame.setItem(dye);
+                                                }
                                                 playDoorSound(true, location);
                                             }
                                         } else {
-                                            if (rs.getTardis().isAbandoned()) {
+                                            if (tardis.isAbandoned()) {
                                                 TARDISMessage.send(player, "ABANDONED_DOOR");
                                                 return;
                                             }
@@ -105,7 +178,7 @@ public class TARDISPoliceBoxDoorListener implements Listener {
                                             frame.setItem(dye);
                                             playDoorSound(false, location);
                                         }
-                                    } else if (rs.getTardis().getUuid() != playerUUID) {
+                                    } else if (tardis.getUuid() != playerUUID) {
                                         TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                     } else {
                                         TARDISMessage.send(player, "DOOR_UNLOCK");
