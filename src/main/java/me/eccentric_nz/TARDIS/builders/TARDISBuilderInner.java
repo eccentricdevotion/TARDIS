@@ -604,8 +604,7 @@ public class TARDISBuilderInner implements Runnable {
                 /*
                  * spawn an item frame and place the time rotor in it
                  */
-                data = Material.STONE_BRICKS.createBlockData();
-                TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, dbID);
+                TARDISBlockSetters.setBlock(world, x, y, z, Material.STONE_BRICKS);
                 TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
             } else if (type.equals(Material.IRON_DOOR)) { // doors
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
