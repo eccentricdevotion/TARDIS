@@ -79,6 +79,8 @@ public class TARDISUpdateLister {
         tg.addRow(ChatColor.BLUE + "stall", ChatColor.DARK_BLUE + "Llama stall room");
         tg.addRow(ChatColor.BLUE + "vault", ChatColor.DARK_BLUE + "Vault room drop chest");
         tg.addRow(ChatColor.BLUE + "village", ChatColor.DARK_BLUE + "Village room");
+        tg.addRow(ChatColor.BLUE + "igloo", ChatColor.DARK_BLUE + "Igloo room");
+        tg.addRow(ChatColor.BLUE + "beacon", ChatColor.DARK_BLUE + "Beacon toggle block");
         tg.addRow();
         tg.addRow("Others", "");
         tg.addRow(ChatColor.LIGHT_PURPLE + "condenser", ChatColor.DARK_PURPLE + "Artron Energy Condenser");
@@ -86,10 +88,10 @@ public class TARDISUpdateLister {
         tg.addRow(ChatColor.LIGHT_PURPLE + "backdoor", ChatColor.DARK_PURPLE + "TARDIS back doors");
         tg.addRow(ChatColor.LIGHT_PURPLE + "keyboard", ChatColor.DARK_PURPLE + "Keyboard Input sign");
         tg.addRow(ChatColor.LIGHT_PURPLE + "scanner", ChatColor.DARK_PURPLE + "Exterior Scanner button");
+        tg.addRow(ChatColor.LIGHT_PURPLE + "map", ChatColor.DARK_PURPLE + "TARDIS Scanner Map");
         tg.addRow(ChatColor.LIGHT_PURPLE + "light", ChatColor.DARK_PURPLE + "Console Light switch");
         tg.addRow(ChatColor.LIGHT_PURPLE + "toggle_wool", ChatColor.DARK_PURPLE + "Toggle Black Wool behind door");
         tg.addRow(ChatColor.LIGHT_PURPLE + "zero", ChatColor.DARK_PURPLE + "Zero room transmat button");
-        tg.addRow(ChatColor.LIGHT_PURPLE + "beacon", ChatColor.DARK_PURPLE + "Beacon toggle block");
         tg.addRow(ChatColor.LIGHT_PURPLE + "frame", ChatColor.DARK_PURPLE + "Chameleon Item Frame");
         tg.addRow(ChatColor.LIGHT_PURPLE + "dispenser", ChatColor.DARK_PURPLE + "Custard Cream Dispenser");
         tg.addRow(ChatColor.LIGHT_PURPLE + "forcefield", ChatColor.DARK_PURPLE + "TARDIS Force Field button");
