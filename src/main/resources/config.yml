@@ -28,7 +28,6 @@ creation:
   custom_schematic_seed: OBSIDIAN
   use_clay: WOOL
   count: 0
-  sky_biome: true
   area: none
 # outer TARDIS
 police_box:
@@ -103,6 +102,7 @@ preferences:
   no_creative_condense: false
   vortex_fall: kill
   wake_bees: true
+  chat_width: 55
 # desktop theme
 desktop:
   check_blocks_before_upgrade: false
@@ -147,6 +147,7 @@ allow:
   chemistry: true
   weather_set: false
   force_field: 8
+  admin_bypass: false
 # room related
 growth:
   gravity_max_distance: 15
