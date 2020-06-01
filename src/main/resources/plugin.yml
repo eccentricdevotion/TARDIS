@@ -467,6 +467,15 @@ permissions:
   tardis.scanner.map:
     description: Allow a player to add and use the TARDIS scanner map.
     default: op
+  tardis.weather.clear:
+    description: Allow a player to change the weather to clear.
+    default: op
+  tardis.weather.rain:
+    description: Allow a player to change the weather to raining.
+    default: op
+  tardis.weather.thunder:
+    description: Allow a player to change the weather to a thunderstorm.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
@@ -1224,3 +1233,13 @@ commands:
     description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
     permission: tardis.admin
     usage: /<command> [player|off]
+  tardisweather:
+    aliases: [/tw, tweather]
+    description: Change the weather in the world the player is in (or where their TARDIS is if they are inside it).
+    permission: tardis.use
+    usage: /<command> [clear|rain|thunder]
+  tardistime:
+    aliases: [ttime]
+    description: Change the time in the world the player is in (or where their TARDIS is if they are inside it).
+    permission: tardis.admin
+    usage: /<command> [morning|noon|night|midnight|?AM|?PM|ticks]

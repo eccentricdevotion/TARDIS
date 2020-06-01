@@ -145,6 +145,7 @@ allow:
   perception_filter: true
   repair: true
   chemistry: true
+  weather_set: false
   force_field: 8
 # room related
 growth:

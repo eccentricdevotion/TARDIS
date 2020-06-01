@@ -168,6 +168,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("use_worldguard", "preferences");
         firstsBool.put("village_travel", "allow");
         firstsBool.put("walk_in_tardis", "preferences");
+        firstsBool.put("weather_set", "allow");
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer

@@ -67,6 +67,7 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.spawn_eggs", true);
         booleanOptions.put("allow.tp_switch", true);
         booleanOptions.put("allow.village_travel", false);
+        booleanOptions.put("allow.weather_set", false);
         booleanOptions.put("allow.wg_flag_set", true);
         booleanOptions.put("allow.zero_room", false);
         booleanOptions.put("arch.clear_inv_on_death", false);

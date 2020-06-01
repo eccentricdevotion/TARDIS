@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISGameModeCommand;
+import me.eccentric_nz.TARDIS.commands.utils.*;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
@@ -119,5 +119,13 @@ class TARDISCommandSetter {
             plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
             plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
         }
+        if (plugin.getConfig().getBoolean("allow.weather_set")) {
+            TARDISWeatherCommand tardisWeatherCommand = new TARDISWeatherCommand(plugin);
+            plugin.getCommand("tardisweather").setExecutor(tardisWeatherCommand);
+            plugin.getCommand("tardisweather").setTabCompleter(tardisWeatherCommand);
+        }
+        TARDISTimeCommand tardisTimeCommand = new TARDISTimeCommand(plugin);
+        plugin.getCommand("tardistime").setExecutor(tardisTimeCommand);
+        plugin.getCommand("tardistime").setTabCompleter(tardisTimeCommand);
     }
 }
