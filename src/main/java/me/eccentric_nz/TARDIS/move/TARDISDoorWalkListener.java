@@ -229,9 +229,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                                 if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
                                     if (!rsd.isLocked()) {
-                                        boolean isPoliceBoxBlue = (rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE) || rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE_OPEN));
+                                        boolean isPoliceBox = (rs.getTardis().getPreset().isColoured());
                                         // toggle the door open/closed
-                                        if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBoxBlue)) {
+                                        if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
                                             if (doortype == 0 || doortype == 1) {
                                                 boolean open = TARDISStaticUtils.isDoorOpen(block);
                                                 if (!material.equals(m) && doortype == 0 && !open) {
@@ -253,8 +253,8 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
                                                 }
                                                 // toggle the door
-                                                if (isPoliceBoxBlue) {
-                                                    new TARDISCustomModelDataChanger(plugin, block, player, id).toggleDoors();
+                                                if (isPoliceBox) {
+                                                    new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                                                 } else {
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 }

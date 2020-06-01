@@ -215,9 +215,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     return;
                                 }
                                 if (!rsd.isLocked()) {
-                                    boolean isPoliceBoxBlue = (rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE) || rs.getTardis().getPreset().equals(PRESET.POLICE_BOX_BLUE_OPEN));
+                                    boolean isPoliceBox = (rs.getTardis().getPreset().isColoured());
                                     // toggle the door open/closed
-                                    if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBoxBlue)) {
+                                    if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
                                         if (doortype == 0 || doortype == 1) {
                                             boolean open = TARDISStaticUtils.isDoorOpen(block);
                                             boolean toggle = true;
@@ -251,8 +251,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             // toggle the door
                                             if (toggle || rs.getTardis().isAbandoned()) {
                                                 // toggle the door
-                                                if (isPoliceBoxBlue) {
-                                                    new TARDISCustomModelDataChanger(plugin, block, player, id).toggleDoors();
+                                                if (isPoliceBox) {
+                                                    new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                                                 } else {
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 }

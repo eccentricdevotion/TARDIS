@@ -57,19 +57,19 @@ public class TARDISInnerDoorOpener {
         // get inner door location
         ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
-            open(rs.getInnerBlock(), rs.getOuterBlock(), true);
+            open(rs.getInnerBlock());
         }
     }
 
     /**
      * Open the door.
      */
-    private void open(Block block, Block other, boolean add) {
+    private void open(Block block) {
         if (Tag.DOORS.isTagged(block.getType())) {
             Openable openable = (Openable) block.getBlockData();
             openable.setOpen(true);
             block.setBlockData(openable, true);
-            if (add && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                 // get all companion UUIDs
                 List<UUID> uuids = new ArrayList<>();
                 uuids.add(uuid);
@@ -105,79 +105,58 @@ public class TARDISInnerDoorOpener {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
                 rsc.resultSet();
                 Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                switch (rsc.getDirection()) {
-                    case EAST:
-                        exportal.add(-1.0d, 0.0d, 0.0d);
-                        break;
-                    case SOUTH:
-                        exportal.add(0.0d, 0.0d, -1.0d);
-                        break;
-                    case WEST:
-                        exportal.add(1.0d, 0.0d, 0.0d);
-                        break;
-                    default: // NORTH
-                        exportal.add(0.0d, 0.0d, 1.0d);
-                        break;
-                }
                 // interior teleport location
                 Location indoor = null;
                 COMPASS indirection = COMPASS.SOUTH;
                 // exterior teleport location
-                Location exdoor = null;
+                Location exdoor = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 COMPASS exdirection = COMPASS.SOUTH;
                 // interior portal
                 Location inportal = null;
                 ResultSetPortals rsp = new ResultSetPortals(plugin, id);
                 rsp.resultSet();
                 for (HashMap<String, String> map : rsp.getData()) {
-                    Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(map.get("door_location"));
                     COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
                     if (map.get("door_type").equals("1")) {
+                        indoor = TARDISStaticLocationGetters.getLocationFromDB(map.get("door_location"));
+                        inportal = TARDISStaticLocationGetters.getLocationFromDB(map.get("door_location"));
                         // clone it because we're going to change it!
-                        inportal = tmp_loc.clone();
                         indirection = tmp_direction;
                         // adjust for teleport
-                        int getx = tmp_loc.getBlockX();
-                        int getz = tmp_loc.getBlockZ();
                         switch (indirection) {
                             case NORTH:
                                 // z -ve
-                                tmp_loc.setX(getx + 0.5);
-                                tmp_loc.setZ(getz - 0.5);
+                                indoor.add(0.5d, 0.0d, -0.5d);
                                 break;
                             case EAST:
                                 // x +ve
-                                tmp_loc.setX(getx + 1.5);
-                                tmp_loc.setZ(getz + 0.5);
+                                indoor.add(1.5d, 0.0d, 0.5d);
                                 break;
                             case SOUTH:
                                 // z +ve
-                                tmp_loc.setX(getx + 0.5);
-                                tmp_loc.setZ(getz + 1.5);
+                                indoor.add(0.5d, 0.0d, 1.5d);
                                 break;
                             case WEST:
                                 // x -ve
-                                tmp_loc.setX(getx - 0.5);
-                                tmp_loc.setZ(getz + 0.5);
+                                indoor.add(-0.5d, 0.0d, 0.5d);
                                 break;
                         }
-                        indoor = tmp_loc;
                     } else {
-                        exdoor = tmp_loc.clone();
+                        // outer door
                         exdirection = COMPASS.valueOf(map.get("door_direction"));
                         // adjust for teleport
                         switch (rsc.getDirection()) {
                             case NORTH:
-                                exdoor.add(0.5d, 0.0d, 1.5d);
+                                exdoor.add(0.5d, 0.0d, 1.75d);
                                 break;
                             case WEST:
-                                exdoor.add(1.5d, 0.0d, 0.5d);
+                                exdoor.add(1.75d, 0.0d, 0.5d);
                                 break;
                             case SOUTH:
-                                exdoor.add(0.5d, 0.0d, -1.5d);
+                                exdoor.add(0.5d, 0.0d, -1.75d);
                                 break;
                             default: // EAST
-                                exdoor.add(-1.5d, 0.0d, 0.5d);
+                                exdoor.add(-1.75d, 0.0d, 0.5d);
                                 break;
                         }
                     }
@@ -204,8 +183,6 @@ public class TARDISInnerDoorOpener {
                         });
                     }
                     // locations
-                    plugin.debug("open exportal: " + exportal.toString());
-                    plugin.debug("open inportal: " + inportal.toString());
                     if (tardis != null && preset != null) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
                     }

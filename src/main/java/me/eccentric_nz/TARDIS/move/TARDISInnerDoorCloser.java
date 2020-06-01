@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
@@ -55,7 +54,7 @@ public class TARDISInnerDoorCloser {
             if (!rs.getInnerBlock().getChunk().isLoaded()) {
                 rs.getInnerBlock().getChunk().load();
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(rs.getInnerBlock(), rs.getInnerDirection()), 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(rs.getInnerBlock()), 5L);
         }
     }
 
@@ -64,7 +63,7 @@ public class TARDISInnerDoorCloser {
      *
      * @param block the bottom door block
      */
-    private void close(Block block, COMPASS indirection) {
+    private void close(Block block) {
         if (block != null && Tag.DOORS.isTagged(block.getType())) {
             Openable closeable = (Openable) block.getBlockData();
             closeable.setOpen(false);
@@ -96,58 +95,17 @@ public class TARDISInnerDoorCloser {
             // get locations
             // interior portal
             Location inportal = block.getLocation();
-            // adjust for teleport
-            int getx = inportal.getBlockX();
-            int getz = inportal.getBlockZ();
-            switch (indirection) {
-                case NORTH:
-                    // z -ve
-                    inportal.setX(getx + 0.5);
-                    inportal.setZ(getz - 0.5);
-                    break;
-                case EAST:
-                    // x +ve
-                    inportal.setX(getx + 1.5);
-                    inportal.setZ(getz + 0.5);
-                    break;
-                case SOUTH:
-                    // z +ve
-                    inportal.setX(getx + 0.5);
-                    inportal.setZ(getz + 1.5);
-                    break;
-                case WEST:
-                    // x -ve
-                    inportal.setX(getx - 0.5);
-                    inportal.setZ(getz + 0.5);
-                    break;
-            }
             // exterior portal (from current location)
             HashMap<String, Object> where_exportal = new HashMap<>();
             where_exportal.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            switch (rsc.getDirection()) {
-                case EAST:
-                    exportal.add(-1.0d, 0.0d, 0.0d);
-                    break;
-                case SOUTH:
-                    exportal.add(0.0d, 0.0d, -1.0d);
-                    break;
-                case WEST:
-                    exportal.add(1.0d, 0.0d, 0.0d);
-                    break;
-                default: // NORTH
-                    exportal.add(0.0d, 0.0d, 1.0d);
-                    break;
-            }
             // unset trackers
             if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 // players
                 uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().remove(u));
             }
-            plugin.debug("close exportal: " + exportal.toString());
-            plugin.debug("close inportal: " + inportal.toString());
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);
             plugin.getTrackerKeeper().getPortals().remove(inportal);

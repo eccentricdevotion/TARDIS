@@ -6,7 +6,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -25,7 +24,7 @@ public class TARDISCustomModelDataChanger {
 
     public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
         this.plugin = plugin;
-        this.block = block.getRelative(BlockFace.UP);
+        this.block = block;
         this.player = player;
         this.id = id;
     }
@@ -33,7 +32,7 @@ public class TARDISCustomModelDataChanger {
     /**
      * Toggle the door open and closed by setting the custom model data.
      */
-    public void toggleDoors() {
+    public void toggleOuterDoor() {
         UUID uuid = player.getUniqueId();
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
@@ -42,6 +41,9 @@ public class TARDISCustomModelDataChanger {
             return;
         }
         Location outer = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        while (!outer.getChunk().isLoaded()) {
+            outer.getChunk().load();
+        }
         ItemFrame itemFrame = null;
         for (Entity e : outer.getWorld().getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
             if (e instanceof ItemFrame) {

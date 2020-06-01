@@ -24,10 +24,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetVoid;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
 import org.bukkit.Location;
@@ -113,12 +113,9 @@ public class TARDISMoveListener implements Listener {
                     petsAndFollowers = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
                 }
                 // set travelling status
-                if (exit) {
-                    // unoccupied
-                    plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
-                } else {
+                plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
+                if (!exit) {
                     // occupied
-                    plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", id);
                     set.put("uuid", uuid.toString());
