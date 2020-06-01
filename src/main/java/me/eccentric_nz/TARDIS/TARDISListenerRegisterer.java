@@ -248,7 +248,9 @@ class TARDISListenerRegisterer {
         if (plugin.getPM().isPluginEnabled("Multiverse-Adventure")) {
             plugin.getPM().registerEvents(new TARDISWorldResetListener(plugin), plugin);
         }
-        plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.zero_room")) {
+            plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
+        }
         if (plugin.getConfig().getBoolean("arch.enabled")) {
             plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
@@ -309,7 +311,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new BalloonListener(plugin), plugin);
             plugin.getPM().registerEvents(new InventoryHelper(plugin), plugin);
         }
-        if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") || plugin.getConfig().getBoolean("travel.allow_end_after_visit")) {
+        if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") || plugin.getConfig().getBoolean("travel.allow_nether_after_visit")) {
             plugin.getPM().registerEvents(new TARDISWorldChangeListener(plugin), plugin);
         }
         return info;
