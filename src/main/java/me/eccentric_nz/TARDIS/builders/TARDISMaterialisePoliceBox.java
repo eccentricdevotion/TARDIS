@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
@@ -11,6 +12,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -75,6 +77,12 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         }
                     }
                     if (!found) {
+                        Block block = bd.getLocation().getBlock();
+                        Block under = block.getRelative(BlockFace.DOWN);
+                        block.setBlockData(TARDISConstants.AIR);
+                        if (under.getType().isAir()) {
+                            TARDISBlockSetters.setBlockAndRemember(under, Material.BARRIER, bd.getTardisID(), 1);
+                        }
                         // spawn item frame
                         frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
                     }
