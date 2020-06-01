@@ -20,7 +20,7 @@
 14. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
 15. Sonic knockback upgrade - [Bukkit #1207](https://dev.bukkit.org/projects/tardis/issues/1207) & bottom of [Bukkit #1056](https://dev.bukkit.org/projects/tardis/issues/1056)
 16. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
-17. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110)
+17. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110) + could tie in with [Bukkit #1034](https://dev.bukkit.org/projects/tardis/issues/1034)
 18. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 
 ## Future version `?+`

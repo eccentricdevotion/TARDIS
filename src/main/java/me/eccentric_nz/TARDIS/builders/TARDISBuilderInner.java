@@ -588,13 +588,6 @@ public class TARDISBuilderInner implements Runnable {
                  */
                 ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
             }
-            if (type.equals(Material.HONEYCOMB_BLOCK) && schm.getPermission().equals("rotor")) {
-                /*
-                 * spawn an item frame and place the time rotor in it
-                 */
-                TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
-                data = Material.STONE_BRICKS.createBlockData();
-            }
             // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
             if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
                 HashMap<String, Object> setpb = new HashMap<>();
@@ -607,7 +600,14 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
             // if it's the door, don't set it just remember its block then do it at the end
-            if (type.equals(Material.IRON_DOOR)) { // doors
+            if (type.equals(Material.HONEYCOMB_BLOCK) && schm.getPermission().equals("rotor")) {
+                /*
+                 * spawn an item frame and place the time rotor in it
+                 */
+                data = Material.STONE_BRICKS.createBlockData();
+                TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, dbID);
+                TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
+            } else if (type.equals(Material.IRON_DOOR)) { // doors
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH)) {
                 postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
