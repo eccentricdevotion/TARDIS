@@ -14,8 +14,8 @@
    * Add advanced console and disk storage to schematics
 9. Set Master button to ON (In Lazarus GUI) when it is in use
 10. Use the Vortex Manipulator to teleport past force fields
-11. Emergency Protocol 712 - [Bukkit #1240](https://dev.bukkit.org/projects/tardis/issues/1240)
-12. Tardis Time-Space Throttle - [Bukkit #1449](https://dev.bukkit.org/projects/tardis/issues/1449) & [Bukkit #1185](https://dev.bukkit.org/projects/tardis/issues/1185)
+11. Emergency Protocol 712 (Authorised Control Disks) - [Bukkit #1240](https://dev.bukkit.org/projects/tardis/issues/1240)
+12. Tardis Space/Time Throttle - [Bukkit #1449](https://dev.bukkit.org/projects/tardis/issues/1449)
 13. Weather control - [Bukkit #1654](https://dev.bukkit.org/projects/tardis/issues/1654)
 14. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
 15. Sonic knockback upgrade - [Bukkit #1207](https://dev.bukkit.org/projects/tardis/issues/1207) & bottom of [Bukkit #1056](https://dev.bukkit.org/projects/tardis/issues/1056)
