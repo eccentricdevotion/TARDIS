@@ -464,6 +464,9 @@ permissions:
   tardis.forcefield:
     description: Allow a player to turn on the TARDIS force field.
     default: op
+  tardis.scanner.map:
+    description: Allow a player to add and use the TARDIS scanner map.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]

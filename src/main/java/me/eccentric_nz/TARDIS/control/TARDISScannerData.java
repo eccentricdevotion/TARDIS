@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;

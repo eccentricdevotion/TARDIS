@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.advanced.TARDISScannerData;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
@@ -29,9 +28,10 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -243,6 +243,34 @@ public class TARDISScanner {
                 }
             }
         }
+        if (player.hasPermission("tardis.scanner.map")) {
+            // is there a scanner map item frame?
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            where.put("type", 37);
+            ResultSetControls rs = new ResultSetControls(TARDIS.plugin, where, true);
+            if (rs.resultSet()) {
+                // get the item frame
+                Location mapFrame = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
+                if (mapFrame != null) {
+                    while (!mapFrame.getChunk().isLoaded()) {
+                        mapFrame.getChunk().load();
+                    }
+                }
+                ItemFrame itemFrame = null;
+                for (Entity e : mapFrame.getWorld().getNearbyEntities(mapFrame, 1.0d, 1.0d, 1.0d)) {
+                    if (e instanceof ItemFrame) {
+                        itemFrame = (ItemFrame) e;
+                        break;
+                    }
+                }
+                if (itemFrame != null) {
+                    if (itemFrame.getItem().getType() == Material.FILLED_MAP) {
+                        new TARDISScannerMap(TARDIS.plugin, scan_loc, itemFrame).setMap();
+                    }
+                }
+            }
+        }
         long time = scan_loc.getWorld().getTime();
         data.setTime(time);
         String daynight = TARDISStaticUtils.getTime(time);
@@ -260,7 +288,7 @@ public class TARDISScanner {
         // get biome
         Biome tmb;
         if (whereisit.equals(TARDIS.plugin.getLanguage().getString("SCAN_CURRENT"))) {
-            // adjsut for current location as it will always return SKY if set_biome is true
+            // adjust for current location as it will always return DEEP_OCEAN if set_biome is true
             switch (tardisDirection) {
                 case NORTH:
                     tmb = scan_loc.getBlock().getRelative(BlockFace.SOUTH, 6).getBiome();

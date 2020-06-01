@@ -22,8 +22,7 @@
 16. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 17. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110)
 18. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
-19. Explore scanner using a map - [Bukkit #1097](https://dev.bukkit.org/projects/tardis/issues/1097)
-20. Fix closing portals!
+19. Update TARDISChatGUIJSON.java
 
 
 ## Future version `?+`
