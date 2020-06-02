@@ -78,10 +78,9 @@ public class ConstructsConverter {
                         String[][] stGrid = new String[10][4];
                         String[][] glGrid = new String[10][4];
                         JsonParser parser = new JsonParser();
-                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                        JsonArray bpIDJson = parser.parse(gson.toJson(bpID)).getAsJsonArray();
-                        JsonArray bpDataJson = parser.parse(gson.toJson(bpData)).getAsJsonArray();
-                        JsonArray glIDJson = parser.parse(gson.toJson(glID)).getAsJsonArray();
+                        JsonArray bpIDJson = parser.parse(bpID).getAsJsonArray();
+                        JsonArray bpDataJson = parser.parse(bpData).getAsJsonArray();
+                        JsonArray glIDJson = parser.parse(glID).getAsJsonArray();
                         for (int y = 0; y < 10; y++) {
                             JsonArray bpIDX = bpIDJson.get(y).getAsJsonArray();
                             JsonArray bpDATAX = bpDataJson.get(y).getAsJsonArray();
@@ -164,6 +163,7 @@ public class ConstructsConverter {
                                 glGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(glIDX.get(x).getAsInt()).createBlockData().getAsString();
                             }
                         }
+                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                         JsonArray bpArr = parser.parse(gson.toJson(bpGrid)).getAsJsonArray();
                         JsonArray stArr = parser.parse(gson.toJson(stGrid)).getAsJsonArray();
                         JsonArray glArr = parser.parse(gson.toJson(glGrid)).getAsJsonArray();
