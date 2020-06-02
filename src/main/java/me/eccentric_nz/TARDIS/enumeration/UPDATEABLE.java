@@ -50,6 +50,7 @@ public enum UPDATEABLE {
     TOGGLE_WOOL(true, true),
     VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST)),
     VILLAGE(false, false, true),
+    WEATHER(true, true),
     WORLD_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
     X_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
     Y_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),

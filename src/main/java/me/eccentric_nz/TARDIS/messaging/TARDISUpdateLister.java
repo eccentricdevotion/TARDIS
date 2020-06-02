@@ -69,6 +69,7 @@ public class TARDISUpdateLister {
         tg.addRow(ChatColor.RED + "terminal", ChatColor.DARK_RED + "Destination Terminal");
         tg.addRow(ChatColor.RED + "storage", ChatColor.DARK_RED + "Disk Storage Container");
         tg.addRow(ChatColor.RED + "generator", ChatColor.DARK_RED + "Sonic Generator");
+        tg.addRow(ChatColor.RED + "weather", ChatColor.DARK_RED + "TARDIS Weather Menu");
         tg.addRow();
         tg.addRow("Spawn Locations", "");
         tg.addRow(ChatColor.BLUE + "creeper", ChatColor.DARK_BLUE + "Artron Charged Creeper");

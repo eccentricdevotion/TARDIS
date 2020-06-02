@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISSetFlightCommand;
+import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -70,7 +71,7 @@ public class TARDISControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38);
 
     public TARDISControlListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -478,6 +479,13 @@ public class TARDISControlListener implements Listener {
                                         bell.setTask(taskID);
                                         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                     }
+                                    break;
+                                case 38:
+                                    // weather menu
+                                    ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
+                                    Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
+                                    forecast.setContents(weather);
+                                    player.openInventory(forecast);
                                     break;
                                 default:
                                     break;

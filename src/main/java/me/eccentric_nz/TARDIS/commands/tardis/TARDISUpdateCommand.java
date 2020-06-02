@@ -214,6 +214,12 @@ class TARDISUpdateCommand {
                     return true;
                 }
             }
+            if (updateable.equals(UPDATEABLE.WEATHER)) {
+                if (!player.hasPermission("tardis.weather.clear") && !player.hasPermission("tardis.weather.rain") && !player.hasPermission("tardis.weather.thunder")) {
+                    TARDISMessage.send(player, "NO_PERMS");
+                    return true;
+                }
+            }
             if (!updateable.equals(UPDATEABLE.BACKDOOR)) {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", player.getUniqueId().toString());

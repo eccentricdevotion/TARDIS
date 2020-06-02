@@ -47,13 +47,13 @@ public class TARDISControlInventory {
     }
 
     /**
-     * Constructs an inventory for the Temporal Locator GUI.
+     * Constructs an inventory for the Control Centre GUI.
      *
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
 
-        // get player prefs
+        // get tardis options
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

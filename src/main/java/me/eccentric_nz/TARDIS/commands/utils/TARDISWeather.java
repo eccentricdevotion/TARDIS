@@ -14,7 +14,7 @@ public class TARDISWeather {
         world.setThundering(true);
     }
 
-    public static void setclear(World world) {
+    public static void setClear(World world) {
         world.setThundering(false);
         world.setStorm(false);
     }
@@ -28,7 +28,7 @@ public class TARDISWeather {
                 setThunder(world);
                 break;
             default:
-                setclear(world);
+                setClear(world);
                 break;
         }
     }

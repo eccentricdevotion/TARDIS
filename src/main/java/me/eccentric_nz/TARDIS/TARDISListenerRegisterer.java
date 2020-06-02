@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
+import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlListener;
@@ -314,6 +315,7 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") || plugin.getConfig().getBoolean("travel.allow_nether_after_visit")) {
             plugin.getPM().registerEvents(new TARDISWorldChangeListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISWeatherListener(plugin), plugin);
         return info;
     }
 }

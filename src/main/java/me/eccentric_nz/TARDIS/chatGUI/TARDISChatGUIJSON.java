@@ -60,7 +60,8 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"9. Telepathic Circuit\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update telepathic\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"10. Siege Mode button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update siege\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"11. Destination Terminal\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update terminal\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"12. Sonic Generator\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update generator\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
+            "{\"text\":\"12. Sonic Generator\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update generator\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+            "{\"text\":\"13. TARDIS Weather Menu\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update weather\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
 
     private final List<String> locations = Arrays.asList(
