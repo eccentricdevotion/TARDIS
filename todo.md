@@ -14,14 +14,13 @@
    * Add advanced console and disk storage to schematics
 9. Set Master button to ON (In Lazarus GUI) when it is in use
 10. Use the Vortex Manipulator to teleport past force fields
-11. Emergency Protocol 712 (Authorised Control Disks) - [Bukkit #1240](https://dev.bukkit.org/projects/tardis/issues/1240)
+11. Security Protocol 712 (Authorised Control Disks) - [Bukkit #1240](https://dev.bukkit.org/projects/tardis/issues/1240) - _started_
 12. Tardis Space/Time Throttle - [Bukkit #1449](https://dev.bukkit.org/projects/tardis/issues/1449)
-13. Weather control - [Bukkit #1654](https://dev.bukkit.org/projects/tardis/issues/1654)
-14. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
-15. Sonic knockback upgrade - [Bukkit #1207](https://dev.bukkit.org/projects/tardis/issues/1207) & bottom of [Bukkit #1056](https://dev.bukkit.org/projects/tardis/issues/1056)
-16. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
-17. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110) + could tie in with [Bukkit #1034](https://dev.bukkit.org/projects/tardis/issues/1034)
-18. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
+13. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
+14. Personal sonic upgrade configuration menu - enable and disable a sonic screwdriver's current upgrades - bottom of [Bukkit #1056](https://dev.bukkit.org/projects/tardis/issues/1056)
+15. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
+16. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110) + could tie in with [Bukkit #1034](https://dev.bukkit.org/projects/tardis/issues/1034)
+17. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 
 ## Future version `?+`
 * TARDISSonicBlaster addon? - _unlikely_
