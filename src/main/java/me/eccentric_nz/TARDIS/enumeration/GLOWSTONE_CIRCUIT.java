@@ -33,6 +33,7 @@ public enum GLOWSTONE_CIRCUIT {
     IGNITE("Ignite Circuit", 10001982),
     INPUT("TARDIS Input Circuit", 10001976),
     INVISIBILITY("TARDIS Invisibility Circuit", 10001981),
+    KNOCKBACK("Knockback Circuit", 10001986),
     LOCATOR("TARDIS Locator Circuit", 10001965),
     MATERIALISATION("TARDIS Materialisation Circuit", 10001964),
     MEMORY("TARDIS Memory Circuit", 10001975),

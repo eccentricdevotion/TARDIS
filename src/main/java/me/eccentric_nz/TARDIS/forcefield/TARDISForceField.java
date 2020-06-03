@@ -92,11 +92,11 @@ public class TARDISForceField implements Runnable {
         return (entity.getWorld() != location.getWorld()) ? range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
     }
 
-    private Vector getTrajectory2d(Location from, Entity to) {
+    public static Vector getTrajectory2d(Location from, Entity to) {
         return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
     }
 
-    private void velocity(Entity ent, Vector vec, double strength) {
+    public static void velocity(Entity ent, Vector vec, double strength) {
         if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0.0D) {
             return;
         }

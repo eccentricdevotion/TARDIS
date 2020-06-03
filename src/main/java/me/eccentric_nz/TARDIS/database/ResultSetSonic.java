@@ -101,7 +101,8 @@ public class ResultSetSonic {
                         rs.getBoolean("redstone"),
                         rs.getBoolean("painter"),
                         rs.getBoolean("ignite"),
-                        rs.getBoolean("arrow")
+                        rs.getBoolean("arrow"),
+                        rs.getBoolean("knockback")
                 );
             } else {
                 return false;

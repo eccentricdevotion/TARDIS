@@ -36,8 +36,9 @@ public class Sonic {
     private final boolean painter;
     private final boolean ignite;
     private final boolean arrow;
+    private final boolean knockback;
 
-    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow) {
+    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback) {
         this.uuid = uuid;
         this.activated = activated;
         this.sonicType = sonicType;
@@ -49,6 +50,7 @@ public class Sonic {
         this.painter = painter;
         this.ignite = ignite;
         this.arrow = arrow;
+        this.knockback = knockback;
     }
 
     public UUID getUuid() {
@@ -93,5 +95,9 @@ public class Sonic {
 
     public boolean hasArrow() {
         return arrow;
+    }
+
+    public boolean hasKnockback() {
+        return knockback;
     }
 }

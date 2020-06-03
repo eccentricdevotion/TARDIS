@@ -85,6 +85,7 @@ public class TARDISGiveLister {
         tg.addRow(ChatColor.BLUE + "painter", ChatColor.DARK_BLUE + "Painter Circuit");
         tg.addRow(ChatColor.BLUE + "ignite-circuit", ChatColor.DARK_BLUE + "Ignite Circuit");
         tg.addRow(ChatColor.BLUE + "arrow-circuit", ChatColor.DARK_BLUE + "Pickup Arrows Circuit");
+        tg.addRow(ChatColor.BLUE + "k-circuit", ChatColor.DARK_BLUE + "Knockback Circuit");
         tg.addRow();
         tg.addRow("Console Circuits", "");
         tg.addRow(ChatColor.LIGHT_PURPLE + "ars-circuit", ChatColor.DARK_PURPLE + "ARS Circuit");

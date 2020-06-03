@@ -32,7 +32,7 @@ public class TARDISSonicFreeze {
         TARDISVector3D observerStart = new TARDISVector3D(observerPos);
         TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
         Player hit = null;
-        // Get nearby entities
+        // Get nearby players
         for (Player target : player.getWorld().getPlayers()) {
             // Bounding box of the given player
             TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
@@ -61,7 +61,7 @@ public class TARDISSonicFreeze {
         }
     }
 
-    private static boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
+    public static boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
         double epsilon = 0.0001f;
         TARDISVector3D d = p2.subtract(p1).multiply(0.5);
         TARDISVector3D e = max.subtract(min).multiply(0.5);

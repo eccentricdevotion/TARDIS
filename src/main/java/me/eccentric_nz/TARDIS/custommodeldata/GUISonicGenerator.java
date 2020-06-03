@@ -48,6 +48,7 @@ public enum GUISonicGenerator {
     PAINTER_UPGRADE(67, 33, Material.BOWL, "", ChatColor.RESET),
     IGNITE_UPGRADE(56, 34, Material.BOWL, "", ChatColor.RESET),
     PICKUP_ARROWS_UPGRADE(68, 35, Material.BOWL, "", ChatColor.RESET),
+    KNOCKBACK_UPGRADE(134, 28, Material.BOWL, "", ChatColor.RESET),
     INSTRUCTIONS_1_OF_3(1, 38, Material.BOOK, "Select your Sonic Screwdriver~type from the top two rows.~Click on the upgrades you~want to add to the sonic.", ChatColor.RESET),
     INSTRUCTIONS_2_OF_3(1, 39, Material.BOOK, "You can reset the upgrades~by clicking the 'Standard' button.~The Artron cost for the~sonic is shown bottom left.", ChatColor.RESET),
     INSTRUCTIONS_3_OF_3(1, 40, Material.BOOK, "The final sonic result~is shown in the middle~of the bottom row.", ChatColor.RESET),

@@ -71,6 +71,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         map.put("Painter Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full));
         map.put("Ignite Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full));
         map.put("Pickup Arrows Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full));
+        map.put("Knockback Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full));
         return map;
     }
 
@@ -83,6 +84,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         map.put("Painter Upgrade", "painter");
         map.put("Ignite Upgrade", "ignite");
         map.put("Pickup Arrows Upgrade", "arrow");
+        map.put("Knockback Upgrade", "knockback");
         return map;
     }
 
@@ -156,6 +158,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         sonic.setItemMeta(sonic_im);
                         setCost(view, costs.get("Standard Sonic"));
                         break;
+                    case 28:
                     case 29:
                     case 30:
                     case 31:

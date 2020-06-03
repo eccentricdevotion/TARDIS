@@ -161,14 +161,18 @@ public class TARDISCraftListener implements Listener {
                     lam.setColor(Color.WHITE);
                     is.setItemMeta(lam);
                     ci.setResult(is);
-                } else if (dn.contains("Key")) {
+                } else if (dn.contains("Key") || dn.contains("Authorised Control")) {
                     HumanEntity human = event.getView().getPlayer();
                     if (human instanceof Player) {
                         ItemMeta im = is.getItemMeta();
                         im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), human.getUniqueId());
                         List<String> lore = im.getLore();
+                        if (lore == null) {
+                            lore = new ArrayList<>();
+                        }
                         String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-                        lore.add(format + "This key belongs to");
+                        String what = dn.contains("Key") ? "key" : "disk";
+                        lore.add(format + "This " + what + " belongs to");
                         lore.add(format + human.getName());
                         im.setLore(lore);
                         is.setItemMeta(im);

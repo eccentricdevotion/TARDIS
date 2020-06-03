@@ -32,6 +32,7 @@ public enum DISK_CIRCUIT {
     BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
     BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD),
     CHAMELEON("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST),
+    CONTROL("Authorised Control Disk", Material.MUSIC_DISC_FAR),
     HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
     INPUT("TARDIS Input Circuit", Material.GLOWSTONE_DUST),
     INVISIBILITY("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST),

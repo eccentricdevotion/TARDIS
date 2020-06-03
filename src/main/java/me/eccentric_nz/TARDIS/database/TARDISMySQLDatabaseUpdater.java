@@ -276,6 +276,14 @@ class TARDISMySQLDatabaseUpdater {
                 String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD arrow int(1) DEFAULT '0'";
                 statement.executeUpdate(arrow_alter);
             }
+            // add knockback to sonic
+            String knockback_query = "SHOW COLUMNS FROM " + prefix + "sonic LIKE 'knockback'";
+            ResultSet rsknock = statement.executeQuery(knockback_query);
+            if (!rsknock.next()) {
+                i++;
+                String knockback_alter = "ALTER TABLE " + prefix + "sonic ADD knockback int(1) DEFAULT '0'";
+                statement.executeUpdate(knockback_alter);
+            }
             // add model to sonic
             String model_query = "SHOW COLUMNS FROM " + prefix + "sonic LIKE 'model'";
             ResultSet rsmodel = statement.executeQuery(model_query);

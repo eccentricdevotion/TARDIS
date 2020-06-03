@@ -53,6 +53,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         upgrades.put("Painter Upgrade", "paint");
         upgrades.put("Ignite Upgrade", "ignite");
         upgrades.put("Pickup Arrows Upgrade", "arrow");
+        upgrades.put("Knockback Upgrade", "knockback");
         customModelData.put(10001968, "Admin Upgrade");
         customModelData.put(10001969, "Bio-scanner Upgrade");
         customModelData.put(10001970, "Redstone Upgrade");
@@ -61,6 +62,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         customModelData.put(10001979, "Painter Upgrade");
         customModelData.put(10001982, "Ignite Upgrade");
         customModelData.put(10001984, "Pickup Arrows Upgrade");
+        customModelData.put(10001986, "Knockback Upgrade");
     }
 
     /**

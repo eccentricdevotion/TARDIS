@@ -109,15 +109,24 @@ public class TARDISSonicListener implements Listener {
                     if (plugin.getTrackerKeeper().getDispersed().containsKey(player.getUniqueId())) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         TARDISSonicDispersed.assemble(plugin, player);
-                    } else if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                    } else if (lore != null && (lore.contains("Bio-scanner Upgrade") || lore.contains("Knockback Upgrade"))) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-                        // freeze target player
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Player target = TARDISSonicFreeze.getTargetPlayer(player);
+                        if (player.hasPermission("tardis.sonic.freeze")) {
+                            // freeze target player
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                Player target = TARDISSonicFreeze.getTargetPlayer(player);
+                                if (target != null) {
+                                    TARDISSonicFreeze.immobilise(plugin, player, target);
+                                }
+                            }, 20L);
+                        }
+                        if (player.hasPermission("tardis.sonic.knockback")) {
+                            // knockback any monsters in line of sight
+                            Entity target = TARDISSonicKnockback.getTargetEntity(player);
                             if (target != null) {
-                                TARDISSonicFreeze.immobilise(plugin, player, target);
+                                TARDISSonicKnockback.knockback(player, target);
                             }
-                        }, 20L);
+                        }
                     }
                     if (player.hasPermission("tardis.sonic.standard")) {
                         TARDISSonic.standardSonic(plugin, player, now);

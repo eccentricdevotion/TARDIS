@@ -328,6 +328,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String arrow_alter = "ALTER TABLE " + prefix + "sonic ADD arrow INTEGER DEFAULT 0";
                 statement.executeUpdate(arrow_alter);
             }
+            // add knockback to sonic
+            String knockback_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "sonic' AND sql LIKE '%knockback%'";
+            ResultSet rsknock = statement.executeQuery(knockback_query);
+            if (!rsknock.next()) {
+                i++;
+                String knockback_alter = "ALTER TABLE " + prefix + "sonic ADD knockback INTEGER DEFAULT 0";
+                statement.executeUpdate(knockback_alter);
+            }
             // add model to sonic
             String model_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "sonic' AND sql LIKE '%model%'";
             ResultSet rsmodel = statement.executeQuery(model_query);

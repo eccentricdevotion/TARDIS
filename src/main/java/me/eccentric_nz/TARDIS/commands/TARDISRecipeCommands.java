@@ -62,6 +62,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("c-circuit", "TARDIS Chameleon Circuit");
         recipeItems.put("cell", "Artron Storage Cell");
         recipeItems.put("communicator", "TARDIS Communicator");
+        recipeItems.put("control", "Authorised Control Disk");
         recipeItems.put("custard", "Bowl of Custard");
         recipeItems.put("d-circuit", "Diamond Disruptor Circuit");
         recipeItems.put("e-circuit", "Emerald Environment Circuit");
@@ -76,6 +77,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("invisible", "TARDIS Invisibility Circuit");
         recipeItems.put("jammy-dodger", "Jammy Dodger");
         recipeItems.put("jelly-baby", "Orange Jelly Baby");
+        recipeItems.put("k-circuit", "Knockback Circuit");
         recipeItems.put("key", "TARDIS Key");
         recipeItems.put("keyboard", "TARDIS Keyboard Editor");
         recipeItems.put("l-circuit", "TARDIS Locator Circuit");
@@ -276,7 +278,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             lore.set(1, uses);
             im.setLore(lore);
         }
-        if (str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Sonic Blaster")) {
+        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk") || str.equals("Sonic Blaster")) {
             im.addItemFlags(ItemFlag.values());
         }
         result.setAmount(1);
@@ -311,7 +313,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(str);
-        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Sonic Blaster")) {
+        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk") || str.equals("Sonic Blaster")) {
             im.addItemFlags(ItemFlag.values());
         }
         RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(str);

@@ -23,11 +23,13 @@ import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
@@ -129,6 +131,9 @@ public class TARDISShapedRecipe {
             damageable.setDamage(50);
             im.addItemFlags(ItemFlag.values());
         }
+        if (s.endsWith("Disk")) {
+            im.addItemFlags(ItemFlag.values());
+        }
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -184,6 +189,20 @@ public class TARDISShapedRecipe {
                     pm.setBasePotionData(potionData);
                     potion.setItemMeta(pm);
                     r.setIngredient(c, new RecipeChoice.ExactChoice(potion));
+                } else if (i.contains("≈")) {
+                    ItemStack book;
+                    String[] choice = i.split("≈");
+                    book = new ItemStack(Material.ENCHANTED_BOOK, 1);
+                    EnchantmentStorageMeta pm = (EnchantmentStorageMeta) book.getItemMeta();
+                    Enchantment enchantment;
+                    try {
+                        enchantment = Enchantment.getByKey(NamespacedKey.minecraft(choice[1].toLowerCase()));
+                    } catch (IllegalArgumentException e) {
+                        enchantment = Enchantment.KNOCKBACK;
+                    }
+                    pm.addStoredEnchant(enchantment, 1, false);
+                    book.setItemMeta(pm);
+                    r.setIngredient(c, new RecipeChoice.ExactChoice(book));
                 } else {
                     Material m = Material.valueOf(i);
                     r.setIngredient(c, m);

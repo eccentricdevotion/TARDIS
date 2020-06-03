@@ -252,6 +252,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("B")) {
                     processKey(p, TARDISInfoMenu.BLANK);
                 }
+                if (chat.equalsIgnoreCase("C")) {
+                    processKey(p, TARDISInfoMenu.CONTROL_DISK);
+                }
                 if (chat.equalsIgnoreCase("i")) {
                     processKey(p, TARDISInfoMenu.BIOME_DISK);
                 }
@@ -321,6 +324,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("I")) {
                     processKey(p, TARDISInfoMenu.IGNITE_CIRCUIT);
+                }
+                if (chat.equalsIgnoreCase("K")) {
+                    processKey(p, TARDISInfoMenu.KNOCKBACK_CIRCUIT);
                 }
                 if (chat.equalsIgnoreCase("m")) {
                     processKey(p, TARDISInfoMenu.E_CIRCUIT);
@@ -699,6 +705,14 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                     showRecipe(p, TARDISInfoMenu.BIOME_DISK_RECIPE);
                 }
                 break;
+            case CONTROL_DISK:
+                if (chat.equalsIgnoreCase("I")) {
+                    showInfo(p, TARDISInfoMenu.CONTROL_DISK_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    showRecipe(p, TARDISInfoMenu.CONTROL_DISK_RECIPE);
+                }
+                break;
             case BLANK:
                 if (chat.equalsIgnoreCase("I")) {
                     showInfo(p, TARDISInfoMenu.BLANK_INFO);
@@ -809,6 +823,14 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     showRecipe(p, TARDISInfoMenu.IGNITE_CIRCUIT_RECIPE);
+                }
+                break;
+            case KNOCKBACK_CIRCUIT:
+                if (chat.equalsIgnoreCase("I")) {
+                    showInfo(p, TARDISInfoMenu.KNOCKBACK_CIRCUIT_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    showRecipe(p, TARDISInfoMenu.KNOCKBACK_CIRCUIT_RECIPE);
                 }
                 break;
             case INVISIBLE_CIRCUIT:
