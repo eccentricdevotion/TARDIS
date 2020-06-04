@@ -30,9 +30,9 @@ import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -51,14 +51,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISMaterialseFromVortex implements Runnable {
+public class TARDISMaterialseFromVortex implements Runnable {
 
     private final TARDIS plugin;
     private final int id;
     private final Player player;
     private final Location handbrake;
 
-    TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+    public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;

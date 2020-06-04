@@ -40,14 +40,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISDematerialiseToVortex implements Runnable {
+public class TARDISDematerialiseToVortex implements Runnable {
 
     private final TARDIS plugin;
     private final int id;
     private final Player player;
     private final Location handbrake;
 
-    TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+    public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;

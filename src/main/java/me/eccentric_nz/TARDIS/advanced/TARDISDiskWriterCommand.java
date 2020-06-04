@@ -17,14 +17,12 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -63,7 +61,7 @@ public class TARDISDiskWriterCommand {
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+            if (im.hasDisplayName() && im.getDisplayName().equals("Save Storage Disk")) {
                 List<String> lore = im.getLore();
                 if (!lore.get(0).equals("Blank")) {
                     TARDISMessage.send(player, "DISK_ONLY_BLANK");
@@ -190,7 +188,7 @@ public class TARDISDiskWriterCommand {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
+            if (im.hasDisplayName() && im.getDisplayName().equals("Player Storage Disk")) {
                 List<String> lore = im.getLore();
                 if (!lore.get(0).equals("Blank")) {
                     TARDISMessage.send(player, "DISK_ONLY_BLANK");
@@ -234,10 +232,50 @@ public class TARDISDiskWriterCommand {
             im.setLore(lore);
             is.setItemMeta(im);
             TARDISMessage.send(player, "DISK_ERASE");
-            return true;
         } else {
             TARDISMessage.send(player, "DISK_HAND_ERASE");
-            return true;
         }
+        return true;
+    }
+
+    public boolean writeSaveToControlDisk(Player player, String[] args) {
+        ItemStack is = player.getInventory().getItemInMainHand();
+        if (is != null && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk") && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+                if (args.length < 2) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return false;
+                }
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (!rs.fromUUID(player.getUniqueId().toString())) {
+                    TARDISMessage.send(player, "NO_TARDIS");
+                    return false;
+                } else {
+                    String save;
+                    if (args[1].equalsIgnoreCase("home")) {
+                        save = "Home";
+                    } else {
+                        HashMap<String, Object> wherename = new HashMap<>();
+                        wherename.put("tardis_id", rs.getTardis_id());
+                        wherename.put("dest_name", args[1]);
+                        wherename.put("type", 0);
+                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
+                        if (!rsd.resultSet()) {
+                            TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET);
+                            return true;
+                        }
+                        save = args[1];
+                    }
+                    List<String> lore = im.getLore();
+                    lore.add(save);
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    TARDISMessage.send(player, "DISK_LOC_SAVED");
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 }

@@ -26,9 +26,10 @@ import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
-import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -206,14 +207,18 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISExterminateCommand(plugin).doExterminate(player);
                 case save:
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
-                    if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                        if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
-                            TARDISMessage.send(player, "DISK_HAND_SAVE");
-                            return true;
-                        }
-                        return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                    if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
+                        return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
                     } else {
-                        return new TARDISSaveLocationCommand(plugin).doSave(player, args);
+                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+                            if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+                                TARDISMessage.send(player, "DISK_HAND_SAVE");
+                                return true;
+                            }
+                            return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                        } else {
+                            return new TARDISSaveLocationCommand(plugin).doSave(player, args);
+                        }
                     }
             }
         }

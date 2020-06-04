@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.GLOWSTONE_CIRCUIT;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -44,6 +41,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -147,6 +145,43 @@ public class TARDISConsoleListener implements Listener {
                         }
                         // open gui
                         p.openInventory(inv);
+                    } else if (disk.equals(Material.MUSIC_DISC_FAR)) {
+                        ItemMeta im = disk.getItemMeta();
+                        if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk")) {
+                            // get the UUID from the disk
+                            if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+                                UUID diskUuid = im.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
+                                // is the disk uuid the same as the tardis uuid?
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("tardis_id", id);
+                                ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
+                                if (rst.resultSet() && rst.getTardis().getUuid() == diskUuid) {
+                                    if (p.getUniqueId() == rst.getTardis().getUuid()) {
+                                        // time lords can't use their own disks!
+                                        TARDISMessage.send(p, "SECURITY_TIMELORD");
+                                        return;
+                                    }
+                                    // process disk
+                                    TARDISAuthorisedControlDisk tacd = new TARDISAuthorisedControlDisk(plugin, rst.getTardis().getUuid(), im.getLore(), id, p, rst.getTardis().getEps(), rst.getTardis().getCreeper());
+                                    String processed = tacd.process();
+                                    if (processed.equals("success")) {
+                                        // success remove disk from hand
+                                        int amount = p.getInventory().getItemInMainHand().getAmount();
+                                        int adjusted = amount - 1;
+                                        if (adjusted > 0) {
+                                            p.getInventory().getItemInMainHand().setAmount(adjusted);
+                                        } else {
+                                            p.getInventory().setItemInMainHand(null);
+                                        }
+                                        p.updateInventory();
+                                        TARDISMessage.send(p, "SECURITY_SUCCESS");
+                                    } else {
+                                        // error message player
+                                        TARDISMessage.send(p, "SECURITY_ERROR", processed);
+                                    }
+                                }
+                            }
+                        }
                     } else {
                         TARDISMessage.send(p, "ADV_OPEN");
                     }
