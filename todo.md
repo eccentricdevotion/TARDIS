@@ -22,6 +22,9 @@
 16. Room Blueprints [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110) + could tie in with [Bukkit #1034](https://dev.bukkit.org/projects/tardis/issues/1034)
 17. More sudo commands [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 
+## Minecraft 1.16
+1. Use Smithing recipes to upgrade sonic screwdrivers / add biome to biome disks etc
+
 ## Future version `?+`
 * TARDISSonicBlaster addon? - _unlikely_
 * Add more API Events that other plugins can listen for? - _unlikely_
