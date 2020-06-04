@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
-import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -151,11 +150,6 @@ public class TARDISAuthorisedControlDisk {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
                 TARDISMessage.send(player, "HANDBRAKE_OFF");
                 plugin.getTrackerKeeper().getInVortex().add(id);
-                // check if we should malfunction
-                if (!plugin.getTrackerKeeper().getMalfunction().containsKey(id)) {
-                    boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
-                    plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
-                }
                 // show emergency program one
                 HashMap<String, Object> wherev = new HashMap<>();
                 wherev.put("tardis_id", id);
