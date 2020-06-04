@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.messaging;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
+import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -47,7 +48,12 @@ public class TARDISRoomLister {
         TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
         options.forEach((key, value) -> {
             player.sendMessage(key);
-            TableGenerator tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT);
+            TableGenerator tg;
+            if (TableGenerator.getSenderPrefs(player)) {
+                tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT);
+            } else {
+                tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT);
+            }
             int s = value.size();
             if (s > 0) {
                 value.sort(Comparator.naturalOrder());
@@ -56,7 +62,7 @@ public class TARDISRoomLister {
                 for (int i = 0; i < limit; i += 4) {
                     tg.addRow("    " + value.get(i), (i + 1 < s) ? value.get(i + 1) : "", (i + 2 < s) ? value.get(i + 2) : "", (i + 3 < s) ? value.get(i + 3) : "");
                 }
-                for (String line : tg.generate(TableGenerator.Receiver.CLIENT, true, true)) {
+                for (String line : tg.generate(Receiver.CLIENT, true, true)) {
                     player.sendMessage(line);
                 }
             } else {

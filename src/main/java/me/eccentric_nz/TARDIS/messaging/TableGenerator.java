@@ -7,6 +7,12 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,17 +27,19 @@ public class TableGenerator {
     private static final List<Character> char4 = Arrays.asList('I', 't', ' ', '[', ']', '€');
     private static final List<Character> char3 = Arrays.asList('l', '`', '³', '\'');
     private static final List<Character> char2 = Arrays.asList(',', '.', '!', 'i', '´', ':', ';', '|');
-    private static final char char1 = '\u17f2';
-    private static final Pattern regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
+    private static char char1;
+    private static Pattern regex;
     private static final String colors = "[&§][0-9a-fA-Fk-oK-OrR]";
     private final Alignment[] alignments;
     private final List<Row> table = new ArrayList<>();
     private final int columns;
 
-    public TableGenerator(Alignment... alignments) {
+    public TableGenerator(char char1, Alignment... alignments) {
         if (alignments == null || alignments.length < 1) {
             throw new IllegalArgumentException("Must at least provide 1 alignment.");
         }
+        this.char1 = char1;
+        regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
         columns = alignments.length;
         this.alignments = alignments;
     }
@@ -130,7 +138,6 @@ public class TableGenerator {
                     sb.append("§r" + delimiter);
                 }
             }
-
             String line = sb.toString();
             if (receiver == Receiver.CLIENT) {
                 for (int i = 0; i < 2; i++) {
@@ -204,7 +211,19 @@ public class TableGenerator {
         table.add(r);
     }
 
-    private class Row {
+    public static boolean getSenderPrefs(CommandSender sender) {
+        if (sender instanceof ConsoleCommandSender) {
+            return true;
+        } else if (sender instanceof Player) {
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ((Player) sender).getUniqueId().toString());
+            if (rsp.resultSet()) {
+                return rsp.useCustomFont();
+            }
+        }
+        return false;
+    }
+
+    public class Row {
 
         public List<String> texts = new ArrayList<>();
         public boolean empty = true;

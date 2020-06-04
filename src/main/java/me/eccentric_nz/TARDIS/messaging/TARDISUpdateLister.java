@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -32,7 +31,11 @@ public class TARDISUpdateLister {
 
     public TARDISUpdateLister(Player player) {
         this.player = player;
-        tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT);
+        if (TableGenerator.getSenderPrefs(player)) {
+            tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+        } else {
+            tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+        }
     }
 
     public void list() {
@@ -98,6 +101,6 @@ public class TARDISUpdateLister {
         tg.addRow(ChatColor.LIGHT_PURPLE + "forcefield", ChatColor.DARK_PURPLE + "TARDIS Force Field button");
         tg.addRow(ChatColor.LIGHT_PURPLE + "bell", ChatColor.DARK_PURPLE + "TARDIS Cloister bell button");
         tg.addRow(ChatColor.LIGHT_PURPLE + "rotor", ChatColor.DARK_PURPLE + "Time Rotor item frame");
-        return tg.generate(TableGenerator.Receiver.CLIENT, true, true);
+        return tg.generate(TableGeneratorSmallChar.Receiver.CLIENT, true, true);
     }
 }

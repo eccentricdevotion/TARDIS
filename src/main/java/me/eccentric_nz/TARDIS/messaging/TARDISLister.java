@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
+import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -62,7 +63,12 @@ public class TARDISLister {
             if (therechargers.size() < 1) {
                 TARDISMessage.send(p, "CHARGER_NONE");
             }
-            TableGenerator tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+            TableGenerator tg;
+            if (TableGenerator.getSenderPrefs(p)) {
+                tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+            } else {
+                tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+            }
             tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS Rechargers", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
             tg.addRow();
             for (String s : therechargers) {
@@ -80,7 +86,7 @@ public class TARDISLister {
                     tg.addRow(ChatColor.GREEN + s + ChatColor.RESET, w, x, y, z);
                 }
             }
-            for (String line : tg.generate(TableGenerator.Receiver.CLIENT, true, true)) {
+            for (String line : tg.generate(Receiver.CLIENT, true, true)) {
                 p.sendMessage(line);
             }
         }
@@ -106,7 +112,12 @@ public class TARDISLister {
                 int id = tardis.getTardis_id();
                 // list TARDIS saves
                 if (l.equalsIgnoreCase("saves")) {
-                    TableGenerator tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                    TableGenerator tg;
+                    if (TableGenerator.getSenderPrefs(p)) {
+                        tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                    } else {
+                        tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                    }
                     tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " + plugin.getLanguage().getString("SAVES"), ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
                     tg.addRow();
                     // get home
@@ -128,7 +139,7 @@ public class TARDISLister {
                             }
                         }
                     }
-                    for (String line : tg.generate(TableGenerator.Receiver.CLIENT, true, true)) {
+                    for (String line : tg.generate(Receiver.CLIENT, true, true)) {
                         p.sendMessage(line);
                     }
                 }

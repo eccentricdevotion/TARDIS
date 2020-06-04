@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,7 +35,11 @@ public class TARDISGiveLister {
     public TARDISGiveLister(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;
         this.sender = sender;
-        tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT);
+        if (TableGenerator.getSenderPrefs(sender)) {
+            tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+        } else {
+            tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+        }
     }
 
     public void list() {
@@ -139,6 +142,6 @@ public class TARDISGiveLister {
         tg.addRow(ChatColor.GREEN + "wand", ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
         tg.addRow(ChatColor.GREEN + "watch", ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
         tg.addRow(ChatColor.GREEN + "keyboard", ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
-        return tg.generate(sender instanceof Player ? TableGenerator.Receiver.CLIENT : TableGenerator.Receiver.CONSOLE, true, true);
+        return tg.generate(sender instanceof Player ? TableGeneratorSmallChar.Receiver.CLIENT : TableGeneratorSmallChar.Receiver.CONSOLE, true, true);
     }
 }

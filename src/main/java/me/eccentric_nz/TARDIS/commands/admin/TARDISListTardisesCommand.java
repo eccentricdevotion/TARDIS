@@ -21,10 +21,12 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
+import me.eccentric_nz.TARDIS.messaging.TableGeneratorCustomFont;
+import me.eccentric_nz.TARDIS.messaging.TableGeneratorSmallChar;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -96,7 +98,12 @@ class TARDISListTardisesCommand {
             ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), limit, true, 0);
             if (rsl.resultSet()) {
                 TARDISMessage.send(sender, "TARDIS_LOCS");
-                TableGenerator tg = new TableGenerator(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                TableGenerator tg;
+                if (TableGenerator.getSenderPrefs(sender)) {
+                    tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                } else {
+                    tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                }
                 tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "ID", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Time Lord", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
                 tg.addRow();
                 for (Tardis t : rsl.getData()) {
