@@ -21,7 +21,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -64,24 +63,6 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.setBuildNumber(buildNumber);
         plugin.setUpdateNumber(newBuildNumber);
         plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
-        String spigotVersion = plugin.getServer().getVersion();
-        if (spigotVersion.contains("Spigot")) {
-            JsonObject spigotBuild = fetchLatestSpigotBuild();
-            if (spigotBuild == null || !spigotBuild.has("refs")) {
-                // couldn't get Spigot info
-                return;
-            }
-            JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
-            if (refs.has("Spigot")) {
-                String spigot = refs.get("Spigot").getAsString().substring(0, 7);
-                String[] split = spigotVersion.split("-"); // something like 'git-Spigot-2f5d615-d07a78b'
-                if (spigot.equals(split[2])) {
-                    // if new build number is same
-                    return;
-                }
-                plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "There is a new Spigot build! " + ChatColor.AQUA + "You should update so TARDIS doesn't bug out :)");
-            }
-        }
     }
 
     /**
@@ -100,24 +81,6 @@ public class TARDISUpdateChecker implements Runnable {
             return rootobj;
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
-        }
-        return null;
-    }
-
-    /**
-     * Fetches the latest build information from hub.spigotmc.org
-     */
-    private JsonObject fetchLatestSpigotBuild() {
-        //
-        try {
-            URL url = new URL("https://hub.spigotmc.org/versions/latest.json");
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject rootobj = root.getAsJsonObject();
-            return rootobj;
-        } catch (Exception ex) {
-            plugin.debug("Failed to check for the latest build info from Spigot.");
         }
         return null;
     }

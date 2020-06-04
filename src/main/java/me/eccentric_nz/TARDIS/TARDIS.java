@@ -378,9 +378,12 @@ public class TARDIS extends JavaPlugin {
                     getServer().dispatchCommand(getConsole(), "minecraft:reload");
                 }
             }, 199L);
+            // check TARDIS build
             if (getConfig().getBoolean("preferences.notify_update")) {
                 getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this));
             }
+            // check Spigot build
+            getServer().getScheduler().runTaskAsynchronously(this, new TARDISSpigotChecker(this));
             // resume any room growing
             new TARDISRoomPersister(this).resume();
             if (getConfig().getInt("allow.force_field") > 0) {
