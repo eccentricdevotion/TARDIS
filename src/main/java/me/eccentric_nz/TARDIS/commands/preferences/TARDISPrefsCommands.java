@@ -21,8 +21,8 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -66,6 +66,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("farm");
         firstArgs.add("flight");
         firstArgs.add("floor");
+        firstArgs.add("font");
         firstArgs.add("forcefield");
         firstArgs.add("hads");
         firstArgs.add("hads_type");

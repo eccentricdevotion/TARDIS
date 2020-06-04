@@ -47,6 +47,7 @@ public class ResultSetPlayerPrefs {
     private boolean beaconOn;
     private boolean buildOn;
     private boolean ctmOn;
+    private boolean customFont;
     private boolean DND;
     private boolean easyDifficulty;
     private boolean epsOn;
@@ -165,6 +166,7 @@ public class ResultSetPlayerPrefs {
                 rendererOn = rs.getBoolean("renderer_on");
                 woolLightsOn = rs.getBoolean("wool_lights_on");
                 ctmOn = rs.getBoolean("ctm_on");
+                customFont = rs.getBoolean("font_on");
                 signOn = rs.getBoolean("sign_on");
                 telepathyOn = rs.getBoolean("telepathy_on");
                 travelbarOn = rs.getBoolean("travelbar_on");
@@ -310,6 +312,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isCtmOn() {
         return ctmOn;
+    }
+
+    public boolean useCustomFont() {
+        return customFont;
     }
 
     public boolean isSignOn() {

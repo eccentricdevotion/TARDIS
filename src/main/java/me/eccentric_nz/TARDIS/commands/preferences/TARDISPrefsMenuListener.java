@@ -58,29 +58,30 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
         super(plugin);
         this.plugin = plugin;
         lookup.put("Auto Power Up", "auto_powerup_on");
-        lookup.put("Autonomous", "auto_on");
-        lookup.put("Autonomous Siege", "auto_siege_on");
         lookup.put("Auto-rescue", "auto_rescue_on");
+        lookup.put("Autonomous Siege", "auto_siege_on");
+        lookup.put("Autonomous", "auto_on");
         lookup.put("Beacon", "beacon_on");
-        lookup.put("Do Not Disturb", "dnd_on");
-        lookup.put("Emergency Programme One", "eps_on");
-        lookup.put("Hostile Action Displacement System", "hads_on");
-        lookup.put("Who Quotes", "quotes_on");
-        lookup.put("Exterior Rendering Room", "renderer_on");
-        lookup.put("Interior SFX", "sfx_on");
-        lookup.put("Submarine Mode", "submarine_on");
-        lookup.put("Resource Pack Switching", "texture_on");
         lookup.put("Companion Build", "build_on");
-        lookup.put("Wool For Lights Off", "wool_lights_on");
         lookup.put("Connected Textures", "ctm_on");
-        lookup.put("Preset Sign", "sign_on");
-        lookup.put("Travel Bar", "travelbar_on");
-        lookup.put("Police Box Textures", "policebox_textures_on");
-        lookup.put("Mob Farming", "farm_on");
-        lookup.put("Telepathic Circuit", "telepathy_on");
+        lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Easy Difficulty", "difficulty");
-        lookup.put("Minecart Sounds", "minecart_on");
+        lookup.put("Emergency Programme One", "eps_on");
+        lookup.put("Exterior Rendering Room", "renderer_on");
+        lookup.put("Hostile Action Displacement System", "hads_on");
+        lookup.put("Interior SFX", "sfx_on");
         lookup.put("Lanterns", "lanterns_on");
+        lookup.put("Minecart Sounds", "minecart_on");
+        lookup.put("Mob Farming", "farm_on");
+        lookup.put("Police Box Textures", "policebox_textures_on");
+        lookup.put("Preset Sign", "sign_on");
+        lookup.put("Resource Pack Switching", "texture_on");
+        lookup.put("Submarine Mode", "submarine_on");
+        lookup.put("Telepathic Circuit", "telepathy_on");
+        lookup.put("Travel Bar", "travelbar_on");
+        lookup.put("Unicode Font", "font_on");
+        lookup.put("Who Quotes", "quotes_on");
+        lookup.put("Wool For Lights Off", "wool_lights_on");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -126,7 +127,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }
                         return;
                     }
-                    if (slot == 27 && im.getDisplayName().equals("Flight Mode")) {
+                    if (slot == 28 && im.getDisplayName().equals("Flight Mode")) {
                         List<String> lore = im.getLore();
                         // cycle through flight modes
                         TARDISSetFlightCommand.FlightMode flight = TARDISSetFlightCommand.FlightMode.valueOf(lore.get(0));

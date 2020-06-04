@@ -947,6 +947,9 @@ commands:
     forcefield:
       description: Toggle the TARDIS forcefield on and off.
       usage: /<command> forcefield [on|off]
+    font:
+      description: Toggle whether to use the TARDIS-Resource-Pack unicode space font on and off.
+      usage: /<command> font [on|off]
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.

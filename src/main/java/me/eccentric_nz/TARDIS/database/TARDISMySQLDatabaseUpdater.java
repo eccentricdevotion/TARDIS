@@ -79,6 +79,7 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("dnd_on int(1) DEFAULT '0'");
         prefsupdates.add("farm_on int(1) DEFAULT '0'");
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
+        prefsupdates.add("font_on int(1) DEFAULT '0'");
         prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("hum varchar(24) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'ENGLISH'");
