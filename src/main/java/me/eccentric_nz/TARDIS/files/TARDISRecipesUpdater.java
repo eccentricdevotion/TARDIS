@@ -402,12 +402,12 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Rotor Early.lore", "");
             // tenth
             recipes_config.set("shaped.Time Rotor Tenth.easy_shape", "CRC,GWG,GRG");
-            recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.C", "GRAY_DYE");
+            recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.C", "CYAN_DYE");
             recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.W", "CLOCK");
             recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.G", "GLASS_PANE");
             recipes_config.set("shaped.Time Rotor Tenth.hard_shape", "CRC,GWG,GRG");
-            recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.C", "GRAY_DYE");
+            recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.C", "CYAN_DYE");
             recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.R", "REDSTONE_BLOCK");
             recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.W", "CLOCK");
             recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.G", "GLASS_PANE");
@@ -443,6 +443,10 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Rotor Twelfth.amount", 1);
             recipes_config.set("shaped.Time Rotor Twelfth.lore", "");
             i++;
+        }
+        if (recipes_config.getString("shaped.Time Rotor Tenth.easy_ingredients.C").equals("GRAY_DYE")) {
+            recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.C", "CYAN_DYE");
+            recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.C", "CYAN_DYE");
         }
         if (recipes_config.getString("shaped.Time Rotor Early.easy_ingredients.R").equals("REDSTONE_BLOCK")) {
             recipes_config.set("shaped.Time Rotor Early.easy_ingredients.R", "REDSTONE");
