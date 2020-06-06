@@ -27,7 +27,7 @@ import java.sql.SQLException;
  * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
  * blocks.
  *
- * @author Technoguyfication
+ * @author Technoguyfication, eccentric_nz
  */
 public class ResultSetTravelledTo {
 
@@ -50,18 +50,18 @@ public class ResultSetTravelledTo {
      * Retrieves an SQL ResultSet from the traveled_to table. This is used to determine if players have traveled to a
      * dimension
      *
-     * @param player      the player to check travel status for
+     * @param uuid        the player to check travel status for
      * @param environment the environment to check
      * @return true or false depending on whether the player has traveled to the environment
      */
-    public boolean resultSet(String player, String environment) {
+    public boolean resultSet(String uuid, String environment) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "traveled_to WHERE uuid = ? AND environment = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            statement.setString(1, player);
+            statement.setString(1, uuid);
             statement.setString(2, environment);
             rs = statement.executeQuery();
             // if row exists, player has visited environment

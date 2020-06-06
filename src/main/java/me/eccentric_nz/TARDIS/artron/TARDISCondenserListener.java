@@ -156,6 +156,9 @@ public class TARDISCondenserListener implements Listener {
                                     if (lore.contains("Pickup Arrows Upgrade")) {
                                         amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
                                     }
+                                    if (lore.contains("Knockback Upgrade")) {
+                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+                                    }
                                 } else {
                                     amount += stack_size * plugin.getCondensables().get(item);
                                 }
