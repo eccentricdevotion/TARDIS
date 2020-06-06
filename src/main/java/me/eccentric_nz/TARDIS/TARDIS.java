@@ -183,7 +183,6 @@ public class TARDIS extends JavaPlugin {
         versions.put("My_Worlds", "1.15.2");
         versions.put("PerWorldInventory", "2.3.0");
         versions.put("TARDISChunkGenerator", "4.4.2");
-        versions.put("TARDISWeepingAngels", "3.2.1");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -1014,7 +1013,7 @@ public class TARDIS extends JavaPlugin {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
             Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
             Version version = new Version(twa.getDescription().getVersion());
-            return (version.compareTo(new Version("3.2")) >= 0);
+            return (version.compareTo(new Version("3.3")) >= 0);
         } else {
             return false;
         }

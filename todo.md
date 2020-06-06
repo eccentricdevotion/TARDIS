@@ -17,8 +17,7 @@
 2. Use Smithing recipes to upgrade sonic screwdrivers / add biome to biome disks etc
 
 ## Resource Pack / TARDISWeepingAngels
-1. Rare armour drops
-2. Re-skin mobs for Resource pack, and add new mob sounds
+1. Re-skin mobs for Resource pack, and add new mob sounds
    * Clockwork Droid
    * Hath _started_
    * Endermites -> Cybermats
@@ -27,7 +26,7 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
-3. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+2. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
 ## Minecraft Bedrock Edition
 1. Recreate everything :)
