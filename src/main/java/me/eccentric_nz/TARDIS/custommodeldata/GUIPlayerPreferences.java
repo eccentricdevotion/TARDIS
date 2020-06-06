@@ -53,7 +53,8 @@ public enum GUIPlayerPreferences {
     FLIGHT_MODE(1, 28, Material.ELYTRA),
     INTERIOR_HUM_SOUND(58, 29, Material.BOWL),
     HANDBRAKE(1, 31, Material.LEVER),
-    TARDIS_MAP(3, 33, Material.MAP),
+    TARDIS_MAP(3, 32, Material.MAP),
+    SONIC_CONFIGURATOR(135, 33, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;

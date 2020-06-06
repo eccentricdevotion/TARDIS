@@ -167,7 +167,14 @@ public class TARDISPrefsMenuInventory {
         map.setDisplayName("TARDIS Map");
         map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
         tt.setItemMeta(map);
-        stack[33] = tt;
+        stack[32] = tt;
+        // map
+        ItemStack sonic = new ItemStack(Material.BOWL, 1);
+        ItemMeta config = sonic.getItemMeta();
+        config.setDisplayName("Sonic Configurator");
+        config.setCustomModelData(GUIPlayerPreferences.SONIC_CONFIGURATOR.getCustomModelData());
+        sonic.setItemMeta(config);
+        stack[33] = sonic;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);

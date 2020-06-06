@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -213,7 +214,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }
                         return;
                     }
-                    if (slot == 33 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 32 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", uuid.toString());
@@ -231,6 +232,18 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         } else {
                             TARDISMessage.send(p, "NOT_IN_TARDIS");
                         }
+                        return;
+                    }
+                    if (slot == 33 && im.getDisplayName().equals("Sonic Configurator")) {
+                        // close this gui and load the Sonic Configurator
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory sonic_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Sonic Configurator");
+                            // close inventory
+                            p.closeInventory();
+                            // open new inventory
+                            sonic_inv.setContents(new TARDISSonicConfiguratorInventory().getConfigurator());
+                            p.openInventory(sonic_inv);
+                        }, 1L);
                         return;
                     }
                     if (slot == 35 && im.getDisplayName().equals("Admin Menu")) {

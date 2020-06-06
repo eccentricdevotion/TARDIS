@@ -52,7 +52,6 @@ class TARDISSonicGeneratorInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-
     private ItemStack[] getItemStack() {
 
         ItemStack[] stack = new ItemStack[54];

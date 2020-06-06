@@ -17,15 +17,12 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Sonic;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,13 +31,13 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class ResultSetSonic {
+public class ResultSetConfiguredSonic {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
-    private Sonic sonic;
+    private final UUID where;
+    private ConfiguredSonic configuredSonic;
     private final String prefix;
 
     /**
@@ -49,7 +46,7 @@ public class ResultSetSonic {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetSonic(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetConfiguredSonic(TARDIS plugin, UUID where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -64,39 +61,19 @@ public class ResultSetSonic {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString() + "sonic_uuid = ''";
-        }
-        String query = "SELECT * FROM " + prefix + "sonic" + wheres;
+        String query = "SELECT * FROM " + prefix + "sonic WHERE sonic_uuid = '" + where.toString() + "'";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, (Integer) entry.getValue());
-                    }
-                    s++;
-                }
-                where.clear();
-            }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                String colour = rs.getString("sonic_type");
-                ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
-                sonic = new Sonic(UUID.fromString(rs.getString("uuid")), rs.getBoolean("activated"), cc, rs.getInt("model"), rs.getBoolean("bio"), rs.getBoolean("diamond"), rs.getBoolean("emerald"), rs.getBoolean("redstone"), rs.getBoolean("painter"), rs.getBoolean("ignite"), rs.getBoolean("arrow"), rs.getBoolean("knockback"));
+                configuredSonic = new ConfiguredSonic(rs.getInt("sonic_id"), UUID.fromString(rs.getString("uuid")), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), UUID.fromString(rs.getString("sonic_uuid")));
             } else {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for sonic table! " + e.getMessage());
+            plugin.debug("ResultSet error for sonic config table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -107,13 +84,13 @@ public class ResultSetSonic {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing sonic table! " + e.getMessage());
+                plugin.debug("Error closing sonic config table! " + e.getMessage());
             }
         }
         return true;
     }
 
-    public Sonic getSonic() {
-        return sonic;
+    public ConfiguredSonic getConfiguredSonic() {
+        return configuredSonic;
     }
 }
