@@ -162,26 +162,28 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 // check out program
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
-                    ItemMeta im = is.getItemMeta();
-                    List<String> lore = im.getLore();
-                    if (lore.get(2).equals("Checked OUT")) {
-                        TARDISMessage.send(player, "HANDLES_CHECKED");
-                        return;
+                    if (is != null) {
+                        ItemMeta im = is.getItemMeta();
+                        List<String> lore = im.getLore();
+                        if (lore.get(2).equals("Checked OUT")) {
+                            TARDISMessage.send(player, "HANDLES_CHECKED");
+                            return;
+                        }
+                        lore.set(2, "Checked OUT");
+                        im.setLore(lore);
+                        is.setItemMeta(im);
+                        setSlots(view, -1);
+                        selectedSlot.put(uuid, null);
+                        ItemStack clone = is.clone();
+                        player.getWorld().dropItemNaturally(player.getLocation(), clone);
+                        // check out
+                        int pid = TARDISNumberParsers.parseInt(lore.get(1));
+                        HashMap<String, Object> set = new HashMap<>();
+                        set.put("checked", 1);
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("program_id", pid);
+                        plugin.getQueryFactory().doUpdate("programs", set, where);
                     }
-                    lore.set(2, "Checked OUT");
-                    im.setLore(lore);
-                    is.setItemMeta(im);
-                    setSlots(view, -1);
-                    selectedSlot.put(uuid, null);
-                    ItemStack clone = is.clone();
-                    player.getWorld().dropItemNaturally(player.getLocation(), clone);
-                    // check out
-                    int pid = TARDISNumberParsers.parseInt(lore.get(1));
-                    HashMap<String, Object> set = new HashMap<>();
-                    set.put("checked", 1);
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("program_id", pid);
-                    plugin.getQueryFactory().doUpdate("programs", set, where);
                 } else {
                     TARDISMessage.send(player, "HANDLES_SELECT");
                 }
