@@ -23,6 +23,10 @@
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -173,6 +177,7 @@
                                 <includes>
                                     <include>org.rauschig:jarchivelib</include>
                                     <include>org.apache.commons:commons-compress</include>
+                                    <include>io.papermc:paperlib</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -183,6 +188,10 @@
                                 <relocation>
                                     <pattern>org.rauschig:jarchivelib</pattern>
                                     <shadedPattern>lib:jarchivelib</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>io.papermc:lib</pattern>
+                                    <shadedPattern>lib:paperlib</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -212,6 +221,12 @@
             <artifactId>spigot-api</artifactId>
             <version>1.15.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.3</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

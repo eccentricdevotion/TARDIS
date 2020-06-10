@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -222,6 +223,7 @@ public class TARDIS extends JavaPlugin {
                     return;
                 }
             }
+            PaperLib.suggestPaper(this);
             worldManager = WORLD_MANAGER.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
