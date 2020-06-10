@@ -96,9 +96,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         Block block = bd.getLocation().getBlock();
                         Block under = block.getRelative(BlockFace.DOWN);
                         block.setBlockData(TARDISConstants.AIR);
-                        if (under.getType().isAir()) {
-                            TARDISBlockSetters.setBlockAndRemember(under, Material.BARRIER, bd.getTardisID(), 1);
-                        }
+                        TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
                         // spawn item frame
                         frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
                     }
