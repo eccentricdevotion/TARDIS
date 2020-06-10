@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
-import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
@@ -43,9 +43,12 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -64,6 +67,8 @@ public class TARDISTravelCommands implements CommandExecutor {
     private final List<String> BIOME_SUBS = new ArrayList<>();
     private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
     private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
+    FileConfiguration spigot = YamlConfiguration.loadConfiguration(new File("spigot.yml"));
+    private final long timeout;
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -72,6 +77,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                 BIOME_SUBS.add(bi.toString());
             }
         }
+        timeout = (spigot != null) ? (spigot.getLong("settings.timeout-time") * 1000) / 2 : 300001;
+        plugin.debug("timeout = " + timeout);
     }
 
     @Override
@@ -526,49 +533,15 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     w = rsc.getWorld();
-                                    x = rsc.getX() + 5;
-                                    z = rsc.getZ() + 5;
+                                    x = rsc.getX() + 128;
+                                    z = rsc.getZ() + 128;
                                 }
-                                Location tb = searchBiome(player, id, biome, w, x, z);
-                                if (tb == null) {
-                                    TARDISMessage.send(player, "BIOME_NOT_FOUND");
-                                    return true;
-                                } else {
-                                    if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, FLAG.getDefaultFlags()))) {
-                                        if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
-                                            plugin.getTrackerKeeper().getMalfunction().put(id, true);
-                                        } else {
-                                            return true;
-                                        }
-                                    }
-                                    World bw = tb.getWorld();
-                                    // check location
-                                    while (!bw.getChunkAt(tb).isLoaded()) {
-                                        bw.getChunkAt(tb).load();
-                                    }
-                                    int[] start_loc = TARDISTimeTravel.getStartLocation(tb, rsc.getDirection());
-                                    int tmp_y = tb.getBlockY();
-                                    for (int up = 0; up < 10; up++) {
-                                        int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), rsc.getDirection());
-                                        if (count == 0) {
-                                            tb.setY(tmp_y + up);
-                                            break;
-                                        }
-                                    }
-                                    set.put("world", tb.getWorld().getName());
-                                    set.put("x", tb.getBlockX());
-                                    set.put("y", tb.getBlockY());
-                                    set.put("z", tb.getBlockZ());
-                                    set.put("direction", rsc.getDirection().toString());
-                                    set.put("submarine", 0);
-                                    plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                                    TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-                                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
-                                    plugin.getTrackerKeeper().getRescue().remove(id);
-                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                        new TARDISLand(plugin, id, player).exitVortex();
-                                    }
-                                }
+                                TARDISBiomeFinder biomeFinder = new TARDISBiomeFinder(plugin, player, x, z, biome, w);
+                                int bfTaskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, biomeFinder, 1L, 1L);
+                                biomeFinder.setTaskid(bfTaskId);
+                                TARDISBiomePoll biomePoll = new TARDISBiomePoll(plugin, biomeFinder, System.currentTimeMillis() + timeout, player, id, rsc.getDirection());
+                                int pollId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, biomePoll, 20L, 20L);
+                                biomePoll.setTaskid(pollId);
                             } catch (IllegalArgumentException iae) {
                                 TARDISMessage.send(player, "BIOME_NOT_VALID");
                                 return true;

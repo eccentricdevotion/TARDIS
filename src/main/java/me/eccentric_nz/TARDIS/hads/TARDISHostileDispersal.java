@@ -210,7 +210,7 @@ class TARDISHostileDispersal {
 
     private List<Material> buildList() {
         List<Material> list = new ArrayList<>();
-        plugin.getBlocksConfig().getStringList("under_door_blocks").forEach((str) -> list.add(Material.getMaterial(str)));
+        plugin.getBlocksConfig().getStringList("under_door_blocks").forEach((str) -> list.add(Material.valueOf(str)));
         return list;
     }
 }
