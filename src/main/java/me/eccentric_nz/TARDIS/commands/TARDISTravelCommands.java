@@ -77,8 +77,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        timeout = (spigot != null) ? (spigot.getLong("settings.timeout-time") * 1000) / 2 : 300001;
-        plugin.debug("timeout = " + timeout);
+        timeout = (spigot != null) ? (spigot.getLong("settings.timeout-time") * 1000) - 2000 : 58000;
     }
 
     @Override
