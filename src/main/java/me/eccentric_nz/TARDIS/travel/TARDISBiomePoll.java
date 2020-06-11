@@ -1,5 +1,22 @@
+/*
+ * Copyright (C) 2020 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.travel;
 
+import com.google.common.base.Strings;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -21,6 +38,7 @@ public class TARDISBiomePoll implements Runnable {
     private final int id;
     private final COMPASS direction;
     private int taskid;
+    private int dots = 0;
 
     public TARDISBiomePoll(TARDIS plugin, TARDISBiomeFinder biomeFinder, long timeout, Player player, int id, COMPASS direction) {
         this.plugin = plugin;
@@ -34,6 +52,10 @@ public class TARDISBiomePoll implements Runnable {
     @Override
     public void run() {
         if (System.currentTimeMillis() < timeout) {
+            // display action bar so players know the task is still running
+            String message = "§6Searching biome" + Strings.repeat(" .", dots);
+            plugin.getTardisHelper().sendActionBarMessage(player, message);
+            dots++;
             if (biomeFinder.poll()) {
                 Location tb = biomeFinder.getLocation();
                 // cancel biome finder
@@ -46,6 +68,7 @@ public class TARDISBiomePoll implements Runnable {
                         TARDISMessage.send(player, "PROTECTED");
                         plugin.getServer().getScheduler().cancelTask(taskid);
                         taskid = -1;
+                        player.resetTitle();
                     }
                 }
                 World bw = tb.getWorld();
@@ -80,6 +103,7 @@ public class TARDISBiomePoll implements Runnable {
                 }
                 plugin.getServer().getScheduler().cancelTask(taskid);
                 taskid = -1;
+                player.resetTitle();
             }
         } else {
             TARDISMessage.send(player, "BIOME_NOT_FOUND");
@@ -88,6 +112,7 @@ public class TARDISBiomePoll implements Runnable {
             // cancel this task
             plugin.getServer().getScheduler().cancelTask(taskid);
             taskid = -1;
+            player.resetTitle();
         }
     }
 
