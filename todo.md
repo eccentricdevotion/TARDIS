@@ -11,6 +11,7 @@
 7. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 8. Room Blueprints - [Bukkit #1110](https://dev.bukkit.org/projects/tardis/issues/1110) + could tie in with [Bukkit #1034](https://dev.bukkit.org/projects/tardis/issues/1034)
 9. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
+10.  Charge players a fee (via Vault) for using the Junk TARDIS
 
 ## Minecraft 1.16
 1. Add new blocks and nether biomes

@@ -16,10 +16,14 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import com.google.common.collect.Sets;
 import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Material;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Keeps track of various building related lookups. these include: Room block counts, Room seed blocks and Stained Glass
@@ -29,13 +33,9 @@ import java.util.*;
  */
 public class TARDISBuilderInstanceKeeper {
 
-    private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
-    private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
-    private HashMap<Material, String> seeds;
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
-    private static final List<String> IGNORE_BLOCKS = Arrays.asList("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
-    private static final List<Material> PRECIOUS = new ArrayList<>();
-    private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
+    private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
+    private static final Set<Material> PRECIOUS = new HashSet<>();
 
     static {
         BLOCK_CONVERSION.put("ACACIA_LEAVES", "ACACIA_SAPLING");
@@ -106,6 +106,15 @@ public class TARDISBuilderInstanceKeeper {
         PRECIOUS.add(Material.BEDROCK);
     }
 
+    private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
+    private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
+    private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
+    private HashMap<Material, String> seeds;
+
+    public static Set<Material> getPrecious() {
+        return PRECIOUS;
+    }
+
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
         return roomBlockCounts;
     }
@@ -126,12 +135,8 @@ public class TARDISBuilderInstanceKeeper {
         return BLOCK_CONVERSION;
     }
 
-    public List<String> getIgnoreBlocks() {
+    public Set<String> getIgnoreBlocks() {
         return IGNORE_BLOCKS;
-    }
-
-    public static List<Material> getPrecious() {
-        return PRECIOUS;
     }
 
     public HashMap<UUID, Integer> getRoomProgress() {

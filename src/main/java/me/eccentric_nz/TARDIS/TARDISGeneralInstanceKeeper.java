@@ -45,40 +45,40 @@ import java.util.logging.Logger;
  */
 public class TARDISGeneralInstanceKeeper {
 
-    private final HashSet<Material> transparent;
-    private final List<Block> doorPistons = new ArrayList<>();
     private final HashMap<Integer, UUID> timeRotors = new HashMap<>();
-    private List<String> quotes = new ArrayList<>();
-    private final HashMap<String, String> sign_lookup;
-    private TARDISAdminCommands tardisAdminCommand;
-    private final TARDISDoorListener doorListener;
-    private TARDISRenderRoomListener rendererListener;
-    private TARDISTravelCommands tardisTravelCommand;
     private final HashMap<String, Double[]> gravityEastList = new HashMap<>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<>();
     private final HashMap<String, Double[]> gravitySouthList = new HashMap<>();
     private final HashMap<String, Double[]> gravityUpList = new HashMap<>();
     private final HashMap<String, Double[]> gravityWestList = new HashMap<>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<>();
+    private final HashMap<String, String> sign_lookup;
     private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
-    private final List<Block> artronFurnaces = new ArrayList<>();
-    private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
+    private final Set<Material> transparent;
+    private final Set<Block> artronFurnaces = new HashSet<>();
+    private final Set<Block> doorPistons = new HashSet<>();
     private final List<BlockFace> blockFaces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN);
+    private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
-    private final List<Location> rechargers = new ArrayList<>();
+    private final Set<Location> rechargers = new HashSet<>();
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
-    private final List<String> gravityDownList = new ArrayList<>();
+    private final Set<String> gravityDownList = new HashSet<>();
     private final List<String> roomArgs;
-    private final List<String> sonicLamps = new ArrayList<>();
-    private final List<String> sonicPistons = new ArrayList<>();
-    private final List<String> sonicRails = new ArrayList<>();
-    private final List<String> sonicWires = new ArrayList<>();
+    private final Set<String> sonicLamps = new HashSet<>();
+    private final Set<String> sonicPistons = new HashSet<>();
+    private final Set<String> sonicRails = new HashSet<>();
+    private final Set<String> sonicWires = new HashSet<>();
+    private final Set<UUID> junkTravellers = new HashSet<>();
     private final TARDIS plugin;
+    private final TARDISDoorListener doorListener;
     private final YamlConfiguration pluginYAML;
-    private long junkTime;
     private boolean junkTravelling = false;
+    private List<String> quotes = new ArrayList<>();
     private Location junkDestination = null;
-    private final List<UUID> junkTravellers = new ArrayList<>();
+    private long junkTime;
+    private TARDISAdminCommands tardisAdminCommand;
+    private TARDISRenderRoomListener rendererListener;
+    private TARDISTravelCommands tardisTravelCommand;
 
     TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -105,7 +105,7 @@ public class TARDISGeneralInstanceKeeper {
         this.quotes = quotes;
     }
 
-    public List<Block> getArtronFurnaces() {
+    public Set<Block> getArtronFurnaces() {
         return artronFurnaces;
     }
 
@@ -129,7 +129,7 @@ public class TARDISGeneralInstanceKeeper {
         return gravityUpList;
     }
 
-    public List<String> getGravityDownList() {
+    public Set<String> getGravityDownList() {
         return gravityDownList;
     }
 
@@ -165,7 +165,7 @@ public class TARDISGeneralInstanceKeeper {
         return timeRotors;
     }
 
-    public List<Block> getDoorPistons() {
+    public Set<Block> getDoorPistons() {
         return doorPistons;
     }
 
@@ -201,27 +201,27 @@ public class TARDISGeneralInstanceKeeper {
         return roomArgs;
     }
 
-    public HashSet<Material> getTransparent() {
+    public Set<Material> getTransparent() {
         return transparent;
     }
 
-    public List<String> getSonicLamps() {
+    public Set<String> getSonicLamps() {
         return sonicLamps;
     }
 
-    public List<String> getSonicPistons() {
+    public Set<String> getSonicPistons() {
         return sonicPistons;
     }
 
-    public List<String> getSonicRails() {
+    public Set<String> getSonicRails() {
         return sonicRails;
     }
 
-    public List<String> getSonicWires() {
+    public Set<String> getSonicWires() {
         return sonicWires;
     }
 
-    public List<Location> getRechargers() {
+    public Set<Location> getRechargers() {
         return rechargers;
     }
 
@@ -253,7 +253,7 @@ public class TARDISGeneralInstanceKeeper {
         this.junkDestination = junkDestination;
     }
 
-    public List<UUID> getJunkTravellers() {
+    public Set<UUID> getJunkTravellers() {
         return junkTravellers;
     }
 
@@ -262,17 +262,19 @@ public class TARDISGeneralInstanceKeeper {
             Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             therechargers.forEach((s) -> {
                 World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + s + ".world"));
-                int x = plugin.getConfig().getInt("rechargers." + s + ".x");
-                int y = plugin.getConfig().getInt("rechargers." + s + ".y");
-                int z = plugin.getConfig().getInt("rechargers." + s + ".z");
-                Location rc_loc = new Location(w, x, y, z);
-                rechargers.add(rc_loc);
+                if (w != null) {
+                    int x = plugin.getConfig().getInt("rechargers." + s + ".x");
+                    int y = plugin.getConfig().getInt("rechargers." + s + ".y");
+                    int z = plugin.getConfig().getInt("rechargers." + s + ".z");
+                    Location rc_loc = new Location(w, x, y, z);
+                    rechargers.add(rc_loc);
+                }
             });
         }
     }
 
-    private HashSet<Material> buildTransparent() {
-        HashSet<Material> trans = new HashSet<>();
+    private Set<Material> buildTransparent() {
+        Set<Material> trans = new HashSet<>();
         // add transparent blocks
         trans.add(Material.ACACIA_SAPLING);
         trans.add(Material.AIR);

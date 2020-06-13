@@ -35,10 +35,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A central repository used to store various data values required to track what Time lords and TARDIS are doing
@@ -49,120 +46,145 @@ import java.util.UUID;
  */
 public class TARDISTrackerInstanceKeeper {
 
-    private String immortalityGate = "";
     private final HashMap<Integer, Boolean> malfunction = new HashMap<>();
-    private final HashMap<Integer, Integer> damage = new HashMap<>();
-    private final HashMap<Integer, Integer> hasDestination = new HashMap<>();
-    private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
+    private final HashMap<Integer, Integer> damage = new HashMap<>();
+    private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
+    private final HashMap<Integer, Integer> hasDestination = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
     private final HashMap<Integer, TARDISRoomData> roomTasks = new HashMap<>();
     private final HashMap<Integer, UUID> rescue = new HashMap<>();
     private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<>();
-    private final HashMap<String, Sign> sign = new HashMap<>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
+    private final HashMap<String, Sign> sign = new HashMap<>();
+    private final HashMap<UUID, BIND> bindRemoval = new HashMap<>();
     private final HashMap<UUID, Block> exterminate = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
+    private final HashMap<UUID, BuildData> flightData = new HashMap<>();
     private final HashMap<UUID, Double[]> gravity = new HashMap<>();
     private final HashMap<UUID, Integer> binder = new HashMap<>();
     private final HashMap<UUID, Integer> count = new HashMap<>();
     private final HashMap<UUID, Integer> ejecting = new HashMap<>();
     private final HashMap<UUID, Integer> junkPlayers = new HashMap<>();
+    private final HashMap<UUID, Integer> secondaryRemovers = new HashMap<>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
     private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
-    private final HashMap<UUID, List<UUID>> renderedNPCs = new HashMap<>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<>();
+    private final HashMap<UUID, List<UUID>> renderedNPCs = new HashMap<>();
+    private final HashMap<UUID, Location> activeForceFields = new HashMap<>();
     private final HashMap<UUID, Location> dispersed = new HashMap<>();
+    private final HashMap<UUID, Location> endLocation = new HashMap<>();
     private final HashMap<UUID, Location> sonicGenerators = new HashMap<>();
     private final HashMap<UUID, Location> startLocation = new HashMap<>();
-    private final HashMap<UUID, Location> endLocation = new HashMap<>();
-    private final HashMap<UUID, Long> setTime = new HashMap<>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final HashMap<UUID, Long> hideCooldown = new HashMap<>();
     private final HashMap<UUID, Long> rebuildCooldown = new HashMap<>();
+    private final HashMap<UUID, Long> setTime = new HashMap<>();
     private final HashMap<UUID, String> area = new HashMap<>();
     private final HashMap<UUID, String> block = new HashMap<>();
     private final HashMap<UUID, String> end = new HashMap<>();
     private final HashMap<UUID, String> flight = new HashMap<>();
     private final HashMap<UUID, String> jettison = new HashMap<>();
-    private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<>();
     private final HashMap<UUID, String> perm = new HashMap<>();
     private final HashMap<UUID, String> players = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
-    private final HashMap<UUID, UPDATEABLE> secondary = new HashMap<>();
-    private final HashMap<UUID, Integer> secondaryRemovers = new HashMap<>();
-    private final HashMap<UUID, BIND> bindRemoval = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
-    private final HashMap<UUID, BuildData> flightData = new HashMap<>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<>();
     private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<>();
+    private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<>();
+    private final HashMap<UUID, UPDATEABLE> secondary = new HashMap<>();
     private final HashMap<UUID, UUID> chat = new HashMap<>();
-    private final HashMap<UUID, UUID> telepaths = new HashMap<>();
     private final HashMap<UUID, UUID> telepathicRescue = new HashMap<>();
-    private final List<String> artronFurnaces = new ArrayList<>();
-    private final List<Integer> dematerialising = new ArrayList<>();
-    private final List<Integer> didDematToVortex = new ArrayList<>();
-    private final List<Integer> dispersedTARDII = new ArrayList<>();
-    private final List<Integer> hasNotClickedHandbrake = new ArrayList<>();
-    private final List<Integer> hasClickedHandbrake = new ArrayList<>();
-    private final List<Integer> hasRandomised = new ArrayList<>();
-    private final List<Integer> inSiegeMode = new ArrayList<>();
-    private final List<Integer> inVortex = new ArrayList<>();
-    private final List<Integer> isSiegeCube = new ArrayList<>();
-    private final List<Integer> materialising = new ArrayList<>();
-    private final List<Integer> minecart = new ArrayList<>();
-    private final List<Integer> submarine = new ArrayList<>();
-    private final List<Integer> keyboard = new ArrayList<>();
-    private final List<String> reset = new ArrayList<>();
-    private final List<String> heatBlocks = new ArrayList<>();
-    private final List<UUID> arrangers = new ArrayList<>();
-    private final List<UUID> beaconColouring = new ArrayList<>();
-    private final List<UUID> constructors = new ArrayList<>();
-    private final List<UUID> eggs = new ArrayList<>();
-    private final List<UUID> excitation = new ArrayList<>();
-    private final List<UUID> farming = new ArrayList<>();
-    private final List<UUID> geneticManipulation = new ArrayList<>();
-    private final List<UUID> geneticallyModified = new ArrayList<>();
-    private final List<UUID> hasTravelled = new ArrayList<>();
-    private final List<UUID> howTo = new ArrayList<>();
-    private final List<UUID> mover = new ArrayList<>();
-    private final List<UUID> recipeView = new ArrayList<>();
-    private final List<UUID> sonicDoors = new ArrayList<>();
-    private final List<UUID> spectacleWearers = new ArrayList<>();
-    private final List<UUID> temporallyLocated = new ArrayList<>();
-    private final List<UUID> renderRoomOccupants = new ArrayList<>();
-    private final List<UUID> zeroRoomOccupants = new ArrayList<>();
-    private final HashMap<UUID, Location> activeForceFields = new HashMap<>();
-    private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final List<UUID> frozenPlayers = new ArrayList<>();
+    private final HashMap<UUID, UUID> telepaths = new HashMap<>();
+    private final Set<String> artronFurnaces = new HashSet<>();
+    private final Set<String> heatBlocks = new HashSet<>();
+    private final Set<String> reset = new HashSet<>();
+    private final Set<Integer> dematerialising = new HashSet<>();
+    private final Set<Integer> didDematToVortex = new HashSet<>();
+    private final Set<Integer> dispersedTARDII = new HashSet<>();
+    private final Set<Integer> hasClickedHandbrake = new HashSet<>();
+    private final Set<Integer> hasNotClickedHandbrake = new HashSet<>();
+    private final Set<Integer> hasRandomised = new HashSet<>();
+    private final Set<Integer> inSiegeMode = new HashSet<>();
+    private final Set<Integer> inVortex = new HashSet<>();
+    private final Set<Integer> isSiegeCube = new HashSet<>();
+    private final Set<Integer> keyboard = new HashSet<>();
+    private final Set<Integer> materialising = new HashSet<>();
+    private final Set<Integer> minecart = new HashSet<>();
+    private final Set<Integer> submarine = new HashSet<>();
+    private final Set<UUID> arrangers = new HashSet<>();
+    private final Set<UUID> beaconColouring = new HashSet<>();
+    private final Set<UUID> constructors = new HashSet<>();
+    private final Set<UUID> eggs = new HashSet<>();
+    private final Set<UUID> excitation = new HashSet<>();
+    private final Set<UUID> farming = new HashSet<>();
+    private final Set<UUID> frozenPlayers = new HashSet<>();
+    private final Set<UUID> geneticallyModified = new HashSet<>();
+    private final Set<UUID> geneticManipulation = new HashSet<>();
+    private final Set<UUID> hasTravelled = new HashSet<>();
+    private final Set<UUID> howTo = new HashSet<>();
+    private final Set<UUID> mover = new HashSet<>();
+    private final Set<UUID> recipeView = new HashSet<>();
+    private final Set<UUID> renderRoomOccupants = new HashSet<>();
+    private final Set<UUID> sonicDoors = new HashSet<>();
+    private final Set<UUID> spectacleWearers = new HashSet<>();
+    private final Set<UUID> temporallyLocated = new HashSet<>();
+    private final Set<UUID> zeroRoomOccupants = new HashSet<>();
+    private String immortalityGate = "";
+
+    public TARDISMoveSession getTARDISMoveSession(Player p) {
+        if (moveSessions.containsKey(p.getUniqueId())) {
+            return moveSessions.get(p.getUniqueId());
+        }
+        TARDISMoveSession session = new TARDISMoveSession(p);
+        moveSessions.put(p.getUniqueId(), session);
+        return session;
+    }
+
+    public String getImmortalityGate() {
+        return immortalityGate;
+    }
+
+    public void setImmortalityGate(String immortalityGate) {
+        this.immortalityGate = immortalityGate;
+    }
 
     public HashMap<Integer, Boolean> getMalfunction() {
         return malfunction;
-    }
-
-    public HashMap<Integer, Integer> getDamage() {
-        return damage;
-    }
-
-    public HashMap<Integer, Integer> getHasDestination() {
-        return hasDestination;
-    }
-
-    public HashMap<Integer, Integer> getDestinationVortex() {
-        return destinationVortex;
     }
 
     public HashMap<Integer, Integer> getCloisterBells() {
         return cloisterBells;
     }
 
+    public HashMap<Integer, Integer> getDamage() {
+        return damage;
+    }
+
+    public HashMap<Integer, Integer> getDestinationVortex() {
+        return destinationVortex;
+    }
+
+    public HashMap<Integer, Integer> getHasDestination() {
+        return hasDestination;
+    }
+
     public HashMap<Integer, String> getRenderer() {
         return renderer;
+    }
+
+    public HashMap<Integer, TARDISAntiBuild> getAntiBuild() {
+        return antiBuild;
+    }
+
+    public HashMap<Integer, TARDISRoomData> getRoomTasks() {
+        return roomTasks;
     }
 
     public HashMap<Integer, UUID> getRescue() {
@@ -173,12 +195,20 @@ public class TARDISTrackerInstanceKeeper {
         return portals;
     }
 
-    public HashMap<Integer, TARDISAntiBuild> getAntiBuild() {
-        return antiBuild;
+    public HashMap<String, List<TARDISSiegeArea>> getSiegeBreedingAreas() {
+        return siegeBreedingAreas;
     }
 
-    public HashMap<Integer, TARDISRoomData> getRoomTasks() {
-        return roomTasks;
+    public HashMap<String, List<TARDISSiegeArea>> getSiegeGrowthAreas() {
+        return siegeGrowthAreas;
+    }
+
+    public HashMap<String, Sign> getSign() {
+        return sign;
+    }
+
+    public HashMap<UUID, BIND> getBindRemoval() {
+        return bindRemoval;
     }
 
     public HashMap<UUID, Block> getExterminate() {
@@ -193,6 +223,10 @@ public class TARDISTrackerInstanceKeeper {
         return lazarus;
     }
 
+    public HashMap<UUID, BuildData> getFlightData() {
+        return flightData;
+    }
+
     public HashMap<UUID, Double[]> getGravity() {
         return gravity;
     }
@@ -201,56 +235,28 @@ public class TARDISTrackerInstanceKeeper {
         return binder;
     }
 
-    public HashMap<UUID, Integer> getJunkPlayers() {
-        return junkPlayers;
-    }
-
-    public HashMap<UUID, Long> getSetTime() {
-        return setTime;
-    }
-
-    public HashMap<UUID, Long> getHideCooldown() {
-        return hideCooldown;
-    }
-
-    public HashMap<UUID, Long> getRebuildCooldown() {
-        return rebuildCooldown;
-    }
-
-    public HashMap<String, Sign> getSign() {
-        return sign;
-    }
-
-    public HashMap<String, List<TARDISSiegeArea>> getSiegeBreedingAreas() {
-        return siegeBreedingAreas;
-    }
-
-    public HashMap<String, List<TARDISSiegeArea>> getSiegeGrowthAreas() {
-        return siegeGrowthAreas;
-    }
-
-    public HashMap<UUID, String> getBlock() {
-        return block;
-    }
-
-    public HashMap<UUID, UUID> getChat() {
-        return chat;
-    }
-
-    public HashMap<UUID, String> getFlight() {
-        return flight;
-    }
-
     public HashMap<UUID, Integer> getCount() {
         return count;
     }
 
-    public HashMap<UUID, TARDISRegulatorRunnable> getRegulating() {
-        return regulating;
+    public HashMap<UUID, Integer> getEjecting() {
+        return ejecting;
     }
 
-    public HashMap<UUID, BuildData> getFlightData() {
-        return flightData;
+    public HashMap<UUID, Integer> getJunkPlayers() {
+        return junkPlayers;
+    }
+
+    public HashMap<UUID, Integer> getSecondaryRemovers() {
+        return secondaryRemovers;
+    }
+
+    public HashMap<UUID, Integer> getSiegeCarrying() {
+        return siegeCarrying;
+    }
+
+    public HashMap<UUID, JsonObject> getPastes() {
+        return pastes;
     }
 
     public HashMap<UUID, List<Location>> getRepeaters() {
@@ -261,16 +267,60 @@ public class TARDISTrackerInstanceKeeper {
         return renderedNPCs;
     }
 
-    public HashMap<UUID, String> getEnd() {
-        return end;
+    public HashMap<UUID, Location> getActiveForceFields() {
+        return activeForceFields;
     }
 
-    public HashMap<UUID, String> getJettison() {
-        return jettison;
+    public HashMap<UUID, Location> getDispersed() {
+        return dispersed;
+    }
+
+    public HashMap<UUID, Location> getEndLocation() {
+        return endLocation;
+    }
+
+    public HashMap<UUID, Location> getSonicGenerators() {
+        return sonicGenerators;
+    }
+
+    public HashMap<UUID, Location> getStartLocation() {
+        return startLocation;
+    }
+
+    public HashMap<UUID, Long> getCooldown() {
+        return cooldown;
+    }
+
+    public HashMap<UUID, Long> getHideCooldown() {
+        return hideCooldown;
+    }
+
+    public HashMap<UUID, Long> getRebuildCooldown() {
+        return rebuildCooldown;
+    }
+
+    public HashMap<UUID, Long> getSetTime() {
+        return setTime;
     }
 
     public HashMap<UUID, String> getArea() {
         return area;
+    }
+
+    public HashMap<UUID, String> getBlock() {
+        return block;
+    }
+
+    public HashMap<UUID, String> getEnd() {
+        return end;
+    }
+
+    public HashMap<UUID, String> getFlight() {
+        return flight;
+    }
+
+    public HashMap<UUID, String> getJettison() {
+        return jettison;
     }
 
     public HashMap<UUID, String> getPerm() {
@@ -285,18 +335,6 @@ public class TARDISTrackerInstanceKeeper {
         return preset;
     }
 
-    public HashMap<UUID, UPDATEABLE> getSecondary() {
-        return secondary;
-    }
-
-    public HashMap<UUID, Integer> getSecondaryRemovers() {
-        return secondaryRemovers;
-    }
-
-    public HashMap<UUID, BIND> getBindRemoval() {
-        return bindRemoval;
-    }
-
     public HashMap<UUID, String> getTelepathicPlacements() {
         return telepathicPlacements;
     }
@@ -305,13 +343,8 @@ public class TARDISTrackerInstanceKeeper {
         return infoMenu;
     }
 
-    public TARDISMoveSession getTARDISMoveSession(Player p) {
-        if (moveSessions.containsKey(p.getUniqueId())) {
-            return moveSessions.get(p.getUniqueId());
-        }
-        TARDISMoveSession session = new TARDISMoveSession(p);
-        moveSessions.put(p.getUniqueId(), session);
-        return session;
+    public HashMap<UUID, TARDISRegulatorRunnable> getRegulating() {
+        return regulating;
     }
 
     public HashMap<UUID, TARDISSeedData> getRoomSeed() {
@@ -322,195 +355,159 @@ public class TARDISTrackerInstanceKeeper {
         return upgrades;
     }
 
-    public List<String> getArtronFurnaces() {
-        return artronFurnaces;
-    }
-
-    public List<String> getHeatBlocks() {
-        return heatBlocks;
-    }
-
-    public List<Integer> getDematerialising() {
-        return dematerialising;
-    }
-
-    public List<Integer> getDidDematToVortex() {
-        return didDematToVortex;
-    }
-
-    public HashMap<UUID, Location> getDispersed() {
-        return dispersed;
-    }
-
-    public List<Integer> getHasNotClickedHandbrake() {
-        return hasNotClickedHandbrake;
-    }
-
-    public List<Integer> getHasClickedHandbrake() {
-        return hasClickedHandbrake;
-    }
-
-    public List<Integer> getHasRandomised() {
-        return hasRandomised;
-    }
-
-    public List<Integer> getInSiegeMode() {
-        return inSiegeMode;
-    }
-
-    public List<Integer> getIsSiegeCube() {
-        return isSiegeCube;
-    }
-
-    public List<Integer> getInVortex() {
-        return inVortex;
-    }
-
-    public List<Integer> getMaterialising() {
-        return materialising;
-    }
-
-    public List<Integer> getMinecart() {
-        return minecart;
-    }
-
-    public List<Integer> getSubmarine() {
-        return submarine;
-    }
-
-    public List<Integer> getDispersedTARDII() {
-        return dispersedTARDII;
-    }
-
-    public List<Integer> getKeyboard() {
-        return keyboard;
-    }
-
-    public List<UUID> getArrangers() {
-        return arrangers;
-    }
-
-    public List<UUID> getBeaconColouring() {
-        return beaconColouring;
-    }
-
-    public List<UUID> getConstructors() {
-        return constructors;
-    }
-
-    public List<UUID> getEggs() {
-        return eggs;
-    }
-
-    public List<UUID> getExcitation() {
-        return excitation;
-    }
-
-    public HashMap<UUID, Integer> getEjecting() {
-        return ejecting;
-    }
-
-    public List<UUID> getFarming() {
-        return farming;
-    }
-
-    public List<UUID> getGeneticManipulation() {
-        return geneticManipulation;
-    }
-
-    public List<UUID> getGeneticallyModified() {
-        return geneticallyModified;
-    }
-
-    public List<UUID> getHasTravelled() {
-        return hasTravelled;
-    }
-
-    public List<UUID> getHowTo() {
-        return howTo;
-    }
-
     public HashMap<UUID, TARDISWatchData> getJohnSmith() {
         return johnSmith;
     }
 
-    public List<UUID> getMover() {
-        return mover;
+    public HashMap<UUID, UPDATEABLE> getSecondary() {
+        return secondary;
     }
 
-    public List<UUID> getRecipeView() {
-        return recipeView;
-    }
-
-    public List<UUID> getSonicDoors() {
-        return sonicDoors;
-    }
-
-    public List<UUID> getSpectacleWearers() {
-        return spectacleWearers;
-    }
-
-    public HashMap<UUID, UUID> getTelepaths() {
-        return telepaths;
+    public HashMap<UUID, UUID> getChat() {
+        return chat;
     }
 
     public HashMap<UUID, UUID> getTelepathicRescue() {
         return telepathicRescue;
     }
 
-    public List<String> getReset() {
+    public HashMap<UUID, UUID> getTelepaths() {
+        return telepaths;
+    }
+
+    public Set<String> getArtronFurnaces() {
+        return artronFurnaces;
+    }
+
+    public Set<String> getHeatBlocks() {
+        return heatBlocks;
+    }
+
+    public Set<String> getReset() {
         return reset;
     }
 
-    public List<UUID> getTemporallyLocated() {
-        return temporallyLocated;
+    public Set<Integer> getDematerialising() {
+        return dematerialising;
     }
 
-    public List<UUID> getRenderRoomOccupants() {
+    public Set<Integer> getDidDematToVortex() {
+        return didDematToVortex;
+    }
+
+    public Set<Integer> getDispersedTARDII() {
+        return dispersedTARDII;
+    }
+
+    public Set<Integer> getHasClickedHandbrake() {
+        return hasClickedHandbrake;
+    }
+
+    public Set<Integer> getHasNotClickedHandbrake() {
+        return hasNotClickedHandbrake;
+    }
+
+    public Set<Integer> getHasRandomised() {
+        return hasRandomised;
+    }
+
+    public Set<Integer> getInSiegeMode() {
+        return inSiegeMode;
+    }
+
+    public Set<Integer> getInVortex() {
+        return inVortex;
+    }
+
+    public Set<Integer> getIsSiegeCube() {
+        return isSiegeCube;
+    }
+
+    public Set<Integer> getKeyboard() {
+        return keyboard;
+    }
+
+    public Set<Integer> getMaterialising() {
+        return materialising;
+    }
+
+    public Set<Integer> getMinecart() {
+        return minecart;
+    }
+
+    public Set<Integer> getSubmarine() {
+        return submarine;
+    }
+
+    public Set<UUID> getArrangers() {
+        return arrangers;
+    }
+
+    public Set<UUID> getBeaconColouring() {
+        return beaconColouring;
+    }
+
+    public Set<UUID> getConstructors() {
+        return constructors;
+    }
+
+    public Set<UUID> getEggs() {
+        return eggs;
+    }
+
+    public Set<UUID> getExcitation() {
+        return excitation;
+    }
+
+    public Set<UUID> getFarming() {
+        return farming;
+    }
+
+    public Set<UUID> getFrozenPlayers() {
+        return frozenPlayers;
+    }
+
+    public Set<UUID> getGeneticallyModified() {
+        return geneticallyModified;
+    }
+
+    public Set<UUID> getGeneticManipulation() {
+        return geneticManipulation;
+    }
+
+    public Set<UUID> getHasTravelled() {
+        return hasTravelled;
+    }
+
+    public Set<UUID> getHowTo() {
+        return howTo;
+    }
+
+    public Set<UUID> getMover() {
+        return mover;
+    }
+
+    public Set<UUID> getRecipeView() {
+        return recipeView;
+    }
+
+    public Set<UUID> getRenderRoomOccupants() {
         return renderRoomOccupants;
     }
 
-    public List<UUID> getZeroRoomOccupants() {
+    public Set<UUID> getSonicDoors() {
+        return sonicDoors;
+    }
+
+    public Set<UUID> getSpectacleWearers() {
+        return spectacleWearers;
+    }
+
+    public Set<UUID> getTemporallyLocated() {
+        return temporallyLocated;
+    }
+
+    public Set<UUID> getZeroRoomOccupants() {
         return zeroRoomOccupants;
-    }
-
-    public String getImmortalityGate() {
-        return immortalityGate;
-    }
-
-    public void setImmortalityGate(String immortalityGate) {
-        this.immortalityGate = immortalityGate;
-    }
-
-    public HashMap<UUID, JsonObject> getPastes() {
-        return pastes;
-    }
-
-    public HashMap<UUID, Location> getStartLocation() {
-        return startLocation;
-    }
-
-    public HashMap<UUID, Location> getSonicGenerators() {
-        return sonicGenerators;
-    }
-
-    public HashMap<UUID, Location> getEndLocation() {
-        return endLocation;
-    }
-
-    public HashMap<UUID, Integer> getSiegeCarrying() {
-        return siegeCarrying;
-    }
-
-    public HashMap<UUID, Location> getActiveForceFields() {
-        return activeForceFields;
-    }
-
-    public HashMap<UUID, Long> getCooldown() {
-        return cooldown;
-    }
-
-    public List<UUID> getFrozenPlayers() {
-        return frozenPlayers;
     }
 }
