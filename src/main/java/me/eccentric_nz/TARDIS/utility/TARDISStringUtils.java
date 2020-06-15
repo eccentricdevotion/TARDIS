@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISStringUtils {
 
@@ -71,5 +72,13 @@ public class TARDISStringUtils {
 
     public static String toScoredUppercase(String s) {
         return s.toUpperCase().replace("-", "_");
+    }
+
+    public static String toUnderscoredUppercase(String s) {
+        return s.toUpperCase().replace(" ", "_");
+    }
+
+    public static String toEnumUppercase(String s) {
+        return s.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
     }
 }

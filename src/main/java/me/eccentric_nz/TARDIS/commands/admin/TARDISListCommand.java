@@ -40,16 +40,16 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISListTardisesCommand {
+class TARDISListCommand {
 
     private final TARDIS plugin;
 
-    TARDISListTardisesCommand(TARDIS plugin) {
+    TARDISListCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean listTardises(CommandSender sender, String[] args) {
-        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned") || args[1].equalsIgnoreCase("preset_perms"))) {
+    boolean listStuff(CommandSender sender, String[] args) {
+        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned") || args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes"))) {
             if (args[1].equalsIgnoreCase("save")) {
                 ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), "", true, 1);
                 if (rsl.resultSet()) {
@@ -80,6 +80,12 @@ class TARDISListTardisesCommand {
                 return true;
             } else if (args[1].equalsIgnoreCase("abandoned")) {
                 new TARDISAbandonLister(plugin).list(sender);
+                return true;
+            } else if (args[1].equalsIgnoreCase("perms")) {
+                new TARDISPermissionLister(plugin).listPerms(sender);
+                return true;
+            } else if (args[1].equalsIgnoreCase("recipes")) {
+                new TARDISRecipesLister(plugin).listRecipes(sender);
                 return true;
             } else {
                 // preset permissions

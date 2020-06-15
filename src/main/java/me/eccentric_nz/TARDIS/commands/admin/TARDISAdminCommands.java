@@ -46,12 +46,12 @@ import java.util.Locale;
  */
 public class TARDISAdminCommands implements CommandExecutor {
 
-    private final TARDIS plugin;
     final HashMap<String, String> firstsStr = new HashMap<>();
     final List<String> firstsStrArtron = new ArrayList<>();
     final HashMap<String, String> firstsBool = new HashMap<>();
     final HashMap<String, String> firstsInt = new HashMap<>();
     final List<String> firstsIntArtron = new ArrayList<>();
+    private final TARDIS plugin;
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -264,7 +264,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 if (first.equals("list")) {
-                    return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
+                    return new TARDISListCommand(plugin).listStuff(sender, args);
                 }
                 if (first.equals("purge_portals")) {
                     return new TARDISPortalCommand(plugin).clearAll(sender);

@@ -38,6 +38,49 @@ public class TARDISFileCopier {
     }
 
     /**
+     * Copies a file to the TARDIS plugin directory if it is not present.
+     *
+     * @param filepath  the path to the file to write to
+     * @param in        the input file to read from
+     * @param overwrite whether to overwrite the file
+     * @return a File
+     */
+    public static File copy(String filepath, InputStream in, boolean overwrite) {
+        File file = new File(filepath);
+        if (overwrite || !file.exists()) {
+            try {
+                OutputStream out = new FileOutputStream(file);
+                byte[] buf = new byte[1024];
+                int len;
+                try {
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                } catch (IOException io) {
+                    System.err.println("[TARDIS] Copier: Could not save the file (" + file.toString() + ").");
+                } finally {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        System.err.println("[TARDIS] Copier: Could not close the output stream.");
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                System.err.println("[TARDIS] Copier: File not found: " + filepath);
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        System.err.println("[TARDIS] Copier: Could not close the input stream.");
+                    }
+                }
+            }
+        }
+        return file;
+    }
+
+    /**
      * Copies files for use by the TARDIS builder classes.
      */
     public void copyFiles() {
@@ -105,50 +148,7 @@ public class TARDISFileCopier {
     }
 
     /**
-     * Copies the schematic file to the TARDIS plugin directory if it is not present.
-     *
-     * @param filepath  the path to the file to write to
-     * @param in        the input file to read from
-     * @param overwrite whether to overwrite the file
-     * @return a File
-     */
-    public static File copy(String filepath, InputStream in, boolean overwrite) {
-        File file = new File(filepath);
-        if (overwrite || !file.exists()) {
-            try {
-                OutputStream out = new FileOutputStream(file);
-                byte[] buf = new byte[1024];
-                int len;
-                try {
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                } catch (IOException io) {
-                    System.err.println("[TARDIS] Copier: Could not save the file (" + file.toString() + ").");
-                } finally {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        System.err.println("[TARDIS] Copier: Could not close the output stream.");
-                    }
-                }
-            } catch (FileNotFoundException e) {
-                System.err.println("[TARDIS] Copier: File not found: " + filepath);
-            } finally {
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        System.err.println("[TARDIS] Copier: Could not close the input stream.");
-                    }
-                }
-            }
-        }
-        return file;
-    }
-
-    /**
-     * Copies the schematic file to the TARDIS plugin directory if it is not present.
+     * Copies a file to the TARDIS plugin directory if it is not present.
      *
      * @param filename the name of the file to copy
      * @return a File

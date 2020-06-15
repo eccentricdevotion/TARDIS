@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.api;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
+import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -32,14 +34,15 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.WeightedChoice;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -53,6 +56,7 @@ import java.util.logging.Level;
  */
 public class TARDII implements TardisAPI {
 
+    private static final WeightedChoice<Environment> weightedChoice = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final Random random = new Random();
@@ -155,8 +159,6 @@ public class TARDII implements TardisAPI {
         }
         return data;
     }
-
-    private static final WeightedChoice<Environment> weightedChoice = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
 
     @Override
     public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
@@ -412,6 +414,90 @@ public class TARDII implements TardisAPI {
     @Override
     public HashMap<String, ShapelessRecipe> getShapelessRecipes() {
         return TARDIS.plugin.getIncomposita().getShapelessRecipes();
+    }
+
+    @Override
+    public ItemStack getTARDISShapeItem(String item, Player player) {
+        ItemStack result;
+        if (item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Bowl of Custard") || item.endsWith("Jelly Baby")) {
+            ShapelessRecipe recipe = TARDIS.plugin.getIncomposita().getShapelessRecipes().get(item);
+            result = recipe.getResult();
+        } else {
+            ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get(item);
+            if (recipe == null) {
+                return null;
+            }
+            result = recipe.getResult();
+        }
+        if (item.equals("TARDIS Invisibility Circuit")) {
+            // set the second line of lore
+            ItemMeta im = result.getItemMeta();
+            List<String> lore = im.getLore();
+            String uses = (TARDIS.plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
+            lore.set(1, uses);
+            im.setLore(lore);
+            result.setItemMeta(im);
+        }
+        if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Sonic Blaster") || item.equals("Authorised Control Disk")) {
+            ItemMeta im = result.getItemMeta();
+            im.addItemFlags(ItemFlag.values());
+            result.setItemMeta(im);
+        }
+        if (item.equals("TARDIS Key") || item.equals("Authorised Control Disk")) {
+            ItemMeta im = result.getItemMeta();
+            im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+            List<String> lore = im.getLore();
+            if (lore == null) {
+                lore = new ArrayList<>();
+            }
+            String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+            String what = item.equals("key") ? "key" : "disk";
+            lore.add(format + "This " + what + " belongs to");
+            lore.add(format + player.getName());
+            im.setLore(lore);
+            result.setItemMeta(im);
+        }
+        return result;
+    }
+
+    @Override
+    public HashMap<SCHEMATIC, ShapedRecipe> getSeedRecipes() {
+        return TARDIS.plugin.getSemen().getSeedRecipes();
+    }
+
+    @Override
+    public ItemStack getTARDISSeedItem(String schematic) {
+        if (CONSOLES.getBY_NAMES().containsKey(schematic)) {
+            ItemStack is;
+            int model = TARDISSeedModel.modelByString(schematic);
+            if (CONSOLES.getBY_NAMES().get(schematic).isCustom()) {
+                is = new ItemStack(Material.MUSHROOM_STEM, 1);
+            } else if (schematic.equalsIgnoreCase("ROTOR")) {
+                is = new ItemStack(Material.MUSHROOM_STEM, 1);
+            } else {
+                is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+            }
+            ItemMeta im = is.getItemMeta();
+            im.setCustomModelData(10000000 + model);
+            im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+            // set display name
+            im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+            List<String> lore = new ArrayList<>();
+            lore.add(schematic);
+            lore.add("Walls: ORANGE_WOOL");
+            lore.add("Floors: LIGHT_GRAY_WOOL");
+            lore.add("Chameleon: FACTORY");
+            im.setLore(lore);
+            is.setItemMeta(im);
+            return is;
+        }
+        return null;
+    }
+
+    @Override
+    public List<BlueprintType> getBlueprints() {
+        // TODO
+        return null;
     }
 
     @Override

@@ -35,12 +35,6 @@ import java.util.List;
  */
 public class TARDISBlockSetters {
 
-    private final TARDIS plugin;
-
-    public TARDISBlockSetters(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
     /**
      * Sets a block to the specified block data.
      *

@@ -103,6 +103,16 @@ public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TARDISArea tardisArea = new TARDISArea(this);
+    private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
+    private final TARDISDestroyerInner interiorDestroyer = new TARDISDestroyerInner(this);
+    private final TARDISFileCopier tardisCopier = new TARDISFileCopier(this);
+    private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
+    private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
+    private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
+    private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
+    private final List<String> cleanUpWorlds = new ArrayList<>();
+    private final HashMap<String, String> versions = new HashMap<>();
     //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
@@ -142,19 +152,9 @@ public class TARDIS extends JavaPlugin {
     private boolean disguisesOnServer;
     private INVENTORY_MANAGER invManager;
     private PluginManager pm;
-    private final TARDISArea tardisArea = new TARDISArea(this);
-    private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
-    private final TARDISDestroyerInner interiorDestroyer = new TARDISDestroyerInner(this);
     private TARDISGeneralInstanceKeeper generalKeeper;
-    private final TARDISFileCopier tardisCopier = new TARDISFileCopier(this);
-    private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
-    private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
-    private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
-    private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
     private TARDISHelper tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
-    private final List<String> cleanUpWorlds = new ArrayList<>();
-    private final HashMap<String, String> versions = new HashMap<>();
     private String prefix;
     private DIFFICULTY difficulty;
     private WORLD_MANAGER worldManager;
@@ -187,6 +187,102 @@ public class TARDIS extends JavaPlugin {
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
+    }
+
+    private Version getServerVersion(String s) {
+        Pattern pat = Pattern.compile("\\((.+?)\\)", Pattern.DOTALL);
+        Matcher mat = pat.matcher(s);
+        String v;
+        if (mat.find()) {
+            String[] split = mat.group(1).split(" ");
+            String[] tmp = split[1].split("-");
+            if (tmp.length > 1) {
+                v = tmp[0];
+            } else {
+                v = split[1];
+            }
+        } else {
+            v = "1.7.10";
+        }
+        return new Version(v);
+    }
+
+    private boolean checkPluginVersion(String plg, String min) {
+        if (pm.isPluginEnabled(plg)) {
+            Plugin check = pm.getPlugin(plg);
+            Version minver = new Version(min);
+            String preSplit = check.getDescription().getVersion();
+            String[] split = preSplit.split("-");
+            try {
+                Version ver = new Version("0");
+                if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
+                    ver = new Version("1");
+                } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
+                    // eg 6.2.1;84bc322
+                    String[] semi = split[0].split(";");
+                    ver = new Version(semi[0]);
+                } else if (plg.equals("Towny") && preSplit.contains(" ")) {
+                    // eg 0.93.1.0 Pre-Release 4
+                    String[] space = split[0].split(" ");
+                    ver = new Version(space[0]);
+                } else {
+                    ver = new Version(split[0]);
+                }
+                return (ver.compareTo(minver) >= 0);
+            } catch (IllegalArgumentException e) {
+                getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
+                getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
+                getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
+                getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", preSplit);
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if (hasVersion) {
+            // force TARDISes to materialise (next restart) if interrupted
+            for (int id : getTrackerKeeper().getDematerialising()) {
+                if (getTrackerKeeper().getHasDestination().containsKey(id)) {
+                    getTrackerKeeper().getDestinationVortex().put(id, -1);
+                }
+            }
+            for (int id : getTrackerKeeper().getMaterialising()) {
+                getTrackerKeeper().getDestinationVortex().put(id, -2);
+            }
+            // persist any room growing
+            new TARDISRoomPersister(this).saveProgress();
+            TARDISPerceptionFilter.removePerceptionFilter();
+            debug("Perception Filters removed");
+            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                new TARDISPortalPersister(this).save();
+            }
+            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
+                new TARDISArchPersister(this).saveAll();
+            }
+            if (getConfig().getBoolean("siege.enabled")) {
+                new TARDISSiegePersister(this).saveCubes();
+            }
+            if (getConfig().getBoolean("allow.hads")) {
+                new TARDISHadsPersister(this).save();
+            }
+            new TARDISVortexPersister(this).save();
+            if (getConfig().getInt("allow.force_field") > 0) {
+                new TARDISForceFieldPersister(this).save();
+            }
+            updateTagStats();
+            debug("Updated Tag stats");
+            getServer().getScheduler().cancelTasks(this);
+            debug("Cancelling all scheduled tasks");
+            resetTime();
+            debug("Reseting player time(s)");
+            closeDatabase();
+            debug("Closing database");
+            debug("TARDIS disabled successfully!");
+        }
     }
 
     @Override
@@ -400,102 +496,6 @@ public class TARDIS extends JavaPlugin {
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
-        }
-    }
-
-    private Version getServerVersion(String s) {
-        Pattern pat = Pattern.compile("\\((.+?)\\)", Pattern.DOTALL);
-        Matcher mat = pat.matcher(s);
-        String v;
-        if (mat.find()) {
-            String[] split = mat.group(1).split(" ");
-            String[] tmp = split[1].split("-");
-            if (tmp.length > 1) {
-                v = tmp[0];
-            } else {
-                v = split[1];
-            }
-        } else {
-            v = "1.7.10";
-        }
-        return new Version(v);
-    }
-
-    private boolean checkPluginVersion(String plg, String min) {
-        if (pm.isPluginEnabled(plg)) {
-            Plugin check = pm.getPlugin(plg);
-            Version minver = new Version(min);
-            String preSplit = check.getDescription().getVersion();
-            String[] split = preSplit.split("-");
-            try {
-                Version ver = new Version("0");
-                if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
-                    ver = new Version("1");
-                } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
-                    // eg 6.2.1;84bc322
-                    String[] semi = split[0].split(";");
-                    ver = new Version(semi[0]);
-                } else if (plg.equals("Towny") && preSplit.contains(" ")) {
-                    // eg 0.93.1.0 Pre-Release 4
-                    String[] space = split[0].split(" ");
-                    ver = new Version(space[0]);
-                } else {
-                    ver = new Version(split[0]);
-                }
-                return (ver.compareTo(minver) >= 0);
-            } catch (IllegalArgumentException e) {
-                getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
-                getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
-                getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
-                getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", preSplit);
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        if (hasVersion) {
-            // force TARDISes to materialise (next restart) if interrupted
-            for (int id : getTrackerKeeper().getDematerialising()) {
-                if (getTrackerKeeper().getHasDestination().containsKey(id)) {
-                    getTrackerKeeper().getDestinationVortex().put(id, -1);
-                }
-            }
-            for (int id : getTrackerKeeper().getMaterialising()) {
-                getTrackerKeeper().getDestinationVortex().put(id, -2);
-            }
-            // persist any room growing
-            new TARDISRoomPersister(this).saveProgress();
-            TARDISPerceptionFilter.removePerceptionFilter();
-            debug("Perception Filters removed");
-            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
-                new TARDISPortalPersister(this).save();
-            }
-            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
-                new TARDISArchPersister(this).saveAll();
-            }
-            if (getConfig().getBoolean("siege.enabled")) {
-                new TARDISSiegePersister(this).saveCubes();
-            }
-            if (getConfig().getBoolean("allow.hads")) {
-                new TARDISHadsPersister(this).save();
-            }
-            new TARDISVortexPersister(this).save();
-            if (getConfig().getInt("allow.force_field") > 0) {
-                new TARDISForceFieldPersister(this).save();
-            }
-            updateTagStats();
-            debug("Updated Tag stats");
-            getServer().getScheduler().cancelTasks(this);
-            debug("Cancelling all scheduled tasks");
-            resetTime();
-            debug("Reseting player time(s)");
-            closeDatabase();
-            debug("Closing database");
-            debug("TARDIS disabled successfully!");
         }
     }
 
@@ -1130,6 +1130,10 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISShapedRecipe getFigura() {
         return figura;
+    }
+
+    public TARDISSeedRecipe getSemen() {
+        return seeds;
     }
 
     public TARDISShapelessRecipe getIncomposita() {

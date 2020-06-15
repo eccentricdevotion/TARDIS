@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import java.util.Locale;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 
 public enum RECIPE_ITEM {
     // shaped recipes start here
@@ -138,16 +138,16 @@ public enum RECIPE_ITEM {
         this.customModelData = customModelData;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
     public static RECIPE_ITEM getByName(String name) {
-        String processed = name.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
+        String processed = TARDISStringUtils.toEnumUppercase(name);
         try {
             return RECIPE_ITEM.valueOf(processed);
         } catch (IllegalArgumentException e) {
             return NOT_FOUND;
         }
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
     }
 }
