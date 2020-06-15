@@ -127,7 +127,10 @@ public class TARDISCommandHelper {
         tardisteleport("Not yet available"),
         tardisworld("Not yet available"),
         tardisgamemode("Not yet available"),
-        tardischemistry("Not yet available");
+        tardischemistry("Not yet available"),
+        tardissudo("Not yet available"),
+        tardistime("Not yet available"),
+        tardisweather("Not yet available");
 
         final String URL;
 

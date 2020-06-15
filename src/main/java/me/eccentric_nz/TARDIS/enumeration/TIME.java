@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 public enum TIME {
 
+    DAY(0),
     MORNING(0),
     NOON(6000),
     NIGHT(12000),
@@ -49,13 +50,24 @@ public enum TIME {
     AM_4(22000),
     AM_5(23000);
 
+    private static final HashMap<String, TIME> BY_NAME = new HashMap<>();
+
+    static {
+        for (TIME time : values()) {
+            BY_NAME.put(time.name, time);
+        }
+    }
+
     private final long ticks;
     private final String name;
-    private static final HashMap<String, TIME> BY_NAME = new HashMap<>();
 
     TIME(long ticks) {
         this.ticks = ticks;
         name = getName();
+    }
+
+    public static HashMap<String, TIME> getByName() {
+        return BY_NAME;
     }
 
     public long getTicks() {
@@ -65,15 +77,5 @@ public enum TIME {
     private String getName() {
         String[] split = toString().split("_");
         return (split.length == 2) ? split[1] + split[0] : split[0];
-    }
-
-    public static HashMap<String, TIME> getByName() {
-        return BY_NAME;
-    }
-
-    static {
-        for (TIME time : values()) {
-            BY_NAME.put(time.name, time);
-        }
     }
 }

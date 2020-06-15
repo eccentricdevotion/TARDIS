@@ -1248,4 +1248,4 @@ commands:
     aliases: [ttime]
     description: Change the time in the world the player is in (or where their TARDIS is if they are inside it).
     permission: tardis.admin
-    usage: /<command> [morning|noon|night|midnight|?AM|?PM|ticks]
+    usage: /<command> [day|morning|noon|night|midnight|?AM|?PM|ticks]
