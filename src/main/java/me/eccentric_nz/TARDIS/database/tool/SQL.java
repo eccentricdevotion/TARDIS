@@ -34,6 +34,7 @@ public class SQL {
         back,
         bind,
         blocks,
+        blueprint,
         chameleon,
         chunks,
         condenser,
@@ -87,6 +88,8 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %sbind (bind_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', `type` int(1) DEFAULT '0', location varchar(512) DEFAULT '', name varchar(32) DEFAULT '', PRIMARY KEY (bind_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sblocks (b_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', `data` text, police_box int(1) DEFAULT '0', PRIMARY KEY (b_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %sblueprint (bp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', varchar(48) DEFAULT '', PRIMARY KEY (bp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %schameleon (chameleon_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', blueprintData text, stainData text, glassData text, line1 varchar(48) DEFAULT '', line2 varchar(48) DEFAULT '', line3 varchar(48) DEFAULT '', line4 varchar(48) DEFAULT '', asymmetric int(1) DEFAULT '0', PRIMARY KEY (chameleon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -177,6 +180,8 @@ public class SQL {
 
             "INSERT INTO `%sblocks` (`b_id`, `tardis_id`, `location`, `data`, `police_box`) VALUES ",
 
+            "INSERT INTO `%sblueprint` (`bp_id`, `uuid`, `permission`) VALUES ",
+
             "INSERT INTO `%schameleon` (`chameleon_id`, `tardis_id`, `blueprintData`, `stainData`, `glassData`, `line1`, `line2`, `line3`, `line4`, `asymmetric`) VALUES ",
 
             "INSERT INTO `%schunks` (`chunk_id`, `tardis_id`, `world`, `x`, `z`) VALUES ",
@@ -265,6 +270,8 @@ public class SQL {
             "(%s, %s, %s, '%s', '%s')",
 
             "(%s, %s, '%s', '%s', %s)",
+
+            "(%s, '%s', '%s')",
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s)",
 

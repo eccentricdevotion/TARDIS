@@ -166,6 +166,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("b_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("data"), rs.getInt("police_box")) + end;
                                         bw.write(str);
                                         break;
+                                    case blueprint:
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("bp_id"), rs.getString("uuid"), rs.getString("permission")) + end;
+                                        bw.write(str);
+                                        break;
                                     case chameleon:
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4"), rs.getInt("asymmetric")) + end;
                                         bw.write(str);

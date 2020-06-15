@@ -84,6 +84,10 @@ public class TARDISSQLiteDatabase {
             String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS " + prefix + "blocks (b_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', data TEXT DEFAULT 'minecraft:air', police_box INTEGER DEFAULT 0)";
             statement.executeUpdate(queryProtectBlocks);
 
+            // Table structure for table 'blueprint'
+            String queryBlueprint = "CREATE TABLE IF NOT EXISTS " + prefix + "blueprint (bp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', permission TEXT DEFAULT '')";
+            statement.executeUpdate(queryBlueprint);
+
             // Table structure for table 'chameleon'
             String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintData TEXT, stainData TEXT, glassData TEXT, line1 TEXT DEFAULT '', line2 TEXT DEFAULT '', line3 TEXT DEFAULT '', line4 TEXT DEFAULT '', asymmetric INTEGER DEFAULT 0)";
             statement.executeUpdate(queryChameleon);
