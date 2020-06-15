@@ -43,9 +43,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
+import org.bukkit.block.*;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -65,6 +63,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
+    private final List<Block> lampblocks = new ArrayList<>();
+    private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private boolean running;
     private int id;
     private int slot;
@@ -78,17 +86,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private int startz;
     private int j = 2;
     private World world;
-    private final List<Block> lampblocks = new ArrayList<>();
     private List<Chunk> chunks;
-    private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private Block postBedrock;
     private JsonArray arr;
     private Material wall_type;
@@ -668,7 +666,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 } else if (type.equals(Material.SPONGE)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
-                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    BlockState state = world.getBlockAt(x, y, z).getState();
+                    if (state instanceof TileState) {
+                        state.getBlock().setBlockData(data);
+                        state.update(true);
+                    } else {
+                        TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    }
                 }
             }
             // remove items
