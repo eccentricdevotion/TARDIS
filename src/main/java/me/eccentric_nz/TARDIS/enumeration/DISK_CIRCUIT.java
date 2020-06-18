@@ -31,6 +31,7 @@ public enum DISK_CIRCUIT {
     ARS("TARDIS ARS Circuit", Material.GLOWSTONE_DUST),
     BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
     BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD),
+    BLUEPRINT("Blueprint Disk", Material.MUSIC_DISC_MELLOHI),
     CHAMELEON("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST),
     CONTROL("Authorised Control Disk", Material.MUSIC_DISC_FAR),
     HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
@@ -47,14 +48,34 @@ public enum DISK_CIRCUIT {
     SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
     TEMPORAL("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST);
 
-    String name;
-    Material material;
     static final List<String> circuitNames = new ArrayList<>();
     static final List<DISK_CIRCUIT> tardisCircuits = new ArrayList<>();
+
+    static {
+        for (DISK_CIRCUIT circuit : values()) {
+            if (circuit.getName().endsWith("Circuit")) {
+                circuitNames.add(circuit.getName());
+            }
+            if (circuit.getMaterial() == Material.GLOWSTONE_DUST) {
+                tardisCircuits.add(circuit);
+            }
+        }
+    }
+
+    String name;
+    Material material;
 
     DISK_CIRCUIT(String name, Material material) {
         this.name = name;
         this.material = material;
+    }
+
+    public static List<String> getCircuitNames() {
+        return circuitNames;
+    }
+
+    public static List<DISK_CIRCUIT> getTardisCircuits() {
+        return tardisCircuits;
     }
 
     public String getName() {
@@ -78,24 +99,5 @@ public enum DISK_CIRCUIT {
             default:
                 return false;
         }
-    }
-
-    static {
-        for (DISK_CIRCUIT circuit : values()) {
-            if (circuit.getName().endsWith("Circuit")) {
-                circuitNames.add(circuit.getName());
-            }
-            if (circuit.getMaterial() == Material.GLOWSTONE_DUST) {
-                tardisCircuits.add(circuit);
-            }
-        }
-    }
-
-    public static List<String> getCircuitNames() {
-        return circuitNames;
-    }
-
-    public static List<DISK_CIRCUIT> getTardisCircuits() {
-        return tardisCircuits;
     }
 }

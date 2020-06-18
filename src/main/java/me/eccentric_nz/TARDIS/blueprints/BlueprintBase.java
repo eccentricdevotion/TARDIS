@@ -8,7 +8,6 @@ public enum BlueprintBase {
     ENTER("tardis.enter"),
     EXTERMINATE("tardis.exterminate"), // don't really need this - just use "tardis.delete"?
     FIND("tardis.find"),
-    HELP("tardis.help"),
     HOME("tardis.home"),
     LIST("tardis.list"),
     REBUILD("tardis.rebuild"),

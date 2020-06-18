@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.api;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
-import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
+import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.WeightedChoice;
 import org.bukkit.*;
@@ -42,6 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.Connection;
@@ -59,7 +61,6 @@ public class TARDII implements TardisAPI {
     private static final WeightedChoice<Environment> weightedChoice = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final Random random = new Random();
 
     @Override
     public HashMap<String, Integer> getTimelordMap() {
@@ -498,6 +499,67 @@ public class TARDII implements TardisAPI {
     public List<BlueprintType> getBlueprints() {
         // TODO
         return null;
+    }
+
+    @Override
+    public ItemStack getTARDISBlueprintItem(String item, Player player) {
+        String[] split = item.split("_");
+        if (split.length < 3) {
+            return null;
+        }
+        try {
+            BlueprintType type = BlueprintType.valueOf(split[1].toUpperCase());
+            int sub = 11 + split[1].length(); // BLUEPRINT_+length()+_
+            String upper = item.toUpperCase().substring(sub);
+            String perm;
+            switch (type) {
+                case CONSOLE:
+                    BlueprintConsole console = BlueprintConsole.valueOf(upper);
+                    perm = console.getPermission();
+                    break;
+                case FEATURE:
+                    BlueprintFeature feature = BlueprintFeature.valueOf(upper);
+                    perm = feature.getPermission();
+                    break;
+                case PRESET:
+                    BlueprintPreset preset = BlueprintPreset.valueOf(upper);
+                    perm = preset.getPermission();
+                    break;
+                case ROOM:
+                    BlueprintRoom room = BlueprintRoom.valueOf(upper);
+                    perm = room.getPermission();
+                    break;
+                case SONIC:
+                    BlueprintSonic sonic = BlueprintSonic.valueOf(upper);
+                    perm = sonic.getPermission();
+                    break;
+                case TRAVEL:
+                    BlueprintTravel travel = BlueprintTravel.valueOf(upper);
+                    perm = travel.getPermission();
+                    break;
+                default: // BASE
+                    BlueprintBase base = BlueprintBase.valueOf(upper);
+                    perm = base.getPermission();
+                    break;
+            }
+            if (perm != null) {
+                ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
+                ItemMeta im = is.getItemMeta();
+                im.setCustomModelData(10000001);
+                PersistentDataContainer pdc = im.getPersistentDataContainer();
+                pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
+                im.setDisplayName("TARDIS Blueprint Disk");
+                List<String> lore = Arrays.asList(TARDISStringUtils.capitalise(item), "Valid only for", player.getName());
+                im.setLore(lore);
+                im.addItemFlags(ItemFlag.values());
+                is.setItemMeta(im);
+                return is;
+            }
+            return null;
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     @Override

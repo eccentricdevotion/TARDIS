@@ -362,6 +362,15 @@ public interface TardisAPI {
     List<BlueprintType> getBlueprints();
 
     /**
+     * Get a TARDIS Blueprint Disk
+     *
+     * @param item   the blueprint disk to get
+     * @param player the player who will be receiving the item
+     * @return a TARDIS Blueprint Disk item or null if an invalid schematic is specified
+     */
+    ItemStack getTARDISBlueprintItem(String item, Player player);
+
+    /**
      * Get the TARDIS wall and floor block names.
      *
      * @return a String List containing the TARDIS wall and floor block names

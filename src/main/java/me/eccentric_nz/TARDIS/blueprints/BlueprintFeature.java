@@ -10,7 +10,7 @@ public enum BlueprintFeature {
     ATMOSPHERIC("tardis.atmospheric"),
     AUTONOMOUS("tardis.autonomous"),
     BACKDOOR("tardis.backdoor"),
-    CHAMELEONARCH("tardis.chameleonarch"),
+    CHAMELEON_ARCH("tardis.chameleonarch"),
     CHEMISTRY_BREW("tardis.chemistry.brew"),
     CHEMISTRY_COMMAND("tardis.chemistry.command"),
     CHEMISTRY_CREATIVE("tardis.chemistry.creative"),

@@ -162,6 +162,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
     private NamespacedKey timeLordUuidKey;
+    private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
     private PersistentDataType<byte[], UUID> persistentDataTypeUUID;
     private QueryFactory queryFactory;
@@ -293,6 +294,7 @@ public class TARDIS extends JavaPlugin {
         oldBlockKey = new NamespacedKey(this, "customBlock");
         customBlockKey = new NamespacedKey(this, "custom_block");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
+        blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
@@ -1257,6 +1259,10 @@ public class TARDIS extends JavaPlugin {
 
     public NamespacedKey getTimeLordUuidKey() {
         return timeLordUuidKey;
+    }
+
+    public NamespacedKey getBlueprintKey() {
+        return blueprintKey;
     }
 
     public NamespacedKey getSonicUuidKey() {
