@@ -49,7 +49,7 @@ class TARDISListCommand {
     }
 
     boolean listStuff(CommandSender sender, String[] args) {
-        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned") || args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes"))) {
+        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned") || args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints"))) {
             if (args[1].equalsIgnoreCase("save")) {
                 ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), "", true, 1);
                 if (rsl.resultSet()) {
@@ -86,6 +86,9 @@ class TARDISListCommand {
                 return true;
             } else if (args[1].equalsIgnoreCase("recipes")) {
                 new TARDISRecipesLister(plugin).listRecipes(sender);
+                return true;
+            } else if (args[1].equalsIgnoreCase("blueprints")) {
+                new TARDISBlueprintsLister().listBlueprints(sender);
                 return true;
             } else {
                 // preset permissions
