@@ -58,6 +58,7 @@ class TARDISSetKeyCommand {
             TARDISMessage.send(player, "MATERIAL_NOT_VALID");
             return false;
         }
+//        if (go.isBlock() && !go.isAir()) {
         if (go.isBlock()) {
             TARDISMessage.send(player, "KEY_NO_BLOCK");
             return true;
