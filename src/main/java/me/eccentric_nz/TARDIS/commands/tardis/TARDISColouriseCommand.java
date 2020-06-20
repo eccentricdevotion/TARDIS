@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -42,7 +43,7 @@ class TARDISColouriseCommand {
     }
 
     void updateBeaconGlass(Player player) {
-        if (!player.hasPermission("tardis.upgrade")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
             TARDISMessage.send(player, "NO_PERMS");
             return;
         }

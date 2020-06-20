@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -74,7 +75,7 @@ public class TARDISThemeInventory {
                 }
                 List<String> lore = new ArrayList<>();
                 lore.add("Cost: " + cost);
-                if (!player.hasPermission("tardis." + a.getPermission())) {
+                if (!TARDISPermission.hasPermission(player, "tardis." + a.getPermission())) {
                     lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 } else if (level < cost && !current_console.equals(a.getPermission())) {
                     lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
@@ -93,7 +94,7 @@ public class TARDISThemeInventory {
             }
         }
         // archive consoles
-        if (player.hasPermission("tardis.archive")) {
+        if (TARDISPermission.hasPermission(player, "tardis.archive")) {
             ItemStack arc = new ItemStack(Material.BOWL, 1);
             ItemMeta hive_im = arc.getItemMeta();
             hive_im.setDisplayName("Archive Consoles");
@@ -103,7 +104,7 @@ public class TARDISThemeInventory {
         }
         if (plugin.getConfig().getBoolean("allow.repair")) {
             // repair
-            if (player.hasPermission("tardis.repair")) {
+            if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack rep = new ItemStack(Material.BOWL, 1);
                 ItemMeta air_im = rep.getItemMeta();
                 air_im.setDisplayName("Repair Console");
@@ -112,7 +113,7 @@ public class TARDISThemeInventory {
                 stack[47] = rep;
             }
             // clean
-            if (player.hasPermission("tardis.repair")) {
+            if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack cle = new ItemStack(Material.BOWL, 1);
                 ItemMeta an_im = cle.getItemMeta();
                 an_im.setDisplayName("Clean");

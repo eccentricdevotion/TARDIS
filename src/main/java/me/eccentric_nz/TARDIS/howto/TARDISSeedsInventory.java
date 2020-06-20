@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISeeds;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -58,7 +59,7 @@ public class TARDISSeedsInventory {
         int i = 0;
         // get consoles
         for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
-            if (player.hasPermission("tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
+            if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = new ItemStack(m, 1);
                 ItemMeta im = is.getItemMeta();

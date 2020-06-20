@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.creative;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -35,7 +36,7 @@ public class CreativeCommand {
     }
 
     public boolean open(Player player, String[] args) {
-        if (!player.hasPermission("tardis.chemistry.creative")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Creative");
             return true;
         }

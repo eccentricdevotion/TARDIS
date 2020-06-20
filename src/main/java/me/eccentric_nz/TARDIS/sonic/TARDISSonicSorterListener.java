@@ -26,6 +26,7 @@ import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -85,60 +86,6 @@ public class TARDISSonicSorterListener implements Listener {
         sortables.add(Material.YELLOW_SHULKER_BOX);
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-            return;
-        }
-        Player player = event.getPlayer();
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK && player.hasPermission("tardis.sonic.sort")) {
-            ItemStack is = player.getInventory().getItemInMainHand();
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
-                    Block block = event.getClickedBlock();
-                    if (block != null && sortables.contains(block.getType())) {
-                        boolean allow = true;
-                        // is Lockette on the server?
-                        if (plugin.getPM().isPluginEnabled("Lockette")) {
-                            if (Lockette.isProtected(block)) {
-                                allow = false;
-                            }
-                        }
-                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                            if (LocketteProAPI.isProtected(block)) {
-                                allow = false;
-                            }
-                        }
-                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-                            if (BlockLockerAPIv2.isProtected(block)) {
-                                allow = false;
-                            }
-                        }
-                        if (plugin.getPM().isPluginEnabled("Towny")) {
-                            allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
-                        }
-                        // LWCX
-                        if (plugin.getPM().isPluginEnabled("LWC")) {
-                            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-                            if (protectionCache != null) {
-                                Protection protection = protectionCache.getProtection(block);
-                                if (protection != null && !protection.isOwner(player)) {
-                                    allow = false;
-                                }
-                            }
-                        }
-                        if (allow) {
-                            Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
-                            sortInventory(inventory);
-                            TARDISMessage.send(player, "CHEST_SORTED");
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private static ItemStack[] sortInventory(ItemStack[] items) {
         int endIndex = items.length;
         for (int i = 0; i < endIndex; i++) {
@@ -195,5 +142,59 @@ public class TARDISSonicSorterListener implements Listener {
 
     public static void sortInventory(Inventory inventory) {
         inventory.setContents(sortInventory(inventory.getContents()));
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK && TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
+            ItemStack is = player.getInventory().getItemInMainHand();
+            if (is.hasItemMeta()) {
+                ItemMeta im = is.getItemMeta();
+                if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
+                    Block block = event.getClickedBlock();
+                    if (block != null && sortables.contains(block.getType())) {
+                        boolean allow = true;
+                        // is Lockette on the server?
+                        if (plugin.getPM().isPluginEnabled("Lockette")) {
+                            if (Lockette.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                            if (LocketteProAPI.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                            if (BlockLockerAPIv2.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("Towny")) {
+                            allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
+                        }
+                        // LWCX
+                        if (plugin.getPM().isPluginEnabled("LWC")) {
+                            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
+                            if (protectionCache != null) {
+                                Protection protection = protectionCache.getProtection(block);
+                                if (protection != null && !protection.isOwner(player)) {
+                                    allow = false;
+                                }
+                            }
+                        }
+                        if (allow) {
+                            Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
+                            sortInventory(inventory);
+                            TARDISMessage.send(player, "CHEST_SORTED");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

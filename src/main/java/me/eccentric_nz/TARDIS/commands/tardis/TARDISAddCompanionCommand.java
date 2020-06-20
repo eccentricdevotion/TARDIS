@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -46,7 +47,7 @@ class TARDISAddCompanionCommand {
     }
 
     boolean doAddGUI(Player player) {
-        if (player.hasPermission("tardis.add")) {
+        if (TARDISPermission.hasPermission(player, "tardis.add")) {
             ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
             Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
             presetinv.setContents(items);
@@ -58,7 +59,7 @@ class TARDISAddCompanionCommand {
     }
 
     boolean doAdd(Player player, String[] args) {
-        if (player.hasPermission("tardis.add")) {
+        if (TARDISPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

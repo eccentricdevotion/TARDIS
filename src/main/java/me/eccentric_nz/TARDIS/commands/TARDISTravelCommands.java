@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -67,8 +68,8 @@ public class TARDISTravelCommands implements CommandExecutor {
     private final List<String> BIOME_SUBS = new ArrayList<>();
     private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
     private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
-    FileConfiguration spigot = YamlConfiguration.loadConfiguration(new File("spigot.yml"));
     private final long timeout;
+    private final FileConfiguration spigot = YamlConfiguration.loadConfiguration(new File("spigot.yml"));
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -78,6 +79,30 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
         }
         timeout = (spigot != null) ? (spigot.getLong("settings.timeout-time") * 1000) - 2000 : 58000;
+    }
+
+    private static boolean isNumber(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -93,7 +118,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return true;
             }
-            if (player.hasPermission("tardis.timetravel")) {
+            if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                 if (args.length < 1) {
                     new TARDISCommandHelper(plugin).getCommand("tardistravel", sender);
                     return true;
@@ -216,7 +241,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
-                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+                if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
                     String permArea = plugin.getTardisArea().getExileArea(player);
                     TARDISMessage.send(player, "EXILE", permArea);
@@ -303,7 +328,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                                 which = "Fast Return to " + ChatColor.GREEN + "(" + rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ() + ")" + ChatColor.RESET;
                             } else if (args[0].equalsIgnoreCase("cave")) {
-                                if (!player.hasPermission("tardis.timetravel.cave")) {
+                                if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
                                     TARDISMessage.send(player, "TRAVEL_NO_PERM_CAVE");
                                     return true;
                                 }
@@ -332,7 +357,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "TRAVEL_NO_VILLAGE");
                                     return true;
                                 }
-                                if (!player.hasPermission("tardis.timetravel.village")) {
+                                if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
                                     TARDISMessage.send(player, "TRAVEL_NO_PERM_VILLAGE");
                                     return true;
                                 }
@@ -375,7 +400,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 new TARDISLand(plugin, id, player).exitVortex();
                             }
                             return true;
-                        } else if (player.hasPermission("tardis.timetravel.player")) {
+                        } else if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
                             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                                 TARDISMessage.send(player, "ADV_PLAYER");
                                 return true;
@@ -411,7 +436,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                     }
                     if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
-                        if (!player.hasPermission("tardis.timetravel.player")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
                             TARDISMessage.send(player, "NO_PERM_PLAYER");
                             return true;
                         }
@@ -447,7 +472,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("biome")) {
                         // we're thinking this is a biome search
-                        if (!player.hasPermission("tardis.timetravel.biome")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_BIOME");
                             return true;
                         }
@@ -550,7 +575,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                         // we're thinking this is a saved destination name
-                        if (player.hasPermission("tardis.save")) {
+                        if (TARDISPermission.hasPermission(player, "tardis.save")) {
                             HashMap<String, Object> whered = new HashMap<>();
                             whered.put("dest_name", args[1]);
                             whered.put("tardis_id", id);
@@ -656,7 +681,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                             return true;
                         }
-                        if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
+                        if ((!TARDISPermission.hasPermission(player, "tardis.area." + args[1]) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
                             TARDISMessage.send(player, "TRAVEL_NO_AREA_PERM", args[1]);
                             return true;
                         }
@@ -700,7 +725,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (player.hasPermission("tardis.timetravel.location")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.timetravel.location")) {
                         switch (args.length) {
                             case 2:
                                 if (args[0].equalsIgnoreCase("random")) {
@@ -879,30 +904,6 @@ public class TARDISTravelCommands implements CommandExecutor {
             w_str = m.group(1);
         }
         return w_str;
-    }
-
-    private static boolean isNumber(String str) {
-        if (str == null) {
-            return false;
-        }
-        int length = str.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        for (; i < length; i++) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        return true;
     }
 
     private Location getCoordinateLocation(String[] args, Player player, int id) {

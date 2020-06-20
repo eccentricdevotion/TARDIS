@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -177,7 +178,7 @@ public class TARDISUtils {
                         set.put("grace", (grace_count + 1));
                         plugin.getQueryFactory().doUpdate("t_count", set, where);
                     }
-                } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
+                } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
                     // check player difficulty preference
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                     if (rsp.resultSet()) {
@@ -185,7 +186,7 @@ public class TARDISUtils {
                     }
                 }
             }
-        } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
+        } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
             // check player difficulty preference
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rsp.resultSet()) {

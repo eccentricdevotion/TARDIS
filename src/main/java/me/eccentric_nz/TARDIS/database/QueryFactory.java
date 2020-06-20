@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -390,7 +391,7 @@ public class QueryFactory {
             try {
                 service.testConnection(connection);
                 long now;
-                if (player.hasPermission("tardis.prune.bypass")) {
+                if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
                     now = Long.MAX_VALUE - TARDISConstants.RANDOM.nextInt(1000);
                 } else {
                     now = System.currentTimeMillis();

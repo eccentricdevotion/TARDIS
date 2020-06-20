@@ -17,9 +17,10 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISLlama;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -89,7 +90,7 @@ public class TARDISEjectListener implements Listener {
             // can't eject OPs or TARDIS admins
             case PLAYER:
                 Player p = (Player) ent;
-                if (p.isOp() || p.hasPermission("tardis.admin")) {
+                if (p.isOp() || TARDISPermission.hasPermission(p, "tardis.admin")) {
                     TARDISMessage.send(player, "EJECT_PLAYER");
                     return;
                 }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -104,7 +105,7 @@ public class TARDISBlockBreakListener implements Listener {
             if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();
-                if (player.hasPermission("tardis.exterminate")) {
+                if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
                     UUID uuid = player.getUniqueId();
                     // check it is their TARDIS
                     plugin.getTrackerKeeper().getExterminate().put(uuid, block);

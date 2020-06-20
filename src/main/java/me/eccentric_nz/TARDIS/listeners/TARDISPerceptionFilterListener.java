@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -59,7 +60,7 @@ public class TARDISPerceptionFilterListener implements Listener {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
-                    if (player.hasPermission("tardis.filter")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.filter")) {
                         ItemStack chestplate = player.getInventory().getChestplate();
                         if (chestplate == null) {
                             // equip the chest slot with the perception filter

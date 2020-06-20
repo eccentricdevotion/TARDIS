@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -83,13 +84,13 @@ public class TARDISTagListener implements Listener {
             if (p.getName().equals(plugin.getTagConfig().getString("it"))) {
                 // find a new player to make it
                 Player newit = getRandomPlayer();
-                if (p.hasPermission("tardis.tag")) {
+                if (TARDISPermission.hasPermission(p, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
-                if (p.hasPermission("tardis.tag")) {
+                if (TARDISPermission.hasPermission(p, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 }
                 setConfig(now);
@@ -108,13 +109,13 @@ public class TARDISTagListener implements Listener {
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
                 Player newit = event.getPlayer();
-                if (newit.hasPermission("tardis.tag")) {
+                if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
-                if (newit.hasPermission("tardis.tag")) {
+                if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 }
                 setConfig(now);

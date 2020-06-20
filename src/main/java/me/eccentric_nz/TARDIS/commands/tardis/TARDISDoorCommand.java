@@ -17,9 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import org.bukkit.entity.Player;
 
 public class TARDISDoorCommand {
@@ -31,7 +32,7 @@ public class TARDISDoorCommand {
     }
 
     public boolean toggleDoors(Player player, String[] args) {
-        if (!player.hasPermission("tardis.use")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.use")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;
         }

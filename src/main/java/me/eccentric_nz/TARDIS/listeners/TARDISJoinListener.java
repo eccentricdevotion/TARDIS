@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -62,7 +63,7 @@ public class TARDISJoinListener implements Listener {
         Player player = event.getPlayer();
         String uuid = player.getUniqueId().toString();
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
-            if (player.hasPermission("tardis.kit.join")) {
+            if (TARDISPermission.hasPermission(player, "tardis.kit.join")) {
                 // check if they have the tardis kit
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
@@ -81,7 +82,7 @@ public class TARDISJoinListener implements Listener {
             }
         }
         if (plugin.getConfig().getBoolean("allow.achievements")) {
-            if (player.hasPermission("tardis.book")) {
+            if (TARDISPermission.hasPermission(player, "tardis.book")) {
                 // check if they have started building a TARDIS yet
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
@@ -99,7 +100,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
         }
-        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && player.hasPermission("tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && player.hasPermission("tardis.create")))) {
+        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(player, "tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")))) {
             // check if they have t_count record - create one if not
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (!rsc.resultSet()) {
@@ -109,7 +110,7 @@ public class TARDISJoinListener implements Listener {
                 plugin.getQueryFactory().doInsert("t_count", setc);
             }
         }
-        if (plugin.getConfig().getBoolean("allow.tp_switch") && player.hasPermission("tardis.texture")) {
+        if (plugin.getConfig().getBoolean("allow.tp_switch") && TARDISPermission.hasPermission(player, "tardis.texture")) {
             // are they in the TARDIS?
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
@@ -147,7 +148,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
             long now;
-            if (player.hasPermission("tardis.prune.bypass")) {
+            if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
                 now = Long.MAX_VALUE;
             } else {
                 now = System.currentTimeMillis();

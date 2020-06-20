@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -84,7 +85,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         ItemStack choice = view.getItem(slot);
                         if (choice != null) {
                             String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
-                            if (p.hasPermission("tardis." + perm)) {
+                            if (TARDISPermission.hasPermission(p, "tardis." + perm)) {
                                 // remember the upgrade choice
                                 SCHEMATIC schm = CONSOLES.SCHEMATICFor(perm);
                                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());

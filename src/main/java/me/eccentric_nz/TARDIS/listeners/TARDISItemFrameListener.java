@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
 import me.eccentric_nz.TARDIS.database.*;
@@ -76,7 +77,7 @@ public class TARDISItemFrameListener implements Listener {
                         case DIRECTION:
                         case FRAME:
                         case MAP:
-                            if (control.equals(CONTROL.MAP) && !player.hasPermission("tardis.scanner.map")) {
+                            if (control.equals(CONTROL.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
                                 plugin.getTrackerKeeper().getPlayers().remove(uuid);
                                 TARDISMessage.send(player, "NO_PERM_MAP");
                                 return;
@@ -238,7 +239,7 @@ public class TARDISItemFrameListener implements Listener {
                     }
                 }
             }
-            if (!player.hasPermission("tardis.handles.use")) {
+            if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
                 TARDISMessage.send(player, "NO_PERMS");
                 return;
             }
@@ -261,7 +262,7 @@ public class TARDISItemFrameListener implements Listener {
                         is.setItemMeta(im);
                         frame.setItem(is);
                     }, 20L);
-                    if (!player.hasPermission("tardis.handles.program")) {
+                    if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
                         TARDISMessage.send(player, "NO_PERMS");
                         return;
                     }

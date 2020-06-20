@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISSetFlightCommand;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
@@ -215,7 +216,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                     if (player.isSneaking()) {
                                         // check they have permission to change the desktop
-                                        if (!player.hasPermission("tardis.upgrade")) {
+                                        if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
                                             TARDISMessage.send(player, "NO_PERM_UPGRADE");
                                             return;
                                         }
@@ -227,7 +228,7 @@ public class TARDISControlListener implements Listener {
                                         new TARDISThemeButton(plugin, player, tardis.getSchematic(), level, id).clickButton();
                                     } else {
                                         // check they have permission to grow rooms
-                                        if (!player.hasPermission("tardis.architectural")) {
+                                        if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
                                             TARDISMessage.send(player, "NO_PERM_ROOMS");
                                             return;
                                         }
@@ -242,7 +243,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                     break;
                                 case 11: // Temporal Locator sign
-                                    if (!player.hasPermission("tardis.temporal")) {
+                                    if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {
                                         TARDISMessage.send(player, "NO_PERM_TEMPORAL");
                                         return;
                                     }
@@ -373,12 +374,12 @@ public class TARDISControlListener implements Listener {
                                     break;
                                 case 26:
                                     // Handles
-                                    if (!player.hasPermission("tardis.handles.use")) {
+                                    if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
                                         TARDISMessage.send(player, "NO_PERMS");
                                         return;
                                     }
                                     TARDISSounds.playTARDISSound(player, "handles");
-                                    if (!player.hasPermission("tardis.handles.program")) {
+                                    if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
                                         TARDISMessage.send(player, "NO_PERMS");
                                         return;
                                     }
@@ -420,7 +421,7 @@ public class TARDISControlListener implements Listener {
                                     break;
                                 case 29:
                                     // force field
-                                    if (player.hasPermission("tardis.forcefield")) {
+                                    if (TARDISPermission.hasPermission(player, "tardis.forcefield")) {
                                         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                                             plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
                                             TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_down");

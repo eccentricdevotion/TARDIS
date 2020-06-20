@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicReplant;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
@@ -58,7 +59,7 @@ public class TARDISFarmBlockListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlantHarvest(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (!player.hasPermission("tardis.sonic.plant")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.sonic.plant")) {
             return;
         }
         Block block = event.getBlock();

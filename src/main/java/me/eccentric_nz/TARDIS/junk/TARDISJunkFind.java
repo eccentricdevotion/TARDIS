@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
@@ -38,7 +39,7 @@ class TARDISJunkFind {
 
     public boolean find(CommandSender sender) {
         // get current location
-        if (!sender.hasPermission("tardis.junk")) {
+        if (!TARDISPermission.hasPermission(sender, "tardis.junk")) {
             TARDISMessage.send(sender, "JUNK_NO_PERM");
             return true;
         }

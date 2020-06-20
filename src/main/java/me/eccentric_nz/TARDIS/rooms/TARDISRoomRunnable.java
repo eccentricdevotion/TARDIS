@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisTimeLordName;
@@ -56,16 +57,13 @@ public class TARDISRoomRunnable implements Runnable {
     private final TARDIS plugin;
     private final Location l;
     private final JsonObject s;
-    private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int tardis_id;
     private final int progressLevel;
     private final int progressRow;
     private final int progressColumn;
     private final Material wall_type, floor_type;
     private final String room;
-    private boolean running;
     private final Player player;
-    private World world;
     private final List<Chunk> chunkList = new ArrayList<>();
     private final List<Block> iceblocks = new ArrayList<>();
     private final List<Block> lampblocks = new ArrayList<>();
@@ -88,10 +86,13 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
-    private JsonArray arr;
-    private Location aqua_spawn;
     private final boolean wasResumed;
     private final List<String> postBlocks;
+    private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
+    private boolean running;
+    private World world;
+    private JsonArray arr;
+    private Location aqua_spawn;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player player) {
         this.plugin = plugin;
@@ -565,7 +566,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 34, new Location(world, startx, starty, startz).toString(), 1);
                 }
                 // set drop chest
-                if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && player.hasPermission("tardis.vault")) {
+                if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && TARDISPermission.hasPermission(player, "tardis.vault")) {
                     // determine the min x, y, z coords
                     int mx = startx % 16;
                     if (mx < 0) {

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
@@ -73,7 +74,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
-            if (!player.hasPermission("tardis.gravity")) {
+            if (!TARDISPermission.hasPermission(player, "tardis.gravity")) {
                 TARDISMessage.send(sender, "NO_PERMS");
                 return true;
             }

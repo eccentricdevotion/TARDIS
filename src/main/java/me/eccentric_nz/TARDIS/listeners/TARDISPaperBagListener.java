@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetPaperBag;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
@@ -46,7 +47,7 @@ public class TARDISPaperBagListener implements Listener {
         Inventory inv = event.getView().getBottomInventory();
         if (inv.getType().equals(InventoryType.PLAYER)) {
             Player player = (Player) event.getWhoClicked();
-            if (!player.hasPermission("tardis.paper_bag")) {
+            if (!TARDISPermission.hasPermission(player, "tardis.paper_bag")) {
                 return;
             }
             if (event.getRawSlot() >= 0) {

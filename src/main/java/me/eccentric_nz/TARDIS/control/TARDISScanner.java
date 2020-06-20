@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
@@ -64,51 +65,6 @@ public class TARDISScanner {
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.COMPARATOR);
         validBlocks.addAll(Tag.BUTTONS.getValues());
-    }
-
-    public void scan(Player player, int id, String renderer, int level) {
-        // get tardis from saved scanner location
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("type", 33);
-        ResultSetControls rs = new ResultSetControls(plugin, where, true);
-        if (rs.resultSet()) {
-            TARDISCircuitChecker tcc = null;
-            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                tcc = new TARDISCircuitChecker(plugin, id);
-                tcc.getCircuits();
-            }
-            if (tcc != null && !tcc.hasScanner()) {
-                TARDISMessage.send(player, "SCAN_MISSING");
-                return;
-            }
-            if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                TARDISMessage.send(player, "SCAN_NO_RANDOM");
-                return;
-            }
-            BukkitScheduler bsched = plugin.getServer().getScheduler();
-            TARDISScannerData data = scan(player, id, bsched);
-            if (data != null) {
-                boolean extrend = true;
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
-                if (rsp.resultSet()) {
-                    extrend = rsp.isRendererOn();
-                }
-                if (!renderer.isEmpty() && extrend) {
-                    int required = plugin.getArtronConfig().getInt("render");
-                    if (level > required) {
-                        bsched.scheduleSyncDelayedTask(plugin, () -> {
-                            if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
-                                TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
-                            }
-                        }, 160L);
-                    } else {
-                        TARDISMessage.send(player, "ENERGY_NO_RENDER");
-                    }
-                }
-            }
-        }
     }
 
     public static List<Entity> getNearbyEntities(Location l, int radius) {
@@ -243,7 +199,7 @@ public class TARDISScanner {
                 }
             }
         }
-        if (player.hasPermission("tardis.scanner.map")) {
+        if (TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
             // is there a scanner map item frame?
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
@@ -423,5 +379,50 @@ public class TARDISScanner {
             }
         }, 140L);
         return data;
+    }
+
+    public void scan(Player player, int id, String renderer, int level) {
+        // get tardis from saved scanner location
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("type", 33);
+        ResultSetControls rs = new ResultSetControls(plugin, where, true);
+        if (rs.resultSet()) {
+            TARDISCircuitChecker tcc = null;
+            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasScanner()) {
+                TARDISMessage.send(player, "SCAN_MISSING");
+                return;
+            }
+            if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+                TARDISMessage.send(player, "SCAN_NO_RANDOM");
+                return;
+            }
+            BukkitScheduler bsched = plugin.getServer().getScheduler();
+            TARDISScannerData data = scan(player, id, bsched);
+            if (data != null) {
+                boolean extrend = true;
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+                if (rsp.resultSet()) {
+                    extrend = rsp.isRendererOn();
+                }
+                if (!renderer.isEmpty() && extrend) {
+                    int required = plugin.getArtronConfig().getInt("render");
+                    if (level > required) {
+                        bsched.scheduleSyncDelayedTask(plugin, () -> {
+                            if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
+                                TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
+                            }
+                        }, 160L);
+                    } else {
+                        TARDISMessage.send(player, "ENERGY_NO_RENDER");
+                    }
+                }
+            }
+        }
     }
 }

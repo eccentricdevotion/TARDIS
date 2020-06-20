@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class ProductCommand {
     }
 
     public boolean craft(Player player) {
-        if (!player.hasPermission("tardis.product.craft")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.product.craft")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Product");
             return true;
         }

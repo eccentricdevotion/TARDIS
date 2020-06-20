@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -85,7 +86,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Return if players are immune
-        if (player.hasPermission("tardis.acid.bypass")) {
+        if (TARDISPermission.hasPermission(player, "tardis.acid.bypass")) {
             return;
         }
         if (player.getGameMode().equals(GameMode.CREATIVE)) {

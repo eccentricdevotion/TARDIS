@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.bind;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
@@ -93,7 +94,7 @@ public class BindAdd {
                     TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return true;
                 }
-                if (!player.hasPermission("tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
+                if (!TARDISPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
                     TARDISMessage.send(player, "BIND_NO_AREA_PERM", which);
                     return true;
                 }

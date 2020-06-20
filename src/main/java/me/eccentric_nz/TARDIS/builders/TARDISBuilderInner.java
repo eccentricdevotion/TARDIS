@@ -20,6 +20,7 @@ import com.google.gson.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -62,7 +63,6 @@ public class TARDISBuilderInner implements Runnable {
 
     private final TARDIS plugin;
     private final List<Block> lampblocks = new ArrayList<>();
-    private Block postBedrock = null;
     private final SCHEMATIC schm;
     private final World world;
     private final int dbID;
@@ -70,15 +70,6 @@ public class TARDISBuilderInner implements Runnable {
     private final Material wall_type;
     private final Material floor_type;
     private final boolean tips;
-    private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
-    private JsonArray arr;
-    private JsonObject obj;
-    private Location wg1;
-    private Location wg2;
-    private TARDISTIPSData pos;
-    private List<Chunk> chunkList;
-    private String playerUUID;
-    private boolean running = false;
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -91,9 +82,19 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postCarpetBlocks = new HashMap<>();
     private final List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
-    private Location ender = null;
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
+    private Block postBedrock = null;
+    private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
+    private JsonArray arr;
+    private JsonObject obj;
+    private Location wg1;
+    private Location wg2;
+    private TARDISTIPSData pos;
+    private List<Chunk> chunkList;
+    private String playerUUID;
+    private boolean running = false;
+    private Location ender = null;
     private Material type;
     private BlockData data;
     private USE_CLAY use_clay;
@@ -334,7 +335,7 @@ public class TARDISBuilderInner implements Runnable {
             plugin.getQueryFactory().doUpdate("tardis", set, where);
             // give kit?
             if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
-                if (player.hasPermission("tardis.kit.create")) {
+                if (TARDISPermission.hasPermission(player, "tardis.kit.create")) {
                     // check if they have the tardis kit
                     HashMap<String, Object> wherek = new HashMap<>();
                     wherek.put("uuid", playerUUID);

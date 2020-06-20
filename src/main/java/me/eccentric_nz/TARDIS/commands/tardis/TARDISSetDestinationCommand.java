@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -43,7 +44,7 @@ class TARDISSetDestinationCommand {
     }
 
     boolean doSetDestination(Player player, String[] args) {
-        if (player.hasPermission("tardis.save")) {
+        if (TARDISPermission.hasPermission(player, "tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NO_TARDIS");
@@ -99,7 +100,7 @@ class TARDISSetDestinationCommand {
                 if (!plugin.getPluginRespect().getRespect(l, new Parameters(player, FLAG.getDefaultFlags()))) {
                     return true;
                 }
-                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+                if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.getTardisArea().getExileArea(player);
                     if (plugin.getTardisArea().areaCheckInExile(areaPerm, l)) {
                         TARDISMessage.send(player, "EXILE_NO_TRAVEL");

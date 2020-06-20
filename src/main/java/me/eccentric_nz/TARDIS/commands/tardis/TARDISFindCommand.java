@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -39,7 +40,7 @@ class TARDISFindCommand {
     }
 
     boolean findTARDIS(Player player, String[] args) {
-        if (player.hasPermission("tardis.find")) {
+        if (TARDISPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NO_TARDIS");

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.junk;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
@@ -92,7 +93,7 @@ public class TARDISJunkControlListener implements Listener {
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!player.hasPermission("tardis.junk")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
@@ -146,7 +147,7 @@ public class TARDISJunkControlListener implements Listener {
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!player.hasPermission("tardis.junk")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
@@ -164,7 +165,7 @@ public class TARDISJunkControlListener implements Listener {
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!player.hasPermission("tardis.junk")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
@@ -182,7 +183,7 @@ public class TARDISJunkControlListener implements Listener {
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!player.hasPermission("tardis.junk")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }

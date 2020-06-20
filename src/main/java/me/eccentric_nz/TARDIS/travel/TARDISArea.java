@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -131,7 +132,7 @@ public class TARDISArea {
                 // is time travel destination within a defined TARDIS area?
                 if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
                     // does the player have permission to travel here
-                    if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
+                    if (!TARDISPermission.hasPermission(p, "tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
                         plugin.getTrackerKeeper().getPerm().put(p.getUniqueId(), "tardis.area." + n);
                         chk = true;
                         break;

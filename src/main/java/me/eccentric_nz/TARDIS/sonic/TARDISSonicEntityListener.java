@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -67,7 +68,7 @@ public class TARDISSonicEntityListener implements Listener {
                 if (ent instanceof Player) {
                     Player scanned = (Player) ent;
                     TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-                    if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
+                    if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
                         TARDISMessage.send(player, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             PlayerInventory pinv = scanned.getInventory();
@@ -76,7 +77,7 @@ public class TARDISSonicEntityListener implements Listener {
                             menu.setContents(items);
                             player.openInventory(menu);
                         }, 40L);
-                    } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                    } else if (TARDISPermission.hasPermission(player, "tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         TARDISMessage.send(player, "SONIC_PLAYER");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // getHealth() / getMaxHealth() * getHealthScale()

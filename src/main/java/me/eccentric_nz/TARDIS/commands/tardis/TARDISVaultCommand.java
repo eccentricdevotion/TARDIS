@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.ResultSetVault;
@@ -41,7 +42,7 @@ class TARDISVaultCommand {
 
     boolean addDropChest(Player player) {
         // check permission
-        if (!player.hasPermission("tardis.vault")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.vault")) {
             TARDISMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");
             return true;
         }

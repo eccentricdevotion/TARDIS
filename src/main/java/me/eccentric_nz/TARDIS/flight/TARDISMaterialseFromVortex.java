@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
@@ -266,7 +267,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     plugin.getTrackerKeeper().getDamage().remove(id);
                     // set last use
                     long now;
-                    if (player.hasPermission("tardis.prune.bypass")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
                         now = Long.MAX_VALUE;
                     } else {
                         now = System.currentTimeMillis();

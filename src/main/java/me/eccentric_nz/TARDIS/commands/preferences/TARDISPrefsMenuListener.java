@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -100,7 +101,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                     ItemMeta im = is.getItemMeta();
                     if (slot == 23 && im.getDisplayName().equals("Force Field")) {
                         // toggle force field on / off
-                        if (p.hasPermission("tardis.forcefield")) {
+                        if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
                             List<String> lore = im.getLore();
                             boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF")));
                             if (bool) {

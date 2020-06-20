@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.*;
@@ -82,7 +83,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
             // only proceed if they are clicking a door!
             if (Tag.DOORS.isTagged(blockType) || Tag.TRAPDOORS.isTagged(blockType)) {
                 Player player = event.getPlayer();
-                if (player.hasPermission("tardis.enter")) {
+                if (TARDISPermission.hasPermission(player, "tardis.enter")) {
                     Action action = event.getAction();
                     UUID playerUUID = player.getUniqueId();
                     World playerWorld = player.getLocation().getWorld();
@@ -238,7 +239,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     // must use key to open the outer door
                                                     String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                                                     Material sonic = Material.valueOf(split[0]);
-                                                    if (!material.equals(sonic) || !player.hasPermission("tardis.sonic.admin")) {
+                                                    if (!material.equals(sonic) || !TARDISPermission.hasPermission(player, "tardis.sonic.admin")) {
                                                         TARDISMessage.send(player, "NOT_KEY", key);
                                                     }
                                                     return;
@@ -386,7 +387,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             }
                                             // exit TARDIS!
                                             movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
-                                            if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
+                                            if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm")) {
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
                                                 TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
                                                 if (petsAndFollowers != null) {
@@ -430,7 +431,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 }
                                             }
                                         }
-                                        if (playerUUID.equals(tlUUID) || chkCompanion || player.hasPermission("tardis.skeletonkey") || tardis.isAbandoned()) {
+                                        if (playerUUID.equals(tlUUID) || chkCompanion || TARDISPermission.hasPermission(player, "tardis.skeletonkey") || tardis.isAbandoned()) {
                                             // get INNER TARDIS location
                                             TARDISDoorLocation idl = getDoor(1, id);
                                             Location tardis_loc = idl.getL();
@@ -438,13 +439,13 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             COMPASS innerD = idl.getD();
                                             // check for entities near the police box
                                             TARDISPetsAndFollowers petsAndFollowers = null;
-                                            if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
+                                            if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
                                                 plugin.getTrackerKeeper().getFarming().add(playerUUID);
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
                                                 petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
                                             }
                                             // if WorldGuard is on the server check for TARDIS region protection and add admin as member
-                                            if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
+                                            if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
                                                 plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
                                             }
                                             // enter TARDIS!
@@ -550,7 +551,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 return;
                                             }
                                             // check permission
-                                            if (!player.hasPermission("tardis.end")) {
+                                            if (!TARDISPermission.hasPermission(player, "tardis.end")) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
                                                 return;
                                             }
@@ -568,7 +569,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 return;
                                             }
                                             // check permission
-                                            if (!player.hasPermission("tardis.nether")) {
+                                            if (!TARDISPermission.hasPermission(player, "tardis.nether")) {
                                                 TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                                 return;
                                             }

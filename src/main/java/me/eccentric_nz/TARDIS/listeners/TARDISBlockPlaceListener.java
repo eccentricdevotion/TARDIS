@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -115,7 +116,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 return;
             }
         }
-        if (!player.hasPermission("tardis.rift")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.rift")) {
             return;
         }
         if (!is.getType().equals(Material.BEACON) || !is.hasItemMeta()) {

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lazarus;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -117,7 +118,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             if (slot == 45) { // The Master Switch : ON | OFF
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
-                if (player.hasPermission("tardis.themaster")) {
+                if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
                         String onoff = (im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
                         im.setLore(Collections.singletonList(onoff));

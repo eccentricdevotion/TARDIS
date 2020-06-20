@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
@@ -79,7 +80,7 @@ public class TARDISRoomLister {
         List<String> custom_rooms = new ArrayList<>();
         plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((room) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".enabled")) {
-                ChatColor colour = (player.hasPermission("tardis.room." + room)) ? ChatColor.GREEN : ChatColor.RED;
+                ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + room)) ? ChatColor.GREEN : ChatColor.RED;
                 if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".user")) {
                     custom_rooms.add(colour + room);
                 } else {

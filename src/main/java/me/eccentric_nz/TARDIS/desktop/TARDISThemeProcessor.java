@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -25,9 +26,9 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -53,7 +54,7 @@ class TARDISThemeProcessor {
         // get upgrade data
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);
-        if (plugin.getHandlesConfig().getBoolean("enabled") && player.hasPermission("tardis.handles")) {
+        if (plugin.getHandlesConfig().getBoolean("enabled") && TARDISPermission.hasPermission(player, "tardis.handles")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);

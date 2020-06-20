@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
@@ -52,7 +53,7 @@ class TARDISUpdateCommand {
     }
 
     boolean startUpdate(Player player, String[] args) {
-        if (player.hasPermission("tardis.update")) {
+        if (TARDISPermission.hasPermission(player, "tardis.update")) {
             if (args.length == 1) {
                 return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
@@ -109,7 +110,7 @@ class TARDISUpdateCommand {
             if (updateable.equals(UPDATEABLE.FUEL) || updateable.equals(UPDATEABLE.SMELT)) {
                 return new TARDISSmelterCommand(plugin).addDropChest(player, updateable);
             }
-            if (updateable.equals(UPDATEABLE.ADVANCED) && !player.hasPermission("tardis.advanced")) {
+            if (updateable.equals(UPDATEABLE.ADVANCED) && !TARDISPermission.hasPermission(player, "tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");
                 return true;
             }
@@ -121,23 +122,23 @@ class TARDISUpdateCommand {
                     block.setBlockData(mushroom, true);
                 }
             }
-            if (updateable.equals(UPDATEABLE.FORCEFIELD) && !player.hasPermission("tardis.forcefield")) {
+            if (updateable.equals(UPDATEABLE.FORCEFIELD) && !TARDISPermission.hasPermission(player, "tardis.forcefield")) {
                 TARDISMessage.send(player, "NO_PERM_FF");
                 return true;
             }
-            if (updateable.equals(UPDATEABLE.STORAGE) && !player.hasPermission("tardis.storage")) {
+            if (updateable.equals(UPDATEABLE.STORAGE) && !TARDISPermission.hasPermission(player, "tardis.storage")) {
                 TARDISMessage.send(player, "NO_PERM_DISK");
                 return true;
             }
-            if (updateable.equals(UPDATEABLE.BACKDOOR) && !player.hasPermission("tardis.backdoor")) {
+            if (updateable.equals(UPDATEABLE.BACKDOOR) && !TARDISPermission.hasPermission(player, "tardis.backdoor")) {
                 TARDISMessage.send(player, "NO_PERM_BACKDOOR");
                 return true;
             }
-            if (updateable.equals(UPDATEABLE.TEMPORAL) && !player.hasPermission("tardis.temporal")) {
+            if (updateable.equals(UPDATEABLE.TEMPORAL) && !TARDISPermission.hasPermission(player, "tardis.temporal")) {
                 TARDISMessage.send(player, "NO_PERM_TEMPORAL");
                 return true;
             }
-            if ((updateable.equals(UPDATEABLE.FARM) || updateable.equals(UPDATEABLE.STABLE) || updateable.equals(UPDATEABLE.VILLAGE) || updateable.equals(UPDATEABLE.STALL)) && !player.hasPermission("tardis.farm")) {
+            if ((updateable.equals(UPDATEABLE.FARM) || updateable.equals(UPDATEABLE.STABLE) || updateable.equals(UPDATEABLE.VILLAGE) || updateable.equals(UPDATEABLE.STALL)) && !TARDISPermission.hasPermission(player, "tardis.farm")) {
                 TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
                 return true;
             }
@@ -205,7 +206,7 @@ class TARDISUpdateCommand {
                 }
             }
             if (updateable.equals(UPDATEABLE.ARS)) {
-                if (!player.hasPermission("tardis.architectural")) {
+                if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
                     TARDISMessage.send(player, "NO_PERM_ARS");
                     return true;
                 }
@@ -215,7 +216,7 @@ class TARDISUpdateCommand {
                 }
             }
             if (updateable.equals(UPDATEABLE.WEATHER)) {
-                if (!player.hasPermission("tardis.weather.clear") && !player.hasPermission("tardis.weather.rain") && !player.hasPermission("tardis.weather.thunder")) {
+                if (!TARDISPermission.hasPermission(player, "tardis.weather.clear") && !TARDISPermission.hasPermission(player, "tardis.weather.rain") && !TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
                     TARDISMessage.send(player, "NO_PERMS");
                     return true;
                 }

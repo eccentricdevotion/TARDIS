@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -40,8 +41,8 @@ import java.util.HashMap;
  */
 public class TARDISLazarusListener implements Listener {
 
-    private final TARDIS plugin;
     final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
+    private final TARDIS plugin;
 
     public TARDISLazarusListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -55,7 +56,7 @@ public class TARDISLazarusListener implements Listener {
             if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
                 return;
             }
-            if (player.hasPermission("tardis.lazarus")) {
+            if (TARDISPermission.hasPermission(player, "tardis.lazarus")) {
                 Block b = event.getClickedBlock();
                 String l = b.getLocation().toString();
                 // is it a lazarus plate?

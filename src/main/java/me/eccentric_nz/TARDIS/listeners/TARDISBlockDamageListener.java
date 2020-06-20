@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -25,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -69,7 +70,7 @@ public class TARDISBlockDamageListener implements Listener {
         if (rsb.resultSet()) {
             ReplacedBlock rb = rsb.getReplacedBlock();
             int id = rb.getTardis_id();
-            if (p.hasPermission("tardis.sonic.admin")) {
+            if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
                 String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                 Material sonic = Material.valueOf(split[0]);
                 ItemStack is = event.getItemInHand();

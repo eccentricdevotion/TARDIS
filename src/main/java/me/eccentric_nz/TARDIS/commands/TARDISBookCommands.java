@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
@@ -60,7 +61,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                 new TARDISCommandHelper(plugin).getCommand("tardisbook", sender);
                 return true;
             }
-            if (sender.hasPermission("tardis.book")) {
+            if (TARDISPermission.hasPermission(sender, "tardis.book")) {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;

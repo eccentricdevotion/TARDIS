@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
@@ -150,7 +151,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
-            if (!sender.hasPermission("tardis.help")) {
+            if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
                 TARDISMessage.send(sender, "NO_PERMS");
                 return true;
             }

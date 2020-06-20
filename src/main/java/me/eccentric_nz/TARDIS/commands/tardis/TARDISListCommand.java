@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -36,7 +37,7 @@ class TARDISListCommand {
     }
 
     boolean doList(Player player, String[] args) {
-        if (player.hasPermission("tardis.list")) {
+        if (TARDISPermission.hasPermission(player, "tardis.list")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

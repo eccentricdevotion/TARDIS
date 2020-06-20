@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -66,7 +67,7 @@ public class TARDISConsoleListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
-        if (!p.hasPermission("tardis.advanced")) {
+        if (!TARDISPermission.hasPermission(p, "tardis.advanced")) {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {

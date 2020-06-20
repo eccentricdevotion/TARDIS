@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -110,7 +111,7 @@ public class TARDISCraftListener implements Listener {
         SCHEMATIC schm = CONSOLES.getBY_MATERIALS().get(m.toString());
         if (schm != null) {
             String perm = schm.getPermission();
-            return (perm.equals("budget")) || p.hasPermission("tardis." + perm);
+            return (perm.equals("budget")) || TARDISPermission.hasPermission(p, "tardis." + perm);
         } else {
             return false;
         }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTransmatCommand;
@@ -59,7 +60,7 @@ public class TARDISHandlesRequest {
         if (player == null || !player.isOnline()) {
             return;
         }
-        if (!player.hasPermission("tardis.handles.use")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
             TARDISMessage.send(player, "NO_PERMS");
             return;
         }
@@ -76,7 +77,7 @@ public class TARDISHandlesRequest {
                 // if placed player must be in TARDIS or be wearing a communicator
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     // player must have communicator
-                    if (!player.hasPermission("tardis.handles.communicator")) {
+                    if (!TARDISPermission.hasPermission(player, "tardis.handles.communicator")) {
                         TARDISMessage.send(player, "NO_PERM_COMMUNICATOR");
                         return;
                     }
@@ -243,7 +244,7 @@ public class TARDISHandlesRequest {
                             if (rsd.resultSet()) {
                                 for (HashMap<String, String> map : rsd.getData()) {
                                     String dest = map.get("dest_name");
-                                    if (groups.get(0).equalsIgnoreCase(dest) && player.hasPermission("tardis.timetravel")) {
+                                    if (groups.get(0).equalsIgnoreCase(dest) && TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel dest " + dest), 1L);
                                         return;
                                     }
@@ -267,7 +268,7 @@ public class TARDISHandlesRequest {
                         break;
                     case "travel.player":
                         if (groups != null) {
-                            if (!player.hasPermission("tardis.timetravel.player")) {
+                            if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
                                 TARDISMessage.handlesSend(player, "NO_PERM_PLAYER");
                                 return;
                             }
@@ -289,7 +290,7 @@ public class TARDISHandlesRequest {
                             if (rsa.resultSet()) {
                                 // cycle through areas
                                 for (String name : rsa.getNames()) {
-                                    if (area.equalsIgnoreCase(name) && (player.hasPermission("tardis.area." + name) || player.hasPermission("tardis.area.*"))) {
+                                    if (area.equalsIgnoreCase(name) && (TARDISPermission.hasPermission(player, "tardis.area." + name) || TARDISPermission.hasPermission(player, "tardis.area.*"))) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel area " + name), 1L);
                                         return;
                                     }
@@ -301,7 +302,7 @@ public class TARDISHandlesRequest {
                         break;
                     case "travel.biome":
                         if (groups != null) {
-                            if (!player.hasPermission("tardis.timetravel.biome")) {
+                            if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
                                 TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                 return;
                             }
@@ -319,14 +320,14 @@ public class TARDISHandlesRequest {
                         }
                         break;
                     case "travel.cave":
-                        if (!player.hasPermission("tardis.timetravel.cave")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
                             TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_CAVE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel cave"), 1L);
                         break;
                     case "travel.village":
-                        if (!player.hasPermission("tardis.timetravel.village")) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
                             TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
                             return;
                         }
@@ -352,7 +353,7 @@ public class TARDISHandlesRequest {
                         break;
                     case "transmat":
                         if (groups != null) {
-                            if (!player.hasPermission("tardis.transmat")) {
+                            if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
                                 TARDISMessage.handlesSend(player, "NO_PERMS");
                                 return;
                             }
@@ -395,7 +396,7 @@ public class TARDISHandlesRequest {
                 //
                 if (matched) {
                     String perm = plugin.getHandlesConfig().getString("custom-commands." + key + ".permission");
-                    if (perm != null && player.hasPermission(perm)) {
+                    if (perm != null && TARDISPermission.hasPermission(player, perm)) {
                         for (String cmd : plugin.getHandlesConfig().getStringList("custom-commands." + key + ".commands")) {
                             if (cmd.contains("%") && plugin.getPM().isPluginEnabled("PlaceholderAPI")) {
                                 cmd = TARDISHandlesPlaceholder.getSubstituted(cmd, player);

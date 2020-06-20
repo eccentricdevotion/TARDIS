@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -40,7 +41,7 @@ class TARDISTransmatCommand {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
-        if (!player.hasPermission("tardis.transmat")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;
         }

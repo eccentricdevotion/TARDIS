@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import org.bukkit.ChatColor;
@@ -102,7 +103,7 @@ class TARDISSonicGeneratorInventory {
         sta.setItemMeta(dard);
         stack[27] = sta;
         // knockback upgrade
-        if (player.hasPermission("tardis.sonic.knockback")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.knockback")) {
             ItemStack knock = new ItemStack(Material.BOWL, 1);
             ItemMeta back = knock.getItemMeta();
             back.setDisplayName("Knockback Upgrade");
@@ -111,7 +112,7 @@ class TARDISSonicGeneratorInventory {
             stack[28] = knock;
         }
         // bio-scanner upgrade
-        if (player.hasPermission("tardis.sonic.bio")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.bio")) {
             ItemStack bio = new ItemStack(Material.BOWL, 1);
             ItemMeta scan = bio.getItemMeta();
             scan.setDisplayName("Bio-scanner Upgrade");
@@ -120,7 +121,7 @@ class TARDISSonicGeneratorInventory {
             stack[29] = bio;
         }
         // diamond disruptor upgrade
-        if (player.hasPermission("tardis.sonic.diamond")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.diamond")) {
             ItemStack dis = new ItemStack(Material.BOWL, 1);
             ItemMeta rupt = dis.getItemMeta();
             rupt.setDisplayName("Diamond Upgrade");
@@ -129,7 +130,7 @@ class TARDISSonicGeneratorInventory {
             stack[30] = dis;
         }
         // emerald environment upgrade
-        if (player.hasPermission("tardis.sonic.emerald")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.emerald")) {
             ItemStack eme = new ItemStack(Material.BOWL, 1);
             ItemMeta rald = eme.getItemMeta();
             rald.setDisplayName("Emerald Upgrade");
@@ -138,7 +139,7 @@ class TARDISSonicGeneratorInventory {
             stack[31] = eme;
         }
         // redstone activator upgrade
-        if (player.hasPermission("tardis.sonic.redstone")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.redstone")) {
             ItemStack red = new ItemStack(Material.BOWL, 1);
             ItemMeta stone = red.getItemMeta();
             stone.setDisplayName("Redstone Upgrade");
@@ -147,7 +148,7 @@ class TARDISSonicGeneratorInventory {
             stack[32] = red;
         }
         // painter upgrade
-        if (player.hasPermission("tardis.sonic.paint")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.paint")) {
             ItemStack pai = new ItemStack(Material.BOWL, 1);
             ItemMeta nter = pai.getItemMeta();
             nter.setDisplayName("Painter Upgrade");
@@ -156,7 +157,7 @@ class TARDISSonicGeneratorInventory {
             stack[33] = pai;
         }
         // ignite upgrade
-        if (player.hasPermission("tardis.sonic.ignite")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.ignite")) {
             ItemStack ign = new ItemStack(Material.BOWL, 1);
             ItemMeta ite = ign.getItemMeta();
             ite.setDisplayName("Ignite Upgrade");
@@ -165,7 +166,7 @@ class TARDISSonicGeneratorInventory {
             stack[34] = ign;
         }
         // arrow upgrade
-        if (player.hasPermission("tardis.sonic.arrow")) {
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.arrow")) {
             ItemStack arr = new ItemStack(Material.BOWL, 1);
             ItemMeta ow = arr.getItemMeta();
             ow.setDisplayName("Pickup Arrows Upgrade");

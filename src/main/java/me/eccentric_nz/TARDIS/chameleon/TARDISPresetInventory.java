@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
@@ -58,7 +59,7 @@ class TARDISPresetInventory {
         int i = 0;
         for (PRESET preset : PRESET.values()) {
             if (!notThese.contains(preset.getCraftMaterial()) && !preset.isColoured()) {
-                if (player.hasPermission("tardis.preset." + preset.toString().toLowerCase())) {
+                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(preset.getDisplayName());

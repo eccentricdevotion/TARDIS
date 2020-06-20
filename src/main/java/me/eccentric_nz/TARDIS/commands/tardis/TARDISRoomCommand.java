@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -57,7 +58,7 @@ class TARDISRoomCommand {
             return true;
         }
         String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
-        if (!player.hasPermission(perm) && !player.hasPermission("tardis.room")) {
+        if (!TARDISPermission.hasPermission(player, perm) && !TARDISPermission.hasPermission(player, "tardis.room")) {
             TARDISMessage.send(player, "NO_PERM_ROOM_TYPE");
             return true;
         }

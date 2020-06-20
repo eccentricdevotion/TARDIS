@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -113,7 +114,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
-                if (player.hasPermission("tardis.timetravel")) {
+                if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                     if (pref.equals("sonic")) {
                         // open sonic prefs menu
                         ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
@@ -169,7 +170,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "PREF_ON_OFF", pref);
                                 return false;
                             }
-                            if (pref.equals("forcefield") && player.hasPermission("tardis.forcefield")) {
+                            if (pref.equals("forcefield") && TARDISPermission.hasPermission(player, "tardis.forcefield")) {
                                 // add tardis + location
                                 if (args[1].equalsIgnoreCase("on")) {
                                     // check power
@@ -210,9 +211,5 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
-    }
-
-    public static String ucfirst(String str) {
-        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase(Locale.ENGLISH);
     }
 }

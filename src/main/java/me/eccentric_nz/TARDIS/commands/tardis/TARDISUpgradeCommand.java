@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -45,7 +46,7 @@ class TARDISUpgradeCommand {
     }
 
     boolean openUpgradeGUI(Player player) {
-        if (!player.hasPermission("tardis.upgrade")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
             TARDISMessage.send(player, "NO_PERM_UPGRADE");
             return true;
         }
@@ -69,7 +70,7 @@ class TARDISUpgradeCommand {
         String current_world = pl.getWorld().getName();
         String[] split = tardis.getChunk().split(":");
         if (plugin.getConfig().getBoolean("creation.default_world")) {
-            if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
+            if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
                 own = (current_world.equals(split[0]));
             } else {
                 // get if player is in TIPS area for their TARDIS

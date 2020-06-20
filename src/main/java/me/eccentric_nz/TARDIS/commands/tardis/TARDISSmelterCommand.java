@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetSmelterCheck;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -41,7 +42,7 @@ class TARDISSmelterCommand {
 
     boolean addDropChest(Player player, UPDATEABLE updateable) {
         // check permission
-        if (!player.hasPermission("tardis.room.smelter")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {
             TARDISMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
             return true;
         }

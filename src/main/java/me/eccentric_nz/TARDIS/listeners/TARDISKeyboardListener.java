@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.GameMode;
@@ -53,6 +54,16 @@ public class TARDISKeyboardListener implements Listener {
         this.plugin = plugin;
     }
 
+    public static boolean isKeyboardEditor(ItemStack is) {
+        if (is != null && Tag.SIGNS.isTagged(is.getType()) && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
 //        if (!isKeyboardEditor(event.getItemInHand())) {
@@ -81,16 +92,6 @@ public class TARDISKeyboardListener implements Listener {
             Sign keyboard = (Sign) against.getState();
             plugin.getTrackerKeeper().getSign().put(block.getLocation().toString(), keyboard);
         }
-    }
-
-    public static boolean isKeyboardEditor(ItemStack is) {
-        if (is != null && Tag.SIGNS.isTagged(is.getType()) && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -168,13 +169,13 @@ public class TARDISKeyboardListener implements Listener {
                 removeTracker(id);
                 return;
             }
-            if (event.getLine(0).equalsIgnoreCase("cave") && p.hasPermission("tardis.timetravel.cave")) {
+            if (event.getLine(0).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
                 p.performCommand("tardistravel cave");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
                 removeTracker(id);
                 return;
             }
-            if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && p.hasPermission("tardis.timetravel.village")) {
+            if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
                 p.performCommand("tardistravel village");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
                 removeTracker(id);

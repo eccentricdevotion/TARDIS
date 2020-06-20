@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
@@ -31,8 +32,8 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -59,7 +60,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player/console typed /tardisremote then do the following...
-        if (cmd.getName().equalsIgnoreCase("tardisremote") && sender.hasPermission("tardis.remote")) {
+        if (cmd.getName().equalsIgnoreCase("tardisremote") && TARDISPermission.hasPermission(sender, "tardis.remote")) {
             if (args.length < 2) {
                 new TARDISCommandHelper(plugin).getCommand("tardisremote", sender);
                 return true;
@@ -220,7 +221,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             }
                                             // check permission
                                             String perm = "tardis.area." + args[3];
-                                            if ((!p.getPlayer().hasPermission(perm) && !p.getPlayer().hasPermission("tardis.area.*"))) {
+                                            if ((!TARDISPermission.hasPermission(p, perm) && !TARDISPermission.hasPermission(p, "tardis.area.*"))) {
                                                 TARDISMessage.send(sender, "TRAVEL_NO_AREA_PERM", args[3]);
                                                 return true;
                                             }
@@ -262,7 +263,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             return true;
                                         }
                                         if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                            if (!p.getPlayer().hasPermission("tardis.timetravel.location")) {
+                                            if (!TARDISPermission.hasPermission(p, "tardis.timetravel.location")) {
                                                 TARDISMessage.send(sender, "NO_PERMS");
                                                 return true;
                                             }

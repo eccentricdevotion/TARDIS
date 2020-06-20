@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.bind;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -47,7 +48,7 @@ public class TARDISBindCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
-            if (!sender.hasPermission("tardis.update")) {
+            if (!TARDISPermission.hasPermission(sender, "tardis.update")) {
                 TARDISMessage.send(sender, "NO_PERMS");
                 return false;
             }

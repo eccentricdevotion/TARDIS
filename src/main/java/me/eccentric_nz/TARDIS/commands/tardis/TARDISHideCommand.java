@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -45,7 +46,7 @@ public class TARDISHideCommand {
     }
 
     public boolean hide(OfflinePlayer player) {
-        if (player.getPlayer().hasPermission("tardis.rebuild")) {
+        if (TARDISPermission.hasPermission(player, "tardis.rebuild")) {
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getHideCooldown().containsKey(uuid)) {
                 long now = System.currentTimeMillis();

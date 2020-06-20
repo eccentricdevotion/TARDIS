@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -223,7 +224,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 ItemStack ris = view.getItem(slot);
                                 String displayName = ris.getItemMeta().getDisplayName();
                                 String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
-                                if (!player.hasPermission("tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
+                                if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
                                     break;
                                 }

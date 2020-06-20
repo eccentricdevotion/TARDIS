@@ -18,9 +18,13 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
@@ -61,7 +65,7 @@ public class TARDISPluginRespect {
         }
         if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
             String perm = l.getWorld().getName();
-            if (!flag.getPlayer().hasPermission("tardis.travel." + perm)) {
+            if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.travel." + perm)) {
                 if (flag.messagePlayer()) {
                     TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM_WORLD", perm);
                 }
@@ -78,7 +82,7 @@ public class TARDISPluginRespect {
                 bool = false;
             }
             // check permission
-            if (!flag.getPlayer().hasPermission("tardis.nether")) {
+            if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.nether")) {
                 if (flag.messagePlayer()) {
                     TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
                 }
@@ -102,7 +106,7 @@ public class TARDISPluginRespect {
                 bool = false;
             }
             // check permission
-            if (!flag.getPlayer().hasPermission("tardis.end")) {
+            if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.end")) {
                 if (flag.messagePlayer()) {
                     TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
                 }

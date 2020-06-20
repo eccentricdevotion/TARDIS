@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -52,7 +53,7 @@ class TARDISEnterCommand {
             TARDISMessage.send(sender, "CMD_PLAYER");
             return true;
         }
-        if (!player.hasPermission("tardis.skeletonkey")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;
         }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
@@ -25,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -73,7 +74,7 @@ public class TARDISRandomButton {
         }
         COMPASS dir = rscl.getDirection();
         Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-        if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+        if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
             // get the exile area
             String permArea = plugin.getTardisArea().getExileArea(player);
             TARDISMessage.send(player, "EXILE", permArea);
@@ -115,7 +116,7 @@ public class TARDISRandomButton {
                     environment = "NORMAL";
                     if (!plugin.getConfig().getBoolean("travel.nether")) {  // nether travel enabled
                         TARDISMessage.send(player, "ANCIENT", "Nether");
-                    } else if (!player.hasPermission("tardis.nether")) {    // nether permission
+                    } else if (!TARDISPermission.hasPermission(player, "tardis.nether")) {    // nether permission
                         TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                     } else if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "NETHER")) { // check if they need to visit nether first
                         TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "Nether");
@@ -129,7 +130,7 @@ public class TARDISRandomButton {
                     environment = "NORMAL";
                     if (!plugin.getConfig().getBoolean("travel.the_end")) {  // end travel enabled
                         TARDISMessage.send(player, "ANCIENT", "End");
-                    } else if (!player.hasPermission("tardis.end")) {    // end permission
+                    } else if (!TARDISPermission.hasPermission(player, "tardis.end")) {    // end permission
                         TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
                     } else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "THE_END")) { // check if they need to visit the end first
                         TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");

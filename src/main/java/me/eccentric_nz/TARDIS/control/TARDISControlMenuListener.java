@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
@@ -156,7 +157,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         return;
                                     }
                                     // check they have permission to grow rooms
-                                    if (!player.hasPermission("tardis.architectural")) {
+                                    if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
                                         TARDISMessage.send(player, "NO_PERM_ROOMS");
                                         return;
                                     }
@@ -240,7 +241,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    if (!player.hasPermission("tardis.upgrade")) {
+                                    if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
                                         TARDISMessage.send(player, "NO_PERM_UPGRADE");
                                         return;
                                     }
@@ -424,7 +425,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 49:
                                     // temporal
-                                    if (!player.hasPermission("tardis.temporal")) {
+                                    if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {
                                         TARDISMessage.send(player, "NO_PERM_TEMPORAL");
                                         return;
                                     }

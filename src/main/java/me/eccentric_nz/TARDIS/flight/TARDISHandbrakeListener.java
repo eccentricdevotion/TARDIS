@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -59,6 +60,11 @@ public class TARDISHandbrakeListener implements Listener {
 
     public TARDISHandbrakeListener(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    public static void toggleBeacon(String str, boolean on) {
+        Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
+        b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
     /**
@@ -134,7 +140,7 @@ public class TARDISHandbrakeListener implements Listener {
                             return;
                         }
                         UUID ownerUUID = tardis.getUuid();
-                        if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                        if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                             // check if cancelled so we don't get double messages from the bind listener
                             TARDISMessage.send(player, "ISO_HANDS_OFF");
                             return;
@@ -244,11 +250,6 @@ public class TARDISHandbrakeListener implements Listener {
                 }
             }
         }
-    }
-
-    public static void toggleBeacon(String str, boolean on) {
-        Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
-        b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
     private boolean isDoorOpen(int id) {

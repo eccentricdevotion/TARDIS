@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -131,7 +132,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!event.getItemInHand().getItemMeta().getDisplayName().equals("TARDIS Artron Furnace")) {
             return;
         }
-        if (event.getPlayer().hasPermission("tardis.furnace")) {
+        if (TARDISPermission.hasPermission(event.getPlayer(), "tardis.furnace")) {
             Block b = event.getBlock();
             if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
                 plugin.getGeneralKeeper().getArtronFurnaces().add(b);

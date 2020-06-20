@@ -20,12 +20,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -62,7 +63,7 @@ public class TARDISSeedBlockProcessor {
      * @return true or false
      */
     public boolean processBlock(TARDISBuildData seed, Location l, Player player) {
-        if (player.hasPermission("tardis.create")) {
+        if (TARDISPermission.hasPermission(player, "tardis.create")) {
             int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
             int grace_count = 0;
@@ -94,7 +95,7 @@ public class TARDISSeedBlockProcessor {
                 }
                 SCHEMATIC schm = seed.getSchematic();
                 // check perms
-                if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
+                if (!schm.getPermission().equals("budget") && !TARDISPermission.hasPermission(player, "tardis." + schm.getPermission())) {
                     TARDISMessage.send(player, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
                     return false;
                 }
@@ -111,7 +112,7 @@ public class TARDISSeedBlockProcessor {
                     chunkworld = space.getTardisWorld(cw);
                     cx = 0;
                     cz = 0;
-                } else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
+                } else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TARDISSpace space = new TARDISSpace(plugin);
@@ -151,7 +152,7 @@ public class TARDISSeedBlockProcessor {
                 Material wall_type = seed.getWallType();
                 Material floor_type = seed.getFloorType();
                 long now;
-                if (player.hasPermission("tardis.prune.bypass")) {
+                if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
                     now = Long.MAX_VALUE;
                 } else {
                     now = System.currentTimeMillis();
@@ -211,7 +212,7 @@ public class TARDISSeedBlockProcessor {
                         l.getBlock().setBlockData(TARDISConstants.AIR);
                     }, schm.getConsoleSize().getDelay());
                     // set achievement completed
-                    if (player.hasPermission("tardis.book")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.book")) {
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("completed", 1);
                         HashMap<String, Object> wherea = new HashMap<>();

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -38,9 +39,9 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
@@ -125,7 +126,7 @@ public class TARDISStattenheimListener implements Listener {
                     if (b.getState() instanceof InventoryHolder || Tag.DOORS.isTagged(m)) {
                         return;
                     }
-                    if (player.hasPermission("tardis.timetravel")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                         Location remoteLocation = b.getLocation();
                         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
@@ -134,7 +135,7 @@ public class TARDISStattenheimListener implements Listener {
                         if (!plugin.getPluginRespect().getRespect(remoteLocation, new Parameters(player, FLAG.getDefaultFlags()))) {
                             return;
                         }
-                        if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+                        if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                             String areaPerm = plugin.getTardisArea().getExileArea(player);
                             if (plugin.getTardisArea().areaCheckInExile(areaPerm, remoteLocation)) {
                                 TARDISMessage.send(player, "EXILE_NO_TRAVEL");

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.compound;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class CompoundCommand {
     }
 
     public boolean create(Player player) {
-        if (!player.hasPermission("tardis.compound.create")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.compound.create")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Compound");
             return true;
         }

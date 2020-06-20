@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.WEATHER;
@@ -75,7 +76,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                 }
                 WEATHER weather = WEATHER.fromString(args[0]);
                 String perm = weather.toString().toLowerCase();
-                if (!player.hasPermission("tardis.weather." + perm)) {
+                if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
                     TARDISMessage.send(sender, "NO_PERMS");
                     return true;
                 }

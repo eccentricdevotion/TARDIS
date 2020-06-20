@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,7 +36,7 @@ public class TARDISSonicDisruptor {
             TARDISSonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");
             // drop appropriate material
             Material mat = block.getType();
-            if (player.hasPermission("tardis.sonic.silktouch")) {
+            if (TARDISPermission.hasPermission(player, "tardis.sonic.silktouch")) {
                 Location l = block.getLocation();
                 if (mat.equals(Material.SNOW)) {
                     Snow snow = (Snow) block.getBlockData();

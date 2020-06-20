@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.reducer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class ReduceCommand {
     }
 
     public boolean use(Player player) {
-        if (!player.hasPermission("tardis.reducer.use")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Reduction");
             return true;
         }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -59,6 +60,7 @@ public class CureBrewingListener implements Listener {
     private final List<String> elements = Arrays.asList("Silver", "Bismuth", "Calcium", "Cobalt");
     private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.UNCRAFTABLE);
     private final HashMap<PotionType, List<String>> potions = new HashMap<>();
+    private final List<UUID> noPickUps = new ArrayList<>();
 
     public CureBrewingListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -89,7 +91,7 @@ public class CureBrewingListener implements Listener {
             Block cauldron = location.getBlock();
             if (item.isOnGround()) {
                 if (cauldron.getType() == Material.CAULDRON) {
-                    if (player.hasPermission("tardis.chemistry.brew")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.chemistry.brew")) {
                         // cauldron must have water in it
                         Levelled levelled = (Levelled) cauldron.getBlockData();
                         if (levelled.getLevel() > 0) {
@@ -223,8 +225,6 @@ public class CureBrewingListener implements Listener {
             }
         }, 20L);
     }
-
-    private final List<UUID> noPickUps = new ArrayList<>();
 
     @EventHandler(ignoreCancelled = true)
     public void noPickup(EntityPickupItemEvent event) {

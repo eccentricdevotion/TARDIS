@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -57,7 +58,7 @@ class TARDISPoliceBoxInventory {
         // coloured police boxes
         for (String s : colours) {
             String underscored = s.replace(" ", "_");
-            if (player.hasPermission("tardis.preset.police_box_" + underscored.toLowerCase())) {
+            if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase())) {
                 String dye = underscored.toUpperCase() + "_DYE";
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();

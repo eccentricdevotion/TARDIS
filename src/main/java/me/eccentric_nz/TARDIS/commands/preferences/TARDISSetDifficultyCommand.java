@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -38,7 +39,7 @@ class TARDISSetDifficultyCommand {
             TARDISMessage.send(player, "CMD_DISABLED");
             return true;
         }
-        if (!player.hasPermission("tardis.difficulty")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.difficulty")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;
         }

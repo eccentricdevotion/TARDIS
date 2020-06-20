@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -43,7 +44,7 @@ class TARDISRescueCommand {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
-        if (player.hasPermission("tardis.timetravel.player")) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");

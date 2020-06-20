@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -25,10 +26,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -141,7 +142,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                                                 continue;
                                             }
-                                            if ((!p.hasPermission("tardis.area." + first) && !p.hasPermission("tardis.area.*")) || (!p.isPermissionSet("tardis.area." + first) && !p.isPermissionSet("tardis.area.*"))) {
+                                            if ((!TARDISPermission.hasPermission(p, "tardis.area." + first) && !TARDISPermission.hasPermission(p, "tardis.area.*")) || (!p.isPermissionSet("tardis.area." + first) && !p.isPermissionSet("tardis.area.*"))) {
                                                 TARDISMessage.send(p, "TRAVEL_NO_AREA_PERM", first);
                                                 continue;
                                             }
@@ -160,7 +161,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             break;
                                         case MUSIC_DISC_CAT: // biome
                                             // find a biome location
-                                            if (!p.hasPermission("tardis.timetravel.biome")) {
+                                            if (!TARDISPermission.hasPermission(p, "tardis.timetravel.biome")) {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_BIOME");
                                                 continue;
                                             }
@@ -213,7 +214,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             break;
                                         case MUSIC_DISC_WAIT: // player
                                             // get the player's location
-                                            if (p.hasPermission("tardis.timetravel.player")) {
+                                            if (TARDISPermission.hasPermission(p, "tardis.timetravel.player")) {
                                                 if (p.getName().equalsIgnoreCase(first)) {
                                                     TARDISMessage.send(p, "TRAVEL_NO_SELF");
                                                     continue;
@@ -245,7 +246,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             }
                                             break;
                                         case MUSIC_DISC_CHIRP: // save
-                                            if (p.hasPermission("tardis.save")) {
+                                            if (TARDISPermission.hasPermission(p, "tardis.save")) {
                                                 String world = lore.get(1);
                                                 int x = TARDISNumberParsers.parseInt(lore.get(2));
                                                 int y = TARDISNumberParsers.parseInt(lore.get(3));

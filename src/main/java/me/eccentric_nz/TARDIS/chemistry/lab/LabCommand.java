@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class LabCommand {
     }
 
     public boolean combine(Player player) {
-        if (!player.hasPermission("tardis.lab.combine")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Lab");
             return true;
         }

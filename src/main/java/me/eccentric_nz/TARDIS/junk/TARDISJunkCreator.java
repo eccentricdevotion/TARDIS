@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -45,7 +46,7 @@ class TARDISJunkCreator {
     }
 
     boolean createJunkTARDIS() {
-        if (!p.hasPermission("tardis.admin")) {
+        if (!TARDISPermission.hasPermission(p, "tardis.admin")) {
             TARDISMessage.send(p, "CMD_ADMIN");
             return true;
         }

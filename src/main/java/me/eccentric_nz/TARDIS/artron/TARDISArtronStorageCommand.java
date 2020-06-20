@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -54,7 +55,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         // If the player typed /tardisartron then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisartron")) {
-            if (!sender.hasPermission("tardis.store")) {
+            if (!TARDISPermission.hasPermission(sender, "tardis.store")) {
                 TARDISMessage.send(sender, "NO_PERMS");
                 return true;
             }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -38,7 +39,7 @@ class TARDISHandlesDiskCommand {
 
     boolean renameDisk(Player player, String[] args) {
         // check perms
-        if (!player.hasPermission("tardis.handles.program")) {
+        if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
             TARDISMessage.send(player, "NO_PERMS");
             return true;
         }

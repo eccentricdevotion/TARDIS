@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
@@ -34,10 +35,10 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -80,7 +81,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         Player player = event.getEntity();
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
-            if (player.hasPermission("tardis.autonomous")) {
+            if (TARDISPermission.hasPermission(player, "tardis.autonomous")) {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -379,7 +380,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {
             String area = rsa.getArea().getAreaName();
-            if (!player.hasPermission("tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
+            if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
             l = plugin.getTardisArea().getNextSpot(area);

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlock;
 import me.eccentric_nz.TARDIS.chemistry.block.RecipeData;
 import me.eccentric_nz.TARDIS.chemistry.compound.CompoundCommand;
@@ -64,10 +65,10 @@ public class TARDISChemistryCommand implements CommandExecutor {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("formula") && player.hasPermission("tardis.formula.show")) {
+            if (args[0].equalsIgnoreCase("formula") && TARDISPermission.hasPermission(player, "tardis.formula.show")) {
                 return new FormulaCommand(plugin).show(player, args);
             } else if (args[0].equalsIgnoreCase("gui")) {
-                if (!player.hasPermission("tardis.chemistry.command")) {
+                if (!TARDISPermission.hasPermission(player, "tardis.chemistry.command")) {
                     TARDISMessage.send(player, "CHEMISTRY_CMD_PERM");
                     return true;
                 }
@@ -92,7 +93,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
                         return true;
                 }
             } else if (args[0].equalsIgnoreCase("recipe")) {
-                if (!sender.hasPermission("tardis.help")) {
+                if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
                     TARDISMessage.send(sender, "NO_PERMS");
                     return true;
                 }
