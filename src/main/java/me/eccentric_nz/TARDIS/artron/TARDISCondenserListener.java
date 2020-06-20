@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -159,6 +160,9 @@ public class TARDISCondenserListener implements Listener {
                                     if (lore.contains("Knockback Upgrade")) {
                                         amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
                                     }
+                                } else if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
+                                    // blueprint disc
+                                    BlueprintProcessor.addPermission(plugin, is, player);
                                 } else {
                                     amount += stack_size * plugin.getCondensables().get(item);
                                 }
@@ -279,6 +283,19 @@ public class TARDISCondenserListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
                 return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
+            }
+        }
+        return false;
+    }
+
+    private boolean isBlueprint(ItemStack is) {
+        if (!plugin.getConfig().getBoolean("blueprints.enabled")) {
+            return false;
+        }
+        if (is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName()) {
+                return (im.getDisplayName()).equals("TARDIS Blueprint Disk");
             }
         }
         return false;
