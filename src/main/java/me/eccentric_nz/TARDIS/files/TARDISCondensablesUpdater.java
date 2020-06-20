@@ -133,6 +133,7 @@ public class TARDISCondensablesUpdater {
             list.put("MOSSY_STONE_BRICK_SLAB", 2);
             list.put("MOSSY_STONE_BRICK_STAIRS", 2);
             list.put("MOSSY_STONE_BRICK_WALL", 2);
+            list.put("MUSIC_DISC_CAT", 100);
             list.put("NETHER_BRICK_WALL", 2);
             list.put("OAK_SIGN", 2);
             list.put("OAK_WALL_SIGN", 2);
@@ -168,6 +169,54 @@ public class TARDISCondensablesUpdater {
             list.put("SWEET_BERRIES", 10);
             list.put("WHITE_DYE", 10);
             list.put("WITHER_ROSE", 2);
+            // TODO set 1.16 values correctly
+            // 1.16
+//            list.put("ANCIENT_DEBRIS", 50);
+//            list.put("BASALT", 1);
+//            list.put("BLACK_STONE", 1);
+//            list.put("CHAIN", 1);
+//            list.put("CHISELED_NETHER_BRICKS", 1);
+//            list.put("CRACKED_NETHER_BRICKS", 1);
+//            list.put("CRIMSON_FUNGI", 1);
+//            list.put("CRIMSON_NYLIUM", 1);
+//            list.put("CRIMSON_PLANKS", 1);
+//            list.put("CRIMSON_ROOT", 1);
+//            list.put("CRIMSON_STEM", 1);
+//            list.put("GILDED_BLACKSTONE", 1);
+//            list.put("HYPHAE", 1);
+//            list.put("MUSIC_DISC_PIGSTEP", 100);
+//            list.put("NETHER_GOLD_ORE", 1);
+//            list.put("NETHER_SPROUTS", 1);
+//            list.put("NETHERITE_AXE", 1870);
+//            list.put("NETHERITE_BLOCK", 10980);
+//            list.put("NETHERITE_BOOTS", 2070);
+//            list.put("NETHERITE_CHESTPLATE", 2970);
+//            list.put("NETHERITE_HELMET", 2220);
+//            list.put("NETHERITE_HOE", 1620);
+//            list.put("NETHERITE_INGOT", 1220);
+//            list.put("NETHERITE_LEGGINGS", 2720);
+//            list.put("NETHERITE_PICKAXE", 1870);
+//            list.put("NETHERITE_SCRAP", 200);
+//            list.put("NETHERITE_SHOVEL", 1430);
+//            list.put("NETHERITE_SWORD", 1640);
+//            list.put("QUARTZ_BRICKS", 1);
+//            list.put("RESPAWN_ANCHOR", 1);
+//            list.put("SHROOM_LIGHT", 1);
+//            list.put("SOUL_CAMPFIRE", 24);
+//            list.put("SOUL_LANTERN", 24);
+//            list.put("SOUL_SOIL", 1);
+//            list.put("SOUL_TORCH", 24);
+//            list.put("TARGET", 24);
+//            list.put("TWISTING_VINES", 24);
+//            list.put("WARPED_FUNGI", 1);
+//            list.put("WARPED_FUNGUS_ON_A_STICK", 24);
+//            list.put("WARPED_NYLIUM", 1);
+//            list.put("WARPED_PLANKS", 1);
+//            list.put("WARPED_ROOT", 1);
+//            list.put("WARPED_STEM", 1);
+//            list.put("WARPED_WART_BLOCK", 24);
+//            list.put("WEEPING_VINES", 24);
+
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
             }
