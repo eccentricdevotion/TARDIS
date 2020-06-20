@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Singleton class to get the database connection.
@@ -34,18 +33,11 @@ import java.sql.Statement;
 public class TARDISDatabaseConnection {
 
     private static final TARDISDatabaseConnection INSTANCE = new TARDISDatabaseConnection();
+    public Connection connection = null;
     private boolean isMySQL;
 
     public static synchronized TARDISDatabaseConnection getINSTANCE() {
         return INSTANCE;
-    }
-
-    public Connection connection = null;
-
-    public void setConnection(String path) throws Exception {
-        Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbc:sqlite:" + path);
-        connection.setAutoCommit(true);
     }
 
     void setIsMySQL(boolean isMySQL) {
@@ -76,6 +68,12 @@ public class TARDISDatabaseConnection {
         return connection;
     }
 
+    public void setConnection(String path) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connection = DriverManager.getConnection("jdbc:sqlite:" + path);
+        connection.setAutoCommit(true);
+    }
+
     /**
      * @return an exception
      * @throws CloneNotSupportedException No cloning allowed
@@ -91,17 +89,12 @@ public class TARDISDatabaseConnection {
      * @param connection the database connection to test
      */
     public void testConnection(Connection connection) {
-        if (isMySQL) {
-            try {
-                Statement statement = connection.createStatement();
-                statement.executeQuery("SELECT 1");
-            } catch (SQLException e) {
-                try {
-                    setConnection();
-                } catch (Exception ex) {
-                    TARDIS.plugin.debug("Could not re-connect to database!");
-                }
+        try {
+            if (isMySQL && !connection.isValid(1)) {
+                setConnection();
             }
+        } catch (SQLException ex) {
+            TARDIS.plugin.debug("Could not re-connect to database! " + ex.getMessage());
         }
     }
 }

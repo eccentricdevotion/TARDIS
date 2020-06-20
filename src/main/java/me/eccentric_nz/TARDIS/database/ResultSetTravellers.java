@@ -40,11 +40,11 @@ public class ResultSetTravellers {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
+    private final List<UUID> data = new ArrayList<>();
+    private final String prefix;
     private int traveller_id;
     private int tardis_id;
     private UUID uuid;
-    private final List<UUID> data = new ArrayList<>();
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
