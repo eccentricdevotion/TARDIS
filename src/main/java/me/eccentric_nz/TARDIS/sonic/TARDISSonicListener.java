@@ -149,6 +149,7 @@ public class TARDISSonicListener implements Listener {
                     if (Tag.WALL_SIGNS.isTagged(block.getType()) && TARDISPermission.hasPermission(player, "tardis.atmospheric")) {
                         // make it snow
                         TARDISSonicAtmospheric.makeItSnow(plugin, player, block);
+                        return;
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.arrow") && lore != null && lore.contains("Pickup Arrows Upgrade")) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
@@ -159,17 +160,19 @@ public class TARDISSonicListener implements Listener {
                                 // pick up arrow
                                 Arrow arrow = (Arrow) e;
                                 arrow.setPickupStatus(AbstractArrow.PickupStatus.ALLOWED);
+                                return;
                             }
                         }
+                    }
+                    if (redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
+                        // toggle powered state
+                        TARDISSonicRedstone.togglePoweredState(plugin, player, block);
+                        return;
                     }
                     if (!redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !block.getType().isInteractable()) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         // scan environment
                         TARDISSonicScanner.scan(plugin, block.getLocation(), player);
-                    }
-                    if (redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
-                        // toggle powered state
-                        TARDISSonicRedstone.togglePoweredState(plugin, player, block);
                     }
                 }
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {
