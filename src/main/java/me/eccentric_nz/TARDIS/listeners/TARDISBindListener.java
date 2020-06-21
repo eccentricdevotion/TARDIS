@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.BIND;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -91,7 +91,7 @@ public class TARDISBindListener implements Listener {
                     plugin.getQueryFactory().doUpdate("bind", set, where);
                     TARDISMessage.send(player, "BIND_SAVE", m.toString());
                 } else if (plugin.getTrackerKeeper().getBindRemoval().containsKey(uuid)) {
-                    BIND bind = plugin.getTrackerKeeper().getBindRemoval().get(uuid);
+                    Bind bind = plugin.getTrackerKeeper().getBindRemoval().get(uuid);
                     // get the bind record from the location and type
                     HashMap<String, Object> whereb = new HashMap<>();
                     whereb.put("type", bind.getType());

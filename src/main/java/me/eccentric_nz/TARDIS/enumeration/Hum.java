@@ -19,6 +19,18 @@ package me.eccentric_nz.TARDIS.enumeration;
 /**
  * @author eccentric_nz
  */
-public enum DIFFICULTY {
-    EASY, MEDIUM, HARD
+public enum Hum {
+
+    ALIEN,
+    ATMOSPHERE,
+    COMPUTER,
+    COPPER,
+    CORAL,
+    GALAXY,
+    LEARNING,
+    MIND,
+    NEON,
+    SLEEPING,
+    VOID,
+    RANDOM
 }

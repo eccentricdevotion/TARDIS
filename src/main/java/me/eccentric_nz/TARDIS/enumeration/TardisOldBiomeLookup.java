@@ -23,7 +23,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISOldBiomeLookup {
+public class TardisOldBiomeLookup {
 
     public final static HashMap<String, Biome> OLD_BIOME_LOOKUP = new HashMap<>();
 

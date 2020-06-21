@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 /**
  * @author eccentric_nz
  */
-public enum LANGUAGE {
+public enum Language {
 
     ar("ARABIC"),
     bg("BULGARIAN"),
@@ -64,7 +64,7 @@ public enum LANGUAGE {
 
     private final String lang;
 
-    LANGUAGE(String lang) {
+    Language(String lang) {
         this.lang = lang;
     }
 

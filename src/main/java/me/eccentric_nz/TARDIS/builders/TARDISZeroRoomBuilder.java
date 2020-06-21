@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -88,7 +88,7 @@ public class TARDISZeroRoomBuilder {
             }
             // are we doing an achievement?
             if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
-                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, ADVANCEMENT.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
                 taf.doAchievement("ZERO");
             }
         }

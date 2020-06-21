@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CONFIG;
-import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
+import me.eccentric_nz.TARDIS.enumeration.Config;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 
@@ -49,7 +49,7 @@ class TARDISReloadCommand {
 
     boolean reloadOtherConfig(CommandSender sender, String[] args) {
         try {
-            CONFIG config = CONFIG.valueOf(args[1].toLowerCase());
+            Config config = Config.valueOf(args[1].toLowerCase());
             File file = new File(plugin.getDataFolder(), config.toString() + ".yml");
             switch (config) {
                 case achievements:

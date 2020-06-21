@@ -24,8 +24,8 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisTimeLordName;
-import me.eccentric_nz.TARDIS.enumeration.ROOM;
-import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.Room;
+import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
@@ -497,11 +497,11 @@ public class TARDISRoomRunnable implements Runnable {
                 BlockData data = plugin.getServer().createBlockData(v.get("data").getAsString());
                 Material type = data.getMaterial();
                 // determine 'use_clay' material
-                USE_CLAY use_clay;
+                UseClay use_clay;
                 try {
-                    use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                    use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
                 } catch (IllegalArgumentException e) {
-                    use_clay = USE_CLAY.WOOL;
+                    use_clay = UseClay.WOOL;
                 }
                 Material ow;
                 Material lgw;
@@ -633,7 +633,7 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                     }
                     // replace with correct block
-                    switch (ROOM.valueOf(room)) {
+                    switch (Room.valueOf(room)) {
                         case VILLAGE:
                             data = Material.COBBLESTONE.createBlockData();
                             break;

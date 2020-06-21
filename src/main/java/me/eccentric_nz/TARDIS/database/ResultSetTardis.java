@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 
 import java.sql.Connection;
@@ -41,10 +41,10 @@ public class ResultSetTardis {
     private final HashMap<String, Object> where;
     private final String limit;
     private final boolean multiple;
-    private Tardis tardis;
     private final List<Tardis> data = new ArrayList<>();
     private final String prefix;
     private final int abandoned;
+    private Tardis tardis;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
@@ -135,7 +135,7 @@ public class ResultSetTardis {
                     } catch (IllegalArgumentException e) {
                         demat = PRESET.FACTORY;
                     }
-                    tardis = new Tardis(rs.getInt("tardis_id"), UUID.fromString(uuid), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH)), rs.getBoolean("abandoned"), companions, preset, demat, rs.getInt("adapti_on"), rs.getInt("artron_level"), rs.getString("creeper"), rs.getString("beacon"), rs.getBoolean("handbrake_on"), rs.getBoolean("tardis_init"), rs.getBoolean("recharging"), rs.getBoolean("hidden"), rs.getLong("lastuse"), rs.getBoolean("iso_on"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), zero, frame, rs.getBoolean("powered_on"), rs.getBoolean("lights_on"), rs.getBoolean("siege_on"), rs.getInt("monsters"));
+                    tardis = new Tardis(rs.getInt("tardis_id"), UUID.fromString(uuid), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH)), rs.getBoolean("abandoned"), companions, preset, demat, rs.getInt("adapti_on"), rs.getInt("artron_level"), rs.getString("creeper"), rs.getString("beacon"), rs.getBoolean("handbrake_on"), rs.getBoolean("tardis_init"), rs.getBoolean("recharging"), rs.getBoolean("hidden"), rs.getLong("lastuse"), rs.getBoolean("iso_on"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), zero, frame, rs.getBoolean("powered_on"), rs.getBoolean("lights_on"), rs.getBoolean("siege_on"), rs.getInt("monsters"));
                     if (multiple) {
                         data.add(tardis);
                     }

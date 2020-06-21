@@ -81,7 +81,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            ADAPTION adapt = tardis.getAdaption();
+                            Adaption adapt = tardis.getAdaption();
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
@@ -104,12 +104,12 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     player.performCommand("tardis rebuild");
                                     close(player);
                                     // damage the circuit if configured
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                         tcc.getCircuits();
                                         // decrement uses
                                         int uses_left = tcc.getChameleonUses();
-                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
+                                        new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
                                     }
                                     break;
                                 case 11:
@@ -120,13 +120,13 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     String ory = fact.getDisplayName();
                                     if (ory.equals(ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"))) {
                                         set.put("chameleon_preset", "FACTORY");
-                                        toggleOthers(CHAMELEON_OPTION.FACTORY, view);
+                                        toggleOthers(ChameleonOption.FACTORY, view);
                                         updateChameleonSign(hasChameleonSign, rsc.getData(), "FACTORY", player);
                                         tcf.updateChameleonFrame(id, PRESET.FACTORY);
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
                                     } else {
                                         set.put("chameleon_preset", "NEW");
-                                        toggleOthers(CHAMELEON_OPTION.PRESET, view);
+                                        toggleOthers(ChameleonOption.PRESET, view);
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
                                         setDefault(view, player, chameleon);
                                     }
@@ -134,18 +134,18 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                 case 12:
                                     // cycle biome adaption
                                     int ca = adapt.ordinal() + 1;
-                                    if (ca >= ADAPTION.values().length) {
+                                    if (ca >= Adaption.values().length) {
                                         ca = 0;
                                     }
-                                    ADAPTION a = ADAPTION.values()[ca];
-                                    if (a.equals(ADAPTION.OFF)) {
+                                    Adaption a = Adaption.values()[ca];
+                                    if (a.equals(Adaption.OFF)) {
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
-                                        toggleOthers(CHAMELEON_OPTION.PRESET, view);
+                                        toggleOthers(ChameleonOption.PRESET, view);
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
                                         setDefault(view, player, chameleon);
                                     } else {
-                                        toggleOthers(CHAMELEON_OPTION.ADAPTIVE, view);
+                                        toggleOthers(ChameleonOption.ADAPTIVE, view);
                                         PRESET adaptive = (tardis.getPreset().equals(PRESET.SUBMERGED)) ? PRESET.SUBMERGED : PRESET.FACTORY;
                                         tcf.updateChameleonFrame(id, adaptive);
                                         set.put("chameleon_preset", adaptive.toString());
@@ -166,25 +166,25 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         // check they have an Invisibility Circuit
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                         tcc.getCircuits();
-                                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+                                        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                                             if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
                                                 close(player);
                                                 TARDISMessage.send(player, "INVISIBILITY_MISSING");
                                                 break;
                                             }
                                         }
-                                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                                             // decrement uses
                                             int uses_left = tcc.getInvisibilityUses();
-                                            new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
+                                            new TARDISCircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
                                         }
-                                        toggleOthers(CHAMELEON_OPTION.INVISIBLE, view);
+                                        toggleOthers(ChameleonOption.INVISIBLE, view);
                                         set.put("chameleon_preset", "INVISIBLE");
                                         updateChameleonSign(hasChameleonSign, rsc.getData(), "INVISIBLE", player);
                                         tcf.updateChameleonFrame(id, PRESET.INVISIBLE);
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
                                     } else {
-                                        toggleOthers(CHAMELEON_OPTION.PRESET, view);
+                                        toggleOthers(ChameleonOption.PRESET, view);
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
                                         tcf.updateChameleonFrame(id, PRESET.NEW);
@@ -244,8 +244,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "New Police Box");
     }
 
-    private void toggleOthers(CHAMELEON_OPTION c, InventoryView view) {
-        for (CHAMELEON_OPTION co : CHAMELEON_OPTION.values()) {
+    private void toggleOthers(ChameleonOption c, InventoryView view) {
+        for (ChameleonOption co : ChameleonOption.values()) {
             ItemStack is = view.getItem(co.getSlot());
             ItemMeta im = is.getItemMeta();
             String onoff;

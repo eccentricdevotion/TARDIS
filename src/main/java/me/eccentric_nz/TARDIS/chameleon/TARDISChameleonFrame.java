@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.enumeration.CONTROL;
+import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -41,7 +41,7 @@ public class TARDISChameleonFrame {
         // is there a Chameleon frame record for this TARDIS?
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        where.put("type", CONTROL.FRAME.getId());
+        where.put("type", Control.FRAME.getId());
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
             // get location of Chameleon frame

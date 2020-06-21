@@ -29,12 +29,12 @@ import java.util.EnumMap;
  */
 class TARDISPreset {
 
-    private String[][] blueprintData;
-    private String[][] stainedData;
-    private String[][] glassData;
     private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+    private String[][] blueprintData;
+    private String[][] stainedData;
+    private String[][] glassData;
 
     TARDISPreset() {
     }

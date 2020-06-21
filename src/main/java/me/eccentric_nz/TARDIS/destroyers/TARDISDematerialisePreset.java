@@ -50,12 +50,12 @@ class TARDISDematerialisePreset implements Runnable {
     private final DestroyData dd;
     private final int loops;
     private final PRESET preset;
-    private int task;
-    private int i;
     private final BlockData cham_id;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
+    private int task;
+    private int i;
     private BlockData the_colour;
     private BlockData stain_colour;
 

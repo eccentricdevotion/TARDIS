@@ -183,12 +183,12 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, FLAG.getAPIFlags()));
+        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
     }
 
     @Override
     public Location getRandomLocation(List<String> worlds, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, FLAG.getAPIFlags()));
+        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
     }
 
     @Override
@@ -227,7 +227,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel")) {
-                if (TARDIS.plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+                if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
                     worlds.add(name);
@@ -243,7 +243,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
-                if (TARDIS.plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+                if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
                     worlds.add(name);
@@ -462,16 +462,16 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public HashMap<SCHEMATIC, ShapedRecipe> getSeedRecipes() {
+    public HashMap<Schematic, ShapedRecipe> getSeedRecipes() {
         return TARDIS.plugin.getSemen().getSeedRecipes();
     }
 
     @Override
     public ItemStack getTARDISSeedItem(String schematic) {
-        if (CONSOLES.getBY_NAMES().containsKey(schematic)) {
+        if (Consoles.getBY_NAMES().containsKey(schematic)) {
             ItemStack is;
             int model = TARDISSeedModel.modelByString(schematic);
-            if (CONSOLES.getBY_NAMES().get(schematic).isCustom()) {
+            if (Consoles.getBY_NAMES().get(schematic).isCustom()) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else if (schematic.equalsIgnoreCase("ROTOR")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
@@ -722,7 +722,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException {
-        if (!CONSOLES.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
+        if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
             throw new TARDISException("Not a valid Console type");
         }
         if (!TARDIS.plugin.getConfig().getBoolean("abandon.enabled")) {
@@ -731,7 +731,7 @@ public class TARDII implements TardisAPI {
         if (!TARDIS.plugin.getConfig().getBoolean("creation.default_world")) {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
-        SCHEMATIC schm = CONSOLES.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
+        Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
         new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, direction, null);
     }
 
@@ -772,12 +772,12 @@ public class TARDII implements TardisAPI {
         if (!TARDISWalls.BLOCKS.contains(f)) {
             throw new TARDISException("Not a valid wall type");
         }
-        // get current SCHEMATIC
+        // get current Schematic
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            SCHEMATIC current_console = rs.getTardis().getSchematic();
+            Schematic current_console = rs.getTardis().getSchematic();
             TARDISUpgradeData tud = new TARDISUpgradeData();
             tud.setSchematic(current_console);
             tud.setPrevious(current_console);

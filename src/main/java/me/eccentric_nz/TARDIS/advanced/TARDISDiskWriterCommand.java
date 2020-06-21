@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.advanced;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -49,7 +49,7 @@ public class TARDISDiskWriterCommand {
 
     public boolean writeSave(Player player, String[] args) {
         ItemStack is;
-        if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
+        if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
             is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Save Storage Disk");
@@ -114,7 +114,7 @@ public class TARDISDiskWriterCommand {
                     lore.add(7, (rsc.isSubmarine()) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
+                    if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
                         // save the disk to storage
                         boolean isSpace = saveDiskToStorage(player, is);
                         if (!isSpace) {

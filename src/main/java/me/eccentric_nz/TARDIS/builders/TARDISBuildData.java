@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
 
 /**
@@ -24,16 +24,16 @@ import org.bukkit.Material;
  */
 public class TARDISBuildData {
 
-    private SCHEMATIC schematic;
+    private Schematic schematic;
     private Material wallType;
     private Material floorType;
     private int lamp;
 
-    public SCHEMATIC getSchematic() {
+    public Schematic getSchematic() {
         return schematic;
     }
 
-    public void setSchematic(SCHEMATIC schematic) {
+    public void setSchematic(Schematic schematic) {
         this.schematic = schematic;
     }
 

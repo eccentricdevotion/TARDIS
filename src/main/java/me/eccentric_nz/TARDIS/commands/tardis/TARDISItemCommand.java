@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import me.eccentric_nz.TARDIS.enumeration.GLOWSTONE_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
+import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -50,12 +50,12 @@ public class TARDISItemCommand {
             // strip color codes
             String stripped = ChatColor.stripColor(im.getDisplayName());
             // look up display name
-            RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(stripped);
-            if (!recipeItem.equals(RECIPE_ITEM.NOT_FOUND)) {
+            RecipeItem recipeItem = RecipeItem.getByName(stripped);
+            if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                 int cmd = recipeItem.getCustomModelData();
                 im.setCustomModelData(cmd);
                 if (inHand.getType().equals(Material.FILLED_MAP)) {
-                    GLOWSTONE_CIRCUIT circuit = GLOWSTONE_CIRCUIT.getByName().get(stripped);
+                    GlowstoneCircuit circuit = GlowstoneCircuit.getByName().get(stripped);
                     if (circuit != null) {
                         inHand.setType(Material.GLOWSTONE_DUST);
                     }
@@ -80,12 +80,12 @@ public class TARDISItemCommand {
                         String stripped = ChatColor.stripColor(im.getDisplayName());
                         TARDISMessage.message(player, stripped);
                         // look up display name
-                        RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(stripped);
+                        RecipeItem recipeItem = RecipeItem.getByName(stripped);
                         TARDISMessage.message(player, recipeItem.toString());
-                        if (!recipeItem.equals(RECIPE_ITEM.NOT_FOUND)) {
+                        if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             if (is.getType().equals(Material.FILLED_MAP)) {
                                 TARDISMessage.message(player, "Filled Map!");
-                                GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(im.getDisplayName());
+                                GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
                                     TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
                                     is.setType(Material.GLOWSTONE_DUST);

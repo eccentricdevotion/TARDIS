@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.BIND;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -65,9 +65,9 @@ public class TARDISBindCommands implements CommandExecutor {
                 new TARDISCommandHelper(plugin).getCommand("tardisbind", sender);
                 return false;
             }
-            BIND bind;
+            Bind bind;
             try {
-                bind = BIND.valueOf(args[1].toUpperCase());
+                bind = Bind.valueOf(args[1].toUpperCase());
             } catch (IllegalArgumentException e) {
                 TARDISMessage.send(player, "BIND_NOT_VALID");
                 return false;

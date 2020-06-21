@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -49,8 +49,8 @@ public class TARDISBeaconToggler {
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            SCHEMATIC schm = tardis.getSchematic();
-            if (CONSOLES.getNO_BEACON().contains(schm)) {
+            Schematic schm = tardis.getSchematic();
+            if (Consoles.getNO_BEACON().contains(schm)) {
                 // doesn't have a beacon!
                 return;
             }
@@ -77,7 +77,7 @@ public class TARDISBeaconToggler {
         }
     }
 
-    private void updateBeacon(SCHEMATIC schm, UUID uuid) {
+    private void updateBeacon(Schematic schm, UUID uuid) {
         // determine beacon location and update the tardis table so we don't have to do this again
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setSchematic(schm);

@@ -2,8 +2,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.command.CommandSender;
@@ -22,12 +22,12 @@ public class TARDISRecipesLister {
 
     public boolean listRecipes(CommandSender sender) {
         for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
-            sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType().toString() + ", " + RECIPE_ITEM.getByName(shaped.getKey()).getCustomModelData() + "),");
+            sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType().toString() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
         }
         for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
-            sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType().toString() + ", " + RECIPE_ITEM.getByName(shapeless.getKey()).getCustomModelData() + "),");
+            sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType().toString() + ", " + RecipeItem.getByName(shapeless.getKey()).getCustomModelData() + "),");
         }
-        for (Map.Entry<SCHEMATIC, ShapedRecipe> seed : plugin.getSemen().getSeedRecipes().entrySet()) {
+        for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getSemen().getSeedRecipes().entrySet()) {
             int model;
             String material;
             if (TARDISSeedModel.materialMap.containsKey(seed.getKey().getSeedMaterial())) {

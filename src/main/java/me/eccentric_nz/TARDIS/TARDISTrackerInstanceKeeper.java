@@ -20,8 +20,8 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.BIND;
-import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -59,7 +59,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
     private final HashMap<String, Sign> sign = new HashMap<>();
-    private final HashMap<UUID, BIND> bindRemoval = new HashMap<>();
+    private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
     private final HashMap<UUID, Block> exterminate = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
@@ -98,7 +98,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<>();
     private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<>();
     private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<>();
-    private final HashMap<UUID, UPDATEABLE> secondary = new HashMap<>();
+    private final HashMap<UUID, Updateable> secondary = new HashMap<>();
     private final HashMap<UUID, UUID> chat = new HashMap<>();
     private final HashMap<UUID, UUID> telepathicRescue = new HashMap<>();
     private final HashMap<UUID, UUID> telepaths = new HashMap<>();
@@ -207,7 +207,7 @@ public class TARDISTrackerInstanceKeeper {
         return sign;
     }
 
-    public HashMap<UUID, BIND> getBindRemoval() {
+    public HashMap<UUID, Bind> getBindRemoval() {
         return bindRemoval;
     }
 
@@ -359,7 +359,7 @@ public class TARDISTrackerInstanceKeeper {
         return johnSmith;
     }
 
-    public HashMap<UUID, UPDATEABLE> getSecondary() {
+    public HashMap<UUID, Updateable> getSecondary() {
         return secondary;
     }
 

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -159,7 +159,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 if (item.equals("seed")) {
                     String seed = args[2].toUpperCase(Locale.ENGLISH);
-                    if (CONSOLES.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
+                    if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                         if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
                             Player sp = plugin.getServer().getPlayer(args[0]);
                             if (sp == null) { // player must be online
@@ -395,9 +395,9 @@ public class TARDISGiveCommand implements CommandExecutor {
             }
         }
         ItemStack is;
-        if (CONSOLES.getBY_NAMES().containsKey(type)) {
+        if (Consoles.getBY_NAMES().containsKey(type)) {
             int model = TARDISSeedModel.modelByString(type);
-            if (CONSOLES.getBY_NAMES().get(type).isCustom()) {
+            if (Consoles.getBY_NAMES().get(type).isCustom()) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else if (type.equalsIgnoreCase("ROTOR")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);

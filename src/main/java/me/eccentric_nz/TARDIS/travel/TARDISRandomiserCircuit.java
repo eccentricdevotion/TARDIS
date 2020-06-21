@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -67,7 +67,7 @@ public class TARDISRandomiserCircuit {
                 }
             }
         });
-        Parameters params = new Parameters(p, FLAG.getDefaultFlags());
+        Parameters params = new Parameters(p, Flag.getDefaultFlags());
         params.setCompass(d);
         return plugin.getTardisAPI().getRandomLocation(allowedWorlds, null, params);
     }

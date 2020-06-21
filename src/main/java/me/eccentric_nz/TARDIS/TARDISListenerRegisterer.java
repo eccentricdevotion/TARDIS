@@ -53,8 +53,8 @@ import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISArchiveMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
@@ -133,7 +133,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISArtronFurnaceListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
-        if (!plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
+        if (!plugin.getDifficulty().equals(Difficulty.HARD)) {
             plugin.getPM().registerEvents(new TARDISBiomeReaderListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);
@@ -258,7 +258,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISRespawnListener(plugin), plugin);
             if (plugin.getConfig().getBoolean("arch.switch_inventory")) {
-                if (!plugin.getInvManager().equals(INVENTORY_MANAGER.NONE)) {
+                if (!plugin.getInvManager().equals(InventoryManager.NONE)) {
                     plugin.getPM().registerEvents(new TARDISInventoryPluginHelper(plugin), plugin);
                 }
             }

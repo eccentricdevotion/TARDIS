@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
@@ -131,7 +131,7 @@ class TARDISArchiveCommand {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
-                    SCHEMATIC current = tardis.getSchematic();
+                    Schematic current = tardis.getSchematic();
                     // get the schematic start location, width, length and height
                     JsonObject obj = null;
                     if (current.getPermission().equals("archive")) {

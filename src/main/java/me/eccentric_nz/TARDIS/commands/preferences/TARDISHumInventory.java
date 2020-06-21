@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIInteriorSounds;
-import me.eccentric_nz.TARDIS.enumeration.HUM;
+import me.eccentric_nz.TARDIS.enumeration.Hum;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -51,7 +51,7 @@ class TARDISHumInventory {
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<>();
         // get HUM sounds
-        for (HUM hum : HUM.values()) {
+        for (Hum hum : Hum.values()) {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(hum.toString());

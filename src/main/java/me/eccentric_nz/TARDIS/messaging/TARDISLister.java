@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
 import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
 import org.bukkit.ChatColor;
@@ -75,7 +75,7 @@ public class TARDISLister {
                 // only list public rechargers
                 if (!s.startsWith("rift")) {
                     String w;
-                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+                    if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         w = plugin.getMVHelper().getAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
                     } else {
                         w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");

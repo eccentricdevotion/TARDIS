@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.enumeration;
 /**
  * @author eccentric_nz
  */
-public enum TARDIS_COMMAND {
+public enum TardisCommand {
+
     abandon,
     abort,
     add,

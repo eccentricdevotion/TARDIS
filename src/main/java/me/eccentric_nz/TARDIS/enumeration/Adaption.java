@@ -16,43 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import org.bukkit.ChatColor;
+
 /**
  * @author eccentric_nz
  */
-public enum ROOM {
+public enum Adaption {
 
-    ANTIGRAVITY,
-    APIARY,
-    AQUARIUM,
-    ARBORETUM,
-    BAKER,
-    BAMBOO,
-    BEDROOM,
-    BIRDCAGE,
-    CHEMISTRY,
-    EMPTY,
-    FARM,
-    GRAVITY,
-    GREENHOUSE,
-    HARMONY,
-    HUTCH,
-    IGLOO,
-    KITCHEN,
-    LAZARUS,
-    LIBRARY,
-    MUSHROOM,
-    PASSAGE,
-    POOL,
-    RAIL,
-    RENDERER,
-    SHELL,
-    SMELTER,
-    STABLE,
-    STALL,
-    TRENZALORE,
-    VAULT,
-    VILLAGE,
-    WOOD,
-    WORKSHOP,
-    ZERO
+    OFF(ChatColor.RED),
+    BIOME(ChatColor.GREEN),
+    BLOCK(ChatColor.AQUA);
+
+    private final ChatColor colour;
+
+    Adaption(ChatColor colour) {
+        this.colour = colour;
+    }
+
+    public ChatColor getColour() {
+        return colour;
+    }
 }

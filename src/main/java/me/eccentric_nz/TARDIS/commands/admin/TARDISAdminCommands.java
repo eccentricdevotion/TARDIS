@@ -21,9 +21,9 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.tool.Converter;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -381,7 +381,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
-                    plugin.setDifficulty(DIFFICULTY.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
+                    plugin.setDifficulty(Difficulty.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
                 }
                 if (first.equals("default_preset")) {
                     try {
@@ -394,7 +394,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("use_clay")) {
                     try {
-                        USE_CLAY use_clay = USE_CLAY.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        UseClay use_clay = UseClay.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
                         TARDISMessage.send(sender, "ARG_USE_CLAY");
                         return true;

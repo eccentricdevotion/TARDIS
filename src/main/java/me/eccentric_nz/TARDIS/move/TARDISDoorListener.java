@@ -24,10 +24,10 @@ import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import multiworld.MultiWorldPlugin;
@@ -48,8 +48,8 @@ import java.util.UUID;
  */
 public class TARDISDoorListener {
 
-    final TARDIS plugin;
     public final float[][] adjustYaw = new float[4][4];
+    final TARDIS plugin;
     private final int player_artron;
 
     public TARDISDoorListener(TARDIS plugin) {

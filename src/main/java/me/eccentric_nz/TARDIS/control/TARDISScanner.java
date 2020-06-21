@@ -26,9 +26,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -233,7 +233,7 @@ public class TARDISScanner {
         // message the player
         TARDISMessage.send(player, "SCAN_RESULT", whereisit);
         String worldname;
-        if (TARDIS.plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+        if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             worldname = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = scan_loc.getWorld().getName();
@@ -370,12 +370,12 @@ public class TARDISScanner {
                 TARDISMessage.send(player, "SCAN_NONE");
             }
             // damage the circuit if configured
-            if (TARDIS.plugin.getConfig().getBoolean("circuits.damage") && !TARDIS.plugin.getDifficulty().equals(DIFFICULTY.EASY) && TARDIS.plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+            if (TARDIS.plugin.getConfig().getBoolean("circuits.damage") && !TARDIS.plugin.getDifficulty().equals(Difficulty.EASY) && TARDIS.plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(TARDIS.plugin, id);
                 tcc.getCircuits();
                 // decrement uses
                 int uses_left = tcc.getScannerUses();
-                new TARDISCircuitDamager(TARDIS.plugin, DISK_CIRCUIT.SCANNER, uses_left, id, player).damage();
+                new TARDISCircuitDamager(TARDIS.plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
             }
         }, 140L);
         return data;
@@ -389,7 +389,7 @@ public class TARDISScanner {
         ResultSetControls rs = new ResultSetControls(plugin, where, true);
         if (rs.resultSet()) {
             TARDISCircuitChecker tcc = null;
-            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                 tcc = new TARDISCircuitChecker(plugin, id);
                 tcc.getCircuits();
             }

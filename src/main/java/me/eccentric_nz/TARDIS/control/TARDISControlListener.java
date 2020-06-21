@@ -47,6 +47,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Repeater;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -72,7 +73,7 @@ public class TARDISControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39);
 
     public TARDISControlListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -121,7 +122,7 @@ public class TARDISControlListener implements Listener {
                     if (!onlythese.contains(type)) {
                         return;
                     }
-                    CONTROL control = CONTROL.getById().get(type);
+                    Control control = Control.getById().get(type);
                     HashMap<String, Object> whereid = new HashMap<>();
                     whereid.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
@@ -157,7 +158,7 @@ public class TARDISControlListener implements Listener {
                         boolean hb = tardis.isHandbrake_on();
                         UUID ownerUUID = tardis.getUuid();
                         TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+                        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }
@@ -279,20 +280,20 @@ public class TARDISControlListener implements Listener {
                                             if (!rsstore.getSavesOne().isEmpty()) {
                                                 stack = TARDISSerializeInventory.itemStacksFromString(rsstore.getSavesOne());
                                             } else {
-                                                stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
+                                                stack = TARDISSerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
                                             }
                                         } catch (IOException ex) {
                                             plugin.debug("Could not get Storage Inventory: " + ex.getMessage());
                                         }
                                     } else {
                                         try {
-                                            stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
+                                            stack = TARDISSerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
                                             for (ItemStack is : stack) {
                                                 if (is != null && is.hasItemMeta()) {
                                                     ItemMeta im = is.getItemMeta();
                                                     if (im.hasDisplayName()) {
                                                         if (is.getType().equals(Material.FILLED_MAP)) {
-                                                            GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(im.getDisplayName());
+                                                            GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                                             if (glowstone != null) {
                                                                 im.setCustomModelData(glowstone.getCustomModelData());
                                                                 is.setType(Material.GLOWSTONE_DUST);
@@ -326,7 +327,7 @@ public class TARDISControlListener implements Listener {
                                         setstore.put("tardis_id", id);
                                         plugin.getQueryFactory().doInsert("storage", setstore);
                                     }
-                                    Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
+                                    Inventory inv = plugin.getServer().createInventory(player, 54, Storage.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
                                     // update note block if it's not MUSHROOM_STEM
@@ -487,6 +488,19 @@ public class TARDISControlListener implements Listener {
                                     Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
                                     forecast.setContents(weather);
                                     player.openInventory(forecast);
+                                    break;
+                                case 39:
+                                    // space/time throttle
+                                    Repeater repeater = (Repeater) block.getBlockData();
+                                    // get delay
+                                    int delay = repeater.getDelay();
+                                    // update player prefs
+                                    HashMap<String, Object> wherer = new HashMap<>();
+                                    wherer.put("uuid", player.getUniqueId().toString());
+                                    HashMap<String, Object> setr = new HashMap<>();
+                                    setr.put("throttle", delay);
+                                    plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
+                                    TARDISMessage.send(player, "THROTTLE", SpaceTimeThrottle.getByDelay().get(delay).toString());
                                     break;
                                 default:
                                     break;

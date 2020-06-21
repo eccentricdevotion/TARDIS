@@ -12,28 +12,23 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.ChatColor;
+public enum Config {
 
-/**
- * @author eccentric_nz
- */
-public enum ADAPTION {
-
-    OFF(ChatColor.RED),
-    BIOME(ChatColor.GREEN),
-    BLOCK(ChatColor.AQUA);
-
-    private final ChatColor colour;
-
-    ADAPTION(ChatColor colour) {
-        this.colour = colour;
-    }
-
-    public ChatColor getColour() {
-        return colour;
-    }
+    achievements,
+    artron,
+    blocks,
+    chameleon_guis,
+    condensables,
+    custom_consoles,
+    handles,
+    kits,
+    planets,
+    recipes,
+    rooms,
+    signs,
+    tag
 }

@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -69,13 +69,13 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
                     plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
                     TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
                     // damage the circuit if configured
-                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
                         int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                         // decrement uses
                         int uses_left = tcc.getTemporalUses();
-                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.TEMPORAL, uses_left, id, player).damage();
+                        new TARDISCircuitDamager(plugin, DiskCircuit.TEMPORAL, uses_left, id, player).damage();
                     }
                 }
                 close(player);

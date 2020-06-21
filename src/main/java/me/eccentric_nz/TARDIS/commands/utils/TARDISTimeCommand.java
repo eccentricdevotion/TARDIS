@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.TIME;
+import me.eccentric_nz.TARDIS.enumeration.Time;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -78,7 +78,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     }
                 }
                 long ticks;
-                TIME time = TIME.getByName().get(args[0].toUpperCase());
+                Time time = Time.getByName().get(args[0].toUpperCase());
                 if (time != null) {
                     ticks = time.getTicks();
                 } else {

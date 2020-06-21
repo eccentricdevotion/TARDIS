@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Chunk;
@@ -167,7 +167,7 @@ public class TARDISRoomSeeder implements Listener {
                     }
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
-                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
                         taf.doAchievement(r);
                     }
                 }

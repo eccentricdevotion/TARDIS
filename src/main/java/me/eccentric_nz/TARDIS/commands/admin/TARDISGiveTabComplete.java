@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,7 +44,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     public TARDISGiveTabComplete(TARDIS plugin) {
         Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);
-        for (String seed : CONSOLES.getBY_NAMES().keySet()) {
+        for (String seed : Consoles.getBY_NAMES().keySet()) {
             if (!seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                 SEED_SUBS.add(seed);
             }

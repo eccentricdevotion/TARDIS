@@ -24,11 +24,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -52,13 +52,38 @@ public class TARDISARSMethods {
     final HashMap<UUID, Integer> selected_slot = new HashMap<>();
     final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
     final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
-    private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    final Set<String> consoleBlocks = CONSOLES.getBY_MATERIALS().keySet();
+    final Set<String> consoleBlocks = Consoles.getBY_MATERIALS().keySet();
     final HashMap<UUID, Integer> ids = new HashMap<>();
     final List<UUID> hasLoadedMap = new ArrayList<>();
+    private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
 
     TARDISARSMethods(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    /**
+     * Converts the JSON data stored in the database to a 3D array.
+     *
+     * @param js the JSON from the database
+     * @return a 3D array of Strings
+     */
+    public static String[][][] getGridFromJSON(String js) {
+        String[][][] grid = new String[3][9][9];
+        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+        for (int y = 0; y < 3; y++) {
+            JsonArray jsonx = json.get(y).getAsJsonArray();
+            for (int x = 0; x < 9; x++) {
+                JsonArray jsonz = jsonx.get(x).getAsJsonArray();
+                for (int z = 0; z < 9; z++) {
+                    if (jsonz.get(z).getAsString().equals("TNT")) {
+                        grid[y][x][z] = "STONE";
+                    } else {
+                        grid[y][x][z] = jsonz.get(z).getAsString();
+                    }
+                }
+            }
+        }
+        return grid;
     }
 
     /**
@@ -94,31 +119,6 @@ public class TARDISARSMethods {
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("ars_id", sd.getId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doUpdate("ars", set, wherea), 6L);
-    }
-
-    /**
-     * Converts the JSON data stored in the database to a 3D array.
-     *
-     * @param js the JSON from the database
-     * @return a 3D array of Strings
-     */
-    public static String[][][] getGridFromJSON(String js) {
-        String[][][] grid = new String[3][9][9];
-        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
-        for (int y = 0; y < 3; y++) {
-            JsonArray jsonx = json.get(y).getAsJsonArray();
-            for (int x = 0; x < 9; x++) {
-                JsonArray jsonz = jsonx.get(x).getAsJsonArray();
-                for (int z = 0; z < 9; z++) {
-                    if (jsonz.get(z).getAsString().equals("TNT")) {
-                        grid[y][x][z] = "STONE";
-                    } else {
-                        grid[y][x][z] = jsonz.get(z).getAsString();
-                    }
-                }
-            }
-        }
-        return grid;
     }
 
     /**
@@ -338,14 +338,14 @@ public class TARDISARSMethods {
                             delay += period;
                         }
                         // damage the circuit if configured
-                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                             // get the id of the TARDIS this player is in
                             int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
                             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                             // decrement uses
                             int uses_left = tcc.getArsUses();
-                            new TARDISCircuitDamager(plugin, DISK_CIRCUIT.ARS, uses_left, id, p).damage();
+                            new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, id, p).damage();
                         }
                     } else {
                         // reset map to the previous version

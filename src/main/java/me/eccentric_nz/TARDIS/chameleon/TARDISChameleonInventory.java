@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -41,12 +41,12 @@ public class TARDISChameleonInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    private final ADAPTION adapt;
+    private final Adaption adapt;
     private final PRESET preset;
     private final ItemStack on;
     private final ItemStack off;
 
-    public TARDISChameleonInventory(TARDIS plugin, ADAPTION adapt, PRESET preset) {
+    public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, PRESET preset) {
         this.plugin = plugin;
         this.adapt = adapt;
         this.preset = preset;
@@ -115,13 +115,13 @@ public class TARDISChameleonInventory {
         truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
         cons.setItemMeta(truct);
         // Disabled radio button
-        ItemStack fac = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.OFF)) ? on.clone() : off.clone();
+        ItemStack fac = (preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF)) ? on.clone() : off.clone();
         ItemMeta tory = fac.getItemMeta();
-        String donoff = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.OFF)) ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+        String donoff = (preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF)) ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
         tory.setDisplayName(donoff);
         fac.setItemMeta(tory);
         // Adaptive radio button
-        ItemStack biome = (adapt.equals(ADAPTION.OFF)) ? off.clone() : on.clone();
+        ItemStack biome = (adapt.equals(Adaption.OFF)) ? off.clone() : on.clone();
         ItemMeta block = biome.getItemMeta();
         block.setDisplayName(adapt.getColour() + adapt.toString());
         biome.setItemMeta(block);
@@ -155,11 +155,7 @@ public class TARDISChameleonInventory {
         can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{
-                apply, null, null, null, null, null, null, null, null,
-                null, null, dis, adap, invis, shor, cons, null, null,
-                null, null, fac, biome, not, pre, bui, null, close
-        };
+        return new ItemStack[]{apply, null, null, null, null, null, null, null, null, null, null, dis, adap, invis, shor, cons, null, null, null, null, fac, biome, not, pre, bui, null, close};
     }
 
     public ItemStack[] getMenu() {

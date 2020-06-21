@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.data.Area;
-import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.enumeration.Storage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -79,7 +79,7 @@ class TARDISAreaDisks {
         ItemStack[] stack = new ItemStack[54];
         // set default top slots
         try {
-            stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.AREA.getEmpty());
+            stack = TARDISSerializeInventory.itemStacksFromString(Storage.AREA.getEmpty());
         } catch (IOException ex) {
             plugin.debug("Could not get make Area Disk Inventory: " + ex);
         }

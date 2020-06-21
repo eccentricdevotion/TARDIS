@@ -21,7 +21,7 @@ import org.bukkit.Material;
 /**
  * @author eccentric_nz
  */
-public class SCHEMATIC {
+public class Schematic {
 
     private final String seed;
     private final String permission;
@@ -31,7 +31,7 @@ public class SCHEMATIC {
     private final boolean lanterns;
     private final boolean custom;
 
-    public SCHEMATIC(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, boolean lanterns, boolean custom) {
+    public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, boolean lanterns, boolean custom) {
         this.seed = seed;
         this.permission = permission;
         this.description = description;
@@ -51,7 +51,7 @@ public class SCHEMATIC {
     }
 
     /**
-     * Gets the block type of this SCHEMATIC.
+     * Gets the block type of this Schematic.
      *
      * @return a block type.
      */
@@ -60,7 +60,7 @@ public class SCHEMATIC {
     }
 
     /**
-     * Gets the SCHEMATIC permission node.
+     * Gets the Schematic permission node.
      *
      * @return the Material.toString().
      */
@@ -69,7 +69,7 @@ public class SCHEMATIC {
     }
 
     /**
-     * Gets the SCHEMATIC description.
+     * Gets the Schematic description.
      *
      * @return the description.
      */
@@ -78,7 +78,7 @@ public class SCHEMATIC {
     }
 
     /**
-     * Gets the console size for this SCHEMATIC.
+     * Gets the console size for this Schematic.
      *
      * @return the ConsoleSize.
      */
@@ -87,27 +87,27 @@ public class SCHEMATIC {
     }
 
     /**
-     * Checks if this SCHEMATIC has a beacon.
+     * Checks if this Schematic has a beacon.
      *
-     * @return true if this SCHEMATIC has a beacon.
+     * @return true if this Schematic has a beacon.
      */
     public boolean hasBeacon() {
         return beacon;
     }
 
     /**
-     * Checks if this SCHEMATIC has a sea lanterns.
+     * Checks if this Schematic has a sea lanterns.
      *
-     * @return true if this SCHEMATIC has a sea lanterns.
+     * @return true if this Schematic has a sea lanterns.
      */
     public boolean hasLanterns() {
         return lanterns;
     }
 
     /**
-     * Checks if this is a custom SCHEMATIC.
+     * Checks if this is a custom Schematic.
      *
-     * @return true if this SCHEMATIC is custom.
+     * @return true if this Schematic is custom.
      */
     public boolean isCustom() {
         return custom;

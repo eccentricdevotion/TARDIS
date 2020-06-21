@@ -360,8 +360,8 @@ public class TARDISHandlesProcessor {
                                                     biome = Biome.valueOf(first);
                                                 } catch (IllegalArgumentException iae) {
                                                     // may have a pre-1.9 biome disk do old biome lookup...
-                                                    if (TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
-                                                        biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
+                                                    if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
+                                                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
                                                     } else {
                                                         TARDISMessage.handlesSend(player, "BIOME_NOT_VALID");
                                                         continue;
@@ -373,7 +373,7 @@ public class TARDISHandlesProcessor {
                                                     TARDISMessage.handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;
                                                 } else {
-                                                    if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                                    if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(player, Flag.getDefaultFlags()))) {
                                                         continue;
                                                     }
                                                     World bw = nsob.getWorld();
@@ -419,7 +419,7 @@ public class TARDISHandlesProcessor {
                                                         TARDISMessage.handlesSend(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
                                                         continue;
                                                     }
-                                                    if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                                    if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
                                                         continue;
                                                     }
                                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
@@ -460,13 +460,13 @@ public class TARDISHandlesProcessor {
                                         if (goto_loc != null) {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                             plugin.getTrackerKeeper().getRescue().remove(id);
-                                            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
                                                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                                 tcc.getCircuits();
                                                 // decrement uses
                                                 int uses_left = tcc.getMemoryUses();
-                                                new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MEMORY, uses_left, id, player).damage();
+                                                new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, id, player).damage();
                                             }
                                             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                                 // destroy police box

@@ -20,7 +20,7 @@ import com.google.common.base.Strings;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -60,7 +60,7 @@ public class TARDISBiomePoll implements Runnable {
                 Location tb = biomeFinder.getLocation();
                 // cancel biome finder
                 plugin.getServer().getScheduler().cancelTask(biomeFinder.getTaskid());
-                if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, FLAG.getDefaultFlags()))) {
+                if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
                     if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                         plugin.getTrackerKeeper().getMalfunction().put(id, true);
                     } else {

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.chemistry.lab;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -42,11 +42,6 @@ import java.util.List;
 public class SuperFertisliserListener implements Listener {
 
     private final TARDIS plugin;
-
-    public SuperFertisliserListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
     private final HashMap<Material, TreeType> TREE_LOOKUP = new HashMap<Material, TreeType>() {
         {
             put(Material.OAK_SAPLING, TreeType.TREE);
@@ -62,6 +57,10 @@ public class SuperFertisliserListener implements Listener {
     };
     private final List<Material> TREES = Arrays.asList(Material.OAK_SAPLING, Material.DARK_OAK_SAPLING, Material.ACACIA_SAPLING, Material.JUNGLE_SAPLING, Material.SPRUCE_SAPLING, Material.BIRCH_SAPLING, Material.CHORUS_FLOWER, Material.RED_MUSHROOM, Material.BROWN_MUSHROOM);
 
+    public SuperFertisliserListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onSuperFertilise(BlockFertilizeEvent event) {
         Player player = event.getPlayer();
@@ -70,7 +69,7 @@ public class SuperFertisliserListener implements Listener {
             event.setCancelled(true);
             Block block = event.getBlock();
             boolean removeItem = false;
-            if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters(player, FLAG.getNoMessageFlags()))) {
+            if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters(player, Flag.getNoMessageFlags()))) {
                 switch (block.getType()) {
                     case PUMPKIN_STEM:
                     case MELON_STEM:

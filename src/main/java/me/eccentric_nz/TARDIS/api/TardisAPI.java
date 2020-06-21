@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -342,9 +342,9 @@ public interface TardisAPI {
     /**
      * Get the TARDIS seed recipes.
      *
-     * @return a HashMap&lt;SCHEMATIC, ShapedRecipe&gt; containing the TARDIS seed recipes
+     * @return a HashMap&lt;Schematic, ShapedRecipe&gt; containing the TARDIS seed recipes
      */
-    HashMap<SCHEMATIC, ShapedRecipe> getSeedRecipes();
+    HashMap<Schematic, ShapedRecipe> getSeedRecipes();
 
     /**
      * Get a TARDIS Seed ItemStack

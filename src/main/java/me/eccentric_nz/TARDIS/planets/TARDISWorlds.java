@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -35,6 +35,41 @@ public class TARDISWorlds {
 
     public TARDISWorlds(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    public static void loadWorld(String world) {
+        try {
+            String wt = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
+            WorldType worldType = WorldType.valueOf(wt);
+            String e = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
+            World.Environment environment = World.Environment.valueOf(e);
+            WorldCreator worldCreator = WorldCreator.name(world).type(worldType).environment(environment);
+            String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
+            if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
+                worldCreator.generator(g);
+            }
+            boolean hardcore = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
+            if (hardcore) {
+                worldCreator.hardcore(true);
+            }
+            World w = worldCreator.createWorld();
+            if (w != null) {
+                String gm = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
+                if (gm != null && gm.toUpperCase(Locale.ENGLISH).equals("CREATIVE")) {
+                    TARDIS.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
+                }
+                if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
+                    for (String rule : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
+                        GameRule gameRule = GameRule.getByName(rule);
+                        w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
+                    }
+                }
+                boolean keepSpawnInMemory = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
+                w.setKeepSpawnInMemory(keepSpawnInMemory);
+            }
+        } catch (IllegalArgumentException e) {
+            TARDIS.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'!");
+        }
     }
 
     public void doWorlds() {
@@ -75,7 +110,7 @@ public class TARDISWorlds {
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
             if (plugin.getServer().getWorld(cw) == null) {
-                if ((plugin.getWorldManager().equals(WORLD_MANAGER.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+                if ((plugin.getWorldManager().equals(WorldManager.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 } else if (TARDISConstants.PLANETS.contains(cw)) {
@@ -118,40 +153,5 @@ public class TARDISWorlds {
             }
         }
         return false;
-    }
-
-    public static void loadWorld(String world) {
-        try {
-            String wt = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
-            WorldType worldType = WorldType.valueOf(wt);
-            String e = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
-            World.Environment environment = World.Environment.valueOf(e);
-            WorldCreator worldCreator = WorldCreator.name(world).type(worldType).environment(environment);
-            String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
-            if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
-                worldCreator.generator(g);
-            }
-            boolean hardcore = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
-            if (hardcore) {
-                worldCreator.hardcore(true);
-            }
-            World w = worldCreator.createWorld();
-            if (w != null) {
-                String gm = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
-                if (gm != null && gm.toUpperCase(Locale.ENGLISH).equals("CREATIVE")) {
-                    TARDIS.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
-                }
-                if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
-                    for (String rule : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
-                        GameRule gameRule = GameRule.getByName(rule);
-                        w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
-                    }
-                }
-                boolean keepSpawnInMemory = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
-                w.setKeepSpawnInMemory(keepSpawnInMemory);
-            }
-        } catch (IllegalArgumentException e) {
-            TARDIS.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'!");
-        }
     }
 }

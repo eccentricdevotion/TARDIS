@@ -38,11 +38,11 @@ public class ResultSetDoorBlocks {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
+    private final String prefix;
     private Block innerBlock;
     private Block outerBlock;
     private COMPASS innerDirection;
     private COMPASS outerDirection;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.

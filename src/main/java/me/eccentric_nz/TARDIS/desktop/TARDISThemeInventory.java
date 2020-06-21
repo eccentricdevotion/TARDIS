@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -63,7 +63,7 @@ public class TARDISThemeInventory {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get consoles
-        for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
+        for (Schematic a : Consoles.getBY_NAMES().values()) {
             Material m = Material.getMaterial(a.getSeed());
             if (!m.equals(Material.COBBLESTONE)) {
                 ItemStack is = new ItemStack(m, 1);

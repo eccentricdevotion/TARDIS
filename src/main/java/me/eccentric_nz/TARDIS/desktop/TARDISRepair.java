@@ -26,12 +26,12 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -73,7 +73,7 @@ public class TARDISRepair {
             String floor = "LIGHT_GRAY_WOOL";
             if (perm.equals("archive")) {
                 new ArchiveUpdate(plugin, uuid.toString(), getArchiveName()).setInUse();
-                tud.setSchematic(CONSOLES.SCHEMATICFor("archive"));
+                tud.setSchematic(Consoles.schematicFor("archive"));
             } else {
                 tud.setSchematic(tud.getPrevious());
                 // get player prefs

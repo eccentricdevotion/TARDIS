@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -37,12 +37,12 @@ import java.util.Locale;
 public class TARDISCircuitDamager {
 
     private final TARDIS plugin;
-    private final DISK_CIRCUIT circuit;
-    private int uses_left;
+    private final DiskCircuit circuit;
     private final int id;
     private final Player p;
+    private int uses_left;
 
-    public TARDISCircuitDamager(TARDIS plugin, DISK_CIRCUIT circuit, int uses_left, int id, Player p) {
+    public TARDISCircuitDamager(TARDIS plugin, DiskCircuit circuit, int uses_left, int id, Player p) {
         this.plugin = plugin;
         this.circuit = circuit;
         this.uses_left = uses_left;

@@ -37,11 +37,11 @@ public class TARDISPortalPersister {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
+    private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
     private int counta = 0;
-    private final String prefix;
 
     public TARDISPortalPersister(TARDIS plugin) {
         this.plugin = plugin;

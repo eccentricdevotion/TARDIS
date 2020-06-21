@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,16 +37,16 @@ public class ResultSetTardisSign {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
+    private final String prefix;
     private int tardis_id;
     private UUID uuid;
     private String owner;
     private String save_sign;
     private String chameleon;
-    private ADAPTION adaption;
+    private Adaption adaption;
     private boolean iso_on;
     private boolean powered_on;
     private int which;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table, for use with the
@@ -83,7 +83,7 @@ public class ResultSetTardisSign {
                 owner = rs.getString("owner");
                 save_sign = rs.getString("save_sign");
                 chameleon = rs.getString("chameleon");
-                adaption = ADAPTION.values()[rs.getInt("adapti_on")];
+                adaption = Adaption.values()[rs.getInt("adapti_on")];
                 iso_on = rs.getBoolean("iso_on");
                 powered_on = rs.getBoolean("powered_on");
                 which = (chameleon.equals(where)) ? 0 : 1;
@@ -128,7 +128,7 @@ public class ResultSetTardisSign {
         return chameleon;
     }
 
-    public ADAPTION getAdaption() {
+    public Adaption getAdaption() {
         return adaption;
     }
 

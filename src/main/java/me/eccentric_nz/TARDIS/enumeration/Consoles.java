@@ -26,35 +26,35 @@ import java.util.TreeMap;
 /**
  * @author eccentric_nz
  */
-public class CONSOLES {
+public class Consoles {
 
-    private final static TreeMap<String, SCHEMATIC> BY_NAMES = new TreeMap<>();
-    private final static HashMap<String, SCHEMATIC> BY_PERMS = new HashMap<>();
-    private final static HashMap<String, SCHEMATIC> BY_MATERIALS = new HashMap<>();
-    private final static List<SCHEMATIC> NO_BEACON = new ArrayList<>();
+    private final static TreeMap<String, Schematic> BY_NAMES = new TreeMap<>();
+    private final static HashMap<String, Schematic> BY_PERMS = new HashMap<>();
+    private final static HashMap<String, Schematic> BY_MATERIALS = new HashMap<>();
+    private final static List<Schematic> NO_BEACON = new ArrayList<>();
 
     /**
-     * Attempts to get the SCHEMATIC with the given name.
+     * Attempts to get the Schematic with the given name.
      *
-     * @param perm permission node of the SCHEMATIC to get
-     * @return SCHEMATIC if found, or null
+     * @param perm permission node of the Schematic to get
+     * @return Schematic if found, or null
      */
-    public static SCHEMATIC SCHEMATICFor(String perm) {
+    public static Schematic schematicFor(String perm) {
         return BY_PERMS.get(perm);
     }
 
     /**
-     * Attempts to get the SCHEMATIC with the given seed Material.
+     * Attempts to get the Schematic with the given seed Material.
      *
-     * @param mat Name of the SCHEMATIC to get
-     * @return SCHEMATIC if found, or null
+     * @param mat Name of the Schematic to get
+     * @return Schematic if found, or null
      */
-    public static SCHEMATIC SCHEMATICFor(Material mat) {
+    public static Schematic schematicFor(Material mat) {
         return BY_MATERIALS.get(mat.toString());
     }
 
     public static void loadLookups() {
-        for (SCHEMATIC ts : BY_NAMES.values()) {
+        for (Schematic ts : BY_NAMES.values()) {
             if (!BY_PERMS.containsKey(ts.getPermission())) {
                 BY_PERMS.put(ts.getPermission(), ts);
             }
@@ -65,21 +65,21 @@ public class CONSOLES {
                 NO_BEACON.add(ts);
             }
         }
-        BY_PERMS.put("junk", new SCHEMATIC("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, false, false));
-        SCHEMATIC archive = new SCHEMATIC("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true);
+        BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, false, false));
+        Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true);
         BY_PERMS.put("archive", archive);
         BY_MATERIALS.put("BONE_BLOCK", archive);
     }
 
-    public static TreeMap<String, SCHEMATIC> getBY_NAMES() {
+    public static TreeMap<String, Schematic> getBY_NAMES() {
         return BY_NAMES;
     }
 
-    public static HashMap<String, SCHEMATIC> getBY_MATERIALS() {
+    public static HashMap<String, Schematic> getBY_MATERIALS() {
         return BY_MATERIALS;
     }
 
-    public static List<SCHEMATIC> getNO_BEACON() {
+    public static List<Schematic> getNO_BEACON() {
         return NO_BEACON;
     }
 }

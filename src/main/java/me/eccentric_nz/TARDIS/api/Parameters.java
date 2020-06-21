@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.api;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -27,9 +27,22 @@ import java.util.List;
  */
 public class Parameters {
 
-    public Parameters(Player p, List<FLAG> flags) {
+    private final Player player;
+    private boolean messagePlayer = false;
+    private boolean permsArea = false;
+    private boolean permsNether = false;
+    private boolean permsTheEnd = false;
+    private boolean repectWorldBorder = false;
+    private boolean respectFactions = false;
+    private boolean respectGreifPrevention = false;
+    private boolean respectTowny = false;
+    private boolean respectWorldguard = false;
+    private boolean spaceTardis = false;
+    private COMPASS compass;
+
+    public Parameters(Player p, List<Flag> flags) {
         player = p;
-        for (FLAG f : flags) {
+        for (Flag f : flags) {
             switch (f) {
                 case MESSAGE_PLAYER:
                     messagePlayer = true;
@@ -66,19 +79,6 @@ public class Parameters {
             }
         }
     }
-
-    private boolean messagePlayer = false;
-    private boolean permsArea = false;
-    private boolean permsNether = false;
-    private boolean permsTheEnd = false;
-    private boolean repectWorldBorder = false;
-    private boolean respectFactions = false;
-    private boolean respectGreifPrevention = false;
-    private boolean respectTowny = false;
-    private boolean respectWorldguard = false;
-    private boolean spaceTardis = false;
-    private COMPASS compass;
-    private final Player player;
 
     public boolean messagePlayer() {
         return messagePlayer;

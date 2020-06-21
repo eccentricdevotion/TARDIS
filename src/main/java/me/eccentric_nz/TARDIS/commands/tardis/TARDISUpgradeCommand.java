@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -86,7 +86,7 @@ class TARDISUpgradeCommand {
             return true;
         }
         // get player's current console
-        SCHEMATIC current_console = tardis.getSchematic();
+        Schematic current_console = tardis.getSchematic();
         int level = tardis.getArtron_level();
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);

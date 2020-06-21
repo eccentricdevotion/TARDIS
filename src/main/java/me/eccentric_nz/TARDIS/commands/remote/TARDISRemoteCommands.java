@@ -28,10 +28,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.REMOTE;
+import me.eccentric_nz.TARDIS.enumeration.Remote;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -103,7 +103,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                         }
                         // must have circuits
                         TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+                        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }
@@ -114,7 +114,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                     }
                     // what are we going to do?
                     try {
-                        REMOTE remote = REMOTE.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        Remote remote = Remote.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                         OfflinePlayer p = plugin.getServer().getOfflinePlayer(uuid);
                         // we can't get permissions for offline players!
                         if (sender instanceof BlockCommandSender && p.getPlayer() == null) {
@@ -215,7 +215,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         }
                                         if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                             // must use advanced console if difficulty hard
-                                            if (plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
+                                            if (plugin.getDifficulty().equals(Difficulty.HARD)) {
                                                 TARDISMessage.send(sender, "ADV_AREA");
                                                 return true;
                                             }
@@ -297,7 +297,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         }
                                         // check respect if not admin
                                         if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                            if (!plugin.getPluginRespect().getRespect(location, new Parameters(p.getPlayer(), FLAG.getDefaultFlags()))) {
+                                            if (!plugin.getPluginRespect().getRespect(location, new Parameters(p.getPlayer(), Flag.getDefaultFlags()))) {
                                                 return true;
                                             }
                                         }

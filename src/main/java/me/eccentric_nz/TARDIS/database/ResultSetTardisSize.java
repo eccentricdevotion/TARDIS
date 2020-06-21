@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 
 import java.sql.Connection;
@@ -81,7 +81,7 @@ public class ResultSetTardisSize {
                         consoleSize = rsa.getArchive().getConsoleSize();
                     }
                 } else {
-                    consoleSize = CONSOLES.getBY_NAMES().get(rs.getString("size")).getConsoleSize();
+                    consoleSize = Consoles.getBY_NAMES().get(rs.getString("size")).getConsoleSize();
                 }
                 return true;
             }

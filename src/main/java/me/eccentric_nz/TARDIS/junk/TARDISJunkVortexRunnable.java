@@ -34,6 +34,7 @@ import java.util.List;
  */
 class TARDISJunkVortexRunnable implements Runnable {
 
+    private static final int LOOPS = 12;
     private final TARDIS plugin;
     private final Location vortexJunkLoc;
     private final Location effectsLoc;
@@ -41,7 +42,6 @@ class TARDISJunkVortexRunnable implements Runnable {
     private final OfflinePlayer player;
     private final int id;
     private int i = 0;
-    private static final int LOOPS = 12;
     private int task;
     private int fryTask;
 

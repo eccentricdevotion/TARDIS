@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public enum DISK_CIRCUIT {
+public enum DiskCircuit {
 
     AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
     ARS("TARDIS ARS Circuit", Material.GLOWSTONE_DUST),
@@ -49,10 +49,10 @@ public enum DISK_CIRCUIT {
     TEMPORAL("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST);
 
     static final List<String> circuitNames = new ArrayList<>();
-    static final List<DISK_CIRCUIT> tardisCircuits = new ArrayList<>();
+    static final List<DiskCircuit> tardisCircuits = new ArrayList<>();
 
     static {
-        for (DISK_CIRCUIT circuit : values()) {
+        for (DiskCircuit circuit : values()) {
             if (circuit.getName().endsWith("Circuit")) {
                 circuitNames.add(circuit.getName());
             }
@@ -65,7 +65,7 @@ public enum DISK_CIRCUIT {
     String name;
     Material material;
 
-    DISK_CIRCUIT(String name, Material material) {
+    DiskCircuit(String name, Material material) {
         this.name = name;
         this.material = material;
     }
@@ -74,7 +74,7 @@ public enum DISK_CIRCUIT {
         return circuitNames;
     }
 
-    public static List<DISK_CIRCUIT> getTardisCircuits() {
+    public static List<DiskCircuit> getTardisCircuits() {
         return tardisCircuits;
     }
 

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.block.Block;
@@ -37,13 +37,13 @@ public class UpdateDoor {
         this.plugin = plugin;
     }
 
-    public void process(UPDATEABLE updateable, Block block, boolean secondary, int id, Player player) {
+    public void process(Updateable updateable, Block block, boolean secondary, int id, Player player) {
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         String location = block.getWorld().getName() + ":" + block.getX() + ":" + block.getY() + ":" + block.getZ();
 
-        if (updateable.equals(UPDATEABLE.DOOR) && !secondary) {
+        if (updateable.equals(Updateable.DOOR) && !secondary) {
             // if portals are on, remove the current portal first
             if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                 ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
@@ -57,7 +57,7 @@ public class UpdateDoor {
             set.put("door_direction", d.getFacing().toString());
             where.put("door_type", 1);
         }
-        if ((updateable.equals(UPDATEABLE.BACKDOOR) || (updateable.equals(UPDATEABLE.DOOR) && secondary))) {
+        if ((updateable.equals(Updateable.BACKDOOR) || (updateable.equals(Updateable.DOOR) && secondary))) {
             // get player direction
             String d = TARDISStaticUtils.getPlayersDirection(player, true);
             set.put("door_location", location);

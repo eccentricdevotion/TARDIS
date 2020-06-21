@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -65,7 +65,7 @@ public class TARDISItemRenamer {
                 im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             }
             try {
-                RECIPE_ITEM recipeItem = RECIPE_ITEM.valueOf(TARDISStringUtils.toScoredUppercase(name));
+                RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
                 im.setCustomModelData(recipeItem.getCustomModelData());
             } catch (IllegalArgumentException e) {
                 // do nothing

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
@@ -77,7 +77,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         List<String> worlds = new ArrayList<>();
         plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
         WORLD_SUBS = ImmutableList.copyOf(worlds);
-        SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
+        SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
         List<String> tmpEntities = new ArrayList<>();
         for (EntityType e : EntityType.values()) {
             if (e.getEntityClass() != null && Creature.class.isAssignableFrom(e.getEntityClass())) {

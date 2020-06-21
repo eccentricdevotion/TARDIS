@@ -21,7 +21,7 @@ import org.bukkit.ChatColor;
 /**
  * @author eccentric_nz
  */
-public enum CHAMELEON_OPTION {
+public enum ChameleonOption {
 
     FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
     ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
@@ -35,7 +35,7 @@ public enum CHAMELEON_OPTION {
     private final String off;
     private final ChatColor offColour;
 
-    CHAMELEON_OPTION(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
+    ChameleonOption(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
         this.slot = slot;
         this.on = on;
         this.off = off;

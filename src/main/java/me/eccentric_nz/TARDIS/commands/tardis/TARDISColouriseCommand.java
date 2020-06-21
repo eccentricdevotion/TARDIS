@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -61,7 +61,7 @@ class TARDISColouriseCommand {
             return;
         }
         Tardis tardis = rs.getTardis();
-        SCHEMATIC console = tardis.getSchematic();
+        Schematic console = tardis.getSchematic();
         if (!console.hasBeacon()) {
             TARDISMessage.send(player, "COLOUR_NOT_VALID");
             return;

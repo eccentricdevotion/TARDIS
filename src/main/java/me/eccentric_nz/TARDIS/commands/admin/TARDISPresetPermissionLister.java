@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class TARDISPresetPermissionLister {
-    
+
     public void list(CommandSender sender) {
         sender.sendMessage(ChatColor.GOLD + "[TARDIS]" + ChatColor.RESET + " Chameleon Preset Permissions:");
         for (PRESET preset : PRESET.values()) {

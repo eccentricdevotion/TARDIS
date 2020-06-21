@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,7 +38,7 @@ import java.util.Locale;
 public class TARDISSeedRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<SCHEMATIC, ShapedRecipe> seedRecipes;
+    private final HashMap<Schematic, ShapedRecipe> seedRecipes;
     private final RecipeChoice.MaterialChoice choices;
 
     public TARDISSeedRecipe(TARDIS plugin) {
@@ -48,12 +48,12 @@ public class TARDISSeedRecipe {
     }
 
     public void addSeedRecipes() {
-        for (SCHEMATIC schematic : CONSOLES.getBY_MATERIALS().values()) {
+        for (Schematic schematic : Consoles.getBY_MATERIALS().values()) {
             plugin.getServer().addRecipe(makeSeedRecipe(schematic));
         }
     }
 
-    private ShapedRecipe makeSeedRecipe(SCHEMATIC s) {
+    private ShapedRecipe makeSeedRecipe(Schematic s) {
         ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
         int model;
@@ -90,7 +90,7 @@ public class TARDISSeedRecipe {
         return r;
     }
 
-    public HashMap<SCHEMATIC, ShapedRecipe> getSeedRecipes() {
+    public HashMap<Schematic, ShapedRecipe> getSeedRecipes() {
         return seedRecipes;
     }
 }

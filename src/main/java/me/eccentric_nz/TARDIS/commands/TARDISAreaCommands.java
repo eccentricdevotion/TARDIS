@@ -46,8 +46,8 @@ import java.util.Locale;
  */
 public class TARDISAreaCommands implements CommandExecutor {
 
-    private final TARDIS plugin;
     public static final BlockData SNOW = Material.SNOW_BLOCK.createBlockData();
+    private final TARDIS plugin;
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;

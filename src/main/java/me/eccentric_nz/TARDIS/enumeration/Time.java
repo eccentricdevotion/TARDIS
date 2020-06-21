@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import java.util.HashMap;
 
-public enum TIME {
+public enum Time {
 
     DAY(0),
     MORNING(0),
@@ -50,10 +50,10 @@ public enum TIME {
     AM_4(22000),
     AM_5(23000);
 
-    private static final HashMap<String, TIME> BY_NAME = new HashMap<>();
+    private static final HashMap<String, Time> BY_NAME = new HashMap<>();
 
     static {
-        for (TIME time : values()) {
+        for (Time time : values()) {
             BY_NAME.put(time.name, time);
         }
     }
@@ -61,12 +61,12 @@ public enum TIME {
     private final long ticks;
     private final String name;
 
-    TIME(long ticks) {
+    Time(long ticks) {
         this.ticks = ticks;
         name = getName();
     }
 
-    public static HashMap<String, TIME> getByName() {
+    public static HashMap<String, Time> getByName() {
         return BY_NAME;
     }
 

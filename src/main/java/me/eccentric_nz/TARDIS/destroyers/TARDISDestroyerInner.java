@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -54,7 +54,7 @@ public class TARDISDestroyerInner {
      * @param w    the world where the TARDIS is to be built.
      * @param slot the TIPS slot number
      */
-    public void destroyInner(SCHEMATIC schm, int id, World w, int slot) {
+    public void destroyInner(Schematic schm, int id, World w, int slot) {
         // destroy TARDIS
         if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));

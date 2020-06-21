@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public enum FLAG {
+public enum Flag {
 
     MESSAGE_PLAYER,
     PERMS_AREA,
@@ -37,20 +37,20 @@ public enum FLAG {
     RESPECT_WORLDGUARD,
     SPACE_TARDIS;
 
-    public static List<FLAG> getNoMessageFlags() {
-        List<FLAG> flags = new ArrayList<>(Arrays.asList(FLAG.values()));
-        flags.remove(FLAG.MESSAGE_PLAYER);
+    public static List<Flag> getNoMessageFlags() {
+        List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
+        flags.remove(Flag.MESSAGE_PLAYER);
         return flags;
     }
 
-    public static List<FLAG> getAPIFlags() {
-        List<FLAG> flags = new ArrayList<>(Arrays.asList(FLAG.values()));
-        flags.remove(FLAG.MESSAGE_PLAYER);
-        flags.remove(FLAG.SPACE_TARDIS);
+    public static List<Flag> getAPIFlags() {
+        List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
+        flags.remove(Flag.MESSAGE_PLAYER);
+        flags.remove(Flag.SPACE_TARDIS);
         return flags;
     }
 
-    public static List<FLAG> getDefaultFlags() {
-        return Arrays.asList(FLAG.values());
+    public static List<Flag> getDefaultFlags() {
+        return Arrays.asList(Flag.values());
     }
 }

@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
@@ -116,7 +116,7 @@ public class TARDISAuthorisedControlDisk {
                     return "The Time Lord must be outside the TARDIS.";
                 }
                 // check respect
-                if (!plugin.getPluginRespect().getRespect(location, new Parameters(timelord, FLAG.getNoMessageFlags()))) {
+                if (!plugin.getPluginRespect().getRespect(location, new Parameters(timelord, Flag.getNoMessageFlags()))) {
                     return "The Time Lord's location does not allow travel.";
                 }
             }

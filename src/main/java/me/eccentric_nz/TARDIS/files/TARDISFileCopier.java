@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 
 import java.io.*;
 import java.util.Locale;
@@ -112,7 +112,7 @@ public class TARDISFileCopier {
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        CONSOLES.getBY_NAMES().values().forEach((ts) -> {
+        Consoles.getBY_NAMES().values().forEach((ts) -> {
             if (!ts.isCustom()) {
                 String str = basepath + ts.getPermission() + ".tschm";
                 copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);

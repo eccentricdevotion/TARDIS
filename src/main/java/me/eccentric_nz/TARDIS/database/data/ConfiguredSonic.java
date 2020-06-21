@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import me.eccentric_nz.TARDIS.enumeration.SONIC_CONFIG;
+import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
 
 import java.util.UUID;
 
@@ -27,27 +27,27 @@ public class ConfiguredSonic {
 
     private final int sonic_id;
     private final UUID uuid;
-    private SONIC_CONFIG bio;
-    private SONIC_CONFIG diamond;
-    private SONIC_CONFIG emerald;
-    private SONIC_CONFIG redstone;
-    private SONIC_CONFIG painter;
-    private SONIC_CONFIG ignite;
-    private SONIC_CONFIG arrow;
-    private SONIC_CONFIG knockback;
+    private SonicConfig bio;
+    private SonicConfig diamond;
+    private SonicConfig emerald;
+    private SonicConfig redstone;
+    private SonicConfig painter;
+    private SonicConfig ignite;
+    private SonicConfig arrow;
+    private SonicConfig knockback;
     private final UUID sonic_uuid;
 
     public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, UUID sonic_uuid) {
         this.sonic_id = sonic_id;
         this.uuid = uuid;
-        this.bio = SONIC_CONFIG.values()[bio];
-        this.diamond = SONIC_CONFIG.values()[diamond];
-        this.emerald = SONIC_CONFIG.values()[emerald];
-        this.redstone = SONIC_CONFIG.values()[redstone];
-        this.painter = SONIC_CONFIG.values()[painter];
-        this.ignite = SONIC_CONFIG.values()[ignite];
-        this.arrow = SONIC_CONFIG.values()[arrow];
-        this.knockback = SONIC_CONFIG.values()[knockback];
+        this.bio = SonicConfig.values()[bio];
+        this.diamond = SonicConfig.values()[diamond];
+        this.emerald = SonicConfig.values()[emerald];
+        this.redstone = SonicConfig.values()[redstone];
+        this.painter = SonicConfig.values()[painter];
+        this.ignite = SonicConfig.values()[ignite];
+        this.arrow = SonicConfig.values()[arrow];
+        this.knockback = SonicConfig.values()[knockback];
         this.sonic_uuid = sonic_uuid;
     }
 
@@ -59,67 +59,67 @@ public class ConfiguredSonic {
         return uuid;
     }
 
-    public SONIC_CONFIG getBio() {
+    public SonicConfig getBio() {
         return bio;
     }
 
-    public void setBio(SONIC_CONFIG bio) {
+    public void setBio(SonicConfig bio) {
         this.bio = bio;
     }
 
-    public SONIC_CONFIG getDiamond() {
+    public SonicConfig getDiamond() {
         return diamond;
     }
 
-    public void setDiamond(SONIC_CONFIG diamond) {
+    public void setDiamond(SonicConfig diamond) {
         this.diamond = diamond;
     }
 
-    public SONIC_CONFIG getEmerald() {
+    public SonicConfig getEmerald() {
         return emerald;
     }
 
-    public void setEmerald(SONIC_CONFIG emerald) {
+    public void setEmerald(SonicConfig emerald) {
         this.emerald = emerald;
     }
 
-    public SONIC_CONFIG getRedstone() {
+    public SonicConfig getRedstone() {
         return redstone;
     }
 
-    public void setRedstone(SONIC_CONFIG redstone) {
+    public void setRedstone(SonicConfig redstone) {
         this.redstone = redstone;
     }
 
-    public SONIC_CONFIG getPainter() {
+    public SonicConfig getPainter() {
         return painter;
     }
 
-    public void setPainter(SONIC_CONFIG painter) {
+    public void setPainter(SonicConfig painter) {
         this.painter = painter;
     }
 
-    public SONIC_CONFIG getIgnite() {
+    public SonicConfig getIgnite() {
         return ignite;
     }
 
-    public void setIgnite(SONIC_CONFIG ignite) {
+    public void setIgnite(SonicConfig ignite) {
         this.ignite = ignite;
     }
 
-    public SONIC_CONFIG getArrow() {
+    public SonicConfig getArrow() {
         return arrow;
     }
 
-    public void setArrow(SONIC_CONFIG arrow) {
+    public void setArrow(SonicConfig arrow) {
         this.arrow = arrow;
     }
 
-    public SONIC_CONFIG getKnockback() {
+    public SonicConfig getKnockback() {
         return knockback;
     }
 
-    public void setKnockback(SONIC_CONFIG knockback) {
+    public void setKnockback(SonicConfig knockback) {
         this.knockback = knockback;
     }
 

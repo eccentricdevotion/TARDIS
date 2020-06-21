@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -338,7 +338,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     if (plugin.getConfig().getBoolean("siege.texture")) {
                                         // change to a dark theme
-                                        SCHEMATIC schm = tardis.getSchematic();
+                                        Schematic schm = tardis.getSchematic();
                                         TARDISUpgradeData tud = new TARDISUpgradeData();
                                         tud.setFloor("BLACK_WOOL");
                                         tud.setWall("GRAY_WOOL");

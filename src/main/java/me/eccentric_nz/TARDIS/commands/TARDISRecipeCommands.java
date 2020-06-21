@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import org.bukkit.ChatColor;
@@ -238,7 +238,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (item.getType().equals(Material.GLOWSTONE_DUST)) {
                     String dn = getDisplayName(str, glowstoneCount);
                     im.setDisplayName(dn);
-                    im.setCustomModelData(RECIPE_ITEM.getByName(dn).getCustomModelData());
+                    im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
                     glowstoneCount++;
                 }
                 if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
@@ -268,8 +268,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(str);
-        RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(str);
-        if (recipeItem != RECIPE_ITEM.NOT_FOUND) {
+        RecipeItem recipeItem = RecipeItem.getByName(str);
+        if (recipeItem != RecipeItem.NOT_FOUND) {
             im.setCustomModelData(recipeItem.getCustomModelData());
         }
         if (str.equals("TARDIS Invisibility Circuit")) {
@@ -301,7 +301,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
                 im.setDisplayName(dn);
-                im.setCustomModelData(RECIPE_ITEM.getByName(dn).getCustomModelData());
+                im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
                 glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
@@ -317,8 +317,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk") || str.equals("Sonic Blaster")) {
             im.addItemFlags(ItemFlag.values());
         }
-        RECIPE_ITEM recipeItem = RECIPE_ITEM.getByName(str);
-        if (recipeItem != RECIPE_ITEM.NOT_FOUND) {
+        RecipeItem recipeItem = RecipeItem.getByName(str);
+        if (recipeItem != RecipeItem.NOT_FOUND) {
             im.setCustomModelData(recipeItem.getCustomModelData());
         }
         result.setAmount(1);
@@ -352,7 +352,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack tardis;
         // should be mushroom block
         int model;
-        if (CONSOLES.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
+        if (Consoles.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
             model = 45;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("ROTOR")) {

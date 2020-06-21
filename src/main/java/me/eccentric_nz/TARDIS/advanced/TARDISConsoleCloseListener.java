@@ -60,7 +60,7 @@ public class TARDISConsoleCloseListener implements Listener {
 
     public TARDISConsoleCloseListener(TARDIS plugin) {
         this.plugin = plugin;
-        for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
+        for (DiskCircuit dc : DiskCircuit.values()) {
             if (!onlythese.contains(dc.getMaterial())) {
                 onlythese.add(dc.getMaterial());
             }
@@ -93,7 +93,7 @@ public class TARDISConsoleCloseListener implements Listener {
                 Inventory inv = event.getInventory();
                 // remember what was placed in the console
                 saveCurrentConsole(inv, p.getUniqueId().toString());
-                if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+                if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                     // check circuits
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
@@ -173,8 +173,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 biome = Biome.valueOf(first);
                                             } catch (IllegalArgumentException iae) {
                                                 // may have a pre-1.9 biome disk do old biome lookup...
-                                                if (TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
-                                                    biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
+                                                if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
+                                                    biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
                                                 } else {
                                                     TARDISMessage.send(p, "BIOME_NOT_VALID");
                                                     continue;
@@ -186,7 +186,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "BIOME_NOT_FOUND");
                                                 continue;
                                             } else {
-                                                if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(p, FLAG.getDefaultFlags()))) {
+                                                if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(p, Flag.getDefaultFlags()))) {
                                                     continue;
                                                 }
                                                 World bw = nsob.getWorld();
@@ -294,13 +294,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TARDISLand(plugin, id, p).exitVortex();
                                     }
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                         plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                         tcc.getCircuits();
                                         // decrement uses
                                         int uses_left = tcc.getMemoryUses();
-                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MEMORY, uses_left, id, p).damage();
+                                        new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, id, p).damage();
                                     }
                                 } else {
                                     TARDISMessage.send(p, "ADV_BLANK");
@@ -330,12 +330,12 @@ public class TARDISConsoleCloseListener implements Listener {
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     new TARDISLand(plugin, id, p).exitVortex();
                                 }
-                                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
+                                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                     tcc.getCircuits();
                                     // decrement uses
                                     int uses_left = tcc.getRandomiserUses();
-                                    new TARDISCircuitDamager(plugin, DISK_CIRCUIT.RANDOMISER, uses_left, id, p).damage();
+                                    new TARDISCircuitDamager(plugin, DiskCircuit.RANDOMISER, uses_left, id, p).damage();
                                 }
                             } else {
                                 TARDISMessage.send(p, "PROTECTED");

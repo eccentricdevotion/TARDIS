@@ -19,6 +19,9 @@ package me.eccentric_nz.TARDIS.enumeration;
 /**
  * @author eccentric_nz
  */
-public enum INVENTORY_MANAGER {
-    MULTI, PER_WORLD, MULTIVERSE, GAMEMODE, NONE
+public enum Difficulty {
+
+    EASY,
+    MEDIUM,
+    HARD
 }

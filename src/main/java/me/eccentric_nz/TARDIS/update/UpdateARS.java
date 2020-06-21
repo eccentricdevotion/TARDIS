@@ -22,7 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -37,7 +37,7 @@ public class UpdateARS {
         this.plugin = plugin;
     }
 
-    public void process(Block block, SCHEMATIC schm, int id, String uuid) {
+    public void process(Block block, Schematic schm, int id, String uuid) {
         // insert control
         plugin.getQueryFactory().insertControl(id, 10, block.getLocation().toString(), 0);
         // check if they already have an ARS record (they may have used `/tardis arsremove`)

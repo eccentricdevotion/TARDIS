@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 public class TARDISSeedData {
 
     private int id;
-    private SCHEMATIC schematic;
+    private Schematic schematic;
     private String room;
     private int minx;
     private int maxx;
@@ -41,11 +41,11 @@ public class TARDISSeedData {
         this.id = id;
     }
 
-    public SCHEMATIC getSchematic() {
+    public Schematic getSchematic() {
         return schematic;
     }
 
-    public void setSchematic(SCHEMATIC schematic) {
+    public void setSchematic(Schematic schematic) {
         this.schematic = schematic;
     }
 

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 /**
  * @author eccentric_nz
  */
-public enum STORAGE {
+public enum Storage {
 
     AREA("Area Storage", "areas", "rO0ABXcEAAAANnNyABpvcmcuYnVra2l0LnV0aWwuaW8uV3JhcHBlcvJQR+zxEm8FAgABTAADbWFw\n"
                                 + "dAAPTGphdmEvdXRpbC9NYXA7eHBzcgA1Y29tLmdvb2dsZS5jb21tb24uY29sbGVjdC5JbW11dGFi\n"
@@ -302,7 +302,7 @@ public enum STORAGE {
     final String table;
     final String empty;
 
-    STORAGE(String title, String table, String empty) {
+    Storage(String title, String table, String empty) {
         this.title = title;
         this.table = table;
         this.empty = empty;

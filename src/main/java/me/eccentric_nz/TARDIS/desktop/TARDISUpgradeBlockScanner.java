@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -148,11 +148,11 @@ public class TARDISUpgradeBlockScanner {
                         }
                         if (Tag.WOOL.isTagged(type)) {
                             // determine 'use_clay' material
-                            USE_CLAY use_clay;
+                            UseClay use_clay;
                             try {
-                                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                                use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
                             } catch (IllegalArgumentException e) {
-                                use_clay = USE_CLAY.WOOL;
+                                use_clay = UseClay.WOOL;
                             }
                             switch (type) {
                                 case ORANGE_WOOL:

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -65,7 +65,7 @@ public class TARDISShapelessRecipe {
         if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("~")));
         }
-        im.setCustomModelData(RECIPE_ITEM.getByName(s).getCustomModelData());
+        im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -77,7 +77,7 @@ public class TARDISShapelessRecipe {
                 exact = new ItemStack(m, 1);
                 ItemMeta em = exact.getItemMeta();
                 em.setDisplayName(choice[1]);
-                em.setCustomModelData(RECIPE_ITEM.getByName(choice[1]).getCustomModelData());
+                em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
                 exact.setItemMeta(em);
                 r.addIngredient(new RecipeChoice.ExactChoice(exact));
             } else {

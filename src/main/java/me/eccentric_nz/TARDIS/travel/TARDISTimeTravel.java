@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -248,7 +248,7 @@ public class TARDISTimeTravel {
                     if (highest > 40) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         Location chunk_loc = currentBlock.getLocation();
-                        if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
+                        if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, Flag.getNoMessageFlags()))) {
                             while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                                 randworld.getChunkAt(chunk_loc).load();
                             }
@@ -332,7 +332,7 @@ public class TARDISTimeTravel {
                                         currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                                     }
                                     Location chunk_loc = currentBlock.getLocation();
-                                    if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
+                                    if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, Flag.getNoMessageFlags()))) {
                                         while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                                             randworld.getChunkAt(chunk_loc).load();
                                         }
@@ -355,7 +355,7 @@ public class TARDISTimeTravel {
                                 break;
                             }
                         } else {
-                            if (!plugin.getPluginRespect().getRespect(new Location(randworld, wherex, highest, wherez), new Parameters(p, FLAG.getNoMessageFlags()))) {
+                            if (!plugin.getPluginRespect().getRespect(new Location(randworld, wherex, highest, wherez), new Parameters(p, Flag.getNoMessageFlags()))) {
                                 return null;
                             } else {
                                 highest = plugin.getConfig().getInt("travel.timeout_height");
@@ -458,7 +458,7 @@ public class TARDISTimeTravel {
         if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether"))) {
             Location netherLocation = startBlock.getLocation();
             netherLocation.setY(netherLocation.getY() + 1);
-            if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, FLAG.getNoMessageFlags()))) {
+            if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, Flag.getNoMessageFlags()))) {
                 // get start location for checking there is enough space
                 int gsl[] = getStartLocation(netherLocation, d);
                 startx = gsl[0];

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 
-public enum RECIPE_ITEM {
+public enum RecipeItem {
     // shaped recipes start here
     ACID_BATTERY(10000001),
     ARTRON_STORAGE_CELL(10000001),
@@ -134,14 +134,14 @@ public enum RECIPE_ITEM {
 
     private final int customModelData;
 
-    RECIPE_ITEM(int customModelData) {
+    RecipeItem(int customModelData) {
         this.customModelData = customModelData;
     }
 
-    public static RECIPE_ITEM getByName(String name) {
+    public static RecipeItem getByName(String name) {
         String processed = TARDISStringUtils.toEnumUppercase(name);
         try {
-            return RECIPE_ITEM.valueOf(processed);
+            return RecipeItem.valueOf(processed);
         } catch (IllegalArgumentException e) {
             return NOT_FOUND;
         }

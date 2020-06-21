@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.control;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetConsole;
 import me.eccentric_nz.TARDIS.database.ResultSetOccupied;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
@@ -58,7 +58,7 @@ public class TARDISControlRunnable implements Runnable {
                                     sign.setLine(2, "");
                                 } else {
                                     String worldname = (rsc.getWorld() != null) ? rsc.getWorld() : "";
-                                    if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE) && !worldname.equals("")) {
+                                    if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldname.equals("")) {
                                         worldname = plugin.getMVHelper().getAlias(worldname);
                                     }
                                     sign.setLine(0, ChatColor.DARK_PURPLE + worldname);

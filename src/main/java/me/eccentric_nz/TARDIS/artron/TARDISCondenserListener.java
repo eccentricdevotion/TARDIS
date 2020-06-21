@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -217,7 +217,7 @@ public class TARDISCondenserListener implements Listener {
                                 int current_level = tardis.getArtron_level() + amount;
                                 int fc = plugin.getArtronConfig().getInt("full_charge");
                                 int percent = Math.round((current_level * 100F) / fc);
-                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.ENERGY, 1);
+                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ENERGY, 1);
                                 if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
                                     taf.doAchievement(percent);
                                 } else {

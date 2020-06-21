@@ -39,6 +39,7 @@ public class ResultSetNextLocation {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int next_id;
     private int tardis_id;
     private World world;
@@ -47,7 +48,6 @@ public class ResultSetNextLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the next locations table.

@@ -24,10 +24,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -339,7 +339,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 }
                                 // check respect
-                                if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, Flag.getDefaultFlags()))) {
                                     if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                                         plugin.getTrackerKeeper().getMalfunction().put(id, true);
                                     } else {
@@ -368,7 +368,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 }
                                 // check respect
-                                if (!plugin.getPluginRespect().getRespect(village, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                if (!plugin.getPluginRespect().getRespect(village, new Parameters(player, Flag.getDefaultFlags()))) {
                                     if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                                         plugin.getTrackerKeeper().getMalfunction().put(id, true);
                                     } else {
@@ -401,7 +401,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             }
                             return true;
                         } else if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
-                            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+                            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                                 TARDISMessage.send(player, "ADV_PLAYER");
                                 return true;
                             }
@@ -477,8 +477,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
-                            if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
+                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
+                            if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
                                 // check they have a biome disk in storage
                                 boolean hasBiomeDisk = false;
                                 UUID uuid = player.getUniqueId();
@@ -591,7 +591,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 }
                                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
-                                if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
                                     if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                                         plugin.getTrackerKeeper().getMalfunction().put(id, true);
                                     } else {
@@ -685,7 +685,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "TRAVEL_NO_AREA_PERM", args[1]);
                             return true;
                         }
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false)) {
+                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }
@@ -747,7 +747,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     wherec.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                                     if (rsc.resultSet()) {
-                                        Parameters parameters = new Parameters(player, FLAG.getNoMessageFlags());
+                                        Parameters parameters = new Parameters(player, Flag.getNoMessageFlags());
                                         parameters.setCompass(rsc.getDirection());
                                         Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
                                         if (l != null) {
@@ -933,7 +933,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             w = rsc.getWorld();
         } else {
-            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(w_str);
             } else {
                 w = plugin.getServer().getWorld(w_str);
@@ -1064,7 +1064,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
             return 1;
         }
-        if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, FLAG.getDefaultFlags()))) {
+        if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags()))) {
             return 1;
         }
         HashMap<String, Object> wherecl = new HashMap<>();

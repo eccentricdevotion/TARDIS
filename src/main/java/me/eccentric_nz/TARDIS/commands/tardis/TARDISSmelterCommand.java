@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetSmelterCheck;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -40,7 +40,7 @@ class TARDISSmelterCommand {
         this.plugin = plugin;
     }
 
-    boolean addDropChest(Player player, UPDATEABLE updateable) {
+    boolean addDropChest(Player player, Updateable updateable) {
         // check permission
         if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {
             TARDISMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
@@ -108,7 +108,7 @@ class TARDISSmelterCommand {
                 plugin.getQueryFactory().doInsert("vaults", set);
             }
         }
-        TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(UPDATEABLE.FUEL)) ? "SMELT" : "FUEL");
+        TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
         return true;
     }
 }

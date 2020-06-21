@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -72,7 +72,7 @@ public class TARDISHandlesTeleportCommand {
             return;
         }
         // plugin respect
-        if (plugin.getPluginRespect().getRespect(location, new Parameters(player, FLAG.getAPIFlags()))) {
+        if (plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getAPIFlags()))) {
             // get direction
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);

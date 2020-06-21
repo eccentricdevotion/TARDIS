@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils;
 
-import me.eccentric_nz.TARDIS.enumeration.WEATHER;
+import me.eccentric_nz.TARDIS.enumeration.Weather;
 import org.bukkit.World;
 
 public class TARDISWeather {
@@ -35,7 +35,7 @@ public class TARDISWeather {
         world.setStorm(false);
     }
 
-    public static void setWeather(World world, WEATHER weather) {
+    public static void setWeather(World world, Weather weather) {
         switch (weather) {
             case RAIN:
                 setRain(world);

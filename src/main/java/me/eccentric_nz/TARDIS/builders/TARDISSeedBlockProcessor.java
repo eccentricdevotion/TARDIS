@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -93,7 +93,7 @@ public class TARDISSeedBlockProcessor {
                     TARDISMessage.send(player, "TARDIS_NO_HOME");
                     return false;
                 }
-                SCHEMATIC schm = seed.getSchematic();
+                Schematic schm = seed.getSchematic();
                 // check perms
                 if (!schm.getPermission().equals("budget") && !TARDISPermission.hasPermission(player, "tardis." + schm.getPermission())) {
                     TARDISMessage.send(player, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
@@ -220,7 +220,7 @@ public class TARDISSeedBlockProcessor {
                         wherea.put("name", "tardis");
                         plugin.getQueryFactory().doUpdate("achievements", seta, wherea);
                         // award advancement
-                        TARDISAchievementFactory.grantAdvancement(ADVANCEMENT.TARDIS, player);
+                        TARDISAchievementFactory.grantAdvancement(Advancement.TARDIS, player);
                     }
                     if (max_count > 0) {
                         TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));

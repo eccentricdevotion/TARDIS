@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.enumeration.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -104,7 +104,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "TARDIS saves", 90);
         map.put(ChatColor.DARK_RED + "TARDIS transmats", 90);
         map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
-        for (STORAGE s : STORAGE.values()) {
+        for (Storage s : Storage.values()) {
             map.put(s.getTitle(), 54);
         }
         return map;

@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum SONIC_CONFIG {
+public enum SonicConfig {
 
     NOT_UPGRADED(1, Material.GRAY_WOOL),
     ENABLED(2, Material.LIME_WOOL),
@@ -12,7 +12,7 @@ public enum SONIC_CONFIG {
     private final int customModelData;
     private final Material material;
 
-    SONIC_CONFIG(int customModelData, Material material) {
+    SonicConfig(int customModelData, Material material) {
         this.customModelData = customModelData;
         this.material = material;
     }

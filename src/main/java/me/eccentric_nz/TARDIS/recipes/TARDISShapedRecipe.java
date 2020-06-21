@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.RECIPE_ITEM;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -44,10 +44,10 @@ public class TARDISShapedRecipe {
 
     private final TARDIS plugin;
     private final HashMap<String, ShapedRecipe> shapedRecipes;
-    private ChatColor keyDisplay;
-    private ChatColor sonicDisplay;
     private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<>();
     private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<>();
+    private ChatColor keyDisplay;
+    private ChatColor sonicDisplay;
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
@@ -111,9 +111,9 @@ public class TARDISShapedRecipe {
         } else {
             im.setDisplayName(s);
         }
-        im.setCustomModelData(RECIPE_ITEM.getByName(s).getCustomModelData());
+        im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
-            if (mat.equals(Material.GLOWSTONE_DUST) && DISK_CIRCUIT.getCircuitNames().contains(s)) {
+            if (mat.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(s)) {
                 // which circuit is it?
                 String[] split = s.split(" ");
                 String which = split[1].toLowerCase(Locale.ENGLISH);
@@ -138,7 +138,7 @@ public class TARDISShapedRecipe {
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape
-        String difficulty = (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
+        String difficulty = (plugin.getDifficulty().equals(Difficulty.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
         try {
             String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
             String[] shape = new String[shape_tmp.length];
@@ -161,8 +161,8 @@ public class TARDISShapedRecipe {
                     exact = new ItemStack(m, 1);
                     ItemMeta em = exact.getItemMeta();
                     em.setDisplayName(choice[1]);
-                    em.setCustomModelData(RECIPE_ITEM.getByName(choice[1]).getCustomModelData());
-                    if (m.equals(Material.GLOWSTONE_DUST) && DISK_CIRCUIT.getCircuitNames().contains(choice[1])) {
+                    em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
+                    if (m.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(choice[1])) {
                         // which circuit is it?
                         String[] split = choice[1].split(" ");
                         String which = split[1].toLowerCase(Locale.ENGLISH);

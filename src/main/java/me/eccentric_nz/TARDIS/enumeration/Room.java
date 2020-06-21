@@ -12,31 +12,47 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-public enum WEATHER {
+/**
+ * @author eccentric_nz
+ */
+public enum Room {
 
-    CLEAR,
-    RAIN,
-    THUNDER;
-
-    public static WEATHER fromString(String s) {
-        String lower = s.toLowerCase();
-        switch (lower) {
-            case "r":
-            case "rain":
-            case "w":
-            case "wet":
-                return RAIN;
-            case "t":
-            case "thunder":
-            case "l":
-            case "lightning":
-                return THUNDER;
-            default:
-                return CLEAR;
-        }
-    }
+    ANTIGRAVITY,
+    APIARY,
+    AQUARIUM,
+    ARBORETUM,
+    BAKER,
+    BAMBOO,
+    BEDROOM,
+    BIRDCAGE,
+    CHEMISTRY,
+    EMPTY,
+    FARM,
+    GRAVITY,
+    GREENHOUSE,
+    HARMONY,
+    HUTCH,
+    IGLOO,
+    KITCHEN,
+    LAZARUS,
+    LIBRARY,
+    MUSHROOM,
+    PASSAGE,
+    POOL,
+    RAIL,
+    RENDERER,
+    SHELL,
+    SMELTER,
+    STABLE,
+    STALL,
+    TRENZALORE,
+    VAULT,
+    VILLAGE,
+    WOOD,
+    WORKSHOP,
+    ZERO
 }

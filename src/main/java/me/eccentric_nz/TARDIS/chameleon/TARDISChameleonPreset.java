@@ -39,6 +39,7 @@ import java.util.List;
 public class TARDISChameleonPreset {
 
     private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.WALL_TORCH, Material.OAK_STAIRS, Material.OAK_SIGN, Material.DARK_OAK_SIGN, Material.SPRUCE_SIGN, Material.BIRCH_SIGN, Material.JUNGLE_SIGN, Material.ACACIA_SIGN, Material.OAK_DOOR, Material.RAIL, Material.COBBLESTONE_STAIRS, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.JUNGLE_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.LEVER, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.STONE_BUTTON, Material.JACK_O_LANTERN, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.NETHER_BRICK_FENCE, Material.OAK_FENCE, Material.BIRCH_FENCE, Material.SPRUCE_FENCE, Material.JUNGLE_FENCE, Material.ACACIA_FENCE, Material.DARK_OAK_FENCE, Material.BROWN_MUSHROOM_BLOCK, Material.VINE, Material.BRICK_STAIRS, Material.STONE_BRICK_STAIRS, Material.NETHER_BRICK_STAIRS, Material.SANDSTONE_STAIRS, Material.SPRUCE_STAIRS, Material.JUNGLE_STAIRS, Material.ACACIA_STAIRS, Material.BIRCH_STAIRS, Material.DARK_OAK_STAIRS, Material.OAK_BUTTON, Material.ANVIL, Material.CHIPPED_ANVIL, Material.DAMAGED_ANVIL, Material.QUARTZ_STAIRS, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR, Material.PURPUR_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.WHITE_BED, Material.ORANGE_BED, Material.MAGENTA_BED, Material.YELLOW_BED, Material.LIME_BED, Material.PINK_BED, Material.GRAY_BED, Material.LIGHT_GRAY_BED, Material.PURPLE_BED, Material.CYAN_BED, Material.BLUE_BED, Material.GREEN_BED, Material.BROWN_BED, Material.RED_BED, Material.BLACK_BED, Material.LIGHT_BLUE_BED, Material.CARVED_PUMPKIN, Material.OBSERVER, Material.WHITE_GLAZED_TERRACOTTA, Material.ORANGE_GLAZED_TERRACOTTA, Material.MAGENTA_GLAZED_TERRACOTTA, Material.LIGHT_BLUE_GLAZED_TERRACOTTA, Material.YELLOW_GLAZED_TERRACOTTA, Material.LIME_GLAZED_TERRACOTTA, Material.PINK_GLAZED_TERRACOTTA, Material.GRAY_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_GLAZED_TERRACOTTA, Material.CYAN_GLAZED_TERRACOTTA, Material.PURPLE_GLAZED_TERRACOTTA, Material.BLUE_GLAZED_TERRACOTTA, Material.BROWN_GLAZED_TERRACOTTA, Material.GREEN_GLAZED_TERRACOTTA, Material.RED_GLAZED_TERRACOTTA, Material.BLACK_GLAZED_TERRACOTTA);
+    public final TARDISCustomPreset custom;
     private final TARDISAndesitePreset andesite;
     private final TARDISAngelDownPreset angeld;
     private final TARDISAngelUpPreset angelu;
@@ -91,7 +92,6 @@ public class TARDISChameleonPreset {
     private final TARDISWellPreset well;
     private final TARDISWindmillPreset windmill;
     private final TARDISYellowSubmarinePreset yellow;
-    public final TARDISCustomPreset custom;
     // biome adaptive presets
     private final TARDISRenderPreset render;
     private final TARDISExtremeHillsPreset extreme;
@@ -173,74 +173,6 @@ public class TARDISChameleonPreset {
         taiga = new TARDISTaigaPreset();
         cold = new TARDISColdTaigaPreset();
         boat = new TARDISBoatPreset();
-    }
-
-    public void makePresets() {
-        andesite.makePresets(false, false);
-        angeld.makePresets(true, false);
-        angelu.makePresets(true, false);
-        apperture.makePresets(false, false);
-        cake.makePresets(false, false);
-        candy.makePresets(true, false);
-        chalice.makePresets(false, false);
-        chorus.makePresets(false, false);
-        column.makePresets(false, false);
-        creepy.makePresets(false, false);
-        desert.makePresets(false, false);
-        diorite.makePresets(false, false);
-        duck.makePresets(true, true);
-        factory.makePresets(false, false);
-        fence.makePresets(true, false);
-        flower.makePresets(false, false);
-        gazebo.makePresets(false, false);
-        granite.makePresets(false, false);
-        gravestone.makePresets(true, false);
-        helix.makePresets(false, false);
-        invisible.makePresets(true, true);
-        jail.makePresets(false, false);
-        jungle.makePresets(false, false);
-        junk.makePresets(true, false);
-        lamp.makePresets(true, false);
-        library.makePresets(false, false);
-        lighthouse.makePresets(false, false);
-        mine.makePresets(false, false);
-        nether.makePresets(false, false);
-        pandorica.makePresets(false, false);
-        party.makePresets(false, false);
-        peanut.makePresets(false, false);
-        pine.makePresets(false, false);
-        police.makePresets(false, false);
-        portal.makePresets(false, false);
-        prismarine.makePresets(false, false);
-        punked.makePresets(false, false);
-        robot.makePresets(true, false);
-        shroom.makePresets(false, false);
-        snowman.makePresets(true, false);
-        submerged.makePresets(true, false);
-        swamp.makePresets(false, false);
-        taller.makePresets(false, false);
-        telephone.makePresets(false, false);
-        theend.makePresets(false, false);
-        toilet.makePresets(true, false);
-        topsyturvey.makePresets(false, false);
-        torch.makePresets(true, false);
-        village.makePresets(false, false);
-        well.makePresets(false, false);
-        windmill.makePresets(true, false);
-        yellow.makePresets(false, false);
-        custom.makePresets();
-        render.makePresets(false, false);
-        extreme.makePresets(false, false);
-        forest.makePresets(true, false);
-        flats.makePresets(true, false);
-        spikes.makePresets(false, false);
-        mesa.makePresets(true, false);
-        plains.makePresets(false, false);
-        roofed.makePresets(false, false);
-        savanna.makePresets(true, false);
-        taiga.makePresets(false, false);
-        cold.makePresets(false, false);
-        boat.makePresets(true, false);
     }
 
     public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric, boolean duck) {
@@ -595,6 +527,74 @@ public class TARDISChameleonPreset {
             }
         }
         return data;
+    }
+
+    public void makePresets() {
+        andesite.makePresets(false, false);
+        angeld.makePresets(true, false);
+        angelu.makePresets(true, false);
+        apperture.makePresets(false, false);
+        cake.makePresets(false, false);
+        candy.makePresets(true, false);
+        chalice.makePresets(false, false);
+        chorus.makePresets(false, false);
+        column.makePresets(false, false);
+        creepy.makePresets(false, false);
+        desert.makePresets(false, false);
+        diorite.makePresets(false, false);
+        duck.makePresets(true, true);
+        factory.makePresets(false, false);
+        fence.makePresets(true, false);
+        flower.makePresets(false, false);
+        gazebo.makePresets(false, false);
+        granite.makePresets(false, false);
+        gravestone.makePresets(true, false);
+        helix.makePresets(false, false);
+        invisible.makePresets(true, true);
+        jail.makePresets(false, false);
+        jungle.makePresets(false, false);
+        junk.makePresets(true, false);
+        lamp.makePresets(true, false);
+        library.makePresets(false, false);
+        lighthouse.makePresets(false, false);
+        mine.makePresets(false, false);
+        nether.makePresets(false, false);
+        pandorica.makePresets(false, false);
+        party.makePresets(false, false);
+        peanut.makePresets(false, false);
+        pine.makePresets(false, false);
+        police.makePresets(false, false);
+        portal.makePresets(false, false);
+        prismarine.makePresets(false, false);
+        punked.makePresets(false, false);
+        robot.makePresets(true, false);
+        shroom.makePresets(false, false);
+        snowman.makePresets(true, false);
+        submerged.makePresets(true, false);
+        swamp.makePresets(false, false);
+        taller.makePresets(false, false);
+        telephone.makePresets(false, false);
+        theend.makePresets(false, false);
+        toilet.makePresets(true, false);
+        topsyturvey.makePresets(false, false);
+        torch.makePresets(true, false);
+        village.makePresets(false, false);
+        well.makePresets(false, false);
+        windmill.makePresets(true, false);
+        yellow.makePresets(false, false);
+        custom.makePresets();
+        render.makePresets(false, false);
+        extreme.makePresets(false, false);
+        forest.makePresets(true, false);
+        flats.makePresets(true, false);
+        spikes.makePresets(false, false);
+        mesa.makePresets(true, false);
+        plains.makePresets(false, false);
+        roofed.makePresets(false, false);
+        savanna.makePresets(true, false);
+        taiga.makePresets(false, false);
+        cold.makePresets(false, false);
+        boat.makePresets(true, false);
     }
 
     public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {

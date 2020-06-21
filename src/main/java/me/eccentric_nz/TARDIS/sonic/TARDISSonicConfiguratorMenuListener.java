@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetConfiguredSonic;
 import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
-import me.eccentric_nz.TARDIS.enumeration.SONIC_CONFIG;
+import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -173,28 +173,28 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
                     String upgrade = lore.get(i);
                     switch (upgrade) {
                         case "Bio-scanner Upgrade":
-                            configuredSonic.setBio(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setBio(SonicConfig.ENABLED);
                             break;
                         case "Diamond Upgrade":
-                            configuredSonic.setDiamond(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setDiamond(SonicConfig.ENABLED);
                             break;
                         case "Emerald Upgrade":
-                            configuredSonic.setEmerald(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setEmerald(SonicConfig.ENABLED);
                             break;
                         case "Redstone Upgrade":
-                            configuredSonic.setRedstone(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setRedstone(SonicConfig.ENABLED);
                             break;
                         case "Painter Upgrade":
-                            configuredSonic.setPainter(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setPainter(SonicConfig.ENABLED);
                             break;
                         case "Ignite Upgrade":
-                            configuredSonic.setIgnite(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setIgnite(SonicConfig.ENABLED);
                             break;
                         case "Pickup Arrows Upgrade":
-                            configuredSonic.setArrow(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setArrow(SonicConfig.ENABLED);
                             break;
                         case "Knockback Upgrade":
-                            configuredSonic.setKnockback(SONIC_CONFIG.ENABLED);
+                            configuredSonic.setKnockback(SonicConfig.ENABLED);
                             break;
                         default:
                             break;
@@ -215,42 +215,42 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
         if (bio == 1) {
             upgrades.add("Bio-scanner Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[bio]);
+        configuredSonic.setBio(SonicConfig.values()[bio]);
         int dia = getSonicConfig(10, view);
         if (dia == 1) {
             upgrades.add("Diamond Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[dia]);
+        configuredSonic.setBio(SonicConfig.values()[dia]);
         int eme = getSonicConfig(11, view);
         if (eme == 1) {
             upgrades.add("Emerald Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[eme]);
+        configuredSonic.setBio(SonicConfig.values()[eme]);
         int red = getSonicConfig(12, view);
         if (red == 1) {
             upgrades.add("Redstone Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[red]);
+        configuredSonic.setBio(SonicConfig.values()[red]);
         int pai = getSonicConfig(13, view);
         if (pai == 1) {
             upgrades.add("Painter Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[pai]);
+        configuredSonic.setBio(SonicConfig.values()[pai]);
         int ign = getSonicConfig(14, view);
         if (ign == 1) {
             upgrades.add("Ignite Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[ign]);
+        configuredSonic.setBio(SonicConfig.values()[ign]);
         int arr = getSonicConfig(15, view);
         if (arr == 1) {
             upgrades.add("Pickup Arrows Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[arr]);
+        configuredSonic.setBio(SonicConfig.values()[arr]);
         int kno = getSonicConfig(16, view);
         if (kno == 1) {
             upgrades.add("Knockback Upgrade");
         }
-        configuredSonic.setBio(SONIC_CONFIG.values()[kno]);
+        configuredSonic.setBio(SonicConfig.values()[kno]);
         sonics.put(player.getUniqueId(), configuredSonic);
         // prepare data for database insertion
         HashMap<String, Object> set = new HashMap<>();

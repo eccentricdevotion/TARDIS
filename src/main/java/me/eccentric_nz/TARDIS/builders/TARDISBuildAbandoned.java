@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
@@ -60,18 +60,12 @@ class TARDISBuildAbandoned implements Runnable {
 
     private final TARDIS plugin;
     private final List<Block> lampblocks = new ArrayList<>();
-    private Block postBedrock = null;
-    private final SCHEMATIC schm;
+    private final Schematic schm;
     private final World world;
     private final int dbID;
     private final Player player;
     private final Material wall_type = Material.ORANGE_WOOL;
     private final Material floor_type = Material.LIGHT_GRAY_WOOL;
-    private boolean running;
-    private TARDISTIPSData pos;
-    private JsonObject obj;
-    private JsonArray arr;
-    private int task, h, w, d, level = 0, row = 0, startx, starty, startz, j = 2;
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -82,12 +76,18 @@ class TARDISBuildAbandoned implements Runnable {
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
-    private Location ender = null;
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
+    private Block postBedrock = null;
+    private boolean running;
+    private TARDISTIPSData pos;
+    private JsonObject obj;
+    private JsonArray arr;
+    private int task, h, w, d, level = 0, row = 0, startx, starty, startz, j = 2;
+    private Location ender = null;
     private Material type;
     private BlockData data;
-    private USE_CLAY use_clay;
+    private UseClay use_clay;
     private int counter = 0;
     private double div = 1.0d;
     private BossBar bb;
@@ -103,7 +103,7 @@ class TARDISBuildAbandoned implements Runnable {
      * @param dbID   the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.
      */
-    TARDISBuildAbandoned(TARDIS plugin, SCHEMATIC schm, World world, int dbID, Player player) {
+    TARDISBuildAbandoned(TARDIS plugin, Schematic schm, World world, int dbID, Player player) {
         this.plugin = plugin;
         this.schm = schm;
         this.world = world;
@@ -162,9 +162,9 @@ class TARDISBuildAbandoned implements Runnable {
             where.put("tardis_id", dbID);
             // determine 'use_clay' material
             try {
-                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
             } catch (IllegalArgumentException e) {
-                use_clay = USE_CLAY.WOOL;
+                use_clay = UseClay.WOOL;
             }
             // get input array
             arr = obj.get("input").getAsJsonArray();

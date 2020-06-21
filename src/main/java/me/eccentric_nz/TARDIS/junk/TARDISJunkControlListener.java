@@ -25,9 +25,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -215,7 +215,7 @@ public class TARDISJunkControlListener implements Listener {
                 return;
             }
             World w;
-            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(line1);
             } else {
                 w = plugin.getServer().getWorld(line1);
@@ -230,7 +230,7 @@ public class TARDISJunkControlListener implements Listener {
             int y = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
             Location d = new Location(w, x, y, z);
             // check destination
-            if (plugin.getPluginRespect().getRespect(d, new Parameters(p, FLAG.getNoMessageFlags()))) {
+            if (plugin.getPluginRespect().getRespect(d, new Parameters(p, Flag.getNoMessageFlags()))) {
                 while (!chunk.isLoaded()) {
                     chunk.load();
                 }

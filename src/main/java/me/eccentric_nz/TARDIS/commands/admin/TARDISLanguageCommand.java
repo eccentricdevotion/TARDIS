@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
+import me.eccentric_nz.TARDIS.enumeration.Language;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -53,7 +53,7 @@ class TARDISLanguageCommand {
         }
         // load the language
         plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
-        TARDISMessage.send(sender, "LANG_SET", LANGUAGE.valueOf(args[1]).getLang());
+        TARDISMessage.send(sender, "LANG_SET", Language.valueOf(args[1]).getLang());
         // set and save the config
         plugin.getConfig().set("preferences.language", args[1]);
         plugin.saveConfig();

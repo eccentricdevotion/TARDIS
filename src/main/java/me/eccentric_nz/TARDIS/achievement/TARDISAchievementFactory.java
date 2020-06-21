@@ -18,12 +18,11 @@ package me.eccentric_nz.TARDIS.achievement;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -45,14 +44,40 @@ public class TARDISAchievementFactory {
 
     private final TARDIS plugin;
     private final Player player;
-    private final ADVANCEMENT advancement;
+    private final Advancement advancement;
     private final int size;
 
-    public TARDISAchievementFactory(TARDIS plugin, Player player, ADVANCEMENT advancement, int size) {
+    public TARDISAchievementFactory(TARDIS plugin, Player player, Advancement advancement, int size) {
         this.plugin = plugin;
         this.player = player;
         this.advancement = advancement;
         this.size = size;
+    }
+
+    public static boolean checkAdvancement(String adv) {
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.toLowerCase(Locale.ENGLISH));
+        org.bukkit.advancement.Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
+        if (a != null) {
+            TARDIS.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
+            return true;
+        } else {
+            TARDIS.plugin.debug("There is no advancement with that key, try reloading - /minecraft:reload");
+            return false;
+        }
+    }
+
+    public static void grantAdvancement(Advancement adv, Player player) {
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.getConfigName());
+        org.bukkit.advancement.Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
+        if (a != null) {
+            AdvancementProgress avp = player.getAdvancementProgress(a);
+            if (!avp.isDone()) {
+                TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
+            }
+        } else {
+            player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
+            player.sendMessage(ChatColor.WHITE + TARDIS.plugin.getAchievementConfig().getString(adv.getConfigName() + ".message"));
+        }
     }
 
     public void doAchievement(Object obj) {
@@ -124,32 +149,6 @@ public class TARDISAchievementFactory {
                     plugin.getQueryFactory().doInsert("achievements", seta);
                 }
             }
-        }
-    }
-
-    public static boolean checkAdvancement(String adv) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.toLowerCase(Locale.ENGLISH));
-        Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
-        if (a != null) {
-            TARDIS.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
-            return true;
-        } else {
-            TARDIS.plugin.debug("There is no advancement with that key, try reloading - /minecraft:reload");
-            return false;
-        }
-    }
-
-    public static void grantAdvancement(ADVANCEMENT adv, Player player) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.getConfigName());
-        Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
-        if (a != null) {
-            AdvancementProgress avp = player.getAdvancementProgress(a);
-            if (!avp.isDone()) {
-                TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
-            }
-        } else {
-            player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
-            player.sendMessage(ChatColor.WHITE + TARDIS.plugin.getAchievementConfig().getString(adv.getConfigName() + ".message"));
         }
     }
 }

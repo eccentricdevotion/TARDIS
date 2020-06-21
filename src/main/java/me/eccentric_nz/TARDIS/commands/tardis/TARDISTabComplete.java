@@ -20,8 +20,8 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
-import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
+import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -53,14 +53,14 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
-        for (TARDIS_COMMAND tc : TARDIS_COMMAND.values()) {
+        for (TardisCommand tc : TardisCommand.values()) {
             ROOT_SUBS.add(tc.toString());
         }
         RECHARGER_SUBS = getPublicRechargers();
         for (PRESET preset : PRESET.values()) {
             PRESET_SUBS.add(preset.toString());
         }
-        for (UPDATEABLE u : UPDATEABLE.values()) {
+        for (Updateable u : Updateable.values()) {
             UPD_SUBS.add(u.getName());
             if (u.isSecondary()) {
                 SEC_SUBS.add(u.getName());

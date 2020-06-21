@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.bind;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.BIND;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -29,7 +29,7 @@ public class BindRemove {
         this.plugin = plugin;
     }
 
-    public boolean setClick(BIND bind, Player player) {
+    public boolean setClick(Bind bind, Player player) {
         plugin.getTrackerKeeper().getBindRemoval().put(player.getUniqueId(), bind);
         TARDISMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
         return true;

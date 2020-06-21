@@ -21,7 +21,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public enum GLOWSTONE_CIRCUIT {
+public enum GlowstoneCircuit {
 
     ADMIN("Server Admin Circuit", 10001968),
     ARS("TARDIS ARS Circuit", 10001973),
@@ -48,21 +48,26 @@ public enum GLOWSTONE_CIRCUIT {
     STATTENHEIM("TARDIS Stattenheim Circuit", 10001963),
     TEMPORAL("TARDIS Temporal Circuit", 10001974);
 
+    private static final HashMap<String, GlowstoneCircuit> BY_NAME = new HashMap<>();
+
+    static {
+        for (GlowstoneCircuit glowstone : values()) {
+            BY_NAME.put(glowstone.displayName, glowstone);
+        }
+    }
+
     String displayName;
     int customModelData;
     int damaged;
-    private static final HashMap<String, GLOWSTONE_CIRCUIT> BY_NAME = new HashMap<>();
 
-    GLOWSTONE_CIRCUIT(String displayName, int customModelData) {
+    GlowstoneCircuit(String displayName, int customModelData) {
         this.displayName = displayName;
         this.customModelData = customModelData;
         damaged = this.customModelData + 10000000;
     }
 
-    static {
-        for (GLOWSTONE_CIRCUIT glowstone : values()) {
-            BY_NAME.put(glowstone.displayName, glowstone);
-        }
+    public static HashMap<String, GlowstoneCircuit> getByName() {
+        return BY_NAME;
     }
 
     public String getDisplayName() {
@@ -75,9 +80,5 @@ public enum GLOWSTONE_CIRCUIT {
 
     public int getDamaged() {
         return damaged;
-    }
-
-    public static HashMap<String, GLOWSTONE_CIRCUIT> getByName() {
-        return BY_NAME;
     }
 }

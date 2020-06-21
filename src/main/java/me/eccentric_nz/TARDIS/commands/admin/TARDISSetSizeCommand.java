@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -46,7 +46,7 @@ class TARDISSetSizeCommand {
         }
         String type = args[2].toUpperCase(Locale.ENGLISH);
         // check size
-        if (!CONSOLES.getBY_NAMES().containsKey(type)) {
+        if (!Consoles.getBY_NAMES().containsKey(type)) {
             TARDISMessage.message(sender, "Not a valid console size! Try using tab completion.");
             return true;
         }

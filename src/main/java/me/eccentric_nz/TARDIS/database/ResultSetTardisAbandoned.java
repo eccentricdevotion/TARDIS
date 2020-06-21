@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +40,7 @@ public class ResultSetTardisAbandoned {
     private final String prefix;
     private int tardis_id;
     private int artron_level;
-    private SCHEMATIC schematic;
+    private Schematic schematic;
     private PRESET preset;
     private boolean handbrake_on;
     private boolean hidden;
@@ -78,7 +78,7 @@ public class ResultSetTardisAbandoned {
                 rs.next();
                 tardis_id = rs.getInt("tardis_id");
                 artron_level = rs.getInt("artron_level");
-                schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
+                schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
                 try {
                     preset = PRESET.valueOf(rs.getString("chameleon_preset"));
                 } catch (IllegalArgumentException e) {
@@ -117,7 +117,7 @@ public class ResultSetTardisAbandoned {
         return artron_level;
     }
 
-    public SCHEMATIC getSchematic() {
+    public Schematic getSchematic() {
         return schematic;
     }
 

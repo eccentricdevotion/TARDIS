@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import org.bukkit.ChatColor;
 
 import java.io.*;
@@ -45,7 +45,7 @@ public class TARDISChecker {
             plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
             tardisDir.mkdirs();
         }
-        for (ADVANCEMENT advancement : ADVANCEMENT.values()) {
+        for (Advancement advancement : Advancement.values()) {
             String json = advancement.getConfigName() + ".json";
             File jfile = new File(dataPacksRoot, json);
             if (!jfile.exists()) {

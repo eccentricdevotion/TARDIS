@@ -25,8 +25,8 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -82,7 +82,7 @@ public class TARDISExterminator {
                 UUID uuid = tardis.getUuid();
                 int tips = tardis.getTIPS();
                 boolean hasZero = (!tardis.getZero().isEmpty());
-                SCHEMATIC schm = tardis.getSchematic();
+                Schematic schm = tardis.getSchematic();
                 HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -187,7 +187,7 @@ public class TARDISExterminator {
             String chunkLoc = tardis.getChunk();
             int tips = tardis.getTIPS();
             boolean hasZero = (!tardis.getZero().isEmpty());
-            SCHEMATIC schm = tardis.getSchematic();
+            Schematic schm = tardis.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (TARDISPermission.hasPermission(player, "tardis.delete")) {
                 HashMap<String, Object> travid = new HashMap<>();
@@ -334,14 +334,14 @@ public class TARDISExterminator {
                 TARDISMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
             });
-            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }
-            if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIWORLD)) {
+            if (plugin.getWorldManager().equals(WorldManager.MULTIWORLD)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw delete " + name);
             }
-            if (plugin.getWorldManager().equals(WORLD_MANAGER.MYWORLDS)) {
+            if (plugin.getWorldManager().equals(WorldManager.MYWORLDS)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + name);
             }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {

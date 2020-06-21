@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -35,12 +35,12 @@ public class Tardis {
     private final String lastKnownName;
     private final String chunk;
     private final int tips;
-    private final SCHEMATIC schematic;
+    private final Schematic schematic;
     private final boolean abandoned;
     private final String companions;
     private final PRESET preset;
     private final PRESET demat;
-    private final ADAPTION adaption;
+    private final Adaption adaption;
     private final int artron_level;
     private final String creeper;
     private final String beacon;
@@ -60,7 +60,7 @@ public class Tardis {
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -72,7 +72,7 @@ public class Tardis {
         this.companions = companions;
         this.preset = preset;
         this.demat = demat;
-        adaption = ADAPTION.values()[adapt];
+        adaption = Adaption.values()[adapt];
         this.artron_level = artron_level;
         this.creeper = creeper;
         this.beacon = beacon;
@@ -149,11 +149,11 @@ public class Tardis {
     }
 
     /**
-     * Returns the SCHEMATIC (desktop theme) this TARDIS is currently using.
+     * Returns the Schematic (desktop theme) this TARDIS is currently using.
      *
-     * @return the SCHEMATIC
+     * @return the Schematic
      */
-    public SCHEMATIC getSchematic() {
+    public Schematic getSchematic() {
         return schematic;
     }
 
@@ -206,7 +206,7 @@ public class Tardis {
      *
      * @return the Chameleon Circuit adaptive setting
      */
-    public ADAPTION getAdaption() {
+    public Adaption getAdaption() {
         return adaption;
     }
 

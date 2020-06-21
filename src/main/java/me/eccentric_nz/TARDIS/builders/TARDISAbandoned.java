@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -44,7 +44,7 @@ public class TARDISAbandoned {
         this.plugin = plugin;
     }
 
-    public void spawn(Location l, SCHEMATIC schm, PRESET preset, COMPASS d, Player player) {
+    public void spawn(Location l, Schematic schm, PRESET preset, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name");
@@ -90,7 +90,7 @@ public class TARDISAbandoned {
         // delay building exterior
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-            TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), ADAPTION.OFF, 3);
+            TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), Adaption.OFF, 3);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
             TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");

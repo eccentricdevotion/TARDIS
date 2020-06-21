@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import org.bukkit.ChatColor;
@@ -84,10 +84,10 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         // get Display name of selected console
                         ItemStack choice = view.getItem(slot);
                         if (choice != null) {
-                            String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
+                            String perm = Consoles.schematicFor(choice.getType()).getPermission();
                             if (TARDISPermission.hasPermission(p, "tardis." + perm)) {
                                 // remember the upgrade choice
-                                SCHEMATIC schm = CONSOLES.SCHEMATICFor(perm);
+                                Schematic schm = Consoles.schematicFor(perm);
                                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                                 int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                                 int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;

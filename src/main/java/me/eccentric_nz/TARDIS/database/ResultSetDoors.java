@@ -38,14 +38,14 @@ public class ResultSetDoors {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
+    private final String prefix;
     private int door_id;
     private int tardis_id;
     private int door_type;
     private String door_location;
     private COMPASS door_direction;
     private boolean locked;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the doors table.

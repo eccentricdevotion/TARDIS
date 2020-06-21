@@ -24,8 +24,8 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.sudo.SudoRepair;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import org.bukkit.ChatColor;
@@ -69,9 +69,9 @@ public class TARDISCommands implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            TARDIS_COMMAND tc;
+            TardisCommand tc;
             try {
-                tc = TARDIS_COMMAND.valueOf(args[0].toLowerCase(Locale.ENGLISH));
+                tc = TardisCommand.valueOf(args[0].toLowerCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
@@ -210,8 +210,8 @@ public class TARDISCommands implements CommandExecutor {
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
                         return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
                     } else {
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                            if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+                            if (plugin.getDifficulty().equals(Difficulty.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
                                 TARDISMessage.send(player, "DISK_HAND_SAVE");
                                 return true;
                             }

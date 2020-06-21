@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
@@ -63,6 +63,17 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
+    private final List<Block> lampblocks = new ArrayList<>();
+    private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
+    private final boolean clean;
     private boolean running;
     private int id;
     private int slot;
@@ -76,17 +87,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private int startz;
     private int j = 2;
     private World world;
-    private final List<Block> lampblocks = new ArrayList<>();
     private List<Chunk> chunks;
-    private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private Block postBedrock;
     private JsonArray arr;
     private Material wall_type;
@@ -99,7 +100,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private Player player;
     private Location ender = null;
     private Archive archive;
-    private final boolean clean;
 
     TARDISThemeRepairRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean clean) {
         this.plugin = plugin;
@@ -599,7 +599,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private List<Chunk> getChunks(Chunk c, SCHEMATIC s) {
+    private List<Chunk> getChunks(Chunk c, Schematic s) {
         List<Chunk> chinks = new ArrayList<>();
         chinks.add(c);
         if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {

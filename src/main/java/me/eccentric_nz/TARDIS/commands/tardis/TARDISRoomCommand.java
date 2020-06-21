@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -85,7 +85,7 @@ class TARDISRoomCommand {
         }
         int id = tardis.getTardis_id();
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
@@ -95,7 +95,7 @@ class TARDISRoomCommand {
         }
         int level = tardis.getArtron_level();
         String chunk = tardis.getChunk();
-        SCHEMATIC schm = tardis.getSchematic();
+        Schematic schm = tardis.getSchematic();
         int tips = tardis.getTIPS();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<>();

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.BIOME_LOOKUP;
+import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
@@ -78,7 +78,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         items.remove(inv.getItem(ladder));
                                         String lookup = items.get(0).getType().toString() + "_B";
                                         try {
-                                            String biome = BIOME_LOOKUP.valueOf(lookup).getUpper();
+                                            String biome = BiomeLookup.valueOf(lookup).getUpper();
                                             disk_lore.add(biome);
                                         } catch (IllegalArgumentException e) {
                                             plugin.debug("Could not get biome from craft item! " + e);
@@ -87,7 +87,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         // regular biome
                                         String lookup = items.get(0).getType().toString() + "_B";
                                         try {
-                                            String biome = BIOME_LOOKUP.valueOf(lookup).getRegular();
+                                            String biome = BiomeLookup.valueOf(lookup).getRegular();
                                             disk_lore.add(biome);
                                         } catch (IllegalArgumentException e) {
                                             plugin.debug("Could not get biome from craft item! " + e);
@@ -103,11 +103,11 @@ public class TARDISDiskCraftListener implements Listener {
                                         inv.setItem(0, disk);
                                         player.updateInventory();
                                     }
-                                } else if (BIOME_LOOKUP.BY_REG.containsKey(lore.get(0)) && ladder > 0) {
+                                } else if (BiomeLookup.BY_REG.containsKey(lore.get(0)) && ladder > 0) {
                                     // upgrade to mega biome
                                     List<String> disk_lore = new ArrayList<>();
                                     try {
-                                        String biome = BIOME_LOOKUP.getBiome(lore.get(0)).getUpper();
+                                        String biome = BiomeLookup.getBiome(lore.get(0)).getUpper();
                                         disk_lore.add(biome);
                                         disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                         ItemMeta dim = disk.getItemMeta();

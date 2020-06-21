@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,11 +34,11 @@ public class TARDISThemeButton {
 
     private final TARDIS plugin;
     private final Player player;
-    private final SCHEMATIC current_console;
+    private final Schematic current_console;
     private final int level;
     private final int id;
 
-    public TARDISThemeButton(TARDIS plugin, Player player, SCHEMATIC current_console, int level, int id) {
+    public TARDISThemeButton(TARDIS plugin, Player player, Schematic current_console, int level, int id) {
         this.plugin = plugin;
         this.player = player;
         this.current_console = current_console;

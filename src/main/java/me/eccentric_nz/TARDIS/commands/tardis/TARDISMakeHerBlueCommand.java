@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -76,7 +76,7 @@ class TARDISMakeHerBlueCommand {
         }
         int id = tardis.getTardis_id();
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

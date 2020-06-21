@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTransmat;
-import me.eccentric_nz.TARDIS.enumeration.BIND;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -41,7 +41,7 @@ public class BindAdd {
         this.plugin = plugin;
     }
 
-    public boolean setClick(BIND bind, Player player, int id, String[] args) {
+    public boolean setClick(Bind bind, Player player, int id, String[] args) {
         String which = (args.length > 2) ? args[2] : "";
         int bind_id = 0;
         HashMap<String, Object> set = new HashMap<>();

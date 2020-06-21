@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
+import me.eccentric_nz.TARDIS.enumeration.TardisOldBiomeLookup;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
@@ -41,6 +41,7 @@ public class ResultSetCurrentLocation {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int current_id;
     private int tardis_id;
     private World world;
@@ -50,7 +51,6 @@ public class ResultSetCurrentLocation {
     private COMPASS direction;
     private boolean submarine;
     private Biome biome;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -110,7 +110,7 @@ public class ResultSetCurrentLocation {
                         biome = Biome.valueOf(rs.getString("biome"));
                     } catch (IllegalArgumentException e) {
                         // may have a pre-1.9 biome stored so do old biome lookup...
-                        biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.getOrDefault(rs.getString("biome"), null);
+                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.getOrDefault(rs.getString("biome"), null);
                     }
                 }
             } else {

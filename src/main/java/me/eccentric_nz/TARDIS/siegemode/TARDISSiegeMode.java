@@ -27,8 +27,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
@@ -211,7 +211,7 @@ public class TARDISSiegeMode {
         plugin.getQueryFactory().doUpdate("tardis", set, wheres);
     }
 
-    void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
+    void changeTextures(String uuid, Schematic schm, Player p, boolean toSiege) {
         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rspp.resultSet()) {
             String wall = rspp.getWall();
@@ -219,18 +219,18 @@ public class TARDISSiegeMode {
             String sw = rspp.getSiegeWall();
             String sf = rspp.getSiegeFloor();
             // determine 'use_clay' material
-            USE_CLAY use_clay;
+            UseClay use_clay;
             try {
-                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
             } catch (IllegalArgumentException e) {
-                use_clay = USE_CLAY.WOOL;
+                use_clay = UseClay.WOOL;
             }
-            if (!use_clay.equals(USE_CLAY.WOOL)) {
+            if (!use_clay.equals(UseClay.WOOL)) {
                 if (sw.equals("GRAY_CLAY") || sw.equals("GREY_CONCRETE")) {
                     sw = "GRAY_WOOL";
                 }
             }
-            if (!use_clay.equals(USE_CLAY.WOOL)) {
+            if (!use_clay.equals(UseClay.WOOL)) {
                 if (sf.equals("BLACK_CLAY") || sw.equals("BLACK_CONCRETE")) {
                     sf = "BLACK_WOOL";
                 }

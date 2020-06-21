@@ -20,9 +20,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
@@ -112,7 +112,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                             if (tud.getLevel() >= upgrade) {
                                 new ArchiveUpdate(plugin, uuid.toString(), im.getDisplayName()).setInUse();
-                                tud.setSchematic(CONSOLES.SCHEMATICFor(size));
+                                tud.setSchematic(Consoles.schematicFor(size));
                                 tud.setWall("ORANGE_WOOL");
                                 tud.setFloor("LIGHT_GRAY_WOOL");
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -133,7 +133,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         ItemStack choice = view.getItem(slot);
                         if (choice != null) {
                             // remember the upgrade choice
-                            SCHEMATIC schm = CONSOLES.SCHEMATICFor("archive");
+                            Schematic schm = Consoles.schematicFor("archive");
                             UUID uuid = p.getUniqueId();
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemMeta im = choice.getItemMeta();

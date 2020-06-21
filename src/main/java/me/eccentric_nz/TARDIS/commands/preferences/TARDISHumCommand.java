@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.HUM;
+import me.eccentric_nz.TARDIS.enumeration.Hum;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -34,14 +34,14 @@ class TARDISHumCommand {
             TARDISMessage.send(player, "HUM_NEED");
             return false;
         }
-        HUM go;
+        Hum go;
         try {
-            go = HUM.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+            go = Hum.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(player, "HUM_NOT_VALID");
             return false;
         }
-        String hum_set = (go.equals(HUM.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
+        String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
         HashMap<String, Object> set = new HashMap<>();
         set.put("hum", hum_set);
         HashMap<String, Object> where = new HashMap<>();

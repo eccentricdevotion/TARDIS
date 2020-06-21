@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.ADVANCEMENT;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
@@ -105,7 +105,7 @@ class TARDISAddCompanionCommand {
                         }
                         // are we doing an achievement?
                         if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, ADVANCEMENT.FRIENDS, 1);
+                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.FRIENDS, 1);
                             taf.doAchievement(1);
                         }
                     } else {

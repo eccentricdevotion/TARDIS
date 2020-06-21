@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.enumeration.USE_CLAY;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
@@ -63,7 +63,7 @@ public class TARDISBuilderInner implements Runnable {
 
     private final TARDIS plugin;
     private final List<Block> lampblocks = new ArrayList<>();
-    private final SCHEMATIC schm;
+    private final Schematic schm;
     private final World world;
     private final int dbID;
     private final Player player;
@@ -97,7 +97,7 @@ public class TARDISBuilderInner implements Runnable {
     private Location ender = null;
     private Material type;
     private BlockData data;
-    private USE_CLAY use_clay;
+    private UseClay use_clay;
     private int counter = 0;
     private double div = 1.0d;
     private BossBar bb;
@@ -119,7 +119,7 @@ public class TARDISBuilderInner implements Runnable {
      * @param tips       a boolean determining where this TARDIS will be built -------- false:own world, underground -
      *                   true:default world--------
      */
-    public TARDISBuilderInner(TARDIS plugin, SCHEMATIC schm, World world, int dbID, Player player, Material wall_type, Material floor_type, boolean tips) {
+    public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, boolean tips) {
         this.plugin = plugin;
         this.schm = schm;
         this.world = world;
@@ -215,9 +215,9 @@ public class TARDISBuilderInner implements Runnable {
             where.put("tardis_id", dbID);
             // determine 'use_clay' material
             try {
-                use_clay = USE_CLAY.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
             } catch (IllegalArgumentException e) {
-                use_clay = USE_CLAY.WOOL;
+                use_clay = UseClay.WOOL;
             }
             // get input array
             arr = obj.get("input").getAsJsonArray();

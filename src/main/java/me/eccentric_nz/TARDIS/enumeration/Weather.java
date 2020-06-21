@@ -12,13 +12,31 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-/**
- * @author eccentric_nz
- */
-public enum USE_CLAY {
-    WOOL, TERRACOTTA, CONCRETE
+public enum Weather {
+
+    CLEAR,
+    RAIN,
+    THUNDER;
+
+    public static Weather fromString(String s) {
+        String lower = s.toLowerCase();
+        switch (lower) {
+            case "r":
+            case "rain":
+            case "w":
+            case "wet":
+                return RAIN;
+            case "t":
+            case "thunder":
+            case "l":
+            case "lightning":
+                return THUNDER;
+            default:
+                return CLEAR;
+        }
+    }
 }

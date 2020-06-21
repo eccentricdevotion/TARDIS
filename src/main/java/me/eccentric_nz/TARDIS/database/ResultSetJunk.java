@@ -40,6 +40,7 @@ public class ResultSetJunk {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int id;
     private UUID uuid;
     private int tardis_id;
@@ -48,7 +49,6 @@ public class ResultSetJunk {
     private String wall;
     private String floor;
     private PRESET preset;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the junk table.

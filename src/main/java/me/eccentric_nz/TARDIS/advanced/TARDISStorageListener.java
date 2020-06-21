@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.GLOWSTONE_CIRCUIT;
-import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
+import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -60,10 +60,10 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
     public TARDISStorageListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        for (STORAGE s : STORAGE.values()) {
+        for (Storage s : Storage.values()) {
             inv_titles.add(s.getTitle());
         }
-        for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
+        for (DiskCircuit dc : DiskCircuit.values()) {
             if (!onlythese.contains(dc.getMaterial())) {
                 onlythese.add(dc.getMaterial());
             }
@@ -81,7 +81,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             if (split.length > 2) {
                 tmp = tmp + "_" + split[2];
             }
-            STORAGE store = STORAGE.valueOf(tmp);
+            Storage store = Storage.valueOf(tmp);
             saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
         } else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
             // scan the inventory for area disks and spit them out
@@ -124,45 +124,45 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             if (split.length > 2) {
                 tmp = tmp + "_" + split[2];
             }
-            STORAGE store = STORAGE.valueOf(tmp);
+            Storage store = Storage.valueOf(tmp);
             if (slot < 6 || slot == 18 || slot == 26) {
                 saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
             }
             switch (slot) {
                 case 0:
-                    if (!store.equals(STORAGE.SAVE_1)) {
+                    if (!store.equals(Storage.SAVE_1)) {
                         // switch to saves
-                        loadInventory(rs.getSavesOne(), player, STORAGE.SAVE_1);
+                        loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
                     }
                     break;
                 case 1:
-                    if (!store.equals(STORAGE.AREA)) {
+                    if (!store.equals(Storage.AREA)) {
                         // switch to areas
-                        loadInventory(rs.getAreas(), player, STORAGE.AREA);
+                        loadInventory(rs.getAreas(), player, Storage.AREA);
                     }
                     break;
                 case 2:
-                    if (!store.equals(STORAGE.PLAYER)) {
+                    if (!store.equals(Storage.PLAYER)) {
                         // switch to players
-                        loadInventory(rs.getPlayers(), player, STORAGE.PLAYER);
+                        loadInventory(rs.getPlayers(), player, Storage.PLAYER);
                     }
                     break;
                 case 3:
-                    if (!store.equals(STORAGE.BIOME_1)) {
+                    if (!store.equals(Storage.BIOME_1)) {
                         // switch to biomes
-                        loadInventory(rs.getBiomesOne(), player, STORAGE.BIOME_1);
+                        loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                     }
                     break;
                 case 4:
-                    if (!store.equals(STORAGE.PRESET_1)) {
+                    if (!store.equals(Storage.PRESET_1)) {
                         // switch to presets
-                        loadInventory(rs.getPresetsOne(), player, STORAGE.PRESET_1);
+                        loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
                     }
                     break;
                 case 5:
-                    if (!store.equals(STORAGE.CIRCUIT)) {
+                    if (!store.equals(Storage.CIRCUIT)) {
                         // switch to circuits
-                        loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
+                        loadInventory(rs.getCircuits(), player, Storage.CIRCUIT);
                     }
                     break;
                 default:
@@ -173,7 +173,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     switch (slot) {
                         case 26:
                             // switch to biome 2
-                            loadInventory(rs.getBiomesTwo(), player, STORAGE.BIOME_2);
+                            loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
                             break;
                         default:
                             break;
@@ -183,7 +183,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     switch (slot) {
                         case 18:
                             // switch to biome 1
-                            loadInventory(rs.getBiomesOne(), player, STORAGE.BIOME_1);
+                            loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                             break;
                         default:
                             break;
@@ -193,7 +193,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     switch (slot) {
                         case 26:
                             // switch to preset 2
-                            loadInventory(rs.getPresetsTwo(), player, STORAGE.PRESET_2);
+                            loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
                             break;
                         default:
                             break;
@@ -203,7 +203,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     switch (slot) {
                         case 18:
                             // switch to preset 1
-                            loadInventory(rs.getPresetsOne(), player, STORAGE.PRESET_1);
+                            loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
                             break;
                         default:
                             break;
@@ -213,7 +213,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     switch (slot) {
                         case 26:
                             // switch to save 2
-                            loadInventory(rs.getSavesTwo(), player, STORAGE.SAVE_2);
+                            loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
                             break;
                         default:
                             break;
@@ -223,7 +223,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                     switch (slot) {
                         case 18:
                             // switch to save 1
-                            loadInventory(rs.getSavesOne(), player, STORAGE.SAVE_1);
+                            loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
                             break;
                         default:
                             break;
@@ -267,17 +267,17 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         plugin.getQueryFactory().doUpdate("storage", set, where);
     }
 
-    private void loadInventory(String serialized, Player p, STORAGE s) {
+    private void loadInventory(String serialized, Player p, Storage s) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] stack = null;
             try {
                 if (!serialized.isEmpty()) {
-                    if (s.equals(STORAGE.AREA)) {
+                    if (s.equals(Storage.AREA)) {
                         stack = TARDISSerializeInventory.itemStacksFromString(new TARDISAreaDisks(plugin).checkDisksForNewAreas(p));
                     } else {
                         stack = TARDISSerializeInventory.itemStacksFromString(serialized);
                     }
-                } else if (s.equals(STORAGE.AREA)) {
+                } else if (s.equals(Storage.AREA)) {
                     stack = new TARDISAreaDisks(plugin).makeDisks(p);
                 } else {
                     stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
@@ -287,7 +287,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName()) {
                             if (is.getType().equals(Material.FILLED_MAP)) {
-                                GLOWSTONE_CIRCUIT glowstone = GLOWSTONE_CIRCUIT.getByName().get(im.getDisplayName());
+                                GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
                                     im.setCustomModelData(glowstone.getCustomModelData());
                                     is.setType(Material.GLOWSTONE_DUST);

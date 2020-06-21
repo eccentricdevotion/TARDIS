@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISUpgradeData {
 
-    private SCHEMATIC schematic;
-    private SCHEMATIC previous;
+    private Schematic schematic;
+    private Schematic previous;
     private String wall;
     private String floor;
     private String siegeWall;
@@ -34,33 +34,33 @@ public class TARDISUpgradeData {
     /**
      * Returns the desktop theme the upgrade will change to.
      *
-     * @return the SCHEMATIC
+     * @return the Schematic
      */
-    public SCHEMATIC getSchematic() {
+    public Schematic getSchematic() {
         return schematic;
     }
 
-    public void setSchematic(SCHEMATIC schematic) {
+    public void setSchematic(Schematic schematic) {
         this.schematic = schematic;
     }
 
     /**
      * Returns the desktop theme the TARDIS had previously.
      *
-     * @return the SCHEMATIC
+     * @return the Schematic
      */
-    public SCHEMATIC getPrevious() {
+    public Schematic getPrevious() {
         return previous;
     }
 
-    public void setPrevious(SCHEMATIC previous) {
+    public void setPrevious(Schematic previous) {
         this.previous = previous;
     }
 
     /**
      * Returns the wall block the theme use when changing.
      *
-     * @return the SCHEMATIC
+     * @return the Material name of the wall block
      */
     public String getWall() {
         return wall;
@@ -73,7 +73,7 @@ public class TARDISUpgradeData {
     /**
      * Returns the floor block the theme use when changing.
      *
-     * @return the SCHEMATIC
+     * @return the Material name of the floor block
      */
     public String getFloor() {
         return floor;

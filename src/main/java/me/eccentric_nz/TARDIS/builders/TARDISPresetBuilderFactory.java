@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
-import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
@@ -46,9 +46,9 @@ import java.util.List;
  */
 public class TARDISPresetBuilderFactory {
 
+    final List<PRESET> no_block_under_door;
     private final TARDIS plugin;
     private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
-    final List<PRESET> no_block_under_door;
     private final List<PRESET> notSubmarinePresets;
 
     public TARDISPresetBuilderFactory(TARDIS plugin) {
@@ -106,12 +106,12 @@ public class TARDISPresetBuilderFactory {
                 // remember the current biome (unless rebuilding)
                 plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.toString());
             }
-            if (tardis.getAdaption().equals(ADAPTION.BIOME)) {
+            if (tardis.getAdaption().equals(Adaption.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());
             }
             PRESET demat = tardis.getDemat();
             Material chameleonMaterial = Material.LIGHT_GRAY_TERRACOTTA;
-            if ((tardis.getAdaption().equals(ADAPTION.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(ADAPTION.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
+            if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
                 if (bd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -194,8 +194,8 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    private PRESET adapt(Biome biome, ADAPTION adaption) {
-        if (adaption.equals(ADAPTION.BLOCK)) {
+    private PRESET adapt(Biome biome, Adaption adaption) {
+        if (adaption.equals(Adaption.BLOCK)) {
             return PRESET.OLD;
         } else {
             switch (biome) {

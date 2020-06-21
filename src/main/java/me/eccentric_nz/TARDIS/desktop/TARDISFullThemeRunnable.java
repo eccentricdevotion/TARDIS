@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
@@ -694,7 +694,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private boolean compare(SCHEMATIC prev, SCHEMATIC next) {
+    private boolean compare(Schematic prev, Schematic next) {
         // special case for archives
         if (archive_next != null && archive_prev == null) {
             return (!prev.getPermission().equals(archive_next.getName()) && ((!prev.getConsoleSize().equals(ConsoleSize.SMALL) && archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (prev.getConsoleSize().equals(ConsoleSize.TALL) && !archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
@@ -707,7 +707,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
+    private List<TARDISARSJettison> getJettisons(Schematic prev, Schematic next, Chunk chunk) {
         List<TARDISARSJettison> list = new ArrayList<>();
         if (prev.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
             // the 3 chunks on the same level
@@ -747,7 +747,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private List<Chunk> getChunks(Chunk c, SCHEMATIC s) {
+    private List<Chunk> getChunks(Chunk c, Schematic s) {
         List<Chunk> chinks = new ArrayList<>();
         chinks.add(c);
         if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {

@@ -154,7 +154,7 @@ public class TARDISTerminalListener implements Listener {
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<>();
                                 String[] data = terminalDestination.get(uuid).split(":");
-                                String ww = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                                String ww = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
                                 set.put("world", ww);
                                 set.put("x", data[1]);
                                 set.put("y", data[2]);
@@ -172,12 +172,12 @@ public class TARDISTerminalListener implements Listener {
                                     new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
                                 }
                                 // damage the circuit if configured
-                                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
+                                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));
                                     tcc.getCircuits();
                                     // decrement uses
                                     int uses_left = tcc.getInputUses();
-                                    new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INPUT, uses_left, terminalIDs.get(uuid), player).damage();
+                                    new TARDISCircuitDamager(plugin, DiskCircuit.INPUT, uses_left, terminalIDs.get(uuid), player).damage();
                                 }
                             } else {
                                 // set lore
@@ -339,7 +339,7 @@ public class TARDISTerminalListener implements Listener {
 
     private void setCurrent(InventoryView view, Player p, int slot) {
         String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
-        if (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) {
+        if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
         }
         int[] slots = new int[]{36, 38, 40, 42};
@@ -437,7 +437,7 @@ public class TARDISTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : world;
+        return (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : world;
     }
 
     private void checkSettings(InventoryView view, Player p) {
@@ -457,7 +457,7 @@ public class TARDISTerminalListener implements Listener {
                 String world = view.getItem(i).getItemMeta().getLore().get(0);
                 if (!world.equals("No permission")) {
                     found = true;
-                    World w = (plugin.getWorldManager().equals(WORLD_MANAGER.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
+                    World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
                     if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
                         e = Environment.NETHER;
@@ -478,7 +478,7 @@ public class TARDISTerminalListener implements Listener {
                                 int esafe = TARDISTimeTravel.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                                 if (esafe == 0) {
                                     String save = world + ":" + slotx + ":" + endy + ":" + slotz;
-                                    if (plugin.getPluginRespect().getRespect(new Location(w, slotx, endy, slotz), new Parameters(p, FLAG.getNoMessageFlags()))) {
+                                    if (plugin.getPluginRespect().getRespect(new Location(w, slotx, endy, slotz), new Parameters(p, Flag.getNoMessageFlags()))) {
                                         terminalDestination.put(uuid, save);
                                         lore.add(save);
                                         lore.add("is a valid destination!");
@@ -533,7 +533,7 @@ public class TARDISTerminalListener implements Listener {
                             }
                             if (safe == 0) {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;
-                                if (plugin.getPluginRespect().getRespect(new Location(w, slotx, starty, slotz), new Parameters(p, FLAG.getNoMessageFlags()))) {
+                                if (plugin.getPluginRespect().getRespect(new Location(w, slotx, starty, slotz), new Parameters(p, Flag.getNoMessageFlags()))) {
                                     terminalDestination.put(uuid, save);
                                     lore.add(save);
                                     lore.add("is a valid destination!");

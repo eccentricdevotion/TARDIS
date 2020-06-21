@@ -16,9 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import java.util.Locale;
+
 /**
  * @author eccentric_nz
  */
-public enum HUM {
-    ALIEN, ATMOSPHERE, COMPUTER, COPPER, CORAL, GALAXY, LEARNING, MIND, NEON, SLEEPING, VOID, RANDOM
+public enum Advancement {
+
+    CRAFT,
+    DEFENDER,
+    ENERGY,
+    FARM,
+    FRIENDS,
+    KILL,
+    ROOMS,
+    ROOT,
+    TARDIS,
+    TRAVEL;
+
+    public String getConfigName() {
+        return toString().toLowerCase(Locale.ENGLISH);
+    }
 }

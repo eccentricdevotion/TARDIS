@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
@@ -171,7 +171,7 @@ class TARDISThemeProcessor {
         ttr.setTaskID(task);
     }
 
-    private boolean compare(SCHEMATIC prev, SCHEMATIC next) {
+    private boolean compare(Schematic prev, Schematic next) {
         // special case for archives
         if (archive_next != null && archive_prev == null) {
             return (!prev.getPermission().equals(archive_next.getName()) && ((prev.getConsoleSize().equals(ConsoleSize.SMALL) && !archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (!prev.getConsoleSize().equals(ConsoleSize.TALL) && archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
@@ -184,7 +184,7 @@ class TARDISThemeProcessor {
         }
     }
 
-    private boolean checkARSGrid(SCHEMATIC prev, SCHEMATIC next, UUID uuid) {
+    private boolean checkARSGrid(Schematic prev, Schematic next, UUID uuid) {
         // get ARS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());

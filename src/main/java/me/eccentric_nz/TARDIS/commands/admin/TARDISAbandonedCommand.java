@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -52,18 +52,18 @@ class TARDISAbandonedCommand {
             TARDISMessage.send(sender, "ABANDONED_SPAWN");
             return true;
         }
-        // tardisadmin spawn_abandoned SCHEMATIC PRESET COMPASS world x y z
+        // tardisadmin spawn_abandoned Schematic PRESET COMPASS world x y z
         if (args.length < 4) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
             TARDISMessage.send(sender, "ABANDONED_ARGS");
             return true;
         }
         String schm = args[1].toUpperCase(Locale.ENGLISH);
-        if (!CONSOLES.getBY_NAMES().containsKey(schm)) {
+        if (!Consoles.getBY_NAMES().containsKey(schm)) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
-        SCHEMATIC s = CONSOLES.getBY_NAMES().get(schm);
+        Schematic s = Consoles.getBY_NAMES().get(schm);
         PRESET preset;
         try {
             preset = PRESET.valueOf(args[2].toUpperCase(Locale.ENGLISH));

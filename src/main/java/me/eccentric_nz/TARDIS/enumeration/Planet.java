@@ -16,16 +16,33 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import java.util.Locale;
+import java.util.HashMap;
 
-/**
- * @author eccentric_nz
- */
-public enum ADVANCEMENT {
+public enum Planet {
 
-    CRAFT, DEFENDER, ENERGY, FARM, FRIENDS, KILL, ROOMS, ROOT, TARDIS, TRAVEL;
+    GALLIFREY("Gallifrey"),
+    SILURIA("Siluria"),
+    SKARO("Skaro");
 
-    public String getConfigName() {
-        return toString().toLowerCase(Locale.ENGLISH);
+    private static final HashMap<String, Planet> PLANET_MAP = new HashMap<>();
+
+    static {
+        for (Planet planet : values()) {
+            PLANET_MAP.put(planet.name, planet);
+        }
+    }
+
+    private final String name;
+
+    Planet(String name) {
+        this.name = name;
+    }
+
+    public static HashMap<String, Planet> getPlanetMap() {
+        return PLANET_MAP;
+    }
+
+    public String getName() {
+        return name;
     }
 }

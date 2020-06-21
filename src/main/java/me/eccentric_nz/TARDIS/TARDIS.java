@@ -37,10 +37,10 @@ import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
-import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
-import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
-import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
-import me.eccentric_nz.TARDIS.enumeration.WORLD_MANAGER;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
+import me.eccentric_nz.TARDIS.enumeration.Language;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
@@ -150,14 +150,14 @@ public class TARDIS extends JavaPlugin {
     private boolean worldGuardOnServer;
     private boolean helperOnServer;
     private boolean disguisesOnServer;
-    private INVENTORY_MANAGER invManager;
+    private InventoryManager invManager;
     private PluginManager pm;
     private TARDISGeneralInstanceKeeper generalKeeper;
     private TARDISHelper tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
     private String prefix;
-    private DIFFICULTY difficulty;
-    private WORLD_MANAGER worldManager;
+    private Difficulty difficulty;
+    private WorldManager worldManager;
     private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
@@ -173,7 +173,7 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         worldGuardOnServer = false;
         helperOnServer = false;
-        invManager = INVENTORY_MANAGER.NONE;
+        invManager = InventoryManager.NONE;
         versions.put("Factions", "1.6.9.5");
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "10.0.0");
@@ -322,7 +322,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             PaperLib.suggestPaper(this);
-            worldManager = WORLD_MANAGER.getWorldManager();
+            worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
             loadCustomConfigs();
@@ -370,10 +370,10 @@ public class TARDIS extends JavaPlugin {
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             try {
-                difficulty = DIFFICULTY.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
+                difficulty = Difficulty.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
-                difficulty = DIFFICULTY.EASY;
+                difficulty = Difficulty.EASY;
             }
             // register recipes
             seeds = new TARDISSeedRecipe(this);
@@ -564,7 +564,7 @@ public class TARDIS extends JavaPlugin {
             lang = "en";
         }
         // load the language
-        console.sendMessage(pluginName + "Loading language: " + LANGUAGE.valueOf(lang).getLang());
+        console.sendMessage(pluginName + "Loading language: " + Language.valueOf(lang).getLang());
         language = YamlConfiguration.loadConfiguration(file);
         // update the language configuration
         new TARDISLanguageUpdater(this).update();
@@ -734,21 +734,21 @@ public class TARDIS extends JavaPlugin {
 
     private void loadInventoryManager() {
         if (pm.isPluginEnabled("MultiInv")) {
-            invManager = INVENTORY_MANAGER.MULTI;
+            invManager = InventoryManager.MULTI;
         }
         if (pm.isPluginEnabled("Multiverse-Inventories")) {
-            invManager = INVENTORY_MANAGER.MULTIVERSE;
+            invManager = InventoryManager.MULTIVERSE;
         }
         if (pm.isPluginEnabled("PerWorldInventory")) {
-            invManager = INVENTORY_MANAGER.PER_WORLD;
+            invManager = InventoryManager.PER_WORLD;
             TARDISPerWorldInventoryChecker.setupPWI();
         }
         if (pm.isPluginEnabled("GameModeInventories")) {
-            invManager = INVENTORY_MANAGER.GAMEMODE;
+            invManager = InventoryManager.GAMEMODE;
         }
     }
 
-    public INVENTORY_MANAGER getInvManager() {
+    public InventoryManager getInvManager() {
         return invManager;
     }
 
@@ -756,7 +756,7 @@ public class TARDIS extends JavaPlugin {
      * Checks if the Multiverse-Core plugin is available, and loads support if it is.
      */
     private void loadMultiverse() {
-        if (worldManager.equals(WORLD_MANAGER.MULTIVERSE)) {
+        if (worldManager.equals(WorldManager.MULTIVERSE)) {
             Plugin mvplugin = pm.getPlugin("Multiverse-Core");
             debug("Hooking into Multiverse-Core!");
             mvHelper = new TARDISMultiverseHelper(mvplugin);
@@ -1226,15 +1226,15 @@ public class TARDIS extends JavaPlugin {
         return cleanUpWorlds;
     }
 
-    public DIFFICULTY getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(DIFFICULTY difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
-    public WORLD_MANAGER getWorldManager() {
+    public WorldManager getWorldManager() {
         return worldManager;
     }
 
