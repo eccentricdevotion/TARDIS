@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.control.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
@@ -158,9 +159,11 @@ public class TARDISHandbrakeListener implements Listener {
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                             boolean beac_on = true;
                             boolean bar = false;
+                            SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                             if (rsp.resultSet()) {
                                 beac_on = rsp.isBeaconOn();
                                 bar = rsp.isTravelbarOn();
+                                spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
@@ -184,7 +187,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar);
                                     // start time rotor?
-                                    if (tardis.getSchematic().getPermission().equals("rotor") && tardis.getRotor() != null) {
+                                    if (tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                         if (itemFrame != null) {
                                             TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
@@ -197,7 +200,7 @@ public class TARDISHandbrakeListener implements Listener {
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (!tardis.isHandbrake_on()) {
                                     // stop time rotor?
-                                    if (tardis.getSchematic().getPermission().equals("rotor") && tardis.getRotor() != null) {
+                                    if (tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                         if (itemFrame != null) {
                                             TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
