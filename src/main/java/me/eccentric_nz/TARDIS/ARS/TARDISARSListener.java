@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,8 +31,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
-
-import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
@@ -299,7 +298,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         }
         custom_names.forEach((c) -> {
             room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
-            String uc = ucfirst(c);
+            String uc = TARDISStringUtils.uppercaseFirst(c);
             room_names.add(uc);
             TARDISARS.addNewARS(new ARS() {
                 @Override

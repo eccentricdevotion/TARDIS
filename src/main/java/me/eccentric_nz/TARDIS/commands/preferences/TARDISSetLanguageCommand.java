@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.universaltranslator.Language;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.universaltranslator.Language;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
-
-import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 
 /**
  * @author eccentric_nz
@@ -50,7 +49,7 @@ class TARDISSetLanguageCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
-        TARDISMessage.send(player, "PREF_SET", ucfirst(pref));
+        TARDISMessage.send(player, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

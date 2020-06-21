@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
@@ -82,7 +82,7 @@ class TARDISJunkFloorWall {
             where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             plugin.getQueryFactory().doUpdate("player_prefs", setpp, where);
         }
-        TARDISMessage.send(sender, "PREF_MAT_SET", TARDISPrefsCommands.ucfirst(pref));
+        TARDISMessage.send(sender, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

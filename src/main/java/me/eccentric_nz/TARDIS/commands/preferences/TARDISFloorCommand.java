@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -60,7 +61,7 @@ class TARDISFloorCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
-        TARDISMessage.send(player, "PREF_MAT_SET", TARDISPrefsCommands.ucfirst(pref));
+        TARDISMessage.send(player, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
         return true;
     }
 }
