@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISSetFlightCommand;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.*;
@@ -455,7 +454,7 @@ public class TARDISControlListener implements Listener {
                                         HashMap<String, Object> wheref = new HashMap<>();
                                         wheref.put("uuid", player.getUniqueId().toString());
                                         plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
-                                        TARDISMessage.send(player, "FLIGHT_TOGGLED", TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
+                                        TARDISMessage.send(player, "FLIGHT_TOGGLED", FlightMode.getByMode().get(mode).toString());
                                     }
                                     break;
                                 case 31:

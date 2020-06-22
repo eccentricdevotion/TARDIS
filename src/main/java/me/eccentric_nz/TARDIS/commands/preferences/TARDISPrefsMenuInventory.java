@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
@@ -139,7 +140,7 @@ public class TARDISPrefsMenuInventory {
         ItemStack fli = new ItemStack(Material.ELYTRA, 1);
         ItemMeta ght_im = fli.getItemMeta();
         ght_im.setDisplayName("Flight Mode");
-        String mode_value = TARDISSetFlightCommand.FlightMode.getByMode().get(rsp.getFlightMode()).toString();
+        String mode_value = FlightMode.getByMode().get(rsp.getFlightMode()).toString();
         ght_im.setLore(Collections.singletonList(mode_value));
         ght_im.setCustomModelData(GUIPlayerPreferences.FLIGHT_MODE.getCustomModelData());
         fli.setItemMeta(ght_im);

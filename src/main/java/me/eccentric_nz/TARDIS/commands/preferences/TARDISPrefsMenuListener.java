@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -132,12 +133,12 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                     if (slot == 28 && im.getDisplayName().equals("Flight Mode")) {
                         List<String> lore = im.getLore();
                         // cycle through flight modes
-                        TARDISSetFlightCommand.FlightMode flight = TARDISSetFlightCommand.FlightMode.valueOf(lore.get(0));
+                        FlightMode flight = FlightMode.valueOf(lore.get(0));
                         int mode = flight.getMode() + 1;
                         if (mode > 3) {
                             mode = 1;
                         }
-                        lore.set(0, TARDISSetFlightCommand.FlightMode.getByMode().get(mode).toString());
+                        lore.set(0, FlightMode.getByMode().get(mode).toString());
                         im.setLore(lore);
                         is.setItemMeta(im);
                         // set flight mode

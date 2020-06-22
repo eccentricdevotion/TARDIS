@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -58,33 +59,5 @@ public class TARDISSetFlightCommand {
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
         TARDISMessage.send(player, "FLIGHT_SAVED");
         return true;
-    }
-
-    public enum FlightMode {
-
-        NORMAL(1),
-        REGULATOR(2),
-        MANUAL(3);
-
-        private final int mode;
-        private static final HashMap<Integer, FlightMode> byMode = new HashMap<>();
-
-        FlightMode(int mode) {
-            this.mode = mode;
-        }
-
-        static {
-            for (FlightMode fm : values()) {
-                byMode.put(fm.mode, fm);
-            }
-        }
-
-        public int getMode() {
-            return mode;
-        }
-
-        public static HashMap<Integer, FlightMode> getByMode() {
-            return byMode;
-        }
     }
 }
