@@ -76,7 +76,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("key");
         firstArgs.add("key_menu");
         firstArgs.add("junk");
-        firstArgs.add("lamp");
         firstArgs.add("language");
         firstArgs.add("lanterns");
         firstArgs.add("minecart");
@@ -138,7 +137,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
                         set.put("uuid", uuid);
-                        set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
                         plugin.getQueryFactory().doInsert("player_prefs", set);
                     }
                     switch (pref) {
@@ -156,8 +154,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
                         case "key":
                             return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
-                        case "lamp":
-                            return new TARDISSetLampCommand(plugin).setLampPref(player, args);
                         case "language":
                             return new TARDISSetLanguageCommand().setLanguagePref(player, args);
                         case "wall":

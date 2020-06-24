@@ -85,6 +85,7 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("farm_on INTEGER DEFAULT 0");
         prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GRAY_WOOL'");
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
+        prefsupdates.add("throttle INTEGER DEFAULT 4");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("font_on INTEGER DEFAULT 0");
         prefsupdates.add("hads_type TEXT DEFAULT 'DISPLACEMENT'");
@@ -244,23 +245,6 @@ class TARDISSQLiteDatabaseUpdater {
                     String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
-            }
-            String lamp_query1 = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%lamp TEXT%'";
-            boolean addlamp = false;
-            ResultSet lamp1 = statement.executeQuery(lamp_query1);
-            if (!lamp1.next()) {
-                addlamp = true;
-                // check again
-                String lamp_query2 = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%lamp INTEGER%'";
-                ResultSet lamp2 = statement.executeQuery(lamp_query2);
-                if (lamp2.next()) {
-                    addlamp = false;
-                }
-            }
-            if (addlamp) {
-                i++;
-                String lamp_alter = "ALTER TABLE " + prefix + "player_prefs ADD lamp TEXT DEFAULT ''";
-                statement.executeUpdate(lamp_alter);
             }
             for (String t : tardisupdates) {
                 String[] tsplit = t.split(" ");

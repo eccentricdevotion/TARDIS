@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
-import org.bukkit.Material;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,6 +37,7 @@ public class ResultSetPlayerPrefs {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
+    private final String prefix;
     private int pp_id;
     private UUID uuid;
     private boolean autoOn;
@@ -68,7 +68,7 @@ public class ResultSetPlayerPrefs {
     private HADS hadsType;
     private int artronLevel;
     private int flightMode;
-    private Material lamp;
+    private int throttle;
     private String epsMessage;
     private String floor;
     private String hum;
@@ -79,7 +79,6 @@ public class ResultSetPlayerPrefs {
     private String textureIn;
     private String textureOut;
     private String wall;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the player_prefs table.
@@ -127,22 +126,6 @@ public class ResultSetPlayerPrefs {
                 }
                 submarineOn = rs.getBoolean("submarine_on");
                 artronLevel = rs.getInt("artron_level");
-                String trylamp = rs.getString("lamp");
-                Material default_lamp;
-                try {
-                    default_lamp = Material.valueOf(plugin.getConfig().getString("police_box.tardis_lamp"));
-                } catch (IllegalArgumentException e) {
-                    default_lamp = Material.REDSTONE_LAMP;
-                }
-                if (rs.wasNull()) {
-                    lamp = default_lamp;
-                } else {
-                    try {
-                        lamp = Material.valueOf(trylamp);
-                    } catch (IllegalArgumentException e) {
-                        lamp = default_lamp;
-                    }
-                }
                 language = rs.getString("language");
                 wall = rs.getString("wall");
                 floor = rs.getString("floor");
@@ -174,6 +157,7 @@ public class ResultSetPlayerPrefs {
                 lanternsOn = rs.getBoolean("lanterns_on");
                 policeboxTexturesOn = rs.getBoolean("policebox_textures_on");
                 flightMode = rs.getInt("flying_mode");
+                throttle = rs.getInt("throttle");
                 easyDifficulty = rs.getBoolean("difficulty");
                 autoPowerUp = rs.getBoolean("auto_powerup_on");
                 hum = rs.getString("hum");
@@ -282,10 +266,6 @@ public class ResultSetPlayerPrefs {
         return textureOut;
     }
 
-    public Material getLamp() {
-        return lamp;
-    }
-
     public String getLanguage() {
         return language;
     }
@@ -344,6 +324,10 @@ public class ResultSetPlayerPrefs {
 
     public int getFlightMode() {
         return flightMode;
+    }
+
+    public int getThrottle() {
+        return throttle;
     }
 
     public boolean isEasyDifficulty() {

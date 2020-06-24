@@ -186,7 +186,6 @@ public class TARDISConfiguration {
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
-        stringOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP");
         stringOptions.put("preferences.default_key", "eleventh");
         stringOptions.put("preferences.default_sonic", "eleventh");
         stringOptions.put("preferences.difficulty", "hard");

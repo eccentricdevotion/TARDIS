@@ -857,12 +857,6 @@ commands:
     isomorphic:
       description: Toggle isomorphic controls on and off.
       usage: /<command> isomorphic [on|off]
-    lamp:
-      description: Set the Police Box lamp block type.
-      usage: /<command> lamp [block id]
-    plain:
-      description: Toggle the plain TARDIS on and off (no sign or lamp).
-      usage: /<command> plain [on|off]
     submarine:
       description: Toggle submarine landings on and off.
       usage: /<command> submarine [on|off]

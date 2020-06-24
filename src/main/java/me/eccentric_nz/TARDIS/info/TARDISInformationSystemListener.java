@@ -40,6 +40,7 @@ import java.util.UUID;
 public class TARDISInformationSystemListener implements Listener, CommandExecutor {
 
     private final TARDIS plugin;
+    private final String JSON = "{\"text\":\"%s\",\"color\":\"gold\",\"extra\":[{\"text\":\"%s\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisinfo %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}},\"extra\":[{\"text\":\"%s\",\"color\":\"gold\"}]}]}";
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -1053,14 +1054,8 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("k")) {
                     showCommand(p, TARDISInfoMenu.TARDISPREFS_KEY);
                 }
-                if (chat.equalsIgnoreCase("l")) {
-                    showCommand(p, TARDISInfoMenu.TARDISPREFS_LAMP);
-                }
                 if (chat.equalsIgnoreCase("m")) {
                     showCommand(p, TARDISInfoMenu.TARDISPREFS_MESSAGE);
-                }
-                if (chat.equalsIgnoreCase("n")) {
-                    showCommand(p, TARDISInfoMenu.TARDISPREFS_PLAIN);
                 }
                 if (chat.equalsIgnoreCase("q")) {
                     showCommand(p, TARDISInfoMenu.TARDISPREFS_QUOTES);
@@ -1299,8 +1294,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 break;
         }
     }
-
-    private final String JSON = "{\"text\":\"%s\",\"color\":\"gold\",\"extra\":[{\"text\":\"%s\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisinfo %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}},\"extra\":[{\"text\":\"%s\",\"color\":\"gold\"}]}]}";
 
     /**
      * Displays the next menu level based on the parent menu item that was selected. Automatically pulls the key code

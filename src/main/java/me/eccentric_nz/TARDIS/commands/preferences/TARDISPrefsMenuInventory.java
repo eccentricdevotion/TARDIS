@@ -61,7 +61,6 @@ public class TARDISPrefsMenuInventory {
             // make a new record
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid.toString());
-            set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
             plugin.getQueryFactory().doInsert("player_prefs", set);
             // get the new record
             rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());

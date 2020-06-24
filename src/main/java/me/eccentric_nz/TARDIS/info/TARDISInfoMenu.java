@@ -258,9 +258,7 @@ public enum TARDISInfoMenu {
     TARDISPREFS_HADS("TIS|Commands|Player Preference Commands|hads", "TARDISPREFS", "h"),
     TARDISPREFS_ISOMORPHIC("TIS|Commands|Player Preference Commands|isomorphic", "TARDISPREFS", "i"),
     TARDISPREFS_KEY("TIS|Commands|Player Preference Commands|key", "TARDISPREFS", "k"),
-    TARDISPREFS_LAMP("TIS|Commands|Player Preference Commands|lamp", "TARDISPREFS", "l"),
     TARDISPREFS_MESSAGE("TIS|Commands|Player Preference Commands|eps_message", "TARDISPREFS", "m"),
-    TARDISPREFS_PLAIN("TIS|Commands|Player Preference Commands|plain", "TARDISPREFS", "n"),
     TARDISPREFS_QUOTES("TIS|Commands|Player Preference Commands|quotes", "TARDISPREFS", "q"),
     TARDISPREFS_SFX("TIS|Commands|Player Preference Commands|sfx", "TARDISPREFS", "s"),
     TARDISPREFS_SUBMARINE("TIS|Commands|Player Preference Commands|submarine", "TARDISPREFS", "u"),
@@ -409,6 +407,23 @@ public enum TARDISInfoMenu {
     }
 
     /**
+     * Attempts to get the children of the parent menu.
+     *
+     * @param parent the parent menu TARDISInfoMenu.toString();
+     * @return a HashMap&lt;String, String&gt; of child menu items, and their (ALT)key
+     */
+    public static TreeMap<String, String> getChildren(String parent) {
+        TreeMap<String, String> children = new TreeMap<>();
+        for (TARDISInfoMenu tim : values()) {
+            if (tim.getParent().equals(parent)) {
+                String[] crumbs = tim.getName().split("[|]");
+                children.put(crumbs[crumbs.length - 1], tim.getKey());
+            }
+        }
+        return children;
+    }
+
+    /**
      * Gets the menu name of this TARDISInfoMenu
      *
      * @return name of this TARDISInfoMenu
@@ -433,22 +448,5 @@ public enum TARDISInfoMenu {
      */
     private String getKey() {
         return key;
-    }
-
-    /**
-     * Attempts to get the children of the parent menu.
-     *
-     * @param parent the parent menu TARDISInfoMenu.toString();
-     * @return a HashMap&lt;String, String&gt; of child menu items, and their (ALT)key
-     */
-    public static TreeMap<String, String> getChildren(String parent) {
-        TreeMap<String, String> children = new TreeMap<>();
-        for (TARDISInfoMenu tim : values()) {
-            if (tim.getParent().equals(parent)) {
-                String[] crumbs = tim.getName().split("[|]");
-                children.put(crumbs[crumbs.length - 1], tim.getKey());
-            }
-        }
-        return children;
     }
 }
