@@ -61,12 +61,6 @@ public class TARDISMinecartListener implements Listener {
         Vehicle vehicle = event.getVehicle();
         if (vehicle instanceof Minecart && vehicle instanceof InventoryHolder) {
             Block block = event.getBlock();
-//            plugin.debug("event block: " + block.getType().toString());
-//            Block minecartBlock = event.getVehicle().getLocation().getBlock();
-//            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
-//                Block bb = minecartBlock.getRelative(face);
-//                plugin.debug(face.toString() + ": " + bb.getType().toString());
-//            }
             Material material = block.getType();
             if (Tag.DOORS.isTagged(material) || Tag.FENCES.isTagged(material)) {
                 String[] data = null;

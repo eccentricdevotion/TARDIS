@@ -98,7 +98,6 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 minecart = rsp.isMinecartOn();
                 spaceTimeThrottle = spaceTimeThrottle.getByDelay().get(rsp.getThrottle());
             }
-            plugin.debug("before dd");
             DestroyData dd = new DestroyData();
             dd.setDirection(cd);
             dd.setLocation(l);
@@ -109,7 +108,6 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setTardisID(id);
             dd.setBiome(biome);
             dd.setThrottle(spaceTimeThrottle);
-            plugin.debug("after dd");
             PRESET preset = tardis.getPreset();
             if (preset.equals(PRESET.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<>();

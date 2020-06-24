@@ -159,7 +159,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                         }
                     }
-                    plugin.debug("ST Throttle: " + spaceTimeThrottle.toString());
                     // set destination flight data
                     BuildData bd = new BuildData(uuid.toString());
                     bd.setDirection(sd);

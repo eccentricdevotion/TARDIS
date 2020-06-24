@@ -35,10 +35,10 @@ public class TARDISSiegePersister {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
+    private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
-    private final String prefix;
 
     public TARDISSiegePersister(TARDIS plugin) {
         this.plugin = plugin;
@@ -66,10 +66,8 @@ public class TARDISSiegePersister {
                                 plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
                             }
                             if (plugin.getConfig().getInt("siege.growth") > 0) {
-                                plugin.debug("growth is set higher than 0");
                                 List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                                 if (growth_areas == null) {
-                                    plugin.debug("the list was null");
                                     growth_areas = new ArrayList<>();
                                 }
                                 growth_areas.add(tsa);
