@@ -470,7 +470,7 @@ public class TARDISHandlesProcessor {
                                             }
                                             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                                 // destroy police box
-                                                DestroyData dd = new DestroyData(plugin, uuid.toString());
+                                                DestroyData dd = new DestroyData();
                                                 dd.setDirection(direction);
                                                 dd.setLocation(current);
                                                 dd.setPlayer(player);
@@ -479,6 +479,7 @@ public class TARDISHandlesProcessor {
                                                 dd.setSubmarine(rsc.isSubmarine());
                                                 dd.setTardisID(id);
                                                 dd.setBiome(rsc.getBiome());
+                                                dd.setThrottle(SpaceTimeThrottle.NORMAL);
                                                 // set handbrake off
                                                 HashMap<String, Object> set = new HashMap<>();
                                                 set.put("handbrake_on", 0);
@@ -498,7 +499,7 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                             }
-                                            BuildData bd = new BuildData(plugin, uuid.toString());
+                                            BuildData bd = new BuildData(uuid.toString());
                                             bd.setDirection(nextDirection);
                                             bd.setLocation(goto_loc);
                                             bd.setMalfunction(false);
@@ -507,6 +508,7 @@ public class TARDISHandlesProcessor {
                                             bd.setOutside(false);
                                             bd.setSubmarine(sub);
                                             bd.setTardisID(id);
+                                            bd.setThrottle(SpaceTimeThrottle.NORMAL);
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                                 // rebuild police box - needs to be a delay
                                                 plugin.getPresetBuilder().buildPreset(bd);

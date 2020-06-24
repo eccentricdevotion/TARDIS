@@ -1,20 +1,23 @@
 # TODO
 
-## Next version `4.4.2`
+## Next version `4.4.3`
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
 3. Set Master button to ON (In Lazarus GUI) when it is in use
 4. Use the Vortex Manipulator to teleport past force fields
-5. Tardis Space/Time Throttle - [Bukkit #1449](https://dev.bukkit.org/projects/tardis/issues/1449)
-6. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
-7. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
-8. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
-10.  Charge players a fee (via Vault) for using the Junk TARDIS
+5. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
+6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
+7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
+8.  Charge players a fee (via Vault) for using the Junk TARDIS
 
 ## Minecraft 1.16
 1. Add new blocks and nether biomes
 2. Use Smithing recipes to upgrade sonic screwdrivers / add biome to biome disks etc
+3. Use `locatebiome` command logic/methods for biome finder
+4. Full unicode support - may not need custom resource pack font for nice looking tabbed lists?
+5. Attribute names have changed
+6. Use new ItemFrame tags - `invisible` & `fixed` - for policeboxes and time rotors
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

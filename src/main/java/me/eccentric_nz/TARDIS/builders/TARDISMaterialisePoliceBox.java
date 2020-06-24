@@ -55,10 +55,11 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private ItemMeta im;
     private Material dye;
 
-    public TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, int loops, PRESET preset) {
+    public TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
         this.plugin = plugin;
         this.bd = bd;
-        this.loops = loops;
+        loops = this.bd.getThrottle().getLoops();
+        this.plugin.debug("Loops: " + loops);
         this.preset = preset;
         i = 0;
     }
@@ -106,7 +107,21 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     is = new ItemStack(dye, 1);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
-                            String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
+                            String sound;
+                            if (preset.equals(PRESET.JUNK_MODE)) {
+                                sound = "junk_land";
+                            } else {
+                                switch (bd.getThrottle()) {
+                                    case WARP:
+                                    case RAPID:
+                                    case FASTER:
+                                        sound = "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                        break;
+                                    default: // NORMAL
+                                        sound = "tardis_land";
+                                        break;
+                                }
+                            }
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

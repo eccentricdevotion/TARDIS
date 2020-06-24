@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -141,7 +142,7 @@ public class TARDISDirectionCommand {
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
-                BuildData bd = new BuildData(plugin, uuid.toString());
+                BuildData bd = new BuildData(uuid.toString());
                 bd.setDirection(d);
                 bd.setLocation(l);
                 bd.setMalfunction(false);
@@ -151,6 +152,7 @@ public class TARDISDirectionCommand {
                 bd.setSubmarine(rsc.isSubmarine());
                 bd.setTardisID(id);
                 bd.setBiome(rsc.getBiome());
+                bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             }
             HashMap<String, Object> wherea = new HashMap<>();

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -80,15 +81,15 @@ public class TARDISPresetDestroyerFactory {
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
                     cham_id = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
                 }
-                int loops = 18;
-                if (dd.isHide() || dd.isSiege()) {
-                    loops = 3;
+                int loops = dd.getThrottle().getLoops();
+                if (loops == 3) {
                     TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
                     if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
                         TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
                     }
-                } else if (preset.equals(PRESET.JUNK_MODE)) {
-                    loops = 25;
+                }
+                if (preset.equals(PRESET.JUNK_MODE)) {
+                    dd.setThrottle(SpaceTimeThrottle.JUNK);
                 }
                 if (demat.equals(PRESET.JUNK)) {
                     TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, dd);
@@ -102,11 +103,11 @@ public class TARDISPresetDestroyerFactory {
                     }
                     int taskID;
                     if (demat.isColoured()) {
-                        TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, loops, demat);
+                        TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, demat);
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                         frame.setTask(taskID);
                     } else {
-                        TARDISDematerialisePreset runnable = new TARDISDematerialisePreset(plugin, dd, demat, cham_id.createBlockData(), loops);
+                        TARDISDematerialisePreset runnable = new TARDISDematerialisePreset(plugin, dd, demat, cham_id.createBlockData());
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                         runnable.setTask(taskID);
                     }

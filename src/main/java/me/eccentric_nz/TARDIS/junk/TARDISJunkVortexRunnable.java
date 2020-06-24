@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.junk;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -75,7 +76,7 @@ class TARDISJunkVortexRunnable implements Runnable {
             }
             if (i == LOOPS - 1) {
                 // build the TARDIS at the location
-                BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+                BuildData bd = new BuildData(null);
                 bd.setDirection(COMPASS.SOUTH);
                 bd.setLocation(destJunkLoc);
                 bd.setMalfunction(false);
@@ -84,6 +85,7 @@ class TARDISJunkVortexRunnable implements Runnable {
                 bd.setRebuild(false);
                 bd.setSubmarine(false);
                 bd.setTardisID(id);
+                bd.setThrottle(SpaceTimeThrottle.JUNK);
                 plugin.getPresetBuilder().buildPreset(bd);
             }
             if (i == LOOPS) {

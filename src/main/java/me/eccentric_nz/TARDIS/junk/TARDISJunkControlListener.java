@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -118,7 +115,7 @@ public class TARDISJunkControlListener implements Listener {
                             lever.setPowered(!lever.isPowered());
                             block.setBlockData(lever);
                             // destroy junk TARDIS
-                            DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+                            DestroyData dd = new DestroyData();
                             dd.setPlayer(player);
                             dd.setDirection(COMPASS.SOUTH);
                             dd.setLocation(junkloc);
@@ -127,6 +124,7 @@ public class TARDISJunkControlListener implements Listener {
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
                             dd.setBiome(biome);
+                            dd.setThrottle(SpaceTimeThrottle.JUNK);
                             plugin.getPresetDestroyer().destroyPreset(dd);
                             // fly my pretties
                             plugin.getGeneralKeeper().setJunkTravelling(true);

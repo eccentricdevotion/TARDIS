@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -175,7 +176,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         COMPASS fd = (going_home) ? hd : cd;
                                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             // destroy police box
-                                            DestroyData dd = new DestroyData(plugin, uuid.toString());
+                                            DestroyData dd = new DestroyData();
                                             dd.setDirection(cd);
                                             dd.setLocation(sl);
                                             dd.setPlayer(player);
@@ -184,6 +185,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             dd.setSubmarine(rsc.isSubmarine());
                                             dd.setTardisID(id);
                                             dd.setBiome(rsc.getBiome());
+                                            dd.setThrottle(SpaceTimeThrottle.NORMAL);
                                             // set handbrake off
                                             HashMap<String, Object> set = new HashMap<>();
                                             set.put("handbrake_on", 0);
@@ -208,7 +210,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             }
                                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                         }
-                                        BuildData bd = new BuildData(plugin, uuid.toString());
+                                        BuildData bd = new BuildData(uuid.toString());
                                         bd.setDirection(fd);
                                         bd.setLocation(goto_loc);
                                         bd.setMalfunction(false);
@@ -217,6 +219,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         bd.setOutside(false);
                                         bd.setSubmarine(sub);
                                         bd.setTardisID(id);
+                                        bd.setThrottle(SpaceTimeThrottle.NORMAL);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                             // rebuild police box - needs to be a delay
                                             plugin.getPresetBuilder().buildPreset(bd);
@@ -295,7 +298,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     wheres.put("tardis_id", id);
                                     HashMap<String, Object> set = new HashMap<>();
                                     // destroy tardis
-                                    DestroyData dd = new DestroyData(plugin, uuid.toString());
+                                    DestroyData dd = new DestroyData();
                                     dd.setDirection(rsc.getDirection());
                                     dd.setLocation(sl);
                                     dd.setPlayer(player);
@@ -304,6 +307,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setSubmarine(rsc.isSubmarine());
                                     dd.setTardisID(id);
                                     dd.setBiome(rsc.getBiome());
+                                    dd.setThrottle(SpaceTimeThrottle.NORMAL);
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // sound the cloister bell at current location for siege mode
                                     TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 7, id, sl, plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);

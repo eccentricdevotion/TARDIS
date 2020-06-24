@@ -24,8 +24,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.CONTROL;
-import me.eccentric_nz.TARDIS.enumeration.UPDATEABLE;
+import me.eccentric_nz.TARDIS.enumeration.Control;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -38,6 +38,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Repeater;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -77,10 +78,10 @@ public class TARDISUpdateListener implements Listener {
         }
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        UPDATEABLE updateable;
+        Updateable updateable;
         boolean secondary = false;
         if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
-            updateable = UPDATEABLE.valueOf(TARDISStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getPlayers().get(uuid)));
+            updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getPlayers().get(uuid)));
         } else if (plugin.getTrackerKeeper().getSecondary().containsKey(uuid)) {
             updateable = plugin.getTrackerKeeper().getSecondary().get(uuid);
             secondary = true;
@@ -107,7 +108,7 @@ public class TARDISUpdateListener implements Listener {
             return;
         }
         // check they are still in the TARDIS world
-        if (!updateable.equals(UPDATEABLE.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
+        if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
             TARDISMessage.send(player, "UPDATE_IN_WORLD");
             return;
         }
@@ -279,12 +280,12 @@ public class TARDISUpdateListener implements Listener {
                     break;
                 case ADVANCED:
                 case STORAGE:
-                    plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                    plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     // check if player has storage record, and update the tardis_id field
                     plugin.getUtils().updateStorageId(playerUUID, id);
                     // check the block type
                     if (!blockType.equals(Material.MUSHROOM_STEM)) {
-                        int bd = (updateable.equals(UPDATEABLE.ADVANCED)) ? 50 : 51;
+                        int bd = (updateable.equals(Updateable.ADVANCED)) ? 50 : 51;
                         BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
                         block.setBlockData(mushroom, true);
                     }
@@ -302,8 +303,18 @@ public class TARDISUpdateListener implements Listener {
                 case ZERO:
                     plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
                     break;
+                case THROTTLE:
+                    plugin.getQueryFactory().insertControl(id, 39, blockLocStr, secondary ? 1 : 0);
+                    Block rblock = block;
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        Repeater repeater = (Repeater) rblock.getBlockData();
+                        repeater.setLocked(true);
+                        repeater.setDelay(4);
+                        rblock.setBlockData(repeater);
+                    }, 2L);
+                    break;
                 default:
-                    plugin.getQueryFactory().insertControl(id, CONTROL.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                    plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     break;
             }
             TARDISMessage.send(player, "UPDATE_SET", updateable.getName());

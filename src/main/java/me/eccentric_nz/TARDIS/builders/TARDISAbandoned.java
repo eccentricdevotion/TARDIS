@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -74,7 +71,7 @@ public class TARDISAbandoned {
         setlocs.put("direction", d.toString());
         plugin.getQueryFactory().insertLocations(setlocs, biome, lastInsertId);
         // turn the block stack into a TARDIS
-        BuildData bd = new BuildData(plugin, null);
+        BuildData bd = new BuildData(null);
         bd.setDirection(d);
         bd.setLocation(l);
         bd.setMalfunction(false);
@@ -83,6 +80,7 @@ public class TARDISAbandoned {
         bd.setSubmarine(l.getBlock().getType().equals(Material.WATER));
         bd.setTardisID(lastInsertId);
         bd.setPlayer(player);
+        bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
         TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin, schm, chunkworld, lastInsertId, player);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
@@ -90,7 +88,7 @@ public class TARDISAbandoned {
         // delay building exterior
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-            TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), Adaption.OFF, 3);
+            TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), Adaption.OFF);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
             TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");

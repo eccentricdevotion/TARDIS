@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import org.bukkit.Location;
 
@@ -29,11 +28,6 @@ public final class DestroyData extends MaterialisationData {
 
     private boolean hide;
     private Location fromToLocation;
-
-    public DestroyData(TARDIS plugin, String uuid) {
-        super(plugin, uuid);
-        super.setPlayerDefaults(uuid);
-    }
 
     public boolean isHide() {
         return hide;

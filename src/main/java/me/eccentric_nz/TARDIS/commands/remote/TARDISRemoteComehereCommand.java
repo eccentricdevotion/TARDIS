@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -207,7 +208,7 @@ class TARDISRemoteComehereCommand {
         plugin.getTrackerKeeper().getInVortex().add(id);
         boolean hid = hidden;
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            DestroyData dd = new DestroyData();
             dd.setDirection(d);
             dd.setLocation(oldSave);
             dd.setPlayer(player);
@@ -216,6 +217,7 @@ class TARDISRemoteComehereCommand {
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(biome);
+            dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (!hid) {
                     plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -225,7 +227,7 @@ class TARDISRemoteComehereCommand {
                 }
             }, delay);
         }
-        BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+        BuildData bd = new BuildData(player.getUniqueId().toString());
         bd.setDirection(player_d);
         bd.setLocation(eyeLocation);
         bd.setMalfunction(false);
@@ -234,6 +236,7 @@ class TARDISRemoteComehereCommand {
         bd.setRebuild(false);
         bd.setSubmarine(sub);
         bd.setTardisID(id);
+        bd.setThrottle(SpaceTimeThrottle.NORMAL);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
         plugin.getTrackerKeeper().getRescue().remove(id);

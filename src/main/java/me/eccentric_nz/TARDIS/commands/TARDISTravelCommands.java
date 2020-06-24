@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -191,7 +188,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     Biome biome = l.getBlock().getBiome();
                     plugin.getQueryFactory().updateLocations(setlocs, biome.toString(), id);
                     // rebuild the exterior
-                    BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+                    BuildData bd = new BuildData(player.getUniqueId().toString());
                     bd.setDirection(rsh.getDirection());
                     bd.setLocation(l);
                     bd.setMalfunction(false);
@@ -201,6 +198,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     bd.setSubmarine(rsh.isSubmarine());
                     bd.setTardisID(id);
                     bd.setBiome(biome);
+                    bd.setThrottle(SpaceTimeThrottle.REBUILD);
                     if (!rsh.getPreset().isEmpty()) {
                         // set the chameleon preset
                         HashMap<String, Object> wherep = new HashMap<>();

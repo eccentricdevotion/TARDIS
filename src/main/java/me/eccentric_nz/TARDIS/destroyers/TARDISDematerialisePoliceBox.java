@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -43,10 +44,10 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     private ItemMeta im;
     private Material dye;
 
-    public TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, int loops, PRESET preset) {
+    public TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, PRESET preset) {
         this.plugin = plugin;
         this.dd = dd;
-        this.loops = loops;
+        loops = dd.getThrottle().getLoops();
         this.preset = preset;
     }
 
@@ -88,11 +89,23 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 if (dd.isOutside()) {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
                     boolean minecart = false;
+                    SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
+                        spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                     }
                     if (!minecart) {
-                        String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
+                        String sound;
+                        switch (spaceTimeThrottle) {
+                            case WARP:
+                            case RAPID:
+                            case FASTER:
+                                sound = "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                                break;
+                            default: // NORMAL
+                                sound = "tardis_takeoff";
+                                break;
+                        }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

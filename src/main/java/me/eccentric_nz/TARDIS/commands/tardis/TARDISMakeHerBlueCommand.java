@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -120,7 +121,7 @@ class TARDISMakeHerBlueCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", "NEW");
         plugin.getQueryFactory().doUpdate("tardis", set, wherep);
-        BuildData bd = new BuildData(plugin, uuid.toString());
+        BuildData bd = new BuildData(uuid.toString());
         bd.setDirection(rsc.getDirection());
         bd.setLocation(l);
         bd.setMalfunction(false);
@@ -130,6 +131,7 @@ class TARDISMakeHerBlueCommand {
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisID(id);
         bd.setBiome(rsc.getBiome());
+        bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
         String message = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";
         TARDISMessage.send(player.getPlayer(), message);

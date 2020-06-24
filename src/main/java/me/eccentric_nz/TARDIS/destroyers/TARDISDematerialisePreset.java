@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
@@ -67,12 +68,11 @@ class TARDISDematerialisePreset implements Runnable {
      * @param dd      the DestroyData
      * @param preset  the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
-     * @param loops   the number of loops to run
      */
-    TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id, int loops) {
+    TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id) {
         this.plugin = plugin;
         this.dd = dd;
-        this.loops = loops;
+        loops = dd.getThrottle().getLoops();
         this.preset = preset;
         i = 0;
         this.cham_id = cham_id;
@@ -94,7 +94,7 @@ class TARDISDematerialisePreset implements Runnable {
             task = 0;
             TARDISMessage.send(dd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
         }
-        BlockData[][] datas;
+        BlockData[][] data;
         // get relative locations
         int x = dd.getLocation().getBlockX(), plusx = dd.getLocation().getBlockX() + 1, minusx = dd.getLocation().getBlockX() - 1;
         int y;
@@ -110,13 +110,13 @@ class TARDISDematerialisePreset implements Runnable {
             // expand placed blocks to a police box
             switch (i % 3) {
                 case 2: // stained
-                    datas = stained_column.getBlockData();
+                    data = stained_column.getBlockData();
                     break;
                 case 1: // glass
-                    datas = glass_column.getBlockData();
+                    data = glass_column.getBlockData();
                     break;
                 default: // preset
-                    datas = column.getBlockData();
+                    data = column.getBlockData();
                     break;
             }
             // first run - play sound
@@ -168,11 +168,27 @@ class TARDISDematerialisePreset implements Runnable {
                 if (dd.isOutside()) {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
                     boolean minecart = false;
+                    SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
+                        spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                     }
                     if (!minecart) {
-                        String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
+                        String sound;
+                        if (preset.equals(PRESET.JUNK_MODE)) {
+                            sound = "junk_takeoff";
+                        } else {
+                            switch (spaceTimeThrottle) {
+                                case WARP:
+                                case RAPID:
+                                case FASTER:
+                                    sound = "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                                    break;
+                                default: // NORMAL
+                                    sound = "tardis_takeoff";
+                                    break;
+                            }
+                        }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
@@ -192,7 +208,7 @@ class TARDISDematerialisePreset implements Runnable {
                 // just change the walls
                 int xx, zz;
                 for (int n = 0; n < 9; n++) {
-                    BlockData[] coldatas = datas[n];
+                    BlockData[] colData = data[n];
                     switch (n) {
                         case 0:
                             xx = minusx;
@@ -233,16 +249,16 @@ class TARDISDematerialisePreset implements Runnable {
                     }
                     for (int yy = 0; yy < 4; yy++) {
                         boolean change = true;
-                        Material mat = coldatas[yy].getMaterial();
+                        Material mat = colData[yy].getMaterial();
                         switch (mat) {
                             case GRASS_BLOCK:
                             case DIRT:
-                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : coldatas[yy];
+                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                                 break;
                             case WHITE_WOOL:
                             case LIME_WOOL:
-                                BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : coldatas[yy];
+                                BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
                                 break;
                             case ALLIUM:
@@ -266,7 +282,12 @@ class TARDISDematerialisePreset implements Runnable {
                             case TORCH: // lamps, glowstone and torches
                             case GLOWSTONE:
                             case REDSTONE_LAMP:
-                                BlockData light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? dd.getLamp().createBlockData() : coldatas[yy];
+                                BlockData light;
+                                if (dd.isSubmarine() && mat.equals(Material.TORCH)) {
+                                    light = Material.GLOWSTONE.createBlockData();
+                                } else {
+                                    light = colData[yy];
+                                }
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                                 break;
                             case ACACIA_DOOR: // wood, iron & trap doors
@@ -293,24 +314,24 @@ class TARDISDematerialisePreset implements Runnable {
                                 }
                                 break;
                             case WHITE_STAINED_GLASS:
-                                BlockData chaf = (preset.equals(PRESET.FLOWER)) ? stain_colour : coldatas[yy];
+                                BlockData chaf = (preset.equals(PRESET.FLOWER)) ? stain_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaf);
                                 break;
                             case LIME_STAINED_GLASS:
-                                BlockData chap = (preset.equals(PRESET.PARTY)) ? stain_colour : coldatas[yy];
+                                BlockData chap = (preset.equals(PRESET.PARTY)) ? stain_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chap);
                                 break;
                             case LIGHT_GRAY_STAINED_GLASS:
-                                BlockData cham = (preset.equals(PRESET.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : coldatas[yy];
+                                BlockData cham = (preset.equals(PRESET.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham);
                                 break;
                             case LIGHT_GRAY_TERRACOTTA:
-                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : coldatas[yy];
+                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                                 break;
                             default: // everything else
                                 if (change) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                 }
                                 break;
                         }

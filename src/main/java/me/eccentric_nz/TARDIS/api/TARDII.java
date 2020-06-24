@@ -680,7 +680,7 @@ public class TARDII implements TardisAPI {
             if (rs.resultSet()) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(rs.getTardis().getUuid());
                 Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                BuildData bd = new BuildData(TARDIS.plugin, player.getUniqueId().toString());
+                BuildData bd = new BuildData(player.getUniqueId().toString());
                 bd.setDirection(rsc.getDirection());
                 bd.setLocation(l);
                 bd.setMalfunction(false);
@@ -690,6 +690,7 @@ public class TARDII implements TardisAPI {
                 bd.setSubmarine(false);
                 bd.setTardisID(id);
                 bd.setBiome(rsc.getBiome());
+                bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 TARDIS.plugin.getPresetBuilder().buildPreset(bd);
                 TARDIS.plugin.getTrackerKeeper().getInVortex().add(id);
                 HashMap<String, Object> whereh = new HashMap<>();

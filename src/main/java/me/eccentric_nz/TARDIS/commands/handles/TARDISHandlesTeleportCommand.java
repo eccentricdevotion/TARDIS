@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
@@ -106,7 +107,7 @@ public class TARDISHandlesTeleportCommand {
             // rescue
             plugin.getTrackerKeeper().getRescue().put(id, uuid);
             // destroy TARDIS
-            DestroyData dd = new DestroyData(plugin, uuid.toString());
+            DestroyData dd = new DestroyData();
             dd.setDirection(rsc.getDirection());
             dd.setLocation(current);
             dd.setPlayer(player);
@@ -115,12 +116,13 @@ public class TARDISHandlesTeleportCommand {
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(rsc.getBiome());
+            dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetDestroyer().destroyPreset(dd);
             }, delay);
             // move TARDIS
-            BuildData bd = new BuildData(plugin, uuid.toString());
+            BuildData bd = new BuildData(uuid.toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(location);
             bd.setMalfunction(false);
@@ -129,6 +131,7 @@ public class TARDISHandlesTeleportCommand {
             bd.setRebuild(false);
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
+            bd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
         }
     }

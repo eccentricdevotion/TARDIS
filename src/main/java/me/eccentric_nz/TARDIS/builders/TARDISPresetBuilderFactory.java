@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -139,6 +140,7 @@ public class TARDISPresetBuilderFactory {
             }
             thisChunk.setForceLoaded(true);
             if (bd.isRebuild()) {
+                bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstantPreset deinsta = new TARDISDeinstantPreset(plugin);
@@ -147,11 +149,11 @@ public class TARDISPresetBuilderFactory {
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
                 int taskID;
                 if (preset.isColoured()) {
-                    TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, 3, preset);
+                    TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                     frame.setTask(taskID);
                 } else {
-                    TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption(), 3);
+                    TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
@@ -168,11 +170,11 @@ public class TARDISPresetBuilderFactory {
                 } else {
                     int taskID;
                     if (preset.isColoured()) {
-                        TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, 18, preset);
+                        TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                         frame.setTask(taskID);
                     } else {
-                        TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption(), 18);
+                        TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                         runnable.setTask(taskID);
                     }

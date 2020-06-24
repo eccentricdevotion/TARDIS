@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -84,7 +85,7 @@ class TARDISRemoteTravelCommand {
             HashMap<String, Object> set = new HashMap<>();
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getTrackerKeeper().getInVortex().add(id);
-                DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+                DestroyData dd = new DestroyData();
                 dd.setDirection(cd);
                 dd.setLocation(l);
                 dd.setPlayer(player);
@@ -93,6 +94,7 @@ class TARDISRemoteTravelCommand {
                 dd.setSubmarine(sub);
                 dd.setTardisID(id);
                 dd.setBiome(biome);
+                dd.setThrottle(SpaceTimeThrottle.NORMAL);
                 if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
                     plugin.getTrackerKeeper().getDematerialising().add(id);
                     plugin.getPresetDestroyer().destroyPreset(dd);
@@ -105,7 +107,7 @@ class TARDISRemoteTravelCommand {
                 }
             }
             long delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 1L : 500L;
-            BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+            BuildData bd = new BuildData(player.getUniqueId().toString());
             bd.setDirection(sd);
             bd.setLocation(exit);
             bd.setMalfunction(false);
@@ -114,6 +116,7 @@ class TARDISRemoteTravelCommand {
             bd.setRebuild(false);
             bd.setSubmarine(is_next_sub);
             bd.setTardisID(id);
+            bd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 plugin.getPresetBuilder().buildPreset(bd);
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");

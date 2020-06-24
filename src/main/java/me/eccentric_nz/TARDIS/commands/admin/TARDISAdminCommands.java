@@ -101,7 +101,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStr.put("spawn_abandoned", "");
-        firstsStr.put("tardis_lamp", "police_box");
         firstsStr.put("use_clay", "creation");
         firstsStr.put("undisguise", "");
         firstsStr.put("vortex_fall", "preferences");
@@ -357,7 +356,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("delete")) {
                     return new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
                 }
-                if (first.equals("key") || first.equals("custom_schematic_seed") || first.equals("tardis_lamp")) {
+                if (first.equals("key") || first.equals("custom_schematic_seed")) {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {

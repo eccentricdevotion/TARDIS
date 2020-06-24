@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.junk;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -43,7 +44,7 @@ class TARDISJunkReturn {
         if (tjl.isNotHome()) {
             Location home = tjl.getHome();
             // fly home
-            DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+            DestroyData dd = new DestroyData();
             dd.setLocation(tjl.getCurrent());
             dd.setDirection(COMPASS.SOUTH);
             dd.setHide(false);
@@ -51,6 +52,7 @@ class TARDISJunkReturn {
             dd.setSubmarine(false);
             dd.setTardisID(tjl.getId());
             dd.setBiome(tjl.getBiome());
+            dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // fly my pretties
             plugin.getGeneralKeeper().setJunkTravelling(true);

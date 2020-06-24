@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -90,7 +91,15 @@ public class TARDISDematerialiseToVortex implements Runnable {
             COMPASS cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
             Biome biome = rscl.getBiome();
-            DestroyData dd = new DestroyData(plugin, uuid.toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+            boolean minecart = false;
+            SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
+            if (rsp.resultSet()) {
+                minecart = rsp.isMinecartOn();
+                spaceTimeThrottle = spaceTimeThrottle.getByDelay().get(rsp.getThrottle());
+            }
+            plugin.debug("before dd");
+            DestroyData dd = new DestroyData();
             dd.setDirection(cd);
             dd.setLocation(l);
             dd.setPlayer(player);
@@ -99,6 +108,8 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setSubmarine(sub);
             dd.setTardisID(id);
             dd.setBiome(biome);
+            dd.setThrottle(spaceTimeThrottle);
+            plugin.debug("after dd");
             PRESET preset = tardis.getPreset();
             if (preset.equals(PRESET.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<>();
@@ -110,15 +121,32 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 }
                 Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
                 dd.setFromToLocation(exit);
+                dd.setThrottle(SpaceTimeThrottle.JUNK);
             }
             plugin.getPM().callEvent(new TARDISDematerialisationEvent(player, tardis, l));
             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-                boolean minecart = (rsp.resultSet()) && rsp.isMinecartOn();
                 // play demat sfx
                 if (!minecart) {
                     if (!preset.equals(PRESET.JUNK_MODE)) {
-                        String sound = (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) ? "tardis_malfunction_takeoff" : "tardis_takeoff";
+                        String sound;
+                        if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                            sound = "tardis_malfunction_takeoff";
+                        } else {
+                            switch (spaceTimeThrottle) {
+                                case WARP:
+                                    sound = "tardis_takeoff_warp";
+                                    break;
+                                case RAPID:
+                                    sound = "tardis_takeoff_rapid";
+                                    break;
+                                case FASTER:
+                                    sound = "tardis_takeoff_faster";
+                                    break;
+                                default: // NORMAL
+                                    sound = "tardis_takeoff";
+                                    break;
+                            }
+                        }
                         TARDISSounds.playTARDISSound(handbrake, sound);
                         TARDISSounds.playTARDISSound(l, sound);
                     } else {

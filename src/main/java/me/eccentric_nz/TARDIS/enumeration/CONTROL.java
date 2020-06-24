@@ -21,7 +21,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public enum CONTROL {
+public enum Control {
 
     HANDBRAKE(0, "handbrake", false, true),
     RANDOM(1, "button", false, true),
@@ -61,29 +61,39 @@ public enum CONTROL {
     CLOISTER_BELL(35, "bell", true, false),
     ROTOR(36, "", false, false),
     MAP(37, "map", false, false),
-    WEATHER(38, "weather", false, false);
+    WEATHER(38, "weather", false, false),
+    THROTTLE(39, "throttle", false, true);
+
+    private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
+    private static final HashMap<Integer, Control> BY_ID = new HashMap<>();
+
+    static {
+        for (Control control : values()) {
+            if (!control.update.isEmpty()) {
+                UPDATE_CONTROLS.put(control.update, control.id);
+            }
+            BY_ID.put(control.id, control);
+        }
+    }
 
     private final int id;
     private final String update;
     private final boolean unpowered;
     private final boolean noSiege;
-    private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
-    private static final HashMap<Integer, CONTROL> BY_ID = new HashMap<>();
 
-    CONTROL(int id, String update, boolean unpowered, boolean noSiege) {
+    Control(int id, String update, boolean unpowered, boolean noSiege) {
         this.id = id;
         this.update = update;
         this.unpowered = unpowered;
         this.noSiege = noSiege;
     }
 
-    static {
-        for (CONTROL control : values()) {
-            if (!control.update.isEmpty()) {
-                UPDATE_CONTROLS.put(control.update, control.id);
-            }
-            BY_ID.put(control.id, control);
-        }
+    public static HashMap<String, Integer> getUPDATE_CONTROLS() {
+        return UPDATE_CONTROLS;
+    }
+
+    public static HashMap<Integer, Control> getById() {
+        return BY_ID;
     }
 
     public int getId() {
@@ -96,13 +106,5 @@ public enum CONTROL {
 
     public boolean isNoSiege() {
         return noSiege;
-    }
-
-    public static HashMap<String, Integer> getUPDATE_CONTROLS() {
-        return UPDATE_CONTROLS;
-    }
-
-    public static HashMap<Integer, CONTROL> getById() {
-        return BY_ID;
     }
 }

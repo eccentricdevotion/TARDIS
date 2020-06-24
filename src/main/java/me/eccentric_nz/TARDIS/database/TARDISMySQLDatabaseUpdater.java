@@ -80,6 +80,7 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("dnd_on int(1) DEFAULT '0'");
         prefsupdates.add("farm_on int(1) DEFAULT '0'");
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
+        prefsupdates.add("throttle int(1) DEFAULT '4'");
         prefsupdates.add("font_on int(1) DEFAULT '0'");
         prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("hum varchar(24) DEFAULT ''");
@@ -228,13 +229,6 @@ class TARDISMySQLDatabaseUpdater {
                     String s_alter = "ALTER TABLE " + prefix + "sonic ADD " + s;
                     statement.executeUpdate(s_alter);
                 }
-            }
-            // update data type for `lamp` in player_prefs
-            String lamp_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "player_prefs' AND COLUMN_NAME = 'lamp'";
-            ResultSet rslc = statement.executeQuery(lamp_check);
-            if (rslc.next() && !rslc.getString("DATA_TYPE").equalsIgnoreCase("varchar")) {
-                String lamp_query = "ALTER TABLE " + prefix + "player_prefs CHANGE `lamp` `lamp` VARCHAR(64) NULL DEFAULT ''";
-                statement.executeUpdate(lamp_query);
             }
             // update data type for `data` in blocks
             String blockdata_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";

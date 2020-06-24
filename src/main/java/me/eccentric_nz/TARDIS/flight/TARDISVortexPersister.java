@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInstantPreset;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,10 +46,10 @@ public class TARDISVortexPersister {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
+    private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
-    private final String prefix;
 
     public TARDISVortexPersister(TARDIS plugin) {
         this.plugin = plugin;
@@ -105,7 +106,7 @@ public class TARDISVortexPersister {
                             whereb.put("tardis_id", id);
                             ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
                             if (rsb.resultSet()) {
-                                DestroyData dd = new DestroyData(plugin, uuid.toString());
+                                DestroyData dd = new DestroyData();
                                 Location location = new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ());
                                 dd.setLocation(location);
                                 dd.setDirection(rsb.getDirection());
@@ -113,6 +114,7 @@ public class TARDISVortexPersister {
                                 dd.setTardisID(id);
                                 dd.setBiome(null);
                                 dd.setSiege(false);
+                                dd.setThrottle(SpaceTimeThrottle.REBUILD);
                                 while (!location.getChunk().isLoaded()) {
                                     location.getChunk().load();
                                 }
@@ -126,7 +128,7 @@ public class TARDISVortexPersister {
                         wherec.put("tardis_id", id);
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                         if (rsc.resultSet()) {
-                            BuildData bd = new BuildData(plugin, uuid.toString());
+                            BuildData bd = new BuildData(uuid.toString());
                             bd.setTardisID(id);
                             Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             bd.setLocation(location);
@@ -137,6 +139,7 @@ public class TARDISVortexPersister {
                             bd.setDirection(rsc.getDirection());
                             bd.setSubmarine(rsc.isSubmarine());
                             bd.setMalfunction(false);
+                            bd.setThrottle(SpaceTimeThrottle.REBUILD);
                             while (!location.getChunk().isLoaded()) {
                                 location.getChunk().load();
                             }

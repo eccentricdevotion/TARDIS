@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -148,14 +149,19 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     boolean set_biome = true;
                     boolean bar = false;
                     int flight_mode = 1;
+                    SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
                         set_biome = rsp.isPoliceboxTexturesOn();
                         bar = rsp.isTravelbarOn();
                         flight_mode = rsp.getFlightMode();
+                        if (flight_mode == 1 && !malfunction) {
+                            spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
+                        }
                     }
+                    plugin.debug("ST Throttle: " + spaceTimeThrottle.toString());
                     // set destination flight data
-                    BuildData bd = new BuildData(plugin, uuid.toString());
+                    BuildData bd = new BuildData(uuid.toString());
                     bd.setDirection(sd);
                     bd.setLocation(exit);
                     bd.setMalfunction(false);
@@ -165,12 +171,36 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     bd.setSubmarine(is_next_sub);
                     bd.setTardisID(id);
                     bd.setTexture(set_biome);
-
+                    bd.setThrottle(spaceTimeThrottle);
+                    // determine delay values
+                    long flight_mode_delay;
+                    long travel_time;
+                    String landSFX;
+                    switch (spaceTimeThrottle) {
+                        case WARP:
+                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
+                            travel_time = (malfunction) ? 400L : 94L;
+                            landSFX = "tardis_land_warp";
+                            break;
+                        case RAPID:
+                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
+                            travel_time = (malfunction) ? 400L : 188L;
+                            landSFX = "tardis_land_rapid";
+                            break;
+                        case FASTER:
+                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
+                            travel_time = (malfunction) ? 400L : 282L;
+                            landSFX = "tardis_land_faster";
+                            break;
+                        default: // NORMAL
+                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
+                            travel_time = (malfunction) ? 400L : 375L;
+                            landSFX = "tardis_land";
+                            break;
+                    }
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
-                    long flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
                     long materialisation_delay = flight_mode_delay;
-                    long travel_time = (malfunction) ? 400L : 375L;
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) && malfunction) {
                         materialisation_delay += 262L;
                         travel_time += 262L;
@@ -199,16 +229,15 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     Location external_sound_loc = exit;
                     boolean malchk = malfunction;
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
-                        BuildData b_data = plugin.getTrackerKeeper().getFlightData().get(uuid);
-                        Location final_location = b_data.getLocation();
+                        Location final_location = bd.getLocation();
                         Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                         plugin.getPM().callEvent(new TARDISMaterialisationEvent(player, tardis, final_location));
-                        plugin.getPresetBuilder().buildPreset(b_data);
+                        plugin.getPresetBuilder().buildPreset(bd);
                         if (!mine_sound) {
                             if (!preset.equals(PRESET.JUNK_MODE)) {
                                 if (!malchk) {
-                                    TARDISSounds.playTARDISSound(sound_loc, "tardis_land");
-                                    TARDISSounds.playTARDISSound(external_sound_loc, "tardis_land");
+                                    TARDISSounds.playTARDISSound(sound_loc, landSFX);
+                                    TARDISSounds.playTARDISSound(external_sound_loc, landSFX);
                                 } else {
                                     TARDISSounds.playTARDISSound(sound_loc, "tardis_emergency_land");
                                     TARDISSounds.playTARDISSound(external_sound_loc, "tardis_emergency_land");
@@ -230,8 +259,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setcurrent.put("x", final_location.getBlockX());
                         setcurrent.put("y", final_location.getBlockY());
                         setcurrent.put("z", final_location.getBlockZ());
-                        setcurrent.put("direction", b_data.getDirection().toString());
-                        setcurrent.put("submarine", (b_data.isSubmarine()) ? 1 : 0);
+                        setcurrent.put("direction", bd.getDirection().toString());
+                        setcurrent.put("submarine", (bd.isSubmarine()) ? 1 : 0);
                         wherecurrent.put("tardis_id", id);
                         // back
                         setback.put("world", rscl.getWorld().getName());
@@ -242,7 +271,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setback.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
                         whereback.put("tardis_id", id);
                         // update Police Box door direction
-                        setdoor.put("door_direction", b_data.getDirection().toString());
+                        setdoor.put("door_direction", bd.getDirection().toString());
                         wheredoor.put("tardis_id", id);
                         wheredoor.put("door_type", 0);
                         if (setcurrent.size() > 0) {

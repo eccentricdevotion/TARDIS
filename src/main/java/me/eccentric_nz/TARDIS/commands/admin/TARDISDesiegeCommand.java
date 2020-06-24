@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
@@ -80,7 +81,7 @@ class TARDISDesiegeCommand {
                 setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
                 // rebuild the TARDIS
-                BuildData bd = new BuildData(plugin, uuid.toString());
+                BuildData bd = new BuildData(uuid.toString());
                 bd.setDirection(rsh.getDirection());
                 bd.setLocation(new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ()));
                 bd.setMalfunction(false);
@@ -90,6 +91,7 @@ class TARDISDesiegeCommand {
                 bd.setSubmarine(rsh.isSubmarine());
                 bd.setTardisID(id);
                 bd.setBiome(Biome.PLAINS);
+                bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetBuilder().buildPreset(bd);
                 TARDISMessage.send(sender, "SIEGE_REBUILT");
             }

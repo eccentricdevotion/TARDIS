@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -73,7 +74,7 @@ class TARDISRemoteHideCommand {
             return true;
         }
         UUID uuid = olp.getUniqueId();
-        DestroyData dd = new DestroyData(plugin, uuid.toString());
+        DestroyData dd = new DestroyData();
         dd.setDirection(rsc.getDirection());
         dd.setLocation(l);
         dd.setPlayer(olp);
@@ -82,6 +83,7 @@ class TARDISRemoteHideCommand {
         dd.setSubmarine(rsc.isSubmarine());
         dd.setTardisID(id);
         dd.setBiome(rsc.getBiome());
+        dd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getPresetDestroyer().destroyPreset(dd);
         TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
         // set hidden to true

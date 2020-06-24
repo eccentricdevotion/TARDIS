@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -354,7 +355,7 @@ public class TARDISSiegeListener implements Listener {
             }
             // rebuild the TARDIS
             Location current = b.getLocation();
-            BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+            BuildData bd = new BuildData(p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(current);
             bd.setMalfunction(false);
@@ -364,6 +365,7 @@ public class TARDISSiegeListener implements Listener {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
+            bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             HashMap<String, Object> set = new HashMap<>();
             set.put("siege_on", 0);

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -90,7 +91,7 @@ public class TARDISSiegeMode {
             // remove siege block
             siege.setBlockData(TARDISConstants.AIR);
             // rebuild preset
-            BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+            BuildData bd = new BuildData(p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(current);
             bd.setMalfunction(false);
@@ -100,6 +101,7 @@ public class TARDISSiegeMode {
             bd.setSubmarine(rsc.isSubmarine());
             bd.setTardisID(id);
             bd.setBiome(rsc.getBiome());
+            bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             set.put("siege_on", 0);
             // remove trackers
@@ -146,7 +148,7 @@ public class TARDISSiegeMode {
                 return;
             }
             // destroy tardis
-            DestroyData dd = new DestroyData(plugin, p.getUniqueId().toString());
+            DestroyData dd = new DestroyData();
             dd.setDirection(rsc.getDirection());
             dd.setLocation(current);
             dd.setPlayer(p.getPlayer());
@@ -156,6 +158,7 @@ public class TARDISSiegeMode {
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(rsc.getBiome());
+            dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);

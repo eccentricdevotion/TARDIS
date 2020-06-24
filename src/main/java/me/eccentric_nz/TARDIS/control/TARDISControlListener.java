@@ -81,6 +81,7 @@ public class TARDISControlListener implements Listener {
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.MUSHROOM_STEM);
         validBlocks.add(Material.NOTE_BLOCK);
+        validBlocks.add(Material.REPEATER);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
         validBlocks.addAll(Tag.SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
@@ -492,7 +493,10 @@ public class TARDISControlListener implements Listener {
                                     // space/time throttle
                                     Repeater repeater = (Repeater) block.getBlockData();
                                     // get delay
-                                    int delay = repeater.getDelay();
+                                    int delay = repeater.getDelay() + 1;
+                                    if (delay > 4) {
+                                        delay = 1;
+                                    }
                                     // update player prefs
                                     HashMap<String, Object> wherer = new HashMap<>();
                                     wherer.put("uuid", player.getUniqueId().toString());

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -139,7 +140,7 @@ public class TARDISDeleteCommand {
             // destroy outer TARDIS
             if (!hidden) {
                 UUID u = rs.getTardis().getUuid();
-                DestroyData dd = new DestroyData(plugin, u.toString());
+                DestroyData dd = new DestroyData();
                 dd.setDirection(d);
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(u));
@@ -148,6 +149,7 @@ public class TARDISDeleteCommand {
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
                 dd.setBiome(biome);
+                dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetDestroyer().destroyPreset(dd);
             } else {
                 // restore biome

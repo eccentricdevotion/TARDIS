@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -129,7 +126,7 @@ class TARDISHostileDisplacement {
                         long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
-                        DestroyData dd = new DestroyData(plugin, uuid.toString());
+                        DestroyData dd = new DestroyData();
                         dd.setDirection(d);
                         dd.setLocation(current);
                         dd.setPlayer(player);
@@ -138,11 +135,12 @@ class TARDISHostileDisplacement {
                         dd.setSubmarine(rsc.isSubmarine());
                         dd.setTardisID(id);
                         dd.setBiome(rsc.getBiome());
+                        dd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
                             plugin.getPresetDestroyer().destroyPreset(dd);
                         }, delay);
-                        BuildData bd = new BuildData(plugin, uuid.toString());
+                        BuildData bd = new BuildData(uuid.toString());
                         bd.setDirection(d);
                         bd.setLocation(fl);
                         bd.setMalfunction(false);
@@ -151,6 +149,7 @@ class TARDISHostileDisplacement {
                         bd.setRebuild(false);
                         bd.setSubmarine(rsc.isSubmarine());
                         bd.setTardisID(id);
+                        bd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // message time lord
                         String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");

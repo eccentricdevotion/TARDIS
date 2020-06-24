@@ -35,10 +35,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -290,7 +287,7 @@ public class TARDISStattenheimListener implements Listener {
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         boolean hid = hidden;
                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                            DestroyData dd = new DestroyData(plugin, uuid.toString());
+                            DestroyData dd = new DestroyData();
                             dd.setDirection(d);
                             dd.setLocation(oldSave);
                             dd.setPlayer(player);
@@ -299,6 +296,7 @@ public class TARDISStattenheimListener implements Listener {
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
                             dd.setBiome(rsc.getBiome());
+                            dd.setThrottle(SpaceTimeThrottle.NORMAL);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (!hid) {
                                     plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -308,7 +306,7 @@ public class TARDISStattenheimListener implements Listener {
                                 }
                             }, delay);
                         }
-                        BuildData bd = new BuildData(plugin, uuid.toString());
+                        BuildData bd = new BuildData(uuid.toString());
                         bd.setDirection(player_d);
                         bd.setLocation(remoteLocation);
                         bd.setMalfunction(false);
@@ -317,6 +315,7 @@ public class TARDISStattenheimListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(sub);
                         bd.setTardisID(id);
+                        bd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<>();

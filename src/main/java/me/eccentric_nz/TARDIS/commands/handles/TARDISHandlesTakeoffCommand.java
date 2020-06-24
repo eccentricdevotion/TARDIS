@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -92,11 +93,13 @@ class TARDISHandlesTakeoffCommand {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
                         boolean beac_on = true;
                         boolean bar = false;
+                        SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                         if (rsp.resultSet()) {
                             beac_on = rsp.isBeaconOn();
                             bar = rsp.isTravelbarOn();
+                            spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                         }
-                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar);
+                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, spaceTimeThrottle);
                     } else {
                         TARDISMessage.handlesSend(player, "HANDBRAKE_OFF_ERR");
                     }

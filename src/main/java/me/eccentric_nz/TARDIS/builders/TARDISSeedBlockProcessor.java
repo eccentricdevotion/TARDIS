@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -190,7 +191,7 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("direction", d);
                 plugin.getQueryFactory().insertLocations(setlocs, biome, lastInsertId);
                 // turn the block stack into a TARDIS
-                BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+                BuildData bd = new BuildData(player.getUniqueId().toString());
                 bd.setDirection(COMPASS.valueOf(d));
                 bd.setLocation(l);
                 bd.setMalfunction(false);
@@ -200,6 +201,7 @@ public class TARDISSeedBlockProcessor {
                 bd.setSubmarine(isSub(l));
                 bd.setTardisID(lastInsertId);
                 bd.setBiome(l.getBlock().getBiome());
+                bd.setThrottle(SpaceTimeThrottle.NORMAL);
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
                     plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));

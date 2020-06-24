@@ -16,11 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 
@@ -31,22 +29,15 @@ import org.bukkit.block.Biome;
  */
 public class MaterialisationData {
 
-    private final TARDIS plugin;
     private Biome biome;
     private COMPASS direction;
     private Location location;
-    private Material lamp = Material.REDSTONE_LAMP;
     private OfflinePlayer player;
     private boolean outside;
     private boolean submarine;
     private boolean siege;
     private int tardisID;
-
-    protected MaterialisationData(TARDIS plugin, String uuid) {
-        this.plugin = plugin;
-        // get player preferences
-        setPlayerDefaults(uuid);
-    }
+    private SpaceTimeThrottle throttle;
 
     public Biome getBiome() {
         return biome;
@@ -70,14 +61,6 @@ public class MaterialisationData {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Material getLamp() {
-        return lamp;
-    }
-
-    public void setLamp(Material lamp) {
-        this.lamp = lamp;
     }
 
     public OfflinePlayer getPlayer() {
@@ -120,11 +103,11 @@ public class MaterialisationData {
         this.tardisID = tardisID;
     }
 
-    public void setPlayerDefaults(String uuid) {
-        player = plugin.getServer().getOfflinePlayer(uuid);
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-        if (rsp.resultSet()) {
-            lamp = rsp.getLamp();
-        }
+    public SpaceTimeThrottle getThrottle() {
+        return throttle;
+    }
+
+    public void setThrottle(SpaceTimeThrottle throttle) {
+        this.throttle = throttle;
     }
 }

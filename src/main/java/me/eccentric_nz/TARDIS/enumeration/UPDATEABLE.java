@@ -21,7 +21,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.RecipeChoice;
 
-public enum UPDATEABLE {
+public enum Updateable {
 
     ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX)),
     ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
@@ -63,6 +63,7 @@ public enum UPDATEABLE {
     TELEPATHIC(true, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR)),
     TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
     TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
+    THROTTLE(true, true, new RecipeChoice.MaterialChoice(Material.REPEATER)),
     TOGGLE_WOOL(true, true),
     VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST)),
     VILLAGE(false, false, true),
@@ -78,21 +79,21 @@ public enum UPDATEABLE {
     private final boolean anyBlock;
     private final RecipeChoice.MaterialChoice materialChoice;
 
-    UPDATEABLE(boolean control, boolean secondary) {
+    Updateable(boolean control, boolean secondary) {
         this.control = control;
         this.secondary = secondary;
         anyBlock = false;
         materialChoice = new RecipeChoice.MaterialChoice(Material.COMPARATOR, Material.LEVER, Material.OAK_BUTTON, Material.DARK_OAK_BUTTON, Material.SPRUCE_BUTTON, Material.BIRCH_BUTTON, Material.ACACIA_BUTTON, Material.JUNGLE_BUTTON, Material.STONE_BUTTON, Material.OAK_PRESSURE_PLATE, Material.DARK_OAK_PRESSURE_PLATE, Material.SPRUCE_PRESSURE_PLATE, Material.BIRCH_PRESSURE_PLATE, Material.ACACIA_PRESSURE_PLATE, Material.JUNGLE_PRESSURE_PLATE, Material.STONE_PRESSURE_PLATE, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.JUNGLE_WALL_SIGN);
     }
 
-    UPDATEABLE(boolean control, boolean secondary, boolean anyBlock) {
+    Updateable(boolean control, boolean secondary, boolean anyBlock) {
         this.control = control;
         this.secondary = secondary;
         this.anyBlock = anyBlock;
         materialChoice = new RecipeChoice.MaterialChoice(Material.SPAWNER);
     }
 
-    UPDATEABLE(boolean control, boolean secondary, RecipeChoice.MaterialChoice materialChoice) {
+    Updateable(boolean control, boolean secondary, RecipeChoice.MaterialChoice materialChoice) {
         this.control = control;
         this.secondary = secondary;
         anyBlock = false;
@@ -100,7 +101,7 @@ public enum UPDATEABLE {
     }
 
     public String getName() {
-        if (this == UPDATEABLE.TOGGLE_WOOL) {
+        if (this == Updateable.TOGGLE_WOOL) {
             return "toggle_wool";
         } else {
             return TARDISStringUtils.toDashedLowercase(toString());

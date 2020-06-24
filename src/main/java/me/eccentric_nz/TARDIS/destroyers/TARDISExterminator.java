@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -90,7 +91,7 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                DestroyData dd = new DestroyData(plugin, uuid.toString());
+                DestroyData dd = new DestroyData();
                 dd.setDirection(rsc.getDirection());
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
@@ -99,6 +100,7 @@ public class TARDISExterminator {
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
                 dd.setBiome(rsc.getBiome());
+                dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 if (!hid) {
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 }
@@ -226,7 +228,7 @@ public class TARDISExterminator {
             int signy = -2;
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 // if the sign was on the TARDIS destroy the TARDIS!
-                DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+                DestroyData dd = new DestroyData();
                 dd.setDirection(d);
                 dd.setLocation(bb_loc);
                 dd.setPlayer(player);
@@ -235,6 +237,7 @@ public class TARDISExterminator {
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
                 dd.setBiome(rsc.getBiome());
+                dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
                 if (!tardis.isHidden()) {
                     // remove Police Box

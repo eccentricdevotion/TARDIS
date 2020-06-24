@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -65,7 +66,7 @@ class TARDISJunkDelete {
                 return true;
             }
             // destroy junk TARDIS
-            DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+            DestroyData dd = new DestroyData();
             dd.setDirection(COMPASS.SOUTH);
             dd.setLocation(bb_loc);
             dd.setHide(false);
@@ -73,6 +74,7 @@ class TARDISJunkDelete {
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(biome);
+            dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex TARDIS
             World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));

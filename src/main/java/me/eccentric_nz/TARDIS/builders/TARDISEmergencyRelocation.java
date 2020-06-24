@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
@@ -51,12 +52,13 @@ public class TARDISEmergencyRelocation {
             World w = plugin.getServer().getWorlds().get(0);
             Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, 4, 4, 4, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
             if (emergency != null) {
-                BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+                BuildData bd = new BuildData(p.getUniqueId().toString());
                 bd.setLocation(emergency);
                 bd.setTardisID(id);
                 bd.setDirection(COMPASS.EAST);
                 bd.setMalfunction(false);
                 bd.setSubmarine(false);
+                bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 Tardis tardis = rs.getTardis();
                 if (tardis.getPreset().isColoured()) {
                     new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();

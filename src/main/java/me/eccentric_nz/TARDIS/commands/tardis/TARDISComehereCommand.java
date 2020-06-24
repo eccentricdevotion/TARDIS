@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -236,7 +237,7 @@ class TARDISComehereCommand {
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 boolean hid = hidden;
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                    DestroyData dd = new DestroyData(plugin, uuid.toString());
+                    DestroyData dd = new DestroyData();
                     dd.setDirection(d);
                     dd.setLocation(oldSave);
                     dd.setPlayer(player);
@@ -245,6 +246,7 @@ class TARDISComehereCommand {
                     dd.setSubmarine(rsc.isSubmarine());
                     dd.setTardisID(id);
                     dd.setBiome(biome);
+                    dd.setThrottle(SpaceTimeThrottle.NORMAL);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (!hid) {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -254,7 +256,7 @@ class TARDISComehereCommand {
                         }
                     }, delay);
                 }
-                BuildData bd = new BuildData(plugin, uuid.toString());
+                BuildData bd = new BuildData(uuid.toString());
                 bd.setDirection(player_d);
                 bd.setLocation(eyeLocation);
                 bd.setMalfunction(false);
@@ -263,6 +265,7 @@ class TARDISComehereCommand {
                 bd.setRebuild(false);
                 bd.setSubmarine(sub);
                 bd.setTardisID(id);
+                bd.setThrottle(SpaceTimeThrottle.NORMAL);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                 // remove energy from TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
@@ -270,11 +273,10 @@ class TARDISComehereCommand {
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
                 plugin.getTrackerKeeper().getRescue().remove(id);
-                return true;
             } else {
                 TARDISMessage.send(player, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
-                return true;
             }
+            return true;
         } else {
             TARDISMessage.send(player, "NO_PERMS");
             return false;
