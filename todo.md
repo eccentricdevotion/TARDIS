@@ -9,7 +9,7 @@
 5. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
 6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
-8.  Charge players a fee (via Vault) for using the Junk TARDIS
+8.  Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
 
 ## Minecraft 1.16
 1. Add new blocks and nether biomes
