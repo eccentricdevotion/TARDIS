@@ -40,10 +40,11 @@ public class TARDISWorlds {
     public static void loadWorld(String world) {
         try {
             String wt = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
-            WorldType worldType = WorldType.valueOf(wt);
+//            WorldType worldType = WorldType.valueOf(wt);
             String e = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
             World.Environment environment = World.Environment.valueOf(e);
-            WorldCreator worldCreator = WorldCreator.name(world).type(worldType).environment(environment);
+//            WorldCreator worldCreator = WorldCreator.name(world).type(worldType).environment(environment);
+            WorldCreator worldCreator = WorldCreator.name(world).environment(environment);
             String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
@@ -68,7 +69,7 @@ public class TARDISWorlds {
                 w.setKeepSpawnInMemory(keepSpawnInMemory);
             }
         } catch (IllegalArgumentException e) {
-            TARDIS.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'!");
+            TARDIS.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'! " + e.getMessage());
         }
     }
 

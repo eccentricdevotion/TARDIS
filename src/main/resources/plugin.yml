@@ -5,13 +5,13 @@ name: TARDIS
 load: POSTWORLD
 loadbefore: [ItemSlotMachine]
 depend: [TARDISChunkGenerator]
-softdepend: [Blocklocker,Essentials,Factions,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,Towny,WorldBorder,WorldGuard]
+softdepend: [Blocklocker,Essentials,Factions,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
 version: maven-version-number
 build-number: maven-build-number
-api-version: 1.15
+api-version: 1.16
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.

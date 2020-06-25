@@ -184,7 +184,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.15.2");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.4.3");
+        versions.put("TARDISChunkGenerator", "4.4.4");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -299,7 +299,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.15.2");
+        Version minversion = new Version("1.16.1");
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
             if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
@@ -1017,7 +1017,7 @@ public class TARDIS extends JavaPlugin {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
             Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
             Version version = new Version(twa.getDescription().getVersion());
-            return (version.compareTo(new Version("3.3")) >= 0);
+            return (version.compareTo(new Version("3.3.1")) >= 0);
         } else {
             return false;
         }

@@ -22,11 +22,12 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -52,8 +53,9 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.CREEPER);
         monsters.add(EntityType.ENDERMAN);
         monsters.add(EntityType.ENDERMITE);
+        monsters.add(EntityType.HOGLIN);
         monsters.add(EntityType.HUSK);
-        monsters.add(EntityType.PIG_ZOMBIE);
+        monsters.add(EntityType.PIGLIN);
         monsters.add(EntityType.PILLAGER);
         monsters.add(EntityType.SILVERFISH);
         monsters.add(EntityType.SKELETON);
@@ -64,8 +66,10 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.VINDICATOR);
         monsters.add(EntityType.WITCH);
         monsters.add(EntityType.WITHER_SKELETON);
+        monsters.add(EntityType.ZOGLIN);
         monsters.add(EntityType.ZOMBIE);
         monsters.add(EntityType.ZOMBIE_VILLAGER);
+        monsters.add(EntityType.ZOMBIFIED_PIGLIN);
         if (this.plugin.getConfig().getBoolean("allow.guardians")) {
             monsters.add(EntityType.GUARDIAN);
         } else {
@@ -129,7 +133,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                 dn = "Silent";
                             }
                             break;
-                        case PIG_ZOMBIE:
+                        case ZOMBIFIED_PIGLIN:
                             PigZombie pigzombie = (PigZombie) e;
                             tm.setAggressive(pigzombie.isAngry());
                             tm.setAnger(pigzombie.getAnger());
@@ -140,7 +144,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     dn = name.substring(0, name.length() - 5);
                                 }
                             } else {
-                                dn = "Pig Zombie";
+                                dn = "Zombified Piglin";
                             }
                             break;
                         case SKELETON:
@@ -162,10 +166,6 @@ public class TARDISMonsterRunnable implements Runnable {
                             Slime slime = (Slime) e;
                             tm.setSize(slime.getSize());
                             break;
-                        case VINDICATOR:
-                            Vindicator vindicator = (Vindicator) e;
-                            tm.setEquipment(vindicator.getEquipment());
-                            break;
                         case HUSK:
                         case ZOMBIE:
                         case ZOMBIE_VILLAGER:
@@ -186,9 +186,11 @@ public class TARDISMonsterRunnable implements Runnable {
                             }
                             break;
                         case PILLAGER:
-                            Pillager pillager = (Pillager) e;
-                            tm.setEquipment(pillager.getEquipment());
-                            dn = "Pillager";
+                        case PIGLIN:
+                        case VINDICATOR:
+                            Monster monster = (Monster) e;
+                            tm.setEquipment(monster.getEquipment());
+                            dn = TARDISStringUtils.uppercaseFirst(type.toString());
                             break;
                         default:
                             break;
@@ -343,7 +345,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         enderman.setCarriedBlock(m.getCarried());
                     }
                     break;
-                case PIG_ZOMBIE:
+                case ZOMBIFIED_PIGLIN:
                     PigZombie pigzombie = (PigZombie) ent;
                     pigzombie.setAngry(m.isAggressive());
                     pigzombie.setAnger(m.getAnger());

@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear");
     private final List<String> FILE_SUBS = new ArrayList<>();
 
     public TARDISSchematicTabComplete(File userDir) {

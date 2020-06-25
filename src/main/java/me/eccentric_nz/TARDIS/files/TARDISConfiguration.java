@@ -232,7 +232,7 @@ public class TARDISConfiguration {
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {
-                plugin.debug("missing entry: " + entry.getKey());
+                plugin.debug("Missing entry: " + entry.getKey());
                 plugin.getConfig().set(entry.getKey(), entry.getValue());
                 i++;
             }
@@ -240,7 +240,7 @@ public class TARDISConfiguration {
         // int values
         for (Map.Entry<String, Integer> entry : integerOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {
-                plugin.debug("missing entry: " + entry.getKey());
+                plugin.debug("Missing entry: " + entry.getKey());
                 plugin.getConfig().set(entry.getKey(), entry.getValue());
                 i++;
             }
@@ -248,7 +248,7 @@ public class TARDISConfiguration {
         // string values
         for (Map.Entry<String, String> entry : stringOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {
-                plugin.debug("missing entry: " + entry.getKey());
+                plugin.debug("Missing entry: " + entry.getKey());
                 plugin.getConfig().set(entry.getKey(), entry.getValue());
                 i++;
             }

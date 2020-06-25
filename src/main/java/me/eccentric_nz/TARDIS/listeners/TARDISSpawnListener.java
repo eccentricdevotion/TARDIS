@@ -76,7 +76,11 @@ public class TARDISSpawnListener implements Listener {
         biomes.add(Biome.END_MIDLANDS);
         biomes.add(Biome.MUSHROOM_FIELD_SHORE);
         biomes.add(Biome.MUSHROOM_FIELDS);
-        biomes.add(Biome.NETHER);
+        biomes.add(Biome.NETHER_WASTES);
+        biomes.add(Biome.SOUL_SAND_VALLEY);
+        biomes.add(Biome.CRIMSON_FOREST);
+        biomes.add(Biome.WARPED_FOREST);
+        biomes.add(Biome.BASALT_DELTAS);
         biomes.add(Biome.SMALL_END_ISLANDS);
         biomes.add(Biome.THE_END);
     }
@@ -141,7 +145,11 @@ public class TARDISSpawnListener implements Listener {
             // always deny MUSHROOM, HELL and SKY biomes
             switch (l.getBlock().getBiome()) {
                 case MUSHROOM_FIELDS:
-                case NETHER:
+                case NETHER_WASTES:
+                case SOUL_SAND_VALLEY:
+                case CRIMSON_FOREST:
+                case WARPED_FOREST:
+                case BASALT_DELTAS:
                     if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
                         event.setCancelled(true);
                         return;

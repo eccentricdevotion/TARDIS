@@ -18,6 +18,7 @@
 4. Full unicode support - may not need custom resource pack font for nice looking tabbed lists?
 5. Attribute names have changed
 6. Use new ItemFrame tags - `invisible` & `fixed` - for policeboxes and time rotors
+7. force update defender.json advancement
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

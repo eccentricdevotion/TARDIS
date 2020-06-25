@@ -71,7 +71,6 @@ public class ConstructsConverter {
                         Matcher m = p.matcher(bpID);
                         if (!m.find()) {
                             // no IDs found, already converted
-                            plugin.debug("doesn't match");
                             continue;
                         }
                         String[][] bpGrid = new String[10][4];

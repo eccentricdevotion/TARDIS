@@ -172,7 +172,11 @@ public class TARDISExteriorRenderer {
                     base = Material.END_STONE.createBlockData();
                     stone = Material.OBSIDIAN.createBlockData();
                     break;
-                case NETHER:
+                case NETHER_WASTES:
+                case SOUL_SAND_VALLEY:
+                case CRIMSON_FOREST:
+                case WARPED_FOREST:
+                case BASALT_DELTAS:
                     sky = TARDISConstants.BLACK;
                     base = Material.NETHERRACK.createBlockData();
                     stone = Material.NETHER_QUARTZ_ORE.createBlockData();
@@ -276,7 +280,6 @@ public class TARDISExteriorRenderer {
         }
         // if enabled add static entities
         if (plugin.getConfig().getBoolean("preferences.render_entities")) {
-            plugin.debug("rendering entities");
             new TARDISEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
         }
         // charge artron energy for the render

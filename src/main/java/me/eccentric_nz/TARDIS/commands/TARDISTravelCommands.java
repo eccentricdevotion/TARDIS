@@ -71,7 +71,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
         for (Biome bi : Biome.values()) {
-            if (!bi.equals(Biome.NETHER) && !bi.equals(Biome.THE_END) && !bi.equals(Biome.THE_VOID)) {
+            if (!TARDISConstants.NETHER_BIOMES.contains(bi) && !bi.equals(Biome.THE_END) && !bi.equals(Biome.THE_VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }
         }

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
 import org.bukkit.command.CommandException;
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
@@ -58,7 +57,8 @@ public class TARDISGallifrey {
             plugin.getTardisHelper().setRandomSeed("Gallifrey");
             archive.delete();
             // load world
-            WorldCreator.name("Gallifrey").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+//            WorldCreator.name("Gallifrey").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+            WorldCreator.name("Gallifrey").environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
             // add world to config
             plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
             plugin.savePlanetsConfig();

@@ -259,7 +259,6 @@ class TARDISHandlesValidator {
                         endCount++;
                     }
                     if (thb.equals(TARDISHandlesBlock.END)) {
-                        plugin.debug("found end block");
                         if (found++ == endCount) {
                             return true;
                         }

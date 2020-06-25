@@ -73,10 +73,15 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
             World world = plugin.getServer().getWorld(args[0]);
             if (world != null) {
                 Location spawn = world.getSpawnLocation();
+                while (!world.getChunkAt(spawn).isLoaded()) {
+                    world.getChunkAt(spawn).load();
+                }
+                int highest = world.getHighestBlockYAt(spawn);
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
                 spawn.setYaw(yaw);
                 spawn.setPitch(pitch);
+                spawn.setY(highest + 1);
                 player.teleport(spawn);
             } else {
                 TARDISMessage.send(player, "WORLD_NOT_FOUND");

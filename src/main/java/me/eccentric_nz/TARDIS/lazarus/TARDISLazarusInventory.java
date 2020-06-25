@@ -86,7 +86,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.WITCH_SPAWN_EGG);
         disguises.add(Material.WITHER_SKELETON_SPAWN_EGG);
         disguises.add(Material.WOLF_SPAWN_EGG);
-        disguises.add(Material.ZOMBIE_PIGMAN_SPAWN_EGG);
+        disguises.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
         terminal = getItemStack();
@@ -107,7 +107,7 @@ class TARDISLazarusInventory {
                 case MOOSHROOM_SPAWN_EGG:
                     me.setDisplayName("MUSHROOM_COW");
                     break;
-                case ZOMBIE_PIGMAN_SPAWN_EGG:
+                case ZOMBIFIED_PIGLIN_SPAWN_EGG:
                     me.setDisplayName("PIG_ZOMBIE");
                     break;
                 default:

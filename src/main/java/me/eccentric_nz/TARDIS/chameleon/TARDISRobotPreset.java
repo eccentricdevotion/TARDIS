@@ -30,7 +30,7 @@ class TARDISRobotPreset extends TARDISPreset {
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:air";
         blueprintData[0][1] = "minecraft:oak_fence";
-        blueprintData[0][2] = "minecraft:cobblestone_wall[south=true,up=true]";
+        blueprintData[0][2] = "minecraft:cobblestone_wall[south=low,up=true]";
         blueprintData[0][3] = "minecraft:air";
         blueprintData[1][0] = "minecraft:air";
         blueprintData[1][1] = "minecraft:air";
@@ -54,7 +54,7 @@ class TARDISRobotPreset extends TARDISPreset {
         blueprintData[5][3] = "minecraft:air";
         blueprintData[6][0] = "minecraft:air";
         blueprintData[6][1] = "minecraft:oak_fence";
-        blueprintData[6][2] = "minecraft:cobblestone_wall[north=true,up=true]";
+        blueprintData[6][2] = "minecraft:cobblestone_wall[north=low,up=true]";
         blueprintData[6][3] = "minecraft:air";
         blueprintData[7][0] = "minecraft:cobblestone_stairs[half=bottom,facing=east,shape=straight]";
         blueprintData[7][1] = "minecraft:cobblestone_wall[up=true]";

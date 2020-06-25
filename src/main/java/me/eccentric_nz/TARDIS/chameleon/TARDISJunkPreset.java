@@ -61,7 +61,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         blueprintData[5][0] = "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]";
         blueprintData[5][1] = "minecraft:air";
         blueprintData[5][2] = "minecraft:oak_wall_sign[facing=west,waterlogged=false]";
-        blueprintData[5][3] = "minecraft:cobblestone_wall[east=true,north=false,south=false,up=false,waterlogged=false,west=true]";
+        blueprintData[5][3] = "minecraft:cobblestone_wall[east=low,north=none,south=none,up=false,waterlogged=false,west=low]";
         blueprintData[6][0] = "minecraft:red_terracotta";
         blueprintData[6][1] = "minecraft:smooth_stone_slab[type=top,waterlogged=false]";
         blueprintData[6][2] = "minecraft:lever[face=floor,facing=north,powered=true]";
@@ -69,7 +69,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         blueprintData[7][0] = "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]";
         blueprintData[7][1] = "minecraft:air";
         blueprintData[7][2] = "minecraft:air";
-        blueprintData[7][3] = "minecraft:cobblestone_wall[east=false,north=true,south=true,up=false,waterlogged=false,west=false]";
+        blueprintData[7][3] = "minecraft:cobblestone_wall[east=none,north=low,south=low,up=false,waterlogged=false,west=none]";
         blueprintData[8][0] = "minecraft:light_gray_wool";
         blueprintData[8][1] = "minecraft:air";
         blueprintData[8][2] = "minecraft:air";
@@ -171,7 +171,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         blueprintWest[1][0] = "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]";
         blueprintWest[1][1] = "minecraft:air";
         blueprintWest[1][2] = "minecraft:oak_wall_sign[facing=east,waterlogged=false]";
-        blueprintWest[1][3] = "minecraft:cobblestone_wall[east=true,north=false,south=false,up=false,waterlogged=false,west=true]";
+        blueprintWest[1][3] = "minecraft:cobblestone_wall[east=low,north=none,south=none,up=false,waterlogged=false,west=low]";
         blueprintWest[2][0] = "minecraft:red_terracotta";
         blueprintWest[2][1] = "minecraft:smooth_stone_slab[type=top,waterlogged=false]";
         blueprintWest[2][2] = "minecraft:lever[face=floor,facing=south,powered=true]";
@@ -179,7 +179,7 @@ public class TARDISJunkPreset extends TARDISPreset {
         blueprintWest[3][0] = "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]";
         blueprintWest[3][1] = "minecraft:air";
         blueprintWest[3][2] = "minecraft:air";
-        blueprintWest[3][3] = "minecraft:cobblestone_wall[east=false,north=true,south=true,up=false,waterlogged=false,west=false]";
+        blueprintWest[3][3] = "minecraft:cobblestone_wall[east=none,north=low,south=low,up=false,waterlogged=false,west=none]";
         blueprintWest[4][0] = "minecraft:light_gray_wool";
         blueprintWest[4][1] = "minecraft:stone_bricks";
         blueprintWest[4][2] = "minecraft:orange_wool";

@@ -55,7 +55,7 @@ public class TARDISSonicScanner {
                     }
                 }
                 if (TARDIS.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                    if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.PIG_ZOMBIE)) {
+                    if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {

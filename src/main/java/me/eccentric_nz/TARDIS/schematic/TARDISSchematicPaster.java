@@ -47,11 +47,10 @@ class TARDISSchematicPaster implements Runnable {
     private final Player player;
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
-    private int task, l, r, h, w, d, rx, ry, rz, x, y, z;
+    private int task, l, r, h, w, d, x, y, z;
     private int counter = 0;
     private double div = 1.0d;
     private World world;
-    private UUID uuid;
     private JsonObject obj;
     private JsonArray arr;
     private boolean running = false;
@@ -68,7 +67,7 @@ class TARDISSchematicPaster implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-            uuid = player.getUniqueId();
+            UUID uuid = player.getUniqueId();
             if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
                 player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
                 plugin.getServer().getScheduler().cancelTask(task);
@@ -84,9 +83,9 @@ class TARDISSchematicPaster implements Runnable {
             div = (h + 1.0d) * w * (d + 1.0d);
             // get start location
             JsonObject r = obj.get("relative").getAsJsonObject();
-            rx = r.get("x").getAsInt();
-            ry = r.get("y").getAsInt();
-            rz = r.get("z").getAsInt();
+            int rx = r.get("x").getAsInt();
+            int ry = r.get("y").getAsInt();
+            int rz = r.get("z").getAsInt();
             x = player.getLocation().getBlockX() - rx;
             y = player.getLocation().getBlockY() - ry;
             z = player.getLocation().getBlockZ() - rz;

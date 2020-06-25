@@ -232,7 +232,11 @@ public class TARDISPresetBuilderFactory {
                 case TALL_BIRCH_FOREST:
                 case TALL_BIRCH_HILLS:
                     return PRESET.FOREST;
-                case NETHER:
+                case NETHER_WASTES:
+                case SOUL_SAND_VALLEY:
+                case CRIMSON_FOREST:
+                case WARPED_FOREST:
+                case BASALT_DELTAS:
                     return PRESET.NETHER;
                 case SNOWY_TUNDRA:
                 case DEEP_FROZEN_OCEAN:

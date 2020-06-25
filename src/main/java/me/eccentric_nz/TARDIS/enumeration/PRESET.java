@@ -113,6 +113,14 @@ public enum PRESET {
     POLICE_BOX_RED(Material.RED_CONCRETE_POWDER, 14, "", "", false, false, "Red Police Box"),
     POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box");
 
+    private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
+
+    static {
+        for (PRESET preset : values()) {
+            BY_MATERIAL.put(preset.getCraftMaterial(), preset);
+        }
+    }
+
     Material craftMaterial;
     Material guiDisplay;
     int slot;
@@ -120,7 +128,6 @@ public enum PRESET {
     String secondLine;
     boolean door;
     boolean portal;
-    private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
     String displayName;
 
     PRESET(Material craftMaterial, String firstLine, String secondLine, boolean door, boolean portal) {
@@ -167,6 +174,10 @@ public enum PRESET {
         displayName = ((this.firstLine.contains("_")) ? TARDISStringUtils.capitalise(this.firstLine) : TARDISStringUtils.titleCase(this.firstLine)) + (!this.secondLine.isEmpty() ? " " + TARDISStringUtils.titleCase(secondLine) : "");
     }
 
+    public static PRESET getPreset(Material mat) {
+        return BY_MATERIAL.get(mat);
+    }
+
     public Material getCraftMaterial() {
         return craftMaterial;
     }
@@ -187,10 +198,6 @@ public enum PRESET {
         return secondLine;
     }
 
-    public static PRESET getPreset(Material mat) {
-        return BY_MATERIAL.get(mat);
-    }
-
     public boolean hasDoor() {
         return door;
     }
@@ -201,12 +208,6 @@ public enum PRESET {
 
     public String getDisplayName() {
         return displayName;
-    }
-
-    static {
-        for (PRESET preset : values()) {
-            BY_MATERIAL.put(preset.getCraftMaterial(), preset);
-        }
     }
 
     public boolean isColoured() {

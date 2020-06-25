@@ -127,7 +127,6 @@ public class TARDISCommands implements CommandExecutor {
                 case upgrade:
                 case theme:
                     if (args.length > 1 && (args[1].equalsIgnoreCase("clean") || args[1].equalsIgnoreCase("repair")) && TARDISSudoTracker.isSudo(sender)) {
-                        plugin.debug("is sudo");
                         UUID uuid = TARDISSudoTracker.getSudoPlayer(sender);
                         return new SudoRepair(plugin, uuid, args[1].equalsIgnoreCase("clean")).repair();
                     } else {
