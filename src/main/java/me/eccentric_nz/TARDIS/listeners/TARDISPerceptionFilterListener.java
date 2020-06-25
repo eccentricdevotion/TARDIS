@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -65,7 +66,9 @@ public class TARDISPerceptionFilterListener implements Listener {
                         if (chestplate == null) {
                             // equip the chest slot with the perception filter
                             player.getInventory().setChestplate(is);
-                            player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                            if (player.getGameMode() == GameMode.SURVIVAL) {
+                                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                            }
                             player.updateInventory();
                             // make the player invisible
                             plugin.getFilter().addPerceptionFilter(player);
