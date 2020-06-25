@@ -98,5 +98,6 @@ public class TARDISInstantPoliceBox {
         }
         is.setItemMeta(im);
         frame.setItem(is);
+        plugin.getTardisHelper().setItemFrameTags(frame);
     }
 }

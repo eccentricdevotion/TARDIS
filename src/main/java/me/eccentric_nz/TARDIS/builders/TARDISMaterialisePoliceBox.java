@@ -135,6 +135,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 }
                 is.setItemMeta(im);
                 frame.setItem(is);
+                plugin.getTardisHelper().setItemFrameTags(frame);
             } else {
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));

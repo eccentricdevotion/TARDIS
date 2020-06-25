@@ -116,6 +116,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             im.setCustomModelData(cmd);
             is.setItemMeta(im);
             frame.setItem(is);
+            plugin.getTardisHelper().setItemFrameTags(frame);
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
