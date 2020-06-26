@@ -1,146 +1,69 @@
-/*
- * Copyright (C) 2020 eccentric_nz
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 
-public class TARDISBiomeFinder implements Runnable {
+public class TARDISBiomeFinder {
 
-    private final Player p;
-    private final int startx;
-    private final int startz;
-    private final int step = 64;
-    private int taskid, limite, limits, limitw, limitn, i = 0, plus = 0;
-    private final Biome b;
-    private final World w;
-    Integer[] directions = new Integer[]{0, 1, 2, 3};
-    private Location location = null;
+    private final TARDIS plugin;
 
-    public TARDISBiomeFinder(TARDIS plugin, Player p, int startx, int startz, Biome b, World w) {
-        this.p = p;
-        this.startx = startx;
-        this.startz = startz;
-        this.b = b;
-        this.w = w;
-        Collections.shuffle(Arrays.asList(directions));
-        limite = startx + 30000;
-        limits = startz + 30000;
-        limitw = startx - 30000;
-        limitn = startz - 30000;
-        if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-            // get the border limit for this world
-            TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin);
-            int[] data = wb.getBorderDistance(w.getName());
-            int minEW = Math.min(data[0], 30000);
-            int minNS = Math.min(data[1], 30000);
-            limite = minEW;
-            limits = minNS;
-            limitw = -minEW;
-            limitn = -minNS;
-        }
+    public TARDISBiomeFinder(TARDIS plugin) {
+        this.plugin = plugin;
     }
 
-    @Override
-    public void run() {
-        if (location == null) {
-            switch (directions[i]) {
-                case 0:
-                    // east
-                    int east = startx + plus;
-                    Biome chkbe = w.getBiome(east, w.getHighestBlockYAt(east, startz), startz);
-                    if (chkbe.equals(b)) {
-                        TARDISMessage.send(p, "BIOME_E", b.toString());
-                        location = new Location(w, east, TARDISStaticLocationGetters.getHighestYin3x3(w, east, startz), startz);
-                    }
-                    plus += step;
-                    if (east >= limite) {
-                        i++;
-                        plus = 0;
-                    }
-                    break;
-                case 1:
-                    // south
-                    int south = startz + plus;
-                    Biome chkbs = w.getBiome(startx, w.getHighestBlockYAt(startx, south), south);
-                    if (chkbs.equals(b)) {
-                        TARDISMessage.send(p, "BIOME_S", b.toString());
-                        location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, south), south);
-                    }
-                    plus += step;
-                    if (south >= limits) {
-                        i++;
-                        plus = 0;
-                    }
-                    break;
-                case 2:
-                    // west
-                    int west = startx - plus;
-                    Biome chkbw = w.getBiome(west, w.getHighestBlockYAt(west, startz), startz);
-                    if (chkbw.equals(b)) {
-                        TARDISMessage.send(p, "BIOME_W", b.toString());
-                        location = new Location(w, west, TARDISStaticLocationGetters.getHighestYin3x3(w, west, startz), startz);
-                    }
-                    plus -= step;
-                    if (west <= limitw) {
-                        i++;
-                        plus = 0;
-                    }
-                    break;
-                case 3:
-                    // north
-                    int north = startz - plus;
-                    Biome chkbn = w.getBiome(startx, w.getHighestBlockYAt(startx, north), north);
-                    if (chkbn.equals(b)) {
-                        TARDISMessage.send(p, "BIOME_N", b.toString());
-                        location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, north), north);
-                    }
-                    plus -= step;
-                    if (north <= limitn) {
-                        i++;
-                        plus = 0;
-                    }
-                    break;
+    public void run(World w, Biome biome, Player player, int id, COMPASS direction) {
+        Location tb = plugin.getTardisHelper().searchBiome(w, biome, player);
+        // cancel biome finder
+        if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
+            if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
+                plugin.getTrackerKeeper().getMalfunction().put(id, true);
+            } else {
+                // cancel
+                TARDISMessage.send(player, "PROTECTED");
+                player.resetTitle();
             }
         }
-    }
-
-    public void setTaskid(int taskid) {
-        this.taskid = taskid;
-    }
-
-    public int getTaskid() {
-        return taskid;
-    }
-
-    public boolean poll() {
-        return location != null;
-    }
-
-    public Location getLocation() {
-        return location;
+        World bw = tb.getWorld();
+        // check location
+        while (!bw.getChunkAt(tb).isLoaded()) {
+            bw.getChunkAt(tb).load();
+        }
+        int highest = tb.getWorld().getHighestBlockYAt(tb);
+        tb.setY(highest + 1);
+        int[] start_loc = TARDISTimeTravel.getStartLocation(tb, direction);
+        int tmp_y = tb.getBlockY();
+        for (int up = 0; up < 10; up++) {
+            int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), direction);
+            if (count == 0) {
+                tb.setY(tmp_y + up);
+                break;
+            }
+        }
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("world", tb.getWorld().getName());
+        set.put("x", tb.getBlockX());
+        set.put("y", tb.getBlockY());
+        set.put("z", tb.getBlockZ());
+        set.put("direction", direction.toString());
+        set.put("submarine", 0);
+        HashMap<String, Object> tid = new HashMap<>();
+        tid.put("tardis_id", id);
+        plugin.getQueryFactory().doSyncUpdate("next", set, tid);
+        TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+        plugin.getTrackerKeeper().getRescue().remove(id);
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            new TARDISLand(plugin, id, player).exitVortex();
+        }
     }
 }

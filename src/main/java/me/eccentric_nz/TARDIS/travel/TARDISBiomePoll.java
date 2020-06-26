@@ -32,7 +32,7 @@ import java.util.HashMap;
 public class TARDISBiomePoll implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISBiomeFinder biomeFinder;
+    private final TARDISBiomeFinderOld biomeFinder;
     private final long timeout;
     private final Player player;
     private final int id;
@@ -40,7 +40,7 @@ public class TARDISBiomePoll implements Runnable {
     private int taskid;
     private int dots = 0;
 
-    public TARDISBiomePoll(TARDIS plugin, TARDISBiomeFinder biomeFinder, long timeout, Player player, int id, COMPASS direction) {
+    public TARDISBiomePoll(TARDIS plugin, TARDISBiomeFinderOld biomeFinder, long timeout, Player player, int id, COMPASS direction) {
         this.plugin = plugin;
         this.biomeFinder = biomeFinder;
         this.timeout = timeout;

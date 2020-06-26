@@ -59,7 +59,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();
-        this.plugin.debug("Loops: " + loops);
         this.preset = preset;
         i = 0;
     }

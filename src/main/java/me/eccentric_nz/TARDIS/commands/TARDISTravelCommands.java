@@ -558,12 +558,13 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     x = rsc.getX() + 128;
                                     z = rsc.getZ() + 128;
                                 }
-                                TARDISBiomeFinder biomeFinder = new TARDISBiomeFinder(plugin, player, x, z, biome, w);
-                                int bfTaskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, biomeFinder, 1L, 1L);
-                                biomeFinder.setTaskid(bfTaskId);
-                                TARDISBiomePoll biomePoll = new TARDISBiomePoll(plugin, biomeFinder, System.currentTimeMillis() + timeout, player, id, rsc.getDirection());
-                                int pollId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, biomePoll, 20L, 20L);
-                                biomePoll.setTaskid(pollId);
+                                new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection());
+                                TARDISBiomeFinderOld biomeFinder = new TARDISBiomeFinderOld(plugin, player, x, z, biome, w);
+//                                int bfTaskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, biomeFinder, 1L, 1L);
+//                                biomeFinder.setTaskid(bfTaskId);
+//                                TARDISBiomePoll biomePoll = new TARDISBiomePoll(plugin, biomeFinder, System.currentTimeMillis() + timeout, player, id, rsc.getDirection());
+//                                int pollId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, biomePoll, 20L, 20L);
+//                                biomePoll.setTaskid(pollId);
                             } catch (IllegalArgumentException iae) {
                                 TARDISMessage.send(player, "BIOME_NOT_VALID");
                                 return true;
