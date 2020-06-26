@@ -51,7 +51,8 @@ public class ResultSetThrottle {
      * Retrieves the Space Time Throttle setting from the player_prefs table. This method builds an SQL query string
      * from the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
-     * @return true or false depending on whether any data matches the query
+     * @param uuid the unique id of the player to get the setting for
+     * @return the Space Time Throttle setting
      */
     public SpaceTimeThrottle getSpeed(String uuid) {
         PreparedStatement statement = null;
