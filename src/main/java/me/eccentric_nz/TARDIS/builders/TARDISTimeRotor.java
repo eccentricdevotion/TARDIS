@@ -69,7 +69,8 @@ public class TARDISTimeRotor {
         im.setCustomModelData(which);
         is.setItemMeta(im);
         itemFrame.setItem(is);
-        TARDIS.plugin.getTardisHelper().setItemFrameTags(itemFrame);
+        itemFrame.setFixed(true);
+        itemFrame.setVisible(false);
     }
 
     public static ItemFrame getItemFrame(UUID uuid) {
