@@ -12,13 +12,8 @@
 8.  Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
 
 ## Minecraft 1.16
-1. Add new blocks and nether biomes
-2. Use Smithing recipes to upgrade sonic screwdrivers / add biome to biome disks etc
-3. Use `locatebiome` command logic/methods for biome finder
-4. Full unicode support - may not need custom resource pack font for nice looking tabbed lists?
-5. Attribute names have changed
-6. Use new ItemFrame tags - `invisible` & `fixed` - for policeboxes and time rotors
-7. force update defender.json advancement
+1. Use Smithing recipes to upgrade sonic screwdrivers / add biome to biome disks etc
+2. Full unicode support - may not need custom resource pack font for nice looking tabbed lists?
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds
