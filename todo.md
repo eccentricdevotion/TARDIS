@@ -11,9 +11,6 @@
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 8.  Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
 
-## Minecraft 1.16
-1. Use Smithing recipes to upgrade sonic screwdrivers / add biome to biome disks etc
-2. Full unicode support - may not need custom resource pack font for nice looking tabbed lists?
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

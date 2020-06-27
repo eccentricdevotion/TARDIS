@@ -152,7 +152,9 @@ public class TARDISSonicListener implements Listener {
                         return;
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.arrow") && lore != null && lore.contains("Pickup Arrows Upgrade")) {
-                        TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                        if (!block.getType().isInteractable()) {
+                            TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                        }
                         // scan area around block for an arrow
                         List<Entity> nearbyEntites = new ArrayList(block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2));
                         for (Entity e : nearbyEntites) {
