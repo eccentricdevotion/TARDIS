@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,8 +55,8 @@ public class TARDISPerceptionFilterListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        if (player.getInventory().getItemInMainHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            ItemStack is = player.getInventory().getItemInMainHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
+        if (is != null && is.getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
@@ -66,12 +65,12 @@ public class TARDISPerceptionFilterListener implements Listener {
                         if (chestplate == null) {
                             // equip the chest slot with the perception filter
                             player.getInventory().setChestplate(is);
-                            if (player.getGameMode() == GameMode.SURVIVAL) {
-                                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-                            }
-                            player.updateInventory();
-                            // make the player invisible
-                            plugin.getFilter().addPerceptionFilter(player);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.getInventory().setItemInMainHand(null);
+                                player.updateInventory();
+                                // make the player invisible
+                                plugin.getFilter().addPerceptionFilter(player);
+                            }, 1L);
                         } else {
                             TARDISMessage.send(player, "FILTER");
                         }
