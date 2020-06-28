@@ -51,22 +51,17 @@ This will reload the items configuration and update any blocks where the price i
 Adding new shop blocks is pretty simple:
 
 1. Place the configured block (`PRISMARINE_BRICKS` by default) in the desired location
-2. Run the command:
-   ```
-   /tardisshop add [item]
-   ```
+2. Run the command `/tardisshop add [item]`
    You can use tab completion to see a list of available items
 3. Follow the onscreen instructions and click the block &mdash; the item will appear with holographic labels for its name and cost
-   ![TARDIS Shop block](images/docs/tardis_shop_block.jpg)
+
+![TARDIS Shop block](images/docs/tardis_shop_block.jpg)
    
 ### Removing shop blocks
 
 To remove a shop block:
 
-1. Run the command:
-   ```
-   /tardisshop remove
-   ```
+1. Run the command `/tardisshop remove`
 2. Follow the onscreen instructions and click the block you want to remove
   
    
