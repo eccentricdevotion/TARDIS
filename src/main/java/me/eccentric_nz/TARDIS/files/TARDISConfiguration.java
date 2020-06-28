@@ -74,6 +74,7 @@ public class TARDISConfiguration {
         booleanOptions.put("arch.enabled", true);
         booleanOptions.put("arch.switch_inventory", true);
         booleanOptions.put("archive.enabled", true);
+        booleanOptions.put("blueprints.enabled", false);
         booleanOptions.put("circuits.damage", false);
         booleanOptions.put("conversions.ars_materials", false);
         booleanOptions.put("conversions.condenser_materials", false);

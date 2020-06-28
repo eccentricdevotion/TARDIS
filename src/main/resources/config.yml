@@ -183,7 +183,8 @@ abandon:
 archive:
   enabled: true
   limit: 3
-# handles
+blueprints:
+  enabled: false
 rechargers: {}
 # don't touch
 conversions:

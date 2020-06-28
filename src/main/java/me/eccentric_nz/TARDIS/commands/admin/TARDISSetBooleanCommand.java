@@ -84,6 +84,8 @@ class TARDISSetBooleanCommand {
                     return true;
                 }
                 plugin.getConfig().set(section, Boolean.valueOf(tf));
+            } else if (first.equals("archive") || first.equals("blueprints")) {
+                plugin.getConfig().set(section, Boolean.valueOf(tf));
             } else {
                 plugin.getConfig().set(first, Boolean.valueOf(tf));
             }

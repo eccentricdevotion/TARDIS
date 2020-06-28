@@ -12,7 +12,6 @@
 8. Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
 9. New Nether console
 10. New Nether room
-11. Add `blueprints.enabled: [true|false]` config setting
 12. Add blueprints to `/tardisgive` command
 13. `/tardisadmin revoke [player] [permission]`
 

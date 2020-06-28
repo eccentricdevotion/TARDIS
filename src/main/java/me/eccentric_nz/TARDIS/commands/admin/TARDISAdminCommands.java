@@ -108,7 +108,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStrArtron.add("jettison_seed");
         // boolean
         firstsBool.put("3d_doors", "allow");
-        firstsBool.put("abandon", "abandon.enable");
+        firstsBool.put("abandon", "abandon.enabled");
+        firstsBool.put("archive", "archive.enabled");
         firstsBool.put("achievements", "allow");
         firstsBool.put("add_perms", "creation");
         firstsBool.put("admin_bypass", "allow");
@@ -116,6 +117,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("allow_end_after_visit", "travel");
         firstsBool.put("allow_nether_after_visit", "travel");
         firstsBool.put("autonomous", "allow");
+        firstsBool.put("blueprints", "blueprints.enabled");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("create_worlds", "creation");
