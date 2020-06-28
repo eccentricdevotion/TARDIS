@@ -9,14 +9,13 @@
 5. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
 6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
-8.  Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
-9. Use Space Time Throttle settings everywhere + charge extra artron for faster speeds
-10. Add new 1.16 blocks to TARDISWalls
-11. New Nether console
-12. New Nether room
-13. Add `blueprints.enabled: [true|false]` config setting
-14. Add blueprints to `/tardisgive` command
-15. `/tardisadmin revoke [player] [permission]`
+8. Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
+9. Add new 1.16 blocks to TARDISWalls
+10. New Nether console
+11. New Nether room
+12. Add `blueprints.enabled: [true|false]` config setting
+13. Add blueprints to `/tardisgive` command
+14. `/tardisadmin revoke [player] [permission]`
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

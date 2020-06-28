@@ -95,12 +95,13 @@ public class TARDISTimeLordDeathListener implements Listener {
                         String creeper = tardis.getCreeper();
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                         if (rsp.resultSet()) {
+                            SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                             // do they have the autonomous circuit on?
                             if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                 // close doors
                                 new TARDISDoorCloser(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
-                                int amount = plugin.getArtronConfig().getInt("autonomous");
+                                int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
                                 if (tardis.getArtron_level() > amount) {
                                     if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                         // check if there are players in the TARDIS
@@ -185,7 +186,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             dd.setSubmarine(rsc.isSubmarine());
                                             dd.setTardisID(id);
                                             dd.setBiome(rsc.getBiome());
-                                            dd.setThrottle(SpaceTimeThrottle.NORMAL);
+                                            dd.setThrottle(spaceTimeThrottle);
                                             // set handbrake off
                                             HashMap<String, Object> set = new HashMap<>();
                                             set.put("handbrake_on", 0);
@@ -219,7 +220,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         bd.setOutside(false);
                                         bd.setSubmarine(sub);
                                         bd.setTardisID(id);
-                                        bd.setThrottle(SpaceTimeThrottle.NORMAL);
+                                        bd.setThrottle(spaceTimeThrottle);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                             // rebuild police box - needs to be a delay
                                             plugin.getPresetBuilder().buildPreset(bd);
@@ -307,7 +308,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setSubmarine(rsc.isSubmarine());
                                     dd.setTardisID(id);
                                     dd.setBiome(rsc.getBiome());
-                                    dd.setThrottle(SpaceTimeThrottle.NORMAL);
+                                    dd.setThrottle(spaceTimeThrottle);
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // sound the cloister bell at current location for siege mode
                                     TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 7, id, sl, plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);

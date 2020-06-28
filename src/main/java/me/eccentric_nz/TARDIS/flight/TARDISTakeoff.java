@@ -68,7 +68,7 @@ public class TARDISTakeoff {
         new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             // materialise
-            new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
+            new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
         } else {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
         }
@@ -118,7 +118,7 @@ public class TARDISTakeoff {
             new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 // materialise
-                new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
+                new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
             } else {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
             }

@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -184,7 +185,9 @@ class TARDISComehereCommand {
                     TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
                     return true;
                 }
-                int ch = plugin.getArtronConfig().getInt("comehere");
+                // get space time throttle
+                SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
+                int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
                 if (level < ch) {
                     TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                     return true;
@@ -246,7 +249,7 @@ class TARDISComehereCommand {
                     dd.setSubmarine(rsc.isSubmarine());
                     dd.setTardisID(id);
                     dd.setBiome(biome);
-                    dd.setThrottle(SpaceTimeThrottle.NORMAL);
+                    dd.setThrottle(spaceTimeThrottle);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (!hid) {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -265,7 +268,7 @@ class TARDISComehereCommand {
                 bd.setRebuild(false);
                 bd.setSubmarine(sub);
                 bd.setTardisID(id);
-                bd.setThrottle(SpaceTimeThrottle.NORMAL);
+                bd.setThrottle(spaceTimeThrottle);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                 // remove energy from TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();

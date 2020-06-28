@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetThrottle;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -32,11 +34,13 @@ public class TARDISLand {
     private final TARDIS plugin;
     private final int id;
     private final Player player;
+    private final SpaceTimeThrottle spaceTimeThrottle;
 
     public TARDISLand(TARDIS plugin, int id, Player player) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
+        spaceTimeThrottle = getThrottle(this.player);
     }
 
     public void exitVortex() {
@@ -49,7 +53,11 @@ public class TARDISLand {
         if (rsh.resultSet()) {
             Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
             // materialise
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake), 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle), 10L);
         }
+    }
+
+    private SpaceTimeThrottle getThrottle(Player player) {
+        return new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
     }
 }

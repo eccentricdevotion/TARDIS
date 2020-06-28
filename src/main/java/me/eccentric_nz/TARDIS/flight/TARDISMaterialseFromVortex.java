@@ -59,12 +59,14 @@ public class TARDISMaterialseFromVortex implements Runnable {
     private final int id;
     private final Player player;
     private final Location handbrake;
+    private final SpaceTimeThrottle spaceTimeThrottle;
 
-    public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+    public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
         this.handbrake = handbrake;
+        this.spaceTimeThrottle = spaceTimeThrottle;
     }
 
     @Override
@@ -107,10 +109,10 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setsave.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", setsave, wheress);
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
+                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
-                            plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
+                            plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
                             TARDISMessage.send(player, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }

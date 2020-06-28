@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
@@ -168,7 +169,7 @@ public class TARDISAuthorisedControlDisk {
                     // dematerialise
                     new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
                     // materialise
-                    new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
+                    new TARDISMaterialseFromVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
                 }, 60L);
             } else {
                 return "Could not disengage handbrake.";

@@ -29,10 +29,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -233,7 +230,8 @@ public class TARDISStattenheimListener implements Listener {
                             TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
                             return;
                         }
-                        int ch = plugin.getArtronConfig().getInt("comehere");
+                        SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
+                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
                         if (level < ch) {
                             TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                             return;
@@ -296,7 +294,7 @@ public class TARDISStattenheimListener implements Listener {
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
                             dd.setBiome(rsc.getBiome());
-                            dd.setThrottle(SpaceTimeThrottle.NORMAL);
+                            dd.setThrottle(spaceTimeThrottle);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (!hid) {
                                     plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -315,7 +313,7 @@ public class TARDISStattenheimListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(sub);
                         bd.setTardisID(id);
-                        bd.setThrottle(SpaceTimeThrottle.NORMAL);
+                        bd.setThrottle(spaceTimeThrottle);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<>();

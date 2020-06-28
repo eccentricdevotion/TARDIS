@@ -8,12 +8,12 @@ import java.util.HashMap;
  */
 public enum SpaceTimeThrottle {
 
-    NORMAL(4, 500, 18),
-    FASTER(3, 375, 12),
-    RAPID(2, 250, 9),
-    WARP(1, 125, 6),
-    REBUILD(0, 80, 3), // TODO ??
-    JUNK(-1, 600, 25); // ??
+    NORMAL(4, 500, 18, 1.0f),
+    FASTER(3, 375, 12, 1.5f),
+    RAPID(2, 250, 9, 2.0f),
+    WARP(1, 125, 6, 3.0f),
+    REBUILD(0, 80, 3, 1.0f),
+    JUNK(-1, 600, 25, 1.0f);
 
     private static final HashMap<Integer, SpaceTimeThrottle> BY_DELAY = new HashMap<>();
 
@@ -26,11 +26,13 @@ public enum SpaceTimeThrottle {
     private final int delay;
     private final long flightTime;
     private final int loops;
+    private final float artronMultiplier;
 
-    SpaceTimeThrottle(int delay, long flightTime, int loops) {
+    SpaceTimeThrottle(int delay, long flightTime, int loops, float artronMultiplier) {
         this.delay = delay;
         this.flightTime = flightTime;
         this.loops = loops;
+        this.artronMultiplier = artronMultiplier;
     }
 
     public static HashMap<Integer, SpaceTimeThrottle> getByDelay() {
@@ -47,5 +49,9 @@ public enum SpaceTimeThrottle {
 
     public int getLoops() {
         return loops;
+    }
+
+    public float getArtronMultiplier() {
+        return artronMultiplier;
     }
 }
