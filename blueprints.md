@@ -18,7 +18,6 @@ TARDIS blueprints are a way for players to earn or purchase TARDIS features. If 
 
 To enable blueprints on your server, use the command:
 ```
-#TODO
 /tardisadmin blueprints true
 ```
 To disable, run the command again with the last argument set to `false`. 
@@ -34,8 +33,8 @@ _Blueprints are keyed to a specific player &mdash; only the player who obtained 
 Players can obtain blueprints in a few ways:
 
 1. By purchasing them from a TARDIS Shop. See the instructions on the [TARDIS Shop](tardis-shop.html) page for how to set this up.
-2. Using the `#TODO /tardisadmin give [player] [blueprint]` command.
-3. Using a system that can run the command above when certain conditions are met &mdash; for example a &ldquo;rank up&rdquo; plugin (or a command block `#TODO add support for @p selector`).
+2. Using the `/tardisadmin give [player] [blueprint]` command.
+3. Using a system that can run the command above when certain conditions are met &mdash; for example a &ldquo;rank up&rdquo; plugin (or a command block &mdash; use the @p selector).
 
 ### Using blueprints
 
@@ -45,7 +44,6 @@ Once a player has obtained a blueprint they need to condense it in the TARDIS Ar
 
 To remove a player&rsquo;s ability to use a blueprint feature use the following command:
 ```
-#TODO
 /tardisadmin revoke [player] [permission]
 ```
 To see a list of blueprint permissions use the command:
