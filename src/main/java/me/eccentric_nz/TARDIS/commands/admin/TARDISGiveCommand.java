@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -31,6 +32,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -64,6 +66,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
         items.put("blaster", "Sonic Blaster");
+        items.put("blueprint", "");
         items.put("bow-tie", "Red Bow Tie");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("cell", "Artron Storage Cell");
@@ -157,6 +160,15 @@ public class TARDISGiveCommand implements CommandExecutor {
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
                 }
+                if (item.equals("blueprint")) {
+                    String blueprint = args[2].toUpperCase(Locale.ENGLISH);
+                    if (TARDISGiveTabComplete.getBlueprints().contains(blueprint)) {
+                        return giveBlueprint(sender, args, blueprint);
+                    } else {
+                        TARDISMessage.send(sender, "ARG_BLUEPRINT");
+                        return true;
+                    }
+                }
                 if (item.equals("seed")) {
                     String seed = args[2].toUpperCase(Locale.ENGLISH);
                     if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
@@ -222,17 +234,31 @@ public class TARDISGiveCommand implements CommandExecutor {
                     }
                     return giveArtron(sender, args[0], amount);
                 } else {
-                    Player p = plugin.getServer().getPlayer(args[0]);
-                    if (p == null) { // player must be online
+                    Player player = null;
+                    if (args[0].equals("@s") && sender instanceof Player) {
+                        player = (Player) sender;
+                    } else if (args[0].equals("@p")) {
+                        List<Entity> near = Bukkit.selectEntities(sender, "@p");
+                        if (near.size() > 0 && near.get(0) instanceof Player) {
+                            player = (Player) near.get(0);
+                            if (player == null) {
+                                TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
+                                return true;
+                            }
+                        }
+                    } else {
+                        player = plugin.getServer().getPlayer(args[0]);
+                    }
+                    if (player == null) { // player must be online
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                     if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
-                        return giveFullCell(sender, amount, p);
+                        return giveFullCell(sender, amount, player);
                     } else if (args[2].equals("knowledge")) {
-                        return giveKnowledgeBook(sender, item, p);
+                        return giveKnowledgeBook(sender, item, player);
                     } else if (!args[2].endsWith("_seed")) {
-                        return giveItem(sender, item, amount, p);
+                        return giveItem(sender, item, amount, player);
                     }
                 }
             } else {
@@ -371,10 +397,19 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean giveSeed(CommandSender sender, String[] args) {
-        Player player;
-        if (args[0].equals("@s")) {
+    private boolean giveBlueprint(CommandSender sender, String args[], String blueprint) {
+        Player player = null;
+        if (args[0].equals("@s") && sender instanceof Player) {
             player = (Player) sender;
+        } else if (args[0].equals("@p")) {
+            List<Entity> near = Bukkit.selectEntities(sender, "@p");
+            if (near.size() > 0 && near.get(0) instanceof Player) {
+                player = (Player) near.get(0);
+                if (player == null) {
+                    TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
+                    return true;
+                }
+            }
         } else {
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
@@ -382,43 +417,74 @@ public class TARDISGiveCommand implements CommandExecutor {
                 return true;
             }
         }
-        String type = args[2].toUpperCase(Locale.ENGLISH);
-        String wall = "ORANGE_WOOL";
-        String floor = "LIGHT_GRAY_WOOL";
-        if (args.length > 4) {
-            try {
-                wall = Material.valueOf(args[3].toUpperCase()).toString();
-                floor = Material.valueOf(args[4].toUpperCase()).toString();
-            } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, "SEED_MAT_NOT_VALID");
+        if (player != null) {
+            ItemStack bp = plugin.getTardisAPI().getTARDISBlueprintItem(blueprint, player);
+            player.getInventory().addItem(bp);
+            player.updateInventory();
+            TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a TARDIS Blueprint Disk");
+        }
+        return true;
+    }
+
+    private boolean giveSeed(CommandSender sender, String[] args) {
+        Player player = null;
+        if (args[0].equals("@s") && sender instanceof Player) {
+            player = (Player) sender;
+        } else if (args[0].equals("@p")) {
+            List<Entity> near = Bukkit.selectEntities(sender, "@p");
+            if (near.size() > 0 && near.get(0) instanceof Player) {
+                player = (Player) near.get(0);
+                if (player == null) {
+                    TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
+                    return true;
+                }
+            }
+        } else {
+            player = plugin.getServer().getPlayer(args[0]);
+            if (player == null) {
+                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                 return true;
             }
         }
-        ItemStack is;
-        if (Consoles.getBY_NAMES().containsKey(type)) {
-            int model = TARDISSeedModel.modelByString(type);
-            if (Consoles.getBY_NAMES().get(type).isCustom()) {
-                is = new ItemStack(Material.MUSHROOM_STEM, 1);
-            } else if (type.equalsIgnoreCase("ROTOR")) {
-                is = new ItemStack(Material.MUSHROOM_STEM, 1);
-            } else {
-                is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+        if (player != null) {
+            String type = args[2].toUpperCase(Locale.ENGLISH);
+            String wall = "ORANGE_WOOL";
+            String floor = "LIGHT_GRAY_WOOL";
+            if (args.length > 4) {
+                try {
+                    wall = Material.valueOf(args[3].toUpperCase()).toString();
+                    floor = Material.valueOf(args[4].toUpperCase()).toString();
+                } catch (IllegalArgumentException e) {
+                    TARDISMessage.send(sender, "SEED_MAT_NOT_VALID");
+                    return true;
+                }
             }
-            ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(10000000 + model);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
-            // set display name
-            im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-            List<String> lore = new ArrayList<>();
-            lore.add(type);
-            lore.add("Walls: " + wall);
-            lore.add("Floors: " + floor);
-            lore.add("Chameleon: FACTORY");
-            im.setLore(lore);
-            is.setItemMeta(im);
-            player.getInventory().addItem(is);
-            player.updateInventory();
-            TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");
+            ItemStack is;
+            if (Consoles.getBY_NAMES().containsKey(type)) {
+                int model = TARDISSeedModel.modelByString(type);
+                if (Consoles.getBY_NAMES().get(type).isCustom()) {
+                    is = new ItemStack(Material.MUSHROOM_STEM, 1);
+                } else if (type.equalsIgnoreCase("ROTOR")) {
+                    is = new ItemStack(Material.MUSHROOM_STEM, 1);
+                } else {
+                    is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+                }
+                ItemMeta im = is.getItemMeta();
+                im.setCustomModelData(10000000 + model);
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+                // set display name
+                im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+                List<String> lore = new ArrayList<>();
+                lore.add(type);
+                lore.add("Walls: " + wall);
+                lore.add("Floors: " + floor);
+                lore.add("Chameleon: FACTORY");
+                im.setLore(lore);
+                is.setItemMeta(im);
+                player.getInventory().addItem(is);
+                player.updateInventory();
+                TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");
+            }
         }
         return true;
     }

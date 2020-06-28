@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -34,7 +35,8 @@ import java.util.Set;
  */
 public class TARDISGiveTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "acid-battery", "arrow-circuit", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "communicator", "control", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "generator", "glasses", "handles", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "k-circuit", "key", "keyboard", "l-circuit", "locator", "m-circuit", "memory-circuit", "mushroom", "oscillator", "pad", "painter", "paper-bag", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "reader", "remote", "rift-circuit", "rift-manipulator", "rust", "rotor_early", "rotor_tenth", "rotor_eleventh", "rotor_twelfth", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "telepathic", "tachyon", "vortex", "wand", "watch");
+    private static final List<String> BLUEPRINT_SUBS = new ArrayList<>();
+    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "acid-battery", "arrow-circuit", "ars-circuit", "battery", "blaster", "blueprint", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "communicator", "control", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "generator", "glasses", "handles", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "k-circuit", "key", "keyboard", "l-circuit", "locator", "m-circuit", "memory-circuit", "mushroom", "oscillator", "pad", "painter", "paper-bag", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "reader", "remote", "rift-circuit", "rift-manipulator", "rust", "rotor_early", "rotor_tenth", "rotor_eleventh", "rotor_twelfth", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "telepathic", "tachyon", "vortex", "wand", "watch");
     private final ImmutableList<String> GIVE_KNOWLEDGE = ImmutableList.of("knowledge", "1", "2", "64");
     private final ImmutableList<String> KIT_SUBS;
     private final List<String> SEED_SUBS = new ArrayList<>();
@@ -44,12 +46,37 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     public TARDISGiveTabComplete(TARDIS plugin) {
         Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);
+        for (BlueprintBase base : BlueprintBase.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_BASE_" + base.toString());
+        }
+        for (BlueprintConsole console : BlueprintConsole.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_CONSOLE_" + console.toString());
+        }
+        for (BlueprintFeature feature : BlueprintFeature.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_FEATURE_" + feature.toString());
+        }
+        for (BlueprintPreset preset : BlueprintPreset.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_PRESET_" + preset.toString());
+        }
+        for (BlueprintRoom room : BlueprintRoom.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_ROOM_" + room.toString());
+        }
+        for (BlueprintSonic sonic : BlueprintSonic.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_SONIC_" + sonic.toString());
+        }
+        for (BlueprintTravel travel : BlueprintTravel.values()) {
+            BLUEPRINT_SUBS.add("BLUEPRINT_TRAVEL_" + travel.toString());
+        }
         for (String seed : Consoles.getBY_NAMES().keySet()) {
             if (!seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                 SEED_SUBS.add(seed);
             }
         }
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
+    }
+
+    public static List<String> getBlueprints() {
+        return BLUEPRINT_SUBS;
     }
 
     @Override
@@ -63,6 +90,9 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             String sub = args[1];
             if (sub.equals("kit")) {
                 return partial(lastArg, KIT_SUBS);
+            }
+            if (sub.equals("blueprint")) {
+                return partial(lastArg, BLUEPRINT_SUBS);
             }
             if (sub.equals("seed")) {
                 return partial(lastArg, SEED_SUBS);

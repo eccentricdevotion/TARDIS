@@ -52,8 +52,9 @@ public class TARDISGiveLister {
     private List<String> createGiveOptions() {
         tg.addRow(ChatColor.GRAY + "Command argument", ChatColor.DARK_GRAY + "Description");
         tg.addRow();
-        tg.addRow("Artron, Kits, Seeds", "");
+        tg.addRow("Artron, Blueprints, Kits, Seeds", "");
         tg.addRow(ChatColor.YELLOW + "artron", ChatColor.GOLD + "Artron Energy");
+        tg.addRow(ChatColor.YELLOW + "blueprint", ChatColor.GOLD + "TARDIS Blueprint Disk");
         tg.addRow(ChatColor.YELLOW + "kit", ChatColor.GOLD + "TARDIS Item Kit");
         tg.addRow(ChatColor.YELLOW + "seed", ChatColor.GOLD + "TARDIS Seed Block");
         tg.addRow(ChatColor.YELLOW + "handles", ChatColor.GOLD + "Handles cyber-companion");
