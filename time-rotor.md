@@ -29,13 +29,10 @@ Twelfth era (not animated)
 
 To add a time rotor to an existing console:
 
-1. Craft a TARDIS TIme Rotor &mdash; see recipes below
+1. Craft a TARDIS Time Rotor &mdash; see recipes below
 2. Place an item frame in the desired location on the TARDIS console
 3. Place the crafted time rotor into the item frame
-4. Run the command:
-   ```
-   /tardis update rotor
-   ```
+4. Run the command `/tardis update rotor`
 5. Click the time rotor item frame
 
 ### Recipes
@@ -49,7 +46,7 @@ GLASSPANE | CLOCK    | GLASSPANE
 GLASSPANE | REDSTONE | GLASSPANE
 ```
 Chage the dye colours for each rotor:
-* 
+
 * Early &mdash; Gray ![#666](https://via.placeholder.com/15/666/000000?text=+)
 * Tenth &mdash; Cyan ![#0099cc](https://via.placeholder.com/15/0099cc/000000?text=+)
 * Eleventh &mdash; Brown ![#663300](https://via.placeholder.com/15/663300/000000?text=+)
