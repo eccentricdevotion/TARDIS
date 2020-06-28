@@ -7,7 +7,7 @@ title: Condensable items
 
 # Condensable items
 
-The following list contains all the valid condensable items that can be used to generate Artron Energy. The number represents the relative energy value (i.e. Item value:1 != Energy value:1).
+The following list contains all the valid condensable items that can be used to generate Artron Energy. The number represents the _relative_ energy value &mdash; the actual value received after condensing the items will be approximately half.
 
 | Item | Relative value |
 | --- | --- |
@@ -29,6 +29,7 @@ The following list contains all the valid condensable items that can be used to 
 | ACACIA_WOOD | 2 |
 | ACTIVATOR_RAIL | 650 |
 | ALLIUM | 2 |
+| ANCIENT_DEBRIS | 100 |
 | ANDESITE | 1 |
 | ANDESITE_SLAB | 2 |
 | ANDESITE_STAIRS | 2 |
@@ -41,6 +42,7 @@ The following list contains all the valid condensable items that can be used to 
 | BAKED_POTATO | 14 |
 | BAMBOO | 2 |
 | BARREL | 16 |
+| BASALT | 1 |
 | BEACON | 700 |
 | BEDROCK | 100 |
 | BEEF | 3 |
@@ -77,6 +79,10 @@ The following list contains all the valid condensable items that can be used to 
 | BLACK_TERRACOTTA | 15 |
 | BLACK_WALL_BANNER | 120 |
 | BLACK_WOOL | 20 |
+| BLACKSTONE | 1 |
+| BLACKSTONE_SLAB | 1 |
+| BLACKSTONE_STAIRS | 1 |
+| BLACKSTONE_WALL | 1 |
 | BLAST_FURNACE | 110 |
 | BLAZE_POWDER | 100 |
 | BLAZE_ROD | 200 |
@@ -137,11 +143,14 @@ The following list contains all the valid condensable items that can be used to 
 | CARTOGRAPHY_TABLE | 28 |
 | CARVED_PUMPKIN | 50 |
 | CAULDRON | 154 |
+| CHAIN | 1 |
 | CHARCOAL | 15 |
 | CHEST | 4 |
 | CHEST_MINECART | 30 |
 | CHICKEN | 5 |
 | CHIPPED_ANVIL | 180 |
+| CHISELED_NETHER_BRICKS | 1 |
+| CHISELED_POLISHED_BLACKSTONE | 1 |
 | CHISELED_QUARTZ_BLOCK | 60 |
 | CHISELED_RED_SANDSTONE | 3 |
 | CHISELED_SANDSTONE | 3 |
@@ -176,10 +185,28 @@ The following list contains all the valid condensable items that can be used to 
 | COOKED_SALMON | 7 |
 | COOKIE | 3 |
 | CORNFLOWER | 2 |
+| CRACKED_NETHER_BRICKS | 1 |
+| CRACKED_POLISHED_BLACKSTONE_BRICKS | 2 |
 | CRACKED_STONE_BRICKS | 4 |
 | CRAFTING_TABLE | 3 |
 | CREEPER_HEAD | 200 |
+| CRIMSON_BUTTON | 1 |
+| CRIMSON_DOOR | 3 |
+| CRIMSON_FENCE | 1 |
+| CRIMSON_FENCE_GATE | 5 |
+| CRIMSON_FUNGUS | 1 |
+| CRIMSON_HYPHAE | 1 |
+| CRIMSON_NYLIUM | 1 |
+| CRIMSON_PLANKS | 1 |
+| CRIMSON_PRESSURE_PLATE | 1 |
+| CRIMSON_ROOTS | 1 |
+| CRIMSON_SIGN | 2 |
+| CRIMSON_SLAB | 2 |
+| CRIMSON_STAIRS | 1 |
+| CRIMSON_STEM | 1 |
+| CRIMSON_TRAPDOOR | 6 |
 | CROSSBOW | 60 |
+| CRYING_OBSIDIAN | 150 |
 | CUT_RED_SANDSTONE | 3 |
 | CUT_RED_SANDSTONE_SLAB | 3 |
 | CUT_SANDSTONE | 3 |
@@ -286,6 +313,7 @@ The following list contains all the valid condensable items that can be used to 
 | FURNACE | 9 |
 | FURNACE_MINECART | 32 |
 | GHAST_TEAR | 90 |
+| GILDED_BLACKSTONE | 40 |
 | GLASS | 30 |
 | GLASS_BOTTLE | 30 |
 | GLASS_PANE | 5 |
@@ -456,6 +484,7 @@ The following list contains all the valid condensable items that can be used to 
 | LIME_WALL_BANNER | 120 |
 | LIME_WOOL | 20 |
 | LINGERING_POTION | 50 |
+| LODESTONE | 1252 |
 | LOOM | 14 |
 | MAGENTA_BANNER | 120 |
 | MAGENTA_BED | 68 |
@@ -488,6 +517,8 @@ The following list contains all the valid condensable items that can be used to 
 | MUSHROOM_STEW | 33 |
 | MUSIC_DISC_13 | 100 |
 | MUSIC_DISC_CAT | 100 |
+| MUSIC_DISC_MELLOHI | 100 |
+| MUSIC_DISC_PIGSTEP | 100 |
 | MUTTON | 3 |
 | MYCELIUM | 1 |
 | NAME_TAG | 100 |
@@ -498,9 +529,23 @@ The following list contains all the valid condensable items that can be used to 
 | NETHER_BRICK_STAIRS | 121 |
 | NETHER_BRICK_WALL | 2 |
 | NETHER_BRICKS | 16 |
+| NETHER_GOLD_ORE | 105 |
 | NETHER_QUARTZ_ORE | 15 |
+| NETHER_SPROUTS | 1 |
 | NETHER_WART | 2 |
 | NETHER_WART_BLOCK | 19 |
+| NETHERITE_AXE | 1870 |
+| NETHERITE_BLOCK | 10980 |
+| NETHERITE_BOOTS | 2070 |
+| NETHERITE_CHESTPLATE | 2970 |
+| NETHERITE_HELMET | 2220 |
+| NETHERITE_HOE | 1620 |
+| NETHERITE_INGOT | 1220 |
+| NETHERITE_LEGGINGS | 2720 |
+| NETHERITE_PICKAXE | 1870 |
+| NETHERITE_SCRAP | 200 |
+| NETHERITE_SHOVEL | 1430 |
+| NETHERITE_SWORD | 1640 |
 | NETHERRACK | 2 |
 | NOTE_BLOCK | 40 |
 | OAK_BOAT | 3 |
@@ -562,6 +607,17 @@ The following list contains all the valid condensable items that can be used to 
 | POLISHED_ANDESITE | 1 |
 | POLISHED_ANDESITE_SLAB | 1 |
 | POLISHED_ANDESITE_STAIRS | 1 |
+| POLISHED_BASALT | 1 |
+| POLISHED_BLACKSTONE | 1 |
+| POLISHED_BLACKSTONE_BRICK_SLAB | 1 |
+| POLISHED_BLACKSTONE_BRICK_STAIRS | 1 |
+| POLISHED_BLACKSTONE_BRICK_WALL | 1 |
+| POLISHED_BLACKSTONE_BRICKS | 1 |
+| POLISHED_BLACKSTONE_BUTTON | 1 |
+| POLISHED_BLACKSTONE_PRESSURE_PLATE | 6 |
+| POLISHED_BLACKSTONE_SLAB | 1 |
+| POLISHED_BLACKSTONE_STAIRS | 1 |
+| POLISHED_BLACKSTONE_WALL | 1 |
 | POLISHED_DIORITE | 1 |
 | POLISHED_DIORITE_SLAB | 1 |
 | POLISHED_DIORITE_STAIRS | 1 |
@@ -604,6 +660,7 @@ The following list contains all the valid condensable items that can be used to 
 | PURPUR_STAIRS | 122 |
 | QUARTZ | 15 |
 | QUARTZ_BLOCK | 60 |
+| QUARTZ_BRICKS | 1 |
 | QUARTZ_PILLAR | 60 |
 | QUARTZ_SLAB | 30 |
 | QUARTZ_STAIRS | 122 |
@@ -643,6 +700,7 @@ The following list contains all the valid condensable items that can be used to 
 | REDSTONE_TORCH | 32 |
 | REDSTONE_WIRE | 32 |
 | REPEATER | 110 |
+| RESPAWN_ANCHOR | 1 |
 | ROSE_BUSH | 2 |
 | ROTTEN_FLESH | 1 |
 | SADDLE | 100 |
@@ -659,6 +717,7 @@ The following list contains all the valid condensable items that can be used to 
 | SEAGRASS | 2 |
 | SHEARS | 44 |
 | SHIELD | 28 |
+| SHROOMLIGHT | 20 |
 | SHULKER_SHELL | 50 |
 | SKELETON_SKULL | 200 |
 | SLIME_BALL | 50 |
@@ -678,7 +737,11 @@ The following list contains all the valid condensable items that can be used to 
 | SMOOTH_STONE_SLAB | 4 |
 | SNOW_BLOCK | 4 |
 | SNOWBALL | 1 |
+| SOUL_CAMPFIRE | 24 |
+| SOUL_LANTERN | 28 |
 | SOUL_SAND | 2 |
+| SOUL_SOIL | 1 |
+| SOUL_TORCH | 6 |
 | SPECTRAL_ARROW | 44 |
 | SPIDER_EYE | 10 |
 | SPLASH_POTION | 50 |
@@ -718,17 +781,28 @@ The following list contains all the valid condensable items that can be used to 
 | STONECUTTER | 112 |
 | STRING | 5 |
 | STRIPPED_ACACIA_LOG | 2 |
+| STRIPPED_ACACIA_WOOD | 2 |
 | STRIPPED_BIRCH_LOG | 2 |
+| STRIPPED_BIRCH_WOOD | 2 |
+| STRIPPED_CRIMSON_HYPHAE | 2 |
+| STRIPPED_CRIMSON_STEM | 2 |
 | STRIPPED_DARK_OAK_LOG | 2 |
+| STRIPPED_DARK_OAK_WOOD | 2 |
 | STRIPPED_JUNGLE_LOG | 2 |
+| STRIPPED_JUNGLE_WOOD | 2 |
 | STRIPPED_OAK_LOG | 2 |
+| STRIPPED_OAK_WOOD | 2 |
 | STRIPPED_SPRUCE_LOG | 2 |
+| STRIPPED_SPRUCE_WOOD | 2 |
+| STRIPPED_WARPED_HYPHAE | 2 |
+| STRIPPED_WARPED_STEM | 2 |
 | SUGAR | 10 |
 | SUGAR_CANE | 10 |
 | SUNFLOWER | 2 |
 | SUSPICIOUS_STEW | 8 |
 | SWEET_BERRIES | 10 |
 | TALL_GRASS | 2 |
+| TARGET | 200 |
 | TERRACOTTA | 12 |
 | TIPPED_ARROW | 10 |
 | TNT | 100 |
@@ -743,8 +817,27 @@ The following list contains all the valid condensable items that can be used to 
 | TUBE_CORAL_BLOCK | 2 |
 | TUBE_CORAL_FAN | 2 |
 | TURTLE_HELMET | 100 |
+| TWISTING_VINES | 1 |
 | VINE | 1 |
+| WARPED_BUTTON | 1 |
+| WARPED_DOOR | 3 |
+| WARPED_FENCE | 1 |
+| WARPED_FENCE_GATE | 5 |
+| WARPED_FUNGUS | 1 |
+| WARPED_FUNGUS_ON_A_STICK | 24 |
+| WARPED_HYPHAE | 1 |
+| WARPED_NYLIUM | 1 |
+| WARPED_PLANKS | 1 |
+| WARPED_PRESSURE_PLATE | 1 |
+| WARPED_ROOTS | 1 |
+| WARPED_SIGN | 2 |
+| WARPED_SLAB | 2 |
+| WARPED_STAIRS | 1 |
+| WARPED_STEM | 1 |
+| WARPED_TRAPDOOR | 6 |
+| WARPED_WART_BLOCK | 24 |
 | WATER_BUCKET | 40 |
+| WEEPING_VINES | 1 |
 | WET_SPONGE | 80 |
 | WHEAT | 9 |
 | WHEAT_SEEDS | 2 |
