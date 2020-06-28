@@ -193,7 +193,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                 }
             }
-            if (tud.getPrevious().getPermission().equals("rotor") && tardis.getRotor() != null) {
+            if (tardis.getRotor() != null) {
                 // remove item frame and delete UUID in db
                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                 itemFrame.setItem(null);
