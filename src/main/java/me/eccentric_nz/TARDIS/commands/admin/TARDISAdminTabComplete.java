@@ -27,6 +27,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
+import org.bukkit.permissions.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> SEED_SUBS;
     private final ImmutableList<String> ENTITY_SUBS;
+    private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -85,6 +87,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             }
         }
         ENTITY_SUBS = ImmutableList.copyOf(tmpEntities);
+        for (Permission b : plugin.getDescription().getPermissions()) {
+            BLUEPRINT_SUBS.add(b.getName());
+        }
     }
 
     @Override
@@ -154,7 +159,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("use_clay")) {
                 return partial(lastArg, USE_CLAY_SUBS);
             }
-            if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("set_size") || sub.equals("undisguise")) {
+            if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
                 // return null to default to online player name matching
                 return null;
             } else {
@@ -167,6 +172,8 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
                 return partial(lastArg, SEED_SUBS);
             } else if (args[0].equalsIgnoreCase("disguise") || args[0].equalsIgnoreCase("handbrake")) {
                 return null;
+            } else if (args[0].equalsIgnoreCase("revoke")) {
+                return partial(lastArg, BLUEPRINT_SUBS);
             } else {
                 return partial(lastArg, BOOL_SUBS);
             }

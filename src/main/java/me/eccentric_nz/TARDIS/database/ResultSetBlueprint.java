@@ -80,4 +80,45 @@ public class ResultSetBlueprint {
             }
         }
     }
+
+    /**
+     * Attempts to see whether the supplied player uuid has the required permission record in the blueprint table. This
+     * method builds an SQL query string from the parameters supplied and then executes the query.
+     *
+     * @param uuid the Time Lord uuid to check
+     * @param node the permission node to check
+     * @return true or false depending on whether the Time Lord has the permission node
+     */
+    public int getRecordId(String uuid, String node) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT bp_id FROM " + prefix + "blueprint WHERE uuid = ? AND permission = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, uuid);
+            statement.setString(2, node);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                return rs.getInt("bp_id");
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for blueprint table! " + e.getMessage());
+            return -1;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing blueprint table! " + e.getMessage());
+            }
+        }
+    }
 }

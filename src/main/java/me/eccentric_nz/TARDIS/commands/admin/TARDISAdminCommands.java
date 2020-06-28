@@ -95,6 +95,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("region_flag", "");
         firstsStr.put("reload", "");
         firstsStr.put("repair", "");
+        firstsStr.put("revoke", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("set_size", "");
@@ -108,8 +109,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStrArtron.add("jettison_seed");
         // boolean
         firstsBool.put("3d_doors", "allow");
-        firstsBool.put("abandon", "abandon.enabled");
-        firstsBool.put("archive", "archive.enabled");
+        firstsBool.put("abandon", "");
+        firstsBool.put("archive", "");
         firstsBool.put("achievements", "allow");
         firstsBool.put("add_perms", "creation");
         firstsBool.put("admin_bypass", "allow");
@@ -117,7 +118,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("allow_end_after_visit", "travel");
         firstsBool.put("allow_nether_after_visit", "travel");
         firstsBool.put("autonomous", "allow");
-        firstsBool.put("blueprints", "blueprints.enabled");
+        firstsBool.put("blueprints", "");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("create_worlds", "creation");
@@ -425,6 +426,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("repair")) {
                     return new TARDISRepairCommand(plugin).setFreeCount(sender, args);
+                }
+                if (first.equals("revoke")) {
+                    return new TARDISRevokeCommand(plugin).removePermission(sender, args);
                 }
                 if (first.equals("vortex_fall")) {
                     if (!args[1].equalsIgnoreCase("kill") && !args[1].equalsIgnoreCase("teleport")) {

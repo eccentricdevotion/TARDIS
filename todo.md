@@ -12,7 +12,6 @@
 8. Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
 9. New Nether console
 10. New Nether room
-11. `/tardisadmin revoke [player] [permission]`
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds
