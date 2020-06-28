@@ -10,12 +10,11 @@
 6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (TARDISShop?)
-9. Add new 1.16 blocks to TARDISWalls
-10. New Nether console
-11. New Nether room
-12. Add `blueprints.enabled: [true|false]` config setting
-13. Add blueprints to `/tardisgive` command
-14. `/tardisadmin revoke [player] [permission]`
+9. New Nether console
+10. New Nether room
+11. Add `blueprints.enabled: [true|false]` config setting
+12. Add blueprints to `/tardisgive` command
+13. `/tardisadmin revoke [player] [permission]`
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds
