@@ -31,22 +31,22 @@ Blueprints are a form of TARDIS disk.
 
 _Blueprints are keyed to a specific player &mdash; only the player who obtained the blueprint can use it to upgrade their TARDIS with the blueprinted feature the disk contains._
 
-Players can obtain blueprints in two ways:
+Players can obtain blueprints in a few ways:
 
 1. By purchasing them from a TARDIS Shop. See the instructions on the [TARDIS Shop](tardis-shop.html) page for how to set this up.
 2. Using the `#TODO /tardisadmin give [player] [blueprint]` command.
-3. Using a system that can run the command above when certain conditions are met &mdash; for example a &ldquo;rank up&rdquo; plugin or a command block.
+3. Using a system that can run the command above when certain conditions are met &mdash; for example a &ldquo;rank up&rdquo; plugin (or a command block `#TODO add support for @p selector`).
 
 ### Using blueprints
 
-Once a player has obtained a blueprint they need to condense it in the TARDIS Artron condenser. Once condensed the blueprint will be stored in the TARDIS&rsquo;s memory core.
+Once a player has obtained a blueprint they need to condense it in the TARDIS Artron condenser. Once condensed the blueprint will be stored in the TARDIS&rsquo; memory core.
 
 ### Removing a blueprint
 
 To remove a player&rsquo;s ability to use a blueprint feature use the following command:
 ```
 #TODO
-/tardissudo revoke [player] [permission]
+/tardisadmin revoke [player] [permission]
 ```
 To see a list of blueprint permissions use the command:
 ```
