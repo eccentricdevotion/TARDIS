@@ -72,7 +72,7 @@ public class TARDISBlocksUpdater {
             blocks.add("CHISELED_NETHER_BRICKS");
             blocks.add("CHISELED_POLISHED_BLACKSTONE");
             blocks.add("CRACKED_NETHER_BRICKS");
-            blocks.add("CRACKED_POLISHED_BLACKSTONE_BRICK");
+            blocks.add("CRACKED_POLISHED_BLACKSTONE_BRICKS");
             blocks.add("CRIMSON_HYPHAE");
             blocks.add("CRIMSON_NYLIUM");
             blocks.add("CRIMSON_PLANKS");
