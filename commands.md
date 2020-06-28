@@ -45,6 +45,8 @@ You can view descriptions, usage and permissions for all commands in-game using 
 
 `/tardisjunk` - [Junk TARDIS related commands](junk-tardis.html)
 
+`/tardissudo` - [Admin super user commands](sudo-commands.html)
+
 `/handles` - [Handles related commands](handles.html)
 
 There are multiple command arguments for each command.
