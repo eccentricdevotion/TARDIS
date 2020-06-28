@@ -83,9 +83,9 @@ class TARDISSetBooleanCommand {
                     TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
                     return true;
                 }
-                plugin.getConfig().set(section, Boolean.valueOf(tf));
+                plugin.getConfig().set("abandon.enabled", Boolean.valueOf(tf));
             } else if (first.equals("archive") || first.equals("blueprints")) {
-                plugin.getConfig().set(section, Boolean.valueOf(tf));
+                plugin.getConfig().set(first + ".enabled", Boolean.valueOf(tf));
             } else {
                 plugin.getConfig().set(first, Boolean.valueOf(tf));
             }
