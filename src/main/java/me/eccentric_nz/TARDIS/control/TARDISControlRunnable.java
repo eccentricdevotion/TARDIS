@@ -62,8 +62,8 @@ public class TARDISControlRunnable implements Runnable {
                                         worldname = plugin.getMVHelper().getAlias(worldname);
                                     }
                                     sign.setLine(0, ChatColor.DARK_PURPLE + worldname);
-                                    sign.setLine(1, rsc.getLocation());
-                                    sign.setLine(2, rsc.getBiome());
+                                    sign.setLine(1, ChatColor.BLACK + rsc.getLocation());
+                                    sign.setLine(2, ChatColor.BLACK + rsc.getBiome());
                                 }
                                 sign.setLine(3, ChatColor.BLUE + rsc.getPreset());
                                 sign.update();
@@ -80,7 +80,7 @@ public class TARDISControlRunnable implements Runnable {
                                 // get the sign
                                 Sign sign = (Sign) rsc.getSign().getState();
                                 // update the data
-                                sign.setLine(0, plugin.getLanguage().getString("ARTRON_DISPLAY"));
+                                sign.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
                                 sign.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
                                 sign.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
                                 sign.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
