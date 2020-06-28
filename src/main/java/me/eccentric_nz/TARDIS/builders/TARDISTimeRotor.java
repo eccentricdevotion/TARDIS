@@ -31,6 +31,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * The time rotor, sometimes called the time column is a component in the central column of the TARDIS console. While
+ * the TARDIS is in flight, the rotor rises and falls, stopping when the TARDIS handbrake is engaged. It is associated
+ * with the 'whooshing' noise heard when the TARDIS is in flight.
+ */
 public class TARDISTimeRotor {
 
     private static final HashMap<String, Integer> BY_NAME = new HashMap<String, Integer>() {

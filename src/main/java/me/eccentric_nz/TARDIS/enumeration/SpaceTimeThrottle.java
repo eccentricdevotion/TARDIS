@@ -2,6 +2,10 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import java.util.HashMap;
 
+/**
+ * The Space Time Throttle controls the effective "speed" of the TARDIS by altering the "length" of the route (and thus
+ * shorten the perceived travel time) through the Time Vortex.
+ */
 public enum SpaceTimeThrottle {
 
     NORMAL(4, 500, 18),
