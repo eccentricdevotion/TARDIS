@@ -161,8 +161,9 @@ public class TARDISCondenserListener implements Listener {
                                         amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
                                     }
                                 } else if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
-                                    // blueprint disc
+                                    // blueprint disk
                                     BlueprintProcessor.addPermission(plugin, is, player);
+                                    amount += plugin.getCondensables().get(item);
                                 } else {
                                     amount += stack_size * plugin.getCondensables().get(item);
                                 }
@@ -295,7 +296,7 @@ public class TARDISCondenserListener implements Listener {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
-                return (im.getDisplayName()).equals("TARDIS Blueprint Disk");
+                return im.getDisplayName().equals("TARDIS Blueprint Disk");
             }
         }
         return false;
