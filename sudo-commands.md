@@ -15,14 +15,6 @@ Used to run commands as another player.
 
 Currently only supports `/tardis theme [clean|build]` commands.
 
-
-### Revoking blueprint permissions
-
-```
-#TODO
-/tardissudo revoke [player] [blueprint.permission]
-```
-
 ### Permission
 
 ```
