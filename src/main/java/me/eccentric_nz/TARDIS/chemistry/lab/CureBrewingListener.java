@@ -60,7 +60,7 @@ public class CureBrewingListener implements Listener {
     private final List<String> elements = Arrays.asList("Silver", "Bismuth", "Calcium", "Cobalt");
     private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.UNCRAFTABLE);
     private final HashMap<PotionType, List<String>> potions = new HashMap<>();
-    private final List<UUID> noPickUps = new ArrayList<>();
+    private final Set<UUID> noPickUps = new HashSet<>();
 
     public CureBrewingListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -213,12 +213,12 @@ public class CureBrewingListener implements Listener {
                                             is.setItemMeta(pm);
                                         }
                                         location.getWorld().dropItem(location.add(0, 1.0d, 0), is);
-                                        noPickUps.removeAll(Collections.singletonList(player.getUniqueId()));
+                                        noPickUps.remove(player.getUniqueId());
                                     }, 400L);
                                     break;
                                 }
                             }
-                            noPickUps.removeAll(Collections.singletonList(player.getUniqueId()));
+                            noPickUps.remove(player.getUniqueId());
                         }
                     }
                 }

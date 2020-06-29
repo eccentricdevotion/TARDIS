@@ -33,7 +33,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -150,10 +149,10 @@ public class TARDISVortexPersister {
                                 new TARDISInstantPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
                             }
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singletonList(id));
-                                plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singletonList(id));
+                                plugin.getTrackerKeeper().getInVortex().remove(id);
+                                plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
                                 plugin.getTrackerKeeper().getDestinationVortex().remove(id);
-                                plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singletonList(id));
+                                plugin.getTrackerKeeper().getDematerialising().remove(id);
                             }, 20L);
                         }
                         land++;
