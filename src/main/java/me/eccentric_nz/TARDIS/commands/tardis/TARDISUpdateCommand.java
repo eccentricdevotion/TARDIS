@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
@@ -33,9 +34,11 @@ import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -234,6 +237,23 @@ class TARDISUpdateCommand {
                     TARDISMessage.send(player, "CMD_ONLY_TL");
                     return false;
                 }
+            }
+            if (updateable.equals(Updateable.ROTOR) && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
+                // get Time Rotor frame location
+                ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                if (itemFrame != null) {
+                    TARDISTimeRotor.unlockRotor(itemFrame);
+                    // also need to remove the item frame protection
+                    plugin.getGeneralKeeper().getTimeRotors().remove(itemFrame.getUniqueId());
+                    // and block protection
+                    Block block = itemFrame.getLocation().getBlock();
+                    String location = block.getLocation().toString();
+                    plugin.getGeneralKeeper().getProtectBlockMap().remove(location);
+                    String under = block.getRelative(BlockFace.DOWN).getLocation().toString();
+                    plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
+                    TARDISMessage.send(player, "ROTOR_UNFIXED");
+                }
+                return true;
             }
             plugin.getTrackerKeeper().getPlayers().put(player.getUniqueId(), tardis_block);
             TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);

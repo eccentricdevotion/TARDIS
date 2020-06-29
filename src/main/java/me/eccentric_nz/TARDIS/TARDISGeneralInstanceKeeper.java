@@ -45,7 +45,6 @@ import java.util.logging.Logger;
  */
 public class TARDISGeneralInstanceKeeper {
 
-    private final HashMap<Integer, UUID> timeRotors = new HashMap<>();
     private final HashMap<String, Double[]> gravityEastList = new HashMap<>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<>();
     private final HashMap<String, Double[]> gravitySouthList = new HashMap<>();
@@ -69,6 +68,7 @@ public class TARDISGeneralInstanceKeeper {
     private final Set<String> sonicRails = new HashSet<>();
     private final Set<String> sonicWires = new HashSet<>();
     private final Set<UUID> junkTravellers = new HashSet<>();
+    private final Set<UUID> timeRotors = new HashSet<>();
     private final TARDIS plugin;
     private final TARDISDoorListener doorListener;
     private final YamlConfiguration pluginYAML;
@@ -161,7 +161,7 @@ public class TARDISGeneralInstanceKeeper {
         return roomCondenserData;
     }
 
-    public HashMap<Integer, UUID> getTimeRotors() {
+    public Set<UUID> getTimeRotors() {
         return timeRotors;
     }
 

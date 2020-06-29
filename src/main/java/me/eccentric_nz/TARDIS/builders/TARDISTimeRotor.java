@@ -55,7 +55,7 @@ public class TARDISTimeRotor {
         // save itemFrame UUID
         UUID uuid = itemFrame.getUniqueId();
         updateRotorRecord(id, uuid.toString());
-        TARDIS.plugin.getGeneralKeeper().getTimeRotors().put(id, uuid);
+        TARDIS.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
     }
 
     public static void updateRotorRecord(int id, String uuid) {
@@ -76,6 +76,11 @@ public class TARDISTimeRotor {
         itemFrame.setItem(is);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
+    }
+
+    public static void unlockRotor(ItemFrame itemFrame) {
+        itemFrame.setFixed(false);
+        itemFrame.setVisible(true);
     }
 
     public static ItemFrame getItemFrame(UUID uuid) {

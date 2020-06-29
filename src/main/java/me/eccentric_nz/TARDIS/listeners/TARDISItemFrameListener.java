@@ -130,9 +130,12 @@ public class TARDISItemFrameListener implements Listener {
                             break;
                         default:
                             // ROTOR
-                            UUID trit = frame.getUniqueId();
-                            TARDISTimeRotor.updateRotorRecord(id, trit.toString());
-                            plugin.getGeneralKeeper().getTimeRotors().put(id, trit);
+                            UUID rotorId = frame.getUniqueId();
+                            TARDISTimeRotor.updateRotorRecord(id, rotorId.toString());
+                            plugin.getGeneralKeeper().getTimeRotors().add(rotorId);
+                            // set fixed and invisible
+                            frame.setFixed(true);
+                            frame.setVisible(false);
                             plugin.getTrackerKeeper().getPlayers().remove(uuid);
                             TARDISMessage.send(player, "ROTOR_UPDATE");
                     }

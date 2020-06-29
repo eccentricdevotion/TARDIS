@@ -32,10 +32,10 @@ public class TARDISTimeRotorLoader {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
+    private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
-    private final String prefix;
 
     public TARDISTimeRotorLoader(TARDIS plugin) {
         this.plugin = plugin;
@@ -54,7 +54,7 @@ public class TARDISTimeRotorLoader {
                     if (!u.isEmpty()) {
                         try {
                             UUID uuid = UUID.fromString(u);
-                            plugin.getGeneralKeeper().getTimeRotors().put(id, uuid);
+                            plugin.getGeneralKeeper().getTimeRotors().add(uuid);
                             count++;
                         } catch (IllegalArgumentException e) {
                             plugin.debug("Invalid Time Rotor UUID: " + e.getMessage());
