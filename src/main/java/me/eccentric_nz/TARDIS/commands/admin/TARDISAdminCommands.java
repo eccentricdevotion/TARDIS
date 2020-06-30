@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -95,15 +96,16 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("region_flag", "");
         firstsStr.put("reload", "");
         firstsStr.put("repair", "");
-        firstsStr.put("revoke", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
+        firstsStr.put("revoke", "");
         firstsStr.put("set_size", "");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStr.put("spawn_abandoned", "");
-        firstsStr.put("use_clay", "creation");
         firstsStr.put("undisguise", "");
+        firstsStr.put("update_plugins", "");
+        firstsStr.put("use_clay", "creation");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
@@ -259,6 +261,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                             TARDISMessage.message(sender, "Database conversion failed! " + e.getMessage());
                             return true;
                         }
+                    }
+                    if (first.equals("update_plugins")) {
+                        if (!sender.isOp()) {
+                            TARDISMessage.message(sender, "You must be a server operator to run this command!");
+                            return true;
+                        }
+                        return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
                     }
                 }
                 if (first.equals("adv")) {

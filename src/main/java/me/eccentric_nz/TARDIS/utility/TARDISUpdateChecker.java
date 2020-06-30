@@ -63,6 +63,7 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.setBuildNumber(buildNumber);
         plugin.setUpdateNumber(newBuildNumber);
         plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
+        plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
     }
 
     /**

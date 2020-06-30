@@ -29,8 +29,9 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMessage {
 
+    public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
+    public static final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
     private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
-    public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!" + ChatColor.GOLD + "\nhttp://tardisjenkins.duckdns.org:8080/job/TARDIS/";
 
     /**
      * Splits a message into multiple lines if it is longer than the guaranteed chat page width.

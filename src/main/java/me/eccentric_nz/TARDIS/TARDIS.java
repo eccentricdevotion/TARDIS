@@ -215,7 +215,7 @@ public class TARDIS extends JavaPlugin {
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
-                Version ver = new Version("0");
+                Version ver;
                 if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
                     ver = new Version("1");
                 } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
