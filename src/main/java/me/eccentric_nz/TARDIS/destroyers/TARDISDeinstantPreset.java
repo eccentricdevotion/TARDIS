@@ -84,7 +84,7 @@ public class TARDISDeinstantPreset {
             for (Entity e : w.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                 if (e instanceof ItemFrame) {
                     ItemFrame frame = (ItemFrame) e;
-                    frame.setItem(null);
+                    frame.setItem(null, false);
                     frame.remove();
                 }
             }

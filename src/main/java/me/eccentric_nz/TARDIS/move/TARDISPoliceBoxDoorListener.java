@@ -163,7 +163,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
                                                     dim.setCustomModelData(1002);
                                                     dye.setItemMeta(dim);
-                                                    frame.setItem(dye);
+                                                    frame.setItem(dye, false);
                                                 }
                                                 playDoorSound(true, location);
                                             }
@@ -176,7 +176,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
                                             dim.setCustomModelData(1001);
                                             dye.setItemMeta(dim);
-                                            frame.setItem(dye);
+                                            frame.setItem(dye, false);
                                             playDoorSound(false, location);
                                         }
                                     } else if (tardis.getUuid() != playerUUID) {

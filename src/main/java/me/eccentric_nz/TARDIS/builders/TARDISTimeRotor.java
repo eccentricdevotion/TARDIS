@@ -73,7 +73,7 @@ public class TARDISTimeRotor {
         im.setDisplayName("Time Rotor");
         im.setCustomModelData(which);
         is.setItemMeta(im);
-        itemFrame.setItem(is);
+        itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
     }

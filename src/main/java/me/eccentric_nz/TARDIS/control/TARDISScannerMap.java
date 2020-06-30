@@ -50,7 +50,7 @@ public class TARDISScannerMap {
         MapMeta meta = (MapMeta) map.getItemMeta();
         meta.setMapView(view);
         map.setItemMeta(meta);
-        itemFrame.setItem(map);
+        itemFrame.setItem(map, false);
         itemFrame.setRotation(Rotation.NONE);
         plugin.getTardisHelper().updateMap(world, view);
     }

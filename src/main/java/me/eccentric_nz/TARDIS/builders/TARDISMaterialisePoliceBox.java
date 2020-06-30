@@ -133,7 +133,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");
                 }
                 is.setItemMeta(im);
-                frame.setItem(is);
+                frame.setItem(is, false);
                 frame.setFixed(true);
                 frame.setVisible(false);
             } else {

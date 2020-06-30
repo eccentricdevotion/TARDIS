@@ -259,11 +259,11 @@ public class TARDISItemFrameListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     im.setCustomModelData(10000002);
                     is.setItemMeta(im);
-                    frame.setItem(is);
+                    frame.setItem(is, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
-                        frame.setItem(is);
+                        frame.setItem(is, false);
                     }, 20L);
                     if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
                         TARDISMessage.send(player, "NO_PERMS");
@@ -358,11 +358,11 @@ public class TARDISItemFrameListener implements Listener {
                         ItemMeta im = is.getItemMeta();
                         im.setCustomModelData(10000002);
                         is.setItemMeta(im);
-                        frame.setItem(is);
+                        frame.setItem(is, false);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             im.setCustomModelData(10000001);
                             is.setItemMeta(im);
-                            frame.setItem(is);
+                            frame.setItem(is, false);
                         }, 40L);
                     } else {
                         // is it the players handles?

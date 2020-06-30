@@ -70,7 +70,7 @@ public class TARDISCustomModelDataChanger {
                         playDoorSound(open, block.getLocation());
                         im.setCustomModelData(newData);
                         is.setItemMeta(im);
-                        itemFrame.setItem(is);
+                        itemFrame.setItem(is, false);
                     }
                 }
             }

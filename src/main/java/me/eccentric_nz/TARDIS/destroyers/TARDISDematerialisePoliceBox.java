@@ -115,7 +115,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             im = is.getItemMeta();
             im.setCustomModelData(cmd);
             is.setItemMeta(im);
-            frame.setItem(is);
+            frame.setItem(is, false);
             frame.setFixed(true);
             frame.setVisible(false);
         } else {
