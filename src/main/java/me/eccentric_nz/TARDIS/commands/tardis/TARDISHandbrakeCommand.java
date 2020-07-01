@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -66,9 +65,9 @@ public class TARDISHandbrakeCommand {
             TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
             if (bool) {
                 plugin.getTrackerKeeper().getDestinationVortex().remove(id);
-                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singletonList(id));
-                plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singletonList(id));
-                plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singletonList(id));
+                plugin.getTrackerKeeper().getInVortex().remove(id);
+                plugin.getTrackerKeeper().getMaterialising().remove(id);
+                plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
             }
             if (!admin) {
                 TARDISMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));

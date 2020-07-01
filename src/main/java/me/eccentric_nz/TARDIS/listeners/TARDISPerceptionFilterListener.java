@@ -65,10 +65,12 @@ public class TARDISPerceptionFilterListener implements Listener {
                         if (chestplate == null) {
                             // equip the chest slot with the perception filter
                             player.getInventory().setChestplate(is);
-                            player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-                            player.updateInventory();
-                            // make the player invisible
-                            plugin.getFilter().addPerceptionFilter(player);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                                player.updateInventory();
+                                // make the player invisible
+                                plugin.getFilter().addPerceptionFilter(player);
+                            }, 1L);
                         } else {
                             TARDISMessage.send(player, "FILTER");
                         }

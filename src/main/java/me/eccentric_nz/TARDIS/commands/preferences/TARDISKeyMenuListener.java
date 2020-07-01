@@ -31,6 +31,9 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
  * you what it does do. It is very good at opening doors!
@@ -48,7 +51,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
-            Player p = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 switch (slot) {
@@ -73,19 +76,34 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
                         }
                         // get Display name of selected key
                         ItemStack choice = view.getItem(slot);
-                        ItemMeta choice_im = choice.getItemMeta();
-                        String choice_name = choice_im.getDisplayName();
-                        ItemMeta sonic_im = key.getItemMeta();
-                        sonic_im.setDisplayName(choice_name);
-                        sonic_im.setCustomModelData(choice_im.getCustomModelData());
-                        key.setItemMeta(sonic_im);
+                        ItemMeta choiceMeta = choice.getItemMeta();
+                        String displayName = choiceMeta.getDisplayName();
+                        ItemMeta keyMeta = key.getItemMeta();
+                        keyMeta.setDisplayName(displayName);
+                        keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
+                        // personalise
+                        keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                        // set lore
+                        List<String> lore;
+                        if (keyMeta.hasLore()) {
+                            lore = keyMeta.getLore();
+                        } else {
+                            lore = new ArrayList<>();
+                        }
+                        String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                        if (!lore.contains(format + "This key belongs to")) {
+                            lore.add(format + "This key belongs to");
+                            lore.add(format + player.getName());
+                            keyMeta.setLore(lore);
+                        }
+                        key.setItemMeta(keyMeta);
                         break;
                     case 18:
                         break;
                     case 26:
                         // close
                         event.setCancelled(true);
-                        close(p);
+                        close(player);
                         break;
                     default:
                         event.setCancelled(true);
