@@ -1,5 +1,7 @@
 # TODO
 
+1. Add a 1.15.2 release to the TARDIS GitHub page
+
 ## Next version `4.4.4`
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
@@ -13,6 +15,7 @@
 9. New Nether console
 10. New Nether room, with parkour?
 11. Maze room, with button to regenerate a new random maze
+12. TCG API - use Police Box location instead of player location?
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds
