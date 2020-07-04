@@ -35,9 +35,9 @@ import org.bukkit.event.block.BlockFertilizeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SuperFertisliserListener implements Listener {
 
@@ -53,12 +53,25 @@ public class SuperFertisliserListener implements Listener {
             put(Material.CHORUS_FLOWER, TreeType.CHORUS_PLANT);
             put(Material.RED_MUSHROOM, TreeType.RED_MUSHROOM);
             put(Material.BROWN_MUSHROOM, TreeType.BROWN_MUSHROOM);
+            put(Material.CRIMSON_FUNGUS, TreeType.CRIMSON_FUNGUS);
+            put(Material.WARPED_FUNGUS, TreeType.WARPED_FUNGUS);
         }
     };
-    private final List<Material> TREES = Arrays.asList(Material.OAK_SAPLING, Material.DARK_OAK_SAPLING, Material.ACACIA_SAPLING, Material.JUNGLE_SAPLING, Material.SPRUCE_SAPLING, Material.BIRCH_SAPLING, Material.CHORUS_FLOWER, Material.RED_MUSHROOM, Material.BROWN_MUSHROOM);
+    private final Set<Material> TREES = new HashSet<>();
 
     public SuperFertisliserListener(TARDIS plugin) {
         this.plugin = plugin;
+        TREES.add(Material.OAK_SAPLING);
+        TREES.add(Material.DARK_OAK_SAPLING);
+        TREES.add(Material.ACACIA_SAPLING);
+        TREES.add(Material.JUNGLE_SAPLING);
+        TREES.add(Material.SPRUCE_SAPLING);
+        TREES.add(Material.BIRCH_SAPLING);
+        TREES.add(Material.CHORUS_FLOWER);
+        TREES.add(Material.RED_MUSHROOM);
+        TREES.add(Material.BROWN_MUSHROOM);
+        TREES.add(Material.CRIMSON_FUNGUS);
+        TREES.add(Material.WARPED_FUNGUS);
     }
 
     @EventHandler(ignoreCancelled = true)
