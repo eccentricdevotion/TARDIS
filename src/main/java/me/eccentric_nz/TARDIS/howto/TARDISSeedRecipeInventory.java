@@ -77,12 +77,14 @@ class TARDISSeedRecipeInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.setCustomModelData(1);
         close.setItemMeta(close_im);
         stack[26] = close;
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
+        back_im.setCustomModelData(8);
         back.setItemMeta(back_im);
         stack[8] = back;
 

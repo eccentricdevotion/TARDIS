@@ -67,6 +67,7 @@ public class TARDISSeedsInventory {
                 List<String> lore = new ArrayList<>();
                 lore.add("Click to see recipe...");
                 im.setLore(lore);
+                im.setCustomModelData((m.equals(Material.NETHER_WART_BLOCK)) ? 2 : 1);
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;
