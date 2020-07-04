@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
+import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
@@ -63,7 +64,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
-    private final List<Block> lampblocks = new ArrayList<>();
+    private final List<Block> lampBlocks = new ArrayList<>();
+    private final List<Block> fractalBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -329,11 +331,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 s++;
             }
-            lampblocks.forEach((lamp) -> {
+            lampBlocks.forEach((lamp) -> {
                 BlockData l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
                 lamp.setBlockData(l);
             });
-            lampblocks.clear();
+            lampBlocks.clear();
+            for (int f = 0; f < fractalBlocks.size(); f++) {
+                FractalFence.grow(fractalBlocks.get(f), f);
+            }
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.GLASS);
             }
@@ -440,6 +445,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.BLUE_WOOL)) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                 }
+                if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
+                    fractalBlocks.add(world.getBlockAt(x, y, z));
+                }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                 }
@@ -542,7 +550,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
                     Block lamp = world.getBlockAt(x, y, z);
-                    lampblocks.add(lamp);
+                    lampBlocks.add(lamp);
                     // remember lamp block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -559,9 +567,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
                     if (type.equals(Material.COMMAND_BLOCK)) {
-                        data = Material.STONE_BRICKS.createBlockData();
                         if (tud.getSchematic().getPermission().equals("ender")) {
                             data = Material.END_STONE_BRICKS.createBlockData();
+                        } else if (tud.getSchematic().getPermission().equals("delta")) {
+                            data = Material.BLACKSTONE.createBlockData();
+                        } else {
+                            data = Material.STONE_BRICKS.createBlockData();
                         }
                     }
                 }
@@ -599,12 +610,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getGeneralKeeper().getProtectBlockMap().put(loc, id);
                 }
                 // if it's the door, don't set it just remember its block then do it at the end
-                if (type.equals(Material.HONEYCOMB_BLOCK) && tud.getSchematic().getPermission().equals("rotor")) {
+                if (type.equals(Material.HONEYCOMB_BLOCK) && (tud.getSchematic().getPermission().equals("delta") || tud.getSchematic().getPermission().equals("rotor"))) {
                     /*
                      * spawn an item frame and place the time rotor in it
                      */
-                    TARDISBlockSetters.setBlock(world, x, y, z, Material.STONE_BRICKS);
-                    TARDISTimeRotor.setItemFrame(tud.getSchematic(), new Location(world, x, y + 1, z), id);
+                    TARDISBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+                    TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
                 } else if (type.equals(Material.IRON_DOOR)) { // doors
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.LEVER)) {

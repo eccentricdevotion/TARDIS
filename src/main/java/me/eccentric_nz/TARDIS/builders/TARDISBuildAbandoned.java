@@ -439,9 +439,12 @@ class TARDISBuildAbandoned implements Runnable {
                 String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                 set.put("creeper", creeploc);
                 if (type.equals(Material.COMMAND_BLOCK)) {
-                    data = Material.STONE_BRICKS.createBlockData();
                     if (schm.getPermission().equals("ender")) {
                         data = Material.END_STONE_BRICKS.createBlockData();
+                    } else if (schm.getPermission().equals("delta")) {
+                        data = Material.BLACKSTONE.createBlockData();
+                    } else {
+                        data = Material.STONE_BRICKS.createBlockData();
                     }
                 }
             }
@@ -478,12 +481,12 @@ class TARDISBuildAbandoned implements Runnable {
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
             // if it's the door, don't set it just remember its block then do it at the end
-            if (type.equals(Material.HONEYCOMB_BLOCK) && schm.getPermission().equals("rotor")) {
+            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
                 /*
                  * spawn an item frame and place the time rotor in it
                  */
-                TARDISBlockSetters.setBlock(world, x, y, z, Material.STONE_BRICKS);
-                TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
+                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
             } else if (type.equals(Material.IRON_DOOR)) { // doors
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH)) {

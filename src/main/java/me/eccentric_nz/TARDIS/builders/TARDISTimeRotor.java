@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,14 +43,15 @@ public class TARDISTimeRotor {
             put("rotor", 10000003);
             put("copper", 10000004);
             put("round", 10000005);
+            put("delta", 10000006);
         }
     };
 
-    public static void setItemFrame(Schematic schm, Location location, int id) {
+    public static void setItemFrame(String schm, Location location, int id) {
         location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
         ItemFrame itemFrame = (ItemFrame) location.getWorld().spawnEntity(location, EntityType.ITEM_FRAME);
         itemFrame.setFacingDirection(BlockFace.UP);
-        setRotor(BY_NAME.get(schm.getPermission()), itemFrame, false);
+        setRotor(BY_NAME.get(schm), itemFrame, false);
         // save itemFrame UUID
         UUID uuid = itemFrame.getUniqueId();
         updateRotorRecord(id, uuid.toString());

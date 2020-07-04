@@ -70,6 +70,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
+        t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
         t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor

@@ -473,7 +473,7 @@ public class TARDII implements TardisAPI {
             int model = TARDISSeedModel.modelByString(schematic);
             if (Consoles.getBY_NAMES().get(schematic).isCustom()) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
-            } else if (schematic.equalsIgnoreCase("ROTOR")) {
+            } else if (schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {
                 is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

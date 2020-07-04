@@ -23,7 +23,6 @@ import org.bukkit.command.CommandSender;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -70,6 +69,11 @@ class TARDISSetMaterialCommand {
     }
 
     private boolean checkMaterial(String setMaterial) {
-        return Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial));
+        try {
+            Material.valueOf(setMaterial);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }

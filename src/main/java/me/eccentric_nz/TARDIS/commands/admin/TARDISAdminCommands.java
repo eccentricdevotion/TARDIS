@@ -19,17 +19,22 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
+import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStr.put("spawn_abandoned", "");
+        firstsStr.put("tree", "");
         firstsStr.put("undisguise", "");
         firstsStr.put("update_plugins", "");
         firstsStr.put("use_clay", "creation");
@@ -286,6 +292,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
+                }
+                if (first.equals("tree")) {
+                    if (sender instanceof Player) {
+                        Player p = (Player) sender;
+                        Block l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
+                        int which = TARDISNumberParsers.parseInt(args[1]);
+                        FractalFence.grow(l, which);
+                    }
                 }
                 if (first.equals("reload")) {
                     return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);

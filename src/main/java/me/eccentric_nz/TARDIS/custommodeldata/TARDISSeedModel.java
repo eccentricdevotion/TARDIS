@@ -70,6 +70,8 @@ public class TARDISSeedModel {
             put(Material.RED_GLAZED_TERRACOTTA, 37);
             // master
             put(Material.NETHER_BRICKS, 39);
+            // delta
+            put(Material.CRYING_OBSIDIAN, 43);
 //            // custom
 //            put(Material.MUSHROOM_STEM, 45);
 //            // templates
@@ -97,6 +99,7 @@ public class TARDISSeedModel {
             put("TOM", 27);
             put("TWELFTH", 28);
             put("WAR", 29);
+            put("DELTA", 43);
             put("ROTOR", 44);
             put("LEGACY_BIGGER", 33);
             put("LEGACY_BUDGET", 34);

@@ -62,7 +62,8 @@ import java.util.Map;
 public class TARDISBuilderInner implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> lampblocks = new ArrayList<>();
+    private final List<Block> lampBlocks = new ArrayList<>();
+    private final List<Block> fractalBlocks = new ArrayList<>();
     private final Schematic schm;
     private final World world;
     private final int dbID;
@@ -274,7 +275,7 @@ public class TARDISBuilderInner implements Runnable {
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
             }
-            lampblocks.forEach((lamp) -> {
+            lampBlocks.forEach((lamp) -> {
                 BlockData lantern;
                 if (schm.hasLanterns()) {
                     lantern = TARDISConstants.LANTERN;
@@ -284,7 +285,10 @@ public class TARDISBuilderInner implements Runnable {
                 }
                 lamp.setBlockData(lantern);
             });
-            lampblocks.clear();
+            lampBlocks.clear();
+            for (int f = 0; f < fractalBlocks.size(); f++) {
+                FractalFence.grow(fractalBlocks.get(f), f);
+            }
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (tips) {
@@ -450,6 +454,9 @@ public class TARDISBuilderInner implements Runnable {
                         data = Material.getMaterial(m).createBlockData();
                 }
             }
+            if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
+                fractalBlocks.add(world.getBlockAt(x, y, z));
+            }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
                 data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                 postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
@@ -544,7 +551,7 @@ public class TARDISBuilderInner implements Runnable {
             if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                 // remember lamp blocks
                 Block lamp = world.getBlockAt(x, y, z);
-                lampblocks.add(lamp);
+                lampBlocks.add(lamp);
                 // remember lamp block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
                 String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -563,6 +570,8 @@ public class TARDISBuilderInner implements Runnable {
                 if (type.equals(Material.COMMAND_BLOCK)) {
                     if (schm.getPermission().equals("ender")) {
                         data = Material.END_STONE_BRICKS.createBlockData();
+                    } else if (schm.getPermission().equals("delta")) {
+                        data = Material.BLACKSTONE.createBlockData();
                     } else {
                         data = Material.STONE_BRICKS.createBlockData();
                     }
@@ -601,12 +610,12 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
             // if it's the door, don't set it just remember its block then do it at the end
-            if (type.equals(Material.HONEYCOMB_BLOCK) && schm.getPermission().equals("rotor")) {
+            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
                 /*
                  * spawn an item frame and place the time rotor in it
                  */
-                TARDISBlockSetters.setBlock(world, x, y, z, Material.STONE_BRICKS);
-                TARDISTimeRotor.setItemFrame(schm, new Location(world, x, y + 1, z), dbID);
+                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
             } else if (type.equals(Material.IRON_DOOR)) { // doors
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH)) {

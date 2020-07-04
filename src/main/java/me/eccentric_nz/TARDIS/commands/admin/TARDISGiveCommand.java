@@ -464,7 +464,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 int model = TARDISSeedModel.modelByString(type);
                 if (Consoles.getBY_NAMES().get(type).isCustom()) {
                     is = new ItemStack(Material.MUSHROOM_STEM, 1);
-                } else if (type.equalsIgnoreCase("ROTOR")) {
+                } else if (type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR")) {
                     is = new ItemStack(Material.MUSHROOM_STEM, 1);
                 } else {
                     is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

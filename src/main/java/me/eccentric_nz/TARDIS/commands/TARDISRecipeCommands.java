@@ -120,6 +120,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("CORAL", Material.NETHER_WART_BLOCK); // coral schematic designed by vistaero
+        t.put("DELTA", Material.CRYING_OBSIDIAN); // delta
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
         t.put("ENDER", Material.PURPUR_BLOCK); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
@@ -354,6 +355,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         int model;
         if (Consoles.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
             model = 45;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("DELTA")) {
+            model = 43;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("ROTOR")) {
             model = 44;

@@ -1,7 +1,5 @@
 # TODO
 
-1. Add a 1.15.2 release to the TARDIS GitHub page
-
 ## Next version `4.4.4`
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
@@ -12,10 +10,9 @@
 6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-9. New Nether console - DELTA
-10. New Nether room - NETHER
-11. Maze room, with button to regenerate a new random maze
-12. TCG API - use Police Box location instead of player location?
+9. New Nether room - NETHER
+10. Maze room, with button to regenerate a new random maze
+11. TCG API - use Police Box location instead of player location?
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

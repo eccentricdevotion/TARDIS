@@ -59,7 +59,7 @@ public class TARDISSeedRecipe {
         int model;
         if (TARDISSeedModel.materialMap.containsKey(s.getSeedMaterial())) {
             model = TARDISSeedModel.modelByMaterial(s.getSeedMaterial());
-            if (s.getPermission().equals("rotor")) {
+            if (s.getPermission().equals("delta") || s.getPermission().equals("rotor")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {
                 is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
